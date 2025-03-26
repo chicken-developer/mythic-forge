@@ -1,0 +1,4 @@
+# Ignore Houdini backup, cache, và GeoCache
+HoudiniAssets/**/backup/
+HoudiniAssets/**/Cache/
+HoudiniAssets/**/GeoCache/
