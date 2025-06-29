@@ -15,7 +15,8 @@ public:
 	AMFBaseCharacter();
 
 protected:
+	UPROPERTY(EditAnywhere, Category="Combat")
+	TObjectPtr<USkeletalMeshComponent> Weapon;
+
 	virtual void BeginPlay() override;
-
-
 };

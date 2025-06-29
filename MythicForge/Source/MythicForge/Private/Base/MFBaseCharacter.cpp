@@ -6,6 +6,8 @@
 AMFBaseCharacter::AMFBaseCharacter()
 {
 	PrimaryActorTick.bCanEverTick = false;
+	Weapon = CreateDefaultSubobject<USkeletalMeshComponent>("Weapon");
+	Weapon->SetupAttachment(GetRootComponent());
 
 }
 
