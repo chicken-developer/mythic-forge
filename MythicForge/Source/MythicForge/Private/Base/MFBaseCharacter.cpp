@@ -3,12 +3,13 @@
 
 #include "Base/MFBaseCharacter.h"
 
-AMFBaseCharacter::AMFBaseCharacter()
+AMFBaseCharacter::AMFBaseCharacter() :
+	WeaponHandSocket(FName("WeaponHandSocket"))
 {
 	PrimaryActorTick.bCanEverTick = false;
 	Weapon = CreateDefaultSubobject<USkeletalMeshComponent>("Weapon");
-	Weapon->SetupAttachment(GetRootComponent());
-
+	Weapon->SetupAttachment(GetMesh(), WeaponHandSocket);
+	Weapon->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 }
 
 void AMFBaseCharacter::BeginPlay()

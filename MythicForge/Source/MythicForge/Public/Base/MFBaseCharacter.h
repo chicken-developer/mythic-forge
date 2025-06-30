@@ -11,12 +11,16 @@ class MYTHICFORGE_API AMFBaseCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
+private:
+
 public:
 	AMFBaseCharacter();
 
 protected:
 	UPROPERTY(EditAnywhere, Category="Combat")
 	TObjectPtr<USkeletalMeshComponent> Weapon;
+
+	FName WeaponHandSocket;
 
 	virtual void BeginPlay() override;
 };
