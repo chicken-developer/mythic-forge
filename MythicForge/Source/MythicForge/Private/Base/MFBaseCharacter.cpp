@@ -2,6 +2,7 @@
 
 
 #include "Base/MFBaseCharacter.h"
+#include "AbilitySystemComponent.h"
 
 AMFBaseCharacter::AMFBaseCharacter() :
 	WeaponHandSocket(FName("WeaponHandSocket"))
@@ -12,9 +13,17 @@ AMFBaseCharacter::AMFBaseCharacter() :
 	Weapon->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 }
 
+UAbilitySystemComponent* AMFBaseCharacter::GetAbilitySystemComponent() const
+{
+	return AbilitySystemComponent;
+}
+
 void AMFBaseCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
 }
 
+void AMFBaseCharacter::InitAbilityActorInfo()
+{
+}
