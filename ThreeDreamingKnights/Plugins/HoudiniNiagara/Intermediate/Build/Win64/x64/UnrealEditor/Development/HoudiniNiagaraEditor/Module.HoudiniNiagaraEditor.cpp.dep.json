@@ -1,0 +1,34 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "e:\\repos\\mythic-forge\\threedreamingknights\\plugins\\houdininiagara\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\houdininiagaraeditor\\module.houdininiagaraeditor.cpp",
+        "ProvidedModule": "",
+        "PCH": "e:\\repos\\mythic-forge\\threedreamingknights\\intermediate\\build\\win64\\x64\\threedreamingknightseditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.valexpapi.cpp20.h.pch",
+        "Includes": [
+            "e:\\repos\\mythic-forge\\threedreamingknights\\plugins\\houdininiagara\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\houdininiagaraeditor\\definitions.houdininiagaraeditor.h",
+            "e:\\repos\\mythic-forge\\threedreamingknights\\plugins\\houdininiagara\\intermediate\\build\\win64\\unrealeditor\\inc\\houdininiagaraeditor\\uht\\houdininiagaraeditor.init.gen.cpp",
+            "e:\\repos\\mythic-forge\\threedreamingknights\\plugins\\houdininiagara\\intermediate\\build\\win64\\unrealeditor\\inc\\houdininiagaraeditor\\uht\\houdinipointcacheexporterbase.gen.cpp",
+            "e:\\repos\\mythic-forge\\threedreamingknights\\plugins\\houdininiagara\\source\\houdininiagaraeditor\\private\\houdinipointcacheexporterbase.h",
+            "c:\\program files\\epic games\\ue_5.8\\engine\\source\\runtime\\engine\\classes\\exporters\\exporter.h",
+            "c:\\program files\\epic games\\ue_5.8\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\exporter.generated.h",
+            "e:\\repos\\mythic-forge\\threedreamingknights\\plugins\\houdininiagara\\intermediate\\build\\win64\\unrealeditor\\inc\\houdininiagaraeditor\\uht\\houdinipointcacheexporterbase.generated.h",
+            "e:\\repos\\mythic-forge\\threedreamingknights\\plugins\\houdininiagara\\intermediate\\build\\win64\\unrealeditor\\inc\\houdininiagaraeditor\\uht\\houdinipointcacheexporterhbjson.gen.cpp",
+            "e:\\repos\\mythic-forge\\threedreamingknights\\plugins\\houdininiagara\\source\\houdininiagaraeditor\\private\\houdinipointcacheexporterhbjson.h",
+            "e:\\repos\\mythic-forge\\threedreamingknights\\plugins\\houdininiagara\\intermediate\\build\\win64\\unrealeditor\\inc\\houdininiagaraeditor\\uht\\houdinipointcacheexporterhbjson.generated.h",
+            "e:\\repos\\mythic-forge\\threedreamingknights\\plugins\\houdininiagara\\intermediate\\build\\win64\\unrealeditor\\inc\\houdininiagaraeditor\\uht\\houdinipointcacheexporterhcsv.gen.cpp",
+            "e:\\repos\\mythic-forge\\threedreamingknights\\plugins\\houdininiagara\\source\\houdininiagaraeditor\\private\\houdinipointcacheexporterhcsv.h",
+            "e:\\repos\\mythic-forge\\threedreamingknights\\plugins\\houdininiagara\\intermediate\\build\\win64\\unrealeditor\\inc\\houdininiagaraeditor\\uht\\houdinipointcacheexporterhcsv.generated.h",
+            "e:\\repos\\mythic-forge\\threedreamingknights\\plugins\\houdininiagara\\intermediate\\build\\win64\\unrealeditor\\inc\\houdininiagaraeditor\\uht\\houdinipointcacheexporterhjson.gen.cpp",
+            "e:\\repos\\mythic-forge\\threedreamingknights\\plugins\\houdininiagara\\source\\houdininiagaraeditor\\private\\houdinipointcacheexporterhjson.h",
+            "e:\\repos\\mythic-forge\\threedreamingknights\\plugins\\houdininiagara\\intermediate\\build\\win64\\unrealeditor\\inc\\houdininiagaraeditor\\uht\\houdinipointcacheexporterhjson.generated.h",
+            "e:\\repos\\mythic-forge\\threedreamingknights\\plugins\\houdininiagara\\intermediate\\build\\win64\\unrealeditor\\inc\\houdininiagaraeditor\\uht\\houdinipointcachefactory.gen.cpp",
+            "e:\\repos\\mythic-forge\\threedreamingknights\\plugins\\houdininiagara\\source\\houdininiagaraeditor\\public\\houdinipointcachefactory.h",
+            "c:\\program files\\epic games\\ue_5.8\\engine\\source\\editor\\unrealed\\public\\editorreimporthandler.h",
+            "e:\\repos\\mythic-forge\\threedreamingknights\\plugins\\houdininiagara\\intermediate\\build\\win64\\unrealeditor\\inc\\houdininiagaraeditor\\uht\\houdinipointcachefactory.generated.h",
+            "e:\\repos\\mythic-forge\\threedreamingknights\\plugins\\houdininiagara\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\houdininiagaraeditor\\permoduleinline.gen.cpp",
+            "c:\\program files\\epic games\\ue_5.8\\engine\\source\\runtime\\core\\public\\hal\\permoduleinline.inl"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}
