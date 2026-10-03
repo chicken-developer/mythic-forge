@@ -7,17 +7,25 @@ public class ThreeDreamingKnights : ModuleRules
 	public ThreeDreamingKnights(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
-	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput" });
+		PublicDependencyModuleNames.AddRange(new string[]
+		{
+			"Core", "CoreUObject", "Engine", "KnightCore", "KnightFramework", "KnightAbilitySystem",
+			"GameplayAbilities", "KnightCombat"
+		});
 
-		PrivateDependencyModuleNames.AddRange(new string[] {  });
-
-		// Uncomment if you are using Slate UI
-		// PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });
-		
-		// Uncomment if you are using online features
-		// PrivateDependencyModuleNames.Add("OnlineSubsystem");
-
-		// To include OnlineSubsystemSteam, add it to the plugins section in your uproject file with the Enabled attribute set to true
+		// The existing primary module owns the KnightGame composition role.
+		PrivateDependencyModuleNames.AddRange(new string[]
+		{
+			"AIModule",
+			"GameplayTags",
+			"KnightAI",
+			"KnightItems",
+			"KnightQuest",
+			"KnightDialogue",
+			"KnightWorld",
+			"KnightUI",
+			"KnightOnline",
+			"KnightSave"
+		});
 	}
 }

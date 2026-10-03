@@ -8,6 +8,12 @@
 # Do not ignore current project's `.uproject`. & ref file
 !/*.uproject
 !/*.pur
+!/Docs/Architecture/RepositoryBaseline.md
+!/Docs/Architecture/EnginePluginPolicy.md
+!/Docs/Implementation/**
+!/Scripts/**
+!/Tests/**
+!/.github/**
 
 # Do not ignore source, config and plugins dirs.
 !/Source/**
@@ -52,3 +58,8 @@ Session.vim
 
 # Visual Studio
 .vs
+
+# Generated outputs from project-owned plugins and tooling.
+/Plugins/Knight/**/Binaries/
+/Plugins/Knight/**/Intermediate/
+/Scripts/**/__pycache__/
