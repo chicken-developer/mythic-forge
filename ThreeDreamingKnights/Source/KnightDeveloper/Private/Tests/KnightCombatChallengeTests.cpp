@@ -738,6 +738,8 @@ namespace KnightCombatChallengeTest
 			UKnightTraversalComponent* Traversal = Knight->FindComponentByClass<UKnightTraversalComponent>();
 			if (Traversal->HasActiveTraversal())
 			{
+				ObservedTraversalLanding = Traversal->GetSnapshot().Landing.GetLocation();
+				bObservedTraversalLanding = true;
 				UMotionWarpingComponent* Warp = Knight->FindComponentByClass<UMotionWarpingComponent>();
 				bObservedTraversal |= Warp != nullptr && Warp->FindWarpTarget(TEXT("KnightTraversal")) != nullptr
 					&& Knight->GetCharacterMovement()->MovementMode == MOVE_Flying
@@ -846,6 +848,29 @@ namespace KnightCombatChallengeTest
 					*GetPathNameSafe(VictimMontage), VictimAnimation != nullptr && VictimMontage != nullptr
 						? VictimAnimation->Montage_GetPosition(VictimMontage) : -1.0f));
 			}
+			if (Knight != nullptr && State.IsValid() && (Phase == EKnightChallengePhase::Traversal
+				|| Phase == EKnightChallengePhase::InterruptTraversal || Phase == EKnightChallengePhase::InterruptRetry))
+			{
+				const UKnightTraversalComponent* Traversal = Knight->FindComponentByClass<UKnightTraversalComponent>();
+				const FGameplayAbilitySpec* Spec = Knight->GetKnightAbilitySystem()->FindAbilitySpecFromClass(
+					UKnightTraversalAbility::StaticClass());
+				const FVector Position = Knight->GetActorLocation();
+				Test.AddInfo(FString::Printf(TEXT("Traversal diagnostics: observed=%d origin=%s position=%s delta=%s "
+					"hasLanding=%d landing=%s landingDistance=%.3f peakZ=%.3f requiredPeakZ=%.3f "
+					"activeTraversal=%d specPresent=%d specActive=%d traversingTag=%d movementMode=%d "
+					"cameraLayers=%d moveIgnored=%d lookIgnored=%d confirmedCount=%d completed=%d failed=%d "
+					"hudComplete=%d hudFailed=%d."), bObservedTraversal, *TraversalOrigin.ToString(), *Position.ToString(),
+					*(Position - TraversalOrigin).ToString(), bObservedTraversalLanding, *ObservedTraversalLanding.ToString(),
+					bObservedTraversalLanding ? FVector::Dist(Position, ObservedTraversalLanding) : -1.0,
+					MaximumTraversalZ, TraversalOrigin.Z + 85.0, Traversal->HasActiveTraversal(), Spec != nullptr,
+					Spec != nullptr && Spec->IsActive(),
+					Knight->GetKnightAbilitySystem()->HasMatchingGameplayTag(KnightGameplayTags::State_Combat_Traversing),
+					static_cast<int32>(Knight->GetCharacterMovement()->MovementMode),
+					Knight->FindComponentByClass<UKnightCameraModeComponent>()->GetModeCount(),
+					Controller->IsMoveInputIgnored(), Controller->IsLookInputIgnored(), State->GetSnapshot().TraversalCount,
+					State->GetSnapshot().bCompleted, State->GetSnapshot().bFailed,
+					HUD.IsValid() && HUD->IsDisplayingChallengeCompletion(), HUD.IsValid() && HUD->IsDisplayingChallengeFailure()));
+			}
 			Test.AddError(Message);
 			BeginCleanup();
 		}
@@ -927,8 +952,10 @@ namespace KnightCombatChallengeTest
 		bool bDefensePressed = false;
 		bool bObservedFinisher = false;
 		bool bObservedTraversal = false;
+		bool bObservedTraversalLanding = false;
 		bool bObservedRuneStatus = false;
 		FVector TraversalOrigin = FVector::ZeroVector;
+		FVector ObservedTraversalLanding = FVector::ZeroVector;
 		FKey PulseKey;
 		TSet<FKey> DownKeys;
 		TArray<TWeakObjectPtr<AKnightCharacter>> Knights;

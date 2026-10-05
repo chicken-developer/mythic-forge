@@ -54,6 +54,9 @@ public:
 	FKnightResult TryCompleteRevive(AActor* Reviver, const FGuid& Token);
 	FKnightResult CancelRevive(AActor* Reviver, const FGuid& Token);
 	FKnightResult ResetForCheckpoint();
+	/** Composition restores every party member and AI context before explicitly restarting decisions. */
+	FKnightResult ResetForCheckpointWithDeferredControllerRestart();
+	bool ShouldDeferControllerRestart() const;
 	FKnightResult TrySetLifeTuning(float InBleedoutDuration, float InReviveDuration,
 		float InReviveRange, float InReviveHealthFraction);
 	void NotifyDamageWhileDowned();
@@ -94,4 +97,5 @@ private:
 	FTimerHandle BleedoutTimer;
 	FDelegateHandle HealthChangedHandle;
 	int32 LifeRevision = 0;
+	bool bDeferControllerRestart = false;
 };

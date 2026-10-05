@@ -5,7 +5,10 @@ public class KnightUI : ModuleRules
 	public KnightUI(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
-		PublicDependencyModuleNames.Add("Core");
-		PrivateDependencyModuleNames.Add("KnightCore");
+		PublicDependencyModuleNames.AddRange(new string[]
+		{
+			"Core", "CoreUObject", "Engine", "KnightCore", "CommonUI", "UMG"
+		});
+		PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore", "InputCore", "CommonInput" });
 	}
 }

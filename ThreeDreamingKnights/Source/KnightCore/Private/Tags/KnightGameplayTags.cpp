@@ -62,6 +62,8 @@ namespace KnightGameplayTags
 	UE_DEFINE_GAMEPLAY_TAG(Role_Party_Knight, "Role.Party.Knight");
 	UE_DEFINE_GAMEPLAY_TAG(Role_Party_Companion, "Role.Party.Companion");
 	UE_DEFINE_GAMEPLAY_TAG(Role_Enemy, "Role.Enemy");
+	UE_DEFINE_GAMEPLAY_TAG(Slot_Equipment_Weapon, "Equipment.Slot.Weapon");
+	UE_DEFINE_GAMEPLAY_TAG(Slot_Equipment_Rune, "Equipment.Slot.Rune");
 	UE_DEFINE_GAMEPLAY_TAG(Event_Foundation_Started, "Event.Foundation.Started");
 	UE_DEFINE_GAMEPLAY_TAG(Event_Foundation_AssetLoaded, "Event.Foundation.AssetLoaded");
 	UE_DEFINE_GAMEPLAY_TAG(Event_Foundation_Stopped, "Event.Foundation.Stopped");

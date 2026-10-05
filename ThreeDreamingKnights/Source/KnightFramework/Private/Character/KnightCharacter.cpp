@@ -199,6 +199,7 @@ bool AKnightCharacter::CanTransferControl() const
 	return KnightEntityId.IsValid() && !IsActorBeingDestroyed() && World != nullptr
 		&& !World->bIsTearingDown && !World->IsInSeamlessTravel()
 		&& LifeComponent != nullptr && LifeComponent->IsAlive()
+		&& AbilitySystem != nullptr && !AbilitySystem->IsMutationFenced()
 		&& CombatComponent != nullptr && CombatComponent->CanTransferControl()
 		&& !TraversalComponent->HasActiveTraversal() && !FinisherComponent->IsReserved()
 		&& Movement != nullptr && Movement->MovementMode != MOVE_None;
@@ -514,7 +515,7 @@ void AKnightCharacter::HandleLifeStateChanged(EKnightLifeState Previous, EKnight
 		{
 			GetCharacterMovement()->SetMovementMode(MOVE_Walking);
 		}
-		if (HasAuthority() && Previous != Current)
+		if (HasAuthority() && Previous != Current && !LifeComponent->ShouldDeferControllerRestart())
 		{
 			if (AAIController* Companion = Cast<AAIController>(GetController()))
 			{

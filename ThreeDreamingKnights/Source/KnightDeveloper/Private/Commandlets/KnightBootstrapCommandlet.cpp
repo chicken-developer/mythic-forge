@@ -1,6 +1,8 @@
 #include "Commandlets/KnightBootstrapCommandlet.h"
 
 #include "Commandlets/KnightCombatAssetAuthoring.h"
+#include "Commandlets/KnightAIAssetAuthoring.h"
+#include "Commandlets/KnightRPGAssetAuthoring.h"
 #include "Assets/KnightDefinition.h"
 #include "Abilities/KnightReviveAbility.h"
 #include "Abilities/KnightTestDamageAbility.h"
@@ -40,6 +42,7 @@
 #include "Misc/Paths.h"
 #include "Misc/ScopeExit.h"
 #include "NavigationData.h"
+#include "NavigationPath.h"
 #include "NavigationSystem.h"
 #include "NavMesh/NavMeshBoundsVolume.h"
 #include "StateTree.h"
@@ -67,6 +70,10 @@ namespace KnightBootstrap
 	const TCHAR* AbilityGameModePath = TEXT("/Script/ThreeDreamingKnights.KnightAbilityYardGameMode");
 	const TCHAR* CombatMapPackageName = TEXT("/Game/Knight/Maps/Playables/L_M03_CombatChallenge");
 	const TCHAR* CombatGameModePath = TEXT("/Script/ThreeDreamingKnights.KnightCombatChallengeGameMode");
+	const TCHAR* ArenaMapPackageName = TEXT("/Game/Knight/Maps/Playables/L_M04_PartyArena");
+	const TCHAR* ArenaGameModePath = TEXT("/Script/ThreeDreamingKnights.KnightPartyArenaGameMode");
+	const TCHAR* RPGMapPackageName = TEXT("/Game/Knight/Maps/Playables/L_M05_RPGLoop");
+	const TCHAR* RPGGameModePath = TEXT("/Script/ThreeDreamingKnights.KnightRPGLoopGameMode");
 	const TCHAR* FollowTreePackageName = TEXT("/Game/Knight/AI/ST_Knight_Follow");
 	const FName FoundationId(TEXT("Foundation"));
 	const FVector FloorScale(30.0, 30.0, 0.25);
@@ -659,13 +666,108 @@ namespace KnightBootstrap
 		return true;
 	}
 
+	bool CreateArenaFixtures(UWorld* World, UStaticMesh* ObstacleMesh)
+	{
+		UClass* MarkerClass = LoadClass<AActor>(nullptr,
+			TEXT("/Script/ThreeDreamingKnights.KnightPartyArenaStartMarker"));
+		if (MarkerClass == nullptr)
+		{
+			UE_LOG(LogKnightBootstrap, Error, TEXT("Native arena Start marker is unavailable."));
+			return false;
+		}
+		AActor* StartMarker = FindOrCreateActor<AActor>(World, TEXT("KnightArena_Start"),
+			FTransform(FVector(0.0, -650.0, 20.0)), MarkerClass);
+		const bool bCreateObstacle = FindObject<AActor>(World->PersistentLevel, TEXT("KnightArena_LOSBlocker"))
+			== nullptr;
+		AStaticMeshActor* Obstacle = FindOrCreateActor<AStaticMeshActor>(World, TEXT("KnightArena_LOSBlocker"),
+			FTransform(FQuat::Identity, FVector(0.0, 0.0, 150.0), FVector(3.0, 2.0, 3.0)));
+		if (StartMarker == nullptr || Obstacle == nullptr)
+		{
+			return false;
+		}
+		UStaticMeshComponent* Mesh = Obstacle->GetStaticMeshComponent();
+		if (bCreateObstacle)
+		{
+			Mesh->SetStaticMesh(ObstacleMesh);
+			Mesh->SetCollisionProfileName(TEXT("BlockAll"));
+			Obstacle->SetMobility(EComponentMobility::Static);
+		}
+		const FBox Bounds = Obstacle->GetComponentsBoundingBox(true);
+		if (Mesh->GetStaticMesh() == nullptr || Mesh->GetCollisionEnabled() != ECollisionEnabled::QueryAndPhysics
+			|| Mesh->GetCollisionResponseToChannel(ECC_Pawn) != ECR_Block
+			|| Mesh->GetCollisionResponseToChannel(ECC_Visibility) != ECR_Block
+			|| !Bounds.IsValid || Bounds.GetSize().Z < 250.0)
+		{
+			UE_LOG(LogKnightBootstrap, Error, TEXT("Arena LOS blocker needs genuine blocking physical geometry."));
+			return false;
+		}
+		return true;
+	}
+
+	bool ValidateArenaNavigation(UWorld* World)
+	{
+		UNavigationSystemV1* Navigation = FNavigationSystem::GetCurrent<UNavigationSystemV1>(World);
+		if (Navigation == nullptr)
+		{
+			return false;
+		}
+		const FVector Start(0.0, -650.0, 50.0);
+		const TArray<FVector> EncounterAnchors =
+		{
+			FVector(-600.0, 250.0, 50.0), FVector(600.0, 250.0, 50.0), FVector(0.0, 850.0, 50.0)
+		};
+		for (const FVector& Anchor : EncounterAnchors)
+		{
+			FNavLocation Projected;
+			if (!Navigation->ProjectPointToNavigation(Anchor, Projected, FVector(60.0, 60.0, 150.0)))
+			{
+				UE_LOG(LogKnightBootstrap, Error, TEXT("Arena spawn anchor has no real navigation: %s."), *Anchor.ToString());
+				return false;
+			}
+			UNavigationPath* Path = Navigation->FindPathToLocationSynchronously(World, Start, Projected.Location);
+			if (Path == nullptr || !Path->IsValid() || Path->IsPartial() || Path->PathPoints.Num() < 2)
+			{
+				UE_LOG(LogKnightBootstrap, Error, TEXT("Arena encounter anchor is unreachable from Start: %s."),
+					*Anchor.ToString());
+				return false;
+			}
+		}
+		FHitResult Obstruction;
+		if (!World->LineTraceSingleByChannel(Obstruction, FVector(0.0, -500.0, 100.0),
+			FVector(0.0, 500.0, 100.0), ECC_Visibility)
+			|| Obstruction.GetActor() == nullptr
+			|| Obstruction.GetActor()->GetFName() != FName(TEXT("KnightArena_LOSBlocker")))
+		{
+			UE_LOG(LogKnightBootstrap, Error, TEXT("Arena blocker does not obstruct the real center LOS trace."));
+			return false;
+		}
+		UE_LOG(LogKnightBootstrap, Display, TEXT("Arena navigation: all three encounter anchors reachable; center LOS blocked."));
+		return true;
+	}
+
+	bool CreateRPGFixtures(UWorld* World)
+	{
+		UClass* StationClass = LoadClass<AActor>(nullptr, TEXT("/Script/ThreeDreamingKnights.KnightRPGUpgradeStation"));
+		if (StationClass == nullptr)
+		{
+			UE_LOG(LogKnightBootstrap, Error, TEXT("Native RPG upgrade station is unavailable."));
+			return false;
+		}
+		AActor* Station = FindOrCreateActor<AActor>(World, TEXT("KnightRPG_UpgradeStation"),
+			FTransform(FVector(-1500.0, -1000.0, 20.0)), StationClass);
+		return Station != nullptr;
+	}
+
 	bool CreateMap(const int32 Milestone)
 	{
 		const bool bTraining = Milestone > 0;
-		const bool bAbilityYard = Milestone >= 2;
+		const bool bAbilityYard = Milestone == 2 || Milestone == 3;
 		const bool bCombatChallenge = Milestone == 3;
-		const TCHAR* GameModePath = bCombatChallenge ? CombatGameModePath : (bAbilityYard ? AbilityGameModePath
-			: (bTraining ? TrainingGameModePath : BootGameModePath));
+		const bool bRPG = Milestone == 5;
+		const bool bArena = Milestone >= 4;
+		const TCHAR* GameModePath = bRPG ? RPGGameModePath : (bArena ? ArenaGameModePath
+			: (bCombatChallenge ? CombatGameModePath : (bAbilityYard ? AbilityGameModePath
+				: (bTraining ? TrainingGameModePath : BootGameModePath))));
 		UClass* BootGameMode = LoadClass<AGameModeBase>(nullptr, GameModePath);
 		UStaticMesh* FloorMesh = LoadObject<UStaticMesh>(nullptr, TEXT("/Engine/BasicShapes/Cube.Cube"));
 		if (BootGameMode == nullptr || FloorMesh == nullptr)
@@ -674,8 +776,9 @@ namespace KnightBootstrap
 			return false;
 		}
 
-		const FString PackageName(bCombatChallenge ? CombatMapPackageName : (bAbilityYard ? AbilityMapPackageName
-			: (bTraining ? TrainingMapPackageName : MapPackageName)));
+		const FString PackageName(bRPG ? RPGMapPackageName : (bArena ? ArenaMapPackageName
+			: (bCombatChallenge ? CombatMapPackageName : (bAbilityYard ? AbilityMapPackageName
+				: (bTraining ? TrainingMapPackageName : MapPackageName)))));
 		const bool bPackageExists = FPackageName::DoesPackageExist(PackageName);
 		UPackage* Package = bPackageExists
 			? LoadPackage(nullptr, *PackageName, LOAD_None)
@@ -798,9 +901,32 @@ namespace KnightBootstrap
 		{
 			return false;
 		}
+		if (bArena && !CreateArenaFixtures(World, FloorMesh))
+		{
+			return false;
+		}
+		if (bRPG && !CreateRPGFixtures(World))
+		{
+			return false;
+		}
 		if (bTraining && !CreateTrainingNavigation(World))
 		{
 			return false;
+		}
+		if (bArena && !ValidateArenaNavigation(World))
+		{
+			return false;
+		}
+		if (bRPG)
+		{
+			UNavigationSystemV1* Navigation = FNavigationSystem::GetCurrent<UNavigationSystemV1>(World);
+			FNavLocation StationPoint;
+			if (Navigation == nullptr || !Navigation->ProjectPointToNavigation(FVector(-1500.0, -1000.0, 50.0),
+				StationPoint, FVector(100.0, 100.0, 150.0)))
+			{
+				UE_LOG(LogKnightBootstrap, Error, TEXT("RPG upgrade station lacks genuine walkable navigation."));
+				return false;
+			}
 		}
 
 		return SaveAsset(Package, World, FPackageName::GetMapPackageExtension());
@@ -820,23 +946,27 @@ int32 UKnightBootstrapCommandlet::Main(const FString& Params)
 {
 	int32 Milestone = 0;
 	FParse::Value(*Params, TEXT("Milestone="), Milestone);
-	if (Milestone < 0 || Milestone > 3)
+	if (Milestone < 0 || Milestone > 5)
 	{
-		UE_LOG(LogKnightBootstrap, Error, TEXT("Supported bootstrap milestones are 0 through 3."));
+		UE_LOG(LogKnightBootstrap, Error, TEXT("Supported bootstrap milestones are 0 through 5."));
 		return 3;
 	}
 	if (Milestone > 0)
 	{
 		if (!KnightBootstrap::CreateFoundationAbilitySet() || !KnightBootstrap::CreatePartyDefinitions()
 			|| !KnightBootstrap::CreateFollowTree()
-			|| (Milestone == 3 && !KnightCombatAssetAuthoring::CreateCombatAssets())
+			|| (Milestone >= 3 && !KnightCombatAssetAuthoring::CreateCombatAssets())
+			|| (Milestone >= 4 && !KnightAIAssetAuthoring::CreateAIAssets())
+			|| (Milestone == 5 && !KnightRPGAssetAuthoring::CreateRPGAssets())
 			|| !KnightBootstrap::CreateMap(Milestone))
 		{
 			return 4;
 		}
 		UE_LOG(LogKnightBootstrap, Display, TEXT("Milestone %d bootstrap complete: %s, real ability set and follow StateTree."),
-			Milestone, Milestone == 3 ? KnightBootstrap::CombatMapPackageName
-				: (Milestone == 2 ? KnightBootstrap::AbilityMapPackageName : KnightBootstrap::TrainingMapPackageName));
+			Milestone, Milestone == 5 ? KnightBootstrap::RPGMapPackageName : (Milestone == 4
+				? KnightBootstrap::ArenaMapPackageName : (Milestone == 3
+				? KnightBootstrap::CombatMapPackageName : (Milestone == 2 ? KnightBootstrap::AbilityMapPackageName
+					: KnightBootstrap::TrainingMapPackageName))));
 		return 0;
 	}
 	if (!KnightBootstrap::CreateDefinition())

@@ -112,7 +112,7 @@ public:
 	FKnightResult SetValidatedTarget(AActor* Target);
 	FKnightResult TryToggleTargetLock(AActor* Target = nullptr);
 	AActor* GetLockedTarget() const;
-	FKnightResult SpendStamina(float Amount);
+	FKnightResult SpendStamina(float Amount, FGameplayTag ActionTag = FGameplayTag());
 	void PublishOutcome(EKnightCombatOutcome Outcome, FGameplayTag ActionTag,
 		AActor* Target = nullptr, float Amount = 0.0f);
 	virtual void ResolveIncomingDamage(AActor* Source, float InDamage, float PoiseDamage,
@@ -142,6 +142,7 @@ private:
 	void HandleLifeTagChanged(const FGameplayTag Tag, int32 Count);
 	void UpdateLockCamera();
 	bool IsAuthorityAlive() const;
+	float GetProjectedDamage(FGameplayTag ActionTag, float AuthoredDamage) const;
 	const FKnightAttackDefinition* GetCurrentAttack() const;
 	UPROPERTY(ReplicatedUsing = OnRep_ProfileId)
 	FPrimaryAssetId ProfileId;

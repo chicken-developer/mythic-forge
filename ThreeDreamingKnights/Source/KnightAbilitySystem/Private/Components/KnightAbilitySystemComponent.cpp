@@ -56,6 +56,7 @@ void UKnightAbilitySystemComponent::GetLifetimeReplicatedProps(TArray<FLifetimeP
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 	DOREPLIFETIME(UKnightAbilitySystemComponent, OwnedGrantCount);
+	DOREPLIFETIME(UKnightAbilitySystemComponent, PublishedProjections);
 }
 
 FKnightResult UKnightAbilitySystemComponent::InitializeKnightActor(AActor* Knight, UKnightAttributeSet* InAttributes,
@@ -259,13 +260,41 @@ FKnightResult UKnightAbilitySystemComponent::ApplyAttributeDefaults()
 
 FKnightResult UKnightAbilitySystemComponent::ResetAttributesForCheckpoint()
 {
-	return ApplyAttributeDefaults();
+	if (IsMutationFenced())
+	{
+		return KnightGASFailure(EKnightError::Conflict, TEXT("CheckpointProjectionFence"));
+	}
+	const FKnightResult DefaultsResult = ApplyAttributeDefaults();
+	if (!DefaultsResult.IsSuccess())
+	{
+		return DefaultsResult;
+	}
+	// Passive max bonuses remain on the same exact active handles. Retry fills their projected maxima.
+	UGameplayEffect* Fill = NewObject<UGameplayEffect>(GetTransientPackage());
+	Fill->DurationPolicy = EGameplayEffectDurationType::Instant;
+	const FGameplayAttribute Resources[] { UKnightAttributeSet::GetHealthAttribute(),
+		UKnightAttributeSet::GetStaminaAttribute(), UKnightAttributeSet::GetRuneEnergyAttribute() };
+	const float Maxima[] { Attributes->GetMaxHealth(), Attributes->GetMaxStamina(), Attributes->GetMaxRuneEnergy() };
+	for (int32 Index = 0; Index < UE_ARRAY_COUNT(Resources); ++Index)
+	{
+		FGameplayModifierInfo& Modifier = Fill->Modifiers.AddDefaulted_GetRef();
+		Modifier.Attribute = Resources[Index];
+		Modifier.ModifierOp = EGameplayModOp::Override;
+		Modifier.ModifierMagnitude = FScalableFloat(Maxima[Index]);
+	}
+	const FGameplayEffectSpec Spec(Fill, MakeEffectContext(), 1.0f);
+	return ApplyGameplayEffectSpecToSelf(Spec).WasSuccessfullyApplied() ? FKnightResult::Success()
+		: KnightGASFailure(EKnightError::InvalidState, TEXT("CheckpointProjectedResources"));
 }
 
 FKnightResult UKnightAbilitySystemComponent::GrantAbilitySet(const UKnightAbilitySetDefinition* Definition,
 	FName SourceKey, FKnightAbilitySetHandle& OutHandle)
 {
 	OutHandle = FKnightAbilitySetHandle();
+	if (IsMutationFenced())
+	{
+		return KnightGASFailure(EKnightError::Conflict, TEXT("GrantProjectionFence"));
+	}
 	if (!IsValid(GetOwner()) || !GetOwner()->HasAuthority())
 	{
 		return KnightGASFailure(EKnightError::NotAuthority, TEXT("GrantAbilitySet"));
@@ -337,6 +366,10 @@ FKnightResult UKnightAbilitySystemComponent::GrantAbilitySet(const UKnightAbilit
 
 FKnightResult UKnightAbilitySystemComponent::RevokeAbilitySet(const FKnightAbilitySetHandle& Handle)
 {
+	if (IsMutationFenced() && !bProjectionEndingPlay)
+	{
+		return KnightGASFailure(EKnightError::Conflict, TEXT("RevokeProjectionFence"));
+	}
 	if (!IsValid(GetOwner()) || !GetOwner()->HasAuthority())
 	{
 		return KnightGASFailure(EKnightError::NotAuthority, TEXT("RevokeAbilitySet"));
@@ -384,6 +417,7 @@ void UKnightAbilitySystemComponent::OnRep_OwnedGrantCount()
 
 void UKnightAbilitySystemComponent::HandleControllerChanged()
 {
+	CancelPendingProjection();
 	const bool bHasCancellationContext = AbilityActorInfo.IsValid() && AbilityActorInfo->OwnerActor.IsValid(true) &&
 		AbilityActorInfo->AbilitySystemComponent.IsValid(true);
 	if (bHasCancellationContext)
@@ -406,6 +440,7 @@ void UKnightAbilitySystemComponent::HandleControllerChanged()
 
 void UKnightAbilitySystemComponent::ClearActorInfo()
 {
+	CancelPendingProjection();
 	if (AbilityActorInfo.IsValid() && AbilityActorInfo->OwnerActor.IsValid(true) &&
 		AbilityActorInfo->AbilitySystemComponent.IsValid(true))
 	{
@@ -432,6 +467,10 @@ FKnightResult UKnightAbilitySystemComponent::RequestAbilityInput(const FGameplay
 	if (!InputTag.IsValid())
 	{
 		return KnightGASFailure(EKnightError::InvalidData, TEXT("AbilityInputTag"));
+	}
+	if (bPressed && IsMutationFenced())
+	{
+		return KnightGASFailure(EKnightError::Conflict, TEXT("AbilityProjectionFence"));
 	}
 	ABILITYLIST_SCOPE_LOCK();
 	for (FGameplayAbilitySpec& Spec : GetActivatableAbilities())
@@ -545,6 +584,10 @@ FKnightResult UKnightAbilitySystemComponent::ApplyCombatDamage(AActor* Source, A
 		TargetASC->GetLifeComponent()->IsDead())
 	{
 		return KnightGASFailure(EKnightError::InvalidState, TEXT("DamageTargetUnavailable"));
+	}
+	if (SourceASC->IsMutationFenced() || TargetASC->IsMutationFenced())
+	{
+		return KnightGASFailure(EKnightError::Conflict, TEXT("DamageProjectionFence"));
 	}
 	FGameplayEffectContextHandle Context = SourceASC->MakeEffectContext();
 	if (Hit != nullptr)
@@ -717,9 +760,24 @@ void UKnightAbilitySystemComponent::PublishDamageConfirmation(AActor* Source, fl
 
 void UKnightAbilitySystemComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
+	bProjectionEndingPlay = true;
+	OnSourceProjectionChanged.Clear();
 	OnAbilityResult.Clear();
 	OnAbilityGrantsChanged.Clear();
 	OnGameplayCueProcessed.Clear();
+	CancelPendingProjection();
+	TArray<FKnightProjectionRuntime> Sources;
+	ProjectionSources.GenerateValueArray(Sources);
+	ProjectionSources.Reset();
+	for (const FKnightProjectionRuntime& Source : Sources)
+	{
+		for (const FKnightOwnedAbilityGrant& Grant : Source.OptionalGrants)
+		{
+			OwnedGrants.Remove(Grant.Handle.SourceKey);
+		}
+		RemoveProjectionRuntime(Source);
+	}
+	PublishedProjections.Reset();
 	CancelAllAbilities();
 	TArray<FKnightAbilitySetHandle> Handles;
 	for (const TPair<FName, FKnightOwnedAbilityGrant>& Entry : OwnedGrants)

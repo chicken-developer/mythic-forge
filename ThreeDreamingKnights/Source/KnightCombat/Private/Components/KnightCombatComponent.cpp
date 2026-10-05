@@ -57,6 +57,10 @@ namespace
 		{
 			return KnightCombatFailure(EKnightError::InvalidData, TEXT("CombatResourceCost"));
 		}
+		if (ASC->IsMutationFenced())
+		{
+			return KnightCombatFailure(EKnightError::Conflict, TEXT("CombatProjectionFence"));
+		}
 		if (ASC->GetNumericAttribute(Attribute) + KINDA_SMALL_NUMBER < Amount)
 		{
 			return KnightCombatFailure(EKnightError::InsufficientResources, TEXT("CombatResourceCost"));
@@ -290,7 +294,8 @@ bool UKnightCombatComponent::IsAuthorityAlive() const
 {
 	return !bEndingPlay && Profile != nullptr && IsValid(GetOwner()) && GetOwner()->HasAuthority() &&
 		GetWorld() != nullptr && !GetWorld()->bIsTearingDown && AbilitySystem.IsValid() &&
-		AbilitySystem->GetLifeComponent() != nullptr && AbilitySystem->GetLifeComponent()->IsAlive();
+		!AbilitySystem->IsMutationFenced() && AbilitySystem->GetLifeComponent() != nullptr
+		&& AbilitySystem->GetLifeComponent()->IsAlive();
 }
 
 void UKnightCombatComponent::RefreshSnapshot()
@@ -303,9 +308,21 @@ void UKnightCombatComponent::RefreshSnapshot()
 	}
 }
 
-FKnightResult UKnightCombatComponent::SpendStamina(float Amount)
+FKnightResult UKnightCombatComponent::SpendStamina(float Amount, FGameplayTag ActionTag)
 {
-	return KnightSpendResource(AbilitySystem.Get(), UKnightAttributeSet::GetStaminaAttribute(), Amount);
+	const float Scale = AbilitySystem.IsValid() ? AbilitySystem->GetActionModifier(ActionTag).CostScale : 1.0f;
+	return KnightSpendResource(AbilitySystem.Get(), UKnightAttributeSet::GetStaminaAttribute(), Amount * Scale);
+}
+
+float UKnightCombatComponent::GetProjectedDamage(FGameplayTag ActionTag, float AuthoredDamage) const
+{
+	if (!AbilitySystem.IsValid() || AbilitySystem->GetKnightAttributes() == nullptr)
+	{
+		return AuthoredDamage;
+	}
+	const float Delta = AbilitySystem->GetKnightAttributes()->GetAttackPower() - AbilitySystem->GetInitialAttackPower();
+	return FMath::Clamp(FMath::Max(0.0f, AuthoredDamage + Delta)
+		* AbilitySystem->GetActionModifier(ActionTag).DamageScale, 0.0f, 1000000.0f);
 }
 
 FKnightResult UKnightCombatComponent::BeginAttack(FGameplayTag ActionTag, UKnightGameplayAbility* Ability,
@@ -324,7 +341,7 @@ FKnightResult UKnightCombatComponent::BeginAttack(FGameplayTag ActionTag, UKnigh
 		{
 			continue;
 		}
-		const FKnightResult Cost = SpendStamina(Attacks[Index].StaminaCost);
+		const FKnightResult Cost = SpendStamina(Attacks[Index].StaminaCost, ActionTag);
 		if (!Cost.IsSuccess())
 		{
 			return Cost;
@@ -443,7 +460,7 @@ void UKnightCombatComponent::SetComboWindow(bool bOpen, UAnimSequenceBase* Anima
 		{
 			continue;
 		}
-		if (Attacks[Next].Montage.Get() != Animation || !SpendStamina(Attacks[Next].StaminaCost).IsSuccess())
+		if (Attacks[Next].Montage.Get() != Animation || !SpendStamina(Attacks[Next].StaminaCost, AttackAction).IsSuccess())
 		{
 			return;
 		}
@@ -508,7 +525,7 @@ void UKnightCombatComponent::PerformWeaponSweep()
 		WindowHitActors.Add(Target);
 		const float Before = TargetASC->GetKnightAttributes()->GetHealth();
 		const FKnightResult Result = UKnightAbilitySystemComponent::ApplyCombatDamage(GetOwner(), Target,
-			Attack.Damage, Attack.PoiseDamage, true, &Hit);
+			GetProjectedDamage(ActionTag, Attack.Damage), Attack.PoiseDamage, true, &Hit);
 		const float Applied = Before - TargetASC->GetKnightAttributes()->GetHealth();
 		if (Result.IsSuccess() && Applied > 0.0f)
 		{
@@ -539,7 +556,7 @@ FKnightResult UKnightCombatComponent::BeginDefense(FGameplayTag ActionTag)
 	}
 	if (ActionTag == KnightGameplayTags::Ability_Combat_Parry)
 	{
-		const FKnightResult Cost = SpendStamina(Profile->GetTuning().ParryStaminaCost);
+		const FKnightResult Cost = SpendStamina(Profile->GetTuning().ParryStaminaCost, ActionTag);
 		if (!Cost.IsSuccess())
 		{
 			return Cost;
@@ -582,7 +599,7 @@ FKnightResult UKnightCombatComponent::BeginDodge()
 	{
 		return KnightCombatFailure(EKnightError::InvalidState, TEXT("DodgeMovement"));
 	}
-	const FKnightResult Cost = SpendStamina(Profile->GetTuning().DodgeStaminaCost);
+	const FKnightResult Cost = SpendStamina(Profile->GetTuning().DodgeStaminaCost, KnightGameplayTags::Ability_Combat_Dodge);
 	if (!Cost.IsSuccess())
 	{
 		return Cost;
@@ -624,6 +641,10 @@ FKnightResult UKnightCombatComponent::ValidateCombatTarget(AActor* Target, float
 		!TargetASC->GetLifeComponent()->IsAlive())
 	{
 		return KnightCombatFailure(EKnightError::InvalidState, TEXT("CombatTargetLife"));
+	}
+	if (SourceASC->IsMutationFenced() || TargetASC->IsMutationFenced())
+	{
+		return KnightCombatFailure(EKnightError::Conflict, TEXT("CombatTargetProjectionFence"));
 	}
 	const bool bHostile = (SourceASC->HasMatchingGameplayTag(KnightGameplayTags::Role_Party_Knight) &&
 		TargetASC->HasMatchingGameplayTag(KnightGameplayTags::Role_Enemy)) ||
@@ -785,7 +806,7 @@ void UKnightCombatComponent::ResolveIncomingDamage(AActor* Source, float InDamag
 	}
 	if (bCanDefend && bFront && Snapshot.bBlocking)
 	{
-		if (SpendStamina(Tuning.BlockStaminaCost).IsSuccess())
+		if (SpendStamina(Tuning.BlockStaminaCost, KnightGameplayTags::Ability_Combat_Block).IsSuccess())
 		{
 			OutHealthDamage *= Tuning.BlockDamageFraction;
 			PublishOutcome(EKnightCombatOutcome::Blocked, KnightGameplayTags::Ability_Combat_Block, Source, OutHealthDamage);
@@ -869,9 +890,10 @@ FKnightResult UKnightCombatComponent::CastRune(AActor* Target)
 	{
 		return KnightCombatFailure(EKnightError::InvalidState, TEXT("RuneStatusSpec"));
 	}
-	Status.Data->SetDuration(Profile->GetTuning().RuneSlowDuration, true);
+	const FKnightActionModifier RuneModifier = AbilitySystem->GetActionModifier(KnightGameplayTags::Ability_Combat_Rune);
+	Status.Data->SetDuration(Profile->GetTuning().RuneSlowDuration * RuneModifier.DurationScale, true);
 	Result = KnightSpendResource(AbilitySystem.Get(), UKnightAttributeSet::GetRuneEnergyAttribute(),
-		Profile->GetTuning().RuneEnergyCost);
+		Profile->GetTuning().RuneEnergyCost * RuneModifier.CostScale);
 	if (!Result.IsSuccess())
 	{
 		return Result;
@@ -879,7 +901,8 @@ FKnightResult UKnightCombatComponent::CastRune(AActor* Target)
 	UKnightAbilitySystemComponent* TargetASC = KnightActorASC(Target);
 	const float Before = TargetASC->GetKnightAttributes()->GetHealth();
 	Result = UKnightAbilitySystemComponent::ApplyCombatDamage(GetOwner(), Target,
-		Profile->GetTuning().RuneDamage, Profile->GetTuning().RunePoiseDamage, false);
+		GetProjectedDamage(KnightGameplayTags::Ability_Combat_Rune, Profile->GetTuning().RuneDamage),
+		Profile->GetTuning().RunePoiseDamage, false);
 	if (!Result.IsSuccess())
 	{
 		return Result;

@@ -10,7 +10,7 @@ public class ThreeDreamingKnights : ModuleRules
 		PublicDependencyModuleNames.AddRange(new string[]
 		{
 			"Core", "CoreUObject", "Engine", "KnightCore", "KnightFramework", "KnightAbilitySystem",
-			"GameplayAbilities", "KnightCombat"
+			"GameplayAbilities", "KnightCombat", "KnightAI", "KnightItems"
 		});
 
 		// The existing primary module owns the KnightGame composition role.
@@ -18,8 +18,7 @@ public class ThreeDreamingKnights : ModuleRules
 		{
 			"AIModule",
 			"GameplayTags",
-			"KnightAI",
-			"KnightItems",
+			"EnhancedInput", "InputCore", "CommonUI", "CommonInput", "UMG", "SlateCore",
 			"KnightQuest",
 			"KnightDialogue",
 			"KnightWorld",

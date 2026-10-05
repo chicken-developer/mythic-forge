@@ -43,6 +43,12 @@ namespace
 		{
 			return false;
 		}
+		const float BlendOutStart = Montage->GetPlayLength() - (Montage->BlendOutTriggerTime < 0.0f
+			? Montage->BlendOut.GetBlendTime() : Montage->BlendOutTriggerTime);
+		if (!FMath::IsFinite(BlendOutStart))
+		{
+			return false;
+		}
 		for (const FAnimNotifyEvent& Notify : Montage->Notifies)
 		{
 			const UAnimNotifyState_MotionWarping* Warping =
@@ -51,7 +57,8 @@ namespace
 				? Cast<URootMotionModifier_SkewWarp>(Warping->RootMotionModifier) : nullptr;
 			if (Modifier != nullptr && Modifier->WarpTargetName == TEXT("KnightTraversal") &&
 				Modifier->bWarpTranslation && Notify.GetDuration() > 0.0f && Notify.GetTriggerTime() >= 0.0f &&
-				Notify.GetTriggerTime() + Notify.GetDuration() <= Montage->GetPlayLength() + KINDA_SMALL_NUMBER)
+				Notify.GetTriggerTime() + Notify.GetDuration() <= Montage->GetPlayLength() + KINDA_SMALL_NUMBER &&
+				Notify.GetTriggerTime() + Notify.GetDuration() <= BlendOutStart + KINDA_SMALL_NUMBER)
 			{
 				return true;
 			}

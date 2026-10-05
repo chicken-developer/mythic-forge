@@ -17,10 +17,25 @@ bool UKnightGameplayAbility::ShouldCancelOnInputRelease() const
 	return true;
 }
 
+bool UKnightGameplayAbility::CanActivateAbility(const FGameplayAbilitySpecHandle Handle,
+	const FGameplayAbilityActorInfo* ActorInfo, const FGameplayTagContainer* SourceTags,
+	const FGameplayTagContainer* TargetTags, FGameplayTagContainer* OptionalRelevantTags) const
+{
+	const UKnightAbilitySystemComponent* ASC = ActorInfo != nullptr
+		? Cast<UKnightAbilitySystemComponent>(ActorInfo->AbilitySystemComponent.Get()) : nullptr;
+	return ASC != nullptr && !ASC->IsMutationFenced()
+		&& Super::CanActivateAbility(Handle, ActorInfo, SourceTags, TargetTags, OptionalRelevantTags);
+}
+
 bool UKnightGameplayAbility::DoesAbilitySatisfyTagRequirements(const UAbilitySystemComponent& InAbilitySystem,
 	const FGameplayTagContainer* SourceTags, const FGameplayTagContainer* TargetTags,
 	FGameplayTagContainer* OptionalRelevantTags) const
 {
+	if (const UKnightAbilitySystemComponent* KnightASC = Cast<UKnightAbilitySystemComponent>(&InAbilitySystem);
+		KnightASC != nullptr && KnightASC->IsMutationFenced())
+	{
+		return false;
+	}
 	if (!Super::DoesAbilitySatisfyTagRequirements(InAbilitySystem, SourceTags, TargetTags, OptionalRelevantTags))
 	{
 		return false;

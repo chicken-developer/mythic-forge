@@ -94,6 +94,16 @@ bool FKnightCombatDefinitionTest::RunTest(const FString& Parameters)
 		Profile->GetFinisherSourceMontage(), Profile->GetFinisherTargetMontage()).Error, EKnightError::InvalidData);
 	TestTrue(TEXT("Failed traversal edit preserves valid motion warping content"),
 		Edited->GetTraversalMontage() == Profile->GetTraversalMontage());
+	const TStrongObjectPtr<UAnimMontage> EarlyBlendOut(
+		DuplicateObject<UAnimMontage>(Profile->GetTraversalMontage(), GetTransientPackage()));
+	EarlyBlendOut->BlendOutTriggerTime = -1.0f;
+	EarlyBlendOut->BlendOut.SetBlendTime(0.1f);
+	TestEqual(TEXT("Blending out during the warp window cannot lose the validated landing trajectory"),
+		Edited->TrySetActionMontages(Profile->GetDodgeMontage(), Profile->GetRuneMontage(),
+			Profile->GetStaggerMontage(), EarlyBlendOut.Get(), Profile->GetFinisherSourceMontage(),
+			Profile->GetFinisherTargetMontage()).Error, EKnightError::InvalidData);
+	TestTrue(TEXT("Rejected early blend preserves valid traversal content"),
+		Edited->GetTraversalMontage() == Profile->GetTraversalMontage());
 	return true;
 }
 
@@ -746,6 +756,192 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(FKnightCombatMechanicsTest, "Knight.Combat.Nati
 bool FKnightCombatMechanicsTest::RunTest(const FString& Parameters)
 {
 	ADD_LATENT_AUTOMATION_COMMAND(KnightCombatTests::FKnightCombatMechanicsCommand(this));
+	return true;
+}
+
+namespace KnightCombatTests
+{
+	class FKnightProjectionCombatCommand final : public IAutomationLatentCommand
+	{
+	public:
+		explicit FKnightProjectionCombatCommand(FAutomationTestBase* InTest)
+			: Test(InTest)
+		{
+			Source = SpawnKnight(Context.World.Get(), FVector(0, 0, 88), true);
+			Target = SpawnKnight(Context.World.Get(), FVector(120, 0, 100), false);
+			Target.Actor->GetCapsuleComponent()->SetCapsuleSize(140.0f, 150.0f);
+			Target.Actor->GetCharacterMovement()->DisableMovement();
+			const FPrimaryAssetId Id(TEXT("KnightCombatProfile"), TEXT("FoundationCombat"));
+			bReady = Test->TestTrue(TEXT("Projected source uses real combat fixture"), Source.Combat->Configure(Id).IsSuccess())
+				&& Test->TestTrue(TEXT("Projected target uses shared combat fixture"), Target.Combat->Configure(Id).IsSuccess());
+			if (bReady)
+			{
+				Profile = Source.Combat->GetProfile();
+				for (const FGameplayAbilitySpec& Spec : Source.ASC->GetActivatableAbilities())
+				{
+					if (Spec.GetDynamicSpecSourceTags().HasTagExact(KnightGameplayTags::Input_Combat_Rune))
+					{
+						RuneSpec = Spec.Handle;
+					}
+				}
+			}
+		}
+
+		virtual bool Update() override
+		{
+			if (!bReady)
+			{
+				return true;
+			}
+			if (FPlatformTime::Seconds() - Started > 35.0)
+			{
+				Test->AddError(TEXT("Projected combat real-world timing exceeded its bound."));
+				return true;
+			}
+			if (LastFrame == GFrameCounter)
+			{
+				return false;
+			}
+			LastFrame = GFrameCounter;
+			Context.World->Tick(LEVELTICK_All, 0.025f);
+			Elapsed += 0.025f;
+			if (Step == 0 && Elapsed >= 0.1f)
+			{
+				Before = Target.Attributes->GetHealth();
+				Press(KnightGameplayTags::Input_Combat_Primary);
+				Step = 1;
+			}
+			else if (Step == 1 && !Source.Combat->GetSnapshot().bAttacking)
+			{
+				const FKnightAttackDefinition& Attack = Profile->GetAttacks()[0];
+				Test->TestEqual(TEXT("No-projection real trace retains authored damage"), Before - Target.Attributes->GetHealth(), Attack.Damage);
+				Reset();
+				Before = Target.Attributes->GetHealth();
+				const float Energy = Source.Attributes->GetRuneEnergy();
+				Press(KnightGameplayTags::Input_Combat_Rune);
+				Test->TestEqual(TEXT("Baseline real Rune damage unchanged"), Before - Target.Attributes->GetHealth(), Profile->GetTuning().RuneDamage);
+				Test->TestEqual(TEXT("Baseline real Rune GE cost unchanged"), Energy - Source.Attributes->GetRuneEnergy(), Profile->GetTuning().RuneEnergyCost);
+				Reset();
+				FKnightGASProjectionPlan Plan;
+				Plan.SourceKey = TEXT("RPG");
+				Plan.DefinitionId = FPrimaryAssetId(TEXT("KnightHero"), TEXT("Training_Red"));
+				Plan.AttackPowerBonus = 10.0f;
+				Plan.MaxHealthBonus = 50.0f;
+				FKnightActionModifier Modifier;
+				Modifier.AbilityTag = KnightGameplayTags::Ability_Combat_Rune;
+				Modifier.DamageScale = 1.5f;
+				Modifier.CostScale = 0.5f;
+				Modifier.DurationScale = 2.0f;
+				Plan.ActionModifiers.Add(Modifier);
+				FKnightMutationFence Fence;
+				FKnightProjectionCapability Capability;
+				bReady = Test->TestTrue(TEXT("Combat projection acquires fence"), Source.ASC->BeginMutationFence(FGuid::NewGuid(), Fence).IsSuccess())
+					&& Test->TestTrue(TEXT("Combat projection validates original Rune action"), Source.ASC->PrepareSourceProjection(Fence, Plan, 0, Capability).IsSuccess())
+					&& Test->TestTrue(TEXT("Combat projection stages real GE"), Source.ASC->StageSourceProjection(Fence, Capability).IsSuccess())
+					&& Test->TestTrue(TEXT("Combat projection commits real source"), Source.ASC->CommitSourceProjection(Fence, Capability).IsSuccess())
+					&& Test->TestTrue(TEXT("Combat projection publishes final modifiers"), Source.ASC->PublishSourceProjection(Fence, Capability).IsSuccess())
+					&& Test->TestTrue(TEXT("Combat projection releases fence"), Source.ASC->EndMutationFence(Fence).IsSuccess());
+				if (!bReady)
+				{
+					return true;
+				}
+				Test->TestEqual(TEXT("Projection adds no duplicate Rune or other combat spec"), Source.ASC->GetActivatableAbilities().Num(), 9);
+				Test->TestNotNull(TEXT("Original exact Rune spec remains"), Source.ASC->FindAbilitySpecFromHandle(RuneSpec));
+				Test->TestEqual(TEXT("Equip does not heal"), Source.Attributes->GetHealth(), 1000.0f);
+				Before = Target.Attributes->GetHealth();
+				Press(KnightGameplayTags::Input_Combat_Primary);
+				Step = 2;
+			}
+			else if (Step == 2 && !Source.Combat->GetSnapshot().bAttacking)
+			{
+				Test->TestEqual(TEXT("Actual notify trace consumes AP delta once"),
+					Before - Target.Attributes->GetHealth(), Profile->GetAttacks()[0].Damage + 10.0f);
+				Test->TestEqual(TEXT("Projected trace window still hits once"),
+					Source.Combat->GetSnapshot().GetOutcomeCount(EKnightCombatOutcome::LightHit), 1);
+				Reset();
+				Before = Target.Attributes->GetHealth();
+				const float Energy = Source.Attributes->GetRuneEnergy();
+				Press(KnightGameplayTags::Input_Combat_Rune);
+				Test->TestEqual(TEXT("Same real Rune uses AP delta and committed damage multiplier"),
+					Before - Target.Attributes->GetHealth(), (Profile->GetTuning().RuneDamage + 10.0f) * 1.5f);
+				Test->TestEqual(TEXT("Same real Rune uses discounted resource GE"),
+					Energy - Source.Attributes->GetRuneEnergy(), Profile->GetTuning().RuneEnergyCost * 0.5f);
+				bool bRealDuration = false;
+				for (FActiveGameplayEffectHandle Handle : Target.ASC->GetActiveEffects(FGameplayEffectQuery()))
+				{
+					const FActiveGameplayEffect* Effect = Target.ASC->GetActiveGameplayEffect(Handle);
+					if (Effect != nullptr && Effect->Spec.Def->IsA<UKnightRuneSlowEffect>())
+					{
+						bRealDuration = true;
+						Test->TestEqual(TEXT("Real status spec carries projected duration"),
+							Effect->Spec.GetDuration(), Profile->GetTuning().RuneSlowDuration * 2.0f);
+					}
+				}
+				Test->TestTrue(TEXT("Real projected slow effect exists"), bRealDuration);
+				Elapsed = 0.0f;
+				Step = 3;
+			}
+			else if (Step == 3)
+			{
+				if (Elapsed < Profile->GetTuning().RuneSlowDuration * 2.0f - 0.1f)
+				{
+					Test->TestTrue(TEXT("Projected slow remains during its real extended lifetime"),
+						Target.ASC->HasMatchingGameplayTag(KnightGameplayTags::State_Combat_RuneSlowed));
+					return false;
+				}
+				if (Elapsed < Profile->GetTuning().RuneSlowDuration * 2.0f + 0.2f)
+				{
+					return false;
+				}
+				Test->TestFalse(TEXT("Real extended slow eventually expires"),
+					Target.ASC->HasMatchingGameplayTag(KnightGameplayTags::State_Combat_RuneSlowed));
+				Test->TestNotNull(TEXT("Original Rune spec survives lifetime and retry"), Source.ASC->FindAbilitySpecFromHandle(RuneSpec));
+				Test->TestEqual(TEXT("No additional source grants were fabricated"), Source.ASC->GetOwnedGrantCount(), 1);
+				return true;
+			}
+			return false;
+		}
+
+	private:
+		void Press(FGameplayTag Input)
+		{
+			Test->TestTrue(TEXT("Actual shared GAS action executes"), Source.ASC->RequestAbilityInput(Input, true, Target.Actor.Get()).IsSuccess());
+			Source.ASC->RequestAbilityInput(Input, false);
+		}
+		void Reset()
+		{
+			Source.Combat->ResetForCheckpoint();
+			Target.Combat->ResetForCheckpoint();
+			Source.Life->ResetForCheckpoint();
+			Target.Life->ResetForCheckpoint();
+			Source.Actor->SetActorLocation(FVector(0, 0, 88));
+			Source.Actor->SetActorRotation(FRotator::ZeroRotator);
+			Source.Actor->GetCharacterMovement()->SetMovementMode(MOVE_Walking);
+			Target.Actor->SetActorLocation(FVector(120, 0, 100));
+			Target.Actor->GetCharacterMovement()->DisableMovement();
+			Source.Combat->SetValidatedTarget(Target.Actor.Get());
+		}
+		FAutomationTestBase* Test;
+		FKnightCombatWorld Context;
+		FKnightCombatFixture Source;
+		FKnightCombatFixture Target;
+		TWeakObjectPtr<UKnightCombatProfileDefinition> Profile;
+		FGameplayAbilitySpecHandle RuneSpec;
+		uint64 LastFrame = MAX_uint64;
+		int32 Step = 0;
+		float Elapsed = 0.0f;
+		float Before = 0.0f;
+		bool bReady = false;
+		double Started = FPlatformTime::Seconds();
+	};
+}
+
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FKnightCombatProjectionTest, "Knight.Combat.RPGProjection",
+	EAutomationTestFlags::EditorContext | EAutomationTestFlags::EngineFilter)
+
+bool FKnightCombatProjectionTest::RunTest(const FString& Parameters)
+{
+	ADD_LATENT_AUTOMATION_COMMAND(KnightCombatTests::FKnightProjectionCombatCommand(this));
 	return true;
 }
 

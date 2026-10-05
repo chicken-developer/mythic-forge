@@ -5,11 +5,14 @@
 #include "Attributes/KnightAttributeSet.h"
 #include "Definitions/KnightAbilitySetDefinition.h"
 #include "Events/KnightConfirmedEvent.h"
+#include "Projection/KnightSourceProjection.h"
 #include "Types/KnightStableIds.h"
 #include "KnightAbilitySystemComponent.generated.h"
 
 class UKnightLifeComponent;
 class AKnightCueVisualActor;
+class UKnightDefinition;
+class AController;
 struct FHitResult;
 
 USTRUCT()
@@ -25,6 +28,21 @@ struct KNIGHTABILITYSYSTEM_API FKnightOwnedAbilityGrant
 	TArray<FGameplayAbilitySpecHandle> AbilityHandles;
 	UPROPERTY()
 	TArray<FActiveGameplayEffectHandle> EffectHandles;
+};
+
+USTRUCT()
+struct FKnightProjectionRuntime
+{
+	GENERATED_BODY()
+
+	UPROPERTY()
+	FKnightSourceProjection Snapshot;
+	UPROPERTY()
+	TObjectPtr<UKnightDefinition> OwnerDefinition;
+	UPROPERTY()
+	TArray<FKnightOwnedAbilityGrant> OptionalGrants;
+	UPROPERTY()
+	FActiveGameplayEffectHandle StatEffect;
 };
 
 USTRUCT()
@@ -77,6 +95,27 @@ public:
 	static FKnightResult ApplyCombatDamage(AActor* Source, AActor* Target, float Amount, float PoiseDamage,
 		bool bCanDefend = true, const FHitResult* Hit = nullptr);
 	FKnightResult ResetAttributesForCheckpoint();
+	FKnightResult BeginMutationFence(FGuid RequestId, FKnightMutationFence& OutFence);
+	bool IsMutationFenced() const;
+	FKnightResult PrepareSourceProjection(const FKnightMutationFence& Fence, const FKnightGASProjectionPlan& Plan,
+		int64 ExpectedRevision, FKnightProjectionCapability& OutCapability);
+	FKnightResult StageSourceProjection(const FKnightMutationFence& Fence,
+		const FKnightProjectionCapability& Capability);
+	FKnightResult ValidateStagedSourceProjection(const FKnightMutationFence& Fence,
+		const FKnightProjectionCapability& Capability) const;
+	FKnightResult CommitSourceProjection(const FKnightMutationFence& Fence,
+		const FKnightProjectionCapability& Capability);
+	FKnightResult AbortSourceProjection(const FKnightMutationFence& Fence,
+		const FKnightProjectionCapability& Capability);
+	/** Always finalizes committed cleanup; an optional live publication owner gates subscriber notifications. */
+	FKnightResult PublishSourceProjection(const FKnightMutationFence& Fence,
+		const FKnightProjectionCapability& Capability, bool bNotifySubscribers = true,
+		AActor* InPublicationOwner = nullptr);
+	FKnightResult EndMutationFence(const FKnightMutationFence& Fence);
+	FKnightSourceProjection GetSourceProjection(FName SourceKey) const;
+	FKnightActionModifier GetActionModifier(FGameplayTag AbilityTag) const;
+	float GetInitialAttackPower() const;
+	FOnKnightSourceProjectionChanged OnSourceProjectionChanged;
 	void GetAdditionalActivationTagRequirements(const FGameplayTagContainer& AbilityTags,
 		FGameplayTagContainer& OutRequiredTags, FGameplayTagContainer& OutBlockedTags) const;
 	virtual void ApplyAbilityBlockAndCancelTags(const FGameplayTagContainer& AbilityTags,
@@ -96,6 +135,16 @@ protected:
 	virtual void OnRep_ReplicatedAnimMontage() override;
 
 private:
+	FKnightResult ValidateProjectionOwner() const;
+	FKnightResult ValidateMutationFence(const FKnightMutationFence& Fence) const;
+	FKnightResult ValidateProjectionCapability(const FKnightMutationFence& Fence,
+		const FKnightProjectionCapability& Capability) const;
+	FKnightResult ValidateProjectionAbilities(const FKnightGASProjectionPlan& Plan,
+		const TArray<FKnightOwnedAbilityGrant>& OptionalGrants) const;
+	void RemoveProjectionRuntime(FKnightProjectionRuntime Runtime);
+	void CancelPendingProjection();
+	UFUNCTION()
+	void OnRep_SourceProjections();
 	FKnightResult ApplyAttributeDefaults();
 	static void RegisterNativeGameplayCues();
 	UFUNCTION()
@@ -114,6 +163,14 @@ private:
 	UPROPERTY(Transient)
 	TMap<FName, FKnightOwnedAbilityGrant> OwnedGrants;
 	UPROPERTY(Transient)
+	TMap<FName, FKnightProjectionRuntime> ProjectionSources;
+	UPROPERTY(Transient)
+	FKnightProjectionRuntime PendingProjection;
+	UPROPERTY(Transient)
+	FKnightProjectionRuntime RetiredProjection;
+	UPROPERTY(ReplicatedUsing = OnRep_SourceProjections)
+	TArray<FKnightSourceProjection> PublishedProjections;
+	UPROPERTY(Transient)
 	TArray<TObjectPtr<AKnightCueVisualActor>> CueVisuals;
 
 	TMap<FGameplayTag, FKnightCueDiagnostics> CueDiagnostics;
@@ -121,4 +178,17 @@ private:
 	FKnightResult LastAbilityResult;
 	bool bAttributesInitialized = false;
 	int32 DamageRevision = 0;
+	FKnightMutationFence MutationFence;
+	FKnightMutationFence LastEndedFence;
+	FKnightProjectionCapability ProjectionCapability;
+	FKnightProjectionCapability LastAbortedProjection;
+	TWeakObjectPtr<AActor> FenceOwner;
+	TWeakObjectPtr<AActor> FenceAvatar;
+	TWeakObjectPtr<AController> FenceController;
+	uint64 ProjectionGeneration = 0;
+	uint64 FenceGeneration = 0;
+	uint8 ProjectionStage = 0;
+	bool bProjectionOperationInProgress = false;
+	bool bProjectionEndingPlay = false;
+	bool bProjectionGrantsChanged = false;
 };

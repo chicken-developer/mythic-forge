@@ -4,6 +4,8 @@ param(
 	[string]$Action,
 	[string]$EngineRoot = 'C:\Program Files\Epic Games\UE_5.8',
 	[string]$EvidenceName = '',
+	[ValidateSet('Development', 'DebugGame')]
+	[string]$Configuration = 'Development',
 	[ValidateRange(0, 9)]
 	[int]$Milestone = 0,
 	[ValidatePattern('^[A-Za-z0-9_.]+$')]
@@ -31,7 +33,7 @@ switch ($Action)
 	'BuildEditor'
 	{
 		$TaskExecutable = Join-Path $EngineRoot 'Engine\Build\BatchFiles\Build.bat'
-		$TaskArguments = @('ThreeDreamingKnightsEditor', 'Win64', 'Development',
+		$TaskArguments = @('ThreeDreamingKnightsEditor', 'Win64', $Configuration,
 			('-Project=' + $TaskProject), '-WaitMutex', '-NoHotReloadFromIDE', '-NoLiveCoding')
 	}
 	'Bootstrap'
@@ -58,18 +60,70 @@ switch ($Action)
 			('-abslog=' + $TaskLog))
 	}
 }
+if ($Configuration -eq 'DebugGame' -and $Action -ne 'BuildEditor')
+{
+	$TaskExecutable = Join-Path $EngineRoot 'Engine\Binaries\Win64\UnrealEditor-Win64-DebugGame-Cmd.exe'
+}
+if ($Action -ne 'BuildEditor')
+{
+	# Headless automation must not replace the interactive Editor's RiderLink discovery port.
+	$TaskArguments += '-DisablePlugins=RiderLink'
+}
 if (!(Test-Path -LiteralPath $TaskExecutable))
 {
 	throw "Missing engine tool: $TaskExecutable"
 }
 $TaskRecord = [ordered]@{
 	action = $Action
+	configuration = $Configuration
 	startedUtc = $TaskStarted
 	executable = $TaskExecutable
 	arguments = $TaskArguments
 	log = $TaskLog
 }
 $TaskRecord | ConvertTo-Json -Depth 4 | Set-Content -LiteralPath ($TaskLog + '.command.json') -Encoding UTF8
+if ($Action -eq 'BuildEditor' -or $Action -eq 'Bootstrap')
+{
+	$TaskLoadedProjectFilter = "Name LIKE 'UnrealEditor%.exe'"
+	$TaskLoadedProjectProcesses = @(Get-CimInstance Win32_Process -Filter $TaskLoadedProjectFilter | Where-Object {
+			$null -ne $_.CommandLine -and $_.CommandLine.Replace('/', '\').IndexOf(
+				$TaskProject, [StringComparison]::OrdinalIgnoreCase) -ge 0
+		})
+	$TaskBlockingProcesses = $TaskLoadedProjectProcesses
+	if ($Action -eq 'BuildEditor' -and $Configuration -eq 'DebugGame')
+	{
+		# DebugGame game DLLs and manifest are separate from Development. Never use hot reload here.
+		$TaskBlockingProcesses = @($TaskLoadedProjectProcesses | Where-Object {
+			try
+			{
+				$TaskProcessModules = @((Get-Process -Id $_.ProcessId -ErrorAction Stop).Modules)
+				$TaskProjectDebugModules = @($TaskProcessModules | Where-Object {
+					$_.FileName.StartsWith($TaskProjectRoot + '\', [StringComparison]::OrdinalIgnoreCase) -and
+					$_.ModuleName -like '*-Win64-DebugGame.dll'
+				})
+				$TaskProjectDebugModules.Count -gt 0
+			}
+			catch
+			{
+				# If loaded modules cannot be read, retain the conservative lock guard.
+				$true
+			}
+		})
+	}
+	if ($TaskBlockingProcesses.Count -gt 0)
+	{
+		$TaskRecord.nativeExitCode = $null
+		$TaskRecord.blockingProcessIds = @($TaskBlockingProcesses | ForEach-Object { $_.ProcessId })
+		$TaskRecord.validationFailure = 'Save and close the loaded project before linking DLLs or authoring assets.'
+		$TaskRecord.finishedUtc = (Get-Date).ToUniversalTime().ToString('o')
+		$TaskRecord.exitCode = 2
+		$TaskRecord.result = 'BLOCKED'
+		$TaskRecord | ConvertTo-Json -Depth 4 | Set-Content -LiteralPath ($TaskLog + '.result.json') -Encoding UTF8
+		Write-Output ('BLOCKED: project is loaded in process IDs {0}; no engine tool launched.' -f
+			($TaskRecord.blockingProcessIds -join ', '))
+		exit 2
+	}
+}
 & $TaskExecutable @TaskArguments 2>&1 | Tee-Object -FilePath ($TaskLog + '.stdout')
 $TaskExit = $LASTEXITCODE
 $TaskRecord.nativeExitCode = $TaskExit

@@ -5,6 +5,7 @@
 #include "Engine/World.h"
 #include "Events/KnightEventSubsystem.h"
 #include "GameplayEffect.h"
+#include "Misc/ScopeExit.h"
 #include "Net/UnrealNetwork.h"
 #include "Tags/KnightGameplayTags.h"
 #include "TimerManager.h"
@@ -343,6 +344,25 @@ FKnightResult UKnightLifeComponent::ResetForCheckpoint()
 	ChangeLifeState(EKnightLifeState::Alive);
 	SynchronizeLifeTags();
 	return FKnightResult::Success();
+}
+
+FKnightResult UKnightLifeComponent::ResetForCheckpointWithDeferredControllerRestart()
+{
+	if (bDeferControllerRestart)
+	{
+		return KnightLifeFailure(EKnightError::Conflict, TEXT("ResetLifeCheckpoint"));
+	}
+	bDeferControllerRestart = true;
+	ON_SCOPE_EXIT
+	{
+		bDeferControllerRestart = false;
+	};
+	return ResetForCheckpoint();
+}
+
+bool UKnightLifeComponent::ShouldDeferControllerRestart() const
+{
+	return bDeferControllerRestart;
 }
 
 FKnightResult UKnightLifeComponent::TrySetLifeTuning(float InBleedoutDuration, float InReviveDuration,

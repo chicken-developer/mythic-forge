@@ -12,7 +12,8 @@ public class KnightDeveloper : ModuleRules
 			"StateTreeModule", "StateTreeEditorModule", "GameplayStateTreeModule", "NavigationSystem",
 			"PropertyBindingUtils", "AIModule", "EnhancedInput", "InputCore", "GameplayTags", "Sockets",
 			"KnightAbilitySystem", "GameplayAbilities", "GameplayTasks", "KnightCombat", "MotionWarping",
-			"AnimationDataController", "AnimGraphRuntime", "AssetTools", "LevelSequence"
+			"AnimationDataController", "AnimGraphRuntime", "AssetTools", "LevelSequence", "AIGraph",
+			"EnvironmentQueryEditor", "KnightItems", "KnightUI", "UMG", "CommonUI", "Slate", "SlateCore"
 		});
 	}
 }

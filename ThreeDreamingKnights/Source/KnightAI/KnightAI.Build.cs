@@ -7,9 +7,13 @@ public class KnightAI : ModuleRules
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 		PublicDependencyModuleNames.AddRange(new string[]
 		{
-			"Core", "CoreUObject", "Engine", "KnightCore", "KnightFramework", "AIModule",
-			"StateTreeModule", "GameplayStateTreeModule"
+			"Core", "CoreUObject", "Engine", "KnightCore", "AIModule",
+			"StateTreeModule", "GameplayStateTreeModule", "GameplayTags", "KnightAbilitySystem", "GameplayAbilities",
+			"KnightFramework"
 		});
-		PrivateDependencyModuleNames.Add("NavigationSystem");
+		PrivateDependencyModuleNames.AddRange(new string[]
+		{
+			"NavigationSystem", "KnightCombat"
+		});
 	}
 }

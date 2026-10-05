@@ -425,9 +425,10 @@ namespace KnightCombatAssetAuthoring
 			*(PackageName + TEXT(".") + FPackageName::GetLongPackageAssetName(PackageName)));
 	}
 
-	bool ValidateTraversalSequence(UAnimSequence* Sequence)
+	bool ValidateTraversalSequence(UAnimSequence* Sequence, const bool bLog = true)
 	{
-		if (Sequence == nullptr || !Sequence->bEnableRootMotion || Sequence->GetPlayLength() <= 0.0f)
+		if (Sequence == nullptr || !Sequence->bEnableRootMotion || !FMath::IsFinite(Sequence->GetPlayLength())
+			|| Sequence->GetPlayLength() <= 0.0f)
 		{
 			return false;
 		}
@@ -435,15 +436,63 @@ namespace KnightCombatAssetAuthoring
 		const FVector Delta = Sequence->ExtractRootMotionFromRange(0.0, Sequence->GetPlayLength(), Context).GetTranslation();
 		const FVector HalfDelta = Sequence->ExtractRootMotionFromRange(0.0,
 			Sequence->GetPlayLength() * 0.5, Context).GetTranslation();
-		if (Delta.ContainsNaN() || HalfDelta.ContainsNaN() || Delta.X < 299.0 || FMath::Abs(Delta.Z) > 1.0
+		if (Delta.ContainsNaN() || HalfDelta.ContainsNaN() || FMath::Abs(Delta.X) > 1.0
+			|| FMath::Abs(Delta.Y - 300.0) > 1.0 || FMath::Abs(Delta.Z) > 1.0
 			|| HalfDelta.Z < 100.0)
 		{
-			UE_LOG(LogKnightCombatAuthoring, Error, TEXT("Traversal has no valid authored root trajectory: end %s, mid %s."),
-				*Delta.ToString(), *HalfDelta.ToString());
+			if (bLog)
+			{
+				UE_LOG(LogKnightCombatAuthoring, Error,
+					TEXT("Traversal lacks the Manny local +Y root trajectory: end %s, mid %s."),
+					*Delta.ToString(), *HalfDelta.ToString());
+			}
 			return false;
 		}
-		UE_LOG(LogKnightCombatAuthoring, Display, TEXT("Traversal real CPU root motion: full %s, midpoint %s."),
-			*Delta.ToString(), *HalfDelta.ToString());
+		if (bLog)
+		{
+			UE_LOG(LogKnightCombatAuthoring, Display, TEXT("Traversal real CPU root motion (Manny local +Y): full %s, midpoint %s."),
+				*Delta.ToString(), *HalfDelta.ToString());
+		}
+		return true;
+	}
+
+	bool AuthorTraversalRootTrajectory(UAnimSequence* Sequence)
+	{
+		if (Sequence == nullptr || Sequence->GetSkeleton() == nullptr || Sequence->GetDataModel() == nullptr)
+		{
+			return false;
+		}
+		const IAnimationDataModel* Model = Sequence->GetDataModel();
+		const FReferenceSkeleton& Reference = Sequence->GetSkeleton()->GetReferenceSkeleton();
+		if (Reference.GetNum() == 0 || Model->GetNumberOfKeys() < 2)
+		{
+			return false;
+		}
+		const FName RootName = Reference.GetBoneName(0);
+		const FTransform RootPose = Reference.GetRefBonePose()[0];
+		TArray<FVector3f> Positions;
+		TArray<FQuat4f> Rotations;
+		TArray<FVector3f> Scales;
+		for (int32 Key = 0; Key < Model->GetNumberOfKeys(); ++Key)
+		{
+			const float Alpha = static_cast<float>(Key) / static_cast<float>(Model->GetNumberOfKeys() - 1);
+			// Manny's mesh yaw is -90 degrees: animation local +Y is the character's forward +X.
+			Positions.Add(FVector3f(RootPose.GetTranslation())
+				+ FVector3f(0.0f, 300.0f * Alpha, 120.0f * FMath::Sin(PI * Alpha)));
+			Rotations.Add(FQuat4f(RootPose.GetRotation()));
+			Scales.Add(FVector3f(RootPose.GetScale3D()));
+		}
+		IAnimationDataController& Controller = Sequence->GetController();
+		IAnimationDataController::FScopedBracket Bracket(Controller,
+			NSLOCTEXT("KnightCombatAuthoring", "RootTrajectory", "Author Knight traversal root motion"), false);
+		if ((!Model->IsValidBoneTrackName(RootName) && !Controller.AddBoneCurve(RootName, false))
+			|| !Controller.SetBoneTrackKeys(RootName, Positions, Rotations, Scales, false))
+		{
+			return false;
+		}
+		Sequence->bEnableRootMotion = true;
+		Sequence->RootMotionRootLock = ERootMotionRootLock::AnimFirstFrame;
+		Controller.NotifyPopulated();
 		return true;
 	}
 
@@ -454,6 +503,19 @@ namespace KnightCombatAssetAuthoring
 		if (FPackageName::DoesPackageExist(PackageName))
 		{
 			Sequence = LoadObject<UAnimSequence>(nullptr, *(PackageName + TEXT(".AS_Knight_Traversal")));
+			if (Sequence != nullptr && !ValidateTraversalSequence(Sequence, false))
+			{
+				// Repair only the generated root track; retained pose tracks, curves and attributes remain intact.
+				if (!AuthorTraversalRootTrajectory(Sequence))
+				{
+					return nullptr;
+				}
+				Sequence->PostEditChange();
+				FAssetCompilingManager::Get().FinishAllCompilation();
+				UE_LOG(LogKnightCombatAuthoring, Display,
+					TEXT("Repaired owned traversal root track to Manny local +Y without replacing its pose: %s."),
+					*Sequence->GetPathName());
+			}
 		}
 		else
 		{
@@ -473,24 +535,6 @@ namespace KnightCombatAssetAuthoring
 			{
 				return nullptr;
 			}
-			const FReferenceSkeleton& Reference = Source->GetSkeleton()->GetReferenceSkeleton();
-			if (Reference.GetNum() == 0 || SourceModel->GetNumberOfKeys() < 2)
-			{
-				return nullptr;
-			}
-			const FName RootName = Reference.GetBoneName(0);
-			const FTransform RootPose = Reference.GetRefBonePose()[0];
-			TArray<FVector3f> Positions;
-			TArray<FQuat4f> Rotations;
-			TArray<FVector3f> Scales;
-			for (int32 Key = 0; Key < SourceModel->GetNumberOfKeys(); ++Key)
-			{
-				const float Alpha = static_cast<float>(Key) / static_cast<float>(SourceModel->GetNumberOfKeys() - 1);
-				Positions.Add(FVector3f(RootPose.GetTranslation())
-					+ FVector3f(300.0f * Alpha, 0.0f, 120.0f * FMath::Sin(PI * Alpha)));
-				Rotations.Add(FQuat4f(RootPose.GetRotation()));
-				Scales.Add(FVector3f(RootPose.GetScale3D()));
-			}
 			{
 				IAnimationDataController& Controller = Sequence->GetController();
 				IAnimationDataController::FScopedBracket Bracket(Controller,
@@ -508,14 +552,10 @@ namespace KnightCombatAssetAuthoring
 					UE_LOG(LogKnightCombatAuthoring, Error, TEXT("Traversal pose copy lost source keys or bone tracks."));
 					return nullptr;
 				}
-				if ((!Model->IsValidBoneTrackName(RootName) && !Controller.AddBoneCurve(RootName, false))
-					|| !Controller.SetBoneTrackKeys(RootName, Positions, Rotations, Scales, false))
+				if (!AuthorTraversalRootTrajectory(Sequence))
 				{
 					return nullptr;
 				}
-				Sequence->bEnableRootMotion = true;
-				Sequence->RootMotionRootLock = ERootMotionRootLock::AnimFirstFrame;
-				Controller.NotifyPopulated();
 			}
 			UE_LOG(LogKnightCombatAuthoring, Display,
 				TEXT("Traversal copied real animation model from %s: %d keys, %d bone tracks."),
@@ -719,6 +759,15 @@ namespace KnightCombatAssetAuthoring
 				AddNotifyWindow(Montage, Notify, TEXT("KnightTraversalWarp"), 0.0f, StartTime - 0.01f, 0);
 			}
 		}
+		if (bTraversal && Montage->BlendOutTriggerTime != 0.0f)
+		{
+			// A negative trigger blends before the end and attenuates the final active warp/root-motion samples.
+			Montage->BlendOutTriggerTime = 0.0f;
+			Montage->MarkPackageDirty();
+			Montage->PostEditChange();
+			UE_LOG(LogKnightCombatAuthoring, Display, TEXT("Repaired owned traversal blend-out trigger to montage end: %s."),
+				*Montage->GetPathName());
+		}
 		if (!RepairAndValidateNotifyTracks(Montage))
 		{
 			return nullptr;
@@ -744,6 +793,10 @@ namespace KnightCombatAssetAuthoring
 			}
 		}
 		if (!ValidateMontageWindows(Montage, Sections, bAttack, bCombo, bTraversal))
+		{
+			return nullptr;
+		}
+		if (bTraversal && (Montage->BlendOutTriggerTime != 0.0f || !ValidateTraversalSequence(Sequences[0])))
 		{
 			return nullptr;
 		}
