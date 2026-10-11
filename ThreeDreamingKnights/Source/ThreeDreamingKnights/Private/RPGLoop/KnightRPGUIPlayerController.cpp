@@ -4,9 +4,19 @@
 #include "Attributes/KnightAttributeSet.h"
 #include "Character/KnightCharacter.h"
 #include "Components/KnightAbilitySystemComponent.h"
+#include "Components/KnightCombatComponent.h"
 #include "Components/KnightLifeComponent.h"
 #include "Definitions/KnightItemDefinition.h"
+#include "Definitions/KnightRuneDefinition.h"
 #include "Definitions/KnightSkillDefinition.h"
+#include "RPGLoop/KnightRPGSkillPresentation.h"
+#include "RPGLoop/KnightRPGGearPresentation.h"
+#include "GearLab/KnightGearLabState.h"
+#include "RPGLoop/KnightRPGLoopGameMode.h"
+#include "RPGLoop/KnightRPGUpgradeStation.h"
+#include "Party/KnightPartyState.h"
+#include "PartyArena/KnightPartyArenaState.h"
+#include "Skills/KnightSkillRuntimeComponent.h"
 #include "Inventory/KnightInventoryComponent.h"
 #include "Loot/KnightItemPickup.h"
 #include "Models/KnightRPGPanelTypes.h"
@@ -71,6 +81,10 @@ void AKnightRPGUIPlayerController::SetPlayer(UPlayer* InPlayer)
 	if (RPGPanel != nullptr)
 	{
 		RPGPanel->OnActionRequested.Remove(PanelHandle);
+		RPGPanel->OnCommandRequested.Remove(PanelCommandHandle);
+		RPGPanel->OnPreviewRequested.Remove(PreviewHandle);
+		RPGPanel->OnGearCommandRequested.Remove(GearCommandHandle);
+		RPGPanel->OnGearPreviewRequested.Remove(GearPreviewHandle);
 		RPGPanel = nullptr;
 		PanelHandle.Reset();
 	}
@@ -88,6 +102,7 @@ void AKnightRPGUIPlayerController::BeginPlay()
 		ControlHandle = OnControlledKnightChanged.AddUObject(this, &ThisClass::HandleControlledKnight);
 		ResultHandle = OnRPGCommandResult.AddUObject(this, &ThisClass::HandleRPGResult);
 		LoopResultHandle = OnRPGLoopResult.AddUObject(this, &ThisClass::HandleLoopResult);
+		GearFixtureResultHandle = OnGearFixtureResult.AddUObject(this, &ThisClass::HandleGearFixtureResult);
 		HandleControlledKnight(nullptr, GetControlledKnight());
 		BindRPGSources();
 	}
@@ -186,6 +201,14 @@ void AKnightRPGUIPlayerController::BindRPGSources()
 
 void AKnightRPGUIPlayerController::UnbindRPGSources()
 {
+	GetWorldTimerManager().ClearTimer(GearReadinessTimer);
+	UnbindGearViewedKnight();
+	if (GearLabState.IsValid())
+	{
+		GearLabState->OnGearDemoChanged.Remove(GearStateHandle);
+	}
+	GearLabState.Reset();
+	GearStateHandle.Reset();
 	if (RPGState.IsValid())
 	{
 		RPGState->GetInventory()->OnSnapshotChanged.Remove(InventoryHandle);
@@ -234,6 +257,7 @@ void AKnightRPGUIPlayerController::HandleRPGStateReady(AKnightRPGStateActor* InS
 
 void AKnightRPGUIPlayerController::HandleControlledKnight(AKnightCharacter* Previous, AKnightCharacter* Current)
 {
+	GearSelectedKnightId = Current != nullptr ? Current->GetKnightEntityId() : FKnightEntityId();
 	CloseRPGPanel();
 	UnbindDisplayedKnight();
 	DisplayedKnight = Current;
@@ -243,6 +267,53 @@ void AKnightRPGUIPlayerController::HandleControlledKnight(AKnightCharacter* Prev
 		LifeHandle = Current->GetLifeComponent()->OnLifeStateChanged.AddUObject(this, &ThisClass::HandleLifeChanged);
 		ProjectionHandle = Current->GetKnightAbilitySystem()->OnSourceProjectionChanged.AddUObject(
 			this, &ThisClass::HandleProjectionChanged);
+		const TArray<FGameplayAttribute> ObservedAttributes{
+			UKnightAttributeSet::GetHealthAttribute(), UKnightAttributeSet::GetMaxHealthAttribute(),
+			UKnightAttributeSet::GetStaminaAttribute(), UKnightAttributeSet::GetMaxStaminaAttribute(),
+			UKnightAttributeSet::GetRuneEnergyAttribute(), UKnightAttributeSet::GetMaxRuneEnergyAttribute(),
+			UKnightAttributeSet::GetAttackPowerAttribute(), UKnightAttributeSet::GetDefenseAttribute(),
+			UKnightAttributeSet::GetCritChanceAttribute(), UKnightAttributeSet::GetCritMultiplierAttribute(),
+			UKnightAttributeSet::GetHasteAttribute(), UKnightAttributeSet::GetDamageReductionAttribute(),
+			UKnightAttributeSet::GetArcaneResistanceAttribute(), UKnightAttributeSet::GetLightningResistanceAttribute(),
+			UKnightAttributeSet::GetFrostResistanceAttribute(), UKnightAttributeSet::GetFireResistanceAttribute(),
+			UKnightAttributeSet::GetMasteryBonusAttribute(), UKnightAttributeSet::GetVersatilityAttribute(),
+			UKnightAttributeSet::GetCooldownRecoveryAttribute()};
+		for (const FGameplayAttribute& Attribute : ObservedAttributes)
+		{
+			const FDelegateHandle Handle = DisplayedASC->GetGameplayAttributeValueChangeDelegate(Attribute)
+				.AddWeakLambda(this, [this](const FOnAttributeChangeData& Change)
+				{
+					if (DisplayedASC.IsValid() && !DisplayedASC->IsMutationFenced())
+					{
+						RefreshRPGPresentation();
+					}
+				});
+			AttributeHandles.Emplace(Attribute, Handle);
+		}
+		DisplayedRuntime = Current->FindComponentByClass<UKnightSkillRuntimeComponent>();
+		DisplayedCombat = Current->GetCombatComponent();
+		if (DisplayedCombat.IsValid())
+		{
+			CombatStateHandle = DisplayedCombat->OnCombatSnapshotChanged.AddWeakLambda(this,
+				[this](const FKnightCombatSnapshot& State)
+				{
+					if (DisplayedASC.IsValid() && !DisplayedASC->IsMutationFenced())
+					{
+						RefreshRPGPresentation();
+					}
+				});
+		}
+		if (DisplayedRuntime.IsValid())
+		{
+			RuntimeStateHandle = DisplayedRuntime->OnSkillStateChanged.AddWeakLambda(this,
+				[this](const FKnightSkillRuntimeState& State)
+				{
+					if (DisplayedASC.IsValid() && !DisplayedASC->IsMutationFenced())
+					{
+						RefreshRPGPresentation();
+					}
+				});
+		}
 	}
 	RefreshRPGPresentation();
 }
@@ -256,7 +327,24 @@ void AKnightRPGUIPlayerController::UnbindDisplayedKnight()
 	if (DisplayedASC.IsValid())
 	{
 		DisplayedASC->OnSourceProjectionChanged.Remove(ProjectionHandle);
+		for (const TPair<FGameplayAttribute, FDelegateHandle>& Binding : AttributeHandles)
+		{
+			DisplayedASC->GetGameplayAttributeValueChangeDelegate(Binding.Key).Remove(Binding.Value);
+		}
 	}
+	if (DisplayedRuntime.IsValid())
+	{
+		DisplayedRuntime->OnSkillStateChanged.Remove(RuntimeStateHandle);
+	}
+	AttributeHandles.Reset();
+	if (DisplayedCombat.IsValid())
+	{
+		DisplayedCombat->OnCombatSnapshotChanged.Remove(CombatStateHandle);
+	}
+	DisplayedCombat.Reset();
+	CombatStateHandle.Reset();
+	RuntimeStateHandle.Reset();
+	DisplayedRuntime.Reset();
 	LifeHandle.Reset();
 	ProjectionHandle.Reset();
 	DisplayedKnight.Reset();
@@ -353,7 +441,14 @@ void AKnightRPGUIPlayerController::ToggleRPGPanel()
 			return;
 		}
 		PanelHandle = RPGPanel->OnActionRequested.AddUObject(this, &ThisClass::HandlePanelAction);
+		PanelCommandHandle = RPGPanel->OnCommandRequested.AddUObject(this, &ThisClass::HandlePanelCommand);
+		PreviewHandle = RPGPanel->OnPreviewRequested.AddUObject(this, &ThisClass::HandleBuildPreview);
+		GearCommandHandle = RPGPanel->OnGearCommandRequested.AddUObject(this, &ThisClass::HandleGearCommand);
+		GearPreviewHandle = RPGPanel->OnGearPreviewRequested.AddUObject(this, &ThisClass::HandleGearPreview);
 	}
+	// A closed panel receives no live snapshots. Resynchronize before CommonUI restores its focus.
+	BindGearSources();
+	RPGPanel->SetSnapshot(BuildPanelSnapshot());
 	RefreshRPGPresentation();
 	RPGPanel->AddToPlayerScreen(100);
 	RPGPanel->ActivateWidget();
@@ -427,6 +522,11 @@ void AKnightRPGUIPlayerController::HandlePanelAction(const EKnightRPGPanelAction
 			{
 				const UKnightItemDefinition* Definition = Cast<UKnightItemDefinition>(
 					KnightRPGPresentation::Resolve(Item.DefinitionId, UKnightItemDefinition::StaticClass()));
+				const UKnightRuneDefinition* Rune = Cast<UKnightRuneDefinition>(Definition);
+				if (bRune && Rune != nullptr && !Rune->GetAttachmentRuneId().IsNone())
+				{
+					continue;
+				}
 				if (Definition != nullptr && !Assigned.Contains(Item.InstanceId)
 					&& Definition->GetItemKind() == (bRune ? EKnightItemKind::Rune : EKnightItemKind::Equipment))
 				{
@@ -476,6 +576,82 @@ void AKnightRPGUIPlayerController::HandlePanelAction(const EKnightRPGPanelAction
 	RequestRPGCommand(Command);
 }
 
+void AKnightRPGUIPlayerController::HandlePanelCommand(const FKnightRPGPanelCommand& Intent)
+{
+	if (bEndingUIPlay || RPGPanel == nullptr || !RPGPanel->IsActivated() || PendingRequestId.IsValid())
+	{
+		return;
+	}
+	if (Intent.Action == EKnightRPGPanelAction::SelectKnight)
+	{
+		for (TActorIterator<AKnightPartyState> It(GetWorld()); It; ++It)
+		{
+			for (const FKnightRosterEntry& Entry : It->GetRoster())
+			{
+				if (Entry.KnightId == Intent.KnightId)
+				{
+					RequestSwitchKnight(Entry.Slot);
+					return;
+				}
+			}
+		}
+		return;
+	}
+	EKnightRPGOperation Operation;
+	switch (Intent.Action)
+	{
+	case EKnightRPGPanelAction::ApplyBuild: Operation = EKnightRPGOperation::ApplyBuild; break;
+	case EKnightRPGPanelAction::NewTalentLoadout: Operation = EKnightRPGOperation::NewTalentLoadout; break;
+	case EKnightRPGPanelAction::RenameTalentLoadout: Operation = EKnightRPGOperation::RenameTalentLoadout; break;
+	case EKnightRPGPanelAction::DuplicateTalentLoadout: Operation = EKnightRPGOperation::DuplicateTalentLoadout; break;
+	case EKnightRPGPanelAction::DeleteTalentLoadout: Operation = EKnightRPGOperation::DeleteTalentLoadout; break;
+	case EKnightRPGPanelAction::ApplyTalentLoadout: Operation = EKnightRPGOperation::ApplyTalentLoadout; break;
+	default: return;
+	}
+	FKnightRPGCommand Command = CreateCurrentCommand(Operation);
+	Command.ExpectedKnightId = Intent.KnightId;
+	Command.ExpectedKnightRevision = Intent.ExpectedRevision;
+	Command.RequestId = Intent.RequestId;
+	Command.ProposedBuild = Intent.ProposedBuild;
+	Command.WeaponRuneInstanceId = Intent.WeaponRuneInstanceId;
+	Command.SkillRuneInstanceId = Intent.SkillRuneInstanceId;
+	Command.TalentLoadoutId = Intent.TalentLoadoutId;
+	Command.TalentLoadoutName = Intent.TalentLoadoutName;
+	PendingRequestId = Command.RequestId;
+	RefreshRPGPresentation();
+	RequestRPGCommand(Command);
+}
+
+void AKnightRPGUIPlayerController::HandleBuildPreview(const FKnightSkillBuild& Build)
+{
+	AKnightCharacter* Knight = GetControlledKnight();
+	if (RPGPanel == nullptr || Knight == nullptr)
+	{
+		return;
+	}
+	FKnightRPGBuildPreview Preview = KnightRPGSkillPresentation::Preview(Build,
+		Knight->GetKnightAttributeSet()->GetAttackPower());
+	const FKnightSkillBuild& Confirmed = RPGPanel->GetSnapshot().Build;
+	const float ProposedStamina = Knight->GetKnightAttributeSet()->GetMaxStamina()
+		+ (Build.ClassChoice == TEXT("Endurance") ? 10.0f : 0.0f)
+		- (Confirmed.ClassChoice == TEXT("Endurance") ? 10.0f : 0.0f);
+	const float ProposedResource = Knight->GetKnightAttributeSet()->GetMaxRuneEnergy()
+		+ (Build.ClassChoice == TEXT("Reservoir") ? 10.0f : 0.0f)
+		- (Confirmed.ClassChoice == TEXT("Reservoir") ? 10.0f : 0.0f);
+	Preview.Summary = FText::Format(NSLOCTEXT("KnightSkillsUI", "DraftStatPreview",
+		"{0}\nProposed MaxStamina {1}; MaxResource {2}. Current pools are preserved and clamped on confirmation."),
+		Preview.Summary, FText::AsNumber(ProposedStamina), FText::AsNumber(ProposedResource));
+	Preview.KnightId = RPGPanel->GetSnapshot().KnightId;
+	Preview.Runes = BuildPanelSnapshot().Runes;
+	for (FKnightRPGRuneRow& Rune : Preview.Runes)
+	{
+		Rune.bCompatible = FKnightSkillCatalog::IsRuneCompatible(Build.SpecId, Rune.RuneId)
+			&& (Rune.IncompatibilityReason.IsEmpty() || Rune.IncompatibilityReason.EqualTo(
+				NSLOCTEXT("KnightSkillsUI", "RuneIncompatible", "The selected specialization has no compatible skill for this rune.")));
+	}
+	RPGPanel->SetBuildPreview(Preview);
+}
+
 void AKnightRPGUIPlayerController::HandleRPGResult(const FKnightRPGCommandResult& Outcome)
 {
 	if (bEndingUIPlay)
@@ -483,8 +659,14 @@ void AKnightRPGUIPlayerController::HandleRPGResult(const FKnightRPGCommandResult
 		return;
 	}
 	// A delayed receipt describes its original Knight; it never replaces the currently observed readmodel.
+	LastCompletedRequestId = Outcome.RequestId;
+	if (PendingRequestId == Outcome.RequestId)
+	{
+		PendingRequestId.Invalidate();
+	}
 	Feedback = Outcome.Result.IsSuccess()
 		? NSLOCTEXT("KnightRPG", "TransactionCommitted", "Upgrade transaction committed.") : Outcome.Result.Message;
+	ReconcileClosedPanelReceipt(Outcome.RequestId);
 	RefreshRPGPresentation();
 }
 
@@ -509,11 +691,22 @@ void AKnightRPGUIPlayerController::RefreshRPGPresentation()
 	{
 		return;
 	}
-	if (RPGPanel != nullptr)
+	BindGearSources();
+	if (RPGPanel != nullptr && RPGPanel->IsActivated())
 	{
 		RPGPanel->SetSnapshot(BuildPanelSnapshot());
 	}
 	OnRPGPresentationChanged.Broadcast();
+}
+
+void AKnightRPGUIPlayerController::ReconcileClosedPanelReceipt(const FGuid& RequestId)
+{
+	if (RPGPanel != nullptr && !RPGPanel->IsActivated() && RequestId.IsValid() &&
+		RPGPanel->GetPendingRequestId() == RequestId)
+	{
+		// Consume this exact receipt once, before a later gameplay receipt replaces its ID.
+		RPGPanel->SetSnapshot(BuildPanelSnapshot());
+	}
 }
 
 FKnightRPGPanelSnapshot AKnightRPGUIPlayerController::BuildPanelSnapshot() const
@@ -533,6 +726,37 @@ FKnightRPGPanelSnapshot AKnightRPGUIPlayerController::BuildPanelSnapshot() const
 	Snapshot.bCanContinue = Loop.Stage == EKnightRPGLoopStage::RewardAvailable || Loop.Stage == EKnightRPGLoopStage::Upgrade;
 	const FKnightInventoryView Inventory = RPGState->GetInventory()->GetView();
 	const FKnightRPGKnightView View = RPGState->GetRPG()->GetKnightView(Snapshot.KnightId);
+	KnightRPGSkillPresentation::Enrich(Snapshot, View, RPGState->GetRPG()->GetView(), Inventory, Knight);
+	Snapshot.LastCompletedRequestId = LastCompletedRequestId;
+	Snapshot.bCommandPending = PendingRequestId.IsValid();
+	if (const AKnightRPGLoopGameMode* Mode = GetWorld()->GetAuthGameMode<AKnightRPGLoopGameMode>())
+	{
+		Snapshot.bCanEditBuild = Mode->IsInUpgradeSafeZone(Knight);
+	}
+	else
+	{
+		for (TActorIterator<AKnightPartyArenaState> It(GetWorld()); It; ++It)
+		{
+			Snapshot.bCanEditBuild = It->GetSnapshot().AliveEnemies == 0
+				&& (It->GetSnapshot().Stage == EKnightArenaStage::Victory
+					|| It->GetSnapshot().Stage == EKnightArenaStage::AwaitingStart);
+			break;
+		}
+		bool bAtSanctuary = false;
+		for (TActorIterator<AKnightRPGUpgradeStation> It(GetWorld()); It; ++It)
+		{
+			bAtSanctuary |= FVector::DistSquared(Knight->GetActorLocation(), It->GetActorLocation())
+				<= FMath::Square(It->GetInteractionRange());
+		}
+		Snapshot.bCanEditBuild &= bAtSanctuary;
+	}
+	Snapshot.bCanEditBuild &= !View.Build.SpecId.IsNone();
+	if (const UKnightSkillRuntimeComponent* Runtime = Knight->FindComponentByClass<UKnightSkillRuntimeComponent>())
+	{
+		Snapshot.bCanEditBuild &= !Runtime->HasDeferredDamage();
+	}
+	Snapshot.EditLockReason = Snapshot.bCanEditBuild ? FText::GetEmpty()
+		: NSLOCTEXT("KnightSkillsUI", "SanctuaryLock", "Build edits require the sanctuary outside an encounter. View only here.");
 	FString InventoryText;
 	for (const FKnightItemInstance& Item : Inventory.Items)
 	{
@@ -581,6 +805,41 @@ FKnightRPGPanelSnapshot AKnightRPGUIPlayerController::BuildPanelSnapshot() const
 		FText::AsNumber(View.StatBonuses.MaxHealth), FText::AsNumber(View.StatBonuses.AttackPower),
 		FText::AsNumber(View.RuneTuning.DamageScale), FText::AsNumber(View.RuneTuning.CostScale),
 		FText::AsNumber(View.RuneTuning.DurationScale));
+	if (AKnightCharacter* GearKnight = FindGearKnight())
+	{
+		const FKnightRPGView Party = RPGState->GetRPG()->GetView();
+		bool bGearAtSanctuary = Snapshot.bCanEditBuild;
+		if (const AKnightRPGLoopGameMode* Mode = GetWorld()->GetAuthGameMode<AKnightRPGLoopGameMode>())
+		{
+			bGearAtSanctuary = Mode->IsInUpgradeSafeZone(GearKnight);
+		}
+		else if (Party.IsItemizationEnabled() && GearKnight != Knight)
+		{
+			bool bOutsideEncounter = false;
+			for (TActorIterator<AKnightPartyArenaState> It(GetWorld()); It; ++It)
+			{
+				bOutsideEncounter = It->GetSnapshot().AliveEnemies == 0 &&
+					(It->GetSnapshot().Stage == EKnightArenaStage::Victory ||
+						It->GetSnapshot().Stage == EKnightArenaStage::AwaitingStart);
+				break;
+			}
+			bool bNearStation = false;
+			for (TActorIterator<AKnightRPGUpgradeStation> It(GetWorld()); It; ++It)
+			{
+				bNearStation |= FVector::DistSquared(GearKnight->GetActorLocation(), It->GetActorLocation())
+					<= FMath::Square(It->GetInteractionRange());
+			}
+			bGearAtSanctuary = bOutsideEncounter && bNearStation;
+		}
+		if (Party.IsItemizationEnabled() && GearKnight != Knight)
+		{
+			FKnightRPGPanelSnapshot GearStats;
+			KnightRPGSkillPresentation::Enrich(GearStats, RPGState->GetRPG()->GetKnightView(GearKnight->GetKnightEntityId()), Party, Inventory, GearKnight);
+			Snapshot.StatRows = GearStats.StatRows;
+		}
+		KnightRPGGearPresentation::Enrich(Snapshot, Party, Inventory, GearKnight, this,
+			bGearAtSanctuary, GearLabState.IsValid() ? &GearLabState->GetSnapshot() : nullptr);
+	}
 	return Snapshot;
 }
 
@@ -592,6 +851,10 @@ void AKnightRPGUIPlayerController::EndPlay(const EEndPlayReason::Type EndPlayRea
 	if (RPGPanel != nullptr)
 	{
 		RPGPanel->OnActionRequested.Remove(PanelHandle);
+		RPGPanel->OnCommandRequested.Remove(PanelCommandHandle);
+		RPGPanel->OnPreviewRequested.Remove(PreviewHandle);
+		RPGPanel->OnGearCommandRequested.Remove(GearCommandHandle);
+		RPGPanel->OnGearPreviewRequested.Remove(GearPreviewHandle);
 		RPGPanel->RemoveFromParent();
 	}
 	PanelHandle.Reset();
@@ -600,6 +863,7 @@ void AKnightRPGUIPlayerController::EndPlay(const EEndPlayReason::Type EndPlayRea
 	OnControlledKnightChanged.Remove(ControlHandle);
 	OnRPGCommandResult.Remove(ResultHandle);
 	OnRPGLoopResult.Remove(LoopResultHandle);
+	OnGearFixtureResult.Remove(GearFixtureResultHandle);
 	OnRPGPresentationChanged.Clear();
 	RemoveRPGMappings();
 	if (BoundRPGInput.IsValid())

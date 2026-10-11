@@ -4,6 +4,8 @@
 #include "GameplayTagContainer.h"
 #include "Types/KnightResult.h"
 #include "Types/KnightStableIds.h"
+#include "Skills/KnightSkillTypes.h"
+#include "Skills/KnightEquipmentCombatTypes.h"
 #include "KnightSourceProjection.generated.h"
 
 namespace KnightProjection
@@ -51,11 +53,27 @@ struct KNIGHTABILITYSYSTEM_API FKnightGASProjectionPlan
 	UPROPERTY()
 	float DefenseBonus = 0.0f;
 	UPROPERTY()
+	float CritChanceBonus = 0.0f;
+	UPROPERTY()
+	float HasteBonus = 0.0f;
+	UPROPERTY()
+	float CooldownRecoveryBonus = 0.0f;
+	UPROPERTY()
+	float MasteryBonus = 0.0f;
+	UPROPERTY()
+	float VersatilityBonus = 0.0f;
+	UPROPERTY()
+	float MaxPoiseBonus = 0.0f;
+	UPROPERTY()
 	TArray<FKnightActionModifier> ActionModifiers;
 	UPROPERTY()
 	FPrimaryAssetId OptionalAbilitySetId;
 	UPROPERTY()
 	TArray<FPrimaryAssetId> OptionalAbilitySetIds;
+	UPROPERTY()
+	FKnightSkillBuild SkillBuild;
+	UPROPERTY()
+	FKnightEquipmentCombatBuild EquipmentCombatBuild;
 
 	FKnightResult Validate() const;
 	bool HasStatBonuses() const;

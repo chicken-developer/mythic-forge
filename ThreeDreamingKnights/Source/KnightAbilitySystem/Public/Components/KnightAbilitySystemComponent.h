@@ -13,6 +13,7 @@ class UKnightLifeComponent;
 class AKnightCueVisualActor;
 class UKnightDefinition;
 class AController;
+class UKnightSkillRuntimeComponent;
 struct FHitResult;
 
 USTRUCT()
@@ -90,12 +91,15 @@ public:
 	void RefreshReplicatedMontagePresentation();
 	virtual void ClearActorInfo() override;
 	FKnightResult RequestAbilityInput(const FGameplayTag& InputTag, bool bPressed, AActor* Target = nullptr);
+	FKnightResult ActivateSpecializationHandle(FGameplayAbilitySpecHandle Handle, AActor* Target);
 	AActor* FindAbilityTarget(const FGameplayTag& InputTag) const;
 	static FKnightResult ApplyDamage(AActor* Source, AActor* Target, float Amount);
 	static FKnightResult ApplyCombatDamage(AActor* Source, AActor* Target, float Amount, float PoiseDamage,
-		bool bCanDefend = true, const FHitResult* Hit = nullptr);
+		bool bCanDefend = true, const FHitResult* Hit = nullptr, bool bHeavy = false,
+		FGuid ActivationId = FGuid(), int32 HitIndex = 0);
 	FKnightResult ResetAttributesForCheckpoint();
 	FKnightResult BeginMutationFence(FGuid RequestId, FKnightMutationFence& OutFence);
+	FKnightResult ValidateItemMutationFence(const FKnightMutationFence& Fence) const;
 	bool IsMutationFenced() const;
 	FKnightResult PrepareSourceProjection(const FKnightMutationFence& Fence, const FKnightGASProjectionPlan& Plan,
 		int64 ExpectedRevision, FKnightProjectionCapability& OutCapability);
@@ -135,6 +139,9 @@ protected:
 	virtual void OnRep_ReplicatedAnimMontage() override;
 
 private:
+	friend class UKnightSkillRuntimeComponent;
+	FKnightResult PrepareConsumableEffect(const FKnightMutationFence& Fence, FGameplayEffectSpec& Spec);
+	void ExecutePreparedConsumableEffect(const FKnightMutationFence& Fence, FGameplayEffectSpec& Spec);
 	FKnightResult ValidateProjectionOwner() const;
 	FKnightResult ValidateMutationFence(const FKnightMutationFence& Fence) const;
 	FKnightResult ValidateProjectionCapability(const FKnightMutationFence& Fence,

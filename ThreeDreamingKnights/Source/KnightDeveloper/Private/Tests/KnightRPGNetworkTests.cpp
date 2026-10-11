@@ -1014,6 +1014,7 @@ namespace KnightRPGNetwork
 			}
 			Test.AddInfo(TEXT("Both-client same-instance equip race committed one exclusive assignment with real GAS stat change; other Knight projections remained exact."));
 			Pending = MakeCommand(Winner.Get(), EKnightRPGOperation::Unequip);
+			Pending.ItemInstanceId = EquipmentId;
 			Pending.SlotTag = KnightGameplayTags::Slot_Equipment_Weapon;
 			Send(Winner.Get(), Pending);
 			Enter(EKnightRPGNetworkPhase::Unequip);

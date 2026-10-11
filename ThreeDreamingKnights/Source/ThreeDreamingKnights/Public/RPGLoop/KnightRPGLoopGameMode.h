@@ -11,6 +11,8 @@ class AKnightRPGPlayerController;
 class AKnightRPGStateActor;
 class AKnightRPGUpgradeStation;
 class UKnightLootTableDefinition;
+class UKnightInventoryComponent;
+class UKnightRPGComponent;
 
 /** The primary module validates human/canonical ownership and composes the host's RPG domains. */
 UCLASS()
@@ -23,7 +25,7 @@ public:
 	virtual void InitGameState() override;
 	virtual FKnightResult TryInteract(APlayerController* Player) override;
 	virtual FKnightResult TryRestartDrill(APlayerController* Player) override;
-	FKnightRPGCommandResult ExecuteRPGCommand(AKnightRPGPlayerController* Player, const FKnightRPGCommand& Command);
+	virtual FKnightRPGCommandResult ExecuteRPGCommand(AKnightRPGPlayerController* Player, const FKnightRPGCommand& Command);
 	FKnightResult TryContinueRPGLoop(APlayerController* Player);
 	AKnightRPGStateActor* GetRPGState() const;
 	AKnightRPGUpgradeStation* GetUpgradeStation() const;
@@ -31,11 +33,16 @@ public:
 	bool IsInUpgradeSafeZone(const AActor* Knight) const;
 
 protected:
+	virtual int32 GetInitialInventoryCapacity() const;
+	virtual bool ShouldIssueLegacyEncounterRewards() const;
+	virtual FKnightResult BuildCaller(APlayerController* Player, FKnightRPGCallerContext& OutCaller) const;
+	virtual FKnightResult ConfigureRPGDomains(UKnightInventoryComponent* Inventory, UKnightRPGComponent* RPG);
+	virtual FKnightResult InitializeRPGDomains(UKnightInventoryComponent* Inventory, UKnightRPGComponent* RPG,
+		TConstArrayView<FKnightRPGKnightRegistration> Registrations);
 	virtual void BeginPlay() override;
 	virtual void EndPlay(EEndPlayReason::Type EndPlayReason) override;
 
 private:
-	FKnightResult BuildCaller(APlayerController* Player, FKnightRPGCallerContext& OutCaller) const;
 	FKnightResult IssueEncounterReward();
 	void HandleArenaSnapshot(const FKnightPartyArenaSnapshot& Snapshot);
 

@@ -1,0 +1,597 @@
+{
+  "status": "pass",
+  "execution": "Python design validation; no Unreal collision queried",
+  "errors": [],
+  "road_slopes": [
+    {
+      "id": "main_axis",
+      "angle_deg": 0.0,
+      "run_m": 9.8,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "main_axis",
+      "angle_deg": 8.231,
+      "run_m": 34.567,
+      "required_run_m": 23.523
+    },
+    {
+      "id": "main_axis",
+      "angle_deg": 0.0,
+      "run_m": 9.8,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "main_axis",
+      "angle_deg": 0.0,
+      "run_m": 9.8,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "main_axis",
+      "angle_deg": 6.375,
+      "run_m": 17.9,
+      "required_run_m": 9.409
+    },
+    {
+      "id": "main_axis",
+      "angle_deg": 0.0,
+      "run_m": 9.8,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "main_axis",
+      "angle_deg": 0.0,
+      "run_m": 9.8,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "main_axis",
+      "angle_deg": 2.236,
+      "run_m": 51.233,
+      "required_run_m": 9.409
+    },
+    {
+      "id": "main_axis",
+      "angle_deg": 0.0,
+      "run_m": 9.8,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "main_axis",
+      "angle_deg": 0.0,
+      "run_m": 9.8,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "main_axis",
+      "angle_deg": 4.858,
+      "run_m": 47.067,
+      "required_run_m": 18.819
+    },
+    {
+      "id": "main_axis",
+      "angle_deg": 0.0,
+      "run_m": 9.8,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "main_axis",
+      "angle_deg": 0.0,
+      "run_m": 75.0,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "main_axis",
+      "angle_deg": 0.0,
+      "run_m": 62.5,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "main_axis",
+      "angle_deg": 0.0,
+      "run_m": 9.8,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "main_axis",
+      "angle_deg": 9.53,
+      "run_m": 59.567,
+      "required_run_m": 47.046
+    },
+    {
+      "id": "main_axis",
+      "angle_deg": 0.0,
+      "run_m": 9.8,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "main_axis",
+      "angle_deg": 0.0,
+      "run_m": 27.5,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "council_approach",
+      "angle_deg": 0.0,
+      "run_m": 20.833,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "residential",
+      "angle_deg": 0.0,
+      "run_m": 107.322,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "residential",
+      "angle_deg": 0.0,
+      "run_m": 109.484,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "residential",
+      "angle_deg": 0.0,
+      "run_m": 93.634,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "residential",
+      "angle_deg": 0.0,
+      "run_m": 42.5,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "residential",
+      "angle_deg": 0.0,
+      "run_m": 30.0,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "craft",
+      "angle_deg": 0.0,
+      "run_m": 109.167,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "craft",
+      "angle_deg": 0.0,
+      "run_m": 117.692,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "craft",
+      "angle_deg": 0.0,
+      "run_m": 95.819,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "craft",
+      "angle_deg": 0.0,
+      "run_m": 30.0,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "west_middle_loop",
+      "angle_deg": 0.0,
+      "run_m": 67.186,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "west_middle_loop",
+      "angle_deg": 0.0,
+      "run_m": 86.718,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "west_middle_loop",
+      "angle_deg": 0.0,
+      "run_m": 4.8,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "west_middle_loop",
+      "angle_deg": 1.551,
+      "run_m": 73.884,
+      "required_run_m": 9.409
+    },
+    {
+      "id": "west_middle_loop",
+      "angle_deg": 0.0,
+      "run_m": 4.8,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "west_middle_loop",
+      "angle_deg": 0.0,
+      "run_m": 4.8,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "west_middle_loop",
+      "angle_deg": 2.289,
+      "run_m": 50.034,
+      "required_run_m": 9.409
+    },
+    {
+      "id": "west_middle_loop",
+      "angle_deg": 0.0,
+      "run_m": 4.8,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "west_middle_loop",
+      "angle_deg": 0.0,
+      "run_m": 83.437,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "east_middle_loop",
+      "angle_deg": 0.0,
+      "run_m": 83.437,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "east_middle_loop",
+      "angle_deg": 0.0,
+      "run_m": 4.8,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "east_middle_loop",
+      "angle_deg": 4.626,
+      "run_m": 24.719,
+      "required_run_m": 9.409
+    },
+    {
+      "id": "east_middle_loop",
+      "angle_deg": 0.0,
+      "run_m": 4.8,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "east_middle_loop",
+      "angle_deg": 0.0,
+      "run_m": 4.8,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "east_middle_loop",
+      "angle_deg": 5.587,
+      "run_m": 20.446,
+      "required_run_m": 9.409
+    },
+    {
+      "id": "east_middle_loop",
+      "angle_deg": 0.0,
+      "run_m": 4.8,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "east_middle_loop",
+      "angle_deg": 0.0,
+      "run_m": 66.667,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "upper_west",
+      "angle_deg": 0.0,
+      "run_m": 125.0,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "upper_west",
+      "angle_deg": 0.0,
+      "run_m": 73.452,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "upper_west",
+      "angle_deg": 0.0,
+      "run_m": 3.8,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "upper_west",
+      "angle_deg": 10.717,
+      "run_m": 21.135,
+      "required_run_m": 18.819
+    },
+    {
+      "id": "upper_west",
+      "angle_deg": 0.0,
+      "run_m": 3.8,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "upper_west",
+      "angle_deg": 0.0,
+      "run_m": 33.592,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "upper_east",
+      "angle_deg": 0.0,
+      "run_m": 81.45,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "upper_east",
+      "angle_deg": 0.0,
+      "run_m": 84.281,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "forge_approach",
+      "angle_deg": 0.0,
+      "run_m": 5.8,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "forge_approach",
+      "angle_deg": 3.244,
+      "run_m": 70.562,
+      "required_run_m": 18.819
+    },
+    {
+      "id": "forge_approach",
+      "angle_deg": 0.0,
+      "run_m": 5.8,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "forge_approach",
+      "angle_deg": 0.0,
+      "run_m": 47.508,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "forge_to_upper",
+      "angle_deg": 0.0,
+      "run_m": 5.8,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "forge_to_upper",
+      "angle_deg": 4.348,
+      "run_m": 39.458,
+      "required_run_m": 14.114
+    },
+    {
+      "id": "forge_to_upper",
+      "angle_deg": 0.0,
+      "run_m": 5.8,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "forge_to_upper",
+      "angle_deg": 0.0,
+      "run_m": 5.8,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "forge_to_upper",
+      "angle_deg": 3.765,
+      "run_m": 45.585,
+      "required_run_m": 14.114
+    },
+    {
+      "id": "forge_to_upper",
+      "angle_deg": 0.0,
+      "run_m": 5.8,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "port_descent",
+      "angle_deg": 0.0,
+      "run_m": 4.8,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "port_descent",
+      "angle_deg": 6.211,
+      "run_m": 27.565,
+      "required_run_m": 14.114
+    },
+    {
+      "id": "port_descent",
+      "angle_deg": 0.0,
+      "run_m": 4.8,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "port_descent",
+      "angle_deg": 0.0,
+      "run_m": 4.8,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "port_descent",
+      "angle_deg": 11.132,
+      "run_m": 25.41,
+      "required_run_m": 23.523
+    },
+    {
+      "id": "port_descent",
+      "angle_deg": 0.0,
+      "run_m": 4.8,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "port_descent",
+      "angle_deg": 0.0,
+      "run_m": 4.8,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "port_descent",
+      "angle_deg": 6.118,
+      "run_m": 37.318,
+      "required_run_m": 18.819
+    },
+    {
+      "id": "port_descent",
+      "angle_deg": 0.0,
+      "run_m": 4.8,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "port_descent",
+      "angle_deg": 0.0,
+      "run_m": 4.8,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "port_descent",
+      "angle_deg": 6.737,
+      "run_m": 33.861,
+      "required_run_m": 18.819
+    },
+    {
+      "id": "port_descent",
+      "angle_deg": 0.0,
+      "run_m": 4.8,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "port_descent",
+      "angle_deg": 0.0,
+      "run_m": 44.877,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "port_access",
+      "angle_deg": 0.0,
+      "run_m": 17.179,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "port_access",
+      "angle_deg": 0.0,
+      "run_m": 36.61,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "south_exit",
+      "angle_deg": 0.0,
+      "run_m": 104.725,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "south_exit",
+      "angle_deg": 0.0,
+      "run_m": 60.519,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "south_exit",
+      "angle_deg": 0.0,
+      "run_m": 45.833,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "south_exit",
+      "angle_deg": 0.0,
+      "run_m": 16.667,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "nw_exit",
+      "angle_deg": 0.0,
+      "run_m": 5.3,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "nw_exit",
+      "angle_deg": 6.471,
+      "run_m": 35.264,
+      "required_run_m": 18.819
+    },
+    {
+      "id": "nw_exit",
+      "angle_deg": 0.0,
+      "run_m": 5.3,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "nw_exit",
+      "angle_deg": 0.0,
+      "run_m": 5.3,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "nw_exit",
+      "angle_deg": 3.466,
+      "run_m": 33.02,
+      "required_run_m": 9.409
+    },
+    {
+      "id": "nw_exit",
+      "angle_deg": 0.0,
+      "run_m": 5.3,
+      "required_run_m": 0.0
+    },
+    {
+      "id": "nw_exit",
+      "angle_deg": 0.0,
+      "run_m": 24.166,
+      "required_run_m": 0.0
+    }
+  ],
+  "max_angle_deg": 11.132,
+  "connected_nodes": 80,
+  "samples": [
+    {
+      "id": "sample_main_gate",
+      "expected_m": 0,
+      "compiled_m": 0
+    },
+    {
+      "id": "sample_market",
+      "expected_m": 8,
+      "compiled_m": 8
+    },
+    {
+      "id": "sample_residential",
+      "expected_m": 8,
+      "compiled_m": 8
+    },
+    {
+      "id": "sample_craft",
+      "expected_m": 8,
+      "compiled_m": 8
+    },
+    {
+      "id": "sample_central_plaza",
+      "expected_m": 8,
+      "compiled_m": 8
+    },
+    {
+      "id": "sample_council_hall_ground",
+      "expected_m": 18,
+      "compiled_m": 18
+    },
+    {
+      "id": "sample_barracks_ground",
+      "expected_m": 18,
+      "compiled_m": 18
+    },
+    {
+      "id": "sample_watchtower_ground",
+      "expected_m": 22,
+      "compiled_m": 22
+    },
+    {
+      "id": "sample_waterfront",
+      "expected_m": 2,
+      "compiled_m": 2
+    },
+    {
+      "id": "sample_forge_yard",
+      "expected_m": 12,
+      "compiled_m": 12
+    }
+  ],
+  "building_count": 171,
+  "actor_count": 1281
+}

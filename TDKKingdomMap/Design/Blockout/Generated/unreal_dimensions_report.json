@@ -1,0 +1,11 @@
+{
+	"status": "pass",
+	"measured_components": 1280,
+	"errors": [],
+	"examples": [
+		{
+			"id": "council_hall_body",
+			"label": "council_hall\nWhole building (all mesh parts, including roof)\nL: 35.28 m | W: 52.50 m | H: 56.30 m\nBase Z: +17.00 m | Top Z: +73.30 m"
+		}
+	]
+}

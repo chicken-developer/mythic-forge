@@ -1,0 +1,33 @@
+{
+	"execution": "Actual standalone UE game, DX12 offscreen viewport, stationary outside_vegetation camera, wall-clock frame intervals; 180 warmup + 300 sampled frames. Not manual PIE or a full-map performance guarantee.",
+	"engine": "5.8.3-58210709+++UE5+Release-5.8",
+	"cpu": "AMD Ryzen Threadripper 3990X 64-Core Processor ",
+	"gpu": "AMD Radeon RX 6900 XT",
+	"level": "/Game/Maps/Blockout/L_ThanhA_Blockout",
+	"width": 1600,
+	"height": 1200,
+	"scalability_cvars":
+	{
+		"sg.ViewDistanceQuality": 3,
+		"sg.AntiAliasingQuality": 3,
+		"sg.ShadowQuality": 3,
+		"sg.GlobalIlluminationQuality": 3,
+		"sg.ReflectionQuality": 3,
+		"sg.PostProcessQuality": 3,
+		"sg.TextureQuality": 3,
+		"sg.EffectsQuality": 3,
+		"sg.FoliageQuality": 3,
+		"sg.ShadingQuality": 3,
+		"r.ScreenPercentage": 100,
+		"r.VSync": 0,
+		"t.MaxFPS": 0
+	},
+	"sampled_frames": 300,
+	"sampled_seconds": 18.368026901036501,
+	"average_fps": 16.332728692980687,
+	"mean_frame_ms": 61.226756336788334,
+	"p95_frame_ms": 12.506201863288879,
+	"max_frame_ms": 15154.846202582121,
+	"fixed_simulation_timestep": false,
+	"environment_fingerprint": "201d769c6b6e4558"
+}

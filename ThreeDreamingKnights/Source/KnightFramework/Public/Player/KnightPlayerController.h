@@ -29,6 +29,7 @@ public:
 	AKnightPlayerController();
 	AKnightCharacter* GetControlledKnight() const;
 	UKnightInputConfig* GetKnightInputConfig() const;
+	int32 GetGameplayMappingPriority() const;
 	const FKnightResult& GetLastCommandResult() const;
 	void RequestSwitchKnight(int32 DesiredSlot);
 	void RequestRestartDrill();

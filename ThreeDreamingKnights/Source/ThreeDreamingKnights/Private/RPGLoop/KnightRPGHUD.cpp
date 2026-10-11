@@ -78,6 +78,20 @@ void AKnightRPGHUD::RefreshRPGObjective()
 		RPGObjective = NSLOCTEXT("KnightRPG", "HUDWaiting", "Waiting for RPG campaign state.");
 		return;
 	}
+	AKnightCharacter* CurrentKnight = RPGPlayer.IsValid() ? RPGPlayer->GetControlledKnight() : nullptr;
+	const FKnightRPGKnightView View = CurrentKnight != nullptr
+		? RPGState->GetRPG()->GetKnightView(CurrentKnight->GetKnightEntityId()) : FKnightRPGKnightView();
+	if (View.bGearEnabled)
+	{
+		const FKnightInventoryView Bag = RPGState->GetInventory()->GetView();
+		RPGObjective = NSLOCTEXT("KnightGearLab", "GearHUDHelp",
+			"I: Character / talents / spellbook / inventory. Return to the cyan sanctuary to change gear or claim rewards.");
+		ProgressionFeedback = FText::Format(NSLOCTEXT("KnightGearLab", "GearHUDProgression",
+			"Shared bag {0}/{1} | level {2}, equipment {3}/12, Power bonus +{4}"),
+			FText::AsNumber(Bag.GetBagCount()), FText::AsNumber(Bag.Capacity), FText::AsNumber(View.Level),
+			FText::AsNumber(View.Assignments.Num()), FText::AsNumber(View.StatBonuses.AttackPower));
+		return;
+	}
 	switch (RPGState->GetLoopSnapshot().Stage)
 	{
 	case EKnightRPGLoopStage::EncounterA:
@@ -96,9 +110,6 @@ void AKnightRPGHUD::RefreshRPGObjective()
 		RPGObjective = NSLOCTEXT("KnightRPG", "HUDComplete", "RPG complete! Host R / Y replays B. Loot is awarded once per run.");
 		break;
 	}
-	AKnightCharacter* CurrentKnight = RPGPlayer.IsValid() ? RPGPlayer->GetControlledKnight() : nullptr;
-	const FKnightRPGKnightView View = CurrentKnight != nullptr
-		? RPGState->GetRPG()->GetKnightView(CurrentKnight->GetKnightEntityId()) : FKnightRPGKnightView();
 	ProgressionFeedback = FText::Format(NSLOCTEXT("KnightRPG", "HUDProgression", "Shared loot stacks {0} | current Knight: {1} skill points, {2} equipment slots, attack +{3}"),
 		FText::AsNumber(RPGState->GetInventory()->GetView().Items.Num()), FText::AsNumber(View.SkillPoints),
 		FText::AsNumber(View.Assignments.Num()), FText::AsNumber(View.StatBonuses.AttackPower));

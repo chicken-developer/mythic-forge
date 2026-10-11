@@ -11,7 +11,9 @@
 class UKnightAbilitySystemComponent;
 class UKnightGameplayAbility;
 class UStaticMeshComponent;
+class UPrimitiveComponent;
 class UAnimSequenceBase;
+struct FOnAttributeChangeData;
 
 UENUM(BlueprintType, meta = (ScriptName = "KnightCombatOutcomeType"))
 enum class EKnightCombatOutcome : uint8
@@ -117,6 +119,11 @@ public:
 		AActor* Target = nullptr, float Amount = 0.0f);
 	virtual void ResolveIncomingDamage(AActor* Source, float InDamage, float PoiseDamage,
 		bool bCanDefend, float& OutHealthDamage) override;
+	virtual void ResolveIncomingDamageWithContext(AActor* Source, float InDamage, float PoiseDamage,
+		bool bCanDefend, const FKnightIncomingHitContext& Context, float& OutHealthDamage) override;
+	float GetMaxPoise() const;
+	/** Restores a validated in-memory pool after the owning build projection has committed. */
+	FKnightResult RestoreSnapshotPoise(float InPoise);
 	FOnKnightCombatSnapshotChanged OnCombatSnapshotChanged;
 	FOnKnightCombatOutcome OnCombatOutcome;
 	FOnKnightCombatProfileChanged OnProfileChanged;
@@ -127,6 +134,7 @@ protected:
 		FActorComponentTickFunction* ThisTickFunction) override;
 
 private:
+	void HandlePoiseBonusChanged(const FOnAttributeChangeData& Change);
 	UFUNCTION()
 	void OnRep_ProfileId();
 	UFUNCTION()
@@ -134,6 +142,16 @@ private:
 	FKnightResult ApplyProfile();
 	void RefreshSnapshot();
 	void PerformWeaponSweep();
+	void CommitWeaponHit(const FHitResult& Hit, const FKnightAttackDefinition& Attack, FGameplayTag ActionTag,
+		uint64 Generation, FName WindowId, const TWeakObjectPtr<UKnightGameplayAbility>& Ability, int32 Index);
+	void FlushDeferredWeaponHits(uint64 Generation, FName WindowId,
+		const TWeakObjectPtr<UKnightGameplayAbility>& Ability, int32 Index);
+	void ClearDeferredWeaponHits();
+	void BeginTraceGeometryDiagnostics();
+	void RecordTraceGeometrySweep(const FVector& Hand, const FVector& Head, const FVector& PreviousHead,
+		const TArray<FHitResult>& Hits, const TArray<FHitResult>& MovingHits);
+	void RecordTraceGeometryDecision(const FHitResult& Hit, FName Decision);
+	void EndTraceGeometryDiagnostics(FName Reason);
 	bool IsTraceCapabilityCurrent(uint64 Generation, FName WindowId,
 		const TWeakObjectPtr<UKnightGameplayAbility>& Ability, int32 Index) const;
 	void EnterStagger(AActor* Source);
@@ -160,6 +178,8 @@ private:
 	TWeakObjectPtr<UKnightGameplayAbility> AttackAbility;
 	FKnightAbilitySetHandle GrantHandle;
 	TSet<TWeakObjectPtr<AActor>> WindowHitActors;
+	TMap<TWeakObjectPtr<AActor>, FHitResult> DeferredWindowHits;
+	TArray<TWeakObjectPtr<AActor>> DeferredWindowHitOrder;
 	FName ActiveWindow;
 	FVector PreviousHammerHead = FVector::ZeroVector;
 	FGameplayTag AttackAction;
@@ -168,6 +188,7 @@ private:
 	bool bComboWindow = false;
 	bool bBufferedAttack = false;
 	bool bEndingPlay = false;
+	bool bSnapshotPublicationPending = false;
 	float DodgeStartedAt = 0.0f;
 	float ParryStartedAt = 0.0f;
 	float LockValidationElapsed = 0.0f;
@@ -175,6 +196,30 @@ private:
 	FDelegateHandle RuneTagHandle;
 	FDelegateHandle DownedTagHandle;
 	FDelegateHandle DeadTagHandle;
+	FDelegateHandle PoiseBonusHandle;
 	FTimerHandle StaggerTimer;
 	FGuid LockCameraHandle;
+	FGuid AttackActivationId;
+	int32 WindowHitIndex = 0;
+	struct FTraceGeometryDiagnostics
+	{
+		TWeakObjectPtr<UPrimitiveComponent> ArmorZone;
+		bool bActive = false;
+		bool bLoggedContact = false;
+		bool bLoggedZone = false;
+		bool bLoggedAccepted = false;
+		bool bLoggedZoneDedup = false;
+		int32 Sweeps = 0;
+		int32 ArmorCandidates = 0;
+		int32 OtherCandidates = 0;
+		FName FirstContact;
+		FName AcceptedComponent;
+		FVector HandMin = FVector::ZeroVector;
+		FVector HandMax = FVector::ZeroVector;
+		FVector HeadMin = FVector::ZeroVector;
+		FVector HeadMax = FVector::ZeroVector;
+		float MinSegmentCenterDistance = MAX_flt;
+	};
+	FTraceGeometryDiagnostics TraceGeometryDiagnostics;
+	int32 TraceGeometryLogCount = 0;
 };

@@ -75,7 +75,7 @@ void AKnightPartyArenaHUD::BindControlledKnight(AKnightCharacter* Previous, AKni
 		DisplayedName = NSLOCTEXT("KnightArena", "WaitingForPawn", "Waiting for your Knight");
 		return;
 	}
-	DisplayedName = Current->GetKnightDisplayName();
+	DisplayedName = GetKnightLabel(Current);
 	UKnightAbilitySystemComponent* ASC = Current->GetKnightAbilitySystem();
 	AbilitySystem = ASC;
 	Life = Current->GetLifeComponent();
@@ -275,7 +275,7 @@ void AKnightPartyArenaHUD::DrawHUD()
 		DrawText(Text.ToString(), Color, 25.0f, Y, nullptr, 1.15f);
 		Y += 25.0f;
 	};
-	DrawLine(NSLOCTEXT("KnightArena", "ArenaTitle", "PARTY ARENA: wave > two-phase boss"), FLinearColor::Yellow);
+	DrawLine(GetArenaTitle(), FLinearColor::Yellow);
 	DrawLine(FText::Format(NSLOCTEXT("KnightArena", "Resources", "{0} | Health {1}/{2} | Stamina {3} | Rune {4}"),
 		DisplayedName, FText::AsNumber(FMath::RoundToInt(Health)), FText::AsNumber(FMath::RoundToInt(MaxHealth)),
 		FText::AsNumber(FMath::RoundToInt(Stamina)), FText::AsNumber(FMath::RoundToInt(RuneEnergy))));
@@ -306,9 +306,9 @@ void AKnightPartyArenaHUD::DrawHUD()
 		break;
 	}
 	DrawLine(Objective, IsDisplayingArenaDefeat() ? FLinearColor::Red : FLinearColor::Green);
-	DrawLine(NSLOCTEXT("KnightArena", "CombatKeys", "WASD move | LMB light / RMB heavy | Q block / C parry / Shift dodge | MMB lock | G rune / H finisher"));
-	DrawLine(NSLOCTEXT("KnightArena", "PartyKeys", "N follow / Z hold / B focus locked enemy / K regroup | gamepad View cycles | E / X hold revive | Tab / RB switch"));
-	DrawLine(NSLOCTEXT("KnightArena", "ResourceHint", "Arena recovery: +8 stamina / +6 rune each second; health requires revive/checkpoint."));
+	DrawLine(GetCombatHelp());
+	DrawLine(GetPartyHelp());
+	DrawLine(GetRecoveryHelp());
 	DrawLine(CommandFeedback, FLinearColor(0.0f, 1.0f, 1.0f));
 	DrawLine(FText::FromString(AIDebugFeedback), FLinearColor(0.6f, 0.8f, 1.0f));
 }
@@ -316,6 +316,31 @@ void AKnightPartyArenaHUD::DrawHUD()
 const FKnightPartyArenaSnapshot& AKnightPartyArenaHUD::GetDisplayedArenaSnapshot() const
 {
 	return DisplayedArena;
+}
+
+FText AKnightPartyArenaHUD::GetArenaTitle() const
+{
+	return NSLOCTEXT("KnightArena", "ArenaTitle", "PARTY ARENA: wave > two-phase boss");
+}
+
+FText AKnightPartyArenaHUD::GetCombatHelp() const
+{
+	return NSLOCTEXT("KnightArena", "CombatKeys", "WASD move | LMB light / RMB heavy | Q block / C parry / Shift dodge | MMB lock | G rune / H finisher");
+}
+
+FText AKnightPartyArenaHUD::GetPartyHelp() const
+{
+	return NSLOCTEXT("KnightArena", "PartyKeys", "N follow / Z hold / B focus locked enemy / K regroup | gamepad View cycles | E / X hold revive | Tab / RB switch");
+}
+
+FText AKnightPartyArenaHUD::GetRecoveryHelp() const
+{
+	return NSLOCTEXT("KnightArena", "ResourceHint", "Arena recovery: +8 stamina / +6 rune each second; health requires revive/checkpoint.");
+}
+
+FText AKnightPartyArenaHUD::GetKnightLabel(const AKnightCharacter* InKnight) const
+{
+	return InKnight->GetKnightDisplayName();
 }
 
 bool AKnightPartyArenaHUD::IsDisplayingArenaVictory() const

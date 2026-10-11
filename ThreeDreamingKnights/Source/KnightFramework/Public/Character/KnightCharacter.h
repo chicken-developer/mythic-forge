@@ -10,6 +10,7 @@
 #include "KnightCharacter.generated.h"
 
 class UCameraComponent;
+struct FKnightAttributeDefaults;
 class UDamageType;
 class UKnightHeroDefinition;
 class UKnightAbilitySystemComponent;
@@ -60,6 +61,7 @@ public:
 	FOnKnightIdentityChanged OnIdentityChanged;
 
 protected:
+	virtual FKnightAttributeDefaults GetInitialAttributeDefaults() const;
 	virtual void BeginPlay() override;
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 	virtual void OnRep_Controller() override;

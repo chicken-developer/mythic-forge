@@ -1,4 +1,5 @@
 #include "Context/KnightAIContextComponent.h"
+#include "Skills/KnightSkillRuntimeComponent.h"
 
 #include "Abilities/GameplayAbility.h"
 #include "AbilitySystemGlobals.h"
@@ -549,6 +550,12 @@ FKnightAIDecisionSnapshot UKnightAIContextComponent::GetDecisionSnapshot() const
 	{
 		FKnightAIActionEntry Selection;
 		Snapshot.bCanSelectAction = ActionSet->TrySelectAction(MakeSelectionContext(), Selection).IsSuccess();
+		if (HasSpecialization())
+		{
+			int32 Slot = 0;
+			AActor* SkillTarget = nullptr;
+			Snapshot.bCanSelectAction = SelectSpecializationAction(Slot, SkillTarget).IsSuccess();
+		}
 	}
 	return Snapshot;
 }
@@ -761,6 +768,149 @@ FKnightResult UKnightAIContextComponent::TryBeginAction(const FKnightAIActionEnt
 	}
 	return BeginActionSpec(Selected.ActionTag, Selected.ActionKey, Selected.CooldownSeconds,
 		bUseAttackLease, OutActionToken);
+}
+
+bool UKnightAIContextComponent::HasSpecialization() const
+{
+	const UKnightSkillRuntimeComponent* Runtime = ControlledPawn.IsValid()
+		? ControlledPawn->FindComponentByClass<UKnightSkillRuntimeComponent>() : nullptr;
+	return Runtime != nullptr && !Runtime->GetBuild().SpecId.IsNone();
+}
+
+FKnightResult UKnightAIContextComponent::SelectSpecializationAction(int32& OutSlot, AActor*& OutTarget) const
+{
+	OutSlot = 0;
+	OutTarget = nullptr;
+	const UKnightSkillRuntimeComponent* Runtime = ControlledPawn.IsValid()
+		? ControlledPawn->FindComponentByClass<UKnightSkillRuntimeComponent>() : nullptr;
+	if (Runtime == nullptr || Runtime->GetBuild().SpecId.IsNone())
+	{
+		return KnightAIFailure(EKnightError::NotFound, TEXT("AISpecialization"));
+	}
+	const FKnightSkillRuntimeState State = Runtime->GetSkillState();
+	const EKnightSkillRole Role = FKnightSkillCatalog::Role(State.Build.SpecId);
+	TArray<int32> Priority;
+	AActor* Ally = Runtime->SelectLowestHealthAlly(1200.0f);
+	if (Role == EKnightSkillRole::Healer && Ally != nullptr)
+	{
+		Priority = { 4, 2, 3, 1 };
+	}
+	else if (Role == EKnightSkillRole::Tank)
+	{
+		Priority = State.Shield < 20.0f ? TArray<int32> { 4, 3, 2, 1 } : TArray<int32> { 4, 2, 1, 3 };
+	}
+	else if (State.Build.SpecId == TEXT("Pluto"))
+	{
+		const UKnightSkillRuntimeComponent* EnemyRuntime = Target.IsValid()
+			? Target->FindComponentByClass<UKnightSkillRuntimeComponent>() : nullptr;
+		const bool bCanShatter = EnemyRuntime != nullptr && EnemyRuntime->GetSkillState().Chilled >= 3;
+		Priority = bCanShatter ? TArray<int32> { 4, 2, 3, 1 } : TArray<int32> { 4, 3, 1, 2 };
+	}
+	else
+	{
+		Priority = State.Stacks >= 2 ? TArray<int32> { 4, 2, 1, 3 } : TArray<int32> { 4, 1, 3, 2 };
+	}
+	for (int32 Slot : Priority)
+	{
+		const FKnightSpecActionDefinition D = FKnightSkillCatalog::GetSkill(State.Build, Slot);
+		AActor* Candidate = D.bFriendly ? Ally != nullptr ? Ally : ControlledPawn.Get() : Target.Get();
+		if (Role == EKnightSkillRole::Healer && Ally == nullptr && Slot != 1)
+		{
+			continue;
+		}
+		if (Runtime->ValidateSkill(Slot, Candidate).IsSuccess())
+		{
+			OutSlot = Slot;
+			OutTarget = Candidate;
+			return FKnightResult::Success();
+		}
+	}
+	return KnightAIFailure(EKnightError::Conflict, TEXT("AISkillCooldownOrRange"));
+}
+
+FKnightResult UKnightAIContextComponent::TryBeginSpecializationAction(bool bUseAttackLease, FGuid& OutActionToken)
+{
+	OutActionToken.Invalidate();
+	const FKnightResult ContextResult = ValidateContext();
+	if (!ContextResult.IsSuccess() || !Life->IsAlive() || ActiveActionToken.IsValid() || bStartingAction)
+	{
+		return ContextResult.IsSuccess() ? KnightAIFailure(EKnightError::Conflict, TEXT("AISkillRunning")) : ContextResult;
+	}
+	int32 Slot = 0;
+	AActor* SkillTarget = nullptr;
+	const FKnightResult Selection = SelectSpecializationAction(Slot, SkillTarget);
+	if (!Selection.IsSuccess())
+	{
+		return Selection;
+	}
+	UKnightSkillRuntimeComponent* Runtime = ControlledPawn->FindComponentByClass<UKnightSkillRuntimeComponent>();
+	const FKnightSpecActionDefinition D = FKnightSkillCatalog::GetSkill(Runtime->GetBuild(), Slot);
+	const uint64 StartingGeneration = OwnershipGeneration;
+	const TWeakObjectPtr<UKnightAbilitySystemComponent> StartingASC = AbilitySystem;
+	const TWeakObjectPtr<APawn> StartingPawn = ControlledPawn;
+	const TWeakObjectPtr<UKnightCombatDirectorSubsystem> StartingDirector = Director;
+	const FKnightEntityId StartingPawnId = PawnId;
+	const TWeakObjectPtr<UKnightSkillRuntimeComponent> StartingRuntime = Runtime;
+	TGuardValue<bool> StartingGuard(bStartingAction, true);
+	FKnightAttackLease Lease;
+	bool bLeaseTransferred = false;
+	ON_SCOPE_EXIT
+	{
+		if (!bLeaseTransferred && Lease.IsValid() && StartingDirector.IsValid() && StartingPawn.IsValid())
+		{
+			StartingDirector->ReleaseAttackToken(StartingPawn.Get(), Lease);
+		}
+	};
+	if (bUseAttackLease && !D.bFriendly && Slot != 4)
+	{
+		if (!Director.IsValid())
+		{
+			return KnightAIFailure(EKnightError::InvalidState, TEXT("AISkillDirector"));
+		}
+		const FKnightResult LeaseResult = StartingDirector->TryAcquireAttackToken(
+			StartingPawn.Get(), SkillTarget, AttackLeaseDuration, Lease);
+		if (!LeaseResult.IsSuccess())
+		{
+			return LeaseResult;
+		}
+	}
+	if (OwnershipGeneration != StartingGeneration || ControlledPawn != StartingPawn || AbilitySystem != StartingASC
+		|| PawnId != StartingPawnId || !StartingRuntime.IsValid() || !ValidateContext().IsSuccess())
+	{
+		return KnightAIFailure(EKnightError::Cancelled, TEXT("AISkillOwnershipChangedBeforeActivation"));
+	}
+	ActiveActionToken = FGuid::NewGuid();
+	OutActionToken = ActiveActionToken;
+	const FGuid StartedToken = ActiveActionToken;
+	ActiveSpec = StartingRuntime->GetSkillHandle(Slot);
+	ActiveLease = Lease;
+	bLeaseTransferred = true;
+	LastActionToken.Invalidate();
+	LastActionStatus = EKnightAIActionStatus::Unknown;
+	const FKnightResult Result = StartingRuntime->RequestSkill(Slot, SkillTarget);
+	if (OwnershipGeneration != StartingGeneration || ControlledPawn != StartingPawn || AbilitySystem != StartingASC
+		|| PawnId != StartingPawnId || !ValidateContext().IsSuccess())
+	{
+		if (ActiveActionToken == StartedToken)
+		{
+			FinishOwnedAction(EKnightAIActionStatus::Cancelled, true);
+		}
+		return KnightAIFailure(EKnightError::Cancelled, TEXT("AISkillOwnershipChangedDuringActivation"));
+	}
+	if (!Result.IsSuccess())
+	{
+		if (ActiveActionToken == StartedToken)
+		{
+			FinishOwnedAction(EKnightAIActionStatus::Failed, true);
+		}
+		return Result;
+	}
+	if (LastActionToken == StartedToken && LastActionStatus == EKnightAIActionStatus::Cancelled)
+	{
+		return KnightAIFailure(EKnightError::Cancelled, TEXT("AISkillCancelledDuringActivation"));
+	}
+	OnDecisionChanged.Broadcast();
+	return FKnightResult::Success();
 }
 
 FKnightResult UKnightAIContextComponent::TryBeginRevive(FGuid& OutActionToken)

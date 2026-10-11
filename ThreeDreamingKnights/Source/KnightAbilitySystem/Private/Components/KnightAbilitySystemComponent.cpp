@@ -16,6 +16,7 @@
 #include "Math/NumericLimits.h"
 #include "Net/UnrealNetwork.h"
 #include "Tags/KnightGameplayTags.h"
+#include "Skills/KnightSkillRuntimeComponent.h"
 
 namespace
 {
@@ -263,6 +264,10 @@ FKnightResult UKnightAbilitySystemComponent::ResetAttributesForCheckpoint()
 	if (IsMutationFenced())
 	{
 		return KnightGASFailure(EKnightError::Conflict, TEXT("CheckpointProjectionFence"));
+	}
+	if (UKnightSkillRuntimeComponent* Skills = GetOwner()->FindComponentByClass<UKnightSkillRuntimeComponent>())
+	{
+		Skills->ResetForCheckpoint();
 	}
 	const FKnightResult DefaultsResult = ApplyAttributeDefaults();
 	if (!DefaultsResult.IsSuccess())
@@ -519,6 +524,20 @@ FKnightResult UKnightAbilitySystemComponent::RequestAbilityInput(const FGameplay
 	return KnightGASFailure(EKnightError::NotFound, TEXT("InputAbilityNotGranted"));
 }
 
+FKnightResult UKnightAbilitySystemComponent::ActivateSpecializationHandle(FGameplayAbilitySpecHandle Handle, AActor* Target)
+{
+	if (GetOwner() == nullptr || !GetOwner()->HasAuthority() || IsMutationFenced())
+	{
+		return KnightGASFailure(EKnightError::InvalidState, TEXT("SkillActivationAuthority"));
+	}
+	FGameplayEventData Payload;
+	Payload.Instigator = GetOwner();
+	Payload.Target = Target;
+	const bool bActivated = InternalTryActivateAbility(Handle, FPredictionKey(), nullptr, nullptr, &Payload);
+	return bActivated ? FKnightResult::Success()
+		: KnightGASFailure(EKnightError::InvalidState, TEXT("SkillActivationRejected"));
+}
+
 AActor* UKnightAbilitySystemComponent::FindAbilityTarget(const FGameplayTag& InputTag) const
 {
 	if (!IsValid(GetOwner()) || GetWorld() == nullptr)
@@ -563,7 +582,8 @@ FKnightResult UKnightAbilitySystemComponent::ApplyDamage(AActor* Source, AActor*
 }
 
 FKnightResult UKnightAbilitySystemComponent::ApplyCombatDamage(AActor* Source, AActor* Target,
-	float Amount, float PoiseDamage, bool bCanDefend, const FHitResult* Hit)
+	float Amount, float PoiseDamage, bool bCanDefend, const FHitResult* Hit, bool bHeavy,
+	FGuid ActivationId, int32 HitIndex)
 {
 	if (!IsValid(Source) || !IsValid(Target) || Source->GetWorld() != Target->GetWorld() ||
 		!FMath::IsFinite(Amount) || Amount <= 0.0f || Amount > 1000000.0f ||
@@ -602,6 +622,28 @@ FKnightResult UKnightAbilitySystemComponent::ApplyCombatDamage(AActor* Source, A
 	Spec.Data->SetSetByCallerMagnitude(KnightGameplayTags::Data_Damage, Amount);
 	Spec.Data->SetSetByCallerMagnitude(KnightGameplayTags::Data_DamagePoise, PoiseDamage);
 	Spec.Data->SetSetByCallerMagnitude(KnightGameplayTags::Data_DamageCanDefend, bCanDefend ? 1.0f : 0.0f);
+	const UKnightSkillRuntimeComponent* SourceSkills = Source->FindComponentByClass<UKnightSkillRuntimeComponent>();
+	const UKnightSkillRuntimeComponent* TargetSkills = Target->FindComponentByClass<UKnightSkillRuntimeComponent>();
+	if ((SourceSkills != nullptr && !SourceSkills->GetBuild().SpecId.IsNone())
+		|| (TargetSkills != nullptr && !TargetSkills->GetBuild().SpecId.IsNone()))
+	{
+		Spec.Data->SetSetByCallerMagnitude(FName(TEXT("SkillSeed")), 1.0f);
+		Spec.Data->SetSetByCallerMagnitude(FName(TEXT("SkillSchool")), 0.0f);
+	}
+	Spec.Data->SetSetByCallerMagnitude(FName(TEXT("SkillHeavy")), bHeavy ? 1.0f : 0.0f);
+	Spec.Data->SetSetByCallerMagnitude(FName(TEXT("SkillDirect")), bCanDefend ? 1.0f : 0.0f);
+	Spec.Data->SetSetByCallerMagnitude(FName(TEXT("ItemEligibleActivation")), bCanDefend ? 1.0f : 0.0f);
+	Spec.Data->SetSetByCallerMagnitude(FName(TEXT("SkillHitIndex")), HitIndex);
+	if (!ActivationId.IsValid())
+	{
+		ActivationId = FGuid::NewGuid();
+	}
+	const uint32 Parts[] { ActivationId.A, ActivationId.B, ActivationId.C, ActivationId.D };
+	for (int32 Index = 0; Index < 4; ++Index)
+	{
+		Spec.Data->SetSetByCallerMagnitude(FName(*FString::Printf(TEXT("SkillActivation%dLow"), Index)), Parts[Index] & 0xffff);
+		Spec.Data->SetSetByCallerMagnitude(FName(*FString::Printf(TEXT("SkillActivation%dHigh"), Index)), Parts[Index] >> 16);
+	}
 	return SourceASC->ApplyGameplayEffectSpecToTarget(*Spec.Data.Get(), TargetASC).WasSuccessfullyApplied()
 		? FKnightResult::Success() : KnightGASFailure(EKnightError::InvalidState, TEXT("DamageEffectRejected"));
 }

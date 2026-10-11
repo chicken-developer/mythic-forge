@@ -8,6 +8,8 @@ class AKnightRPGGameState;
 class AKnightRPGStateActor;
 class UMaterialInstanceDynamic;
 class UStaticMeshComponent;
+class UKnightSkillRuntimeComponent;
+class UKnightGearAppearanceComponent;
 
 /** Equipment presentation belongs to the canonical Knight, including while a companion controls it. */
 UCLASS()
@@ -21,10 +23,15 @@ public:
 	UStaticMeshComponent* GetRuneVisual() const;
 
 protected:
+	virtual FKnightAttributeDefaults GetInitialAttributeDefaults() const override;
 	virtual void BeginPlay() override;
 	virtual void EndPlay(EEndPlayReason::Type EndPlayReason) override;
 
 private:
+	UPROPERTY(VisibleAnywhere, Category = "Knight|RPG|Presentation")
+	TObjectPtr<UKnightGearAppearanceComponent> GearAppearance;
+	UPROPERTY(VisibleAnywhere, Category = "Knight|Skills")
+	TObjectPtr<UKnightSkillRuntimeComponent> SkillRuntime;
 	void BindRPGPresentation();
 	void HandleRPGStateReady(AKnightRPGStateActor* InState);
 	void RefreshEquipmentVisuals();

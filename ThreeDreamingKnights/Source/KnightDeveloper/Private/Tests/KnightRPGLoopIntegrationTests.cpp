@@ -6,10 +6,12 @@
 #include "Abilities/KnightLightAttackAbility.h"
 #include "Animation/AnimInstance.h"
 #include "Attributes/KnightAttributeSet.h"
+#include "Blueprint/WidgetTree.h"
 #include "Character/KnightCharacter.h"
 #include "Components/KnightAbilitySystemComponent.h"
 #include "Components/KnightCombatComponent.h"
 #include "Components/KnightLifeComponent.h"
+#include "Components/ScrollBox.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Editor.h"
@@ -49,6 +51,7 @@
 #include "UObject/StrongObjectPtr.h"
 #include "UObject/UObjectGlobals.h"
 #include "Widgets/KnightRPGPanel.h"
+#include "Widgets/KnightRPGActionButton.h"
 
 namespace KnightRPGPlaythrough
 {
@@ -75,6 +78,8 @@ namespace KnightRPGPlaythrough
 		int32 LightHitsA = 0;
 		int32 LightHitsB = 0;
 		int32 RuneHitsB = 0;
+		int32 LightRequests = 0;
+		int32 LightCommits = 0;
 		float MaximumRuneSpendB = 0.0f;
 		bool bObservedHumanMontage = false;
 	};
@@ -211,6 +216,7 @@ namespace KnightRPGPlaythrough
 			PhaseTimeout = Timeout;
 			WalkPath.Reset();
 			NextPathQueryAt = -1.0;
+			NextCombatDiagnosticAt = 0.0;
 			Test.AddInfo(FString::Printf(TEXT("Actual RPG playthrough phase %d started."), static_cast<int32>(Next)));
 		}
 
@@ -324,7 +330,7 @@ namespace KnightRPGPlaythrough
 			}
 			BindObservers();
 			LastPosition = Controller->GetControlledKnight()->GetActorLocation();
-			Test.AddInfo(TEXT("Normal encounter A/B victory uses physical mapped W movement and actual LMB/G GAS attacks, companion StateTrees, F start, P pickups and focused Slate/CommonUI 1/2/3/4/5/Enter/Escape. No teleport or damage injection creates either victory."));
+			Test.AddInfo(TEXT("Normal encounter A/B victory uses physical mapped W movement and actual LMB/G GAS attacks, companion StateTrees, F start, P pickups and visible CommonUI buttons activated with focused Slate Enter/Escape. No teleport or damage injection creates either victory."));
 			Enter(EKnightRPGPlayPhase::WalkStartA, TravelTimeout);
 		}
 
@@ -365,6 +371,15 @@ namespace KnightRPGPlaythrough
 					}
 				});
 			ObservedASC = Controller->GetControlledKnight()->GetKnightAbilitySystem();
+			AbilityCommitHandle = ObservedASC->AbilityCommittedCallbacks.AddLambda(
+				[WeakObservation](UGameplayAbility* Ability)
+				{
+					if (TSharedPtr<FKnightRPGPlayObservation> Current = WeakObservation.Pin();
+						Current.IsValid() && Ability != nullptr && Ability->IsA<UKnightLightAttackAbility>())
+					{
+						++Current->LightCommits;
+					}
+				});
 			EnergyHandle = ObservedASC->GetGameplayAttributeValueChangeDelegate(
 				UKnightAttributeSet::GetRuneEnergyAttribute()).AddLambda(
 					[WeakObservation, WeakMode](const FOnAttributeChangeData& Change)
@@ -542,7 +557,7 @@ namespace KnightRPGPlaythrough
 		{
 			if (Arena->GetSnapshot().Stage == EKnightArenaStage::Defeat)
 			{
-				Fail(TEXT("The party wiped during a genuine mapped RPG victory playthrough."));
+				Fail(GetDiagnostics(TEXT("The party wiped during a genuine mapped RPG victory playthrough")));
 				return;
 			}
 			if (Arena->GetSnapshot().Stage == EKnightArenaStage::Victory)
@@ -594,7 +609,21 @@ namespace KnightRPGPlaythrough
 				SetKey(EKeys::W, false);
 				return;
 			}
-			if (!WalkToward(Target->GetActorLocation(), MeleeReach) || PulseKey.IsValid())
+			if (Elapsed() >= NextCombatDiagnosticAt && CombatDiagnostics < 40)
+			{
+				NextCombatDiagnosticAt = Elapsed() + 1.0;
+				++CombatDiagnostics;
+				const FVector Direction = (Target->GetActorLocation() - Knight->GetActorLocation()).GetSafeNormal2D();
+				Test.AddInfo(FString::Printf(TEXT("Native M5 combat phase%d t%.2f humanHP%.2f targetHP%.2f range%.2f facingDot%.3f transfer%d attacking%d staggered%d lightRequests%d commits%d AHit%d BHit%d delta%.4f"),
+					static_cast<int32>(Phase), Elapsed(), Knight->GetKnightAttributeSet()->GetHealth(),
+					Target->GetKnightAbilitySystem()->GetNumericAttribute(UKnightAttributeSet::GetHealthAttribute()),
+					FVector::Dist2D(Knight->GetActorLocation(), Target->GetActorLocation()),
+					FVector::DotProduct(Knight->GetActorForwardVector(), Direction),
+					Knight->GetCombatComponent()->CanTransferControl(), Knight->GetCombatComponent()->GetSnapshot().bAttacking,
+					Knight->GetCombatComponent()->GetSnapshot().bStaggered, Observation->LightRequests,
+					Observation->LightCommits, Observation->LightHitsA, Observation->LightHitsB, World->GetDeltaSeconds()));
+			}
+			if (PulseKey.IsValid() || !WalkToward(Target->GetActorLocation(), MeleeReach))
 			{
 				return;
 			}
@@ -602,6 +631,15 @@ namespace KnightRPGPlaythrough
 			const double Now = World->GetTimeSeconds();
 			if (!Combat->CanTransferControl() || Now - LastAttackAt < 0.95)
 			{
+				return;
+			}
+			const FVector Facing = (Target->GetActorLocation() - Knight->GetActorLocation()).GetSafeNormal2D();
+			Controller->SetControlRotation(Facing.Rotation());
+			if (FVector::DotProduct(Knight->GetActorForwardVector(), Facing) < 0.98)
+			{
+				// Camera yaw cannot turn this movement-oriented Character while standing in melee range.
+				// Use the real mapped input before attacking; preserve the entire pulse on later updates.
+				Pulse(EKeys::W);
 				return;
 			}
 			if (bSecond && Observation->RuneHitsB == 0 && Now - LastRuneRequestAt >= 3.0
@@ -613,6 +651,7 @@ namespace KnightRPGPlaythrough
 				return;
 			}
 			LastAttackAt = Now;
+			++Observation->LightRequests;
 			Pulse(EKeys::LeftMouseButton);
 		}
 
@@ -727,13 +766,61 @@ namespace KnightRPGPlaythrough
 			return bHandled;
 		}
 
+		bool ActivateVisibleButton(const FString& ExpectedCaption)
+		{
+			UKnightRPGPanel* Panel = Controller->GetRPGPanel();
+			if (!HasFocusedPanel() || Panel->WidgetTree == nullptr)
+			{
+				return false;
+			}
+			TArray<UWidget*> Widgets;
+			Panel->WidgetTree->GetAllWidgets(Widgets);
+			UKnightRPGActionButton* MatchingButton = nullptr;
+			for (UWidget* Widget : Widgets)
+			{
+				UKnightRPGActionButton* Button = Cast<UKnightRPGActionButton>(Widget);
+				if (Button != nullptr && Button->IsVisible() && Button->GetIsEnabled()
+					&& Button->GetCaption().ToString() == ExpectedCaption)
+				{
+					MatchingButton = Button;
+					break;
+				}
+			}
+			if (MatchingButton == nullptr)
+			{
+				Fail(FString::Printf(TEXT("Actual visible CommonUI action button is missing: %s"), *ExpectedCaption));
+				return false;
+			}
+			if (PendingSlateButton.Get() != MatchingButton)
+			{
+				PendingSlateButton = MatchingButton;
+				for (UWidget* Parent = MatchingButton->GetParent(); Parent != nullptr; Parent = Parent->GetParent())
+				{
+					if (UScrollBox* Scroll = Cast<UScrollBox>(Parent))
+					{
+						Scroll->ScrollWidgetIntoView(MatchingButton, false, EDescendantScrollDestination::Center);
+					}
+				}
+				MatchingButton->SetUserFocus(Controller.Get());
+				return false;
+			}
+			if (!MatchingButton->HasUserFocus(Controller.Get()) &&
+				!MatchingButton->HasUserFocusedDescendants(Controller.Get()))
+			{
+				Fail(TEXT("Visible CommonUI action button did not receive local Slate focus."));
+				return false;
+			}
+			PendingSlateButton.Reset();
+			return SlateKey(EKeys::Enter);
+		}
+
 		void WaitPanel()
 		{
 			if (!HasFocusedPanel() || PulseKey.IsValid())
 			{
 				return;
 			}
-			if (SlateKey(EKeys::One))
+			if (ActivateVisibleButton(TEXT("Equip available weapon")))
 			{
 				Enter(EKnightRPGPlayPhase::EquipWeapon);
 			}
@@ -764,11 +851,11 @@ namespace KnightRPGPlaythrough
 				|| Controller->GetControlledKnight()->GetKnightAttributeSet()->GetAttackPower() <= BaseAttackPower
 				|| !HasExpectedVisuals(true, false))
 			{
-				Fail(TEXT("Slate key1 did not equip the correct Knight with real GAS stat bonus/native weapon visual."));
+				Fail(TEXT("Focused Equip button did not equip the correct Knight with real GAS stat bonus/native weapon visual."));
 				return;
 			}
 			EquippedAttackPower = Controller->GetControlledKnight()->GetKnightAttributeSet()->GetAttackPower();
-			if (SlateKey(EKeys::Two))
+			if (ActivateVisibleButton(TEXT("Equip available rune")))
 			{
 				Enter(EKnightRPGPlayPhase::EquipRune);
 			}
@@ -783,12 +870,12 @@ namespace KnightRPGPlaythrough
 			const FKnightRPGKnightView View = RPGState->GetRPG()->GetKnightView(ControlledId);
 			if (View.FindAssignment(KnightGameplayTags::Slot_Equipment_Rune) == nullptr || !HasExpectedVisuals(true, true))
 			{
-				Fail(TEXT("Slate key2 did not equip the correct Knight's real rune assignment/native visual."));
+				Fail(TEXT("Focused Rune button did not equip the correct Knight's real rune assignment/native visual."));
 				return;
 			}
 			RuneBeforeSkills = View.RuneTuning;
 			BeforeSkillsPoints = View.SkillPoints;
-			if (SlateKey(EKeys::Three))
+			if (ActivateVisibleButton(TEXT("M5 upgrade: Hammer Force")))
 			{
 				Enter(EKnightRPGPlayPhase::PurchaseHammer);
 			}
@@ -805,10 +892,10 @@ namespace KnightRPGPlaythrough
 				|| View.SkillPoints >= BeforeSkillsPoints
 				|| Controller->GetControlledKnight()->GetKnightAttributeSet()->GetAttackPower() <= EquippedAttackPower)
 			{
-				Fail(TEXT("Slate key3 did not atomically buy HammerForce and apply its actual stat bonus."));
+				Fail(TEXT("Focused Hammer Force button did not atomically buy HammerForce and apply its actual stat bonus."));
 				return;
 			}
-			if (SlateKey(EKeys::Four))
+			if (ActivateVisibleButton(TEXT("M5 upgrade: Rune Focus")))
 			{
 				Enter(EKnightRPGPlayPhase::PurchaseRune);
 			}
@@ -824,10 +911,10 @@ namespace KnightRPGPlaythrough
 			if (!View.HasSkill(FPrimaryAssetId(TEXT("KnightSkill"), TEXT("RuneFocus"))) || View.SkillPoints != 0
 				|| View.RuneTuning.DurationScale <= RuneBeforeSkills.DurationScale)
 			{
-				Fail(TEXT("Slate key4 did not buy the real prerequisite-gated RuneFocus/rune duration modifier."));
+				Fail(TEXT("Focused Rune Focus button did not buy the real prerequisite-gated RuneFocus/rune duration modifier."));
 				return;
 			}
-			if (SlateKey(EKeys::Five))
+			if (ActivateVisibleButton(TEXT("Refund M5 purchased upgrades")))
 			{
 				Enter(EKnightRPGPlayPhase::Respec);
 			}
@@ -845,10 +932,10 @@ namespace KnightRPGPlaythrough
 				|| !(View.RuneTuning == RuneBeforeSkills)
 				|| !FMath::IsNearlyEqual(Controller->GetControlledKnight()->GetKnightAttributeSet()->GetAttackPower(), EquippedAttackPower))
 			{
-				Fail(TEXT("Slate key5 respec did not atomically refund exact paid item identities/points and remove skill modifiers."));
+				Fail(TEXT("Focused Refund button did not atomically refund exact paid item identities/points and remove skill modifiers."));
 				return;
 			}
-			if (SlateKey(EKeys::Three))
+			if (ActivateVisibleButton(TEXT("M5 upgrade: Hammer Force")))
 			{
 				Enter(EKnightRPGPlayPhase::RebuyHammer);
 			}
@@ -869,7 +956,7 @@ namespace KnightRPGPlaythrough
 				Fail(TEXT("Real rebuilt upgraded loadout did not enable the CommonUI host Continue action."));
 				return;
 			}
-			if (SlateKey(EKeys::Enter))
+			if (ActivateVisibleButton(TEXT("Host Continue")))
 			{
 				Enter(EKnightRPGPlayPhase::Continue);
 			}
@@ -1098,11 +1185,13 @@ namespace KnightRPGPlaythrough
 			}
 			if (ObservedASC.IsValid())
 			{
+				ObservedASC->AbilityCommittedCallbacks.Remove(AbilityCommitHandle);
 				ObservedASC->GetGameplayAttributeValueChangeDelegate(UKnightAttributeSet::GetRuneEnergyAttribute()).Remove(EnergyHandle);
 			}
 			ReplyHandle.Reset();
 			CombatHandle.Reset();
 			EnergyHandle.Reset();
+			AbilityCommitHandle.Reset();
 		}
 
 		void BeginCleanup()
@@ -1175,6 +1264,8 @@ namespace KnightRPGPlaythrough
 		double NextPathQueryAt = -1.0;
 		double LastAttackAt = -10.0;
 		double LastRuneRequestAt = -10.0;
+		double NextCombatDiagnosticAt = 0.0;
+		int32 CombatDiagnostics = 0;
 		double PulseStarted = 0.0;
 		double PhysicalDistance = 0.0;
 		TArray<FVector> WalkPath;
@@ -1209,6 +1300,7 @@ namespace KnightRPGPlaythrough
 		TWeakObjectPtr<AKnightItemPickup> SelectedPickup;
 		TWeakObjectPtr<UKnightCombatComponent> ObservedCombat;
 		TWeakObjectPtr<UKnightAbilitySystemComponent> ObservedASC;
+		TWeakObjectPtr<UKnightRPGActionButton> PendingSlateButton;
 		TArray<TWeakObjectPtr<AKnightRPGCharacter>> Knights;
 		TArray<FKnightEntityId> Ids;
 		TArray<FPrimaryAssetId> Heroes;
@@ -1223,6 +1315,7 @@ namespace KnightRPGPlaythrough
 		FDelegateHandle ReplyHandle;
 		FDelegateHandle CombatHandle;
 		FDelegateHandle EnergyHandle;
+		FDelegateHandle AbilityCommitHandle;
 	};
 }
 

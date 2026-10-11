@@ -31,12 +31,20 @@ bool FKnightActionModifier::operator==(const FKnightActionModifier& Other) const
 
 FKnightResult FKnightGASProjectionPlan::Validate() const
 {
+	if (!FKnightSkillCatalog::ValidateDescriptor(SkillBuild).IsSuccess()
+		|| !EquipmentCombatBuild.Validate().IsSuccess()
+		|| (SourceKey != KnightProjection::RPGSourceKey && (!SkillBuild.SpecId.IsNone() || EquipmentCombatBuild.bEnabled)))
+	{
+		return FKnightResult::Failure(EKnightError::InvalidData, TEXT("ProjectionSkillBuild"),
+			LOCTEXT("InvalidSkillBuild", "A skill projection requires a valid specialization and compatible rune."));
+	}
 	if (!KnightIdentity::IsValidIdentifier(SourceKey) || !KnightIdentity::IsValidDefinitionId(DefinitionId))
 	{
 		return FKnightResult::Failure(EKnightError::InvalidId, TEXT("ProjectionPlan"),
 			LOCTEXT("InvalidSource", "A projection requires a source key and a stable owner definition ID."));
 	}
-	const float Values[] { MaxHealthBonus, MaxStaminaBonus, MaxRuneEnergyBonus, AttackPowerBonus, DefenseBonus };
+	const float Values[] { MaxHealthBonus, MaxStaminaBonus, MaxRuneEnergyBonus, AttackPowerBonus, DefenseBonus,
+		CritChanceBonus, HasteBonus, CooldownRecoveryBonus, MasteryBonus, VersatilityBonus, MaxPoiseBonus };
 	for (float Value : Values)
 	{
 		if (!FMath::IsFinite(Value) || Value < 0.0f || Value > 10000.0f)
@@ -102,7 +110,8 @@ FKnightResult FKnightGASProjectionPlan::Validate() const
 bool FKnightGASProjectionPlan::HasStatBonuses() const
 {
 	return MaxHealthBonus > 0.0f || MaxStaminaBonus > 0.0f || MaxRuneEnergyBonus > 0.0f
-		|| AttackPowerBonus > 0.0f || DefenseBonus > 0.0f;
+		|| AttackPowerBonus > 0.0f || DefenseBonus > 0.0f || CritChanceBonus > 0.0f || HasteBonus > 0.0f
+		|| CooldownRecoveryBonus > 0.0f || MasteryBonus > 0.0f || VersatilityBonus > 0.0f || MaxPoiseBonus > 0.0f;
 }
 
 bool FKnightGASProjectionPlan::operator==(const FKnightGASProjectionPlan& Other) const
@@ -111,7 +120,11 @@ bool FKnightGASProjectionPlan::operator==(const FKnightGASProjectionPlan& Other)
 		&& MaxHealthBonus == Other.MaxHealthBonus && MaxStaminaBonus == Other.MaxStaminaBonus
 		&& MaxRuneEnergyBonus == Other.MaxRuneEnergyBonus && AttackPowerBonus == Other.AttackPowerBonus
 		&& DefenseBonus == Other.DefenseBonus && ActionModifiers == Other.ActionModifiers
-		&& OptionalAbilitySetId == Other.OptionalAbilitySetId && OptionalAbilitySetIds == Other.OptionalAbilitySetIds;
+		&& CritChanceBonus == Other.CritChanceBonus && HasteBonus == Other.HasteBonus
+		&& CooldownRecoveryBonus == Other.CooldownRecoveryBonus && MasteryBonus == Other.MasteryBonus
+		&& VersatilityBonus == Other.VersatilityBonus && MaxPoiseBonus == Other.MaxPoiseBonus
+		&& OptionalAbilitySetId == Other.OptionalAbilitySetId && OptionalAbilitySetIds == Other.OptionalAbilitySetIds
+		&& SkillBuild == Other.SkillBuild && EquipmentCombatBuild == Other.EquipmentCombatBuild;
 }
 
 bool FKnightMutationFence::IsValid() const

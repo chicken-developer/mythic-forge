@@ -1,6 +1,7 @@
 #include "Abilities/KnightGameplayAbility.h"
 
 #include "Components/KnightAbilitySystemComponent.h"
+#include "Tags/KnightFixtureGameplayTags.h"
 #include "Tags/KnightGameplayTags.h"
 
 UKnightGameplayAbility::UKnightGameplayAbility()
@@ -10,6 +11,7 @@ UKnightGameplayAbility::UKnightGameplayAbility()
 	ActivationRequiredTags.AddTag(KnightGameplayTags::State_Life_Alive);
 	ActivationBlockedTags.AddTag(KnightGameplayTags::State_Life_Downed);
 	ActivationBlockedTags.AddTag(KnightGameplayTags::State_Life_Dead);
+	ActivationBlockedTags.AddTag(KnightGameplayTags::State_Fixture_TravelPending);
 }
 
 bool UKnightGameplayAbility::ShouldCancelOnInputRelease() const

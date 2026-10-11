@@ -8,6 +8,7 @@
 #include "Engine/World.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/Pawn.h"
+#include "Skills/KnightSkillRuntimeComponent.h"
 
 namespace
 {
@@ -36,7 +37,13 @@ namespace
 			|| Attribute == UKnightAttributeSet::GetMaxStaminaAttribute()
 			|| Attribute == UKnightAttributeSet::GetMaxRuneEnergyAttribute()
 			|| Attribute == UKnightAttributeSet::GetAttackPowerAttribute()
-			|| Attribute == UKnightAttributeSet::GetDefenseAttribute();
+			|| Attribute == UKnightAttributeSet::GetDefenseAttribute()
+			|| Attribute == UKnightAttributeSet::GetCritChanceAttribute()
+			|| Attribute == UKnightAttributeSet::GetHasteAttribute()
+			|| Attribute == UKnightAttributeSet::GetCooldownRecoveryAttribute()
+			|| Attribute == UKnightAttributeSet::GetMasteryBonusAttribute()
+			|| Attribute == UKnightAttributeSet::GetVersatilityAttribute()
+			|| Attribute == UKnightAttributeSet::GetPoiseBonusAttribute();
 	}
 }
 
@@ -91,6 +98,11 @@ FKnightResult UKnightAbilitySystemComponent::BeginMutationFence(FGuid RequestId,
 	FenceGeneration = ++ProjectionGeneration;
 	OutFence = MutationFence;
 	return FKnightResult::Success();
+}
+
+FKnightResult UKnightAbilitySystemComponent::ValidateItemMutationFence(const FKnightMutationFence& Fence) const
+{
+	return ValidateMutationFence(Fence);
 }
 
 bool UKnightAbilitySystemComponent::IsMutationFenced() const
@@ -230,6 +242,13 @@ FKnightResult UKnightAbilitySystemComponent::PrepareSourceProjection(const FKnig
 	{
 		return PlanResult;
 	}
+	UKnightSkillRuntimeComponent* Skills = GetOwner()->FindComponentByClass<UKnightSkillRuntimeComponent>();
+	if (Plan.SourceKey == KnightProjection::RPGSourceKey
+		&& (((!Plan.SkillBuild.SpecId.IsNone() || Plan.EquipmentCombatBuild.bEnabled) && Skills == nullptr)
+			|| (Skills != nullptr && Skills->GetBuild().SpecId != Plan.SkillBuild.SpecId && Skills->HasDeferredDamage())))
+	{
+		return KnightProjectionFailure(EKnightError::Conflict, TEXT("ProjectionSkillRuntime"));
+	}
 	const FKnightProjectionRuntime* Old = ProjectionSources.Find(Plan.SourceKey);
 	const int64 CurrentRevision = Old != nullptr ? Old->Snapshot.Revision : 0;
 	if (ExpectedRevision != CurrentRevision || ExpectedRevision < 0 || ExpectedRevision >= MAX_int64)
@@ -340,6 +359,14 @@ FKnightResult UKnightAbilitySystemComponent::StageSourceProjection(const FKnight
 	FKnightProjectionRuntime Candidate = PendingProjection;
 	const auto FailStage = [this, &Candidate, &Capability](EKnightError Error, FName Context)
 	{
+		if (Candidate.Snapshot.Plan.SourceKey == KnightProjection::RPGSourceKey)
+		{
+			if (UKnightSkillRuntimeComponent* Skills = GetOwner()->FindComponentByClass<UKnightSkillRuntimeComponent>())
+			{
+				Skills->AbortPreparedBuild();
+				Skills->AbortPreparedEquipmentBuild();
+			}
+		}
 		RemoveProjectionRuntime(Candidate);
 		if (ProjectionCapability == Capability)
 		{
@@ -351,6 +378,22 @@ FKnightResult UKnightAbilitySystemComponent::StageSourceProjection(const FKnight
 		return KnightProjectionFailure(Error, Context);
 	};
 	const FKnightGASProjectionPlan Plan = Candidate.Snapshot.Plan;
+	if (Plan.SourceKey == KnightProjection::RPGSourceKey)
+	{
+		if (UKnightSkillRuntimeComponent* Skills = GetOwner()->FindComponentByClass<UKnightSkillRuntimeComponent>())
+		{
+			const FKnightResult SkillResult = Skills->PrepareBuild(Plan.SkillBuild);
+			if (!SkillResult.IsSuccess())
+			{
+				return FailStage(SkillResult.Error, SkillResult.Context);
+			}
+			const FKnightResult EquipmentResult = Skills->PrepareEquipmentBuild(Plan.EquipmentCombatBuild);
+			if (!EquipmentResult.IsSuccess())
+			{
+				return FailStage(EquipmentResult.Error, EquipmentResult.Context);
+			}
+		}
+	}
 	for (FKnightOwnedAbilityGrant& Grant : Candidate.OptionalGrants)
 	{
 		for (const FKnightAbilitySetEntry& Entry : Grant.Definition->GetAbilities())
@@ -397,6 +440,12 @@ FKnightResult UKnightAbilitySystemComponent::StageSourceProjection(const FKnight
 		Spec.Data->SetSetByCallerMagnitude(UKnightSourceProjectionEffect::MaxRuneEnergyMagnitude, Plan.MaxRuneEnergyBonus);
 		Spec.Data->SetSetByCallerMagnitude(UKnightSourceProjectionEffect::AttackPowerMagnitude, Plan.AttackPowerBonus);
 		Spec.Data->SetSetByCallerMagnitude(UKnightSourceProjectionEffect::DefenseMagnitude, Plan.DefenseBonus);
+		Spec.Data->SetSetByCallerMagnitude(UKnightSourceProjectionEffect::CritChanceMagnitude, Plan.CritChanceBonus);
+		Spec.Data->SetSetByCallerMagnitude(UKnightSourceProjectionEffect::HasteMagnitude, Plan.HasteBonus);
+		Spec.Data->SetSetByCallerMagnitude(UKnightSourceProjectionEffect::CooldownRecoveryMagnitude, Plan.CooldownRecoveryBonus);
+		Spec.Data->SetSetByCallerMagnitude(UKnightSourceProjectionEffect::MasteryMagnitude, Plan.MasteryBonus);
+		Spec.Data->SetSetByCallerMagnitude(UKnightSourceProjectionEffect::VersatilityMagnitude, Plan.VersatilityBonus);
+		Spec.Data->SetSetByCallerMagnitude(UKnightSourceProjectionEffect::PoiseMagnitude, Plan.MaxPoiseBonus);
 		Candidate.StatEffect = ApplyGameplayEffectSpecToSelf(*Spec.Data.Get());
 		if (!ValidateProjectionCapability(Fence, Capability).IsSuccess())
 		{
@@ -503,6 +552,14 @@ FKnightResult UKnightAbilitySystemComponent::CommitSourceProjection(const FKnigh
 	RetiredProjection = Existing != nullptr ? *Existing : FKnightProjectionRuntime();
 	// Value promotion has no engine callbacks. The coordinator commits every participant before publication.
 	ProjectionSources.Add(SourceKey, PendingProjection);
+	if (SourceKey == KnightProjection::RPGSourceKey)
+	{
+		if (UKnightSkillRuntimeComponent* Skills = GetOwner()->FindComponentByClass<UKnightSkillRuntimeComponent>())
+		{
+			Skills->CommitPreparedBuild();
+			Skills->CommitPreparedEquipmentBuild();
+		}
+	}
 	ProjectionStage = KnightProjectionCommitted;
 	for (const FKnightOwnedAbilityGrant& Grant : RetiredProjection.OptionalGrants)
 	{
@@ -552,6 +609,14 @@ FKnightResult UKnightAbilitySystemComponent::AbortSourceProjection(const FKnight
 	}
 	TGuardValue<bool> OperationGuard(bProjectionOperationInProgress, true);
 	const FKnightProjectionRuntime Candidate = PendingProjection;
+	if (Candidate.Snapshot.Plan.SourceKey == KnightProjection::RPGSourceKey)
+	{
+		if (UKnightSkillRuntimeComponent* Skills = GetOwner()->FindComponentByClass<UKnightSkillRuntimeComponent>())
+		{
+			Skills->AbortPreparedBuild();
+			Skills->AbortPreparedEquipmentBuild();
+		}
+	}
 	LastAbortedProjection = Capability;
 	ProjectionCapability = FKnightProjectionCapability();
 	ProjectionStage = KnightProjectionNone;
@@ -590,6 +655,18 @@ FKnightResult UKnightAbilitySystemComponent::PublishSourceProjection(const FKnig
 	FKnightProjectionRuntime Retired = MoveTemp(RetiredProjection);
 	RetiredProjection = FKnightProjectionRuntime();
 	RemoveProjectionRuntime(MoveTemp(Retired));
+	if (!WeakASC.IsValid() || PublishedGeneration != ProjectionGeneration || !ValidateMutationFence(Fence).IsSuccess())
+	{
+		return FKnightResult::Success();
+	}
+	if (Snapshot.Plan.SourceKey == KnightProjection::RPGSourceKey)
+	{
+		if (UKnightSkillRuntimeComponent* Skills = GetOwner()->FindComponentByClass<UKnightSkillRuntimeComponent>())
+		{
+			// Publish after old stat handles retire so shield caps and subscribers see the final aggregate.
+			Skills->PublishPreparedBuild(bNotifySubscribers);
+		}
+	}
 	if (!WeakASC.IsValid() || PublishedGeneration != ProjectionGeneration || !ValidateMutationFence(Fence).IsSuccess())
 	{
 		return FKnightResult::Success();
@@ -707,6 +784,11 @@ void UKnightAbilitySystemComponent::CancelPendingProjection()
 	FenceController.Reset();
 	if (bRemoveCandidate)
 	{
+		if (UKnightSkillRuntimeComponent* Skills = GetOwner()->FindComponentByClass<UKnightSkillRuntimeComponent>())
+		{
+			Skills->AbortPreparedBuild();
+			Skills->AbortPreparedEquipmentBuild();
+		}
 		RemoveProjectionRuntime(Candidate);
 	}
 	RemoveProjectionRuntime(MoveTemp(Retired));

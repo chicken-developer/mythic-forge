@@ -1,4 +1,5 @@
 #include "Tags/KnightGameplayTags.h"
+#include "Tags/KnightFixtureGameplayTags.h"
 
 namespace KnightGameplayTags
 {
@@ -50,6 +51,7 @@ namespace KnightGameplayTags
 	UE_DEFINE_GAMEPLAY_TAG(State_Life_Alive, "State.Life.Alive");
 	UE_DEFINE_GAMEPLAY_TAG(State_Life_Downed, "State.Life.Downed");
 	UE_DEFINE_GAMEPLAY_TAG(State_Life_Dead, "State.Life.Dead");
+	UE_DEFINE_GAMEPLAY_TAG(State_Fixture_TravelPending, "State.Fixture.TravelPending");
 	UE_DEFINE_GAMEPLAY_TAG(State_Combat_Attacking, "State.Combat.Attacking");
 	UE_DEFINE_GAMEPLAY_TAG(State_Combat_Blocking, "State.Combat.Blocking");
 	UE_DEFINE_GAMEPLAY_TAG(State_Combat_Parrying, "State.Combat.Parrying");
@@ -63,6 +65,17 @@ namespace KnightGameplayTags
 	UE_DEFINE_GAMEPLAY_TAG(Role_Party_Companion, "Role.Party.Companion");
 	UE_DEFINE_GAMEPLAY_TAG(Role_Enemy, "Role.Enemy");
 	UE_DEFINE_GAMEPLAY_TAG(Slot_Equipment_Weapon, "Equipment.Slot.Weapon");
+	UE_DEFINE_GAMEPLAY_TAG(Slot_Equipment_Head, "Equipment.Slot.Head");
+	UE_DEFINE_GAMEPLAY_TAG(Slot_Equipment_Shoulders, "Equipment.Slot.Shoulders");
+	UE_DEFINE_GAMEPLAY_TAG(Slot_Equipment_Chest, "Equipment.Slot.Chest");
+	UE_DEFINE_GAMEPLAY_TAG(Slot_Equipment_Wrists, "Equipment.Slot.Wrists");
+	UE_DEFINE_GAMEPLAY_TAG(Slot_Equipment_Hands, "Equipment.Slot.Hands");
+	UE_DEFINE_GAMEPLAY_TAG(Slot_Equipment_Waist, "Equipment.Slot.Waist");
+	UE_DEFINE_GAMEPLAY_TAG(Slot_Equipment_Feet, "Equipment.Slot.Feet");
+	UE_DEFINE_GAMEPLAY_TAG(Slot_Equipment_Neck, "Equipment.Slot.Neck");
+	UE_DEFINE_GAMEPLAY_TAG(Slot_Equipment_Ring1, "Equipment.Slot.Ring1");
+	UE_DEFINE_GAMEPLAY_TAG(Slot_Equipment_Ring2, "Equipment.Slot.Ring2");
+	UE_DEFINE_GAMEPLAY_TAG(Slot_Equipment_Relic, "Equipment.Slot.Relic");
 	UE_DEFINE_GAMEPLAY_TAG(Slot_Equipment_Rune, "Equipment.Slot.Rune");
 	UE_DEFINE_GAMEPLAY_TAG(Event_Foundation_Started, "Event.Foundation.Started");
 	UE_DEFINE_GAMEPLAY_TAG(Event_Foundation_AssetLoaded, "Event.Foundation.AssetLoaded");

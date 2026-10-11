@@ -197,7 +197,8 @@ FKnightResult AKnightPartyArenaGameMode::SpawnEncounter(const EKnightArenaStage 
 	ClearEncounter();
 	const TArray<FVector> SpawnPoints = bBoss
 		? TArray<FVector>{FVector(0.0, 850.0, 100.0)}
-		: TArray<FVector>{FVector(-600.0, 250.0, 100.0), FVector(600.0, 250.0, 100.0)};
+		: (bFixtureElite ? TArray<FVector>{FVector(0.0, 500.0, 100.0)}
+			: TArray<FVector>{FVector(-600.0, 250.0, 100.0), FVector(600.0, 250.0, 100.0)});
 	for (const FVector& Point : SpawnPoints)
 	{
 		const FTransform Transform(FRotator(0.0, -90.0, 0.0), Point);
@@ -346,7 +347,7 @@ void AKnightPartyArenaGameMode::RefreshEncounter()
 				}
 			}
 		}
-		else if (Snapshot.AliveEnemies == 0 && Snapshot.Stage == EKnightArenaStage::Wave)
+		else if (Snapshot.AliveEnemies == 0 && Snapshot.Stage == EKnightArenaStage::Wave && ShouldAdvanceWaveToBoss())
 		{
 			const FKnightResult Spawn = SpawnEncounter(EKnightArenaStage::Boss);
 			if (Spawn.IsSuccess())
@@ -362,6 +363,21 @@ void AKnightPartyArenaGameMode::RefreshEncounter()
 		}
 	}
 	ArenaState->CommitSnapshot(Snapshot);
+}
+
+bool AKnightPartyArenaGameMode::ShouldAdvanceWaveToBoss() const
+{
+	return true;
+}
+
+FKnightResult AKnightPartyArenaGameMode::StartFixtureEncounter(const EKnightArenaStage Stage, const bool bElite)
+{
+	if (!HasAuthority() || ArenaState == nullptr || ArenaState->GetSnapshot().AliveEnemies != 0)
+	{
+		return FKnightResult::Failure(EKnightError::InvalidState, TEXT("FixtureEncounter"), FText::GetEmpty());
+	}
+	bFixtureElite = bElite;
+	return SpawnEncounter(Stage);
 }
 
 void AKnightPartyArenaGameMode::HandleBossPhaseChanged(const FKnightBossPhaseSnapshot& Phase)

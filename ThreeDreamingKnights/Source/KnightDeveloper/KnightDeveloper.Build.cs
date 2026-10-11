@@ -13,7 +13,8 @@ public class KnightDeveloper : ModuleRules
 			"PropertyBindingUtils", "AIModule", "EnhancedInput", "InputCore", "GameplayTags", "Sockets",
 			"KnightAbilitySystem", "GameplayAbilities", "GameplayTasks", "KnightCombat", "MotionWarping",
 			"AnimationDataController", "AnimGraphRuntime", "AssetTools", "LevelSequence", "AIGraph",
-			"EnvironmentQueryEditor", "KnightItems", "KnightUI", "UMG", "CommonUI", "Slate", "SlateCore"
+			"EnvironmentQueryEditor", "KnightItems", "KnightUI", "UMG", "CommonUI", "Slate", "SlateCore", "Json",
+			"RenderCore", "RHI"
 		});
 	}
 }

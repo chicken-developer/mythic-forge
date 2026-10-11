@@ -1,0 +1,501 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:thanh-a:blockout:layout:1",
+  "title": "Thanh A editable design, metres, +X East +Y North +Z Up",
+  "type": "object",
+  "required": [
+    "schema",
+    "version",
+    "units",
+    "scale",
+    "seed",
+    "reference",
+    "pawn",
+    "land",
+    "water",
+    "city_boundary",
+    "architecture_regions",
+    "elevation_zones",
+    "plazas",
+    "roads",
+    "stairs",
+    "retaining_walls",
+    "walls",
+    "landmarks",
+    "no_build",
+    "building_styles",
+    "heightmap",
+    "samples",
+    "routes",
+    "lighting",
+    "geometry",
+    "prototyping",
+    "dimensions"
+  ],
+  "properties": {
+    "lighting": {
+      "type": "object",
+      "required": [
+        "sun_rotation_deg",
+        "sun_intensity_lux",
+        "sky_intensity",
+        "fill_intensity_lux",
+        "capture_exposure_bias",
+        "fog_density"
+      ],
+      "properties": {
+        "sun_rotation_deg": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": {
+            "type": "number"
+          }
+        },
+        "sun_intensity_lux": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "sky_intensity": {
+          "type": "number",
+          "minimum": 0
+        },
+        "fill_intensity_lux": {
+          "type": "number",
+          "minimum": 0
+        },
+        "capture_exposure_bias": {
+          "type": "number"
+        },
+        "fog_density": {
+          "type": "number",
+          "minimum": 0
+        }
+      }
+    },
+    "schema": {
+      "const": "thanh-a-layout"
+    },
+    "version": {
+      "const": 1
+    },
+    "units": {
+      "const": "m"
+    },
+    "scale": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "seed": {
+      "type": "integer"
+    },
+    "water_datum_m": {
+      "type": "number"
+    },
+    "estimated": {
+      "type": "boolean"
+    },
+    "land": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/polygon"
+      }
+    },
+    "water": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/polygon"
+      }
+    },
+    "city_boundary": {
+      "$ref": "#/$defs/polygon"
+    },
+    "architecture_regions": {
+      "type": "array",
+      "items": {
+        "allOf": [
+          {
+            "$ref": "#/$defs/polygon"
+          },
+          {
+            "required": [
+              "architecture_style",
+              "reference_color"
+            ],
+            "properties": {
+              "architecture_style": {
+                "enum": [
+                  "Medieval",
+                  "Gothic",
+                  "Hybrid"
+                ]
+              },
+              "reference_color": {
+                "enum": [
+                  "blue",
+                  "red",
+                  "green"
+                ]
+              }
+            },
+            "oneOf": [
+              {
+                "properties": {
+                  "architecture_style": {
+                    "const": "Gothic"
+                  },
+                  "reference_color": {
+                    "const": "red"
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "architecture_style": {
+                    "const": "Medieval"
+                  },
+                  "reference_color": {
+                    "const": "blue"
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "architecture_style": {
+                    "const": "Hybrid"
+                  },
+                  "reference_color": {
+                    "const": "green"
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "elevation_zones": {
+      "type": "array",
+      "items": {
+        "allOf": [
+          {
+            "$ref": "#/$defs/polygon"
+          },
+          {
+            "required": [
+              "elevation_m",
+              "range_m",
+              "priority"
+            ],
+            "properties": {
+              "elevation_m": {
+                "type": "number"
+              },
+              "range_m": {
+                "$ref": "#/$defs/xy"
+              },
+              "priority": {
+                "type": "integer"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "roads": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/route"
+      }
+    },
+    "stairs": {
+      "type": "array",
+      "items": {
+        "allOf": [
+          {
+            "$ref": "#/$defs/route"
+          },
+          {
+            "required": [
+              "step_rise_m",
+              "landing_m"
+            ],
+            "properties": {
+              "step_rise_m": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              "landing_m": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              }
+            }
+          }
+        ]
+      }
+    },
+    "retaining_walls": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "points_m",
+          "thickness_m"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/id"
+          },
+          "points_m": {
+            "type": "array",
+            "minItems": 2,
+            "items": {
+              "$ref": "#/$defs/xy"
+            }
+          },
+          "thickness_m": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          }
+        }
+      }
+    },
+    "no_build": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/polygon"
+      }
+    },
+    "landmarks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "position_m",
+          "size_m",
+          "style",
+          "roof_m",
+          "towers"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/id"
+          },
+          "position_m": {
+            "$ref": "#/$defs/xyz"
+          },
+          "size_m": {
+            "$ref": "#/$defs/xyz"
+          },
+          "style": {
+            "enum": [
+              "Medieval",
+              "Gothic",
+              "Hybrid"
+            ]
+          }
+        }
+      }
+    },
+    "heightmap": {
+      "type": "object",
+      "required": [
+        "resolution",
+        "min_xy_m",
+        "extent_m",
+        "encoded_min_m",
+        "encoded_max_m",
+        "num_subsections",
+        "subsection_quads"
+      ],
+      "properties": {
+        "resolution": {
+          "type": "integer",
+          "minimum": 64
+        },
+        "min_xy_m": {
+          "$ref": "#/$defs/xy"
+        },
+        "extent_m": {
+          "$ref": "#/$defs/xy"
+        },
+        "num_subsections": {
+          "enum": [
+            1,
+            2
+          ]
+        },
+        "subsection_quads": {
+          "enum": [
+            7,
+            15,
+            31,
+            63,
+            127,
+            255
+          ]
+        }
+      }
+    },
+    "geometry": {
+      "type": "object",
+      "required": [
+        "foundation_cap_m",
+        "retaining_cap_m",
+        "terminal_extension_m",
+        "surface_tolerance_m"
+      ],
+      "properties": {
+        "foundation_cap_m": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "retaining_cap_m": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "terminal_extension_m": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "surface_tolerance_m": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        }
+      }
+    },
+    "prototyping": {
+      "type": "object",
+      "required": [
+        "box",
+        "cylinder",
+        "ramp",
+        "grid_parent",
+        "asset_revision"
+      ],
+      "properties": {
+        "box": {
+          "type": "string"
+        },
+        "cylinder": {
+          "type": "string"
+        },
+        "ramp": {
+          "type": "string"
+        },
+        "grid_parent": {
+          "type": "string"
+        },
+        "asset_revision": {
+          "type": "string"
+        }
+      }
+    },
+    "dimensions": {
+      "type": "object",
+      "required": [
+        "ShowDimensions",
+        "SelectedOnly",
+        "ShowElevation",
+        "ShowGrid",
+        "GridSizeCm",
+        "MinorGridSizeCm",
+        "MaxLabels"
+      ],
+      "properties": {
+        "ShowDimensions": {
+          "type": "boolean"
+        },
+        "SelectedOnly": {
+          "type": "boolean"
+        },
+        "ShowElevation": {
+          "type": "boolean"
+        },
+        "ShowGrid": {
+          "type": "boolean"
+        },
+        "GridSizeCm": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "MinorGridSizeCm": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "MaxLabels": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        }
+      }
+    }
+  },
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$"
+    },
+    "xy": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {
+        "type": "number"
+      }
+    },
+    "xyz": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {
+        "type": "number"
+      }
+    },
+    "polygon": {
+      "type": "object",
+      "required": [
+        "id",
+        "polygon_m"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "polygon_m": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "$ref": "#/$defs/xy"
+          }
+        }
+      }
+    },
+    "route": {
+      "type": "object",
+      "required": [
+        "id",
+        "points_m",
+        "width_m"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "points_m": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "$ref": "#/$defs/xyz"
+          }
+        },
+        "width_m": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        }
+      }
+    }
+  }
+}

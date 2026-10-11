@@ -1,0 +1,246 @@
+{
+  "schema": "thanh-a-grid-calibration",
+  "version": 1,
+  "units": "m",
+  "level": "/Game/Maps/Blockout/L_ThanhA_GridCalibration",
+  "actors": [
+    {
+      "id": "calibration_floor",
+      "mesh": "box",
+      "center_m": [
+        30,
+        0,
+        -0.1
+      ],
+      "size_m": [
+        110,
+        20,
+        0.2
+      ],
+      "yaw_deg": 0
+    },
+    {
+      "id": "calibration_unit",
+      "mesh": "box",
+      "center_m": [
+        0,
+        0,
+        0.5
+      ],
+      "size_m": [
+        1,
+        1,
+        1
+      ],
+      "yaw_deg": 0
+    },
+    {
+      "id": "calibration_unequal",
+      "mesh": "box",
+      "center_m": [
+        15,
+        0,
+        1.5
+      ],
+      "size_m": [
+        2,
+        4,
+        3
+      ],
+      "yaw_deg": 0
+    },
+    {
+      "id": "calibration_rotated",
+      "mesh": "box",
+      "center_m": [
+        30,
+        0,
+        1.5
+      ],
+      "size_m": [
+        2,
+        4,
+        3
+      ],
+      "yaw_deg": 37
+    },
+    {
+      "id": "calibration_ramp",
+      "mesh": "ramp",
+      "center_m": [
+        45,
+        0,
+        0.5
+      ],
+      "size_m": [
+        3,
+        2,
+        1
+      ],
+      "yaw_deg": 0
+    },
+    {
+      "id": "calibration_composite_body",
+      "mesh": "box",
+      "center_m": [
+        60,
+        0,
+        1.5
+      ],
+      "size_m": [
+        2,
+        2,
+        3
+      ],
+      "yaw_deg": 0,
+      "building_id": "calibration_composite"
+    },
+    {
+      "id": "calibration_composite_roof",
+      "mesh": "roof",
+      "center_m": [
+        60,
+        0,
+        3.5
+      ],
+      "size_m": [
+        2,
+        2,
+        1
+      ],
+      "yaw_deg": 0,
+      "building_id": "calibration_composite"
+    },
+    {
+      "id": "calibration_cylinder",
+      "mesh": "cylinder",
+      "center_m": [
+        75,
+        0,
+        1.5
+      ],
+      "size_m": [
+        2,
+        2,
+        3
+      ],
+      "yaw_deg": 0
+    }
+  ],
+  "capture_views": [
+    {
+      "id": "calibration_unit",
+      "location_m": [
+        0,
+        -8,
+        0.5
+      ],
+      "target_m": [
+        0,
+        0,
+        0.5
+      ],
+      "ortho_width_m": 3,
+      "view_mode": "base_color",
+      "label_id": "calibration_unit"
+    },
+    {
+      "id": "calibration_unequal",
+      "location_m": [
+        15,
+        -8,
+        1.5
+      ],
+      "target_m": [
+        15,
+        0,
+        1.5
+      ],
+      "ortho_width_m": 6,
+      "view_mode": "base_color",
+      "label_id": "calibration_unequal"
+    },
+    {
+      "id": "calibration_rotated",
+      "location_m": [
+        34.8145201852,
+        -6.38908408038,
+        1.5
+      ],
+      "target_m": [
+        30,
+        0,
+        1.5
+      ],
+      "ortho_width_m": 6,
+      "view_mode": "base_color",
+      "label_id": "calibration_rotated"
+    },
+    {
+      "id": "calibration_composite",
+      "location_m": [
+        60,
+        -8,
+        2
+      ],
+      "target_m": [
+        60,
+        0,
+        2
+      ],
+      "ortho_width_m": 6,
+      "view_mode": "base_color",
+      "label_id": "calibration_composite_body"
+    },
+    {
+      "id": "calibration_ramp",
+      "location_m": [
+        43,
+        -6,
+        4
+      ],
+      "target_m": [
+        45,
+        0,
+        0.5
+      ],
+      "ortho_width_m": 6,
+      "view_mode": "base_color",
+      "label_id": "calibration_ramp",
+      "align_to_slope": true
+    },
+    {
+      "id": "calibration_cylinder",
+      "location_m": [
+        75,
+        -8,
+        1.5
+      ],
+      "target_m": [
+        75,
+        0,
+        1.5
+      ],
+      "ortho_width_m": 4,
+      "view_mode": "base_color",
+      "label_id": "calibration_cylinder"
+    },
+    {
+      "id": "calibration_roof_slope",
+      "location_m": [
+        60,
+        -8,
+        4
+      ],
+      "target_m": [
+        60,
+        0,
+        3.5
+      ],
+      "ortho_width_m": 3,
+      "view_mode": "base_color",
+      "label_id": "calibration_composite_roof",
+      "align_to_slope": true
+    }
+  ]
+}

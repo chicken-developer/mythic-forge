@@ -1,0 +1,12 @@
+{
+	"fingerprint": "681317dce54e2a6d",
+	"level": "/Game/Maps/Blockout/L_ThanhA_Blockout",
+	"status": "pass",
+	"reason": "Main Gate, Market, Plaza, Council forecourt, Waterfront, Residential and Craft reached using CharacterMovement",
+	"execution": "Standalone Unreal game world; native CharacterMovement, fixed 60Hz, actual collision, no jumps or route teleports; headless automated walk, not manual PIE",
+	"waypoints_reached": 49,
+	"waypoints_total": 49,
+	"simulation_seconds": 492.03333333333336,
+	"max_waypoint_ground_error_m": 0.063803441822528839,
+	"stair_id": ""
+}

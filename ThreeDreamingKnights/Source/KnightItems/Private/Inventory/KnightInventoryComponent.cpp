@@ -1,5 +1,7 @@
 #include "Inventory/KnightInventoryComponent.h"
 
+#include "Models/KnightGearModels.h"
+
 #include "Assets/KnightAssetManager.h"
 #include "Definitions/KnightItemDefinition.h"
 #include "Types/KnightStableIds.h"
@@ -190,6 +192,15 @@ FKnightInventoryTransactionResult UKnightInventoryComponent::TryApplyTransaction
 	}
 	TArray<FKnightItemInstance> CandidateItems;
 	TSet<FGuid> CandidateIds;
+	if (Request.Mutations.ContainsByPredicate([](const FKnightInventoryMutation& Mutation)
+	{
+		return Mutation.Operation == EKnightInventoryOperation::Update || Mutation.Item.LocationId != KnightGear::InventoryLocation;
+	}))
+	{
+		Outcome.Result = FKnightResult::Failure(EKnightError::NotOwned, TEXT("InventoryCoordinator"),
+			LOCTEXT("CoordinatorUpdate", "Equipment locations and ranks change only through the authoritative RPG coordinator."));
+		return Outcome;
+	}
 	Outcome.Result = BuildCandidate(PublishedView.Items, UsedInstanceIds, PublishedView.Capacity,
 		Request, CandidateItems, CandidateIds);
 	if (!Outcome.Result.IsSuccess())
@@ -235,7 +246,8 @@ FKnightResult UKnightInventoryComponent::CaptureSnapshot(FKnightInventorySnapsho
 FKnightResult UKnightInventoryComponent::ValidateSnapshot(const FKnightInventorySnapshot& Snapshot,
 	TArray<FKnightItemInstance>& OutItems, TSet<FGuid>& OutIds, TMap<FGuid, int32>& OutReceipts) const
 {
-	if (Snapshot.SchemaVersion != KnightItems::InventorySnapshotVersion || !Snapshot.InventoryId.IsValid()
+	if ((Snapshot.SchemaVersion != 1 && Snapshot.SchemaVersion != KnightItems::InventorySnapshotVersion)
+		|| !Snapshot.InventoryId.IsValid()
 		|| Snapshot.Capacity < 1 || Snapshot.Capacity > KnightItems::MaximumInventoryCapacity
 		|| Snapshot.Receipts.Num() > KnightItems::MaximumTransactionReceipts)
 	{
@@ -379,6 +391,14 @@ FKnightResult UKnightInventoryComponent::PrepareTransaction(const FKnightInvento
 	{
 		return Shape;
 	}
+	if (!bCoordinatorPreparing && Request.Mutations.ContainsByPredicate([](const FKnightInventoryMutation& Mutation)
+	{
+		return Mutation.Operation == EKnightInventoryOperation::Update || Mutation.Item.LocationId != KnightGear::InventoryLocation;
+	}))
+	{
+		return FKnightResult::Failure(EKnightError::NotOwned, TEXT("InventoryCoordinator"),
+			LOCTEXT("CoordinatorPrepare", "Assigned item updates require the existing RPG coordinator's private prepare path."));
+	}
 	if (ReceiptIndices.Contains(Request.RequestId))
 	{
 		return FKnightResult::Failure(EKnightError::Conflict, TEXT("InventoryPrepare"),
@@ -406,6 +426,13 @@ FKnightResult UKnightInventoryComponent::PrepareTransaction(const FKnightInvento
 	PreparedView.Revision = PublishedView.Revision + 1;
 	bPreparedWrite = true;
 	return FKnightResult::Success();
+}
+
+FKnightResult UKnightInventoryComponent::PrepareCoordinatorTransaction(const FKnightInventoryRequest& Request,
+	FKnightInventoryCapability& OutCapability)
+{
+	TGuardValue<bool> Scope(bCoordinatorPreparing, true);
+	return PrepareTransaction(Request, OutCapability);
 }
 
 FKnightResult UKnightInventoryComponent::PrepareRestore(const FKnightInventorySnapshot& Snapshot,
@@ -670,6 +697,12 @@ FKnightResult UKnightInventoryComponent::BuildCandidate(const TArray<FKnightItem
 			return FKnightResult::Failure(EKnightError::Conflict, TEXT("InventoryInstance"),
 				LOCTEXT("InstanceDefinitionMismatch", "An instance GUID cannot change its stable definition identity."));
 		}
+		if (Mutation.ExpectedItemRevision > 0 && (ExistingIndex == INDEX_NONE
+			|| OutItems[ExistingIndex].ItemRevision != Mutation.ExpectedItemRevision))
+		{
+			return FKnightResult::Failure(EKnightError::InvalidRevision, TEXT("InventoryItemRevision"),
+				LOCTEXT("ItemRevision", "The exact item instance changed before this transaction."));
+		}
 		if (Mutation.Operation == EKnightInventoryOperation::Add)
 		{
 			if (ExistingIndex == INDEX_NONE)
@@ -684,6 +717,11 @@ FKnightResult UKnightInventoryComponent::BuildCandidate(const TArray<FKnightItem
 			}
 			else
 			{
+				if (OutItems[ExistingIndex].LocationId != KnightGear::InventoryLocation)
+				{
+					return FKnightResult::Failure(EKnightError::NotOwned, TEXT("InventoryAddLocation"),
+						LOCTEXT("AddLocation", "Only inventory stacks may receive additional counts."));
+				}
 				const int64 CombinedCount = static_cast<int64>(OutItems[ExistingIndex].Count) + Mutation.Item.Count;
 				if (CombinedCount > Definition->GetMaximumStack())
 				{
@@ -691,11 +729,27 @@ FKnightResult UKnightInventoryComponent::BuildCandidate(const TArray<FKnightItem
 						LOCTEXT("StackExceeded", "The transaction would exceed the authored maximum stack."));
 				}
 				OutItems[ExistingIndex].Count = static_cast<int32>(CombinedCount);
+				if (Mutation.ExpectedItemRevision > 0)
+				{
+					++OutItems[ExistingIndex].ItemRevision;
+				}
 			}
+		}
+		else if (Mutation.Operation == EKnightInventoryOperation::Update)
+		{
+			if (ExistingIndex == INDEX_NONE || Mutation.Item.Count != OutItems[ExistingIndex].Count
+				|| Mutation.Item.ItemRevision != OutItems[ExistingIndex].ItemRevision + 1)
+			{
+				return FKnightResult::Failure(EKnightError::InvalidRevision, TEXT("InventoryUpdate"),
+					LOCTEXT("Update", "Location and upgrade updates retain identity/count and advance one exact revision."));
+			}
+			OutItems[ExistingIndex] = Mutation.Item;
 		}
 		else
 		{
-			if (AssignedInstanceIds.Contains(Mutation.Item.InstanceId))
+			if (AssignedInstanceIds.Contains(Mutation.Item.InstanceId)
+				|| (ExistingIndex != INDEX_NONE && (OutItems[ExistingIndex].LocationId != KnightGear::InventoryLocation
+					|| OutItems[ExistingIndex].RuneAttachmentId.IsValid())))
 			{
 				return FKnightResult::Failure(EKnightError::NotOwned, TEXT("InventoryAssignment"),
 					LOCTEXT("AssignedRemoval", "An assigned equipment instance must be unequipped before removal."));
@@ -711,6 +765,10 @@ FKnightResult UKnightInventoryComponent::BuildCandidate(const TArray<FKnightItem
 					LOCTEXT("RemovalCountExceeded", "The requested removal exceeds the current item count."));
 			}
 			OutItems[ExistingIndex].Count -= Mutation.Item.Count;
+			if (Mutation.ExpectedItemRevision > 0)
+			{
+				++OutItems[ExistingIndex].ItemRevision;
+			}
 			if (OutItems[ExistingIndex].Count == 0)
 			{
 				OutItems.RemoveAt(ExistingIndex);
@@ -727,7 +785,13 @@ FKnightResult UKnightInventoryComponent::BuildCandidate(const TArray<FKnightItem
 
 FKnightResult UKnightInventoryComponent::ValidateItems(const TArray<FKnightItemInstance>& Items, int32 InCapacity) const
 {
-	if (InCapacity < 1 || InCapacity > KnightItems::MaximumInventoryCapacity || Items.Num() > InCapacity)
+	int32 BagCount = 0;
+	for (const FKnightItemInstance& Item : Items)
+	{
+		BagCount += Item.LocationId == KnightGear::InventoryLocation ? 1 : 0;
+	}
+	if (InCapacity < 1 || InCapacity > KnightItems::MaximumInventoryCapacity || BagCount > InCapacity
+		|| Items.Num() > KnightItems::MaximumOwnedInstances)
 	{
 		return FKnightResult::Failure(EKnightError::CapacityExceeded, TEXT("InventoryCapacity"),
 			LOCTEXT("InventoryCapacityExceeded", "The complete candidate inventory exceeds its finite instance capacity."));
@@ -756,6 +820,16 @@ FKnightResult UKnightInventoryComponent::ValidateItems(const TArray<FKnightItemI
 		{
 			return FKnightResult::Failure(EKnightError::CapacityExceeded, TEXT("InventoryStack"),
 				LOCTEXT("InvalidCandidateStack", "An item count exceeds its validated definition's maximum stack."));
+		}
+		if ((Item.UpgradeRank > 0 && Definition->GetMetadata().UpgradeTrack != TEXT("RareOne"))
+			|| (Item.RuneAttachmentId.IsValid() && Definition->GetMetadata().Subtype != EKnightEquipmentSubtype::Hammer)
+			|| (Definition->GetMetadata().bUniqueOwned && Items.ContainsByPredicate([&Item](const FKnightItemInstance& Other)
+			{
+				return Other.InstanceId != Item.InstanceId && Other.DefinitionId == Item.DefinitionId;
+			})))
+		{
+			return FKnightResult::Failure(EKnightError::Conflict, TEXT("InventoryItemMetadata"),
+				LOCTEXT("Metadata", "Upgrade, weapon socket and unique-owned item values must match their real definitions."));
 		}
 	}
 	return FKnightResult::Success();
@@ -830,7 +904,7 @@ void UKnightInventoryComponent::HandleReplicatedStateReady()
 	if (Control == nullptr || !Control->InventoryId.IsValid() || Control->Revision < 1
 		|| Control->Revision <= PublishedView.Revision || Control->Capacity < 1
 		|| Control->Capacity > KnightItems::MaximumInventoryCapacity
-		|| Control->ItemCount < 0 || Control->ItemCount > Control->Capacity
+		|| Control->ItemCount < 0 || Control->ItemCount > KnightItems::MaximumOwnedInstances
 		|| (IsInitialized() && Control->InventoryId != PublishedView.InventoryId))
 	{
 		return;

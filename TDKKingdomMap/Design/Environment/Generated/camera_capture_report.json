@@ -1,0 +1,106 @@
+{
+	"capture_views": [
+		{
+			"id": "top_down",
+			"location_m": [
+				0,
+				0,
+				950
+			],
+			"target_m": [
+				0,
+				0,
+				0
+			],
+			"ortho_width_m": 980
+		},
+		{
+			"id": "south",
+			"location_m": [
+				0,
+				-690,
+				350
+			],
+			"target_m": [
+				0,
+				-70,
+				18
+			],
+			"fov": 65
+		},
+		{
+			"id": "gate_to_plaza",
+			"location_m": [
+				0,
+				240,
+				2
+			],
+			"target_m": [
+				0,
+				135,
+				8
+			],
+			"fov": 75
+		},
+		{
+			"id": "plaza",
+			"location_m": [
+				-39,
+				41,
+				11
+			],
+			"target_m": [
+				22,
+				-20,
+				10
+			],
+			"fov": 75
+		},
+		{
+			"id": "upper_tier",
+			"location_m": [
+				-110,
+				-110,
+				21
+			],
+			"target_m": [
+				-15,
+				-170,
+				20
+			],
+			"fov": 70
+		},
+		{
+			"id": "port_descent",
+			"location_m": [
+				330,
+				-310,
+				55
+			],
+			"target_m": [
+				190,
+				-200,
+				12
+			],
+			"fov": 70
+		},
+		{
+			"id": "outside_vegetation",
+			"location_m": [
+				29.865000000000002,
+				281.89699999999999,
+				7.2000000000000002
+			],
+			"target_m": [
+				59.865000000000002,
+				316.89699999999999,
+				8
+			],
+			"fov": 75
+		}
+	],
+	"execution": "Actual UE DX12 SceneCapture; camera-only override, no generation input changes",
+	"captures_saved": true,
+	"width": 1600,
+	"height": 1200
+}

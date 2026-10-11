@@ -10,6 +10,7 @@
 #include "Camera/KnightCameraModeComponent.h"
 #include "Components/KnightAbilitySystemComponent.h"
 #include "Components/KnightLifeComponent.h"
+#include "Components/PrimitiveComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Engine/StaticMesh.h"
@@ -21,6 +22,7 @@
 #include "GameplayEffect.h"
 #include "Net/UnrealNetwork.h"
 #include "Tags/KnightGameplayTags.h"
+#include "Skills/KnightSkillRuntimeComponent.h"
 #include "TimerManager.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogKnightCombat, Log, All);
@@ -48,6 +50,24 @@ namespace
 	{
 		return IsValid(Actor) ? Cast<UKnightAbilitySystemComponent>(
 			UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Actor, true)) : nullptr;
+	}
+	bool IsOwnedArmorZone(const UPrimitiveComponent* Component, const AActor* Target)
+	{
+		return IsValid(Component) && IsValid(Target) && Component->GetOwner() == Target &&
+			Component->IsRegistered() && Component->IsQueryCollisionEnabled() &&
+			Component->ComponentHasTag(TEXT("KnightArmorZone"));
+	}
+	bool HasOwnedArmorZone(const AActor* Target)
+	{
+		TInlineComponentArray<UPrimitiveComponent*> Components(Target);
+		for (const UPrimitiveComponent* Component : Components)
+		{
+			if (IsOwnedArmorZone(Component, Target))
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 	FKnightResult KnightSpendResource(UKnightAbilitySystemComponent* ASC,
 		const FGameplayAttribute& Attribute, float Amount)
@@ -124,7 +144,7 @@ FKnightResult UKnightCombatComponent::Configure(const FPrimaryAssetId& InProfile
 		Profile = nullptr;
 		return Result;
 	}
-	Snapshot.Poise = Profile->GetTuning().MaxPoise;
+	Snapshot.Poise = GetMaxPoise();
 	Snapshot.OutcomeCounts.Init(0, static_cast<int32>(EKnightCombatOutcome::Traversal) + 1);
 	RefreshSnapshot();
 	return FKnightResult::Success();
@@ -171,6 +191,11 @@ FKnightResult UKnightCombatComponent::ApplyProfile()
 		return Result;
 	}
 	AbilitySystem = ASC;
+	if (!PoiseBonusHandle.IsValid())
+	{
+		PoiseBonusHandle = ASC->GetGameplayAttributeValueChangeDelegate(UKnightAttributeSet::GetPoiseBonusAttribute())
+			.AddUObject(this, &ThisClass::HandlePoiseBonusChanged);
+	}
 	if (Character->HasAuthority())
 	{
 		Result = ASC->GrantAbilitySet(Set, TEXT("CombatProfile"), GrantHandle);
@@ -281,7 +306,10 @@ const FKnightCombatSnapshot& UKnightCombatComponent::GetSnapshot() const
 }
 bool UKnightCombatComponent::CanTransferControl() const
 {
+	const UKnightSkillRuntimeComponent* Skills = GetOwner() != nullptr
+		? GetOwner()->FindComponentByClass<UKnightSkillRuntimeComponent>() : nullptr;
 	return !Snapshot.bAttacking && !Snapshot.bBlocking && !Snapshot.bParrying && !Snapshot.bDodging &&
+		(Skills == nullptr || !Skills->HasActiveSkill()) &&
 		!Snapshot.bStaggered && (!AbilitySystem.IsValid() ||
 			(!AbilitySystem->HasMatchingGameplayTag(KnightGameplayTags::State_Combat_Finishing) &&
 			!AbilitySystem->HasMatchingGameplayTag(KnightGameplayTags::State_Combat_Traversing)));
@@ -302,6 +330,13 @@ void UKnightCombatComponent::RefreshSnapshot()
 {
 	if (!bEndingPlay && IsValid(GetOwner()) && GetOwner()->HasAuthority())
 	{
+		if (AbilitySystem.IsValid() && AbilitySystem->IsMutationFenced())
+		{
+			// Raw GAS staging may temporarily contain both stat sources; publish only their final aggregate.
+			bSnapshotPublicationPending = true;
+			return;
+		}
+		bSnapshotPublicationPending = false;
 		++Snapshot.Revision;
 		OnCombatSnapshotChanged.Broadcast(Snapshot);
 		GetOwner()->ForceNetUpdate();
@@ -330,6 +365,14 @@ FKnightResult UKnightCombatComponent::BeginAttack(FGameplayTag ActionTag, UKnigh
 {
 	OutMontage = nullptr;
 	OutSection = NAME_None;
+	if (const UKnightSkillRuntimeComponent* Skills = GetOwner()->FindComponentByClass<UKnightSkillRuntimeComponent>())
+	{
+		if (Skills->RequiresHammer())
+		{
+			return FKnightResult::Failure(EKnightError::InvalidState, TEXT("RequiresHammer"),
+				NSLOCTEXT("KnightEquipment", "RequiresHammer", "Equip a hammer to use this action."));
+		}
+	}
 	if (!IsAuthorityAlive() || Ability == nullptr || !CanTransferControl())
 	{
 		return KnightCombatFailure(EKnightError::InvalidState, TEXT("BeginAttack"));
@@ -350,12 +393,15 @@ FKnightResult UKnightCombatComponent::BeginAttack(FGameplayTag ActionTag, UKnigh
 		AttackIndex = Index;
 		AttackAction = ActionTag;
 		AttackAbility = Ability;
+		AttackActivationId = FGuid::NewGuid();
+		WindowHitIndex = 0;
 		Snapshot.bAttacking = true;
 		Snapshot.ComboIndex = 1;
 		bComboWindow = false;
 		bBufferedAttack = false;
 		ActiveWindow = NAME_None;
 		WindowHitActors.Reset();
+		ClearDeferredWeaponHits();
 		OutMontage = Attacks[Index].Montage.LoadSynchronous();
 		OutSection = Attacks[Index].SectionName;
 		if (IsValid(Snapshot.LockedTarget) && ValidateCombatTarget(Snapshot.LockedTarget, Profile->GetTuning().LockRange).IsSuccess())
@@ -388,12 +434,14 @@ void UKnightCombatComponent::EndAttack(UKnightGameplayAbility* Ability)
 	{
 		return;
 	}
+	EndTraceGeometryDiagnostics(TEXT("AttackEnded"));
 	++TraceGeneration;
 	AttackAbility.Reset();
 	AttackIndex = INDEX_NONE;
 	AttackAction = FGameplayTag();
 	ActiveWindow = NAME_None;
 	WindowHitActors.Reset();
+	ClearDeferredWeaponHits();
 	bComboWindow = false;
 	bBufferedAttack = false;
 	Snapshot.bAttacking = false;
@@ -415,9 +463,12 @@ void UKnightCombatComponent::BeginTraceWindow(FName WindowId, UAnimSequenceBase*
 	}
 	++TraceGeneration;
 	ActiveWindow = WindowId;
+	++WindowHitIndex;
 	WindowHitActors.Reset();
+	ClearDeferredWeaponHits();
 	PreviousHammerHead = Hammer != nullptr ? Hammer->GetComponentLocation() + Hammer->GetUpVector() * 50.0f
 		: GetOwner()->GetActorLocation();
+	BeginTraceGeometryDiagnostics();
 	PerformWeaponSweep();
 }
 void UKnightCombatComponent::TickTraceWindow(FName WindowId, UAnimSequenceBase* Animation)
@@ -434,6 +485,15 @@ void UKnightCombatComponent::EndTraceWindow(FName WindowId, UAnimSequenceBase* A
 	const FKnightAttackDefinition* Attack = GetCurrentAttack();
 	if (ActiveWindow == WindowId && Attack != nullptr && Animation == Attack->Montage.Get())
 	{
+		const uint64 Generation = TraceGeneration;
+		const TWeakObjectPtr<UKnightGameplayAbility> Ability = AttackAbility;
+		const int32 Index = AttackIndex;
+		FlushDeferredWeaponHits(Generation, WindowId, Ability, Index);
+		if (!IsTraceCapabilityCurrent(Generation, WindowId, Ability, Index))
+		{
+			return;
+		}
+		EndTraceGeometryDiagnostics(TEXT("NotifyEnded"));
 		++TraceGeneration;
 		ActiveWindow = NAME_None;
 	}
@@ -469,6 +529,7 @@ void UKnightCombatComponent::SetComboWindow(bool bOpen, UAnimSequenceBase* Anima
 		++Snapshot.ComboIndex;
 		ActiveWindow = NAME_None;
 		WindowHitActors.Reset();
+		ClearDeferredWeaponHits();
 		AbilitySystem->CurrentMontageJumpToSection(Attacks[Next].SectionName);
 		PublishOutcome(EKnightCombatOutcome::Combo, AttackAction, Snapshot.LockedTarget, Snapshot.ComboIndex);
 		return;
@@ -503,7 +564,16 @@ void UKnightCombatComponent::PerformWeaponSweep()
 	const FCollisionShape Shape = FCollisionShape::MakeSphere(Attack.TraceRadius);
 	GetWorld()->SweepMultiByObjectType(Hits, Hand, Head, FQuat::Identity, Objects, Shape, Query);
 	GetWorld()->SweepMultiByObjectType(MovingHits, PreviousHammerHead, Head, FQuat::Identity, Objects, Shape, Query);
+	RecordTraceGeometrySweep(Hand, Head, PreviousHammerHead, Hits, MovingHits);
 	Hits.Append(MovingHits);
+	TSet<AActor*> ArmorTargets;
+	for (const FHitResult& Candidate : Hits)
+	{
+		if (IsOwnedArmorZone(Candidate.GetComponent(), Candidate.GetActor()))
+		{
+			ArmorTargets.Add(Candidate.GetActor());
+		}
+	}
 	PreviousHammerHead = Head;
 	for (const FHitResult& Hit : Hits)
 	{
@@ -512,6 +582,15 @@ void UKnightCombatComponent::PerformWeaponSweep()
 			return;
 		}
 		AActor* Target = Hit.GetActor();
+		if (ArmorTargets.Contains(Target) && !IsOwnedArmorZone(Hit.GetComponent(), Target))
+		{
+			RecordTraceGeometryDecision(Hit, TEXT("SameSweepPrefersArmor"));
+			continue;
+		}
+		if (IsValid(Target) && WindowHitActors.Contains(Target))
+		{
+			RecordTraceGeometryDecision(Hit, TEXT("ActorAlreadyHit"));
+		}
 		if (!IsValid(Target) || WindowHitActors.Contains(Target) ||
 			!ValidateCombatTarget(Target, 400.0f).IsSuccess())
 		{
@@ -522,21 +601,105 @@ void UKnightCombatComponent::PerformWeaponSweep()
 		{
 			continue;
 		}
-		WindowHitActors.Add(Target);
-		const float Before = TargetASC->GetKnightAttributes()->GetHealth();
-		const FKnightResult Result = UKnightAbilitySystemComponent::ApplyCombatDamage(GetOwner(), Target,
-			GetProjectedDamage(ActionTag, Attack.Damage), Attack.PoiseDamage, true, &Hit);
-		const float Applied = Before - TargetASC->GetKnightAttributes()->GetHealth();
-		if (Result.IsSuccess() && Applied > 0.0f)
+		if (!IsOwnedArmorZone(Hit.GetComponent(), Target) && HasOwnedArmorZone(Target))
 		{
-			PublishOutcome(ActionTag == KnightGameplayTags::Ability_Combat_Heavy ? EKnightCombatOutcome::HeavyHit
-				: EKnightCombatOutcome::LightHit, ActionTag, Target, Applied);
+			// An early capsule touch cannot consume the actor before this swing reaches its actual armor zone.
+			if (!DeferredWindowHits.Contains(Target))
+			{
+				DeferredWindowHits.Add(Target, Hit);
+				DeferredWindowHitOrder.Add(Target);
+				RecordTraceGeometryDecision(Hit, TEXT("DeferredBody"));
+			}
+			continue;
 		}
+		CommitWeaponHit(Hit, Attack, ActionTag, Generation, WindowId, Ability, Index);
 		if (!IsTraceCapabilityCurrent(Generation, WindowId, Ability, Index))
 		{
 			return;
 		}
 	}
+}
+
+void UKnightCombatComponent::CommitWeaponHit(const FHitResult& Hit, const FKnightAttackDefinition& Attack,
+	FGameplayTag ActionTag, uint64 Generation, FName WindowId,
+	const TWeakObjectPtr<UKnightGameplayAbility>& Ability, int32 Index)
+{
+	AActor* Target = Hit.GetActor();
+	const UPrimitiveComponent* Component = Hit.GetComponent();
+	if (!IsTraceCapabilityCurrent(Generation, WindowId, Ability, Index) || !IsValid(Target) ||
+		WindowHitActors.Contains(Target) || !IsValid(Component) || Component->GetOwner() != Target ||
+		!Component->IsRegistered() || !Component->IsQueryCollisionEnabled() ||
+		!ValidateCombatTarget(Target, 400.0f).IsSuccess())
+	{
+		return;
+	}
+	const TWeakObjectPtr<UKnightAbilitySystemComponent> TargetASC = KnightActorASC(Target);
+	if (!TargetASC.IsValid() || TargetASC->GetKnightAttributes() == nullptr)
+	{
+		return;
+	}
+	RecordTraceGeometryDecision(Hit, TEXT("Accepted"));
+	// Retire the pending contact and reserve dedup before any synchronous damage/proc/event callback.
+	DeferredWindowHits.Remove(Target);
+	WindowHitActors.Add(Target);
+	const float Before = TargetASC->GetKnightAttributes()->GetHealth();
+	const FKnightResult Result = UKnightAbilitySystemComponent::ApplyCombatDamage(GetOwner(), Target,
+		GetProjectedDamage(ActionTag, Attack.Damage), Attack.PoiseDamage, true, &Hit,
+		ActionTag == KnightGameplayTags::Ability_Combat_Heavy, AttackActivationId, WindowHitIndex);
+	if (!TargetASC.IsValid() || TargetASC->GetKnightAttributes() == nullptr || !IsValid(Target))
+	{
+		return;
+	}
+	if (Result.IsSuccess() && ActionTag == KnightGameplayTags::Ability_Combat_Heavy &&
+		IsTraceCapabilityCurrent(Generation, WindowId, Ability, Index))
+	{
+		if (UKnightSkillRuntimeComponent* Skills = GetOwner()->FindComponentByClass<UKnightSkillRuntimeComponent>())
+		{
+			Skills->NotifyHeavyHit(Target);
+		}
+	}
+	if (!TargetASC.IsValid() || TargetASC->GetKnightAttributes() == nullptr || !IsValid(Target))
+	{
+		return;
+	}
+	const float Applied = Before - TargetASC->GetKnightAttributes()->GetHealth();
+	if (Result.IsSuccess() && Applied > 0.0f)
+	{
+		PublishOutcome(ActionTag == KnightGameplayTags::Ability_Combat_Heavy ? EKnightCombatOutcome::HeavyHit
+			: EKnightCombatOutcome::LightHit, ActionTag, Target, Applied);
+	}
+}
+
+void UKnightCombatComponent::FlushDeferredWeaponHits(uint64 Generation, FName WindowId,
+	const TWeakObjectPtr<UKnightGameplayAbility>& Ability, int32 Index)
+{
+	const FKnightAttackDefinition* CurrentAttack = GetCurrentAttack();
+	if (CurrentAttack == nullptr || !IsTraceCapabilityCurrent(Generation, WindowId, Ability, Index))
+	{
+		ClearDeferredWeaponHits();
+		return;
+	}
+	const FKnightAttackDefinition Attack = *CurrentAttack;
+	const FGameplayTag ActionTag = AttackAction;
+	TMap<TWeakObjectPtr<AActor>, FHitResult> PendingHits = MoveTemp(DeferredWindowHits);
+	TArray<TWeakObjectPtr<AActor>> PendingOrder = MoveTemp(DeferredWindowHitOrder);
+	for (const TWeakObjectPtr<AActor>& Target : PendingOrder)
+	{
+		if (!IsTraceCapabilityCurrent(Generation, WindowId, Ability, Index))
+		{
+			return;
+		}
+		if (const FHitResult* Hit = PendingHits.Find(Target))
+		{
+			CommitWeaponHit(*Hit, Attack, ActionTag, Generation, WindowId, Ability, Index);
+		}
+	}
+}
+
+void UKnightCombatComponent::ClearDeferredWeaponHits()
+{
+	DeferredWindowHits.Reset();
+	DeferredWindowHitOrder.Reset();
 }
 
 bool UKnightCombatComponent::IsTraceCapabilityCurrent(uint64 Generation, FName WindowId,
@@ -549,8 +712,10 @@ bool UKnightCombatComponent::IsTraceCapabilityCurrent(uint64 Generation, FName W
 
 FKnightResult UKnightCombatComponent::BeginDefense(FGameplayTag ActionTag)
 {
+	const UKnightSkillRuntimeComponent* Skills = GetOwner() != nullptr
+		? GetOwner()->FindComponentByClass<UKnightSkillRuntimeComponent>() : nullptr;
 	if (!IsAuthorityAlive() || Snapshot.bAttacking || Snapshot.bDodging || Snapshot.bStaggered ||
-		Snapshot.bBlocking || Snapshot.bParrying)
+		Snapshot.bBlocking || Snapshot.bParrying || (Skills != nullptr && Skills->HasActiveSkill()))
 	{
 		return KnightCombatFailure(EKnightError::InvalidState, TEXT("BeginDefense"));
 	}
@@ -603,6 +768,17 @@ FKnightResult UKnightCombatComponent::BeginDodge()
 	if (!Cost.IsSuccess())
 	{
 		return Cost;
+	}
+	if (UKnightSkillRuntimeComponent* Skills = GetOwner()->FindComponentByClass<UKnightSkillRuntimeComponent>())
+	{
+		for (int32 Slot = 1; Slot <= 4; ++Slot)
+		{
+			const FGameplayAbilitySpecHandle Handle = Skills->GetSkillHandle(Slot);
+			if (Handle.IsValid())
+			{
+				AbilitySystem->CancelAbilityHandle(Handle);
+			}
+		}
 	}
 	Snapshot.bDodging = true;
 	DodgeStartedAt = GetWorld()->GetTimeSeconds();
@@ -769,6 +945,48 @@ void UKnightCombatComponent::UpdateLockCamera()
 void UKnightCombatComponent::ResolveIncomingDamage(AActor* Source, float InDamage, float PoiseDamage,
 	bool bCanDefend, float& OutHealthDamage)
 {
+	ResolveIncomingDamageWithContext(Source, InDamage, PoiseDamage, bCanDefend,
+		FKnightIncomingHitContext(), OutHealthDamage);
+}
+
+float UKnightCombatComponent::GetMaxPoise() const
+{
+	const float Bonus = AbilitySystem.IsValid() && AbilitySystem->GetKnightAttributes() != nullptr
+		? AbilitySystem->GetKnightAttributes()->GetPoiseBonus() : 0.0f;
+	return Profile != nullptr ? Profile->GetTuning().MaxPoise + Bonus : Bonus;
+}
+
+FKnightResult UKnightCombatComponent::RestoreSnapshotPoise(float InPoise)
+{
+	if (!IsValid(GetOwner()) || !GetOwner()->HasAuthority())
+	{
+		return KnightCombatFailure(EKnightError::NotAuthority, TEXT("SnapshotPoiseAuthority"));
+	}
+	if (!IsAuthorityAlive())
+	{
+		return KnightCombatFailure(EKnightError::InvalidState, TEXT("SnapshotPoiseState"));
+	}
+	if (!FMath::IsFinite(InPoise) || InPoise < 0.0f || InPoise > GetMaxPoise())
+	{
+		return KnightCombatFailure(EKnightError::InvalidData, TEXT("SnapshotPoiseRange"));
+	}
+	Snapshot.Poise = InPoise;
+	RefreshSnapshot();
+	return FKnightResult::Success();
+}
+
+void UKnightCombatComponent::HandlePoiseBonusChanged(const FOnAttributeChangeData& Change)
+{
+	if (!bEndingPlay && GetOwner() != nullptr && GetOwner()->HasAuthority())
+	{
+		Snapshot.Poise = FMath::Min(Snapshot.Poise, GetMaxPoise());
+		RefreshSnapshot();
+	}
+}
+
+void UKnightCombatComponent::ResolveIncomingDamageWithContext(AActor* Source, float InDamage, float PoiseDamage,
+	bool bCanDefend, const FKnightIncomingHitContext& Context, float& OutHealthDamage)
+{
 	OutHealthDamage = InDamage;
 	if (!IsAuthorityAlive() || !FMath::IsFinite(InDamage) || !FMath::IsFinite(PoiseDamage))
 	{
@@ -794,6 +1012,11 @@ void UKnightCombatComponent::ResolveIncomingDamage(AActor* Source, float InDamag
 	{
 		OutHealthDamage = 0.0f;
 		AbilitySystem->ExecuteGameplayCue(KnightGameplayTags::GameplayCue_Parry);
+		if (UKnightSkillRuntimeComponent* Skills = GetOwner()->FindComponentByClass<UKnightSkillRuntimeComponent>())
+		{
+			Skills->NotifyDefenseSuccess();
+			Skills->NotifyItemDefenseSuccess(Source, Context.ActivationId, Context.bDirect, Context.TargetItemGeneration);
+		}
 		PublishOutcome(EKnightCombatOutcome::Parried, KnightGameplayTags::Ability_Combat_Parry, Source);
 		if (IsValid(Source))
 		{
@@ -809,6 +1032,11 @@ void UKnightCombatComponent::ResolveIncomingDamage(AActor* Source, float InDamag
 		if (SpendStamina(Tuning.BlockStaminaCost, KnightGameplayTags::Ability_Combat_Block).IsSuccess())
 		{
 			OutHealthDamage *= Tuning.BlockDamageFraction;
+			if (UKnightSkillRuntimeComponent* Skills = GetOwner()->FindComponentByClass<UKnightSkillRuntimeComponent>())
+			{
+				Skills->NotifyDefenseSuccess();
+				Skills->NotifyItemDefenseSuccess(Source, Context.ActivationId, Context.bDirect, Context.TargetItemGeneration);
+			}
 			PublishOutcome(EKnightCombatOutcome::Blocked, KnightGameplayTags::Ability_Combat_Block, Source, OutHealthDamage);
 			return;
 		}
@@ -858,7 +1086,7 @@ void UKnightCombatComponent::EndStagger()
 	if (!bEndingPlay && Profile != nullptr && GetOwner() != nullptr && GetOwner()->HasAuthority())
 	{
 		Snapshot.bStaggered = false;
-		Snapshot.Poise = Profile->GetTuning().MaxPoise;
+		Snapshot.Poise = GetMaxPoise();
 		if (AbilitySystem.IsValid())
 		{
 			AbilitySystem->SetLooseGameplayTagCount(KnightGameplayTags::State_Combat_Staggered, 0,
@@ -995,6 +1223,8 @@ void UKnightCombatComponent::HandleLifeTagChanged(const FGameplayTag Tag, int32 
 
 void UKnightCombatComponent::ClearTransientActions()
 {
+	EndTraceGeometryDiagnostics(TEXT("TransientActionsCleared"));
+	ClearDeferredWeaponHits();
 	++TraceGeneration;
 	if (AbilitySystem.IsValid())
 	{
@@ -1049,6 +1279,15 @@ void UKnightCombatComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 	{
 		return;
 	}
+	if (bSnapshotPublicationPending && AbilitySystem.IsValid() && !AbilitySystem->IsMutationFenced())
+	{
+		Snapshot.Poise = FMath::Min(Snapshot.Poise, GetMaxPoise());
+		RefreshSnapshot();
+		if (bEndingPlay || !IsValid(GetOwner()) || GetOwner()->IsActorBeingDestroyed())
+		{
+			return;
+		}
+	}
 	LockValidationElapsed += DeltaTime;
 	if (LockValidationElapsed >= 0.1f)
 	{
@@ -1073,6 +1312,8 @@ void UKnightCombatComponent::EndPlay(EEndPlayReason::Type EndPlayReason)
 	}
 	if (AbilitySystem.IsValid())
 	{
+		AbilitySystem->GetGameplayAttributeValueChangeDelegate(UKnightAttributeSet::GetPoiseBonusAttribute())
+			.Remove(PoiseBonusHandle);
 		AbilitySystem->RegisterGameplayTagEvent(KnightGameplayTags::State_Combat_RuneSlowed).Remove(RuneTagHandle);
 		AbilitySystem->RegisterGameplayTagEvent(KnightGameplayTags::State_Life_Downed).Remove(DownedTagHandle);
 		AbilitySystem->RegisterGameplayTagEvent(KnightGameplayTags::State_Life_Dead).Remove(DeadTagHandle);

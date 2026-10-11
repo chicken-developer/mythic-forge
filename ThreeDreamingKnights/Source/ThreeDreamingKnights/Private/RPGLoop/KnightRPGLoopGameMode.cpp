@@ -20,6 +20,7 @@
 #include "RPGLoop/KnightRPGStateActor.h"
 #include "RPGLoop/KnightRPGUIPlayerController.h"
 #include "RPGLoop/KnightRPGUpgradeStation.h"
+#include "SkillLab/KnightSkillLabGameMode.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogKnightRPGLoop, Log, All);
 
@@ -65,22 +66,17 @@ void AKnightRPGLoopGameMode::InitGameState()
 			TEXT("RPGStateSpawn"), FText::GetEmpty());
 		return;
 	}
-	RPGInitializationResult = RPGState->GetInventory()->InitializeInventory(64);
-	if (RPGInitializationResult.IsSuccess())
+	TArray<FKnightRPGKnightRegistration> Registrations;
+	for (const FKnightRosterEntry& Entry : GetPartyState()->GetRoster())
 	{
-		TArray<FKnightRPGKnightRegistration> Registrations;
-		for (const FKnightRosterEntry& Entry : GetPartyState()->GetRoster())
-		{
-			FKnightRPGKnightRegistration Registration;
-			Registration.KnightId = Entry.KnightId;
-			Registration.HeroDefinitionId = Entry.HeroDefinitionId;
-			Registration.Pawn = Entry.Knight;
-			Registration.AbilitySystem = Entry.Knight->GetKnightAbilitySystem();
-			Registrations.Add(Registration);
-		}
-		RPGInitializationResult = RPGState->GetRPG()->InitializeRPG(
-			RPGState->GetInventory(), SkillTreeId, Registrations, 2);
+		FKnightRPGKnightRegistration Registration;
+		Registration.KnightId = Entry.KnightId;
+		Registration.HeroDefinitionId = Entry.HeroDefinitionId;
+		Registration.Pawn = Entry.Knight;
+		Registration.AbilitySystem = Entry.Knight->GetKnightAbilitySystem();
+		Registrations.Add(Registration);
 	}
+	RPGInitializationResult = InitializeRPGDomains(RPGState->GetInventory(), RPGState->GetRPG(), Registrations);
 	if (RPGInitializationResult.IsSuccess())
 	{
 		AKnightRPGGameState* State = GetGameState<AKnightRPGGameState>();
@@ -93,6 +89,33 @@ void AKnightRPGLoopGameMode::InitGameState()
 		RPGState = nullptr;
 	}
 	RewardId = FGuid::NewGuid();
+}
+
+FKnightResult AKnightRPGLoopGameMode::ConfigureRPGDomains(UKnightInventoryComponent* Inventory,
+	UKnightRPGComponent* RPG)
+{
+	return FKnightResult::Success();
+}
+
+FKnightResult AKnightRPGLoopGameMode::InitializeRPGDomains(UKnightInventoryComponent* Inventory,
+	UKnightRPGComponent* RPG, TConstArrayView<FKnightRPGKnightRegistration> Registrations)
+{
+	FKnightResult Result = Inventory->InitializeInventory(GetInitialInventoryCapacity());
+	if (Result.IsSuccess())
+	{
+		Result = ConfigureRPGDomains(Inventory, RPG);
+	}
+	return Result.IsSuccess() ? RPG->InitializeRPG(Inventory, SkillTreeId, Registrations, 2) : Result;
+}
+
+int32 AKnightRPGLoopGameMode::GetInitialInventoryCapacity() const
+{
+	return 64;
+}
+
+bool AKnightRPGLoopGameMode::ShouldIssueLegacyEncounterRewards() const
+{
+	return true;
 }
 
 void AKnightRPGLoopGameMode::BeginPlay()
@@ -157,6 +180,21 @@ FKnightResult AKnightRPGLoopGameMode::BuildCaller(APlayerController* Player,
 	OutCaller.Pawn = Knight;
 	OutCaller.AbilitySystem = Knight->GetKnightAbilitySystem();
 	OutCaller.bInSafeZone = IsInUpgradeSafeZone(Knight);
+	OutCaller.bInCombat = GetArenaState() != nullptr && GetArenaState()->GetSnapshot().AliveEnemies != 0;
+	if (RPGState->GetRPG()->GetView().IsItemizationEnabled())
+	{
+		for (const FKnightRosterEntry& Candidate : Party->GetRoster())
+		{
+			if (Candidate.KnightId == OutCaller.KnightId || Candidate.OwnerKind == EKnightControllerOwner::Companion)
+			{
+				OutCaller.EditableKnights.Add(Candidate.KnightId);
+			}
+		}
+	}
+	if (const AKnightSkillLabGameMode* Lab = Cast<AKnightSkillLabGameMode>(this))
+	{
+		OutCaller.EncounterId = Lab->GetLabEncounterId();
+	}
 	return FKnightResult::Success();
 }
 
@@ -185,7 +223,70 @@ FKnightRPGCommandResult AKnightRPGLoopGameMode::ExecuteRPGCommand(AKnightRPGPlay
 	{
 		return Outcome;
 	}
-	// The authenticated domain can return an exact historical receipt after a legitimate Knight switch.
+	// Authenticate the current human before returning an exact receipt, even after a Knight switch.
+	const FKnightRPGCommandResult Committed = RPGState->GetRPG()->QueryCommittedCommand(Caller, Command);
+	if (Committed.Result.Error != EKnightError::NotFound)
+	{
+		return Committed;
+	}
+	if (RPGState->GetRPG()->GetView().IsItemizationEnabled() && Command.ExpectedKnightId != Caller.KnightId)
+	{
+		bool bCompanionGearOperation = false;
+		switch (Command.Operation)
+		{
+		case EKnightRPGOperation::Equip:
+		case EKnightRPGOperation::Unequip:
+		case EKnightRPGOperation::TransferEquipment:
+		case EKnightRPGOperation::SwapRings:
+		case EKnightRPGOperation::AttachWeaponRune:
+		case EKnightRPGOperation::DetachWeaponRune:
+		case EKnightRPGOperation::ApplyBuild:
+		case EKnightRPGOperation::BuyItem:
+		case EKnightRPGOperation::SellItem:
+		case EKnightRPGOperation::UpgradeItem:
+		case EKnightRPGOperation::BindConsumable:
+		case EKnightRPGOperation::ApplyGearPreset:
+		case EKnightRPGOperation::ClaimReward:
+			bCompanionGearOperation = true;
+			break;
+		default: break;
+		}
+		const FKnightRosterEntry* Selected = GetPartyState()->GetRoster().FindByPredicate(
+			[&Command](const FKnightRosterEntry& Candidate)
+			{
+				return Candidate.KnightId == Command.ExpectedKnightId;
+			});
+		if (!bCompanionGearOperation || Selected == nullptr
+			|| Selected->OwnerKind != EKnightControllerOwner::Companion
+			|| !Caller.EditableKnights.Contains(Selected->KnightId) || !IsValid(Selected->Knight))
+		{
+			Outcome.Result = FKnightResult::Failure(EKnightError::NotOwned, TEXT("GearSelectedKnight"),
+				NSLOCTEXT("KnightRPG", "SelectedGearPermission", "Only this human's permitted companion gear may be changed."));
+			return Outcome;
+		}
+		// Human authentication stays intact; only the selected canonical gameplay participant changes.
+		Caller.KnightId = Selected->KnightId;
+		Caller.HeroDefinitionId = Selected->HeroDefinitionId;
+		Caller.Pawn = Selected->Knight;
+		Caller.AbilitySystem = Selected->Knight->GetKnightAbilitySystem();
+		Caller.bInSafeZone &= IsInUpgradeSafeZone(Selected->Knight);
+	}
+	if (RPGState->GetRPG()->GetView().IsItemizationEnabled()
+		&& Command.Operation == EKnightRPGOperation::TransferEquipment)
+	{
+		const FKnightRosterEntry* Target = GetPartyState()->GetRoster().FindByPredicate(
+			[&Command](const FKnightRosterEntry& Candidate)
+			{
+				return Candidate.KnightId == Command.TargetKnightId;
+			});
+		if (Target == nullptr || !Caller.EditableKnights.Contains(Target->KnightId) || !IsValid(Target->Knight))
+		{
+			Outcome.Result = FKnightResult::Failure(EKnightError::NotOwned, TEXT("GearTransferTarget"),
+				NSLOCTEXT("KnightRPG", "TransferTargetPermission", "Transfer requires permission for both canonical Knights."));
+			return Outcome;
+		}
+		Caller.bInSafeZone &= IsInUpgradeSafeZone(Target->Knight);
+	}
 	Outcome = RPGState->GetRPG()->ExecuteCommand(Caller, Command);
 	if (Outcome.Result.IsSuccess() && !Outcome.bWasReplay && !bEndingRPGPlay && IsValid(RPGState)
 		&& Command.Operation != EKnightRPGOperation::Pickup
@@ -261,6 +362,10 @@ void AKnightRPGLoopGameMode::HandleArenaSnapshot(const FKnightPartyArenaSnapshot
 
 FKnightResult AKnightRPGLoopGameMode::IssueEncounterReward()
 {
+	if (!ShouldIssueLegacyEncounterRewards())
+	{
+		return FKnightResult::Success();
+	}
 	if (bIssuingReward || bEndingRPGPlay || RPGState == nullptr || !IsValid(RewardTable)
 		|| !IsValid(UpgradeStation) || !RewardId.IsValid()
 		|| GetArenaState()->GetSnapshot().Stage != EKnightArenaStage::Victory)

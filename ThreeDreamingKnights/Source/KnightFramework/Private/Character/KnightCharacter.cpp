@@ -409,6 +409,11 @@ void AKnightCharacter::ResolveHeroDefinition()
 	OnIdentityChanged.Broadcast();
 }
 
+FKnightAttributeDefaults AKnightCharacter::GetInitialAttributeDefaults() const
+{
+	return FKnightAttributeDefaults();
+}
+
 FKnightResult AKnightCharacter::InitializeKnightAbilitySystem()
 {
 	if (bEndingPlay || GetWorld() == nullptr || GetWorld()->bIsTearingDown)
@@ -425,7 +430,8 @@ FKnightResult AKnightCharacter::InitializeKnightAbilitySystem()
 	{
 		LifeStateHandle = LifeComponent->OnLifeStateChanged.AddUObject(this, &AKnightCharacter::HandleLifeStateChanged);
 	}
-	const FKnightResult Initialize = AbilitySystem->InitializeKnightActor(this, Attributes, LifeComponent, KnightEntityId);
+	const FKnightResult Initialize = AbilitySystem->InitializeKnightActor(this, Attributes, LifeComponent, KnightEntityId,
+		GetInitialAttributeDefaults());
 	if (!Initialize.IsSuccess())
 	{
 		return Initialize;

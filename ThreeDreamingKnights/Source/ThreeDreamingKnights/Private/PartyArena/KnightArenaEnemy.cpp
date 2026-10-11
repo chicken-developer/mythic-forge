@@ -1,4 +1,5 @@
 #include "PartyArena/KnightArenaEnemy.h"
+#include "SkillLab/KnightBossArmorComponent.h"
 
 #include "Assets/KnightAssetManager.h"
 #include "Attributes/KnightAttributeSet.h"
@@ -24,6 +25,7 @@ DEFINE_LOG_CATEGORY_STATIC(LogKnightArenaEnemy, Log, All);
 
 AKnightArenaEnemy::AKnightArenaEnemy()
 {
+	SkillLabArmor = CreateDefaultSubobject<UKnightBossArmorComponent>(TEXT("SkillLabArmor"));
 	bReplicates = true;
 	bAlwaysRelevant = true;
 	SetNetUpdateFrequency(30.0f);

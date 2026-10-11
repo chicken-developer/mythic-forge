@@ -23,6 +23,7 @@
 #include "HAL/PlatformTime.h"
 #include "Misc/AutomationTest.h"
 #include "Misc/ScopeExit.h"
+#include "Skills/KnightSkillRuntimeComponent.h"
 #include "Tags/KnightGameplayTags.h"
 #include "UObject/StrongObjectPtr.h"
 #include <limits>
@@ -942,6 +943,318 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(FKnightCombatProjectionTest, "Knight.Combat.RPG
 bool FKnightCombatProjectionTest::RunTest(const FString& Parameters)
 {
 	ADD_LATENT_AUTOMATION_COMMAND(KnightCombatTests::FKnightProjectionCombatCommand(this));
+	return true;
+}
+
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FKnightEquipmentBulwarkTest, "Knight.Equipment.Combat.BulwarkConfirmedBlockParry",
+	EAutomationTestFlags::EditorContext | EAutomationTestFlags::EngineFilter)
+
+bool FKnightEquipmentBulwarkTest::RunTest(const FString& Parameters)
+{
+	using namespace KnightCombatTests;
+	FKnightCombatWorld Context;
+	const FKnightCombatFixture Source = SpawnKnight(Context.World.Get(), FVector(0, 0, 88), true);
+	const FKnightCombatFixture Enemy = SpawnKnight(Context.World.Get(), FVector(180, 0, 88), false);
+	const FPrimaryAssetId ProfileId(TEXT("KnightCombatProfile"), TEXT("FoundationCombat"));
+	if (!TestTrue(TEXT("Actual combat profile and GAS actions configure"), Source.Combat->Configure(ProfileId).IsSuccess())
+		|| !TestTrue(TEXT("Enemy uses actual shared combat"), Enemy.Combat->Configure(ProfileId).IsSuccess()))
+	{
+		return false;
+	}
+	Source.ASC->SetNumericAttributeBase(UKnightAttributeSet::GetAttackPowerAttribute(), 100.0f);
+	Source.ASC->SetNumericAttributeBase(UKnightAttributeSet::GetDefenseAttribute(), 0.0f);
+	Source.ASC->SetNumericAttributeBase(UKnightAttributeSet::GetVersatilityAttribute(), 0.20f);
+	Source.ASC->SetNumericAttributeBase(UKnightAttributeSet::GetMasteryBonusAttribute(), 0.30f);
+	Source.ASC->SetNumericAttributeBase(UKnightAttributeSet::GetCritChanceAttribute(), 0.40f);
+	UKnightSkillRuntimeComponent* Runtime = NewObject<UKnightSkillRuntimeComponent>(Source.Actor.Get());
+	Source.Actor->AddInstanceComponent(Runtime);
+	Runtime->RegisterComponent();
+	FKnightEquipmentCombatBuild Gear;
+	Gear.bEnabled = true;
+	Gear.bHasHammer = true;
+	Gear.RelicEffectId = TEXT("Bulwark");
+	Gear.RelicInstanceId = FGuid::NewGuid();
+	TestTrue(TEXT("Bulwark exact instance prepares"), Runtime->PrepareEquipmentBuild(Gear).IsSuccess());
+	Runtime->CommitPreparedEquipmentBuild();
+	Runtime->PublishPreparedBuild();
+	TestTrue(TEXT("Actual GAS block starts"), Source.ASC->RequestAbilityInput(KnightGameplayTags::Input_Combat_Block, true).IsSuccess());
+	TestTrue(TEXT("Actual damage execution resolves a direct hostile blocked hit"),
+		UKnightAbilitySystemComponent::ApplyCombatDamage(Enemy.Actor.Get(), Source.Actor.Get(), 20.0f, 20.0f,
+			true, nullptr, false, FGuid::NewGuid()).IsSuccess());
+	const float BlockedDamage = 20.0f * Source.Combat->GetProfile()->GetTuning().BlockDamageFraction;
+	TestTrue(TEXT("Bulwark creates .60 Power shield and the confirmed hit consumes its blocked portion"),
+		FMath::IsNearlyEqual(Runtime->GetSkillState().Shield, 60.0f - BlockedDamage, 0.01f));
+	TestEqual(TEXT("Blocked hit is absorbed without HP loss"), Source.Attributes->GetHealth(), 1000.0f);
+	TestTrue(TEXT("Confirmed defense starts the twelve-second owner-family ICD"),
+		FMath::IsNearlyEqual(Runtime->CaptureSnapshot().BulwarkRemaining, 12.0f, 0.01f));
+	UKnightAbilitySystemComponent::ApplyCombatDamage(Enemy.Actor.Get(), Source.Actor.Get(), 20.0f, 0.0f,
+		true, nullptr, false, FGuid::NewGuid());
+	TestTrue(TEXT("Further blocks during ICD consume the existing pool without refreshing it"),
+		FMath::IsNearlyEqual(Runtime->GetSkillState().Shield, 60.0f - 2.0f * BlockedDamage, 0.01f));
+	Source.ASC->RequestAbilityInput(KnightGameplayTags::Input_Combat_Block, false);
+	const uint64 OldGeneration = Runtime->GetItemGeneration();
+	FKnightEquipmentCombatBuild Empty = Gear;
+	Empty.RelicEffectId = NAME_None;
+	Empty.RelicInstanceId.Invalidate();
+	TestTrue(TEXT("Exact relic source withdrawal prepares"), Runtime->PrepareEquipmentBuild(Empty).IsSuccess());
+	Runtime->CommitPreparedEquipmentBuild();
+	Runtime->PublishPreparedBuild();
+	TestEqual(TEXT("Unequip cleans only the old item shield"), Runtime->GetSkillState().Shield, 0.0f);
+	Gear.RelicInstanceId = FGuid::NewGuid();
+	Runtime->PrepareEquipmentBuild(Gear);
+	Runtime->CommitPreparedEquipmentBuild();
+	Runtime->PublishPreparedBuild();
+	TestTrue(TEXT("New instance retains the same owner's family ICD"),
+		FMath::IsNearlyEqual(Runtime->CaptureSnapshot().BulwarkRemaining, 12.0f, 0.01f));
+	Runtime->NotifyItemDefenseSuccess(Enemy.Actor.Get(), FGuid::NewGuid(), true, OldGeneration);
+	TestEqual(TEXT("Stale source generation cannot create an item effect"), Runtime->GetSkillState().Shield, 0.0f);
+	Runtime->ResetForCheckpoint();
+	TestTrue(TEXT("Retry does not reset the family ICD"),
+		FMath::IsNearlyEqual(Runtime->CaptureSnapshot().BulwarkRemaining, 12.0f, 0.01f));
+	FKnightSkillRuntimeSnapshot Cleared = Runtime->CaptureSnapshot();
+	Cleared.BulwarkRemaining = 0.0f;
+	TestTrue(TEXT("Test reconstruction installs an elapsed ICD fragment"), Runtime->RestoreSnapshot(Cleared).IsSuccess());
+	TestTrue(TEXT("Actual shared GAS parry starts"), Source.ASC->RequestAbilityInput(KnightGameplayTags::Input_Combat_Parry, true).IsSuccess());
+	UKnightAbilitySystemComponent::ApplyCombatDamage(Enemy.Actor.Get(), Source.Actor.Get(), 20.0f, 20.0f,
+		true, nullptr, false, FGuid::NewGuid());
+	TestEqual(TEXT("Parry confirms zero incoming HP damage and creates the full Bulwark pool"), Runtime->GetSkillState().Shield, 60.0f);
+	TestEqual(TEXT("Actual combat reports a successful parry"), Source.Combat->GetSnapshot().GetOutcomeCount(EKnightCombatOutcome::Parried), 1);
+	return true;
+}
+
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FKnightEquipmentHammerCombatTest, "Knight.Equipment.Combat.EmptyHammerRejectsLightHeavy",
+	EAutomationTestFlags::EditorContext | EAutomationTestFlags::EngineFilter)
+
+bool FKnightEquipmentHammerCombatTest::RunTest(const FString& Parameters)
+{
+	using namespace KnightCombatTests;
+	FKnightCombatWorld Context;
+	const FKnightCombatFixture Source = SpawnKnight(Context.World.Get(), FVector(0, 0, 88), true);
+	if (!TestTrue(TEXT("Actual combat profile grants real light and heavy GAS actions"),
+		Source.Combat->Configure(FPrimaryAssetId(TEXT("KnightCombatProfile"), TEXT("FoundationCombat"))).IsSuccess()))
+	{
+		return false;
+	}
+	UKnightSkillRuntimeComponent* Runtime = NewObject<UKnightSkillRuntimeComponent>(Source.Actor.Get());
+	Source.Actor->AddInstanceComponent(Runtime);
+	Runtime->RegisterComponent();
+	FKnightEquipmentCombatBuild Empty;
+	Empty.bEnabled = true;
+	TestTrue(TEXT("M56 empty weapon descriptor prepares"), Runtime->PrepareEquipmentBuild(Empty).IsSuccess());
+	Runtime->CommitPreparedEquipmentBuild();
+	Runtime->PublishPreparedBuild();
+	int32 Commits = 0;
+	const FDelegateHandle Handle = Source.ASC->AbilityCommittedCallbacks.AddLambda([&Commits](UGameplayAbility*)
+	{
+		++Commits;
+	});
+	const FGameplayTag AttackInputs[] { KnightGameplayTags::Input_Combat_Primary, KnightGameplayTags::Input_Combat_Heavy };
+	for (FGameplayTag Input : AttackInputs)
+	{
+		Source.ASC->RequestAbilityInput(Input, true);
+		Source.ASC->RequestAbilityInput(Input, false);
+	}
+	TestEqual(TEXT("RequiresHammer rejects before real GAS commit"), Commits, 0);
+	TestEqual(TEXT("RequiresHammer rejects before stamina spend"), Source.Attributes->GetStamina(), 1000.0f);
+	TestFalse(TEXT("Rejected attacks leave no active montage or attack state"), Source.Combat->GetSnapshot().bAttacking);
+	TestTrue(TEXT("An empty weapon still permits actual shared block"),
+		Source.ASC->RequestAbilityInput(KnightGameplayTags::Input_Combat_Block, true).IsSuccess());
+	TestTrue(TEXT("Allowed block reaches confirmed combat state"), Source.Combat->GetSnapshot().bBlocking);
+	Source.ASC->RequestAbilityInput(KnightGameplayTags::Input_Combat_Block, false);
+	Source.ASC->AbilityCommittedCallbacks.Remove(Handle);
+	return true;
+}
+
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FKnightEquipmentPoiseSnapshotTest, "Knight.Equipment.Combat.PoiseSnapshotPoolValidation",
+	EAutomationTestFlags::EditorContext | EAutomationTestFlags::EngineFilter)
+
+bool FKnightEquipmentPoiseSnapshotTest::RunTest(const FString& Parameters)
+{
+	using namespace KnightCombatTests;
+	FKnightCombatWorld Context;
+	const FKnightCombatFixture Original = SpawnKnight(Context.World.Get(), FVector(0, 0, 88), true);
+	const FKnightCombatFixture Restored = SpawnKnight(Context.World.Get(), FVector(0, 300, 88), true);
+	const FKnightCombatFixture Enemy = SpawnKnight(Context.World.Get(), FVector(180, 0, 88), false);
+	const FPrimaryAssetId ProfileId(TEXT("KnightCombatProfile"), TEXT("FoundationCombat"));
+	if (!TestTrue(TEXT("Original combat pool uses the real authored profile"), Original.Combat->Configure(ProfileId).IsSuccess())
+		|| !TestTrue(TEXT("Fresh reconstructed pool uses the same authored profile"), Restored.Combat->Configure(ProfileId).IsSuccess()))
+	{
+		return false;
+	}
+	const float InitialMax = Original.Combat->GetMaxPoise();
+	TestTrue(TEXT("Real GAS hit consumes the combat-owned Poise pool"), UKnightAbilitySystemComponent::ApplyCombatDamage(
+		Enemy.Actor.Get(), Original.Actor.Get(), 10.0f, 20.0f, false, nullptr, false, FGuid::NewGuid()).IsSuccess());
+	const float Saved = Original.Combat->GetSnapshot().Poise;
+	TestEqual(TEXT("Actual hit removes twenty Poise"), Saved, InitialMax - 20.0f);
+	Original.ASC->SetNumericAttributeBase(UKnightAttributeSet::GetPoiseBonusAttribute(), 10.0f);
+	Restored.ASC->SetNumericAttributeBase(UKnightAttributeSet::GetPoiseBonusAttribute(), 10.0f);
+	TestEqual(TEXT("Gear extends maximum Poise without refilling the consumed pool"), Original.Combat->GetSnapshot().Poise, Saved);
+	TestEqual(TEXT("Effective maximum includes exactly one gear Poise bonus"), Restored.Combat->GetMaxPoise(), InitialMax + 10.0f);
+	int32 Publications = 0;
+	float PublishedPoise = -1.0f;
+	const FDelegateHandle Handle = Restored.Combat->OnCombatSnapshotChanged.AddLambda(
+		[&Publications, &PublishedPoise](const FKnightCombatSnapshot& Snapshot)
+		{
+			++Publications;
+			PublishedPoise = Snapshot.Poise;
+		});
+	TestTrue(TEXT("Fresh reconstruction restores the consumed pool instead of the baseline"), Restored.Combat->RestoreSnapshotPoise(Saved).IsSuccess());
+	TestEqual(TEXT("Confirmed pool remains the captured absolute value"), Restored.Combat->GetSnapshot().Poise, Saved);
+	TestEqual(TEXT("One real snapshot publication observes the restored value"), Publications, 1);
+	TestEqual(TEXT("Published snapshot contains actual restored pool"), PublishedPoise, Saved);
+	const int32 Revision = Restored.Combat->GetSnapshot().Revision;
+	for (float Invalid : { -1.0f, InitialMax + 11.0f, std::numeric_limits<float>::quiet_NaN() })
+	{
+		TestEqual(TEXT("Out-of-range and nonfinite pool fragments reject"), Restored.Combat->RestoreSnapshotPoise(Invalid).Error, EKnightError::InvalidData);
+	}
+	TestEqual(TEXT("Rejected reconstruction never mutates the pool"), Restored.Combat->GetSnapshot().Poise, Saved);
+	TestEqual(TEXT("Rejected reconstruction never advances revision"), Restored.Combat->GetSnapshot().Revision, Revision);
+	TestEqual(TEXT("Rejected reconstruction never publishes success"), Publications, 1);
+	Restored.Combat->OnCombatSnapshotChanged.Remove(Handle);
+	return true;
+}
+
+namespace KnightCombatTests
+{
+	struct FKnightPoisePublicationObservation
+	{
+		int32 Publications = 0;
+		bool bPublishedWhileFenced = false;
+		float PublishedMaximum = 0.0f;
+		float PublishedPool = 0.0f;
+		int64 PublishedSourceRevision = 0;
+	};
+
+	class FKnightPoiseFenceCommand final : public IAutomationLatentCommand
+	{
+	public:
+		explicit FKnightPoiseFenceCommand(FAutomationTestBase* InTest)
+			: Test(InTest), Observation(MakeShared<FKnightPoisePublicationObservation>())
+		{
+			Source = SpawnKnight(Context.World.Get(), FVector(0, 0, 88), true);
+			bReady = Test->TestTrue(TEXT("Poise observer uses the actual authored combat profile"),
+				Source.Combat->Configure(FPrimaryAssetId(TEXT("KnightCombatProfile"), TEXT("FoundationCombat"))).IsSuccess());
+			BaseMaximum = Source.Combat->GetMaxPoise();
+			if (bReady)
+			{
+				bReady = Stage(30.0f, 0)
+					&& Test->TestTrue(TEXT("Initial real Poise source commits"), Source.ASC->CommitSourceProjection(Fence, Capability).IsSuccess())
+					&& Test->TestTrue(TEXT("Initial real Poise source publishes"), Source.ASC->PublishSourceProjection(Fence, Capability).IsSuccess())
+					&& Test->TestTrue(TEXT("Initial source fence ends"), Source.ASC->EndMutationFence(Fence).IsSuccess());
+			}
+		}
+
+		virtual ~FKnightPoiseFenceCommand() override
+		{
+			if (Source.Combat.IsValid())
+			{
+				Source.Combat->OnCombatSnapshotChanged.Remove(ObserverHandle);
+			}
+			if (Source.ASC.IsValid() && Source.ASC->IsMutationFenced())
+			{
+				Source.ASC->AbortSourceProjection(Fence, Capability);
+				Source.ASC->EndMutationFence(Fence);
+			}
+		}
+
+		virtual bool Update() override
+		{
+			if (!bReady)
+			{
+				return true;
+			}
+			Context.World->Tick(LEVELTICK_All, 0.025f);
+			if (Step == 0)
+			{
+				Test->TestTrue(TEXT("An actual extended Poise pool is available before replacement"),
+					Source.Combat->RestoreSnapshotPoise(BaseMaximum + 25.0f).IsSuccess());
+				const TWeakObjectPtr<UKnightAbilitySystemComponent> ASC = Source.ASC;
+				const TWeakObjectPtr<UKnightCombatComponent> Combat = Source.Combat;
+				ObserverHandle = Source.Combat->OnCombatSnapshotChanged.AddLambda(
+					[ASC, Combat, Observed = Observation](const FKnightCombatSnapshot& Snapshot)
+					{
+						++Observed->Publications;
+						Observed->bPublishedWhileFenced |= ASC->IsMutationFenced();
+						Observed->PublishedMaximum = Combat->GetMaxPoise();
+						Observed->PublishedPool = Snapshot.Poise;
+						Observed->PublishedSourceRevision = ASC->GetSourceProjection(KnightProjection::RPGSourceKey).Revision;
+					});
+				bReady = Stage(10.0f, 1);
+				Test->TestEqual(TEXT("Staging exposes both real GE contributions only behind the mutation fence"),
+					Source.Combat->GetMaxPoise(), BaseMaximum + 40.0f);
+				Test->TestEqual(TEXT("No confirmed combat observer runs during double-source staging"), Observation->Publications, 0);
+				++Step;
+				return false;
+			}
+			if (Step == 1)
+			{
+				Test->TestEqual(TEXT("An intervening world tick cannot publish the staged Poise aggregate"), Observation->Publications, 0);
+				bReady = Test->TestTrue(TEXT("Replacement source commits behind its owning fence"), Source.ASC->CommitSourceProjection(Fence, Capability).IsSuccess())
+					&& Test->TestTrue(TEXT("Publication retires the old real Poise effect"), Source.ASC->PublishSourceProjection(Fence, Capability).IsSuccess());
+				Test->TestEqual(TEXT("Final Poise maximum includes only the committed replacement"), Source.Combat->GetMaxPoise(), BaseMaximum + 10.0f);
+				Test->TestEqual(TEXT("Reduced maximum clamps the real pool without a fenced callback"), Source.Combat->GetSnapshot().Poise, BaseMaximum + 10.0f);
+				Test->TestEqual(TEXT("Source retirement still publishes no confirmed combat callback under fence"), Observation->Publications, 0);
+				bReady &= Test->TestTrue(TEXT("The committed source fence ends before combat publication"), Source.ASC->EndMutationFence(Fence).IsSuccess());
+				++Step;
+				return false;
+			}
+			if (Step == 2)
+			{
+				Test->TestEqual(TEXT("Exactly one deferred combat snapshot follows committed source order"), Observation->Publications, 1);
+				Test->TestFalse(TEXT("Confirmed Poise publication never observes an active mutation fence"), Observation->bPublishedWhileFenced);
+				Test->TestEqual(TEXT("Observer receives the final effective maximum"), Observation->PublishedMaximum, BaseMaximum + 10.0f);
+				Test->TestEqual(TEXT("Observer receives the final clamped pool"), Observation->PublishedPool, BaseMaximum + 10.0f);
+				Test->TestEqual(TEXT("Observer receives the committed source revision"), Observation->PublishedSourceRevision, int64(2));
+				bReady = Stage(50.0f, 2)
+					&& Test->TestTrue(TEXT("A rejected real candidate aborts its exact source"), Source.ASC->AbortSourceProjection(Fence, Capability).IsSuccess())
+					&& Test->TestTrue(TEXT("Rollback ends the owning source fence"), Source.ASC->EndMutationFence(Fence).IsSuccess());
+				Test->TestEqual(TEXT("Rollback cannot emit an intermediate confirmed combat snapshot"), Observation->Publications, 1);
+				++Step;
+				return false;
+			}
+			if (Step == 3)
+			{
+				Test->TestEqual(TEXT("Rollback coalesces to one final confirmed publication"), Observation->Publications, 2);
+				Test->TestEqual(TEXT("Rollback preserves the prior committed maximum"), Observation->PublishedMaximum, BaseMaximum + 10.0f);
+				Test->TestEqual(TEXT("Rollback preserves the consumed Poise pool"), Observation->PublishedPool, BaseMaximum + 10.0f);
+				Test->TestEqual(TEXT("Rollback retains the existing source revision"), Observation->PublishedSourceRevision, int64(2));
+				++Step;
+				return false;
+			}
+			Test->TestEqual(TEXT("Further ticks do not repeat the deferred publication"), Observation->Publications, 2);
+			return true;
+		}
+
+	private:
+		bool Stage(float PoiseBonus, int64 ExpectedRevision)
+		{
+			FKnightGASProjectionPlan Plan;
+			Plan.SourceKey = KnightProjection::RPGSourceKey;
+			Plan.DefinitionId = FPrimaryAssetId(TEXT("KnightHero"), TEXT("Training_Red"));
+			Plan.MaxPoiseBonus = PoiseBonus;
+			return Test->TestTrue(TEXT("Poise transaction obtains an actual ASC mutation fence"), Source.ASC->BeginMutationFence(FGuid::NewGuid(), Fence).IsSuccess())
+				&& Test->TestTrue(TEXT("Poise transaction prepares its exact source revision"), Source.ASC->PrepareSourceProjection(Fence, Plan, ExpectedRevision, Capability).IsSuccess())
+				&& Test->TestTrue(TEXT("Poise transaction stages a native stat GE"), Source.ASC->StageSourceProjection(Fence, Capability).IsSuccess());
+		}
+		FAutomationTestBase* Test;
+		FKnightCombatWorld Context;
+		FKnightCombatFixture Source;
+		TSharedRef<FKnightPoisePublicationObservation> Observation;
+		FKnightMutationFence Fence;
+		FKnightProjectionCapability Capability;
+		FDelegateHandle ObserverHandle;
+		float BaseMaximum = 0.0f;
+		int32 Step = 0;
+		bool bReady = false;
+	};
+}
+
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FKnightEquipmentPoiseFenceTest, "Knight.Equipment.Combat.PoiseProjectionObserverFence",
+	EAutomationTestFlags::EditorContext | EAutomationTestFlags::EngineFilter)
+
+bool FKnightEquipmentPoiseFenceTest::RunTest(const FString& Parameters)
+{
+	ADD_LATENT_AUTOMATION_COMMAND(KnightCombatTests::FKnightPoiseFenceCommand(this));
 	return true;
 }
 

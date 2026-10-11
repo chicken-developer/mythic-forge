@@ -273,11 +273,18 @@ EStateTreeRunStatus FKnightAIExecuteActionTask::EnterState(FStateTreeExecutionCo
 	}
 	else
 	{
-		FKnightAIActionEntry Action;
-		Result = Data.DecisionContext->TrySelectAction(Action);
-		if (Result.IsSuccess())
+		if (Data.DecisionContext->HasSpecialization())
 		{
-			Result = Data.DecisionContext->TryBeginAction(Action, bUseAttackLease, Data.ActionToken);
+			Result = Data.DecisionContext->TryBeginSpecializationAction(bUseAttackLease, Data.ActionToken);
+		}
+		else
+		{
+			FKnightAIActionEntry Action;
+			Result = Data.DecisionContext->TrySelectAction(Action);
+			if (Result.IsSuccess())
+			{
+				Result = Data.DecisionContext->TryBeginAction(Action, bUseAttackLease, Data.ActionToken);
+			}
 		}
 	}
 	if (!Result.IsSuccess())

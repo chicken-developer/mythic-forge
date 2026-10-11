@@ -3,14 +3,18 @@
 #include "CoreMinimal.h"
 #include "Commands/KnightRPGCommand.h"
 #include "Models/KnightItemModels.h"
+#include "Models/KnightGearModels.h"
 #include "Projection/KnightSourceProjection.h"
+#include "Skills/KnightSkillRuntimeComponent.h"
 #include "KnightRPGModels.generated.h"
 
 class UKnightAbilitySystemComponent;
 
 namespace KnightRPG
 {
-	inline constexpr int32 SnapshotVersion = 1;
+	inline constexpr int32 SnapshotVersion = 3;
+	inline constexpr int32 MaximumTalentLoadouts = 16;
+	inline constexpr int32 MaximumLoadoutNameLength = 48;
 	inline constexpr int32 MaximumSkills = 64;
 	inline constexpr int32 MaximumSkillPoints = 100000;
 	inline constexpr int32 MaximumLootEntries = 32;
@@ -27,6 +31,10 @@ struct KNIGHTITEMS_API FKnightRPGCallerContext
 	TWeakObjectPtr<UKnightAbilitySystemComponent> AbilitySystem;
 	FPrimaryAssetId HeroDefinitionId;
 	bool bInSafeZone = false;
+	bool bInCombat = false;
+	FGuid EncounterId;
+	/** Server composition fills this from current ownership, never from client payloads. */
+	TArray<FKnightEntityId> EditableKnights;
 };
 
 struct KNIGHTITEMS_API FKnightRPGKnightRegistration
@@ -98,6 +106,24 @@ struct KNIGHTITEMS_API FKnightPurchasedSkill
 };
 
 USTRUCT(BlueprintType)
+struct KNIGHTITEMS_API FKnightTalentLoadout
+{
+	GENERATED_BODY()
+
+	UPROPERTY(BlueprintReadOnly, SaveGame, Category = "Knight|RPG|Talents")
+	FGuid LoadoutId;
+	UPROPERTY(BlueprintReadOnly, SaveGame, Category = "Knight|RPG|Talents")
+	FString Name;
+	/** Talent presets contain spec and choices only; equipment and rune attachments remain independent. */
+	UPROPERTY(BlueprintReadOnly, SaveGame, Category = "Knight|RPG|Talents")
+	FKnightSkillBuild Build;
+	UPROPERTY(BlueprintReadOnly, SaveGame, Category = "Knight|RPG|Talents")
+	int32 Version = 1;
+
+	bool operator==(const FKnightTalentLoadout& Other) const;
+};
+
+USTRUCT(BlueprintType)
 struct KNIGHTITEMS_API FKnightRPGKnightView
 {
 	GENERATED_BODY()
@@ -118,6 +144,22 @@ struct KNIGHTITEMS_API FKnightRPGKnightView
 	FKnightItemStatBonuses StatBonuses;
 	UPROPERTY(BlueprintReadOnly, SaveGame, Category = "Knight|RPG|Rune")
 	FKnightRuneTuning RuneTuning;
+	UPROPERTY(BlueprintReadOnly, SaveGame, Category = "Knight|RPG|Talents")
+	FKnightSkillBuild Build;
+	UPROPERTY(BlueprintReadOnly, SaveGame, Category = "Knight|RPG|Rune")
+	FGuid WeaponRuneInstanceId;
+	UPROPERTY(BlueprintReadOnly, SaveGame, Category = "Knight|RPG|Rune")
+	FGuid SkillRuneInstanceId;
+	UPROPERTY(BlueprintReadOnly, SaveGame, Category = "Knight|RPG|Talents")
+	TArray<FKnightTalentLoadout> TalentLoadouts;
+	UPROPERTY(BlueprintReadOnly, SaveGame, Category = "Knight|RPG|Talents")
+	FGuid ActiveTalentLoadoutId;
+	UPROPERTY(BlueprintReadOnly, SaveGame, Category = "Knight|RPG|Gear")
+	bool bGearEnabled = false;
+	UPROPERTY(BlueprintReadOnly, SaveGame, Category = "Knight|RPG|Progression")
+	int32 Level = 1;
+	UPROPERTY(BlueprintReadOnly, SaveGame, Category = "Knight|RPG|Consumables")
+	TArray<FPrimaryAssetId> ConsumableBindings;
 
 	bool IsInitialized() const;
 	const FKnightEquipmentAssignment* FindAssignment(FGameplayTag SlotTag) const;
@@ -140,8 +182,18 @@ struct KNIGHTITEMS_API FKnightRPGView
 	FPrimaryAssetId SkillTreeId;
 	UPROPERTY(BlueprintReadOnly, SaveGame, Category = "Knight|RPG|Identity")
 	TArray<FKnightRPGKnightView> Knights;
+	UPROPERTY(BlueprintReadOnly, SaveGame, Category = "Knight|RPG|Currency")
+	int64 Currency = 0;
+	UPROPERTY(BlueprintReadOnly, SaveGame, Category = "Knight|RPG|Demo")
+	FGuid DemoRunId;
+	UPROPERTY(BlueprintReadOnly, SaveGame, Category = "Knight|RPG|Demo")
+	bool bGearDemo = false;
+	UPROPERTY(BlueprintReadOnly, SaveGame, Category = "Knight|RPG|Rewards")
+	TArray<FGuid> ClaimedRewards;
 
 	bool IsInitialized() const;
+	/** Twelve-slot authority is independent of isolated demo rewards and fixture presets. */
+	bool IsItemizationEnabled() const;
 	bool operator==(const FKnightRPGView& Other) const;
 };
 
@@ -165,8 +217,46 @@ struct KNIGHTITEMS_API FKnightRPGReceipt
 	int64 CommittedInventoryRevision = 0;
 	UPROPERTY(SaveGame)
 	FGuid AffectedInstanceId;
+	UPROPERTY(SaveGame)
+	TArray<FKnightRPGKnightView> CommittedKnights;
+	UPROPERTY(SaveGame)
+	int64 CommittedCurrency = 0;
+	UPROPERTY(SaveGame)
+	FKnightGearRewardBundle Reward;
 
 	bool operator==(const FKnightRPGReceipt& Other) const;
+};
+
+USTRUCT()
+struct KNIGHTITEMS_API FKnightRPGCombatSnapshot
+{
+	GENERATED_BODY()
+
+	UPROPERTY(SaveGame)
+	FKnightSkillRuntimeSnapshot Skills;
+	UPROPERTY(SaveGame)
+	float Health = 0.0f;
+	UPROPERTY(SaveGame)
+	float Stamina = 0.0f;
+
+	bool operator==(const FKnightRPGCombatSnapshot& Other) const;
+};
+
+/** One deterministic administrative boundary after the immutable historical request prefix. */
+USTRUCT()
+struct KNIGHTITEMS_API FKnightItemizationMigration
+{
+	GENERATED_BODY()
+
+	UPROPERTY(SaveGame)
+	FGuid MigrationId;
+	UPROPERTY(SaveGame)
+	int32 LegacyReceiptCount = INDEX_NONE;
+	UPROPERTY(SaveGame)
+	FKnightInventoryRequest InventoryRequest;
+
+	bool IsPresent() const;
+	bool operator==(const FKnightItemizationMigration& Other) const;
 };
 
 USTRUCT()
@@ -188,6 +278,15 @@ struct KNIGHTITEMS_API FKnightRPGSnapshot
 	FKnightInventorySnapshot Inventory;
 	UPROPERTY(SaveGame)
 	TArray<FKnightRPGReceipt> Receipts;
+	UPROPERTY(SaveGame)
+	TMap<FKnightEntityId, FKnightRPGCombatSnapshot> CombatStates;
+	UPROPERTY(SaveGame)
+	TArray<FKnightGearRewardBundle> RewardOffers;
+	/** Schema adapters preserve old inventory receipts and derive exact parent ownership separately. */
+	UPROPERTY(SaveGame)
+	TMap<FGuid, FGuid> LegacyWeaponRuneParents;
+	UPROPERTY(SaveGame)
+	FKnightItemizationMigration ItemizationMigration;
 
 	bool operator==(const FKnightRPGSnapshot& Other) const;
 };

@@ -14,9 +14,13 @@ public:
 	UKnightRuneDefinition();
 	const FKnightRuneTuning& GetRuneTuning() const;
 	FKnightResult TrySetRuneTuning(const FKnightRuneTuning& InTuning);
+	FName GetAttachmentRuneId() const;
+	FKnightResult TrySetAttachmentRune(FName InRuneId);
 	virtual FKnightResult ValidateItem() const override;
 
 private:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Knight|Items|Rune", meta = (AllowPrivateAccess = "true"))
 	FKnightRuneTuning RuneTuning;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Knight|Items|Rune", meta = (AllowPrivateAccess = "true"))
+	FName AttachmentRuneId;
 };

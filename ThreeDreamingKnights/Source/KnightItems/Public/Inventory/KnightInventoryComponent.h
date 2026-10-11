@@ -111,6 +111,8 @@ private:
 	friend struct FKnightInventoryArray;
 	friend class UKnightRPGComponent;
 	FKnightResult ValidateCapability(const FKnightInventoryCapability& Capability) const;
+	FKnightResult PrepareCoordinatorTransaction(const FKnightInventoryRequest& Request,
+		FKnightInventoryCapability& OutCapability);
 	FKnightResult ValidateSnapshot(const FKnightInventorySnapshot& Snapshot,
 		TArray<FKnightItemInstance>& OutItems, TSet<FGuid>& OutIds, TMap<FGuid, int32>& OutReceipts) const;
 	void ResetPrepared();
@@ -149,4 +151,5 @@ private:
 	bool bPreparedPublished = false;
 	bool bHasFixtureCatalog = false;
 	bool bEndingPlay = false;
+	bool bCoordinatorPreparing = false;
 };

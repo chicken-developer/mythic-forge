@@ -48,6 +48,7 @@ public:
 	virtual void PreAttributeBaseChange(const FGameplayAttribute& Attribute, float& NewValue) const override;
 	virtual void PostAttributeChange(const FGameplayAttribute& Attribute, float OldValue, float NewValue) override;
 	virtual void PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data) override;
+	virtual bool PreGameplayEffectExecute(FGameplayEffectModCallbackData& Data) override;
 
 	KNIGHT_ATTRIBUTE_ACCESSORS(UKnightAttributeSet, Health)
 	KNIGHT_ATTRIBUTE_ACCESSORS(UKnightAttributeSet, MaxHealth)
@@ -58,8 +59,24 @@ public:
 	KNIGHT_ATTRIBUTE_ACCESSORS(UKnightAttributeSet, AttackPower)
 	KNIGHT_ATTRIBUTE_ACCESSORS(UKnightAttributeSet, Defense)
 	KNIGHT_ATTRIBUTE_ACCESSORS(UKnightAttributeSet, IncomingDamage)
+	KNIGHT_ATTRIBUTE_ACCESSORS(UKnightAttributeSet, ArcaneResistance)
+	KNIGHT_ATTRIBUTE_ACCESSORS(UKnightAttributeSet, LightningResistance)
+	KNIGHT_ATTRIBUTE_ACCESSORS(UKnightAttributeSet, FrostResistance)
+	KNIGHT_ATTRIBUTE_ACCESSORS(UKnightAttributeSet, FireResistance)
+	KNIGHT_ATTRIBUTE_ACCESSORS(UKnightAttributeSet, CritChance)
+	KNIGHT_ATTRIBUTE_ACCESSORS(UKnightAttributeSet, CritMultiplier)
+	KNIGHT_ATTRIBUTE_ACCESSORS(UKnightAttributeSet, Haste)
+	KNIGHT_ATTRIBUTE_ACCESSORS(UKnightAttributeSet, CooldownRecovery)
+	KNIGHT_ATTRIBUTE_ACCESSORS(UKnightAttributeSet, MasteryBonus)
+	KNIGHT_ATTRIBUTE_ACCESSORS(UKnightAttributeSet, Versatility)
+	KNIGHT_ATTRIBUTE_ACCESSORS(UKnightAttributeSet, DamageReduction)
+	KNIGHT_ATTRIBUTE_ACCESSORS(UKnightAttributeSet, PoiseBonus)
 
 private:
+	UFUNCTION()
+	void OnRep_PoiseBonus(const FGameplayAttributeData& OldValue);
+	UPROPERTY(ReplicatedUsing = OnRep_PoiseBonus)
+	FGameplayAttributeData PoiseBonus;
 	void ClampAttribute(const FGameplayAttribute& Attribute, float& Value) const;
 
 	UFUNCTION()
@@ -97,4 +114,48 @@ private:
 	FGameplayAttributeData Defense;
 	UPROPERTY()
 	FGameplayAttributeData IncomingDamage;
+	UFUNCTION()
+	void OnRep_ArcaneResistance(const FGameplayAttributeData& OldValue);
+	UPROPERTY(ReplicatedUsing = OnRep_ArcaneResistance)
+	FGameplayAttributeData ArcaneResistance;
+	UFUNCTION()
+	void OnRep_LightningResistance(const FGameplayAttributeData& OldValue);
+	UPROPERTY(ReplicatedUsing = OnRep_LightningResistance)
+	FGameplayAttributeData LightningResistance;
+	UFUNCTION()
+	void OnRep_FrostResistance(const FGameplayAttributeData& OldValue);
+	UPROPERTY(ReplicatedUsing = OnRep_FrostResistance)
+	FGameplayAttributeData FrostResistance;
+	UFUNCTION()
+	void OnRep_FireResistance(const FGameplayAttributeData& OldValue);
+	UPROPERTY(ReplicatedUsing = OnRep_FireResistance)
+	FGameplayAttributeData FireResistance;
+	UFUNCTION()
+	void OnRep_CritChance(const FGameplayAttributeData& OldValue);
+	UPROPERTY(ReplicatedUsing = OnRep_CritChance)
+	FGameplayAttributeData CritChance;
+	UFUNCTION()
+	void OnRep_CritMultiplier(const FGameplayAttributeData& OldValue);
+	UPROPERTY(ReplicatedUsing = OnRep_CritMultiplier)
+	FGameplayAttributeData CritMultiplier;
+	UFUNCTION()
+	void OnRep_Haste(const FGameplayAttributeData& OldValue);
+	UPROPERTY(ReplicatedUsing = OnRep_Haste)
+	FGameplayAttributeData Haste;
+	UFUNCTION()
+	void OnRep_CooldownRecovery(const FGameplayAttributeData& OldValue);
+	UPROPERTY(ReplicatedUsing = OnRep_CooldownRecovery)
+	FGameplayAttributeData CooldownRecovery;
+	UFUNCTION()
+	void OnRep_MasteryBonus(const FGameplayAttributeData& OldValue);
+	UPROPERTY(ReplicatedUsing = OnRep_MasteryBonus)
+	FGameplayAttributeData MasteryBonus;
+	UFUNCTION()
+	void OnRep_Versatility(const FGameplayAttributeData& OldValue);
+	UPROPERTY(ReplicatedUsing = OnRep_Versatility)
+	FGameplayAttributeData Versatility;
+	UFUNCTION()
+	void OnRep_DamageReduction(const FGameplayAttributeData& OldValue);
+	UPROPERTY(ReplicatedUsing = OnRep_DamageReduction)
+	FGameplayAttributeData DamageReduction;
 };

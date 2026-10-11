@@ -1,0 +1,7 @@
+{
+  "execution": "Luminance comparison of actual UE DX12 captures, identical camera, world time advanced 2 seconds",
+  "changed_pixels_above_3": 71887,
+  "sampled_pixels": 280000,
+  "mean_absolute_luminance_change": 6.015231607851247,
+  "manual_motion_review": false
+}

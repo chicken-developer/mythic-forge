@@ -1,0 +1,116 @@
+{
+  "schema": "thanh-a-heightmap",
+  "version": 1,
+  "resolution": [
+    1009,
+    1009
+  ],
+  "horizontal_extent_m": [
+    1008,
+    1008
+  ],
+  "encoded_elevation_range_m": [
+    -32,
+    32
+  ],
+  "xy_scale_cm": [
+    100.0,
+    100.0
+  ],
+  "z_scale": 12.5,
+  "actor_offset_cm": [
+    -50400,
+    -50400,
+    0
+  ],
+  "orientation": "row 0 = South (-Y), columns go West to East (+X); no rotation; do not flip Y",
+  "raw_endianness": "little",
+  "num_subsections": 1,
+  "subsection_quads": 63,
+  "components_per_axis": 16,
+  "equation": "world_z_cm = actor_z_cm + (uint16 - 32768) * z_scale / 128",
+  "source": "designed elevation polygons and explicit route profiles; no image grayscale, no noise",
+  "roadbed_depth_m": 0.25,
+  "samples": [
+    {
+      "id": "sample_main_gate",
+      "position_m": [
+        0.0,
+        250.0
+      ],
+      "ground_m": 0
+    },
+    {
+      "id": "sample_market",
+      "position_m": [
+        0.0,
+        75.0
+      ],
+      "ground_m": 8
+    },
+    {
+      "id": "sample_residential",
+      "position_m": [
+        -212.5,
+        -41.667
+      ],
+      "ground_m": 8
+    },
+    {
+      "id": "sample_craft",
+      "position_m": [
+        109.167,
+        0.0
+      ],
+      "ground_m": 8
+    },
+    {
+      "id": "sample_central_plaza",
+      "position_m": [
+        0.0,
+        0.0
+      ],
+      "ground_m": 8
+    },
+    {
+      "id": "sample_council_hall_ground",
+      "position_m": [
+        0.0,
+        -169.167
+      ],
+      "ground_m": 18
+    },
+    {
+      "id": "sample_barracks_ground",
+      "position_m": [
+        158.333,
+        -162.5
+      ],
+      "ground_m": 18
+    },
+    {
+      "id": "sample_watchtower_ground",
+      "position_m": [
+        -200.0,
+        -200.0
+      ],
+      "ground_m": 22
+    },
+    {
+      "id": "sample_waterfront",
+      "position_m": [
+        245.833,
+        -266.667
+      ],
+      "ground_m": 2
+    },
+    {
+      "id": "sample_forge_yard",
+      "position_m": [
+        162.5,
+        -62.5
+      ],
+      "ground_m": 12
+    }
+  ]
+}

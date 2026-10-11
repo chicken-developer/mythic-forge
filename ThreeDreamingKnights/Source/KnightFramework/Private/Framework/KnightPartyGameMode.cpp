@@ -510,7 +510,7 @@ FKnightResult AKnightPartyGameMode::EnsureCanonicalParty()
 			break;
 		}
 		SpawnedKnights.Add(Knight);
-		const FKnightEntityId KnightId = FKnightEntityId::Create();
+		const FKnightEntityId KnightId = CreateKnightIdentity(Slot, Heroes[Slot]->GetPrimaryAssetId());
 		SpawnResult = Knight->InitializeKnight(KnightId, Heroes[Slot]);
 		if (!SpawnResult.IsSuccess())
 		{
@@ -558,6 +558,11 @@ FKnightResult AKnightPartyGameMode::EnsureCanonicalParty()
 	UE_LOG(LogKnightCore, Display, TEXT("Canonical party created: %s, three Knight actors, three companion controllers"),
 		*PartyDefinitionId.ToString());
 	return FKnightResult::Success();
+}
+
+FKnightEntityId AKnightPartyGameMode::CreateKnightIdentity(const int32 Slot, const FPrimaryAssetId& HeroId) const
+{
+	return FKnightEntityId::Create();
 }
 
 FKnightResult AKnightPartyGameMode::AssignHumanSlot(APlayerController* Player, int32 DesiredSlot)

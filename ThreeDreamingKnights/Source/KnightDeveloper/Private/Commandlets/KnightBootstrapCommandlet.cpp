@@ -3,6 +3,7 @@
 #include "Commandlets/KnightCombatAssetAuthoring.h"
 #include "Commandlets/KnightAIAssetAuthoring.h"
 #include "Commandlets/KnightRPGAssetAuthoring.h"
+#include "Commandlets/KnightGearAssetAuthoring.h"
 #include "Assets/KnightDefinition.h"
 #include "Abilities/KnightReviveAbility.h"
 #include "Abilities/KnightTestDamageAbility.h"
@@ -15,6 +16,9 @@
 #include "Definitions/KnightPartyDefinition.h"
 #include "Tags/KnightGameplayTags.h"
 #include "Tasks/KnightFollowTask.h"
+#include "SkillLab/KnightFrozenSurface.h"
+#include "SkillLab/KnightRunestone.h"
+#include "Definitions/KnightRuneDefinition.h"
 
 #include "ActorFactories/ActorFactory.h"
 #include "AssetCompilingManager.h"
@@ -74,6 +78,10 @@ namespace KnightBootstrap
 	const TCHAR* ArenaGameModePath = TEXT("/Script/ThreeDreamingKnights.KnightPartyArenaGameMode");
 	const TCHAR* RPGMapPackageName = TEXT("/Game/Knight/Maps/Playables/L_M05_RPGLoop");
 	const TCHAR* RPGGameModePath = TEXT("/Script/ThreeDreamingKnights.KnightRPGLoopGameMode");
+	const TCHAR* SkillLabMapPackageName = TEXT("/Game/Knight/Maps/Playables/L_M05_5_SkillLab");
+	const TCHAR* SkillLabGameModePath = TEXT("/Script/ThreeDreamingKnights.KnightSkillLabGameMode");
+	const TCHAR* GearLabMapPackageName = TEXT("/Game/Knight/Maps/Playables/L_M05_6_GearLab");
+	const TCHAR* CatalogLabMapPackageName = TEXT("/Game/Knight/Maps/Playables/L_M05_6_CatalogLab");
 	const TCHAR* FollowTreePackageName = TEXT("/Game/Knight/AI/ST_Knight_Follow");
 	const FName FoundationId(TEXT("Foundation"));
 	const FVector FloorScale(30.0, 30.0, 0.25);
@@ -760,14 +768,19 @@ namespace KnightBootstrap
 
 	bool CreateMap(const int32 Milestone)
 	{
+		const bool bGearLab = Milestone == 56 || Milestone == 57;
+		const bool bSkillLab = Milestone == 55 || bGearLab;
 		const bool bTraining = Milestone > 0;
 		const bool bAbilityYard = Milestone == 2 || Milestone == 3;
 		const bool bCombatChallenge = Milestone == 3;
-		const bool bRPG = Milestone == 5;
+		const bool bRPG = Milestone == 5 || bSkillLab;
 		const bool bArena = Milestone >= 4;
-		const TCHAR* GameModePath = bRPG ? RPGGameModePath : (bArena ? ArenaGameModePath
+		const TCHAR* GameModePath = bGearLab ? (Milestone == 57
+			? TEXT("/Script/ThreeDreamingKnights.KnightGearCatalogGameMode")
+			: TEXT("/Script/ThreeDreamingKnights.KnightGearLabGameMode"))
+			: (bSkillLab ? SkillLabGameModePath : (bRPG ? RPGGameModePath : (bArena ? ArenaGameModePath
 			: (bCombatChallenge ? CombatGameModePath : (bAbilityYard ? AbilityGameModePath
-				: (bTraining ? TrainingGameModePath : BootGameModePath))));
+				: (bTraining ? TrainingGameModePath : BootGameModePath))))));
 		UClass* BootGameMode = LoadClass<AGameModeBase>(nullptr, GameModePath);
 		UStaticMesh* FloorMesh = LoadObject<UStaticMesh>(nullptr, TEXT("/Engine/BasicShapes/Cube.Cube"));
 		if (BootGameMode == nullptr || FloorMesh == nullptr)
@@ -776,9 +789,10 @@ namespace KnightBootstrap
 			return false;
 		}
 
-		const FString PackageName(bRPG ? RPGMapPackageName : (bArena ? ArenaMapPackageName
+		const FString PackageName(bGearLab ? (Milestone == 57 ? CatalogLabMapPackageName : GearLabMapPackageName)
+			: (bSkillLab ? SkillLabMapPackageName : (bRPG ? RPGMapPackageName : (bArena ? ArenaMapPackageName
 			: (bCombatChallenge ? CombatMapPackageName : (bAbilityYard ? AbilityMapPackageName
-				: (bTraining ? TrainingMapPackageName : MapPackageName)))));
+				: (bTraining ? TrainingMapPackageName : MapPackageName)))))));
 		const bool bPackageExists = FPackageName::DoesPackageExist(PackageName);
 		UPackage* Package = bPackageExists
 			? LoadPackage(nullptr, *PackageName, LOAD_None)
@@ -909,6 +923,32 @@ namespace KnightBootstrap
 		{
 			return false;
 		}
+		if (bSkillLab)
+		{
+			if (FindOrCreateActor<AKnightAbilityDummy>(World, TEXT("KnightSkillLab_CombatDummy"),
+				FTransform(FVector(-1200.0, 0.0, 100.0))) == nullptr)
+			{
+				return false;
+			}
+			const TArray<EKnightRunestoneKind> Kinds{EKnightRunestoneKind::Healing,
+				EKnightRunestoneKind::Crystal, EKnightRunestoneKind::Frost};
+			for (int32 Index = 0; Index < Kinds.Num(); ++Index)
+			{
+				AKnightRunestone* Stone = FindOrCreateActor<AKnightRunestone>(World,
+					FName(*FString::Printf(TEXT("KnightSkillLab_Runestone%d"), Index)),
+					FTransform(FVector(-900.0 + 900.0 * Index, 1100.0, 60.0)));
+				if (Stone == nullptr)
+				{
+					return false;
+				}
+				Stone->ConfigureFixture(Kinds[Index], FGuid());
+			}
+			if (FindOrCreateActor<AKnightFrozenSurface>(World, TEXT("KnightSkillLab_FrozenSurface"),
+				FTransform(FVector(1200.0, 500.0, 55.0))) == nullptr)
+			{
+				return false;
+			}
+		}
 		if (bTraining && !CreateTrainingNavigation(World))
 		{
 			return false;
@@ -946,6 +986,58 @@ int32 UKnightBootstrapCommandlet::Main(const FString& Params)
 {
 	int32 Milestone = 0;
 	FParse::Value(*Params, TEXT("Milestone="), Milestone);
+	if (Milestone == 56)
+	{
+		if (!KnightGearAssetAuthoring::CreateGearAssets() || !KnightBootstrap::CreateMap(56)
+			|| !KnightBootstrap::CreateMap(57))
+		{
+			return 4;
+		}
+		UE_LOG(LogKnightBootstrap, Display, TEXT("M5.6 genuine 41-item manifest, GearLab and CatalogLab authored."));
+		return 0;
+	}
+	if (Milestone == 55)
+	{
+		// Existing M0-M4 assets are prerequisites; this branch never reauthors their implementation.
+		if (!KnightRPGAssetAuthoring::CreateRPGAssets())
+		{
+			return 4;
+		}
+		for (const FName RuneName : { FName(TEXT("Aftershock")), FName(TEXT("Convergence")),
+			FName(TEXT("Propagation")), FName(TEXT("Mobile")) })
+		{
+			const FString Path = TEXT("/Game/Knight/Definitions/Items/DA_Knight_Rune_") + RuneName.ToString();
+			const bool bExists = FPackageName::DoesPackageExist(Path);
+			UPackage* Package = bExists ? LoadPackage(nullptr, *Path, LOAD_None) : CreatePackage(*Path);
+			const FName AssetName(*FPackageName::GetLongPackageAssetName(Path));
+			UKnightRuneDefinition* Rune = FindObject<UKnightRuneDefinition>(Package, *AssetName.ToString());
+			if (Rune == nullptr && !bExists)
+			{
+				Rune = NewObject<UKnightRuneDefinition>(Package, AssetName, RF_Public | RF_Standalone);
+				Rune->TrySetIdentity(RuneName, TEXT("KnightItem"));
+				Rune->SetDisplayName(FText::FromName(RuneName));
+				const FName LogicId(*(FString(RuneName == TEXT("Aftershock") ? TEXT("Weapon.") : TEXT("Skill."))
+					+ RuneName.ToString()));
+				if (!Rune->TrySetAttachmentRune(LogicId).IsSuccess())
+				{
+					return 4;
+				}
+				FAssetRegistryModule::AssetCreated(Rune);
+			}
+			if (Rune == nullptr || !Rune->ValidateItem().IsSuccess()
+				|| !KnightBootstrap::SaveAsset(Package, Rune, FPackageName::GetAssetPackageExtension()))
+			{
+				return 4;
+			}
+		}
+		if ((!FPackageName::DoesPackageExist(KnightBootstrap::RPGMapPackageName) && !KnightBootstrap::CreateMap(5))
+			|| !KnightBootstrap::CreateMap(55))
+		{
+			return 4;
+		}
+		UE_LOG(LogKnightBootstrap, Display, TEXT("M5.5 genuine SkillLab map and attachment assets authored."));
+		return 0;
+	}
 	if (Milestone < 0 || Milestone > 5)
 	{
 		UE_LOG(LogKnightBootstrap, Error, TEXT("Supported bootstrap milestones are 0 through 5."));

@@ -1,9 +1,13 @@
 #include "RPGLoop/KnightRPGCharacter.h"
+#include "Attributes/KnightAttributeSet.h"
 
 #include "Progression/KnightRPGComponent.h"
 #include "RPGLoop/KnightRPGGameState.h"
 #include "RPGLoop/KnightRPGStateActor.h"
 #include "Tags/KnightGameplayTags.h"
+#include "Skills/KnightSkillRuntimeComponent.h"
+#include "SkillLab/KnightSkillLabGameMode.h"
+#include "GearLab/KnightGearAppearanceComponent.h"
 
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/StaticMeshComponent.h"
@@ -15,6 +19,8 @@
 
 AKnightRPGCharacter::AKnightRPGCharacter()
 {
+	SkillRuntime = CreateDefaultSubobject<UKnightSkillRuntimeComponent>(TEXT("SkillRuntime"));
+	GearAppearance = CreateDefaultSubobject<UKnightGearAppearanceComponent>(TEXT("GearAppearance"));
 	WeaponUpgradeVisual = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("WeaponUpgradeVisual"));
 	WeaponUpgradeVisual->SetupAttachment(GetMesh(), TEXT("hand_r"));
 	WeaponUpgradeVisual->SetRelativeLocation(FVector(0.0f, 0.0f, 60.0f));
@@ -40,6 +46,18 @@ AKnightRPGCharacter::AKnightRPGCharacter()
 UStaticMeshComponent* AKnightRPGCharacter::GetWeaponUpgradeVisual() const
 {
 	return WeaponUpgradeVisual;
+}
+
+FKnightAttributeDefaults AKnightRPGCharacter::GetInitialAttributeDefaults() const
+{
+	FKnightAttributeDefaults Defaults = Super::GetInitialAttributeDefaults();
+	if (GetWorld() != nullptr && GetWorld()->GetAuthGameMode<AKnightSkillLabGameMode>() != nullptr)
+	{
+		Defaults.MaxHealth = 1000.0f;
+		Defaults.AttackPower = 100.0f;
+		Defaults.Defense = 100.0f;
+	}
+	return Defaults;
 }
 
 UStaticMeshComponent* AKnightRPGCharacter::GetRuneVisual() const
@@ -112,7 +130,8 @@ void AKnightRPGCharacter::RefreshEquipmentVisuals()
 	}
 	const FKnightRPGKnightView View = RPGState.IsValid()
 		? RPGState->GetRPG()->GetKnightView(GetKnightEntityId()) : FKnightRPGKnightView();
-	WeaponUpgradeVisual->SetVisibility(View.FindAssignment(KnightGameplayTags::Slot_Equipment_Weapon) != nullptr);
+	WeaponUpgradeVisual->SetVisibility(!View.bGearEnabled
+		&& View.FindAssignment(KnightGameplayTags::Slot_Equipment_Weapon) != nullptr);
 	RuneVisual->SetVisibility(View.FindAssignment(KnightGameplayTags::Slot_Equipment_Rune) != nullptr);
 }
 

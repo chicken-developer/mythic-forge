@@ -1,0 +1,631 @@
+{
+  "schema": "thanh-a-prototyping-mapping",
+  "version": 1,
+  "units": "cm for audited bounds; metres for design",
+  "source": "Generated/prototyping_asset_audit_before.json: actual Unreal Registry/loaded meshes",
+  "mapping": [
+    {
+      "blockout_kind": "body/foundation/wall/retaining/pier",
+      "selection": "native or derived pack mesh",
+      "reason": "Fit measured bounds; preserve design center with native root and component offset.",
+      "object_path": "/Game/LevelPrototyping/Meshes/SM_Cube.SM_Cube",
+      "bounds_min_cm": [
+        0,
+        0,
+        0
+      ],
+      "bounds_max_cm": [
+        100,
+        100,
+        100
+      ],
+      "bounds_center_cm": [
+        50,
+        50,
+        50
+      ],
+      "bounds_size_cm": [
+        100,
+        100,
+        100
+      ],
+      "mesh_pivot_cm": [
+        0,
+        0,
+        0
+      ],
+      "material_slots": [
+        {
+          "slot": "lambert1",
+          "material": "/Game/LevelPrototyping/Materials/MI_PrototypeGrid_Gray.MI_PrototypeGrid_Gray"
+        }
+      ],
+      "simple_collision_shapes": 1,
+      "collision_trace_flag": "CTF_UseDefault",
+      "lod0_triangles": 12
+    },
+    {
+      "blockout_kind": "round tower/plaza",
+      "selection": "native or derived pack mesh",
+      "reason": "Native tower simple collision; plaza render derives from actual pack cylinder then trims coplanar junctions.",
+      "object_path": "/Game/LevelPrototyping/Meshes/SM_Cylinder.SM_Cylinder",
+      "bounds_min_cm": [
+        -50,
+        -50,
+        0
+      ],
+      "bounds_max_cm": [
+        50,
+        50,
+        100
+      ],
+      "bounds_center_cm": [
+        0,
+        0,
+        50
+      ],
+      "bounds_size_cm": [
+        100,
+        100,
+        100
+      ],
+      "mesh_pivot_cm": [
+        0,
+        0,
+        0
+      ],
+      "material_slots": [
+        {
+          "slot": "lambert1",
+          "material": "/Game/LevelPrototyping/Materials/MI_PrototypeGrid_Gray.MI_PrototypeGrid_Gray"
+        }
+      ],
+      "simple_collision_shapes": 1,
+      "collision_trace_flag": "CTF_UseSimpleAndComplex",
+      "lod0_triangles": 2812
+    },
+    {
+      "blockout_kind": "wedge ramp calibration",
+      "selection": "native or derived pack mesh",
+      "reason": "Actual pack wedge used in calibration. Main road ramps retain thin slab geometry to preserve existing profile and footprint.",
+      "object_path": "/Game/LevelPrototyping/Meshes/SM_Ramp.SM_Ramp",
+      "bounds_min_cm": [
+        0,
+        0,
+        0
+      ],
+      "bounds_max_cm": [
+        100,
+        100,
+        100
+      ],
+      "bounds_center_cm": [
+        50,
+        50,
+        50
+      ],
+      "bounds_size_cm": [
+        100,
+        100,
+        100
+      ],
+      "mesh_pivot_cm": [
+        0,
+        0,
+        0
+      ],
+      "material_slots": [
+        {
+          "slot": "lambert1",
+          "material": "/Game/LevelPrototyping/Materials/MI_PrototypeGrid_Gray.MI_PrototypeGrid_Gray"
+        }
+      ],
+      "simple_collision_shapes": 1,
+      "collision_trace_flag": "CTF_UseDefault",
+      "lod0_triangles": 8
+    },
+    {
+      "blockout_kind": "road/ramp slab",
+      "selection": "generated geometry / Landscape",
+      "reason": "A wedge would change the constant thickness road surface and its existing landing/route geometry."
+    },
+    {
+      "blockout_kind": "stairs",
+      "selection": "generated geometry / Landscape",
+      "reason": "No dedicated stair mesh in the audited registry; one extruded watertight step profile replaces stacked boxes."
+    },
+    {
+      "blockout_kind": "roof/pyramid",
+      "selection": "generated geometry / Landscape",
+      "reason": "No matching roof or spire mesh in audited registry; generated simple closed meshes preserve silhouette."
+    },
+    {
+      "blockout_kind": "Landscape",
+      "selection": "generated geometry / Landscape",
+      "reason": "Imported ALandscape is retained; never replaced by a cube."
+    }
+  ],
+  "all_audited_meshes": [
+    {
+      "object_path": "/Game/LevelPrototyping/Interactable/Door/Meshes/SM_Door.SM_Door",
+      "bounds_min_cm": [
+        -100.00001525878906,
+        -100.00001525878906,
+        -100
+      ],
+      "bounds_max_cm": [
+        100.00001525878906,
+        100.00001525878906,
+        100
+      ],
+      "bounds_center_cm": [
+        0,
+        0,
+        0
+      ],
+      "bounds_size_cm": [
+        200.00003051757812,
+        200.00003051757812,
+        200
+      ],
+      "mesh_pivot_cm": [
+        0,
+        0,
+        0
+      ],
+      "material_slots": [
+        {
+          "slot": "Material_0",
+          "material": "/Game/LevelPrototyping/Materials/M_FlatCol.M_FlatCol"
+        }
+      ],
+      "simple_collision_shapes": 1,
+      "collision_trace_flag": "CTF_UseDefault",
+      "lod0_triangles": 12
+    },
+    {
+      "object_path": "/Game/LevelPrototyping/Interactable/Door/Meshes/SM_DoorFrame_Corner.SM_DoorFrame_Corner",
+      "bounds_min_cm": [
+        -100.00001525878906,
+        -100.00001525878906,
+        -100
+      ],
+      "bounds_max_cm": [
+        100.00001525878906,
+        100.00001525878906,
+        100
+      ],
+      "bounds_center_cm": [
+        0,
+        0,
+        0
+      ],
+      "bounds_size_cm": [
+        200.00003051757812,
+        200.00003051757812,
+        200
+      ],
+      "mesh_pivot_cm": [
+        0,
+        0,
+        0
+      ],
+      "material_slots": [
+        {
+          "slot": "Material_0",
+          "material": "/Game/LevelPrototyping/Materials/MI_DefaultColorway.MI_DefaultColorway"
+        }
+      ],
+      "simple_collision_shapes": 1,
+      "collision_trace_flag": "CTF_UseDefault",
+      "lod0_triangles": 536
+    },
+    {
+      "object_path": "/Game/LevelPrototyping/Interactable/Door/Meshes/SM_DoorFrame_Edge.SM_DoorFrame_Edge",
+      "bounds_min_cm": [
+        -100.00000762939453,
+        -100.00000762939453,
+        -4.371139311842853e-06
+      ],
+      "bounds_max_cm": [
+        100.00000762939453,
+        100.00000762939453,
+        100.00000762939453
+      ],
+      "bounds_center_cm": [
+        0,
+        0,
+        50.00000162912761
+      ],
+      "bounds_size_cm": [
+        200.00001525878906,
+        200.00001525878906,
+        100.00001200053384
+      ],
+      "mesh_pivot_cm": [
+        0,
+        0,
+        0
+      ],
+      "material_slots": [
+        {
+          "slot": "Material_0",
+          "material": "/Game/LevelPrototyping/Materials/MI_DefaultColorway.MI_DefaultColorway"
+        }
+      ],
+      "simple_collision_shapes": 1,
+      "collision_trace_flag": "CTF_UseDefault",
+      "lod0_triangles": 36
+    },
+    {
+      "object_path": "/Game/LevelPrototyping/Interactable/JumpPad/Assets/Meshes/SM_CircularBand.SM_CircularBand",
+      "bounds_min_cm": [
+        -70,
+        -70,
+        -6.469536304473877
+      ],
+      "bounds_max_cm": [
+        70,
+        70,
+        6.469536304473877
+      ],
+      "bounds_center_cm": [
+        0,
+        0,
+        0
+      ],
+      "bounds_size_cm": [
+        140,
+        140,
+        12.939072608947754
+      ],
+      "mesh_pivot_cm": [
+        0,
+        0,
+        0
+      ],
+      "material_slots": [
+        {
+          "slot": "Material_0",
+          "material": "/Game/LevelPrototyping/Interactable/JumpPad/Assets/Materials/M_SimpleGlow.M_SimpleGlow"
+        }
+      ],
+      "simple_collision_shapes": 1,
+      "collision_trace_flag": "CTF_UseDefault",
+      "lod0_triangles": 64
+    },
+    {
+      "object_path": "/Game/LevelPrototyping/Interactable/JumpPad/Assets/Meshes/SM_CircularGlow.SM_CircularGlow",
+      "bounds_min_cm": [
+        -86.39083099365234,
+        -86.39083099365234,
+        1.0108482837677002
+      ],
+      "bounds_max_cm": [
+        86.39083099365234,
+        86.39083099365234,
+        19.495237350463867
+      ],
+      "bounds_center_cm": [
+        0,
+        0,
+        10.253042817115784
+      ],
+      "bounds_size_cm": [
+        172.7816619873047,
+        172.7816619873047,
+        18.484389066696167
+      ],
+      "mesh_pivot_cm": [
+        0,
+        0,
+        0
+      ],
+      "material_slots": [
+        {
+          "slot": "Material_0",
+          "material": "/Game/LevelPrototyping/Interactable/JumpPad/Assets/Materials/M_GradientGlow.M_GradientGlow"
+        }
+      ],
+      "simple_collision_shapes": 1,
+      "collision_trace_flag": "CTF_UseDefault",
+      "lod0_triangles": 94
+    },
+    {
+      "object_path": "/Game/LevelPrototyping/Interactable/Target/Assets/SM_TargetBaseMesh.SM_TargetBaseMesh",
+      "bounds_min_cm": [
+        -33.96346664428711,
+        -33.96345520019531,
+        0.22610162198543549
+      ],
+      "bounds_max_cm": [
+        33.963470458984375,
+        33.963470458984375,
+        186.91209411621094
+      ],
+      "bounds_center_cm": [
+        1.9073486328125e-06,
+        7.62939453125e-06,
+        93.56909786909819
+      ],
+      "bounds_size_cm": [
+        67.92693710327148,
+        67.92692565917969,
+        186.6859924942255
+      ],
+      "mesh_pivot_cm": [
+        0,
+        0,
+        0
+      ],
+      "material_slots": [
+        {
+          "slot": "Material_0",
+          "material": "/Game/LevelPrototyping/Materials/MI_DefaultColorway.MI_DefaultColorway"
+        }
+      ],
+      "simple_collision_shapes": 1,
+      "collision_trace_flag": "CTF_UseDefault",
+      "lod0_triangles": 8192
+    },
+    {
+      "object_path": "/Game/LevelPrototyping/Meshes/SM_ChamferCube.SM_ChamferCube",
+      "bounds_min_cm": [
+        -50.00000762939453,
+        -50.00000762939453,
+        -50
+      ],
+      "bounds_max_cm": [
+        50.00000762939453,
+        50.00000762939453,
+        50
+      ],
+      "bounds_center_cm": [
+        0,
+        0,
+        0
+      ],
+      "bounds_size_cm": [
+        100.00001525878906,
+        100.00001525878906,
+        100
+      ],
+      "mesh_pivot_cm": [
+        0,
+        0,
+        0
+      ],
+      "material_slots": [
+        {
+          "slot": "CubeMaterial",
+          "material": "/Game/LevelPrototyping/Materials/MI_DefaultColorway.MI_DefaultColorway"
+        }
+      ],
+      "simple_collision_shapes": 1,
+      "collision_trace_flag": "CTF_UseDefault",
+      "lod0_triangles": 2024
+    },
+    {
+      "object_path": "/Game/LevelPrototyping/Meshes/SM_Cube.SM_Cube",
+      "bounds_min_cm": [
+        0,
+        0,
+        0
+      ],
+      "bounds_max_cm": [
+        100,
+        100,
+        100
+      ],
+      "bounds_center_cm": [
+        50,
+        50,
+        50
+      ],
+      "bounds_size_cm": [
+        100,
+        100,
+        100
+      ],
+      "mesh_pivot_cm": [
+        0,
+        0,
+        0
+      ],
+      "material_slots": [
+        {
+          "slot": "lambert1",
+          "material": "/Game/LevelPrototyping/Materials/MI_PrototypeGrid_Gray.MI_PrototypeGrid_Gray"
+        }
+      ],
+      "simple_collision_shapes": 1,
+      "collision_trace_flag": "CTF_UseDefault",
+      "lod0_triangles": 12
+    },
+    {
+      "object_path": "/Game/LevelPrototyping/Meshes/SM_Cylinder.SM_Cylinder",
+      "bounds_min_cm": [
+        -50,
+        -50,
+        0
+      ],
+      "bounds_max_cm": [
+        50,
+        50,
+        100
+      ],
+      "bounds_center_cm": [
+        0,
+        0,
+        50
+      ],
+      "bounds_size_cm": [
+        100,
+        100,
+        100
+      ],
+      "mesh_pivot_cm": [
+        0,
+        0,
+        0
+      ],
+      "material_slots": [
+        {
+          "slot": "lambert1",
+          "material": "/Game/LevelPrototyping/Materials/MI_PrototypeGrid_Gray.MI_PrototypeGrid_Gray"
+        }
+      ],
+      "simple_collision_shapes": 1,
+      "collision_trace_flag": "CTF_UseSimpleAndComplex",
+      "lod0_triangles": 2812
+    },
+    {
+      "object_path": "/Game/LevelPrototyping/Meshes/SM_Plane.SM_Plane",
+      "bounds_min_cm": [
+        -50,
+        -50,
+        0
+      ],
+      "bounds_max_cm": [
+        50,
+        50,
+        0
+      ],
+      "bounds_center_cm": [
+        0,
+        0,
+        0
+      ],
+      "bounds_size_cm": [
+        100,
+        100,
+        0
+      ],
+      "mesh_pivot_cm": [
+        0,
+        0,
+        0
+      ],
+      "material_slots": [
+        {
+          "slot": "Material_0",
+          "material": "/Game/LevelPrototyping/Materials/MI_DefaultColorway.MI_DefaultColorway"
+        }
+      ],
+      "simple_collision_shapes": 1,
+      "collision_trace_flag": "CTF_UseSimpleAndComplex",
+      "lod0_triangles": 2
+    },
+    {
+      "object_path": "/Game/LevelPrototyping/Meshes/SM_QuarterCylinder.SM_QuarterCylinder",
+      "bounds_min_cm": [
+        -2.9802324661432067e-06,
+        -3.7748950489913113e-06,
+        0
+      ],
+      "bounds_max_cm": [
+        50,
+        50,
+        100
+      ],
+      "bounds_center_cm": [
+        24.999998509883767,
+        24.999998112552476,
+        50
+      ],
+      "bounds_size_cm": [
+        50.000002980232466,
+        50.00000377489505,
+        100
+      ],
+      "mesh_pivot_cm": [
+        0,
+        0,
+        0
+      ],
+      "material_slots": [
+        {
+          "slot": "lambert1",
+          "material": "/Game/LevelPrototyping/Materials/MI_PrototypeGrid_Gray.MI_PrototypeGrid_Gray"
+        }
+      ],
+      "simple_collision_shapes": 1,
+      "collision_trace_flag": "CTF_UseSimpleAndComplex",
+      "lod0_triangles": 768
+    },
+    {
+      "object_path": "/Game/LevelPrototyping/Meshes/SM_QuarterCylinderOuter.SM_QuarterCylinderOuter",
+      "bounds_min_cm": [
+        1.3216094885137863e-12,
+        -99.99998474121094,
+        0
+      ],
+      "bounds_max_cm": [
+        100.00000762939453,
+        1.6292065993184224e-05,
+        100
+      ],
+      "bounds_center_cm": [
+        50.000003814697926,
+        -49.99998422457247,
+        50
+      ],
+      "bounds_size_cm": [
+        100.00000762939321,
+        100.00000103327693,
+        100
+      ],
+      "mesh_pivot_cm": [
+        0,
+        0,
+        0
+      ],
+      "material_slots": [
+        {
+          "slot": "Material_0",
+          "material": "/Game/LevelPrototyping/Materials/MI_PrototypeGrid_Gray.MI_PrototypeGrid_Gray"
+        }
+      ],
+      "simple_collision_shapes": 3,
+      "collision_trace_flag": "CTF_UseSimpleAndComplex",
+      "lod0_triangles": 356
+    },
+    {
+      "object_path": "/Game/LevelPrototyping/Meshes/SM_Ramp.SM_Ramp",
+      "bounds_min_cm": [
+        0,
+        0,
+        0
+      ],
+      "bounds_max_cm": [
+        100,
+        100,
+        100
+      ],
+      "bounds_center_cm": [
+        50,
+        50,
+        50
+      ],
+      "bounds_size_cm": [
+        100,
+        100,
+        100
+      ],
+      "mesh_pivot_cm": [
+        0,
+        0,
+        0
+      ],
+      "material_slots": [
+        {
+          "slot": "lambert1",
+          "material": "/Game/LevelPrototyping/Materials/MI_PrototypeGrid_Gray.MI_PrototypeGrid_Gray"
+        }
+      ],
+      "simple_collision_shapes": 1,
+      "collision_trace_flag": "CTF_UseDefault",
+      "lod0_triangles": 8
+    }
+  ]
+}

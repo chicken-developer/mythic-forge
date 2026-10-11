@@ -1,0 +1,940 @@
+{
+  "version": 1,
+  "seed": 42871,
+  "estimated": true,
+  "sample_map": "/Game/Stylized_Forest/Maps/Demonstration",
+  "landscape_instance": "/Game/Stylized_Forest/Materials/landscape/MI_landscape_Inst.MI_landscape_Inst",
+  "layers": {
+    "Grass_Cliff": "/Game/Stylized_Forest/Maps/Demonstration_sharedassets/LayerInfo_Grass_Cliff.LayerInfo_Grass_Cliff",
+    "Grass": "/Game/Stylized_Forest/Maps/Demonstration_sharedassets/LayerInfo_Grass.LayerInfo_Grass",
+    "Ground": "/Game/Stylized_Forest/Maps/Demonstration_sharedassets/LayerInfo_Ground.LayerInfo_Ground",
+    "Cliff": "/Game/Stylized_Forest/Maps/Demonstration_sharedassets/LayerInfo_Cliff.LayerInfo_Cliff"
+  },
+  "grass_types": {
+    "Grass_01": "/Game/Stylized_Forest/Materials/landscape/LandscapeGrassType_Grass_01.LandscapeGrassType_Grass_01",
+    "Grass_02": "/Game/Stylized_Forest/Materials/landscape/LandscapeGrassType_Grass_02.LandscapeGrassType_Grass_02",
+    "Grass_03": "/Game/Stylized_Forest/Materials/landscape/LandscapeGrassType_Grass_03.LandscapeGrassType_Grass_03",
+    "Grass_04": "/Game/Stylized_Forest/Materials/landscape/LandscapeGrassType_Grass_04.LandscapeGrassType_Grass_04"
+  },
+  "ground_basecolor": "/Game/Stylized_Forest/Textures/landscape/T_ground_basecolor.T_ground_basecolor",
+  "ground_normal": "/Game/Stylized_Forest/Textures/landscape/T_ground_normal.T_ground_normal",
+  "cliff_material": "/Game/Stylized_Forest/Materials/stones/MI_stone_cliff_Inst.MI_stone_cliff_Inst",
+  "grass_density_multiplier": 0.2,
+  "grass_start_cull_cm": 3500,
+  "grass_end_cull_cm": 6500,
+  "vegetation_start_cull_cm": 65000,
+  "vegetation_end_cull_cm": 100000,
+  "exclusion_margin_m": 1.5,
+  "tree_building_margin_m": 1.5,
+  "road_margin_m": 1.3,
+  "texture_scale_m": 4,
+  "sun_rotation_deg": [
+    -31.341522,
+    36.412563,
+    0
+  ],
+  "capture_exposure_bias": -12,
+  "sample_exposure_bias": 0,
+  "trial_min_m": [
+    -140,
+    -85,
+    -20
+  ],
+  "trial_max_m": [
+    -35,
+    25,
+    60
+  ],
+  "fixed_trees": [
+    {
+      "id": "hero_000",
+      "position_m": [
+        -53.0,
+        35.0
+      ],
+      "mesh": "/Game/Stylized_Forest/Meshes/trees/SM_tree_01.SM_tree_01",
+      "scale": 0.6,
+      "yaw_deg": 0.0,
+      "estimated": true,
+      "sketch_position_m": [
+        -56,
+        35
+      ]
+    },
+    {
+      "id": "hero_001",
+      "position_m": [
+        54.0,
+        34.0
+      ],
+      "mesh": "/Game/Stylized_Forest/Meshes/trees/SM_tree_03.SM_tree_03",
+      "scale": 0.52,
+      "yaw_deg": 137.508,
+      "estimated": true,
+      "sketch_position_m": [
+        54,
+        34
+      ]
+    },
+    {
+      "id": "hero_002",
+      "position_m": [
+        -52.0,
+        -34.0
+      ],
+      "mesh": "/Game/Stylized_Forest/Meshes/trees/SM_tree_06.SM_tree_06",
+      "scale": 0.8,
+      "yaw_deg": 275.016,
+      "estimated": true,
+      "sketch_position_m": [
+        -55,
+        -34
+      ]
+    },
+    {
+      "id": "hero_003",
+      "position_m": [
+        56.148,
+        -30.228
+      ],
+      "mesh": "/Game/Stylized_Forest/Meshes/trees/SM_tree_01.SM_tree_01",
+      "scale": 0.6,
+      "yaw_deg": 52.524,
+      "estimated": true,
+      "sketch_position_m": [
+        55,
+        -33
+      ]
+    },
+    {
+      "id": "hero_004",
+      "position_m": [
+        -33.0,
+        58.0
+      ],
+      "mesh": "/Game/Stylized_Forest/Meshes/trees/SM_tree_03.SM_tree_03",
+      "scale": 0.52,
+      "yaw_deg": 190.03200000000004,
+      "estimated": true,
+      "sketch_position_m": [
+        -33,
+        58
+      ]
+    },
+    {
+      "id": "hero_005",
+      "position_m": [
+        31.0,
+        58.0
+      ],
+      "mesh": "/Game/Stylized_Forest/Meshes/trees/SM_tree_06.SM_tree_06",
+      "scale": 0.8,
+      "yaw_deg": 327.5400000000001,
+      "estimated": true,
+      "sketch_position_m": [
+        31,
+        58
+      ]
+    },
+    {
+      "id": "hero_006",
+      "position_m": [
+        -38.0,
+        -58.0
+      ],
+      "mesh": "/Game/Stylized_Forest/Meshes/trees/SM_tree_01.SM_tree_01",
+      "scale": 0.6,
+      "yaw_deg": 105.048,
+      "estimated": true,
+      "sketch_position_m": [
+        -38,
+        -58
+      ]
+    },
+    {
+      "id": "hero_007",
+      "position_m": [
+        37.0,
+        -52.0
+      ],
+      "mesh": "/Game/Stylized_Forest/Meshes/trees/SM_tree_03.SM_tree_03",
+      "scale": 0.52,
+      "yaw_deg": 242.55600000000004,
+      "estimated": true,
+      "sketch_position_m": [
+        37,
+        -58
+      ]
+    },
+    {
+      "id": "hero_008",
+      "position_m": [
+        -92.0,
+        59.0
+      ],
+      "mesh": "/Game/Stylized_Forest/Meshes/trees/SM_tree_06.SM_tree_06",
+      "scale": 0.8,
+      "yaw_deg": 20.064000000000078,
+      "estimated": true,
+      "sketch_position_m": [
+        -92,
+        59
+      ]
+    },
+    {
+      "id": "hero_009",
+      "position_m": [
+        -117.543,
+        81.704
+      ],
+      "mesh": "/Game/Stylized_Forest/Meshes/trees/SM_tree_01.SM_tree_01",
+      "scale": 0.6,
+      "yaw_deg": 157.57200000000012,
+      "estimated": true,
+      "sketch_position_m": [
+        -112,
+        84
+      ]
+    },
+    {
+      "id": "hero_010",
+      "position_m": [
+        -160.0,
+        62.0
+      ],
+      "mesh": "/Game/Stylized_Forest/Meshes/trees/SM_tree_03.SM_tree_03",
+      "scale": 0.52,
+      "yaw_deg": 295.08000000000015,
+      "estimated": true,
+      "sketch_position_m": [
+        -163,
+        62
+      ]
+    },
+    {
+      "id": "hero_011",
+      "position_m": [
+        -182.0,
+        14.0
+      ],
+      "mesh": "/Game/Stylized_Forest/Meshes/trees/SM_tree_06.SM_tree_06",
+      "scale": 0.8,
+      "yaw_deg": 72.58800000000019,
+      "estimated": true,
+      "sketch_position_m": [
+        -191,
+        14
+      ]
+    },
+    {
+      "id": "hero_012",
+      "position_m": [
+        -229.0,
+        -73.0
+      ],
+      "mesh": "/Game/Stylized_Forest/Meshes/trees/SM_tree_01.SM_tree_01",
+      "scale": 0.6,
+      "yaw_deg": 210.096,
+      "estimated": true,
+      "sketch_position_m": [
+        -229,
+        -73
+      ]
+    },
+    {
+      "id": "hero_013",
+      "position_m": [
+        -272.148,
+        52.228
+      ],
+      "mesh": "/Game/Stylized_Forest/Meshes/trees/SM_tree_03.SM_tree_03",
+      "scale": 0.52,
+      "yaw_deg": 347.60400000000004,
+      "estimated": true,
+      "sketch_position_m": [
+        -271,
+        55
+      ]
+    },
+    {
+      "id": "hero_014",
+      "position_m": [
+        -300.364,
+        121.364
+      ],
+      "mesh": "/Game/Stylized_Forest/Meshes/trees/SM_tree_06.SM_tree_06",
+      "scale": 0.8,
+      "yaw_deg": 125.11200000000008,
+      "estimated": true,
+      "sketch_position_m": [
+        -294,
+        115
+      ]
+    },
+    {
+      "id": "hero_015",
+      "position_m": [
+        82.0,
+        44.0
+      ],
+      "mesh": "/Game/Stylized_Forest/Meshes/trees/SM_tree_01.SM_tree_01",
+      "scale": 0.6,
+      "yaw_deg": 262.62000000000035,
+      "estimated": true,
+      "sketch_position_m": [
+        82,
+        44
+      ]
+    },
+    {
+      "id": "hero_016",
+      "position_m": [
+        157.0,
+        48.0
+      ],
+      "mesh": "/Game/Stylized_Forest/Meshes/trees/SM_tree_03.SM_tree_03",
+      "scale": 0.52,
+      "yaw_deg": 40.128000000000156,
+      "estimated": true,
+      "sketch_position_m": [
+        148,
+        48
+      ]
+    },
+    {
+      "id": "hero_017",
+      "position_m": [
+        182.457,
+        68.296
+      ],
+      "mesh": "/Game/Stylized_Forest/Meshes/trees/SM_tree_06.SM_tree_06",
+      "scale": 0.8,
+      "yaw_deg": 177.63599999999997,
+      "estimated": true,
+      "sketch_position_m": [
+        188,
+        66
+      ]
+    },
+    {
+      "id": "hero_018",
+      "position_m": [
+        254.0,
+        25.0
+      ],
+      "mesh": "/Game/Stylized_Forest/Meshes/trees/SM_tree_01.SM_tree_01",
+      "scale": 0.6,
+      "yaw_deg": 315.14400000000023,
+      "estimated": true,
+      "sketch_position_m": [
+        254,
+        25
+      ]
+    },
+    {
+      "id": "hero_019",
+      "position_m": [
+        282.0,
+        -50.0
+      ],
+      "mesh": "/Game/Stylized_Forest/Meshes/trees/SM_tree_03.SM_tree_03",
+      "scale": 0.52,
+      "yaw_deg": 92.65200000000004,
+      "estimated": true,
+      "sketch_position_m": [
+        282,
+        -50
+      ]
+    },
+    {
+      "id": "hero_020",
+      "position_m": [
+        250.0,
+        -84.0
+      ],
+      "mesh": "/Game/Stylized_Forest/Meshes/trees/SM_tree_06.SM_tree_06",
+      "scale": 0.8,
+      "yaw_deg": 230.1600000000003,
+      "estimated": true,
+      "sketch_position_m": [
+        250,
+        -84
+      ]
+    },
+    {
+      "id": "hero_021",
+      "position_m": [
+        -61.0,
+        180.0
+      ],
+      "mesh": "/Game/Stylized_Forest/Meshes/trees/SM_tree_01.SM_tree_01",
+      "scale": 0.6,
+      "yaw_deg": 7.66800000000012,
+      "estimated": true,
+      "sketch_position_m": [
+        -70,
+        180
+      ]
+    },
+    {
+      "id": "hero_022",
+      "position_m": [
+        61.0,
+        184.0
+      ],
+      "mesh": "/Game/Stylized_Forest/Meshes/trees/SM_tree_03.SM_tree_03",
+      "scale": 0.52,
+      "yaw_deg": 145.17600000000039,
+      "estimated": true,
+      "sketch_position_m": [
+        70,
+        184
+      ]
+    },
+    {
+      "id": "hero_023",
+      "position_m": [
+        -114.0,
+        213.0
+      ],
+      "mesh": "/Game/Stylized_Forest/Meshes/trees/SM_tree_06.SM_tree_06",
+      "scale": 0.8,
+      "yaw_deg": 282.6840000000002,
+      "estimated": true,
+      "sketch_position_m": [
+        -114,
+        213
+      ]
+    },
+    {
+      "id": "hero_024",
+      "position_m": [
+        112.0,
+        214.0
+      ],
+      "mesh": "/Game/Stylized_Forest/Meshes/trees/SM_tree_01.SM_tree_01",
+      "scale": 0.6,
+      "yaw_deg": 60.19200000000001,
+      "estimated": true,
+      "sketch_position_m": [
+        112,
+        214
+      ]
+    },
+    {
+      "id": "hero_025",
+      "position_m": [
+        -230.0,
+        153.0
+      ],
+      "mesh": "/Game/Stylized_Forest/Meshes/trees/SM_tree_03.SM_tree_03",
+      "scale": 0.52,
+      "yaw_deg": 197.70000000000027,
+      "estimated": true,
+      "sketch_position_m": [
+        -230,
+        153
+      ]
+    },
+    {
+      "id": "hero_026",
+      "position_m": [
+        212.685,
+        158.556
+      ],
+      "mesh": "/Game/Stylized_Forest/Meshes/trees/SM_tree_06.SM_tree_06",
+      "scale": 0.8,
+      "yaw_deg": 335.2080000000001,
+      "estimated": true,
+      "sketch_position_m": [
+        221,
+        162
+      ]
+    },
+    {
+      "id": "hero_027",
+      "position_m": [
+        -137.0,
+        -101.0
+      ],
+      "mesh": "/Game/Stylized_Forest/Meshes/trees/SM_tree_01.SM_tree_01",
+      "scale": 0.6,
+      "yaw_deg": 112.71600000000035,
+      "estimated": true,
+      "sketch_position_m": [
+        -143,
+        -101
+      ]
+    },
+    {
+      "id": "hero_028",
+      "position_m": [
+        -117.121,
+        -116.879
+      ],
+      "mesh": "/Game/Stylized_Forest/Meshes/trees/SM_tree_03.SM_tree_03",
+      "scale": 0.52,
+      "yaw_deg": 250.22400000000016,
+      "estimated": true,
+      "sketch_position_m": [
+        -115,
+        -119
+      ]
+    },
+    {
+      "id": "hero_029",
+      "position_m": [
+        -57.0,
+        -155.0
+      ],
+      "mesh": "/Game/Stylized_Forest/Meshes/trees/SM_tree_06.SM_tree_06",
+      "scale": 0.8,
+      "yaw_deg": 27.732000000000426,
+      "estimated": true,
+      "sketch_position_m": [
+        -57,
+        -155
+      ]
+    },
+    {
+      "id": "hero_030",
+      "position_m": [
+        46.408,
+        -164.087
+      ],
+      "mesh": "/Game/Stylized_Forest/Meshes/trees/SM_tree_01.SM_tree_01",
+      "scale": 0.6,
+      "yaw_deg": 165.2400000000007,
+      "estimated": true,
+      "sketch_position_m": [
+        51,
+        -153
+      ]
+    },
+    {
+      "id": "hero_032",
+      "position_m": [
+        68.408,
+        -233.087
+      ],
+      "mesh": "/Game/Stylized_Forest/Meshes/trees/SM_tree_06.SM_tree_06",
+      "scale": 0.8,
+      "yaw_deg": 80.25600000000031,
+      "estimated": true,
+      "sketch_position_m": [
+        73,
+        -222
+      ]
+    },
+    {
+      "id": "hero_033",
+      "position_m": [
+        -45.0,
+        -281.0
+      ],
+      "mesh": "/Game/Stylized_Forest/Meshes/trees/SM_tree_01.SM_tree_01",
+      "scale": 0.6,
+      "yaw_deg": 217.76400000000012,
+      "estimated": true,
+      "sketch_position_m": [
+        -48,
+        -281
+      ]
+    },
+    {
+      "id": "hero_034",
+      "position_m": [
+        42.879,
+        -284.879
+      ],
+      "mesh": "/Game/Stylized_Forest/Meshes/trees/SM_tree_03.SM_tree_03",
+      "scale": 0.52,
+      "yaw_deg": 355.27199999999993,
+      "estimated": true,
+      "sketch_position_m": [
+        45,
+        -287
+      ]
+    },
+    {
+      "id": "hero_035",
+      "position_m": [
+        -256.444,
+        -221.315
+      ],
+      "mesh": "/Game/Stylized_Forest/Meshes/trees/SM_tree_06.SM_tree_06",
+      "scale": 0.8,
+      "yaw_deg": 132.78000000000065,
+      "estimated": true,
+      "sketch_position_m": [
+        -253,
+        -213
+      ]
+    },
+    {
+      "id": "hero_036",
+      "position_m": [
+        -178.457,
+        -264.704
+      ],
+      "mesh": "/Game/Stylized_Forest/Meshes/trees/SM_tree_01.SM_tree_01",
+      "scale": 0.6,
+      "yaw_deg": 270.28800000000047,
+      "estimated": true,
+      "sketch_position_m": [
+        -184,
+        -267
+      ]
+    },
+    {
+      "id": "hero_037",
+      "position_m": [
+        204.0,
+        -156.0
+      ],
+      "mesh": "/Game/Stylized_Forest/Meshes/trees/SM_tree_03.SM_tree_03",
+      "scale": 0.52,
+      "yaw_deg": 47.79600000000028,
+      "estimated": true,
+      "sketch_position_m": [
+        204,
+        -156
+      ]
+    },
+    {
+      "id": "hero_038",
+      "position_m": [
+        -91.228,
+        -12.852
+      ],
+      "mesh": "/Game/Stylized_Forest/Meshes/trees/SM_tree_06.SM_tree_06",
+      "scale": 0.8,
+      "yaw_deg": 185.3040000000001,
+      "estimated": true,
+      "sketch_position_m": [
+        -94,
+        -14
+      ]
+    },
+    {
+      "id": "hero_039",
+      "position_m": [
+        -79.0,
+        -51.0
+      ],
+      "mesh": "/Game/Stylized_Forest/Meshes/trees/SM_tree_01.SM_tree_01",
+      "scale": 0.6,
+      "yaw_deg": 322.8120000000008,
+      "estimated": true,
+      "sketch_position_m": [
+        -82,
+        -51
+      ]
+    }
+  ],
+  "zones": [
+    {
+      "id": "north_copse",
+      "polygon_m": [
+        [
+          -390,
+          220
+        ],
+        [
+          365,
+          220
+        ],
+        [
+          410,
+          460
+        ],
+        [
+          -430,
+          460
+        ]
+      ],
+      "attempts": 500,
+      "min_spacing_m": 13,
+      "density": 0.65
+    },
+    {
+      "id": "west_silhouette",
+      "polygon_m": [
+        [
+          -460,
+          -340
+        ],
+        [
+          -300,
+          -340
+        ],
+        [
+          -280,
+          210
+        ],
+        [
+          -450,
+          210
+        ]
+      ],
+      "attempts": 300,
+      "min_spacing_m": 12,
+      "density": 0.7
+    },
+    {
+      "id": "east_quarry_edge",
+      "polygon_m": [
+        [
+          300,
+          -170
+        ],
+        [
+          455,
+          -170
+        ],
+        [
+          455,
+          255
+        ],
+        [
+          300,
+          255
+        ]
+      ],
+      "attempts": 250,
+      "min_spacing_m": 15,
+      "density": 0.45
+    },
+    {
+      "id": "south_coast",
+      "polygon_m": [
+        [
+          -310,
+          -440
+        ],
+        [
+          180,
+          -440
+        ],
+        [
+          180,
+          -275
+        ],
+        [
+          -310,
+          -275
+        ]
+      ],
+      "attempts": 300,
+      "min_spacing_m": 14,
+      "density": 0.6
+    }
+  ],
+  "sample_views": [
+    {
+      "id": "sample_overview",
+      "location_m": [
+        -110,
+        -140,
+        70
+      ],
+      "target_m": [
+        -25,
+        -35,
+        5
+      ],
+      "fov": 65
+    },
+    {
+      "id": "sample_eye",
+      "location_m": [
+        -45,
+        -28,
+        4
+      ],
+      "target_m": [
+        -18,
+        -12,
+        3
+      ],
+      "fov": 75
+    }
+  ],
+  "trial_views": [
+    {
+      "id": "trial_patch",
+      "location_m": [
+        -90,
+        -3,
+        11
+      ],
+      "target_m": [
+        -65,
+        -36,
+        9
+      ],
+      "fov": 75
+    },
+    {
+      "id": "trial_eye",
+      "location_m": [
+        -93,
+        -27,
+        10
+      ],
+      "target_m": [
+        -72,
+        -36,
+        9
+      ],
+      "fov": 75
+    },
+    {
+      "id": "trial_top",
+      "location_m": [
+        -87,
+        -30,
+        120
+      ],
+      "target_m": [
+        -87,
+        -30,
+        8
+      ],
+      "ortho_width_m": 140
+    },
+    {
+      "id": "wind_start",
+      "location_m": [
+        -90,
+        -3,
+        11
+      ],
+      "target_m": [
+        -65,
+        -36,
+        9
+      ],
+      "fov": 75
+    },
+    {
+      "id": "wind_after",
+      "location_m": [
+        -90,
+        -3,
+        11
+      ],
+      "target_m": [
+        -65,
+        -36,
+        9
+      ],
+      "fov": 75,
+      "advance_world_seconds": 2
+    }
+  ],
+  "capture_views": [
+    {
+      "id": "top_down",
+      "location_m": [
+        0,
+        0,
+        950
+      ],
+      "target_m": [
+        0,
+        0,
+        0
+      ],
+      "ortho_width_m": 980
+    },
+    {
+      "id": "south",
+      "location_m": [
+        0,
+        -690,
+        350
+      ],
+      "target_m": [
+        0,
+        -70,
+        18
+      ],
+      "fov": 65
+    },
+    {
+      "id": "gate_to_plaza",
+      "location_m": [
+        -12,
+        240,
+        2.2
+      ],
+      "target_m": [
+        -5,
+        135,
+        6
+      ],
+      "fov": 75
+    },
+    {
+      "id": "plaza",
+      "location_m": [
+        -39,
+        41,
+        11
+      ],
+      "target_m": [
+        22,
+        -20,
+        10
+      ],
+      "fov": 75
+    },
+    {
+      "id": "upper_tier",
+      "location_m": [
+        -110,
+        -110,
+        21
+      ],
+      "target_m": [
+        -15,
+        -170,
+        20
+      ],
+      "fov": 70
+    },
+    {
+      "id": "port_descent",
+      "location_m": [
+        330,
+        -310,
+        55
+      ],
+      "target_m": [
+        190,
+        -200,
+        12
+      ],
+      "fov": 70
+    },
+    {
+      "id": "outside_vegetation",
+      "location_m": [
+        29.865000000000002,
+        281.897,
+        7.2
+      ],
+      "target_m": [
+        59.865,
+        316.897,
+        8.0
+      ],
+      "fov": 75
+    }
+  ],
+  "fixed_trees_resolved": true,
+  "omitted_sketch_ids": [
+    "hero_031"
+  ]
+}

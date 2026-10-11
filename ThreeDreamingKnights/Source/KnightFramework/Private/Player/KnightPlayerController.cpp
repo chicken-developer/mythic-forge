@@ -34,6 +34,11 @@ UKnightInputConfig* AKnightPlayerController::GetKnightInputConfig() const
 	return InputConfig;
 }
 
+int32 AKnightPlayerController::GetGameplayMappingPriority() const
+{
+	return GameplayMappingPriority;
+}
+
 const FKnightResult& AKnightPlayerController::GetLastCommandResult() const
 {
 	return LastCommandResult;

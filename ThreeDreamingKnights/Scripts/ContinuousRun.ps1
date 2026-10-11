@@ -6,10 +6,13 @@ param(
 	[string]$EvidenceName = '',
 	[ValidateSet('Development', 'DebugGame')]
 	[string]$Configuration = 'Development',
-	[ValidateRange(0, 9)]
+	[ValidateSet(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 55, 56)]
 	[int]$Milestone = 0,
 	[ValidatePattern('^[A-Za-z0-9_.]+$')]
-	[string]$TestFilter = 'Knight.'
+	[string]$TestFilter = 'Knight.',
+	[string]$ConsoleCommands = '',
+	[switch]$Rendered,
+	[string[]]$AdditionalEngineArguments = @()
 )
 
 $ErrorActionPreference = 'Stop'
@@ -43,10 +46,23 @@ switch ($Action)
 	}
 	'Test'
 	{
-		$TaskArguments = @($TaskProject, '-unattended', '-nop4', '-NullRHI', '-nosplash',
-			('-ExecCmds=Automation RunTests ' + $TestFilter), '-TestExit=Automation Test Queue Empty',
+		$TaskTestCommands = 'Automation RunTests ' + $TestFilter
+		if (![string]::IsNullOrWhiteSpace($ConsoleCommands))
+		{
+			$TaskTestCommands = $ConsoleCommands.TrimEnd(',') + ',' + $TaskTestCommands
+		}
+		$TaskArguments = @($TaskProject, '-unattended', '-nop4', '-nosplash',
+			('-ExecCmds=' + $TaskTestCommands), '-TestExit=Automation Test Queue Empty',
 			('-ReportExportPath=' + (Join-Path $TaskEvidence ($EvidenceName + '-report'))),
-			('-abslog=' + $TaskLog))
+			('-abslog=' + $TaskLog), '-DDC=InstalledNoZenLocalFallback')
+		if ($Rendered)
+		{
+			$TaskArguments += @('-d3d12', '-windowed', '-ResX=1600', '-ResY=900')
+		}
+		else
+		{
+			$TaskArguments += '-NullRHI'
+		}
 	}
 	'BootSmoke'
 	{
@@ -68,6 +84,7 @@ if ($Action -ne 'BuildEditor')
 {
 	# Headless automation must not replace the interactive Editor's RiderLink discovery port.
 	$TaskArguments += '-DisablePlugins=RiderLink'
+	$TaskArguments += $AdditionalEngineArguments
 }
 if (!(Test-Path -LiteralPath $TaskExecutable))
 {

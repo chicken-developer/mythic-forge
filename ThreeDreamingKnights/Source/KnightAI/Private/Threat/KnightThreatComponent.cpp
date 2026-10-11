@@ -6,6 +6,7 @@
 #include "Engine/World.h"
 #include "EngineUtils.h"
 #include "Tags/KnightGameplayTags.h"
+#include "Skills/KnightSkillRuntimeComponent.h"
 #include "TimerManager.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogKnightThreat, Log, All);
@@ -324,8 +325,29 @@ TArray<FKnightThreatSnapshot> UKnightThreatComponent::GetThreatSnapshot() const
 
 AActor* UKnightThreatComponent::GetHighestThreatTarget() const
 {
+	if (TauntTarget.IsValid() && GetWorld() != nullptr && GetWorld()->GetTimeSeconds() < TauntEnd)
+	{
+		UKnightAbilitySystemComponent* TargetASC = nullptr;
+		if (ValidateOwner().IsSuccess() && ValidateTarget(TauntTarget.Get(), TargetASC).IsSuccess())
+		{
+			return TauntTarget.Get();
+		}
+	}
 	const TArray<FKnightThreatSnapshot> Snapshot = GetThreatSnapshot();
 	return Snapshot.IsEmpty() ? nullptr : Snapshot[0].Target.Get();
+}
+
+void UKnightThreatComponent::ApplySkillTaunt(AActor* Source, float Duration)
+{
+	UKnightAbilitySystemComponent* TargetASC = nullptr;
+	if (!ValidateOwner().IsSuccess() || !ValidateTarget(Source, TargetASC).IsSuccess()
+		|| !FMath::IsFinite(Duration) || Duration <= 0.0f)
+	{
+		return;
+	}
+	TauntTarget = Source;
+	TauntEnd = GetWorld()->GetTimeSeconds() + FMath::Min(3.0f, Duration);
+	OnThreatChanged.Broadcast();
 }
 
 float UKnightThreatComponent::GetThreat(const FKnightEntityId& TargetId) const
@@ -371,8 +393,12 @@ void UKnightThreatComponent::HandleDamageConfirmed(const FKnightDamageConfirmedE
 			Source = *It;
 		}
 	}
+	const UKnightSkillRuntimeComponent* Skills = IsValid(Source)
+		? Source->FindComponentByClass<UKnightSkillRuntimeComponent>() : nullptr;
+	const float RoleScale = Skills != nullptr && !Skills->GetBuild().SpecId.IsNone()
+		&& FKnightSkillCatalog::Role(Skills->GetBuild().SpecId) == EKnightSkillRole::Tank ? 1.5f : 1.0f;
 	const float Amount = static_cast<float>(FMath::Min(static_cast<double>(MaxThreat),
-		static_cast<double>(Event.AppliedDamage) * DamageScale));
+		static_cast<double>(Event.AppliedDamage) * DamageScale * RoleScale));
 	const FKnightResult Result = AddThreat(Source, Amount);
 	if (!Result.IsSuccess())
 	{
@@ -400,6 +426,8 @@ void UKnightThreatComponent::RemoveEntry(const FKnightEntityId& Id)
 
 void UKnightThreatComponent::ResetEntries(bool bNotify)
 {
+	TauntTarget.Reset();
+	TauntEnd = 0.0;
 	const bool bChanged = !Entries.IsEmpty();
 	TArray<FKnightEntityId> Ids;
 	Entries.GetKeys(Ids);

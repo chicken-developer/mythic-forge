@@ -32,6 +32,19 @@ FKnightResult UKnightRPGComponent::BuildCandidate(const FKnightRPGView& Existing
 	TSet<FGuid> AssignedIds;
 	for (const FKnightRPGKnightView& ExistingKnight : Existing.Knights)
 	{
+		const FGuid RuneIds[] { ExistingKnight.WeaponRuneInstanceId, ExistingKnight.SkillRuneInstanceId };
+		for (const FGuid& RuneId : RuneIds)
+		{
+			if (RuneId.IsValid())
+			{
+				if (AssignedIds.Contains(RuneId))
+				{
+					return FKnightResult::Failure(EKnightError::DuplicateId, TEXT("RPGAttachments"),
+						LOCTEXT("AttachmentDuplicate", "A rune instance has exactly one attachment owner."));
+				}
+				AssignedIds.Add(RuneId);
+			}
+		}
 		for (const FKnightEquipmentAssignment& Assignment : ExistingKnight.Assignments)
 		{
 			if (!Assignment.ItemInstanceId.IsValid() || AssignedIds.Contains(Assignment.ItemInstanceId))
@@ -42,7 +55,18 @@ FKnightResult UKnightRPGComponent::BuildCandidate(const FKnightRPGView& Existing
 			AssignedIds.Add(Assignment.ItemInstanceId);
 		}
 	}
-	if (Command.Operation == EKnightRPGOperation::Pickup)
+	if (Existing.IsItemizationEnabled() && (Command.Operation == EKnightRPGOperation::Equip
+		|| Command.Operation == EKnightRPGOperation::Unequip
+		|| Command.Operation >= EKnightRPGOperation::TransferEquipment))
+	{
+		const FKnightResult Result = BuildGearCandidate(OutView, InventoryView, Command,
+			HistoricalMutations, OutInventoryRequest, OutAffectedInstance);
+		if (!Result.IsSuccess())
+		{
+			return Result;
+		}
+	}
+	else if (Command.Operation == EKnightRPGOperation::Pickup)
 	{
 		if (PickedItem == nullptr || !PickedItem->ValidateIdentityAndCount().IsSuccess())
 		{
@@ -78,6 +102,12 @@ FKnightResult UKnightRPGComponent::BuildCandidate(const FKnightRPGView& Existing
 			return Validation;
 		}
 		const bool bRune = Command.Operation == EKnightRPGOperation::Rune;
+		const UKnightRuneDefinition* AttachmentRune = Cast<UKnightRuneDefinition>(Definition);
+		if (bRune && AttachmentRune != nullptr && !AttachmentRune->GetAttachmentRuneId().IsNone())
+		{
+			return FKnightResult::Failure(EKnightError::TypeMismatch, TEXT("RuneSocket"),
+				LOCTEXT("AttachmentSocket", "Attachment runes use the explicit weapon or skill socket in ApplyBuild."));
+		}
 		if (Item->Count != 1 || (bRune && (Definition->GetItemKind() != EKnightItemKind::Rune
 			|| !Definition->IsA<UKnightRuneDefinition>() || Command.SlotTag != KnightGameplayTags::Slot_Equipment_Rune))
 			|| (!bRune && (Definition->GetItemKind() != EKnightItemKind::Equipment
@@ -273,10 +303,27 @@ FKnightResult UKnightRPGComponent::BuildCandidate(const FKnightRPGView& Existing
 		Knight->SkillPoints = static_cast<int32>(RefundedPoints);
 		Knight->PurchasedSkills.Reset();
 	}
+	else if (Command.Operation >= EKnightRPGOperation::ApplyBuild
+		&& Command.Operation <= EKnightRPGOperation::ApplyTalentLoadout)
+	{
+		const FKnightResult Result = BuildSkillCandidate(*Knight, Existing, InventoryView, Command);
+		if (!Result.IsSuccess())
+		{
+			return Result;
+		}
+	}
 	else
 	{
 		return FKnightResult::Failure(EKnightError::InvalidData, TEXT("RPGCandidate"),
 			LOCTEXT("Operation", "The RPG operation is not supported."));
+	}
+	if (Existing.IsItemizationEnabled())
+	{
+		const FKnightResult Result = SynchronizeLocations(OutView, InventoryView, OutInventoryRequest);
+		if (!Result.IsSuccess())
+		{
+			return Result;
+		}
 	}
 	++Knight->Revision;
 	++OutView.Revision;
@@ -290,16 +337,88 @@ FKnightResult UKnightRPGComponent::BuildProjection(FKnightRPGKnightView& Knight,
 	OutPlan = FKnightGASProjectionPlan();
 	OutPlan.SourceKey = KnightRPG::ProjectionSource;
 	OutPlan.DefinitionId = Knight.HeroDefinitionId;
+	OutPlan.SkillBuild = Knight.Build;
+	OutPlan.EquipmentCombatBuild.bEnabled = Knight.bGearEnabled;
+	if (Knight.bGearEnabled)
+	{
+		if (Knight.ConsumableBindings.Num() != 2)
+		{
+			return FKnightResult::Failure(EKnightError::InvalidData, TEXT("QuickBindings"),
+				LOCTEXT("QuickBindings", "Gear Knights retain two explicit definition bindings."));
+		}
+		for (const FPrimaryAssetId& Binding : Knight.ConsumableBindings)
+		{
+			const UKnightDefinition* Definition = nullptr;
+			const FKnightResult Result = ResolveDefinition(Binding, UKnightItemDefinition::StaticClass(), Definition);
+			if (!Result.IsSuccess())
+			{
+				return Result;
+			}
+			const FKnightItemMetadata& Metadata = CastChecked<UKnightItemDefinition>(Definition)->GetMetadata();
+			if (Metadata.Category != EKnightItemCategory::Consumable
+				|| (Metadata.SocketProfile != TEXT("Health") && Metadata.SocketProfile != TEXT("Resource")))
+			{
+				return FKnightResult::Failure(EKnightError::TypeMismatch, TEXT("QuickBindingEffect"),
+					LOCTEXT("QuickBindingEffect", "Bind only actual supported health or resource consumable definitions."));
+			}
+		}
+	}
+	if (!Knight.Build.SpecId.IsNone())
+	{
+		const FKnightResult BuildResult = FKnightSkillCatalog::ValidateBuild(Knight.HeroDefinitionId, Knight.Build);
+		if (!BuildResult.IsSuccess())
+		{
+			return BuildResult;
+		}
+	}
+	if (Knight.TalentLoadouts.Num() > KnightRPG::MaximumTalentLoadouts)
+	{
+		return FKnightResult::Failure(EKnightError::CapacityExceeded, TEXT("TalentLoadouts"),
+			LOCTEXT("PresetCapacity", "The talent loadout collection exceeds its finite capacity."));
+	}
+	TSet<FGuid> PresetIds;
+	TSet<FString> PresetNames;
+	for (const FKnightTalentLoadout& Preset : Knight.TalentLoadouts)
+	{
+		if (!Preset.LoadoutId.IsValid() || PresetIds.Contains(Preset.LoadoutId) || Preset.Version < 1
+			|| Preset.Name.IsEmpty() || Preset.Name.Len() > KnightRPG::MaximumLoadoutNameLength
+			|| Preset.Name != Preset.Name.TrimStartAndEnd() || PresetNames.Contains(Preset.Name.ToLower())
+			|| Preset.Build.SpecId.IsNone() || !Preset.Build.WeaponRune.IsNone() || !Preset.Build.SkillRune.IsNone()
+			|| !FKnightSkillCatalog::ValidateBuild(Knight.HeroDefinitionId, Preset.Build).IsSuccess())
+		{
+			return FKnightResult::Failure(EKnightError::InvalidData, TEXT("TalentLoadouts"),
+				LOCTEXT("PresetData", "Saved talent loadouts need distinct identities, valid names and rune-free builds for their canonical Knight."));
+		}
+		for (TCHAR Character : Preset.Name)
+		{
+			if (FChar::IsControl(Character))
+			{
+				return FKnightResult::Failure(EKnightError::InvalidData, TEXT("TalentLoadoutName"),
+					LOCTEXT("PresetControl", "Talent loadout names cannot contain control characters."));
+			}
+		}
+		PresetIds.Add(Preset.LoadoutId);
+		PresetNames.Add(Preset.Name.ToLower());
+	}
+	if (Knight.ActiveTalentLoadoutId.IsValid() && !PresetIds.Contains(Knight.ActiveTalentLoadoutId))
+	{
+		return FKnightResult::Failure(EKnightError::InvalidId, TEXT("ActiveTalentLoadout"),
+			LOCTEXT("ActivePreset", "The selected talent loadout identity must exist for this Knight."));
+	}
 	FKnightItemStatBonuses Bonuses;
 	FKnightRuneTuning Rune;
+	if (Knight.Build.ClassChoice == TEXT("Endurance"))
+	{
+		Bonuses.MaxStamina += 10.0f;
+	}
+	else if (Knight.Build.ClassChoice == TEXT("Reservoir"))
+	{
+		Bonuses.MaxRuneEnergy += 10.0f;
+	}
 	auto AddTuning = [&Bonuses, &Rune, &OutPlan](const FKnightItemStatBonuses& InBonuses,
 		const FKnightRuneTuning& InRune, const FPrimaryAssetId& AbilitySetId)
 	{
-		Bonuses.MaxHealth += InBonuses.MaxHealth;
-		Bonuses.MaxStamina += InBonuses.MaxStamina;
-		Bonuses.MaxRuneEnergy += InBonuses.MaxRuneEnergy;
-		Bonuses.AttackPower += InBonuses.AttackPower;
-		Bonuses.Defense += InBonuses.Defense;
+		Bonuses.Add(InBonuses);
 		Rune.DamageScale *= InRune.DamageScale;
 		Rune.CostScale *= InRune.CostScale;
 		Rune.DurationScale *= InRune.DurationScale;
@@ -310,6 +429,7 @@ FKnightResult UKnightRPGComponent::BuildProjection(FKnightRPGKnightView& Knight,
 	};
 	TSet<FGameplayTag> Slots;
 	TSet<FGuid> AssignedIds;
+	TSet<FPrimaryAssetId> UniqueGroups;
 	for (const FKnightEquipmentAssignment& Assignment : Knight.Assignments)
 	{
 		const FKnightItemInstance* Item = Items.FindByPredicate([&Assignment](const FKnightItemInstance& Entry)
@@ -335,8 +455,10 @@ FKnightResult UKnightRPGComponent::BuildProjection(FKnightRPGKnightView& Knight,
 			return Result;
 		}
 		const UKnightRuneDefinition* RuneDefinition = Cast<UKnightRuneDefinition>(Definition);
+		const FKnightItemMetadata& Metadata = Definition->GetMetadata();
 		if ((Definition->GetItemKind() == EKnightItemKind::Equipment
-			&& Assignment.SlotTag != KnightGameplayTags::Slot_Equipment_Weapon)
+			&& (!Metadata.AllowedSlots.Contains(Assignment.SlotTag)
+				|| Knight.bGearEnabled && Knight.Level < Metadata.RequiredLevel))
 			|| (Definition->GetItemKind() == EKnightItemKind::Rune
 				&& (Assignment.SlotTag != KnightGameplayTags::Slot_Equipment_Rune || RuneDefinition == nullptr))
 			|| (Definition->GetItemKind() != EKnightItemKind::Equipment && Definition->GetItemKind() != EKnightItemKind::Rune))
@@ -344,7 +466,26 @@ FKnightResult UKnightRPGComponent::BuildProjection(FKnightRPGKnightView& Knight,
 			return FKnightResult::Failure(EKnightError::TypeMismatch, TEXT("RPGProjection"),
 				LOCTEXT("ProjectionSlot", "An equipment assignment has an incompatible native slot or item kind."));
 		}
-		AddTuning(Definition->GetStatBonuses(),
+		if (Metadata.UniqueEquipLimit > 0 && UniqueGroups.Contains(Metadata.UniqueEquipGroup))
+		{
+			return FKnightResult::Failure(EKnightError::Conflict, TEXT("UniqueEquipped"),
+				LOCTEXT("UniqueRing", "Each unique-equipped ring definition may be equipped once per canonical Knight."));
+		}
+		if (Metadata.UniqueEquipLimit > 0)
+		{
+			UniqueGroups.Add(Metadata.UniqueEquipGroup);
+		}
+		if (Assignment.SlotTag == KnightGameplayTags::Slot_Equipment_Weapon)
+		{
+			OutPlan.EquipmentCombatBuild.bHasHammer = Knight.bGearEnabled
+				&& Metadata.Subtype == EKnightEquipmentSubtype::Hammer;
+		}
+		if (Assignment.SlotTag == KnightGameplayTags::Slot_Equipment_Relic && Knight.bGearEnabled)
+		{
+			OutPlan.EquipmentCombatBuild.RelicInstanceId = Item->InstanceId;
+			OutPlan.EquipmentCombatBuild.RelicEffectId = Metadata.EquipEffectId;
+		}
+		AddTuning(Definition->GetEffectiveStats(Item->UpgradeRank),
 			RuneDefinition == nullptr ? FKnightRuneTuning() : RuneDefinition->GetRuneTuning(), Definition->GetAbilitySetId());
 		Slots.Add(Assignment.SlotTag);
 		AssignedIds.Add(Assignment.ItemInstanceId);
@@ -393,6 +534,12 @@ FKnightResult UKnightRPGComponent::BuildProjection(FKnightRPGKnightView& Knight,
 	OutPlan.MaxRuneEnergyBonus = Bonuses.MaxRuneEnergy;
 	OutPlan.AttackPowerBonus = Bonuses.AttackPower;
 	OutPlan.DefenseBonus = Bonuses.Defense;
+	OutPlan.CritChanceBonus = Bonuses.CritChance;
+	OutPlan.HasteBonus = Bonuses.Haste;
+	OutPlan.CooldownRecoveryBonus = Bonuses.CooldownRecovery;
+	OutPlan.MasteryBonus = Bonuses.MasteryBonus;
+	OutPlan.VersatilityBonus = Bonuses.Versatility;
+	OutPlan.MaxPoiseBonus = Bonuses.Poise;
 	if (!(Rune == FKnightRuneTuning()))
 	{
 		FKnightActionModifier Modifier;

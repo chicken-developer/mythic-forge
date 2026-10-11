@@ -4,6 +4,7 @@
 #include "Components/ActorComponent.h"
 #include "Events/KnightEventSubsystem.h"
 #include "Types/KnightStableIds.h"
+#include "Damage/KnightTauntResponse.h"
 #include "KnightThreatComponent.generated.h"
 
 class UKnightAbilitySystemComponent;
@@ -22,7 +23,7 @@ DECLARE_MULTICAST_DELEGATE(FOnKnightThreatChanged);
 
 /** Authority-owned awareness and confirmed damage threat. Read queries never purge or alter stored scores. */
 UCLASS(ClassGroup = Knight, meta = (BlueprintSpawnableComponent))
-class KNIGHTAI_API UKnightThreatComponent : public UActorComponent
+class KNIGHTAI_API UKnightThreatComponent : public UActorComponent, public IKnightTauntResponse
 {
 	GENERATED_BODY()
 
@@ -36,6 +37,7 @@ public:
 	FKnightResult ForgetTarget(AActor* Target);
 	FKnightResult ClearThreat();
 	AActor* GetHighestThreatTarget() const;
+	virtual void ApplySkillTaunt(AActor* Source, float Duration) override;
 	float GetThreat(const FKnightEntityId& TargetId) const;
 	int32 GetThreatCount() const;
 	int32 GetTrackedEntryCount() const;
@@ -83,4 +85,6 @@ private:
 	float DamageScale = 1.0f;
 	float MaxThreat = 10000.0f;
 	bool bEndingPlay = false;
+	TWeakObjectPtr<AActor> TauntTarget;
+	double TauntEnd = 0.0;
 };

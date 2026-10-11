@@ -42,6 +42,11 @@ public:
 protected:
 	virtual void BeginPlay() override;
 	virtual void EndPlay(EEndPlayReason::Type EndPlayReason) override;
+	virtual FText GetArenaTitle() const;
+	virtual FText GetCombatHelp() const;
+	virtual FText GetPartyHelp() const;
+	virtual FText GetRecoveryHelp() const;
+	virtual FText GetKnightLabel(const AKnightCharacter* InKnight) const;
 
 private:
 	void BindSources();

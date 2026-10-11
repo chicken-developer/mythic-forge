@@ -3,6 +3,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
 #include "Types/KnightResult.h"
+#include "Types/KnightStableIds.h"
 #include "UObject/PrimaryAssetId.h"
 #include "KnightPartyGameMode.generated.h"
 
@@ -35,6 +36,8 @@ public:
 	FKnightResult TryRecoverKnightFromFall(AKnightCharacter* Knight);
 
 protected:
+	/** Composition may restore an existing canonical identity from a validated in-memory fixture snapshot. */
+	virtual FKnightEntityId CreateKnightIdentity(int32 Slot, const FPrimaryAssetId& HeroId) const;
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 	FKnightResult EnsureCanonicalParty();
 	FKnightResult AssignHumanSlot(APlayerController* Player, int32 DesiredSlot);

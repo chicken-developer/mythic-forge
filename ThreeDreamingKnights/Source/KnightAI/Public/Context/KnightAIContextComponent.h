@@ -113,6 +113,8 @@ public:
 	FKnightResult TrySelectAction(FKnightAIActionEntry& OutAction) const;
 	FKnightResult TryBeginAction(const FKnightAIActionEntry& Action, bool bUseAttackLease, FGuid& OutActionToken);
 	FKnightResult TryBeginRevive(FGuid& OutActionToken);
+	bool HasSpecialization() const;
+	FKnightResult TryBeginSpecializationAction(bool bUseAttackLease, FGuid& OutActionToken);
 	FKnightResult CancelAction(const FGuid& ActionToken);
 	void CancelOwnedAction();
 	EKnightAIActionStatus GetActionStatus(const FGuid& ActionToken) const;
@@ -133,6 +135,7 @@ private:
 	FKnightResult ValidateContext() const;
 	FKnightResult ValidateTarget(AActor* InTarget, bool bFriendlyDowned) const;
 	FKnightAIActionSelectionContext MakeSelectionContext() const;
+	FKnightResult SelectSpecializationAction(int32& OutSlot, AActor*& OutTarget) const;
 	FKnightResult ResolveActionSpec(FGameplayTag ActionTag, FGameplayAbilitySpecHandle& OutSpec,
 		FGameplayTag& OutInput) const;
 	FKnightResult BeginActionSpec(FGameplayTag ActionTag, FName ActionKey, float Cooldown,

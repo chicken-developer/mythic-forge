@@ -30,6 +30,9 @@ public:
 	const TArray<TObjectPtr<AKnightArenaEnemy>>& GetEncounterEnemies() const;
 
 protected:
+	/** Fixture adapters may split the existing wave/boss into independently claimable encounters. */
+	virtual bool ShouldAdvanceWaveToBoss() const;
+	FKnightResult StartFixtureEncounter(EKnightArenaStage Stage, bool bElite = false);
 	virtual void BeginPlay() override;
 	virtual void EndPlay(EEndPlayReason::Type EndPlayReason) override;
 
@@ -53,4 +56,5 @@ private:
 	bool bResetting = false;
 	bool bEndingPlay = false;
 	bool bUnexpectedEnemyLoss = false;
+	bool bFixtureElite = false;
 };

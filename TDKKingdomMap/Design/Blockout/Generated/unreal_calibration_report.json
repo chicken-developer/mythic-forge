@@ -1,0 +1,54 @@
+{
+	"status": "pass",
+	"measured_components": 8,
+	"errors": [],
+	"examples": [
+		{
+			"id": "calibration_unit",
+			"label": "calibration_unit\nSelected mesh component\nL: 1.00 m | W: 1.00 m | H: 1.00 m\nBase Z: +0.00 m | Top Z: +1.00 m"
+		},
+		{
+			"id": "calibration_unequal",
+			"label": "calibration_unequal\nSelected mesh component\nL: 2.00 m | W: 4.00 m | H: 3.00 m\nBase Z: +0.00 m | Top Z: +3.00 m"
+		},
+		{
+			"id": "calibration_rotated",
+			"label": "calibration_rotated\nSelected mesh component\nL: 2.00 m | W: 4.00 m | H: 3.00 m\nBase Z: +0.00 m | Top Z: +3.00 m"
+		},
+		{
+			"id": "calibration_ramp",
+			"label": "calibration_ramp\nSelected mesh component\nL: 3.00 m | W: 2.00 m | H: 1.00 m\nBase Z: +0.00 m | Top Z: +1.00 m"
+		},
+		{
+			"id": "calibration_composite_body",
+			"label": "calibration_composite\nWhole building (all mesh parts, including roof)\nL: 2.00 m | W: 2.00 m | H: 4.00 m\nBase Z: +0.00 m | Top Z: +4.00 m"
+		},
+		{
+			"id": "calibration_composite_roof",
+			"label": "calibration_composite\nWhole building (all mesh parts, including roof)\nL: 2.00 m | W: 2.00 m | H: 4.00 m\nBase Z: +0.00 m | Top Z: +4.00 m"
+		},
+		{
+			"id": "calibration_cylinder",
+			"label": "calibration_cylinder\nSelected mesh component\nL: 2.00 m | W: 2.00 m | H: 3.00 m\nBase Z: +0.00 m | Top Z: +3.00 m"
+		},
+		{
+			"id": "calibration_floor",
+			"label": "calibration_floor\nSelected mesh component\nL: 110.00 m | W: 20.00 m | H: 0.20 m\nBase Z: -0.20 m | Top Z: +0.00 m"
+		}
+	],
+	"fingerprint": "681317dce54e2a6d",
+	"level": "/Game/Maps/Blockout/L_ThanhA_GridCalibration",
+	"rotation_scale_composite_checks": [
+		{
+			"id": "calibration_rotated",
+			"pass": true
+		},
+		{
+			"id": "calibration_composite_body",
+			"pass": true
+		}
+	],
+	"calibration_ramp_actual_slope_degrees": 26.565051177077994,
+	"calibration_roof_slope_actual_slope_degrees": 45,
+	"captures_saved": true
+}

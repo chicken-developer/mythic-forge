@@ -2,6 +2,7 @@
 
 #include "Assets/KnightAssetManager.h"
 #include "Assets/KnightDefinition.h"
+#include "Catalog/KnightGearCatalog.h"
 #include "Components/KnightAbilitySystemComponent.h"
 #include "Components/KnightLifeComponent.h"
 #include "Definitions/KnightItemDefinition.h"
@@ -9,6 +10,9 @@
 #include "Definitions/KnightSkillDefinition.h"
 #include "Definitions/KnightSkillTreeDefinition.h"
 #include "Inventory/KnightInventoryComponent.h"
+#include "Events/KnightEventSubsystem.h"
+#include "Events/KnightSkillLabEvent.h"
+#include "Skills/KnightSkillRuntimeComponent.h"
 #include "Loot/KnightItemPickup.h"
 #include "Engine/World.h"
 #include "Misc/ScopeExit.h"
@@ -78,6 +82,9 @@ FKnightResult UKnightRPGComponent::InitializeRPG(UKnightInventoryComponent* InIn
 	Candidate.InventoryId = Baseline.InventoryId;
 	Candidate.InventoryRevision = Baseline.Revision;
 	Candidate.SkillTreeId = InSkillTreeId;
+	Candidate.bGearDemo = GearDemoRunId.IsValid();
+	Candidate.DemoRunId = GearDemoRunId;
+	Candidate.Currency = Candidate.bGearDemo ? GearInitialCurrency : 0;
 	for (const FKnightRPGKnightRegistration& Registration : InRegistrations)
 	{
 		FKnightRPGKnightView Knight;
@@ -85,16 +92,198 @@ FKnightResult UKnightRPGComponent::InitializeRPG(UKnightInventoryComponent* InIn
 		Knight.HeroDefinitionId = Registration.HeroDefinitionId;
 		Knight.Revision = 1;
 		Knight.SkillPoints = InitialPoints;
+		Knight.bGearEnabled = Candidate.bGearDemo;
+		Knight.Level = Candidate.bGearDemo ? GearInitialLevel : 1;
+		if (Knight.bGearEnabled)
+		{
+			Knight.ConsumableBindings = { FKnightGearCatalog::DefinitionId(TEXT("C01")),
+				FKnightGearCatalog::DefinitionId(TEXT("C02")) };
+		}
+		if (!InitialSkillLabBuilds.IsEmpty())
+		{
+			const FKnightSkillBuild* Seed = InitialSkillLabBuilds.Find(Registration.HeroDefinitionId);
+			if (Seed == nullptr)
+			{
+				return FKnightResult::Failure(EKnightError::InvalidId, TEXT("SkillLabSeed"),
+					LOCTEXT("SeedHero", "Each canonical registration must match its exact configured SkillLab hero."));
+			}
+			Knight.Build = *Seed;
+		}
 		Candidate.Knights.Add(Knight);
 		Registrations.Add(Registration.KnightId, Registration);
 	}
 	SortView(Candidate);
+	FKnightInventoryView SeedView = InInventory->GetView();
+	FKnightInventoryRequest SeedRequest;
+	if (Candidate.bGearDemo)
+	{
+		const FKnightResult SeedResult = SeedGearAssignments(Candidate, SeedView, SeedRequest);
+		if (!SeedResult.IsSuccess())
+		{
+			Registrations.Reset();
+			return SeedResult;
+		}
+		SortView(Candidate);
+	}
+	TArray<FKnightMutationFence> Fences;
+	TArray<FKnightProjectionCapability> Capabilities;
+	TArray<UKnightAbilitySystemComponent*> ASCs;
+	FKnightInventoryCapability SeedInventoryCapability;
+	bool bCommitted = false;
+	bTransactionInProgress = true;
+	ON_SCOPE_EXIT
+	{
+		for (int32 Index = ASCs.Num() - 1; Index >= 0; --Index)
+		{
+			if (IsValid(ASCs[Index]) && Fences[Index].IsValid())
+			{
+				if (Capabilities[Index].IsValid())
+				{
+					if (bCommitted)
+					{
+						ASCs[Index]->PublishSourceProjection(Fences[Index], Capabilities[Index], false, GetOwner());
+					}
+					else
+					{
+						ASCs[Index]->AbortSourceProjection(Fences[Index], Capabilities[Index]);
+					}
+				}
+				ASCs[Index]->EndMutationFence(Fences[Index]);
+			}
+		}
+		if (!bCommitted)
+		{
+			Registrations.Reset();
+		}
+		if (SeedInventoryCapability.IsValid() && IsValid(InInventory))
+		{
+			if (bCommitted)
+			{
+				InInventory->ResetPrepared();
+			}
+			else
+			{
+				InInventory->AbortPrepared(SeedInventoryCapability);
+			}
+		}
+		bTransactionInProgress = false;
+	};
+	if (!InitialSkillLabBuilds.IsEmpty() || Candidate.bGearDemo)
+	{
+		const FKnightResult Reservation = SeedRequest.Mutations.IsEmpty()
+			? InInventory->ReserveRead(Baseline.InventoryId, Baseline.Revision, SeedInventoryCapability)
+			: InInventory->PrepareCoordinatorTransaction(SeedRequest, SeedInventoryCapability);
+		if (!Reservation.IsSuccess())
+		{
+			return Reservation;
+		}
+		const FKnightResult SeedPrepared = InInventory->GetPreparedView(SeedInventoryCapability, SeedView);
+		if (!SeedPrepared.IsSuccess())
+		{
+			return SeedPrepared;
+		}
+		Candidate.InventoryRevision = SeedView.Revision;
+		for (const FKnightRPGKnightRegistration& Registration : InRegistrations)
+		{
+			UKnightAbilitySystemComponent* ASC = Registration.AbilitySystem.Get();
+			ASCs.Add(ASC);
+			Fences.AddDefaulted();
+			Capabilities.AddDefaulted();
+			FKnightRPGKnightView* Knight = Candidate.Knights.FindByPredicate(
+				[&Registration](const FKnightRPGKnightView& Entry)
+				{
+					return Entry.KnightId == Registration.KnightId;
+				});
+			FKnightGASProjectionPlan Plan;
+			FKnightResult Result = BuildProjection(*Knight, SeedView.Items, Plan);
+			if (Result.IsSuccess())
+			{
+				Result = ASC->BeginMutationFence(FGuid::NewGuid(), Fences.Last());
+			}
+			if (Result.IsSuccess())
+			{
+				Result = ASC->PrepareSourceProjection(Fences.Last(), Plan, 0, Capabilities.Last());
+			}
+			if (Result.IsSuccess())
+			{
+				Result = ASC->StageSourceProjection(Fences.Last(), Capabilities.Last());
+			}
+			if (!Result.IsSuccess())
+			{
+				return Result;
+			}
+		}
+		FKnightResult Revalidation = ValidateAuthority();
+		if (Revalidation.IsSuccess())
+		{
+			Revalidation = ValidateRegistrations(InRegistrations, &Candidate, true);
+		}
+		if (!Revalidation.IsSuccess())
+		{
+			return Revalidation;
+		}
+		for (int32 Index = 0; Index < ASCs.Num(); ++Index)
+		{
+			const FKnightResult Result = ASCs[Index]->ValidateStagedSourceProjection(Fences[Index], Capabilities[Index]);
+			if (!Result.IsSuccess())
+			{
+				return Result;
+			}
+		}
+		const FKnightResult InventoryCommit = InInventory->CommitPrepared(SeedInventoryCapability);
+		if (!InventoryCommit.IsSuccess())
+		{
+			return InventoryCommit;
+		}
+		for (int32 Index = 0; Index < ASCs.Num(); ++Index)
+		{
+			const FKnightResult Result = ASCs[Index]->CommitSourceProjection(Fences[Index], Capabilities[Index]);
+			if (!Result.IsSuccess())
+			{
+				return Result;
+			}
+		}
+	}
 	InitialSkillPoints = InitialPoints;
+	if (Candidate.bGearDemo)
+	{
+		const FKnightResult GearCapture = InInventory->CaptureSnapshot(Baseline);
+		if (!GearCapture.IsSuccess())
+		{
+			return GearCapture;
+		}
+	}
 	InitialInventory = MoveTemp(Baseline);
 	InitialView = Candidate;
 	PublishedView = MoveTemp(Candidate);
 	BindInventory(InInventory);
+	InInventory->AssignedInstanceIds.Reset();
+	for (const FKnightItemInstance& Item : SeedView.Items)
+	{
+		if (Item.LocationId != KnightGear::InventoryLocation)
+		{
+			InInventory->AssignedInstanceIds.Add(Item.InstanceId);
+		}
+	}
+	bCommitted = true;
 	RefreshReplicatedState();
+	for (int32 Index = 0; Index < ASCs.Num(); ++Index)
+	{
+		ASCs[Index]->PublishSourceProjection(Fences[Index], Capabilities[Index], true, GetOwner());
+		if (!ValidateAuthority().IsSuccess()
+			|| !ValidateRegistrations(InRegistrations, &PublishedView, true, false).IsSuccess())
+		{
+			return FKnightResult::Success();
+		}
+	}
+	if (SeedInventoryCapability.IsValid())
+	{
+		InInventory->PublishPrepared(SeedInventoryCapability, false);
+		if (!ValidateAuthority().IsSuccess())
+		{
+			return FKnightResult::Success();
+		}
+	}
 	OnSnapshotChanged.Broadcast();
 	return FKnightResult::Success();
 }
@@ -169,8 +358,8 @@ FKnightResult UKnightRPGComponent::InitializeFixtureCatalog(TConstArrayView<UKni
 	return FKnightResult::Success();
 }
 
-FKnightRPGCommandResult UKnightRPGComponent::ExecuteCommand(const FKnightRPGCallerContext& InCaller,
-	const FKnightRPGCommand& InCommand)
+FKnightRPGCommandResult UKnightRPGComponent::QueryCommittedCommand(const FKnightRPGCallerContext& InCaller,
+	const FKnightRPGCommand& InCommand) const
 {
 	const FKnightRPGCallerContext Caller = InCaller;
 	const FKnightRPGCommand Command = InCommand;
@@ -195,6 +384,12 @@ FKnightRPGCommandResult UKnightRPGComponent::ExecuteCommand(const FKnightRPGCall
 	{
 		return Outcome;
 	}
+	if (ItemizationMigration.IsPresent() && Command.RequestId == ItemizationMigration.MigrationId)
+	{
+		Outcome.Result = FKnightResult::Failure(EKnightError::Conflict, TEXT("MigrationRequestId"),
+			LOCTEXT("MigrationRequestId", "This request identity belongs to the retained administrative migration boundary."));
+		return Outcome;
+	}
 	if (const int32* Index = ReceiptIndices.Find(Command.RequestId))
 	{
 		const FKnightRPGReceipt Receipt = Receipts[*Index];
@@ -209,6 +404,21 @@ FKnightRPGCommandResult UKnightRPGComponent::ExecuteCommand(const FKnightRPGCall
 		Outcome.CommittedKnightRevision = Receipt.CommittedKnight.Revision;
 		Outcome.AffectedInstanceId = Receipt.AffectedInstanceId;
 		Outcome.bWasReplay = true;
+		return Outcome;
+	}
+	Outcome.Result = FKnightResult::Failure(EKnightError::NotFound, TEXT("RPGReceipt"),
+		LOCTEXT("UncommittedRequest", "This request has no committed receipt; fresh command validation is required."));
+	return Outcome;
+}
+
+FKnightRPGCommandResult UKnightRPGComponent::ExecuteCommand(const FKnightRPGCallerContext& InCaller,
+	const FKnightRPGCommand& InCommand)
+{
+	const FKnightRPGCallerContext Caller = InCaller;
+	const FKnightRPGCommand Command = InCommand;
+	FKnightRPGCommandResult Outcome = QueryCommittedCommand(Caller, Command);
+	if (Outcome.Result.Error != EKnightError::NotFound)
+	{
 		return Outcome;
 	}
 	Outcome.Result = Command.ValidateShape();
@@ -241,10 +451,22 @@ FKnightRPGCommandResult UKnightRPGComponent::ExecuteCommand(const FKnightRPGCall
 	UKnightInventoryComponent* TransactionInventory = Inventory;
 	const TWeakObjectPtr<AActor> PublicationOwner(GetOwner());
 	if (ASC->GetLifeComponent() == nullptr || !ASC->GetLifeComponent()->IsAlive()
-		|| (Command.Operation != EKnightRPGOperation::Pickup && !Caller.bInSafeZone))
+		|| (Command.Operation != EKnightRPGOperation::Pickup && Command.Operation != EKnightRPGOperation::UseConsumable
+			&& (!Caller.bInSafeZone || Caller.bInCombat)))
 	{
 		Outcome.Result = FKnightResult::Failure(EKnightError::InvalidState, TEXT("RPGSafeZone"),
 			LOCTEXT("SafeZone", "Loadout and skill changes require a living Knight in the authoritative safe zone."));
+		return Outcome;
+	}
+	if (PublishedView.IsItemizationEnabled() && Command.Operation != EKnightRPGOperation::Pickup)
+	{
+		return ExecuteGearCommand(Caller, Command);
+	}
+	const UKnightSkillRuntimeComponent* SkillRuntime = Caller.Pawn->FindComponentByClass<UKnightSkillRuntimeComponent>();
+	if (Command.Operation != EKnightRPGOperation::Pickup && SkillRuntime != nullptr && SkillRuntime->HasDeferredDamage())
+	{
+		Outcome.Result = FKnightResult::Failure(EKnightError::InvalidState, TEXT("SkillBuildDebt"),
+			LOCTEXT("DeferredDebt", "Resolve all deferred damage before changing equipment, talents, specialization or runes."));
 		return Outcome;
 	}
 	bTransactionInProgress = true;
@@ -358,6 +580,10 @@ FKnightRPGCommandResult UKnightRPGComponent::ExecuteCommand(const FKnightRPGCall
 		});
 	FKnightGASProjectionPlan Plan;
 	Outcome.Result = BuildProjection(*CandidateKnight, PreparedInventory.Items, Plan);
+	if (Outcome.Result.IsSuccess())
+	{
+		Outcome.Result = ValidateBuildAttachments(*CandidateKnight, Candidate, PreparedInventory.Items);
+	}
 	if (!Outcome.Result.IsSuccess())
 	{
 		return Outcome;
@@ -421,6 +647,11 @@ FKnightRPGCommandResult UKnightRPGComponent::ExecuteCommand(const FKnightRPGCall
 	Receipt.InventoryRequest = InventoryRequest;
 	Receipt.PickedItem = PickedItem;
 	Receipt.CommittedKnight = *CandidateKnight;
+	if (Candidate.IsItemizationEnabled())
+	{
+		Receipt.CommittedKnights.Add(*CandidateKnight);
+		Receipt.CommittedCurrency = Candidate.Currency;
+	}
 	Receipt.CommittedInventoryRevision = PreparedInventory.Revision;
 	Receipt.AffectedInstanceId = Outcome.AffectedInstanceId;
 	Outcome.CommittedInventoryRevision = Receipt.CommittedInventoryRevision;
@@ -431,6 +662,14 @@ FKnightRPGCommandResult UKnightRPGComponent::ExecuteCommand(const FKnightRPGCall
 	Inventory->AssignedInstanceIds.Reset();
 	for (const FKnightRPGKnightView& Knight : PublishedView.Knights)
 	{
+		if (Knight.WeaponRuneInstanceId.IsValid())
+		{
+			Inventory->AssignedInstanceIds.Add(Knight.WeaponRuneInstanceId);
+		}
+		if (Knight.SkillRuneInstanceId.IsValid())
+		{
+			Inventory->AssignedInstanceIds.Add(Knight.SkillRuneInstanceId);
+		}
 		for (const FKnightEquipmentAssignment& Assignment : Knight.Assignments)
 		{
 			Inventory->AssignedInstanceIds.Add(Assignment.ItemInstanceId);
@@ -473,6 +712,45 @@ FKnightRPGCommandResult UKnightRPGComponent::ExecuteCommand(const FKnightRPGCall
 		return Outcome;
 	}
 	OnCommandCompleted.Broadcast(Outcome);
+	if (!CanPublish())
+	{
+		return Outcome;
+	}
+	if (Command.Operation == EKnightRPGOperation::ApplyBuild
+		|| Command.Operation == EKnightRPGOperation::ApplyTalentLoadout)
+	{
+		const FKnightRPGKnightView Confirmed = GetKnightView(Caller.KnightId);
+		UKnightEventSubsystem* Bus = GetWorld()->GetSubsystem<UKnightEventSubsystem>();
+		if (Bus != nullptr)
+		{
+			auto Publish = [Bus, &Caller, &Command, &Outcome](FName EventName, FName SubjectId)
+			{
+				FKnightSkillLabEvent Event;
+				Event.ConfirmationId = FGuid::NewGuid();
+				Event.Revision = Outcome.CommittedKnightRevision;
+				Event.SourceId = Caller.KnightId;
+				Event.TargetId = Caller.KnightId;
+				Event.EncounterId = Caller.EncounterId;
+				Event.RequestId = Command.RequestId;
+				Event.EventName = EventName;
+				Event.SubjectId = SubjectId;
+				Bus->PublishConfirmed(Event);
+			};
+			Publish(TEXT("LoadoutApplied"), Confirmed.Build.SpecId);
+			if (CanPublish() && KnightBefore.Build.SpecId != Confirmed.Build.SpecId)
+			{
+				Publish(TEXT("SpecChanged"), Confirmed.Build.SpecId);
+			}
+			if (CanPublish() && (KnightBefore.WeaponRuneInstanceId != Confirmed.WeaponRuneInstanceId))
+			{
+				Publish(TEXT("RuneAttached"), Confirmed.Build.WeaponRune);
+			}
+			if (CanPublish() && (KnightBefore.SkillRuneInstanceId != Confirmed.SkillRuneInstanceId))
+			{
+				Publish(TEXT("RuneAttached"), Confirmed.Build.SkillRune);
+			}
+		}
+	}
 	return Outcome;
 }
 
@@ -805,6 +1083,10 @@ void UKnightRPGComponent::SortView(FKnightRPGView& View)
 		Knight.PurchasedSkills.Sort([](const FKnightPurchasedSkill& Left, const FKnightPurchasedSkill& Right)
 			{
 				return Left.DefinitionId.ToString() < Right.DefinitionId.ToString();
+			});
+		Knight.TalentLoadouts.Sort([](const FKnightTalentLoadout& Left, const FKnightTalentLoadout& Right)
+			{
+				return Left.LoadoutId < Right.LoadoutId;
 			});
 	}
 }

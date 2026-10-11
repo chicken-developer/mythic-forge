@@ -28,6 +28,7 @@
 #include "HAL/PlatformTime.h"
 #include "Misc/AutomationTest.h"
 #include "Misc/ScopeExit.h"
+#include "Skills/KnightSkillRuntimeComponent.h"
 #include "StateTree.h"
 #include "StateTree/KnightAIStateTreeNodes.h"
 #include "StateTreeInstanceData.h"
@@ -861,4 +862,193 @@ bool FKnightAIResourceRecoveryTest::RunTest(const FString& Parameters)
 	return true;
 }
 
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FKnightAINineSpecializationTest, "Knight.AI.Actions.NineSpecializationSharedGAS",
+	EAutomationTestFlags::EditorContext | EAutomationTestFlags::EngineFilter)
+
+namespace KnightAIActionLifecycleTests
+{
+	bool RunNineSpecializations(FAutomationTestBase* Test, bool bEquipment)
+	{
+		using namespace KnightAIActionLifecycleTests;
+		const TSharedRef<FKnightActionWorld> OwnedWorld = MakeShared<FKnightActionWorld>();
+		TStrongObjectPtr<UStateTree> Tree(LoadObject<UStateTree>(nullptr,
+			TEXT("/Game/Knight/AI/Tests/ST_Knight_LifecyclePulse.ST_Knight_LifecyclePulse")));
+		if (!Test->TestTrue(TEXT("The existing native action fixture StateTree is compiled"), Tree.IsValid() && Tree->IsReadyToRun()))
+		{
+			return false;
+		}
+		UKnightCombatDirectorSubsystem* Director = OwnedWorld->World->GetSubsystem<UKnightCombatDirectorSubsystem>();
+		if (!Test->TestTrue(TEXT("Fixture reserves three separate DPS targets through real director budgets"),
+			Director != nullptr && Director->TrySetBudgets(3, 1).IsSuccess()))
+		{
+			return false;
+		}
+		const TArray<FName> Specs = FKnightSkillCatalog::AllSpecs();
+		TArray<FKnightActionActor> Sources;
+		TArray<FKnightActionActor> Allies;
+		TArray<FKnightActionActor> Enemies;
+		TArray<FKnightActionController> Controllers;
+		TArray<TWeakObjectPtr<UKnightSkillRuntimeComponent>> Runtimes;
+		TArray<FDelegateHandle> EndHandles;
+		const TSharedRef<TArray<int32>> Ended = MakeShared<TArray<int32>>();
+		Ended->Init(0, Specs.Num());
+		for (int32 Index = 0; Index < Specs.Num(); ++Index)
+		{
+			const FVector Origin(Index * 3000.0f, 0.0f, 0.0f);
+			FKnightActionActor Source = SpawnActor(OwnedWorld->World.Get(), 1000 + Index * 3, true, Origin);
+			const FKnightActionActor Ally = SpawnActor(OwnedWorld->World.Get(), 1001 + Index * 3, true,
+				Origin + FVector(0.0f, 100.0f, 0.0f));
+			const FKnightActionActor Enemy = SpawnActor(OwnedWorld->World.Get(), 1002 + Index * 3, false,
+				Origin + FVector(250.0f, 0.0f, 0.0f));
+			if (!Test->TestTrue(TEXT("Every source, injured ally and enemy uses initialized character-owned ASC"),
+				Source.IsReady() && Ally.IsReady() && Enemy.IsReady() && GrantFoundation(Source)))
+			{
+				return false;
+			}
+			for (const FKnightActionActor& Actor : { Source, Ally, Enemy })
+			{
+				Actor.ASC->SetNumericAttributeBase(UKnightAttributeSet::GetMaxHealthAttribute(), 1000.0f);
+				Actor.ASC->SetNumericAttributeBase(UKnightAttributeSet::GetHealthAttribute(), 1000.0f);
+				Actor.ASC->SetNumericAttributeBase(UKnightAttributeSet::GetDefenseAttribute(), 0.0f);
+			}
+			Ally.ASC->SetNumericAttributeBase(UKnightAttributeSet::GetHealthAttribute(), 100.0f);
+			Source.ASC->SetNumericAttributeBase(UKnightAttributeSet::GetAttackPowerAttribute(), 100.0f);
+			Source.ASC->SetNumericAttributeBase(UKnightAttributeSet::GetCritChanceAttribute(), 0.0f);
+			UKnightSkillRuntimeComponent* Runtime = NewObject<UKnightSkillRuntimeComponent>(Source.Actor.Get());
+			Source.Actor->AddInstanceComponent(Runtime);
+			Runtime->RegisterComponent();
+			FKnightSkillBuild Build;
+			Build.SpecId = Specs[Index];
+			if (!Test->TestTrue(TEXT("Selected specialization projects four real GAS actions"), Runtime->ConfigureBuild(Build).IsSuccess()))
+			{
+				return false;
+			}
+			if (bEquipment)
+			{
+				const EKnightSkillRole Role = FKnightSkillCatalog::Role(Build.SpecId);
+				FKnightGASProjectionPlan Plan;
+				Plan.SourceKey = KnightProjection::RPGSourceKey;
+				Plan.DefinitionId = FPrimaryAssetId(TEXT("KnightHero"), TEXT("Training_Red"));
+				Plan.SkillBuild = Build;
+				Plan.EquipmentCombatBuild.bEnabled = true;
+				Plan.EquipmentCombatBuild.bHasHammer = true;
+				Plan.MaxHealthBonus = Role == EKnightSkillRole::Tank ? 380.0f : 310.0f;
+				Plan.AttackPowerBonus = Role == EKnightSkillRole::Tank ? 28.0f : Role == EKnightSkillRole::Healer ? 32.0f : 36.0f;
+				Plan.DefenseBonus = Role == EKnightSkillRole::Tank ? 97.0f : 72.0f;
+				Plan.CritChanceBonus = Role == EKnightSkillRole::Damage ? 0.09f : 0.02f;
+				Plan.MasteryBonus = Role == EKnightSkillRole::Healer ? 0.09f : 0.04f;
+				Plan.CooldownRecoveryBonus = Role == EKnightSkillRole::Tank ? 0.02f : 0.05f;
+				Plan.VersatilityBonus = Role == EKnightSkillRole::Tank ? 0.12f : 0.07f;
+				Plan.MaxPoiseBonus = 10.0f;
+				FKnightMutationFence Fence;
+				FKnightProjectionCapability Capability;
+				if (!Test->TestTrue(TEXT("AI gear owns the same actual source projection fence as human gear"),
+					Source.ASC->BeginMutationFence(FGuid::NewGuid(), Fence).IsSuccess()))
+				{
+					return false;
+				}
+				const bool bApplied = Source.ASC->PrepareSourceProjection(Fence, Plan, 0, Capability).IsSuccess()
+					&& Source.ASC->StageSourceProjection(Fence, Capability).IsSuccess()
+					&& Source.ASC->CommitSourceProjection(Fence, Capability).IsSuccess()
+					&& Source.ASC->PublishSourceProjection(Fence, Capability).IsSuccess();
+				if (!bApplied && Capability.IsValid())
+				{
+					Source.ASC->AbortSourceProjection(Fence, Capability);
+				}
+				Source.ASC->EndMutationFence(Fence);
+				if (!Test->TestTrue(TEXT("Actual gear GAS stats and hammer descriptor commit before AI decisions"), bApplied))
+				{
+					return false;
+				}
+				Test->TestEqual(TEXT("AI consumes projected gear Power exactly once"), Source.Attributes->GetAttackPower(),
+					100.0f + Plan.AttackPowerBonus);
+				Test->TestFalse(TEXT("Equipped AI resolves the same hammer requirement as human"), Runtime->RequiresHammer());
+			}
+			FKnightSkillRuntimeSnapshot Snapshot = Runtime->CaptureSnapshot();
+			// A retained major cooldown forces role selection to execute a combat action, rather than its opening buff.
+			Snapshot.CooldownRemaining[3] = 60.0f;
+			Runtime->RestoreSnapshot(Snapshot);
+			const FKnightActionController AI = CreateController(Source, Tree.Get());
+			if (!Test->TestTrue(TEXT("Every actual controller initializes its existing StateTree/GAS context"),
+				AI.IsReady() && AI.Tree.IsValid() && AI.Context->SetActionSet(PulseSetId).IsSuccess()
+				&& AI.Context->SetValidatedTarget(Enemy.Actor.Get()).IsSuccess()))
+			{
+				return false;
+			}
+			Sources.Add(Source);
+			Allies.Add(Ally);
+			Enemies.Add(Enemy);
+			Controllers.Add(AI);
+			Runtimes.Add(Runtime);
+			EndHandles.Add(AI.Context->OnActionFinished.AddLambda([Ended, Index](FGuid Token, EKnightAIActionStatus Status)
+			{
+				++(*Ended)[Index];
+			}));
+		}
+		for (const FKnightActionController& AI : Controllers)
+		{
+			AI.Tree->StartLogic();
+		}
+		WaitForWorldTime(Test, OwnedWorld, 1.8f,
+			[Test, OwnedWorld, Specs, Sources, Allies, Enemies, Controllers, Runtimes, Ended, EndHandles]()
+		{
+			for (int32 Index = 0; Index < Specs.Num(); ++Index)
+			{
+				const FName Spec = Specs[Index];
+				const FKnightActionController& AI = Controllers[Index];
+				AI.Context->OnActionFinished.Remove(EndHandles[Index]);
+				Test->TestEqual(*FString::Printf(TEXT("%s StateTree action completes once"), *Spec.ToString()), (*Ended)[Index], 1);
+				Test->TestEqual(*FString::Printf(TEXT("%s reaches a real terminal StateTree state"), *Spec.ToString()),
+					AI.Tree->GetStateTreeRunStatus(), EStateTreeRunStatus::Succeeded);
+				Test->TestFalse(TEXT("Successful role action clears owned action token"), AI.Context->GetDecisionSnapshot().bActionRunning);
+				Test->TestFalse(TEXT("Shared GAS specialization action has ended"), Runtimes[Index]->HasActiveSkill());
+				const EKnightSkillRole Role = FKnightSkillCatalog::Role(Spec);
+				if (Role == EKnightSkillRole::Tank)
+				{
+					const UKnightSkillRuntimeComponent* ShieldOwner = Spec == TEXT("Uranus")
+						? Allies[Index].Actor->FindComponentByClass<UKnightSkillRuntimeComponent>() : Runtimes[Index].Get();
+					Test->TestTrue(*FString::Printf(TEXT("%s AI applied a real protective shield"), *Spec.ToString()),
+						ShieldOwner != nullptr && ShieldOwner->GetSkillState().Shield >= 200.0f);
+				}
+				else if (Role == EKnightSkillRole::Healer)
+				{
+					Test->TestTrue(*FString::Printf(TEXT("%s AI selects and really heals the missing-HP ally"), *Spec.ToString()),
+						Allies[Index].Attributes->GetHealth() > 100.0f);
+					Test->TestEqual(TEXT("Healer target selection keeps full-health self unchanged"), Sources[Index].Attributes->GetHealth(), 1000.0f);
+				}
+				else
+				{
+					Test->TestTrue(*FString::Printf(TEXT("%s AI applied real enemy damage"), *Spec.ToString()),
+						Enemies[Index].Attributes->GetHealth() < 1000.0f);
+					if (Spec == TEXT("Jupiter") || Spec == TEXT("Mars"))
+					{
+						Test->TestEqual(TEXT("DPS builder creates its one real specialization stack"), Runtimes[Index]->GetSkillState().Stacks, 1);
+					}
+					else
+					{
+						const UKnightSkillRuntimeComponent* Status = Enemies[Index].Actor->FindComponentByClass<UKnightSkillRuntimeComponent>();
+						Test->TestTrue(TEXT("Pluto AI executes real Ice AoE and shared chilled state"),
+							Status != nullptr && Status->GetSkillState().Chilled == 2);
+					}
+				}
+			}
+			Test->TestEqual(TEXT("All completed specialization actions release actual director leases"),
+				OwnedWorld->World->GetSubsystem<UKnightCombatDirectorSubsystem>()->GetActiveLeaseCount(), 0);
+		});
+		return true;
+	}
+}
+
+bool FKnightAINineSpecializationTest::RunTest(const FString& Parameters)
+{
+	return KnightAIActionLifecycleTests::RunNineSpecializations(this, false);
+}
+
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FKnightAINineEquipmentTest, "Knight.Equipment.AI.NineSpecializationsSharedGAS",
+	EAutomationTestFlags::EditorContext | EAutomationTestFlags::EngineFilter)
+
+bool FKnightAINineEquipmentTest::RunTest(const FString& Parameters)
+{
+	return KnightAIActionLifecycleTests::RunNineSpecializations(this, true);
+}
 #endif

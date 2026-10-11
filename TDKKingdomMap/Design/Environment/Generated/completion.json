@@ -1,0 +1,40 @@
+{
+  "completed_utc": "2026-10-07T20:31:25.135159+00:00",
+  "environment_fingerprint": "201d769c6b6e4558",
+  "engine": "5.8.3-58210709+++UE5+Release-5.8",
+  "primary_map": "/Game/Maps/Blockout/L_ThanhA_Blockout",
+  "protected_static_mesh_actors": 1073,
+  "original_package_files_unchanged": 108,
+  "terrain_height_unchanged": true,
+  "vegetation_and_rock_instances": 2020,
+  "instanced_groups": 21,
+  "hero_trees": 39,
+  "actual_grass_render_instances": 219244,
+  "same_input_rerun_passed": true,
+  "regeneration_guards_passed": true,
+  "character_movement_waypoints": 49,
+  "manual_pie": false,
+  "actual_dx12_screenshots": 7,
+  "actual_game_benchmark_fps": 97.09309584605346,
+  "benchmark_only_one_camera": true,
+  "remaining_limits": [
+    "Existing water slab retained; pack has no water system.",
+    "Original straight retaining/coast geometry retained under rock material and dressing.",
+    "Tree positions inferred from reference and marked estimated.",
+    "No manual PIE or interactive dimension-label test."
+  ],
+  "reports": [
+    "execution.json",
+    "verification.json",
+    "preservation.json",
+    "saved_state.json",
+    "rerun_validation.json",
+    "guard_validation.json",
+    "walk_validation.json",
+    "collision_validation.json",
+    "performance.json",
+    "capture.json",
+    "camera_capture_report.json",
+    "sample_foliage.json"
+  ]
+}

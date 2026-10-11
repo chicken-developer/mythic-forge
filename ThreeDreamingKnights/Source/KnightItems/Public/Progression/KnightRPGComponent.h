@@ -30,6 +30,14 @@ struct KNIGHTITEMS_API FKnightRPGRecord : public FFastArraySerializerItem
 	UPROPERTY()
 	FPrimaryAssetId SkillTreeId;
 	UPROPERTY()
+	int64 Currency = 0;
+	UPROPERTY()
+	FGuid DemoRunId;
+	UPROPERTY()
+	bool bGearDemo = false;
+	UPROPERTY()
+	TArray<FGuid> ClaimedRewards;
+	UPROPERTY()
 	FKnightRPGKnightView Knight;
 };
 
@@ -73,6 +81,21 @@ public:
 	/** Clients bind the replicated sibling without granting or mutating anything. */
 	FKnightResult BindReplicatedInventory(UKnightInventoryComponent* InInventory);
 	FKnightResult InitializeFixtureCatalog(TConstArrayView<UKnightDefinition*> Definitions);
+	/** SkillLab-only unlock seed, configured once before RPG initialization. Legacy maps keep empty builds. */
+	FKnightResult ConfigureSkillLabBuilds(const TMap<FPrimaryAssetId, FKnightSkillBuild>& InBuilds);
+	FKnightResult ConfigureGearDemo(const FGuid& DemoRunId, int64 InitialCurrency, int32 InitialLevel,
+		bool bEquipStarter = true);
+	FKnightResult RegisterRewardBundle(const FKnightGearRewardBundle& Bundle);
+	TArray<FKnightGearRewardBundle> GetRewardOffers() const;
+	FKnightResult PreviewEquip(const FKnightEntityId& KnightId, const FGuid& InstanceId,
+		FGameplayTag Slot, FKnightItemStatBonuses& OutStatBonuses) const;
+	FKnightResult PreviewTransfer(const FKnightEntityId& SourceKnightId, const FKnightEntityId& TargetKnightId,
+		const FGuid& InstanceId, FGameplayTag SlotTag, FKnightItemStatBonuses& OutSource,
+		FKnightItemStatBonuses& OutTarget) const;
+	FGuid GetWeaponRuneParentId(const FGuid& RuneId) const;
+	/** Read an exact same-human receipt before fresh routing; NotFound means no committed request exists. */
+	FKnightRPGCommandResult QueryCommittedCommand(const FKnightRPGCallerContext& Caller,
+		const FKnightRPGCommand& Command) const;
 	FKnightRPGCommandResult ExecuteCommand(const FKnightRPGCallerContext& Caller, const FKnightRPGCommand& Command);
 	FKnightResult RegisterPickup(AKnightItemPickup* Pickup);
 	/** Composition may withdraw its exact unclaimed actor after a failed reward spawn batch. */
@@ -85,6 +108,10 @@ public:
 	/** Fresh inventory/coordinator only; journal reconstruction and all projections validate before commit. */
 	FKnightResult TryRestoreSnapshot(UKnightInventoryComponent* InInventory, const FKnightRPGSnapshot& Snapshot,
 		TConstArrayView<FKnightRPGKnightRegistration> InRegistrations);
+	/** Explicit legacy-to-twelve-slot import; preserves journals/GUIDs and grants no fixture rewards or currency. */
+	FKnightResult TryRestoreItemizationSnapshot(UKnightInventoryComponent* InInventory,
+		const FKnightRPGSnapshot& Snapshot, TConstArrayView<FKnightRPGKnightRegistration> InRegistrations,
+		const FGuid& MigrationId);
 	FOnKnightRPGSnapshotChanged OnSnapshotChanged;
 	FOnKnightRPGCommandCompleted OnCommandCompleted;
 
@@ -109,6 +136,26 @@ private:
 	FKnightResult BuildProjection(FKnightRPGKnightView& Knight, const TArray<FKnightItemInstance>& Items,
 		FKnightGASProjectionPlan& OutPlan) const;
 	FKnightResult ValidateSnapshot(const FKnightRPGSnapshot& Snapshot, FKnightRPGView& OutView) const;
+	FKnightResult RestoreSnapshot(UKnightInventoryComponent* InInventory, const FKnightRPGSnapshot& Snapshot,
+		TConstArrayView<FKnightRPGKnightRegistration> InRegistrations, const FGuid& MigrationId);
+	FKnightResult BuildItemizationMigration(const FKnightRPGView& Existing,
+		const FKnightInventoryView& InventoryView, const FGuid& MigrationId,
+		FKnightRPGView& OutView, FKnightInventoryRequest& OutRequest) const;
+	FKnightResult AppendItemizationMigration(FKnightRPGSnapshot& Snapshot, const FGuid& MigrationId) const;
+	FKnightResult ValidateBuildAttachments(const FKnightRPGKnightView& Knight,
+		const FKnightRPGView& View, const TArray<FKnightItemInstance>& Items) const;
+	FKnightResult BuildSkillCandidate(FKnightRPGKnightView& Knight, const FKnightRPGView& Existing,
+		const FKnightInventoryView& InventoryView, const FKnightRPGCommand& Command) const;
+	FKnightResult BuildGearCandidate(FKnightRPGView& Candidate, const FKnightInventoryView& InventoryView,
+		const FKnightRPGCommand& Command, const TArray<FKnightInventoryMutation>* HistoricalMutations,
+		FKnightInventoryRequest& Request, FGuid& OutAffected) const;
+	FKnightRPGCommandResult ExecuteGearCommand(const FKnightRPGCallerContext& Caller, const FKnightRPGCommand& Command);
+	FKnightResult SynchronizeLocations(const FKnightRPGView& Candidate, const FKnightInventoryView& InventoryView,
+		FKnightInventoryRequest& Request) const;
+	FKnightResult SeedGearAssignments(FKnightRPGView& Candidate, const FKnightInventoryView& InventoryView,
+		FKnightInventoryRequest& Request) const;
+	FKnightResult ValidateGearLocations(const FKnightRPGView& Candidate, const TArray<FKnightItemInstance>& Items) const;
+	static FKnightResult MigrateSnapshot(FKnightRPGSnapshot& Snapshot);
 	void RefreshReplicatedState();
 	void HandleReplicatedStateReady();
 	void HandleInventoryChanged();
@@ -123,6 +170,10 @@ private:
 	TMap<FPrimaryAssetId, TObjectPtr<UKnightDefinition>> FixtureDefinitions;
 	UPROPERTY(Transient)
 	TMap<FPrimaryAssetId, TObjectPtr<UKnightSkillDefinition>> Skills;
+	UPROPERTY(Transient)
+	TMap<FPrimaryAssetId, FKnightSkillBuild> InitialSkillLabBuilds;
+	UPROPERTY(Transient)
+	TArray<FKnightGearRewardBundle> RewardOffers;
 	TMap<FKnightEntityId, FKnightRPGKnightRegistration> Registrations;
 	TMap<FGuid, TWeakObjectPtr<AKnightItemPickup>> Pickups;
 	TArray<FKnightRPGReceipt> Receipts;
@@ -130,8 +181,13 @@ private:
 	FKnightRPGView PublishedView;
 	FKnightRPGView InitialView;
 	FKnightInventorySnapshot InitialInventory;
+	FKnightItemizationMigration ItemizationMigration;
 	FDelegateHandle InventoryChangedHandle;
 	int32 InitialSkillPoints = 2;
+	FGuid GearDemoRunId;
+	int64 GearInitialCurrency = 0;
+	int32 GearInitialLevel = 1;
+	bool bGearEquipStarter = false;
 	bool bHasFixtureCatalog = false;
 	bool bTransactionInProgress = false;
 	bool bEndingPlay = false;

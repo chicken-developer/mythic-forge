@@ -1,0 +1,12 @@
+{
+  "status": "pass",
+  "errors": [],
+  "protected_static_mesh_actors": 1073,
+  "pack_files_unchanged": 108,
+  "heightmap_md5": "be8500d6ae211b3f823d4630727c63b3",
+  "fingerprint": "201d769c6b6e4558",
+  "interactive_playtest": false,
+  "standalone_auto_walk_passed": true,
+  "fps_measured": true,
+  "performance_report": "performance.json"
+}

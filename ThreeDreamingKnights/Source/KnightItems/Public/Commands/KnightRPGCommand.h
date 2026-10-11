@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "GameplayTagContainer.h"
+#include "Skills/KnightSkillTypes.h"
 #include "Types/KnightResult.h"
 #include "Types/KnightStableIds.h"
 #include "KnightRPGCommand.generated.h"
@@ -14,7 +15,24 @@ enum class EKnightRPGOperation : uint8
 	Unequip,
 	Rune,
 	PurchaseSkill,
-	Respec
+	Respec,
+	ApplyBuild,
+	NewTalentLoadout,
+	RenameTalentLoadout,
+	DuplicateTalentLoadout,
+	DeleteTalentLoadout,
+	ApplyTalentLoadout,
+	TransferEquipment,
+	SwapRings,
+	AttachWeaponRune,
+	DetachWeaponRune,
+	UseConsumable,
+	BuyItem,
+	SellItem,
+	UpgradeItem,
+	ClaimReward,
+	BindConsumable,
+	ApplyGearPreset
 };
 
 /** Sparse client intent. Costs, counts, definitions and GAS classes are resolved by authority. */
@@ -43,6 +61,34 @@ struct KNIGHTITEMS_API FKnightRPGCommand
 	FGameplayTag SlotTag;
 	UPROPERTY(SaveGame)
 	FPrimaryAssetId SkillDefinitionId;
+	UPROPERTY(SaveGame)
+	FKnightSkillBuild ProposedBuild;
+	UPROPERTY(SaveGame)
+	FGuid WeaponRuneInstanceId;
+	UPROPERTY(SaveGame)
+	FGuid SkillRuneInstanceId;
+	UPROPERTY(SaveGame)
+	FGuid TalentLoadoutId;
+	UPROPERTY(SaveGame)
+	FString TalentLoadoutName;
+	UPROPERTY(SaveGame)
+	FKnightEntityId TargetKnightId;
+	UPROPERTY(SaveGame)
+	int64 ExpectedTargetKnightRevision = 0;
+	UPROPERTY(SaveGame)
+	FPrimaryAssetId ItemDefinitionId;
+	UPROPERTY(SaveGame)
+	int64 ExpectedItemRevision = 0;
+	UPROPERTY(SaveGame)
+	int32 Quantity = 1;
+	UPROPERTY(SaveGame)
+	int32 QuickSlot = 0;
+	UPROPERTY(SaveGame)
+	FGuid RewardId;
+	UPROPERTY(SaveGame)
+	FName PresetId;
+	UPROPERTY(SaveGame)
+	bool bConfirmEpicSale = false;
 
 	FKnightResult ValidateShape() const;
 	bool operator==(const FKnightRPGCommand& Other) const;

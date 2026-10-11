@@ -1,0 +1,19 @@
+{
+  "fingerprint": "201d769c6b6e4558",
+  "visually_reviewed": true,
+  "reviewer": "Codex actual UE DX12 image inspection",
+  "images": [
+    "editor_trial_patch.png",
+    "editor_trial_eye.png",
+    "editor_trial_top.png",
+    "editor_wind_start.png",
+    "editor_wind_after.png"
+  ],
+  "notes": [
+    "Road joins and shoulders checked in trial patch.",
+    "Building grid materials and dimension actors remain intact.",
+    "Grass, flowers, large trees, small trees and stones render with package materials.",
+    "Two still frames separated by two seconds reviewed; this is not a manual realtime motion test.",
+    "Saved landscape weights match all four authored masks exactly."
+  ]
+}
