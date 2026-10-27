@@ -9,6 +9,13 @@ class AKnightArenaEnemy;
 class UKnightLifeComponent;
 struct FKnightBossPhaseSnapshot;
 
+struct FKnightArenaSpawn
+{
+	FPrimaryAssetId ArchetypeId;
+	FPrimaryAssetId BossId;
+	FVector Position = FVector::ZeroVector;
+};
+
 struct FKnightArenaLifeBinding
 {
 	TWeakObjectPtr<UKnightLifeComponent> Life;
@@ -32,6 +39,7 @@ public:
 protected:
 	/** Fixture adapters may split the existing wave/boss into independently claimable encounters. */
 	virtual bool ShouldAdvanceWaveToBoss() const;
+	virtual TArray<FKnightArenaSpawn> GetEncounterSpawns(EKnightArenaStage Stage) const;
 	FKnightResult StartFixtureEncounter(EKnightArenaStage Stage, bool bElite = false);
 	virtual void BeginPlay() override;
 	virtual void EndPlay(EEndPlayReason::Type EndPlayReason) override;

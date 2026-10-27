@@ -125,8 +125,9 @@ FKnightResult UKnightRPGComponent::RegisterRewardBundle(const FKnightGearRewardB
 	}
 	if (!PublishedView.bGearDemo || bTransactionInProgress || !Bundle.RewardId.IsValid()
 		|| Bundle.DemoRunId != PublishedView.DemoRunId || Bundle.Currency < 0
-		|| Bundle.Currency > KnightGear::MaximumCurrency || Bundle.Items.IsEmpty()
-		|| Bundle.Items.Num() > KnightItems::MaximumBatchOperations || Bundle.Level < 1 || Bundle.Level > 8)
+		|| Bundle.Currency > KnightGear::MaximumCurrency || (Bundle.Items.IsEmpty() && Bundle.BoundItems.IsEmpty())
+		|| Bundle.Items.Num() > KnightItems::MaximumBatchOperations || Bundle.BoundItems.Num() > 3
+		|| Bundle.Level < 1 || Bundle.Level > 8)
 	{
 		return FKnightResult::Failure(EKnightError::InvalidData, TEXT("GearReward"),
 			LOCTEXT("Reward", "An authoritative reward belongs to this isolated demo generation and has a complete bounded bundle."));
@@ -140,6 +141,23 @@ FKnightResult UKnightRPGComponent::RegisterRewardBundle(const FKnightGearRewardB
 			: FKnightResult::Failure(EKnightError::Conflict, TEXT("GearReward"), LOCTEXT("OfferReplay", "A reward identity cannot change its authoritative bundle."));
 	}
 	TSet<FPrimaryAssetId> Definitions;
+	TSet<FGuid> Bound;
+	const FKnightInventoryView BoundInventory = Inventory->GetView();
+	for (const FGuid Id : Bundle.BoundItems)
+	{
+		const FKnightItemInstance* Item = BoundInventory.Items.FindByPredicate([Id](const FKnightItemInstance& Row)
+		{
+			return Row.InstanceId == Id;
+		});
+		const UKnightDefinition* Definition = nullptr;
+		if (!Id.IsValid() || Bound.Contains(Id) || Item == nullptr
+			|| !ResolveDefinition(Item->DefinitionId, UKnightItemDefinition::StaticClass(), Definition).IsSuccess()
+			|| CastChecked<UKnightItemDefinition>(Definition)->GetMetadata().Subtype != EKnightEquipmentSubtype::Hammer)
+		{
+			return FKnightResult::Failure(EKnightError::InvalidData, TEXT("BoundRewardHammer"), FText::GetEmpty());
+		}
+		Bound.Add(Id);
+	}
 	for (const FKnightGearRewardItem& Item : Bundle.Items)
 	{
 		const UKnightDefinition* Definition = nullptr;
@@ -543,6 +561,16 @@ FKnightResult UKnightRPGComponent::BuildGearCandidate(FKnightRPGView& Candidate,
 				return Result;
 			}
 		}
+		for (const FGuid Id : Reward->BoundItems)
+		{
+			if (!InventoryView.Items.ContainsByPredicate([Id](const FKnightItemInstance& Item)
+			{
+				return Item.InstanceId == Id;
+			}))
+			{
+				return FKnightResult::Failure(EKnightError::NotFound, TEXT("BoundRewardHammer"), FText::GetEmpty());
+			}
+		}
 		Candidate.Currency += Reward->Currency;
 		Candidate.ClaimedRewards.Add(Reward->RewardId);
 		for (FKnightRPGKnightView& Entry : Candidate.Knights)
@@ -562,6 +590,33 @@ FKnightResult UKnightRPGComponent::BuildGearCandidate(FKnightRPGView& Candidate,
 			}
 		}
 		OutAffected = Reward->RewardId;
+	}
+	else if (Command.Operation == EKnightRPGOperation::DeliverQuestItem)
+	{
+		const FKnightItemInstance* DeliveryItem = InventoryView.Items.FindByPredicate([&Command](const FKnightItemInstance& Row)
+		{
+			return Row.InstanceId == Command.ItemInstanceId;
+		});
+		const UKnightDefinition* DeliveryDefinition = nullptr;
+		if (DeliveryItem == nullptr || DeliveryItem->DefinitionId != Command.ItemDefinitionId
+			|| DeliveryItem->ItemRevision != Command.ExpectedItemRevision
+			|| DeliveryItem->LocationId != KnightGear::InventoryLocation || DeliveryItem->Count < Command.Quantity
+			|| !ResolveDefinition(DeliveryItem->DefinitionId,
+				UKnightItemDefinition::StaticClass(), DeliveryDefinition).IsSuccess())
+		{
+			return FKnightResult::Failure(EKnightError::InvalidData, TEXT("QuestDeliveryItem"), FText::GetEmpty());
+		}
+		const EKnightItemCategory Category = CastChecked<UKnightItemDefinition>(DeliveryDefinition)->GetMetadata().Category;
+		if (Category != EKnightItemCategory::Material && Category != EKnightItemCategory::QuestItem)
+		{
+			return FKnightResult::Failure(EKnightError::TypeMismatch, TEXT("QuestDeliveryCategory"), FText::GetEmpty());
+		}
+		FKnightInventoryMutation& Removal = Request.Mutations.AddDefaulted_GetRef();
+		Removal.Operation = EKnightInventoryOperation::Remove;
+		Removal.Item = *DeliveryItem;
+		Removal.Item.Count = Command.Quantity;
+		Removal.ExpectedItemRevision = DeliveryItem->ItemRevision;
+		OutAffected = DeliveryItem->InstanceId;
 	}
 	else if (Command.Operation == EKnightRPGOperation::BindConsumable || Command.Operation == EKnightRPGOperation::UseConsumable)
 	{

@@ -4,6 +4,9 @@
 #include "Commandlets/KnightAIAssetAuthoring.h"
 #include "Commandlets/KnightRPGAssetAuthoring.h"
 #include "Commandlets/KnightGearAssetAuthoring.h"
+#include "Commandlets/KnightStoryAssetAuthoring.h"
+#include "Commandlets/KnightCampaignAssetAuthoring.h"
+#include "Commandlets/KnightEncounterQualityAuthoring.h"
 #include "Assets/KnightDefinition.h"
 #include "Abilities/KnightReviveAbility.h"
 #include "Abilities/KnightTestDamageAbility.h"
@@ -58,6 +61,7 @@
 #include "StateTreeState.h"
 #include "UObject/Package.h"
 #include "UObject/SavePackage.h"
+#include "UObject/UnrealType.h"
 #include "UObject/UObjectGlobals.h"
 #include "UObject/UnrealType.h"
 
@@ -768,14 +772,19 @@ namespace KnightBootstrap
 
 	bool CreateMap(const int32 Milestone)
 	{
+		const bool bQuality = Milestone == 75;
+		const bool bCampaign = Milestone == 7 || Milestone == 70;
+		const bool bStory = Milestone == 6 || (Milestone >= 60 && Milestone <= 63) || bCampaign || bQuality;
 		const bool bGearLab = Milestone == 56 || Milestone == 57;
 		const bool bSkillLab = Milestone == 55 || bGearLab;
 		const bool bTraining = Milestone > 0;
 		const bool bAbilityYard = Milestone == 2 || Milestone == 3;
 		const bool bCombatChallenge = Milestone == 3;
-		const bool bRPG = Milestone == 5 || bSkillLab;
+		const bool bRPG = Milestone == 5 || bSkillLab || bStory;
 		const bool bArena = Milestone >= 4;
-		const TCHAR* GameModePath = bGearLab ? (Milestone == 57
+		const TCHAR* GameModePath = bQuality ? TEXT("/Script/ThreeDreamingKnights.KnightEncounterQualityGameMode")
+			: bCampaign ? TEXT("/Script/ThreeDreamingKnights.KnightCampaignGameMode")
+			: bStory ? TEXT("/Script/ThreeDreamingKnights.KnightStoryGameMode") : bGearLab ? (Milestone == 57
 			? TEXT("/Script/ThreeDreamingKnights.KnightGearCatalogGameMode")
 			: TEXT("/Script/ThreeDreamingKnights.KnightGearLabGameMode"))
 			: (bSkillLab ? SkillLabGameModePath : (bRPG ? RPGGameModePath : (bArena ? ArenaGameModePath
@@ -789,7 +798,13 @@ namespace KnightBootstrap
 			return false;
 		}
 
-		const FString PackageName(bGearLab ? (Milestone == 57 ? CatalogLabMapPackageName : GearLabMapPackageName)
+		const FString PackageName(bQuality ? TEXT("/Game/Knight/Maps/Playables/L_M07_5_ForgeTrial") : bCampaign ? (Milestone == 70
+			? TEXT("/Game/Knight/Maps/Playables/L_M07_Courtyard") : TEXT("/Game/Knight/Maps/Playables/L_M07_Campaign")) : bStory ? (Milestone == 60
+			? TEXT("/Game/Knight/Maps/Playables/L_M06_StoryCourtyard") : Milestone == 63
+			? TEXT("/Game/Knight/Maps/Playables/L_M06_StoryV1") : Milestone == 61
+			? TEXT("/Game/Knight/Maps/Playables/L_M06_CaravanFixture") : Milestone == 62
+			? TEXT("/Game/Knight/Maps/Playables/L_M06_LifecycleFixture")
+			: TEXT("/Game/Knight/Maps/Playables/L_M06_StoryFrameworkDemo")) : bGearLab ? (Milestone == 57 ? CatalogLabMapPackageName : GearLabMapPackageName)
 			: (bSkillLab ? SkillLabMapPackageName : (bRPG ? RPGMapPackageName : (bArena ? ArenaMapPackageName
 			: (bCombatChallenge ? CombatMapPackageName : (bAbilityYard ? AbilityMapPackageName
 				: (bTraining ? TrainingMapPackageName : MapPackageName)))))));
@@ -923,6 +938,18 @@ namespace KnightBootstrap
 		{
 			return false;
 		}
+		if (bCampaign && !KnightCampaignAssetAuthoring::PopulateMap(World, Milestone == 70))
+		{
+			return false;
+		}
+		if (bQuality && !KnightEncounterQualityAuthoring::PopulateMap(World))
+		{
+			return false;
+		}
+		if (bStory && !bCampaign && !bQuality && !KnightStoryAssetAuthoring::PopulateStoryMap(World, Milestone))
+		{
+			return false;
+		}
 		if (bSkillLab)
 		{
 			if (FindOrCreateActor<AKnightAbilityDummy>(World, TEXT("KnightSkillLab_CombatDummy"),
@@ -957,6 +984,19 @@ namespace KnightBootstrap
 		{
 			return false;
 		}
+		if (bQuality)
+		{
+			UNavigationSystemV1* Navigation = FNavigationSystem::GetCurrent<UNavigationSystemV1>(World);
+			ANavigationData* Data = Navigation != nullptr ? Navigation->GetDefaultNavDataInstance(FNavigationSystem::DontCreate) : nullptr;
+			FProperty* Generation = FindFProperty<FProperty>(ANavigationData::StaticClass(), TEXT("RuntimeGeneration"));
+			if (Data == nullptr || Generation == nullptr || Generation->ImportText_Direct(TEXT("Dynamic"),
+				Generation->ContainerPtrToValuePtr<void>(Data), Data, PPF_None) == nullptr
+				|| Data->GetRuntimeGenerationMode() != ERuntimeGenerationType::Dynamic)
+			{
+				UE_LOG(LogKnightBootstrap, Error, TEXT("The practice gate requires an actual dynamic navmesh."));
+				return false;
+			}
+		}
 		if (bRPG)
 		{
 			UNavigationSystemV1* Navigation = FNavigationSystem::GetCurrent<UNavigationSystemV1>(World);
@@ -986,6 +1026,31 @@ int32 UKnightBootstrapCommandlet::Main(const FString& Params)
 {
 	int32 Milestone = 0;
 	FParse::Value(*Params, TEXT("Milestone="), Milestone);
+	if (Milestone == 75)
+	{
+		return KnightEncounterQualityAuthoring::CreateAssets() && KnightBootstrap::CreateMap(75) ? 0 : 1;
+	}
+	if (Milestone == 7)
+	{
+		if (!KnightCampaignAssetAuthoring::CreateAssets() || !KnightBootstrap::CreateMap(7)
+			|| !KnightBootstrap::CreateMap(70))
+		{
+			return 1;
+		}
+		UE_LOG(LogKnightBootstrap, Display, TEXT("M7 campaign profiles/worlds, audio buses and two playable maps authored."));
+		return 0;
+	}
+	if (Milestone == 6)
+	{
+		if (!KnightStoryAssetAuthoring::CreateStoryAssets() || !KnightBootstrap::CreateMap(6)
+			|| !KnightBootstrap::CreateMap(60) || !KnightBootstrap::CreateMap(63)
+			|| !KnightBootstrap::CreateMap(61) || !KnightBootstrap::CreateMap(62))
+		{
+			return 1;
+		}
+		UE_LOG(LogKnightBootstrap, Display, TEXT("M6 story definitions and genuine demo/courtyard/V1 maps authored."));
+		return 0;
+	}
 	if (Milestone == 56)
 	{
 		if (!KnightGearAssetAuthoring::CreateGearAssets() || !KnightBootstrap::CreateMap(56)

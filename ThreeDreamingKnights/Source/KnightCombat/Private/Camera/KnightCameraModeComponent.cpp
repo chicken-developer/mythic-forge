@@ -33,6 +33,8 @@ FKnightResult UKnightCameraModeComponent::Configure(USpringArmComponent* InBoom,
 	BaseArmLength = InBoom->TargetArmLength;
 	BaseSocketOffset = InBoom->SocketOffset;
 	BaseFieldOfView = InCamera->FieldOfView;
+	bBaseCameraLag = InBoom->bEnableCameraLag;
+	bBaseRotationLag = InBoom->bEnableCameraRotationLag;
 	bConfigured = true;
 	ApplyTopMode();
 	return FKnightResult::Success();
@@ -106,6 +108,22 @@ bool UKnightCameraModeComponent::HasMode(const FGuid& Handle) const
 	});
 }
 
+void UKnightCameraModeComponent::SetLocalMotionPreferences(const float ShakeScale, const bool bReduceMotion)
+{
+	if (!FMath::IsFinite(ShakeScale))
+	{
+		return;
+	}
+	LocalFeedbackScale = FMath::Clamp(ShakeScale, 0.0f, 1.0f);
+	bReducedMotion = bReduceMotion;
+	ApplyTopMode();
+}
+
+float UKnightCameraModeComponent::GetLocalFeedbackScale() const
+{
+	return bReducedMotion ? 0.0f : LocalFeedbackScale;
+}
+
 void UKnightCameraModeComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
@@ -138,7 +156,9 @@ void UKnightCameraModeComponent::TickComponent(float DeltaTime, ELevelTick TickT
 	{
 		const FRotator Desired = (Top->Settings.FocusTarget->GetActorLocation()
 			- Camera->GetComponentLocation()).Rotation();
-		Controller->SetControlRotation(FMath::RInterpTo(Controller->GetControlRotation(), Desired, DeltaTime, 6.0f));
+		Controller->SetControlRotation(bReducedMotion
+			? FMath::RInterpConstantTo(Controller->GetControlRotation(), Desired, DeltaTime, 90.0f)
+			: FMath::RInterpTo(Controller->GetControlRotation(), Desired, DeltaTime, 6.0f));
 	}
 }
 
@@ -159,7 +179,9 @@ void UKnightCameraModeComponent::ApplyTopMode()
 	const FKnightCameraModeEntry* Top = FindTopMode();
 	Boom->TargetArmLength = Top != nullptr ? Top->Settings.ArmLength : BaseArmLength;
 	Boom->SocketOffset = Top != nullptr ? Top->Settings.SocketOffset : BaseSocketOffset;
-	Camera->SetFieldOfView(Top != nullptr ? Top->Settings.FieldOfView : BaseFieldOfView);
+	Camera->SetFieldOfView(Top != nullptr && !bReducedMotion ? Top->Settings.FieldOfView : BaseFieldOfView);
+	Boom->bEnableCameraLag = bBaseCameraLag && !bReducedMotion;
+	Boom->bEnableCameraRotationLag = bBaseRotationLag && !bReducedMotion;
 	const bool bMoveLock = Controller != nullptr && Top != nullptr && Top->Settings.bLockMovementInput;
 	const bool bLookLock = Controller != nullptr && Top != nullptr && Top->Settings.bLockLookInput;
 	if (Controller != LockedController.Get())

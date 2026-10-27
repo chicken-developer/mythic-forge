@@ -10,21 +10,18 @@ public class ThreeDreamingKnights : ModuleRules
 		PublicDependencyModuleNames.AddRange(new string[]
 		{
 			"Core", "CoreUObject", "Engine", "KnightCore", "KnightFramework", "KnightAbilitySystem",
-			"GameplayAbilities", "KnightCombat", "KnightAI", "KnightItems"
+			"GameplayAbilities", "KnightCombat", "KnightAI", "KnightItems",
+			"KnightQuest", "KnightDialogue", "KnightWorld", "KnightSave", "KnightUI"
 		});
 
 		// The existing primary module owns the KnightGame composition role.
 		PrivateDependencyModuleNames.AddRange(new string[]
 		{
 			"AIModule",
+			"ApplicationCore",
 			"GameplayTags",
 			"EnhancedInput", "InputCore", "CommonUI", "CommonInput", "UMG", "SlateCore",
-			"KnightQuest",
-			"KnightDialogue",
-			"KnightWorld",
-			"KnightUI",
-			"KnightOnline",
-			"KnightSave"
+			"KnightOnline"
 		});
 	}
 }

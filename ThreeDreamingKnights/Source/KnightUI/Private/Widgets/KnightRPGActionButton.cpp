@@ -26,6 +26,16 @@ UKnightRPGActionButton::UKnightRPGActionButton()
 	SetMinDimensions(0, 36);
 }
 
+void UKnightRPGActionButton::SetFocusIdentity(const FName Identity)
+{
+	FocusIdentity = Identity;
+}
+
+FName UKnightRPGActionButton::GetFocusIdentity() const
+{
+	return FocusIdentity;
+}
+
 bool UKnightRPGActionButton::Initialize()
 {
 	if (AcceptInputTable == nullptr)
@@ -95,7 +105,8 @@ void UKnightRPGActionButton::RefreshStyle()
 	{
 		Caption->SetRenderTransformAngle(Shape == 2 ? -45.0f : 0.0f);
 		FSlateFontInfo Font = Caption->GetFont();
-		Font.Size = CaptionFontSize > 0 ? CaptionFontSize : (bIsTalentNode ? 11 : (bCompact ? 14 : 16));
+		const int32 BaseSize = CaptionFontSize > 0 ? CaptionFontSize : (bIsTalentNode ? 11 : (bCompact ? 14 : 16));
+		Font.Size = FMath::RoundToInt(BaseSize * AccessibilityScale);
 		Caption->SetFont(Font);
 		Caption->SetColorAndOpacity(FSlateColor(CaptionColor));
 		Caption->SetJustification(bCompact && !bIsTalentNode ? ETextJustify::Left : ETextJustify::Center);
@@ -105,6 +116,13 @@ void UKnightRPGActionButton::RefreshStyle()
 void UKnightRPGActionButton::SetCaptionFontSize(int32 InFontSize)
 {
 	CaptionFontSize = FMath::Clamp(InFontSize, 0, 36);
+	RefreshStyle();
+}
+
+void UKnightRPGActionButton::SetAccessibilityScale(const float Scale)
+{
+	AccessibilityScale = FMath::Clamp(Scale, 0.75f, 1.5f);
+	SetMinDimensions(0, FMath::RoundToInt((bCompact ? 22.0f : 36.0f) * AccessibilityScale));
 	RefreshStyle();
 }
 

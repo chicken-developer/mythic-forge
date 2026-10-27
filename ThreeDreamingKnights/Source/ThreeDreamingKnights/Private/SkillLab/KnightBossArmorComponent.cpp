@@ -154,6 +154,8 @@ void UKnightBossArmorComponent::PublishArmorChange()
 		Event.SourceId = Enemy != nullptr ? Enemy->GetArenaEnemyId() : FKnightEntityId(EncounterId);
 		Event.TargetId = Event.SourceId;
 		Event.SubjectId = TEXT("Boss.Armor.Leg");
+		Event.ValueId = ArmorState == EKnightBossArmorState::Intact ? TEXT("Intact")
+			: ArmorState == EKnightBossArmorState::Brittle ? TEXT("Brittle") : TEXT("Broken");
 		Events->PublishConfirmed(Event);
 	}
 }

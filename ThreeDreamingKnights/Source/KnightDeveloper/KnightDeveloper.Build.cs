@@ -10,11 +10,11 @@ public class KnightDeveloper : ModuleRules
 		{
 			"ThreeDreamingKnights", "KnightCore", "KnightFramework", "KnightAI", "UnrealEd", "AssetRegistry",
 			"StateTreeModule", "StateTreeEditorModule", "GameplayStateTreeModule", "NavigationSystem",
-			"PropertyBindingUtils", "AIModule", "EnhancedInput", "InputCore", "GameplayTags", "Sockets",
+			"PropertyBindingUtils", "AIModule", "EnhancedInput", "InputCore", "GameplayTags", "Sockets", "ApplicationCore",
 			"KnightAbilitySystem", "GameplayAbilities", "GameplayTasks", "KnightCombat", "MotionWarping",
 			"AnimationDataController", "AnimGraphRuntime", "AssetTools", "LevelSequence", "AIGraph",
 			"EnvironmentQueryEditor", "KnightItems", "KnightUI", "UMG", "CommonUI", "Slate", "SlateCore", "Json",
-			"RenderCore", "RHI"
+			"RenderCore", "RHI", "KnightQuest", "KnightDialogue", "KnightWorld", "KnightSave"
 		});
 	}
 }

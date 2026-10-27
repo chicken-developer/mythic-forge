@@ -70,6 +70,14 @@ FKnightResult FKnightRPGCommand::ValidateShape() const
 			bValidPayload = ItemInstanceId.IsValid() && ExpectedItemRevision > 0 && Quantity > 0
 				&& Quantity <= 10000;
 			break;
+		case EKnightRPGOperation::DeliverQuestItem:
+			Allowed.ItemInstanceId = ItemInstanceId;
+			Allowed.ExpectedItemRevision = ExpectedItemRevision;
+			Allowed.ItemDefinitionId = ItemDefinitionId;
+			Allowed.Quantity = Quantity;
+			bValidPayload = ItemInstanceId.IsValid() && ExpectedItemRevision > 0
+				&& KnightIdentity::IsValidDefinitionId(ItemDefinitionId) && Quantity > 0 && Quantity <= 10000;
+			break;
 		case EKnightRPGOperation::ClaimReward:
 			Allowed.RewardId = RewardId;
 			bValidPayload = RewardId.IsValid();

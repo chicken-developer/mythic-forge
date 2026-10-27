@@ -102,6 +102,8 @@ struct KNIGHTITEMS_API FKnightGearRewardBundle
 	int32 Level = 1;
 	UPROPERTY(SaveGame)
 	TArray<FKnightGearRewardItem> Items;
+	UPROPERTY(SaveGame)
+	TArray<FGuid> BoundItems;
 	bool operator==(const FKnightGearRewardBundle& Other) const;
 };
 

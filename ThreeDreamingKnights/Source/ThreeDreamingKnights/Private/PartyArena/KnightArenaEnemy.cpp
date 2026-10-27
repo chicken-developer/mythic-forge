@@ -1,5 +1,6 @@
 #include "PartyArena/KnightArenaEnemy.h"
 #include "SkillLab/KnightBossArmorComponent.h"
+#include "Skills/KnightSkillRuntimeComponent.h"
 
 #include "Assets/KnightAssetManager.h"
 #include "Attributes/KnightAttributeSet.h"
@@ -118,6 +119,16 @@ FKnightResult AKnightArenaEnemy::InitializeArenaEnemy(const FPrimaryAssetId& InA
 			return InitializationResult;
 		}
 	}
+	if (!Archetype->Specialization.SpecId.IsNone())
+	{
+		SpecializationRuntime = NewObject<UKnightSkillRuntimeComponent>(this, TEXT("EnemySkills"));
+		SpecializationRuntime->RegisterComponent();
+		InitializationResult = SpecializationRuntime->ConfigureBuild(Archetype->Specialization);
+		if (!InitializationResult.IsSuccess())
+		{
+			return InitializationResult;
+		}
+	}
 	GetCharacterMovement()->MaxWalkSpeed = Archetype->GetTuning().WalkSpeed;
 	FGameplayEffectContextHandle Context = AbilitySystem->MakeEffectContext();
 	Context.AddSourceObject(this);
@@ -133,7 +144,7 @@ FKnightResult AKnightArenaEnemy::InitializeArenaEnemy(const FPrimaryAssetId& InA
 			TEXT("ArenaEnemyRecovery"), FText::GetEmpty());
 		return InitializationResult;
 	}
-	Label->SetText(BossDefinitionId.IsValid()
+	Label->SetText(!Archetype->GetDisplayName().IsEmpty() ? Archetype->GetDisplayName() : BossDefinitionId.IsValid()
 		? NSLOCTEXT("KnightArena", "BossLabel", "ARENA BOSS: two phases")
 		: NSLOCTEXT("KnightArena", "EnemyLabel", "ARENA ENEMY"));
 	ForceNetUpdate();

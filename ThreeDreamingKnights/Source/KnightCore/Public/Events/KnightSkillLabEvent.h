@@ -20,4 +20,6 @@ struct KNIGHTCORE_API FKnightSkillLabEvent : public FKnightConfirmedEvent
 	FKnightEntityId TargetId;
 	UPROPERTY(BlueprintReadOnly, Category = "Knight|Events")
 	FName SubjectId;
+	UPROPERTY(BlueprintReadOnly, Category = "Knight|Events")
+	FName ValueId;
 };

@@ -57,6 +57,9 @@ struct KNIGHTCOMBAT_API FKnightCombatSnapshot
 	TObjectPtr<AActor> LockedTarget;
 	UPROPERTY(BlueprintReadOnly, Category = "Knight|Combat")
 	bool bAttacking = false;
+	/** Authoritative montage notify phase: 0 idle, 1 windup, 2 active trace, 3 recovery. */
+	UPROPERTY(BlueprintReadOnly, Category = "Knight|Combat")
+	uint8 AttackPhase = 0;
 	UPROPERTY(BlueprintReadOnly, Category = "Knight|Combat")
 	bool bBlocking = false;
 	UPROPERTY(BlueprintReadOnly, Category = "Knight|Combat")
@@ -67,6 +70,8 @@ struct KNIGHTCOMBAT_API FKnightCombatSnapshot
 	bool bStaggered = false;
 	UPROPERTY(BlueprintReadOnly, Category = "Knight|Combat")
 	TArray<int32> OutcomeCounts;
+	UPROPERTY(BlueprintReadOnly, Category = "Knight|Combat")
+	double LastOutcomeServerTime = 0.0;
 	UPROPERTY(BlueprintReadOnly, Category = "Knight|Combat")
 	int32 Revision = 0;
 	int32 GetOutcomeCount(EKnightCombatOutcome Outcome) const;

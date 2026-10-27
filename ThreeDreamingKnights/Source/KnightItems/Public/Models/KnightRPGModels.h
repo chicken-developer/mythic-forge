@@ -32,6 +32,7 @@ struct KNIGHTITEMS_API FKnightRPGCallerContext
 	FPrimaryAssetId HeroDefinitionId;
 	bool bInSafeZone = false;
 	bool bInCombat = false;
+	bool bQuestDeliveryAuthorized = false;
 	FGuid EncounterId;
 	/** Server composition fills this from current ownership, never from client payloads. */
 	TArray<FKnightEntityId> EditableKnights;

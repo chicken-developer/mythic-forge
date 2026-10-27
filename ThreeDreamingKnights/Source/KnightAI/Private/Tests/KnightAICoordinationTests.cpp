@@ -417,6 +417,24 @@ bool FKnightAttackLeaseBudgetTest::RunTest(const FString& Parameters)
 	TestTrue(TEXT("Second contender exact release succeeds"), Director->ReleaseAttackToken(Second.Actor.Get(), Two).IsSuccess());
 	TestEqual(TEXT("All explicit releases restore budget"), Director->GetActiveLeaseCount(), 0);
 	TestFalse(TEXT("Empty director stops maintenance"), Director->HasMaintenanceTimer());
+	TestTrue(TEXT("Story can limit hostile coordination without starving companion slots"),
+		Director->TrySetTeamBudgets(2, 1, 1).IsSuccess());
+	TestTrue(TEXT("One hostile fits Story coordination"),
+		Director->TryAcquireAttackToken(First.Actor.Get(), TargetOne.Actor.Get(), 5.0f, One).IsSuccess());
+	TestEqual(TEXT("A different Knight is protected by the hostile side cap"),
+		Director->TryAcquireAttackToken(Second.Actor.Get(), TargetTwo.Actor.Get(), 5.0f, Rejected).Error, EKnightError::CapacityExceeded);
+	TestTrue(TEXT("Companion retains a separate opportunity"),
+		Director->TryAcquireAttackToken(TargetTwo.Actor.Get(), Second.Actor.Get(), 5.0f, Two).IsSuccess());
+	FKnightAttackLease PartySecond;
+	TestTrue(TEXT("Second companion retains coordination slot"),
+		Director->TryAcquireAttackToken(TargetThree.Actor.Get(), Third.Actor.Get(), 5.0f, PartySecond).IsSuccess());
+	Director->ReleaseAttackToken(First.Actor.Get(), One);
+	TestEqual(TEXT("Party cap still applies when the hostile slot is empty"),
+		Director->TryAcquireAttackToken(TargetOne.Actor.Get(), First.Actor.Get(), 5.0f, Rejected).Error, EKnightError::CapacityExceeded);
+	TestEqual(TEXT("Active leases prevent difficulty retuning"), Director->TrySetTeamBudgets(2, 2, 1).Error, EKnightError::Conflict);
+	Director->ReleaseAttackToken(TargetTwo.Actor.Get(), Two);
+	Director->ReleaseAttackToken(TargetThree.Actor.Get(), PartySecond);
+	TestTrue(TEXT("Legacy tuning remains available after team release"), Director->TrySetBudgets(2, 1).IsSuccess());
 	TestEqual(TEXT("Nonfinite expiry request is rejected"), Director->TryAcquireAttackToken(Third.Actor.Get(),
 		TargetThree.Actor.Get(), std::numeric_limits<float>::quiet_NaN(), Rejected).Error, EKnightError::InvalidData);
 	FKnightCoordinationWorld ForeignContext;

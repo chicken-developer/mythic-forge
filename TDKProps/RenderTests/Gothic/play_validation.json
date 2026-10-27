@@ -1,0 +1,162 @@
+{
+  "status": "passed",
+  "buildings": [
+    {
+      "id": "variant_01",
+      "collision": [
+        {
+          "query": "simple",
+          "hit": "variant_01 | Village Chapel",
+          "height_cm": 1003.4646010941578
+        },
+        {
+          "query": "complex",
+          "hit": "variant_01 | Village Chapel",
+          "height_cm": 1003.4646010941578
+        }
+      ]
+    },
+    {
+      "id": "variant_02",
+      "collision": [
+        {
+          "query": "simple",
+          "hit": "variant_02 | Town Church",
+          "height_cm": 1064.124823063612
+        },
+        {
+          "query": "complex",
+          "hit": "variant_02 | Town Church",
+          "height_cm": 1064.124823063612
+        }
+      ]
+    },
+    {
+      "id": "variant_03",
+      "collision": [
+        {
+          "query": "simple",
+          "hit": "variant_03 | Gothic Townhouse",
+          "height_cm": 1231.4922232063473
+        },
+        {
+          "query": "complex",
+          "hit": "variant_03 | Gothic Townhouse",
+          "height_cm": 1231.4922232063473
+        }
+      ]
+    },
+    {
+      "id": "variant_04",
+      "collision": [
+        {
+          "query": "simple",
+          "hit": "variant_04 | Twin Tower Church",
+          "height_cm": 1328.485478013754
+        },
+        {
+          "query": "complex",
+          "hit": "variant_04 | Twin Tower Church",
+          "height_cm": 1328.485478013754
+        }
+      ]
+    },
+    {
+      "id": "variant_05",
+      "collision": [
+        {
+          "query": "simple",
+          "hit": "variant_05 | Clock Gate",
+          "height_cm": 1150.3474801778793
+        },
+        {
+          "query": "complex",
+          "hit": "variant_05 | Clock Gate",
+          "height_cm": 1150.3474801778793
+        }
+      ]
+    },
+    {
+      "id": "variant_06",
+      "collision": [
+        {
+          "query": "simple",
+          "hit": "variant_06 | Dark Cathedral",
+          "height_cm": 1413.0404415726662
+        },
+        {
+          "query": "complex",
+          "hit": "variant_06 | Dark Cathedral",
+          "height_cm": 1413.0404415726662
+        }
+      ]
+    },
+    {
+      "id": "variant_07",
+      "collision": [
+        {
+          "query": "simple",
+          "hit": "variant_07 | Civic Watchtower",
+          "height_cm": 2838.7096832692623
+        },
+        {
+          "query": "complex",
+          "hit": "variant_07 | Civic Watchtower",
+          "height_cm": 2838.7096832692623
+        }
+      ]
+    },
+    {
+      "id": "variant_08",
+      "collision": [
+        {
+          "query": "simple",
+          "hit": "variant_08 | Layered Twin Basilica",
+          "height_cm": 1384.806858599186
+        },
+        {
+          "query": "complex",
+          "hit": "variant_08 | Layered Twin Basilica",
+          "height_cm": 1384.806858599186
+        }
+      ]
+    },
+    {
+      "id": "variant_09",
+      "collision": [
+        {
+          "query": "simple",
+          "hit": "variant_09 | Astronomical City Gate",
+          "height_cm": 1150.3481191396713
+        },
+        {
+          "query": "complex",
+          "hit": "variant_09 | Astronomical City Gate",
+          "height_cm": 1150.3481191396713
+        }
+      ]
+    },
+    {
+      "id": "variant_10",
+      "collision": [
+        {
+          "query": "simple",
+          "hit": "variant_10 | Ceremonial High Cathedral",
+          "height_cm": 1717.4380326530227
+        },
+        {
+          "query": "complex",
+          "hit": "variant_10 | Ceremonial High Cathedral",
+          "height_cm": 1717.4380326530227
+        }
+      ]
+    }
+  ],
+  "pawn_class": "/Script/Engine.DefaultPawn",
+  "pawn_position_cm": [
+    -8038.344909667969,
+    1800.0,
+    220.0
+  ],
+  "world": "/Game/Gothic/Maps/UEDPIE_0_L_Gothic_Lineup.L_Gothic_Lineup"
+}

@@ -85,7 +85,7 @@ bool FKnightGearRewardItem::operator==(const FKnightGearRewardItem& Other) const
 bool FKnightGearRewardBundle::operator==(const FKnightGearRewardBundle& Other) const
 {
 	return RewardId == Other.RewardId && DemoRunId == Other.DemoRunId && EncounterId == Other.EncounterId
-		&& Currency == Other.Currency && Level == Other.Level && Items == Other.Items;
+		&& Currency == Other.Currency && Level == Other.Level && Items == Other.Items && BoundItems == Other.BoundItems;
 }
 
 #undef LOCTEXT_NAMESPACE

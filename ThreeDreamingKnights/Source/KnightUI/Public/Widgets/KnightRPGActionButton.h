@@ -22,6 +22,9 @@ public:
 	void SetPresentationState(bool bInSelected, bool bInDraft);
 	void SetCompact(bool bInCompact);
 	void SetCaptionFontSize(int32 InFontSize);
+	void SetAccessibilityScale(float Scale);
+	void SetFocusIdentity(FName Identity);
+	FName GetFocusIdentity() const;
 	void SetCaptionColor(const FLinearColor& InColor);
 	FSimpleMulticastDelegate OnInspectRequested;
 	FSimpleMulticastDelegate OnRefundRequested;
@@ -42,6 +45,7 @@ private:
 	UPROPERTY(Transient)
 	TObjectPtr<UDataTable> AcceptInputTable;
 	FText CaptionText;
+	FName FocusIdentity;
 	uint8 Shape = 0;
 	int32 CaptionFontSize = 0;
 	FLinearColor CaptionColor = FLinearColor::White;
@@ -51,5 +55,6 @@ private:
 	bool bHovered = false;
 	bool bHasPresentationFocus = false;
 	bool bIsTalentNode = false;
+	float AccessibilityScale = 1.0f;
 	void RefreshStyle();
 };

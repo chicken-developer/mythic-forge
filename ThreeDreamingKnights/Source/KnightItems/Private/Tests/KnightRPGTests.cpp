@@ -2838,4 +2838,130 @@ bool FKnightCommittedQuerySwitchTest::RunTest(const FString& Parameters)
 	return true;
 }
 
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FKnightBoundStoryRewardTest, "Knight.Items.M6.BoundStarterRewardAndFullBag",
+	EAutomationTestFlags::EditorContext | EAutomationTestFlags::EngineFilter)
+
+bool FKnightBoundStoryRewardTest::RunTest(const FString& Parameters)
+{
+	using namespace KnightRPGTests;
+	FKnightWorld Fixture;
+	FKnightDomains Domains = Fixture.MakeDomains(nullptr, nullptr, true, true);
+	const FGuid RunId = FGuid::NewGuid();
+	TArray<FKnightItemInstance> Starters;
+	for (int32 Index = 0; Index < 3; ++Index)
+	{
+		FKnightItemInstance Starter;
+		Starter.InstanceId = FGuid::NewGuid();
+		Starter.DefinitionId = FKnightGearCatalog::DefinitionId(TEXT("W01"));
+		Starter.Count = 1;
+		Starters.Add(Starter);
+	}
+	FKnightItemInstance Rune;
+	Rune.InstanceId = FGuid::NewGuid();
+	Rune.DefinitionId = FKnightGearCatalog::DefinitionId(TEXT("R01"));
+	Rune.Count = 1;
+	Starters.Add(Rune);
+	if (!TestTrue(TEXT("Real itemization starts with three exact common hammers and a physical rune"),
+		Domains.InitializationResult.IsSuccess() && Domains.Inventory->InitializeInventory(4).IsSuccess()
+		&& ConfigureLab(Domains).IsSuccess() && Domains.RPG->ConfigureGearDemo(RunId, 100, 1, false).IsSuccess()
+		&& Domains.Inventory->TryApplyTransaction(Seed(Domains.Inventory, Starters)).Result.IsSuccess()
+		&& Domains.RPG->InitializeRPG(Domains.Inventory, Fixture.Tree->GetPrimaryAssetId(),
+			Domains.Registrations, 5).IsSuccess()))
+	{
+		return false;
+	}
+	const FKnightRPGCallerContext Owner = Caller(Domains, FGuid::NewGuid());
+	FKnightGearRewardBundle Mint;
+	Mint.RewardId = FGuid::NewGuid();
+	Mint.DemoRunId = RunId;
+	FKnightGearRewardItem Ore;
+	Ore.DefinitionId = FKnightGearCatalog::DefinitionId(TEXT("M01"));
+	Ore.Count = 1;
+	Mint.Items.Add(Ore);
+	TestTrue(TEXT("Pending mint offer registers"), Domains.RPG->RegisterRewardBundle(Mint).IsSuccess());
+	FKnightRPGCommand Claim = Command(Domains, 0, EKnightRPGOperation::ClaimReward);
+	Claim.RewardId = Mint.RewardId;
+	const FKnightInventoryView Full = Domains.Inventory->GetView();
+	const FKnightRPGView FullRPG = Domains.RPG->GetView();
+	TestTrue(TEXT("Full bag preserves the complete claimable offer and both domains"),
+		!Domains.RPG->ExecuteCommand(Owner, Claim).Result.IsSuccess()
+		&& Domains.Inventory->GetView() == Full && Domains.RPG->GetView() == FullRPG
+		&& Domains.RPG->GetRewardOffers().Num() == 1);
+	for (int32 Index = 0; Index < 3; ++Index)
+	{
+		if (!EquipItem(*this, Domains, Caller(Domains, Owner.HumanId, Index),
+			Index, Starters[Index], KnightGameplayTags::Slot_Equipment_Weapon))
+		{
+			return false;
+		}
+	}
+	FKnightRPGCommand Attach = Command(Domains, 0, EKnightRPGOperation::AttachWeaponRune);
+	Attach.ItemInstanceId = Starters[0].InstanceId;
+	Attach.ExpectedItemRevision = InventoryItem(Domains, Attach.ItemInstanceId).ItemRevision;
+	Attach.WeaponRuneInstanceId = Rune.InstanceId;
+	if (!TestTrue(TEXT("Starter keeps its real physical rune"),
+		Domains.RPG->ExecuteCommand(Owner, Attach).Result.IsSuccess()))
+	{
+		return false;
+	}
+	FKnightRPGCommand Fill = Command(Domains, 0, EKnightRPGOperation::BuyItem);
+	Fill.ItemDefinitionId = FKnightGearCatalog::DefinitionId(TEXT("W01"));
+	Fill.Quantity = 4;
+	if (!TestTrue(TEXT("Real purchase refills the bag"), Domains.RPG->ExecuteCommand(Owner, Fill).Result.IsSuccess()))
+	{
+		return false;
+	}
+	FKnightGearRewardBundle Bound;
+	Bound.RewardId = FGuid::NewGuid();
+	Bound.DemoRunId = RunId;
+	for (int32 Index = 0; Index < 3; ++Index)
+	{
+		Bound.BoundItems.Add(Starters[Index].InstanceId);
+	}
+	if (!TestTrue(TEXT("Tutorial binds the existing three starter GUIDs"),
+		Domains.RPG->RegisterRewardBundle(Bound).IsSuccess()))
+	{
+		return false;
+	}
+	const FKnightInventoryView BeforeBound = Domains.Inventory->GetView();
+	Claim = Command(Domains, 0, EKnightRPGOperation::ClaimReward);
+	Claim.RewardId = Bound.RewardId;
+	if (!TestTrue(TEXT("Bound-only claim needs no bag slots and mints nothing"),
+		Domains.RPG->ExecuteCommand(Owner, Claim).Result.IsSuccess()
+		&& Domains.Inventory->GetView() == BeforeBound
+		&& Domains.RPG->GetView().ClaimedRewards.Num() == 1))
+	{
+		return false;
+	}
+	TestTrue(TEXT("Exact claim replay never issues more items"),
+		Domains.RPG->ExecuteCommand(Owner, Claim).bWasReplay && Domains.Inventory->GetView() == BeforeBound);
+	TestTrue(TEXT("Weapon GUID and Rune parent/attachment remain exact"),
+		InventoryItem(Domains, Starters[0].InstanceId).RuneAttachmentId == Rune.InstanceId
+		&& InventoryItem(Domains, Rune.InstanceId).ParentWeaponId == Starters[0].InstanceId
+		&& Domains.RPG->GetKnightView(Owner.KnightId).WeaponRuneInstanceId == Rune.InstanceId);
+	FKnightRPGSnapshot Snapshot;
+	if (!TestTrue(TEXT("Bound-only receipt captures through the existing schema3 journal"),
+		Domains.RPG->CaptureSnapshot(Snapshot).IsSuccess()))
+	{
+		return false;
+	}
+	FKnightDomains Fresh = Fixture.MakeDomains(&Domains.Registrations, nullptr, true, true);
+	if (!TestTrue(TEXT("Full journal reconstructs bound receipt, three IDs and Rune exactly"),
+		Fresh.InitializationResult.IsSuccess()
+		&& Fresh.RPG->TryRestoreSnapshot(Fresh.Inventory, Snapshot, Fresh.Registrations).IsSuccess()
+		&& Fresh.Inventory->GetView() == BeforeBound))
+	{
+		return false;
+	}
+	FKnightRPGSnapshot Restored;
+	TestTrue(TEXT("Recapture retains all unclaimed and claimed offers without minted duplicates"),
+		Fresh.RPG->CaptureSnapshot(Restored).IsSuccess() && Restored == Snapshot);
+	FKnightRPGSnapshot Corrupt = Snapshot;
+	Corrupt.RewardOffers.Last().BoundItems[1] = Corrupt.RewardOffers.Last().BoundItems[0];
+	FKnightDomains Rejected = Fixture.MakeDomains(&Domains.Registrations, nullptr, true, true);
+	TestFalse(TEXT("Duplicate persisted binding is rejected"),
+		Rejected.RPG->TryRestoreSnapshot(Rejected.Inventory, Corrupt, Rejected.Registrations).IsSuccess());
+	return true;
+}
+
 #endif

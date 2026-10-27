@@ -162,6 +162,18 @@ FKnightResult AKnightPartyArenaGameMode::TryInteract(APlayerController* Player)
 	return SpawnEncounter(EKnightArenaStage::Wave);
 }
 
+TArray<FKnightArenaSpawn> AKnightPartyArenaGameMode::GetEncounterSpawns(const EKnightArenaStage Stage) const
+{
+	const bool bBoss = Stage == EKnightArenaStage::Boss;
+	const FPrimaryAssetId Archetype(TEXT("KnightAIArchetype"), bBoss ? TEXT("ArenaBoss") : TEXT("ArenaEnemy"));
+	const FPrimaryAssetId Boss = bBoss ? FPrimaryAssetId(TEXT("KnightBossPhase"), TEXT("ArenaBoss")) : FPrimaryAssetId();
+	if (bBoss || bFixtureElite)
+	{
+		return {{Archetype, Boss, FVector(0.0, bBoss ? 850.0 : 500.0, 100.0)}};
+	}
+	return {{Archetype, Boss, FVector(-600.0, 250.0, 100.0)}, {Archetype, Boss, FVector(600.0, 250.0, 100.0)}};
+}
+
 FKnightResult AKnightPartyArenaGameMode::SpawnEncounter(const EKnightArenaStage Stage)
 {
 	if (Stage != EKnightArenaStage::Wave && Stage != EKnightArenaStage::Boss)
@@ -169,39 +181,46 @@ FKnightResult AKnightPartyArenaGameMode::SpawnEncounter(const EKnightArenaStage 
 		return FKnightResult::Failure(EKnightError::InvalidState, TEXT("ArenaSpawn"), FText::GetEmpty());
 	}
 	const bool bBoss = Stage == EKnightArenaStage::Boss;
-	const FPrimaryAssetId ArchetypeId(TEXT("KnightAIArchetype"), bBoss ? TEXT("ArenaBoss") : TEXT("ArenaEnemy"));
-	const FPrimaryAssetId BossId = bBoss
-		? FPrimaryAssetId(TEXT("KnightBossPhase"), TEXT("ArenaBoss")) : FPrimaryAssetId();
+	const TArray<FKnightArenaSpawn> Spawns = GetEncounterSpawns(Stage);
+	if (Spawns.IsEmpty() || Spawns.Num() > 32 || bBoss && Spawns.Num() != 1)
+	{
+		return FKnightResult::Failure(EKnightError::InvalidData, TEXT("EncounterSpawns"), FText::GetEmpty());
+	}
 	UKnightAssetManager* Manager = UKnightAssetManager::GetKnightAssetManager();
 	UKnightDefinition* Definition = nullptr;
-	FKnightResult Result = Manager != nullptr
-		? Manager->ResolveDefinition(ArchetypeId, UKnightAIArchetypeDefinition::StaticClass(), Definition)
-		: FKnightResult::Failure(EKnightError::InvalidState, TEXT("ArenaSpawn"), FText::GetEmpty());
-	if (!Result.IsSuccess())
+	if (Manager == nullptr)
 	{
-		return Result;
+		return FKnightResult::Failure(EKnightError::InvalidState, TEXT("ArenaSpawn"), FText::GetEmpty());
 	}
-	Result = CastChecked<UKnightAIArchetypeDefinition>(Definition)->ValidateArchetype();
-	if (Result.IsSuccess() && bBoss)
+	FKnightResult Result = FKnightResult::Success();
+	for (const FKnightArenaSpawn& Spawn : Spawns)
 	{
-		Result = Manager->ResolveDefinition(BossId, UKnightBossPhaseDefinition::StaticClass(), Definition);
+		if (Spawn.Position.ContainsNaN() || Spawn.BossId.IsValid() != bBoss)
+		{
+			return FKnightResult::Failure(EKnightError::InvalidData, TEXT("EncounterSpawn"), FText::GetEmpty());
+		}
+		Result = Manager->ResolveDefinition(Spawn.ArchetypeId, UKnightAIArchetypeDefinition::StaticClass(), Definition);
 		if (Result.IsSuccess())
 		{
-			Result = CastChecked<UKnightBossPhaseDefinition>(Definition)->ValidateBossPhases();
+			Result = CastChecked<UKnightAIArchetypeDefinition>(Definition)->ValidateArchetype();
+		}
+		if (Result.IsSuccess() && bBoss)
+		{
+			Result = Manager->ResolveDefinition(Spawn.BossId, UKnightBossPhaseDefinition::StaticClass(), Definition);
+			if (Result.IsSuccess())
+			{
+				Result = CastChecked<UKnightBossPhaseDefinition>(Definition)->ValidateBossPhases();
+			}
+		}
+		if (!Result.IsSuccess())
+		{
+			return Result;
 		}
 	}
-	if (!Result.IsSuccess())
-	{
-		return Result;
-	}
 	ClearEncounter();
-	const TArray<FVector> SpawnPoints = bBoss
-		? TArray<FVector>{FVector(0.0, 850.0, 100.0)}
-		: (bFixtureElite ? TArray<FVector>{FVector(0.0, 500.0, 100.0)}
-			: TArray<FVector>{FVector(-600.0, 250.0, 100.0), FVector(600.0, 250.0, 100.0)});
-	for (const FVector& Point : SpawnPoints)
+	for (const FKnightArenaSpawn& Spawn : Spawns)
 	{
-		const FTransform Transform(FRotator(0.0, -90.0, 0.0), Point);
+		const FTransform Transform(FRotator(0.0, -90.0, 0.0), Spawn.Position);
 		AKnightArenaEnemy* Enemy = GetWorld()->SpawnActorDeferred<AKnightArenaEnemy>(
 			AKnightArenaEnemy::StaticClass(), Transform, this, nullptr,
 			ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn);
@@ -211,7 +230,7 @@ FKnightResult AKnightPartyArenaGameMode::SpawnEncounter(const EKnightArenaStage 
 			break;
 		}
 		Enemies.Add(Enemy);
-		Result = Enemy->InitializeArenaEnemy(ArchetypeId, BossId);
+		Result = Enemy->InitializeArenaEnemy(Spawn.ArchetypeId, Spawn.BossId);
 		Enemy->FinishSpawning(Transform);
 		if (Result.IsSuccess())
 		{

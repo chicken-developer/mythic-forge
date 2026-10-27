@@ -5,7 +5,10 @@ public class KnightSave : ModuleRules
 	public KnightSave(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
-		PublicDependencyModuleNames.Add("Core");
-		PrivateDependencyModuleNames.Add("KnightCore");
+		PublicDependencyModuleNames.AddRange(new string[]
+		{
+			"Core", "CoreUObject", "Engine", "KnightCore", "KnightItems", "KnightQuest", "KnightDialogue", "KnightWorld",
+			"KnightAbilitySystem", "GameplayTags"
+		});
 	}
 }

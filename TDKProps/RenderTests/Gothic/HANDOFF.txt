@@ -1,0 +1,47 @@
+Gothic stylized props - Unreal render test
+
+Mở TDKProps.uproject bằng Unreal Engine 5.8.3. Map mặc định:
+/Game/Gothic/Maps/L_Gothic_Lineup
+
+Level có 10 preset từ gothic_building.hip, xếp một hàng ngang theo cùng tỉ lệ.
+Mỗi công trình là một Static Mesh đã bake, pivot tại chân, actor scale 1,
+UV tiling, material instance đã gắn, Nanite và complex-as-simple collision.
+Các mesh dùng trực tiếp trong game mà không cần chạy Houdini hoặc Designer.
+Đây là bộ prop kiến trúc tĩnh cho desktop UE5; scene dùng ánh sáng động/Lumen.
+
+Asset Unreal:
+Content/Gothic/Buildings - 10 static meshes
+Content/Gothic/Textures - 30 texture assets
+Content/Gothic/Materials - master PBR, 16 instances và vật liệu studio
+SourceAssets/Gothic/Meshes - 10 FBX với vertex ở đơn vị centimet
+
+Nguồn Substance tại ../SubstanceWorkspace/src tính từ TDKProps:
+Gothic_Stylized.sbs - 10 graph procedural native, có frame để chỉnh sửa
+Gothic_Stylized.sbsar - package đã cook thành công
+exports/ - 70 PNG 2048 x 2048: BaseColor, Normal, ORM, Height, Roughness, Metallic, AO
+ORM: R=AO, G=Roughness, B=Metallic. Normal: DirectX.
+Các lớp vật liệu: limestone, vữa sứt, phào ngà, mái slate/copper/oxblood,
+kính amber, brass, iron, walnut. Màu từng preset chỉnh trong material instance.
+
+Ảnh từ Unreal:
+gothic_lineup.png - toàn cảnh 5000 x 2000
+gothic_group_a/b/c.png - các góc gần 2560 x 1440
+gothic_pie.png - ảnh thực từ Play In Editor 3840 x 1536
+Camera Overview, ba Group và 10 camera riêng được lưu trong level.
+Nhấn Play để di chuyển bằng DefaultPawn: WASD, chuột và Q/E.
+
+Kiểm chứng:
+asset_validation.json - 10/10 mesh, đúng bounds, material, UV, Nanite, collision
+play_validation.json - world PIE có 10 nhà và DefaultPawn; 20/20 trace đạt
+texture_validation.json - 70 map 2K; kênh ORM khớp trong sai số 1/255
+HIP nguồn được giữ nguyên, đối chiếu SHA-256 với lần export.
+Tổng geometry Nanite: 383114 triangles. Map Check: 0 error, 0 warning.
+Đã kiểm tra trong editor/PIE; chưa tạo bản game đóng gói hoặc benchmark FPS.
+
+Tạo lại:
+1. Hython 22.0.368 chạy Tools/Gothic/export_houdini.py.
+2. Python Editor của Designer chạy SubstanceWorkspace/src/build_gothic_materials.py.
+3. Console Unreal chạy: py E:/Repos/mythic-forge/TDKProps/Tools/Gothic/import_meshes.py
+4. Chờ import xong, chạy build_materials.py, rồi assemble_test_level.py theo cùng cách.
+5. capture_lineup.py và capture_Group_A/B/C.py xuất ảnh vào Saved/GothicReview.
+Các script chạy từng bước; export hoàn tất trước khi chạy bước tiêu thụ dữ liệu.

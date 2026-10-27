@@ -4,10 +4,22 @@
 #include "CommonActivatableWidget.h"
 #include "Components/ComboBoxString.h"
 #include "Models/KnightRPGPanelTypes.h"
+#include "Models/KnightCampaignPanelTypes.h"
 #include "KnightRPGPanel.generated.h"
+
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnKnightStoryPanelAction, FName);
+DECLARE_MULTICAST_DELEGATE_TwoParams(FOnKnightStoryChoiceAction, FName, FName);
+
+struct KNIGHTUI_API FKnightStoryChoicePresentation
+{
+	FName AnchorId;
+	FName ChoiceId;
+	FText Label;
+};
 
 class UKnightRPGActionButton;
 class UTextBlock;
+class USizeBox;
 class UVerticalBox;
 class UHorizontalBox;
 class UCanvasPanel;
@@ -27,6 +39,16 @@ class KNIGHTUI_API UKnightRPGPanel : public UCommonActivatableWidget
 public:
 	UKnightRPGPanel();
 	void SetSnapshot(const FKnightRPGPanelSnapshot& InSnapshot);
+	void SetStoryPresentation(const FText& Text, bool bHost, bool bPending);
+	FOnKnightStoryPanelAction OnStoryActionRequested;
+	void SetStoryChoices(const TArray<FKnightStoryChoicePresentation>& Choices, bool bPending);
+	FOnKnightStoryChoiceAction OnStoryChoiceRequested;
+	void SetCampaignPresentation(const FKnightCampaignPanelSnapshot& InSnapshot);
+	void UpdateMapPosition(const FVector2D& UV, bool bVisible);
+	const FKnightCampaignPanelSnapshot& GetCampaignPresentation() const;
+	FOnKnightCampaignPanelAction OnCampaignActionRequested;
+	FOnKnightCampaignKeyRemap OnCampaignKeyRemapRequested;
+	FSimpleMulticastDelegate OnPanelClosed;
 	void SetBuildPreview(const FKnightRPGBuildPreview& InPreview);
 	void SetGearCompare(const FKnightGearCompare& InCompare);
 	void SetActiveTab(EKnightRPGPanelTab InTab);
@@ -50,6 +72,7 @@ protected:
 	virtual TSharedRef<SWidget> RebuildWidget() override;
 	virtual UWidget* NativeGetDesiredFocusTarget() const override;
 	virtual FReply NativeOnPreviewKeyDown(const FGeometry& InGeometry, const FKeyEvent& InKeyEvent) override;
+	virtual FReply NativeOnPreviewMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent) override;
 	virtual void NativeOnActivated() override;
 	virtual void NativeOnDeactivated() override;
 	virtual void NativeDestruct() override;
@@ -71,6 +94,13 @@ private:
 	void BuildRunes(UVerticalBox* Parent);
 	void BuildGearCharacter(UVerticalBox* Parent);
 	void BuildGearInventory(UVerticalBox* Parent);
+	void BuildCampaign(UVerticalBox* Parent);
+	void BuildJournal(UVerticalBox* Parent);
+	void BuildCampaignMap(UVerticalBox* Parent);
+	void BuildSettings(UVerticalBox* Parent);
+	void AddCampaignAction(UVerticalBox* Parent, const FText& Caption, FName Action,
+		FName Context = NAME_None, bool bEnabled = true);
+	void ApplyCampaignTextScale();
 	void BuildGearFixtureControls(UVerticalBox* Parent);
 	void AddGearSlot(UVerticalBox* Parent, const FKnightGearSlotRow& GearSlot);
 	void SelectGearItem(FGuid InstanceId, bool bVendorStock);
@@ -123,6 +153,15 @@ private:
 	UPROPERTY(Transient)
 	TObjectPtr<UTextBlock> HeaderText;
 	UPROPERTY(Transient)
+	TObjectPtr<UVerticalBox> StoryBody;
+	UPROPERTY(Transient)
+	TObjectPtr<UTextBlock> StoryText;
+	UPROPERTY(Transient)
+	TArray<TObjectPtr<UKnightRPGActionButton>> StoryButtons;
+	UPROPERTY(Transient)
+	TObjectPtr<UHorizontalBox> StoryChoiceBody;
+	TArray<FKnightStoryChoicePresentation> DisplayedStoryChoices;
+	UPROPERTY(Transient)
 	TObjectPtr<UTextBlock> ObjectiveText;
 	UPROPERTY(Transient)
 	TObjectPtr<UTextBlock> StatusText;
@@ -130,6 +169,10 @@ private:
 	TObjectPtr<UTextBlock> DetailText;
 	UPROPERTY(Transient)
 	TObjectPtr<UScrollBox> DetailScroll;
+	UPROPERTY(Transient)
+	TObjectPtr<USizeBox> CampaignDetailContainer;
+	UPROPERTY(Transient)
+	TObjectPtr<UTextBlock> CampaignDetailHelp;
 	UPROPERTY(Transient)
 	TObjectPtr<UComboBoxString> GearTargetSelector;
 	UPROPERTY(Transient)
@@ -197,4 +240,16 @@ private:
 	TWeakPtr<SWidget> DeferredOriginalFocus;
 	FDelegateHandle PageLayoutHandle;
 	int32 PageLayoutPasses = 0;
+	FKnightCampaignPanelSnapshot CampaignSnapshot;
+	FName CapturingBinding;
+	FName SelectedMapMarker;
+	UPROPERTY(Transient)
+	TObjectPtr<UHorizontalBox> CampaignNavigation;
+	UPROPERTY(Transient)
+	TObjectPtr<UHorizontalBox> PanelFooter;
+	UPROPERTY(Transient)
+	TArray<TObjectPtr<UKnightRPGActionButton>> CampaignTabButtons;
+	UPROPERTY(Transient)
+	TObjectPtr<UTextBlock> MapPlayerLabel;
+	TMap<TWeakObjectPtr<UTextBlock>, int32> OriginalFontSizes;
 };

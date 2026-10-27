@@ -19,6 +19,7 @@
 #include "Events/KnightEventSubsystem.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "GameFramework/GameStateBase.h"
 #include "GameplayEffect.h"
 #include "Net/UnrealNetwork.h"
 #include "Tags/KnightGameplayTags.h"
@@ -396,6 +397,7 @@ FKnightResult UKnightCombatComponent::BeginAttack(FGameplayTag ActionTag, UKnigh
 		AttackActivationId = FGuid::NewGuid();
 		WindowHitIndex = 0;
 		Snapshot.bAttacking = true;
+		Snapshot.AttackPhase = 1;
 		Snapshot.ComboIndex = 1;
 		bComboWindow = false;
 		bBufferedAttack = false;
@@ -445,6 +447,7 @@ void UKnightCombatComponent::EndAttack(UKnightGameplayAbility* Ability)
 	bComboWindow = false;
 	bBufferedAttack = false;
 	Snapshot.bAttacking = false;
+	Snapshot.AttackPhase = 0;
 	RefreshSnapshot();
 }
 
@@ -463,6 +466,7 @@ void UKnightCombatComponent::BeginTraceWindow(FName WindowId, UAnimSequenceBase*
 	}
 	++TraceGeneration;
 	ActiveWindow = WindowId;
+	Snapshot.AttackPhase = 2;
 	++WindowHitIndex;
 	WindowHitActors.Reset();
 	ClearDeferredWeaponHits();
@@ -470,6 +474,7 @@ void UKnightCombatComponent::BeginTraceWindow(FName WindowId, UAnimSequenceBase*
 		: GetOwner()->GetActorLocation();
 	BeginTraceGeometryDiagnostics();
 	PerformWeaponSweep();
+	RefreshSnapshot();
 }
 void UKnightCombatComponent::TickTraceWindow(FName WindowId, UAnimSequenceBase* Animation)
 {
@@ -496,6 +501,8 @@ void UKnightCombatComponent::EndTraceWindow(FName WindowId, UAnimSequenceBase* A
 		EndTraceGeometryDiagnostics(TEXT("NotifyEnded"));
 		++TraceGeneration;
 		ActiveWindow = NAME_None;
+		Snapshot.AttackPhase = 3;
+		RefreshSnapshot();
 	}
 }
 
@@ -527,6 +534,7 @@ void UKnightCombatComponent::SetComboWindow(bool bOpen, UAnimSequenceBase* Anima
 		++TraceGeneration;
 		AttackIndex = Next;
 		++Snapshot.ComboIndex;
+		Snapshot.AttackPhase = 1;
 		ActiveWindow = NAME_None;
 		WindowHitActors.Reset();
 		ClearDeferredWeaponHits();
@@ -1166,6 +1174,8 @@ void UKnightCombatComponent::PublishOutcome(EKnightCombatOutcome Outcome, FGamep
 		return;
 	}
 	++Snapshot.OutcomeCounts[Index];
+	Snapshot.LastOutcomeServerTime = GetWorld()->GetGameState() != nullptr
+		? GetWorld()->GetGameState()->GetServerWorldTimeSeconds() : GetWorld()->GetTimeSeconds();
 	RefreshSnapshot();
 	FKnightCombatOutcome Event;
 	Event.ConfirmationId = FGuid::NewGuid();
@@ -1241,6 +1251,7 @@ void UKnightCombatComponent::ClearTransientActions()
 	}
 	Snapshot.bAttacking = false;
 	Snapshot.bBlocking = false;
+	Snapshot.AttackPhase = 0;
 	Snapshot.bParrying = false;
 	Snapshot.bDodging = false;
 	Snapshot.LockedTarget = nullptr;

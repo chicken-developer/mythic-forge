@@ -18,6 +18,7 @@ class UKnightBossPhaseComponent;
 class UKnightAIArchetypeDefinition;
 class UTextRenderComponent;
 class UKnightBossArmorComponent;
+class UKnightSkillRuntimeComponent;
 enum class EKnightLifeState : uint8;
 
 /** Noncanonical combat pawn. Its persistent identity and ASC survive boss phase changes. */
@@ -48,6 +49,8 @@ protected:
 	virtual void EndPlay(EEndPlayReason::Type EndPlayReason) override;
 
 private:
+	UPROPERTY(Transient)
+	TObjectPtr<UKnightSkillRuntimeComponent> SpecializationRuntime;
 	UPROPERTY(VisibleAnywhere, Category = "Knight|SkillLab")
 	TObjectPtr<UKnightBossArmorComponent> SkillLabArmor;
 	void HandleLifeChanged(EKnightLifeState Previous, EKnightLifeState Current);

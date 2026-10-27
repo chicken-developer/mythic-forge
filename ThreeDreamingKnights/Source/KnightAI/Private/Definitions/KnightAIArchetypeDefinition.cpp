@@ -60,6 +60,10 @@ UEnvQuery* UKnightAIArchetypeDefinition::GetRepositionQuery() const
 
 FKnightResult UKnightAIArchetypeDefinition::ValidateArchetype() const
 {
+	if (!Specialization.SpecId.IsNone() && !FKnightSkillCatalog::ValidateDescriptor(Specialization).IsSuccess())
+	{
+		return KnightAIFailure(EKnightError::InvalidData, TEXT("AIArchetypeSkills"));
+	}
 	const FKnightResult Identity = ValidateIdentity();
 	if (!Identity.IsSuccess())
 	{

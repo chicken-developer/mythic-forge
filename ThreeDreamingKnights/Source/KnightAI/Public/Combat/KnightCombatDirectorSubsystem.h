@@ -51,6 +51,8 @@ public:
 	virtual void Deinitialize() override;
 	virtual void OnWorldEndPlay(UWorld& InWorld) override;
 	FKnightResult TrySetBudgets(int32 InGlobalBudget, int32 InPerTargetBudget);
+	FKnightResult TrySetTeamBudgets(int32 InPartyBudget, int32 InHostileBudget, int32 InPerTargetBudget);
+	int32 GetHostileBudget() const;
 	FKnightResult TryAcquireAttackToken(AActor* Source, AActor* Target, float Duration, FKnightAttackLease& OutLease);
 	FKnightResult ReleaseAttackToken(AActor* Source, const FKnightAttackLease& Lease);
 	bool IsLeaseActive(const FKnightAttackLease& Lease) const;
@@ -110,5 +112,7 @@ private:
 	FTimerHandle MaintenanceTimer;
 	int32 GlobalBudget = 2;
 	int32 PerTargetBudget = 1;
+	int32 PartyBudget = 64;
+	int32 HostileBudget = 64;
 	bool bReady = false;
 };

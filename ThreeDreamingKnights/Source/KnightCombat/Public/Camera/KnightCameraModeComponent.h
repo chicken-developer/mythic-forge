@@ -54,6 +54,8 @@ public:
 	void HandleControllerChanged();
 	int32 GetModeCount() const;
 	bool HasMode(const FGuid& Handle) const;
+	void SetLocalMotionPreferences(float ShakeScale, bool bReduceMotion);
+	float GetLocalFeedbackScale() const;
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 protected:
@@ -82,4 +84,8 @@ private:
 	bool bOwnLookLock = false;
 	bool bConfigured = false;
 	bool bEndingPlay = false;
+	bool bReducedMotion = false;
+	bool bBaseCameraLag = false;
+	bool bBaseRotationLag = false;
+	float LocalFeedbackScale = 1.0f;
 };

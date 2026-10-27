@@ -15,6 +15,7 @@
 #include "EnvironmentQuery/EnvQueryManager.h"
 #include "GameFramework/Pawn.h"
 #include "Misc/ScopeExit.h"
+#include "NavigationSystem.h"
 #include "Tags/KnightGameplayTags.h"
 #include "Threat/KnightThreatComponent.h"
 
@@ -527,6 +528,41 @@ FKnightAIDecisionSnapshot UKnightAIContextComponent::GetDecisionSnapshot() const
 		Snapshot.FormationGoal = FormationLeader->GetActorLocation() +
 			FRotator(0.0, FormationLeader->GetActorRotation().Yaw, 0.0).RotateVector(FormationOffset);
 		Snapshot.bHasFormationGoal = !Snapshot.FormationGoal.ContainsNaN();
+		if (Snapshot.bHasFormationGoal && !Snapshot.bHoldPosition)
+		{
+			UNavigationSystemV1* Navigation = FNavigationSystem::GetCurrent<UNavigationSystemV1>(GetWorld());
+			if (Navigation != nullptr)
+			{
+				const FVector LeaderPosition = FormationLeader->GetActorLocation();
+				const FVector DesiredOffset = Snapshot.FormationGoal - LeaderPosition;
+				FNavLocation LeaderOnNavigation;
+				const bool bHasLeaderNavigation = Navigation->ProjectPointToNavigation(LeaderPosition, LeaderOnNavigation,
+					FVector(150.0, 150.0, 250.0), &ControlledPawn->GetNavAgentPropertiesRef());
+				if (bHasLeaderNavigation)
+				{
+					Snapshot.FormationGoal = LeaderOnNavigation.Location;
+				}
+				// Contract wide formations on the leader's side of walls and narrow bridges.
+				// Movement still requires a complete path from the companion; this never relocates a pawn.
+				for (const double Fraction : {1.0, 0.5, 0.25, 0.0})
+				{
+					if (!bHasLeaderNavigation)
+					{
+						break;
+					}
+					FNavLocation Projected;
+					FVector Obstruction;
+					if (Navigation->ProjectPointToNavigation(LeaderPosition + DesiredOffset * Fraction, Projected,
+						FVector(150.0, 150.0, 250.0), &ControlledPawn->GetNavAgentPropertiesRef())
+						&& !UNavigationSystemV1::NavigationRaycast(ControlledPawn.Get(), LeaderOnNavigation.Location,
+							Projected.Location, Obstruction, {}, ControlledPawn->GetController()))
+					{
+						Snapshot.FormationGoal = Projected.Location;
+						break;
+					}
+				}
+			}
+		}
 	}
 	if (Snapshot.bHoldPosition)
 	{

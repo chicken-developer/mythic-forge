@@ -24,6 +24,11 @@ FKnightRPGCommandResult UKnightRPGComponent::ExecuteGearCommand(const FKnightRPG
 	Outcome.InventoryId = Command.InventoryId;
 	UKnightInventoryComponent* TransactionInventory = Inventory;
 	const bool bConsumable = Command.Operation == EKnightRPGOperation::UseConsumable;
+	if (Command.Operation == EKnightRPGOperation::DeliverQuestItem && !Caller.bQuestDeliveryAuthorized)
+	{
+		Outcome.Result = FKnightResult::Failure(EKnightError::NotOwned, TEXT("QuestDeliveryAuthority"), FText::GetEmpty());
+		return Outcome;
+	}
 	const TWeakObjectPtr<AActor> PublicationOwner(GetOwner());
 	const FKnightRPGView Before = PublishedView;
 	const auto CanPublish = [this, &Caller]()
@@ -352,6 +357,7 @@ FKnightRPGCommandResult UKnightRPGComponent::ExecuteGearCommand(const FKnightRPG
 		case EKnightRPGOperation::UpgradeItem: EventName = TEXT("ItemUpgraded"); break;
 		case EKnightRPGOperation::UseConsumable: EventName = TEXT("ConsumableUsed"); break;
 		case EKnightRPGOperation::ClaimReward: EventName = TEXT("RewardClaimed"); break;
+		case EKnightRPGOperation::DeliverQuestItem: EventName = TEXT("ItemDelivered"); break;
 		default: break;
 		}
 		if (!EventName.IsNone())

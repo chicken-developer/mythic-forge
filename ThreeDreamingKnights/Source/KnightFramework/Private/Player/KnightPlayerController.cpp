@@ -593,7 +593,21 @@ void AKnightPlayerController::HandleLook(const FInputActionValue& Value)
 	}
 	const FVector2D Look = Value.Get<FVector2D>();
 	AddYawInput(Look.X * LookSensitivity);
-	AddPitchInput(Look.Y * LookSensitivity);
+	AddPitchInput(Look.Y * LookSensitivity * (bInvertLookY ? -1.0f : 1.0f));
+}
+
+void AKnightPlayerController::SetLocalInputPreferences(const float Sensitivity, const bool bInvertY,
+	const bool bToggleBlock, const bool bHoldLock)
+{
+	if (!FMath::IsFinite(Sensitivity) || Sensitivity < 0.1f || Sensitivity > 4.0f)
+	{
+		return;
+	}
+	ResetControlInput();
+	LookSensitivity = Sensitivity;
+	bInvertLookY = bInvertY;
+	bToggleBlockInput = bToggleBlock;
+	bHoldLockInput = bHoldLock;
 }
 
 void AKnightPlayerController::HandleJumpStarted()
@@ -626,11 +640,26 @@ void AKnightPlayerController::HandleRestartDrill()
 
 void AKnightPlayerController::HandleAbilityPressed(FGameplayTag InputTag)
 {
+	if (bToggleBlockInput && InputTag == KnightGameplayTags::Input_Combat_Block && GetControlledKnight() != nullptr)
+	{
+		RequestAbilityInput(InputTag, !GetControlledKnight()->GetCombatComponent()->GetSnapshot().bBlocking);
+		return;
+	}
 	RequestAbilityInput(InputTag, true);
 }
 
 void AKnightPlayerController::HandleAbilityReleased(FGameplayTag InputTag)
 {
+	if (bToggleBlockInput && InputTag == KnightGameplayTags::Input_Combat_Block)
+	{
+		return;
+	}
+	if (bHoldLockInput && InputTag == KnightGameplayTags::Input_Combat_LockOn
+		&& GetControlledKnight() != nullptr && GetControlledKnight()->GetCombatComponent()->GetLockedTarget() != nullptr)
+	{
+		RequestAbilityInput(InputTag, true);
+		return;
+	}
 	RequestAbilityInput(InputTag, false);
 }
 

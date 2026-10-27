@@ -146,6 +146,10 @@ void UKnightRPGPanel::SetBuildPreview(const FKnightRPGBuildPreview& InPreview)
 
 void UKnightRPGPanel::SetActiveTab(EKnightRPGPanelTab InTab)
 {
+	if (ActiveTab != InTab)
+	{
+		CapturingBinding = NAME_None;
+	}
 	ActiveTab = InTab;
 	ShowDetail(NSLOCTEXT("KnightRPGUI", "InspectTabHelp", "Hover / focus to inspect. Apply staged changes at sanctuary."));
 	if (PageBody != nullptr)
@@ -212,7 +216,54 @@ TSharedRef<SWidget> UKnightRPGPanel::RebuildWidget()
 		Border->SetContent(Body);
 		HeaderText = AddLine(Body, FText(), 25);
 		ObjectiveText = AddLine(Body, FText(), 14);
+		StoryBody = WidgetTree->ConstructWidget<UVerticalBox>();
+		Body->AddChildToVerticalBox(StoryBody);
+		StoryBody->SetVisibility(ESlateVisibility::Collapsed);
+		StoryText = AddLine(StoryBody, FText(), 14);
+		StoryChoiceBody = WidgetTree->ConstructWidget<UHorizontalBox>();
+		StoryBody->AddChildToVerticalBox(StoryChoiceBody);
+		UHorizontalBox* StoryActions = WidgetTree->ConstructWidget<UHorizontalBox>();
+		StoryBody->AddChildToVerticalBox(StoryActions);
+		const FName StoryOperations[]{TEXT("Advance"), TEXT("Cancel"), TEXT("Skip"), TEXT("Save"), TEXT("Continue"), TEXT("Activate")};
+		const FText StoryCaptions[]{
+			NSLOCTEXT("KnightStoryUI", "Advance", "Next"),
+			NSLOCTEXT("KnightStoryUI", "Cancel", "Cancel"),
+			NSLOCTEXT("KnightStoryUI", "Skip", "Skip"),
+			NSLOCTEXT("KnightStoryUI", "Save", "Save checkpoint"),
+			NSLOCTEXT("KnightStoryUI", "Load", "Continue"),
+			NSLOCTEXT("KnightStoryUI", "Accept", "Accept quest")};
+		for (int32 Index = 0; Index < UE_ARRAY_COUNT(StoryOperations); ++Index)
+		{
+			UKnightRPGActionButton* StoryButton = MakeButton(StoryCaptions[Index]);
+			StoryButton->SetCompact(true);
+			const FName Operation = StoryOperations[Index];
+			StoryButton->OnClicked().AddWeakLambda(this, [this, Operation]()
+			{
+				OnStoryActionRequested.Broadcast(Operation);
+			});
+			StoryActions->AddChildToHorizontalBox(StoryButton)->SetSize(FSlateChildSize(ESlateSizeRule::Fill));
+			StoryButtons.Add(StoryButton);
+		}
 		UHorizontalBox* Tabs = WidgetTree->ConstructWidget<UHorizontalBox>();
+		CampaignNavigation = WidgetTree->ConstructWidget<UHorizontalBox>();
+		CampaignNavigation->SetVisibility(ESlateVisibility::Collapsed);
+		Body->AddChildToVerticalBox(CampaignNavigation)->SetPadding(FMargin(0.0f, 4.0f));
+		const FText CampaignCaptions[]{
+			NSLOCTEXT("KnightCampaignUI", "Campaign", "Campaign / Pause"),
+			NSLOCTEXT("KnightCampaignUI", "Journal", "Quest journal"),
+			NSLOCTEXT("KnightCampaignUI", "Map", "World map"),
+			NSLOCTEXT("KnightCampaignUI", "Settings", "Settings")};
+		for (int32 Index = 0; Index < UE_ARRAY_COUNT(CampaignCaptions); ++Index)
+		{
+			UKnightRPGActionButton* Button = MakeButton(CampaignCaptions[Index]);
+			Button->SetCompact(true);
+			Button->OnClicked().AddWeakLambda(this, [this, Index]()
+			{
+				SetActiveTab(static_cast<EKnightRPGPanelTab>(static_cast<int32>(EKnightRPGPanelTab::Campaign) + Index));
+			});
+			CampaignNavigation->AddChildToHorizontalBox(Button)->SetSize(FSlateChildSize(ESlateSizeRule::Fill));
+			CampaignTabButtons.Add(Button);
+		}
 		Body->AddChildToVerticalBox(Tabs)->SetPadding(FMargin(0.0f, 8.0f));
 		const FText Captions[] =
 		{
@@ -241,8 +292,9 @@ TSharedRef<SWidget> UKnightRPGPanel::RebuildWidget()
 		PageSize->SetContent(PageScroll);
 		PageBody = WidgetTree->ConstructWidget<UVerticalBox>();
 		PageScroll->AddChild(PageBody);
-		AddLine(Body, NSLOCTEXT("KnightRPGUI", "DetailScrollHelp", "Details  [PgUp / PgDn, LT / RT to scroll]"), 11);
+		CampaignDetailHelp = AddLine(Body, NSLOCTEXT("KnightRPGUI", "DetailScrollHelp", "Details  [PgUp / PgDn, LT / RT to scroll]"), 11);
 		USizeBox* DetailSize = WidgetTree->ConstructWidget<USizeBox>();
+		CampaignDetailContainer = DetailSize;
 		DetailSize->SetHeightOverride(64.0f);
 		Body->AddChildToVerticalBox(DetailSize);
 		DetailScroll = WidgetTree->ConstructWidget<UScrollBox>(UScrollBox::StaticClass(), TEXT("RPGDetailsScroll"));
@@ -255,6 +307,7 @@ TSharedRef<SWidget> UKnightRPGPanel::RebuildWidget()
 		DetailText->SetMinDesiredWidth(1100.0f);
 		StatusText = AddLine(Body, FText(), 14);
 		UHorizontalBox* Footer = WidgetTree->ConstructWidget<UHorizontalBox>();
+		PanelFooter = Footer;
 		Body->AddChildToVerticalBox(Footer)->SetPadding(FMargin(0.0f, 6.0f));
 		UKnightRPGActionButton* Revert = MakeButton(NSLOCTEXT("KnightRPGUI", "Revert", "Revert / Reset draft"));
 		Revert->OnClicked().AddWeakLambda(this, [this]()
@@ -293,7 +346,58 @@ TSharedRef<SWidget> UKnightRPGPanel::RebuildWidget()
 	}
 	RebuildActivePage();
 	RefreshPresentation();
+	if (CampaignSnapshot.bEnabled)
+	{
+		SetCampaignPresentation(CampaignSnapshot);
+	}
 	return Super::RebuildWidget();
+}
+
+void UKnightRPGPanel::SetStoryPresentation(const FText& Text, const bool bHost, const bool bCommandPending)
+{
+	if (StoryBody != nullptr)
+	{
+		StoryBody->SetVisibility(Text.IsEmpty() ? ESlateVisibility::Collapsed : ESlateVisibility::Visible);
+		ObjectiveText->SetVisibility(Text.IsEmpty() ? ESlateVisibility::Visible : ESlateVisibility::Collapsed);
+		ContinueButton->SetVisibility(Text.IsEmpty() ? ESlateVisibility::Visible : ESlateVisibility::Collapsed);
+		StoryText->SetText(Text);
+		for (UKnightRPGActionButton* Button : StoryButtons)
+		{
+			Button->SetIsEnabled(bHost && !bCommandPending);
+		}
+	}
+}
+
+void UKnightRPGPanel::SetStoryChoices(const TArray<FKnightStoryChoicePresentation>& Choices, const bool bCommandPending)
+{
+	if (StoryChoiceBody == nullptr)
+	{
+		return;
+	}
+	bool bChanged = DisplayedStoryChoices.Num() != Choices.Num();
+	for (int32 Index = 0; !bChanged && Index < Choices.Num(); ++Index)
+	{
+		bChanged = DisplayedStoryChoices[Index].AnchorId != Choices[Index].AnchorId
+			|| DisplayedStoryChoices[Index].ChoiceId != Choices[Index].ChoiceId;
+	}
+	if (bChanged)
+	{
+		DisplayedStoryChoices = Choices;
+		StoryChoiceBody->ClearChildren();
+		for (const FKnightStoryChoicePresentation& Choice : Choices)
+		{
+			UKnightRPGActionButton* Button = MakeButton(Choice.Label);
+			Button->OnClicked().AddWeakLambda(this, [this, Choice]()
+			{
+				OnStoryChoiceRequested.Broadcast(Choice.AnchorId, Choice.ChoiceId);
+			});
+			StoryChoiceBody->AddChildToHorizontalBox(Button)->SetSize(FSlateChildSize(ESlateSizeRule::Fill));
+		}
+	}
+	for (UWidget* Child : StoryChoiceBody->GetAllChildren())
+	{
+		Child->SetIsEnabled(!bCommandPending);
+	}
 }
 
 UTextBlock* UKnightRPGPanel::AddLine(UVerticalBox* Parent, const FText& Text, int32 FontSize)
@@ -373,6 +477,26 @@ void UKnightRPGPanel::RefreshPresentation()
 	}
 	StatusText->SetText(FText::Format(NSLOCTEXT("KnightRPGUI", "Status", "{0}   |   {1}   {2}"),
 		State, Snapshot.Feedback, Snapshot.bCanEditBuild ? FText() : Snapshot.EditLockReason));
+	if (CampaignSnapshot.bEnabled && ActiveTab >= EKnightRPGPanelTab::Campaign)
+	{
+		HeaderText->SetText(NSLOCTEXT("KnightCampaignUI", "CampaignTitle", "Three Dreaming Knights"));
+		StatusText->SetText(CampaignSnapshot.SaveStatus);
+	}
+	if (CampaignSnapshot.bEnabled)
+	{
+		ObjectiveText->SetText(CampaignSnapshot.bFrontEnd ? CampaignSnapshot.SessionStatus : CampaignSnapshot.ActiveObjective);
+	}
+	const bool bCampaignPage = CampaignSnapshot.bEnabled && ActiveTab >= EKnightRPGPanelTab::Campaign;
+	if (CampaignDetailContainer != nullptr && CampaignDetailHelp != nullptr)
+	{
+		CampaignDetailContainer->SetVisibility(bCampaignPage ? ESlateVisibility::Collapsed : ESlateVisibility::Visible);
+		CampaignDetailHelp->SetVisibility(bCampaignPage ? ESlateVisibility::Collapsed : ESlateVisibility::Visible);
+	}
+	if (PanelFooter != nullptr)
+	{
+		PanelFooter->SetVisibility(CampaignSnapshot.bEnabled && ActiveTab >= EKnightRPGPanelTab::Campaign
+			? ESlateVisibility::Collapsed : ESlateVisibility::Visible);
+	}
 	if (ApplyButton != nullptr)
 	{
 		ApplyButton->SetIsEnabled(!bPending && ((bHasDraft && CanStage()) || (bGearDraft && Snapshot.Gear.bCanEdit)));
@@ -403,6 +527,7 @@ void UKnightRPGPanel::RebuildActivePage()
 	TGuardValue<bool> Guard(bRebuildingPage, true);
 	CancelDeferredPageFocus();
 	FText FocusedCaption;
+	FName FocusedIdentity;
 	const bool bRestoreFocus = IsActivated() && GetOwningPlayer() != nullptr;
 	for (const TObjectPtr<UKnightRPGActionButton>& Button : Buttons)
 	{
@@ -410,10 +535,13 @@ void UKnightRPGPanel::RebuildActivePage()
 			(Button->HasUserFocus(GetOwningPlayer()) || Button->HasUserFocusedDescendants(GetOwningPlayer())))
 		{
 			FocusedCaption = Button->GetCaption();
+			FocusedIdentity = Button->GetFocusIdentity();
 			break;
 		}
 	}
 	const FText NameEntry = LoadoutName != nullptr ? LoadoutName->GetText() : FText();
+	UE_LOG(LogTemp, Verbose, TEXT("PageFocusCapture page=%d identity=%s caption=%s"),
+		static_cast<int32>(ActiveTab), *FocusedIdentity.ToString(), *FocusedCaption.ToString());
 	const bool bRestoreNameFocus = bRestoreFocus && LoadoutName != nullptr &&
 		(LoadoutName->HasUserFocus(GetOwningPlayer()) || LoadoutName->HasUserFocusedDescendants(GetOwningPlayer()));
 	PageBody->ClearChildren();
@@ -426,6 +554,7 @@ void UKnightRPGPanel::RebuildActivePage()
 	SpecChoiceFirstButton = nullptr;
 	GearTargetSelector = nullptr;
 	GearTransferSelector = nullptr;
+	MapPlayerLabel = nullptr;
 	switch (ActiveTab)
 	{
 	case EKnightRPGPanelTab::Character: BuildCharacter(PageBody); break;
@@ -434,7 +563,12 @@ void UKnightRPGPanel::RebuildActivePage()
 	case EKnightRPGPanelTab::Spellbook: BuildSpellbook(PageBody); break;
 	case EKnightRPGPanelTab::Runes: BuildRunes(PageBody); break;
 	case EKnightRPGPanelTab::Inventory: BuildGearInventory(PageBody); break;
+	case EKnightRPGPanelTab::Campaign: BuildCampaign(PageBody); break;
+	case EKnightRPGPanelTab::Journal: BuildJournal(PageBody); break;
+	case EKnightRPGPanelTab::Map: BuildCampaignMap(PageBody); break;
+	case EKnightRPGPanelTab::Settings: BuildSettings(PageBody); break;
 	}
+	ApplyCampaignTextScale();
 	if (LoadoutName != nullptr)
 	{
 		LoadoutName->SetText(NameEntry);
@@ -448,8 +582,9 @@ void UKnightRPGPanel::RebuildActivePage()
 		UWidget* Focus = nullptr;
 		for (const TObjectPtr<UKnightRPGActionButton>& Button : Buttons)
 		{
-			if (Button != nullptr && Button->GetIsEnabled() && !FocusedCaption.IsEmpty()
-				&& Button->GetCaption().EqualTo(FocusedCaption))
+			if (Button != nullptr && Button->GetIsEnabled()
+				&& (!FocusedIdentity.IsNone() ? Button->GetFocusIdentity() == FocusedIdentity
+					: !FocusedCaption.IsEmpty() && Button->GetCaption().EqualTo(FocusedCaption)))
 			{
 				Focus = Button;
 				break;
@@ -1293,6 +1428,9 @@ void UKnightRPGPanel::HandlePageLayoutFinished(float DeltaTime)
 		FSlateApplication::Get().GetUserFocusedWidget(User->GetUserIndex()) : nullptr;
 	const bool bNewPanelFocus = CurrentFocus.IsValid() && CurrentFocus != DeferredOriginalFocus.Pin()
 		&& HasUserFocusedDescendants(GetOwningPlayer());
+	UE_LOG(LogTemp, Verbose, TEXT("PageFocusLayout target=%s pass=%d newPanelFocus=%d focused=%d"),
+		*Focus->GetName(), PageLayoutPasses, bNewPanelFocus,
+		Focus->HasUserFocus(GetOwningPlayer()) || Focus->HasUserFocusedDescendants(GetOwningPlayer()));
 	if ((PageLayoutPasses > 0 || bNewPanelFocus) && !Focus->HasUserFocus(GetOwningPlayer()) &&
 		!Focus->HasUserFocusedDescendants(GetOwningPlayer()))
 	{
@@ -1436,13 +1574,19 @@ void UKnightRPGPanel::NativeOnActivated()
 {
 	Super::NativeOnActivated();
 	CreatePaperDollPreview();
+	if (CampaignSnapshot.bEnabled)
+	{
+		SetCampaignPresentation(CampaignSnapshot);
+	}
 }
 
 void UKnightRPGPanel::NativeOnDeactivated()
 {
+	CapturingBinding = NAME_None;
 	CancelDeferredPageFocus();
 	ReleasePaperDollPreview();
 	Super::NativeOnDeactivated();
+	OnPanelClosed.Broadcast();
 }
 
 void UKnightRPGPanel::NativeDestruct()
@@ -1478,6 +1622,11 @@ UWidget* UKnightRPGPanel::NativeGetDesiredFocusTarget() const
 	{
 		return Focused;
 	}
+	if (CampaignSnapshot.bEnabled && ActiveTab >= EKnightRPGPanelTab::Campaign)
+	{
+		const int32 Index = static_cast<int32>(ActiveTab) - static_cast<int32>(EKnightRPGPanelTab::Campaign);
+		return CampaignTabButtons.IsValidIndex(Index) ? CampaignTabButtons[Index].Get() : nullptr;
+	}
 	return TabButtons.IsValidIndex(static_cast<int32>(ActiveTab)) ?
 		TabButtons[static_cast<int32>(ActiveTab)].Get() : nullptr;
 }
@@ -1485,6 +1634,20 @@ UWidget* UKnightRPGPanel::NativeGetDesiredFocusTarget() const
 FReply UKnightRPGPanel::NativeOnPreviewKeyDown(const FGeometry& InGeometry, const FKeyEvent& InKeyEvent)
 {
 	const FKey Key = InKeyEvent.GetKey();
+	if (!CapturingBinding.IsNone())
+	{
+		const FName ActionId = CapturingBinding;
+		CapturingBinding = NAME_None;
+		if (Key != EKeys::Escape && Key != EKeys::Gamepad_FaceButton_Right)
+		{
+			OnCampaignKeyRemapRequested.Broadcast(ActionId, Key);
+		}
+		else
+		{
+			RebuildActivePage();
+		}
+		return FReply::Handled();
+	}
 	const bool bEditingText = LoadoutName != nullptr &&
 		(LoadoutName->HasKeyboardFocus() || LoadoutName->HasFocusedDescendants());
 	if (Key == EKeys::Escape || (Key == EKeys::I && !bEditingText) || Key == EKeys::Gamepad_Special_Right ||
@@ -1523,6 +1686,14 @@ FReply UKnightRPGPanel::NativeOnPreviewKeyDown(const FGeometry& InGeometry, cons
 	if (Key == EKeys::Gamepad_LeftShoulder || Key == EKeys::Gamepad_RightShoulder)
 	{
 		const int32 Direction = Key == EKeys::Gamepad_RightShoulder ? 1 : -1;
+		if (CampaignSnapshot.bEnabled && ActiveTab >= EKnightRPGPanelTab::Campaign)
+		{
+			const int32 Index = (static_cast<int32>(ActiveTab) - static_cast<int32>(EKnightRPGPanelTab::Campaign)
+				+ Direction + 4) % 4;
+			SetActiveTab(static_cast<EKnightRPGPanelTab>(static_cast<int32>(EKnightRPGPanelTab::Campaign) + Index));
+			CampaignTabButtons[Index]->SetUserFocus(GetOwningPlayer());
+			return FReply::Handled();
+		}
 		const int32 Count = TabButtons.Num();
 		SetActiveTab(static_cast<EKnightRPGPanelTab>((static_cast<int32>(ActiveTab) + Direction + Count) % Count));
 		if (TabButtons.IsValidIndex(static_cast<int32>(ActiveTab)))

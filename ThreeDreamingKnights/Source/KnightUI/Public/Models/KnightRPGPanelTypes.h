@@ -32,7 +32,11 @@ enum class EKnightRPGPanelTab : uint8
 	Talents,
 	Spellbook,
 	Runes,
-	Inventory
+	Inventory,
+	Campaign,
+	Journal,
+	Map,
+	Settings
 };
 
 /** Intent only. The owning controller resolves the domain command and its authority checks. */

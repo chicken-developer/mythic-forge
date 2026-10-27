@@ -1,0 +1,61 @@
+{
+  "status": "passed",
+  "collision": [
+    {
+      "part": "wall",
+      "complex_query": false,
+      "location_cm": [
+        -170.0,
+        0.00028967857360839844,
+        350.0
+      ]
+    },
+    {
+      "part": "wall",
+      "complex_query": true,
+      "location_cm": [
+        -170.0,
+        0.00028967857360839844,
+        350.0
+      ]
+    },
+    {
+      "part": "recessed_glazing",
+      "complex_query": false,
+      "location_cm": [
+        -260.0,
+        27.000060081481934,
+        300.0
+      ]
+    },
+    {
+      "part": "recessed_glazing",
+      "complex_query": true,
+      "location_cm": [
+        -260.0,
+        27.000060081481934,
+        300.0
+      ]
+    },
+    {
+      "part": "pinnacle_lantern",
+      "complex_query": false,
+      "location_cm": [
+        -118.0,
+        -29.070541858673096,
+        710.0
+      ]
+    },
+    {
+      "part": "pinnacle_lantern",
+      "complex_query": true,
+      "location_cm": [
+        -118.0,
+        -29.070541858673096,
+        710.0
+      ]
+    }
+  ],
+  "world": "/Game/Gothic/FacadeReview/UEDPIE_0_L_Gothic_Facade_Review.L_Gothic_Facade_Review",
+  "pawn_class": "/Script/Engine.DefaultPawn"
+}

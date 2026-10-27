@@ -30,7 +30,7 @@ public:
 	AKnightRPGStateActor* GetRPGState() const;
 	AKnightRPGUpgradeStation* GetUpgradeStation() const;
 	const FKnightResult& GetRPGInitializationResult() const;
-	bool IsInUpgradeSafeZone(const AActor* Knight) const;
+	virtual bool IsInUpgradeSafeZone(const AActor* Knight) const;
 
 protected:
 	virtual int32 GetInitialInventoryCapacity() const;

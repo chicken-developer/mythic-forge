@@ -1,27 +1,15 @@
-﻿{
-    "FileVersion":  3,
-    "EngineAssociation":  "5.8",
-    "Category":  "",
-    "Description":  "",
-    "Plugins":  [
-                    {
-                        "Name":  "ModelingToolsEditorMode",
-                        "Enabled":  true,
-                        "TargetAllowList":  [
-                                                "Editor"
-                                            ]
-                    }
-                ],
-    "Modules":  [
-                    {
-                        "Name":  "TDKKingdomMap",
-                        "Type":  "Runtime",
-                        "LoadingPhase":  "Default"
-                    },
-                    {
-                        "Name":  "ThanhABlockoutEditor",
-                        "Type":  "Editor",
-                        "LoadingPhase":  "Default"
-                    }
-                ]
+{
+    "FileVersion": 3,
+    "EngineAssociation": "5.8",
+    "Category": "",
+    "Description": "Thanh A environment handoff - content-only Unreal Engine 5.8 project",
+    "Plugins": [
+        {
+            "Name": "ModelingToolsEditorMode",
+            "Enabled": true,
+            "TargetAllowList": [
+                "Editor"
+            ]
+        }
+    ]
 }

@@ -1,0 +1,172 @@
+{
+  "map": "/Game/Gothic/Maps/L_Gothic_Lineup",
+  "row_width_cm": 17483.689819335938,
+  "buildings": [
+    {
+      "id": "variant_01",
+      "label": "Village Chapel",
+      "actor": "/Game/Gothic/Maps/L_Gothic_Lineup.L_Gothic_Lineup:PersistentLevel.StaticMeshActor_2",
+      "position_cm": [
+        -8038.344909667969,
+        -637.5,
+        20.0
+      ],
+      "size_cm": [
+        907.0,
+        1275.0,
+        1113.701416015625
+      ]
+    },
+    {
+      "id": "variant_02",
+      "label": "Town Church",
+      "actor": "/Game/Gothic/Maps/L_Gothic_Lineup.L_Gothic_Lineup:PersistentLevel.StaticMeshActor_5",
+      "position_cm": [
+        -6516.594909667969,
+        -1088.75,
+        20.0
+      ],
+      "size_cm": [
+        1136.5,
+        2177.5,
+        1250.0
+      ]
+    },
+    {
+      "id": "variant_03",
+      "label": "Gothic Townhouse",
+      "actor": "/Game/Gothic/Maps/L_Gothic_Lineup.L_Gothic_Lineup:PersistentLevel.StaticMeshActor_8",
+      "position_cm": [
+        -5150.844909667969,
+        -343.75,
+        20.0
+      ],
+      "size_cm": [
+        595.0,
+        687.5,
+        1273.85595703125
+      ]
+    },
+    {
+      "id": "variant_04",
+      "label": "Twin Tower Church",
+      "actor": "/Game/Gothic/Maps/L_Gothic_Lineup.L_Gothic_Lineup:PersistentLevel.StaticMeshActor_11",
+      "position_cm": [
+        -3637.8449096679688,
+        -1556.25,
+        20.0
+      ],
+      "size_cm": [
+        1431.0,
+        3112.5,
+        1860.0
+      ]
+    },
+    {
+      "id": "variant_05",
+      "label": "Clock Gate",
+      "actor": "/Game/Gothic/Maps/L_Gothic_Lineup.L_Gothic_Lineup:PersistentLevel.StaticMeshActor_14",
+      "position_cm": [
+        -1825.192626953125,
+        -226.0,
+        20.0
+      ],
+      "size_cm": [
+        1194.3045654296875,
+        452.0,
+        2555.0
+      ]
+    },
+    {
+      "id": "variant_06",
+      "label": "Dark Cathedral",
+      "actor": "/Game/Gothic/Maps/L_Gothic_Lineup.L_Gothic_Lineup:PersistentLevel.StaticMeshActor_17",
+      "position_cm": [
+        149.45965576171875,
+        -1556.25,
+        20.0
+      ],
+      "size_cm": [
+        1755.0,
+        3112.5,
+        3160.0
+      ]
+    },
+    {
+      "id": "variant_07",
+      "label": "Civic Watchtower",
+      "actor": "/Game/Gothic/Maps/L_Gothic_Lineup.L_Gothic_Lineup:PersistentLevel.StaticMeshActor_20",
+      "position_cm": [
+        1736.9596557617188,
+        -210.0,
+        20.0
+      ],
+      "size_cm": [
+        420.0,
+        420.0,
+        2960.0
+      ]
+    },
+    {
+      "id": "variant_08",
+      "label": "Layered Twin Basilica",
+      "actor": "/Game/Gothic/Maps/L_Gothic_Lineup.L_Gothic_Lineup:PersistentLevel.StaticMeshActor_23",
+      "position_cm": [
+        3262.4596557617188,
+        -1192.25,
+        20.0
+      ],
+      "size_cm": [
+        1631.0,
+        2384.5,
+        2380.0
+      ]
+    },
+    {
+      "id": "variant_09",
+      "label": "Astronomical City Gate",
+      "actor": "/Game/Gothic/Maps/L_Gothic_Lineup.L_Gothic_Lineup:PersistentLevel.StaticMeshActor_26",
+      "position_cm": [
+        5252.402282714844,
+        -226.0,
+        20.0
+      ],
+      "size_cm": [
+        1348.88525390625,
+        452.0,
+        3055.0
+      ]
+    },
+    {
+      "id": "variant_10",
+      "label": "Ceremonial High Cathedral",
+      "actor": "/Game/Gothic/Maps/L_Gothic_Lineup.L_Gothic_Lineup:PersistentLevel.StaticMeshActor_29",
+      "position_cm": [
+        7459.344909667969,
+        -1767.25,
+        20.0
+      ],
+      "size_cm": [
+        2065.0,
+        3534.5,
+        3759.999755859375
+      ]
+    }
+  ],
+  "cameras": [
+    "CAM_variant_01",
+    "CAM_variant_02",
+    "CAM_variant_03",
+    "CAM_variant_04",
+    "CAM_variant_05",
+    "CAM_variant_06",
+    "CAM_variant_07",
+    "CAM_variant_08",
+    "CAM_variant_09",
+    "CAM_variant_10",
+    "CAM_Overview",
+    "CAM_Group_A",
+    "CAM_Group_B",
+    "CAM_Group_C"
+  ]
+}

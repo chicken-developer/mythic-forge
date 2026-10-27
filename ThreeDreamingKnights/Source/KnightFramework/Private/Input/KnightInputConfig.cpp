@@ -101,6 +101,37 @@ void UKnightInputConfig::InitializeDefaultMapping()
 		CombatMappingContext->MapKey(Action, Binding.Gamepad);
 		CombatInputTags.Add(Binding.Tag);
 	}
+	OriginalGameplayMappings = MappingContext->GetMappings();
+	OriginalCombatMappings = CombatMappingContext->GetMappings();
+}
+
+FKnightResult UKnightInputConfig::ApplyDesktopRemapping(const TMap<FKey, FKey>& Remapping)
+{
+	InitializeDefaultMapping();
+	TSet<FKey> Used;
+	for (const TPair<FKey, FKey>& Pair : Remapping)
+	{
+		if (!Pair.Key.IsValid() || !Pair.Value.IsValid() || Pair.Key.IsGamepadKey()
+			|| Pair.Value.IsGamepadKey() || Pair.Value.IsAnalog() || Used.Contains(Pair.Value))
+		{
+			return FKnightResult::Failure(EKnightError::Conflict, TEXT("InputRemap"), FText::GetEmpty());
+		}
+		Used.Add(Pair.Value);
+	}
+	const auto Rebuild = [&Remapping](UInputMappingContext* Context, const TArray<FEnhancedActionKeyMapping>& Original)
+	{
+		Context->UnmapAll();
+		for (const FEnhancedActionKeyMapping& Source : Original)
+		{
+			const FKey* Key = Remapping.Find(Source.Key);
+			FEnhancedActionKeyMapping& Mapping = Context->MapKey(Source.Action, Key != nullptr ? *Key : Source.Key);
+			Mapping.Modifiers = Source.Modifiers;
+			Mapping.Triggers = Source.Triggers;
+		}
+	};
+	Rebuild(MappingContext, OriginalGameplayMappings);
+	Rebuild(CombatMappingContext, OriginalCombatMappings);
+	return FKnightResult::Success();
 }
 
 const UInputAction* UKnightInputConfig::FindAction(const FGameplayTag& InputTag) const

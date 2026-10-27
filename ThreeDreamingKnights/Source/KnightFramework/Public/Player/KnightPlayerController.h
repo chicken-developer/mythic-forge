@@ -36,6 +36,7 @@ public:
 	void RequestAbilityInput(const FGameplayTag& InputTag, bool bPressed);
 	void RequestInteract();
 	void ResetControlInput();
+	void SetLocalInputPreferences(float Sensitivity, bool bInvertY, bool bToggleBlock, bool bHoldLock);
 	virtual void SetPawn(APawn* InPawn) override;
 	virtual void SetPlayer(UPlayer* InPlayer) override;
 
@@ -123,6 +124,9 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Knight|Input", meta = (ClampMin = "0.01"))
 	float LookSensitivity = 1.0f;
+	bool bInvertLookY = false;
+	bool bToggleBlockInput = false;
+	bool bHoldLockInput = false;
 
 	TArray<uint32> InputBindingHandles;
 	FDelegateHandle AbilityResultHandle;

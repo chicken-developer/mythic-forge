@@ -3,6 +3,7 @@
 #include "CoreMinimal.h"
 #include "Assets/KnightDefinition.h"
 #include "Attributes/KnightAttributeSet.h"
+#include "Skills/KnightSkillTypes.h"
 #include "KnightAIArchetypeDefinition.generated.h"
 
 class UEnvQuery;
@@ -42,6 +43,9 @@ class KNIGHTAI_API UKnightAIArchetypeDefinition : public UKnightDefinition
 	GENERATED_BODY()
 
 public:
+	/** Optional kit executed by the same StateTree/GAS action used by companions. */
+	UPROPERTY(EditDefaultsOnly, Category = "Knight|AI|Skills")
+	FKnightSkillBuild Specialization;
 	UKnightAIArchetypeDefinition();
 	const FKnightAIArchetypeTuning& GetTuning() const;
 	FPrimaryAssetId GetCombatProfileId() const;

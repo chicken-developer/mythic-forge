@@ -351,12 +351,23 @@ FKnightResult UKnightRPGComponent::ValidateSnapshot(const FKnightRPGSnapshot& Sn
 	{
 		if (!Offer.RewardId.IsValid() || OfferIds.Contains(Offer.RewardId) || Offer.DemoRunId != Snapshot.View.DemoRunId
 			|| Offer.Currency < 0 || Offer.Currency > KnightGear::MaximumCurrency || Offer.Level < 1 || Offer.Level > 8
-			|| Offer.Items.IsEmpty() || Offer.Items.Num() > 41)
+			|| (Offer.Items.IsEmpty() && Offer.BoundItems.IsEmpty()) || Offer.Items.Num() > 41
+			|| Offer.BoundItems.Num() > 3)
 		{
 			return FKnightResult::Failure(EKnightError::InvalidData, TEXT("SnapshotRewardOffer"),
 				LOCTEXT("SnapshotRewardOffer", "Every persisted reward is one complete bounded offer for the retained demo generation."));
 		}
 		OfferIds.Add(Offer.RewardId);
+		TSet<FGuid> BoundIds;
+		for (const FGuid& BoundId : Offer.BoundItems)
+		{
+			if (!BoundId.IsValid() || BoundIds.Contains(BoundId))
+			{
+				return FKnightResult::Failure(EKnightError::InvalidData, TEXT("SnapshotRewardBinding"),
+					LOCTEXT("SnapshotRewardBinding", "Retained starter bindings require distinct exact instance IDs."));
+			}
+			BoundIds.Add(BoundId);
+		}
 		TSet<FPrimaryAssetId> DefinitionIds;
 		for (const FKnightGearRewardItem& Item : Offer.Items)
 		{

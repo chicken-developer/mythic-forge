@@ -113,7 +113,29 @@ FKnightResult UKnightCombatDirectorSubsystem::TrySetBudgets(int32 InGlobalBudget
 	}
 	GlobalBudget = InGlobalBudget;
 	PerTargetBudget = InPerTargetBudget;
+	PartyBudget = HostileBudget = InGlobalBudget;
 	return FKnightResult::Success();
+}
+
+int32 UKnightCombatDirectorSubsystem::GetHostileBudget() const
+{
+	return HostileBudget;
+}
+
+FKnightResult UKnightCombatDirectorSubsystem::TrySetTeamBudgets(const int32 InPartyBudget,
+	const int32 InHostileBudget, const int32 InPerTargetBudget)
+{
+	if (InPartyBudget < 1 || InHostileBudget < 1 || InPartyBudget > 32 || InHostileBudget > 32)
+	{
+		return KnightDirectorFailure(EKnightError::InvalidData, TEXT("AttackTeamBudgets"));
+	}
+	const FKnightResult Result = TrySetBudgets(InPartyBudget + InHostileBudget, InPerTargetBudget);
+	if (Result.IsSuccess())
+	{
+		PartyBudget = InPartyBudget;
+		HostileBudget = InHostileBudget;
+	}
+	return Result;
 }
 
 FKnightResult UKnightCombatDirectorSubsystem::TryAcquireAttackToken(AActor* Source, AActor* Target,
@@ -162,7 +184,17 @@ FKnightResult UKnightCombatDirectorSubsystem::TryAcquireAttackToken(AActor* Sour
 			return KnightDirectorFailure(EKnightError::Conflict, TEXT("AttackLeaseSourceActive"));
 		}
 	}
-	if (ActiveLeases.Num() >= GlobalBudget || GetActiveLeaseCountForTarget(TargetASC->GetEntityId()) >= PerTargetBudget)
+	const bool bHostile = SourceASC->HasMatchingGameplayTag(KnightGameplayTags::Role_Enemy);
+	int32 SideLeases = 0;
+	for (const TPair<FGuid, FKnightActiveAttackLease>& Entry : ActiveLeases)
+	{
+		if (const UKnightAbilitySystemComponent* ExistingASC = KnightDirectorASC(Entry.Value.Source.Get()))
+		{
+			SideLeases += ExistingASC->HasMatchingGameplayTag(KnightGameplayTags::Role_Enemy) == bHostile ? 1 : 0;
+		}
+	}
+	if (ActiveLeases.Num() >= GlobalBudget || SideLeases >= (bHostile ? HostileBudget : PartyBudget)
+		|| GetActiveLeaseCountForTarget(TargetASC->GetEntityId()) >= PerTargetBudget)
 	{
 		return KnightDirectorFailure(EKnightError::CapacityExceeded, TEXT("AttackLeaseBudgetExhausted"));
 	}

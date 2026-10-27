@@ -3,6 +3,8 @@
 #include "CoreMinimal.h"
 #include "GameplayTagContainer.h"
 #include "InputActionValue.h"
+#include "EnhancedActionKeyMapping.h"
+#include "Types/KnightResult.h"
 #include "UObject/Object.h"
 #include "KnightInputConfig.generated.h"
 
@@ -22,6 +24,7 @@ public:
 	UInputMappingContext* GetMappingContext() const;
 	UInputMappingContext* GetCombatMappingContext() const;
 	bool IsCombatInput(const FGameplayTag& InputTag) const;
+	FKnightResult ApplyDesktopRemapping(const TMap<FKey, FKey>& Remapping);
 
 private:
 	UInputAction* CreateAction(const FGameplayTag& InputTag, EInputActionValueType ValueType, FName ActionName);
@@ -35,6 +38,10 @@ private:
 	UPROPERTY(Transient)
 	TObjectPtr<UInputMappingContext> CombatMappingContext;
 	TSet<FGameplayTag> CombatInputTags;
+	UPROPERTY(Transient)
+	TArray<FEnhancedActionKeyMapping> OriginalGameplayMappings;
+	UPROPERTY(Transient)
+	TArray<FEnhancedActionKeyMapping> OriginalCombatMappings;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Knight|Input|Gamepad", meta = (ClampMin = "0", ClampMax = "0.9"))
 	float GamepadDeadZone = 0.2f;

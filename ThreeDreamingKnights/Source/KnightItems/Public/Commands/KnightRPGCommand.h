@@ -32,7 +32,8 @@ enum class EKnightRPGOperation : uint8
 	UpgradeItem,
 	ClaimReward,
 	BindConsumable,
-	ApplyGearPreset
+	ApplyGearPreset,
+	DeliverQuestItem
 };
 
 /** Sparse client intent. Costs, counts, definitions and GAS classes are resolved by authority. */
