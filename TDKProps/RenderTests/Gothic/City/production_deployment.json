@@ -1,0 +1,41 @@
+{
+  "status": "passed",
+  "version": "3.0",
+  "presets": 28,
+  "type_name": "quynh::gothic_building::3.0",
+  "source": "gothic_building.hip",
+  "hda": "asset/gothic_building.hda",
+  "backup": "houdini_output/backups/v3_rollout",
+  "validation": {
+    "points": 304894,
+    "triangles": 559028,
+    "size_m": [
+      14.359999656677246,
+      18.600000381469727,
+      23.18000030517578
+    ],
+    "min_m": [
+      -7.179999828338623,
+      0.0,
+      -2.75
+    ],
+    "max_m": [
+      7.179999828338623,
+      18.600000381469727,
+      20.43000030517578
+    ],
+    "invalid_normals": 0,
+    "degenerate_triangles": 0,
+    "python_sops": 0,
+    "native_nodes": 1680,
+    "sweeps": 34,
+    "bevels": 69,
+    "materials": {
+      "trim": 270482,
+      "stone": 281918,
+      "roof": 1024,
+      "glass": 5548,
+      "metal": 56
+    }
+  }
+}

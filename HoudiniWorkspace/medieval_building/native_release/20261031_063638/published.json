@@ -1,0 +1,18 @@
+{
+  "status": "passed",
+  "type": "quynh::storybook_blockout::5.1",
+  "preset_count": 24,
+  "source_core": "v5.1; original shape/seeds/chamfer topology retained",
+  "native_fixes": [
+    "persist HDA parameter interface",
+    "HOM polygon winding matches supplied N",
+    "normalize float32 live blockout dimensions to 1 micrometre"
+  ],
+  "hda": "E:\\Repos\\HoudiniWorkspace\\medieval_building\\asset\\medieval_building.hda",
+  "hip": "E:\\Repos\\HoudiniWorkspace\\medieval_building\\medieval_building.hip",
+  "hip_sha256": "216ca827466507a345a6e701c0123937322d5395d210c302ad431e195f9803ac",
+  "embedded_texture_count": 45,
+  "preset_menu": true,
+  "native_material_binding": true,
+  "authoring": "E:\\Repos\\HoudiniWorkspace\\medieval_building\\native_release\\20261031_063638\\authoring"
+}

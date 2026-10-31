@@ -1,0 +1,61 @@
+{
+  "schema_version": 2,
+  "variant_id": "variant_14",
+  "label": "Weaver Terrace",
+  "district": "working",
+  "use": "dwelling",
+  "source_kind": "generated_constrained",
+  "comparison_kind": "city_catalog",
+  "reference_ids": [
+    "master",
+    "preset_01",
+    "preset_05"
+  ],
+  "parameters": {
+    "building_type": "residence",
+    "plan_layout": "hall",
+    "length_bays": 5,
+    "bay_length": 4.0,
+    "nave_width": 5.11,
+    "wall_height": 5.9,
+    "wall_thickness": 0.35,
+    "roof_pitch": 45.6,
+    "tower_layout": "none",
+    "tower_floors": 3,
+    "tower_floor_height": 4.0,
+    "spire_height": 0.0,
+    "town_floors": 2,
+    "dormer_count": 0,
+    "detail": 0.3,
+    "stone_palette": "sandstone",
+    "gold_accents": false,
+    "clock_enable": false,
+    "global_scale": 1.0,
+    "facade_style": "lancet",
+    "window_pattern": "single",
+    "tower_crown": "canopied",
+    "gate_composition": "fortified",
+    "roof_material": "slate",
+    "ridge_detail": "sparse",
+    "porch_depth": 0.0,
+    "urban_program": "dwelling",
+    "urban_plan": "deep",
+    "front_bays": 2,
+    "floor_height": 2.96,
+    "urban_depth": 6.62,
+    "urban_roof": "stepped",
+    "balcony_enable": false,
+    "chimney_count": 1
+  },
+  "seeds": {
+    "layout": 1284282291,
+    "decoration": 1877984562
+  },
+  "assumptions": [
+    "Inferred residential/civic plan within the approved Gothic module language; not a copied architectural survey"
+  ],
+  "outputs": {
+    "geometry": "geometry/variant_14.obj",
+    "result": "results/variant_14.json"
+  }
+}

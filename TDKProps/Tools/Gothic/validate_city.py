@@ -9,7 +9,14 @@ request=json.loads((R/'validation_request.json').read_text()) if (R/'validation_
 mode=request['mode'];report={'status':'failed','mode':mode,'meshes':[]}
 try:
     sm=u.get_editor_subsystem(u.StaticMeshEditorSubsystem)
-    for row in manifest['variants']:
+    # StaticMeshEditorSubsystem collision queries are unavailable during PIE.
+    # Runtime acceptance uses physical traces below; editor asset checks have
+    # already been recorded after reopening the saved packages.
+    if mode=='play':
+        editor=json.loads((OUT/'validation_editor.json').read_text())
+        assert editor['status']=='passed' and len(editor['meshes'])==28
+        report['asset_validation']='validation_editor.json'
+    for row in manifest['variants'] if mode=='editor' else []:
         mesh=u.load_asset('/Game/Gothic/Buildings/SM_Gothic_'+row['id']);assert mesh
         box=mesh.get_bounding_box();size=list((box.max-box.min).to_tuple())
         expected=[row['size_m'][0]*100,row['size_m'][2]*100,row['size_m'][1]*100]
@@ -35,7 +42,7 @@ try:
         pawn=u.GameplayStatics.get_player_pawn(world,0);assert pawn
         assert isinstance(pawn,u.Character),'Expected the walking Third Person character'
         report['pawn_class']=pawn.get_class().get_path_name();report['pawn_location_cm']=list(pawn.get_actor_location().to_tuple())
-        capsule=pawn.get_capsule_component();assert capsule.get_collision_enabled()!=u.CollisionEnabled.NO_COLLISION
+        capsule=pawn.get_component_by_class(u.CapsuleComponent);assert capsule and capsule.get_collision_enabled()!=u.CollisionEnabled.NO_COLLISION
     buildings=[a for a in actors if 'GothicCityBuilding' in [str(t) for t in a.tags]]
     layout=json.loads((ROOT/'TDKProps/SourceAssets/Gothic/city_layout.json').read_text())
     assert len(buildings)==layout['building_instances'],(len(buildings),layout['building_instances'])

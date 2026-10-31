@@ -62,9 +62,9 @@ def materials():
 def run():
     request=json.loads((R/'import_request.json').read_text()) if (R/'import_request.json').exists() else {}
     selected=request.get('ids')
-    if selected:
-        rows=[json.loads((ROOT/'HoudiniWorkspace/gothic_building/houdini_output/production/records'/(i+'_game.json')).read_text()) for i in selected]
-    else:rows=json.loads((SOURCE/'mesh_manifest.json').read_text())['variants']
+    manifest=json.loads((SOURCE/'mesh_manifest.json').read_text())
+    rows=[r for r in manifest['variants'] if not selected or r['id'] in selected]
+    if selected:assert {r['id'] for r in rows}==set(selected),'Unknown dataset ID'
     instances=materials();u.SystemLibrary.execute_console_command(None,'Interchange.FeatureFlags.Import.FBX 0')
     previous=json.loads((R/'asset_import.json').read_text()) if (R/'asset_import.json').exists() else {'meshes':[]}
     by_id={r['id']:r for r in previous['meshes']};report={'status':'running','run_id':request.get('run_id','preview'),'meshes':list(by_id.values())}
@@ -89,7 +89,7 @@ def run():
         mesh.get_editor_property('body_setup').set_editor_property('collision_trace_flag',u.CollisionTraceFlag.CTF_USE_COMPLEX_AS_SIMPLE)
         nanite=SM.get_nanite_settings(mesh);nanite.enabled=True;nanite.fallback_relative_error=.1
         SM.set_nanite_settings(mesh,nanite,True)
-        for k,v in {'SourceHIP':'HoudiniWorkspace/gothic_building/gothic_building.hip','GeneratorVersion':'3.0','District':district,'Program':row['use'],'Dataset':row['id']}.items():u.EditorAssetLibrary.set_metadata_tag(mesh,k,v)
+        for k,v in {'SourceHIP':manifest['source_hip'],'GeneratorVersion':'3.0','District':district,'Program':row['use'],'Dataset':row['id']}.items():u.EditorAssetLibrary.set_metadata_tag(mesh,k,v)
         u.EditorAssetLibrary.save_loaded_asset(mesh)
         box=mesh.get_bounding_box();size=list((box.max-box.min).to_tuple())
         expected=[row['size_m'][0]*100,row['size_m'][2]*100,row['size_m'][1]*100]
@@ -101,6 +101,7 @@ def run():
         u.log('CITY_IMPORTED '+row['id'])
     report['status']='passed';(R/'asset_import.json').write_text(json.dumps(report,indent=2))
     (R/'import_error.txt').unlink(missing_ok=True)
-try:run()
-except Exception:
-    (R/'import_error.txt').write_text(traceback.format_exc());raise
+if __name__=='__main__':
+    try:run()
+    except Exception:
+        (R/'import_error.txt').write_text(traceback.format_exc());raise

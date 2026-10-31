@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "variant_id": "variant_06",
+  "label": "Dark Cathedral",
+  "complexity": "complex",
+  "comparison_kind": "preset",
+  "source_kind": "input",
+  "reference_ids": [
+    "preset_06"
+  ],
+  "parameters": {
+    "building_type": "church",
+    "plan_layout": "cross_aisles",
+    "length_bays": 7,
+    "bay_length": 4.0,
+    "nave_width": 8.0,
+    "wall_height": 10.0,
+    "wall_thickness": 0.35,
+    "roof_pitch": 50.0,
+    "tower_layout": "front_pair_crossing",
+    "tower_floors": 4,
+    "tower_floor_height": 4.0,
+    "spire_height": 9.0,
+    "town_floors": 3,
+    "dormer_count": 2,
+    "detail": 1.0,
+    "stone_palette": "basalt",
+    "gold_accents": true,
+    "clock_enable": false,
+    "global_scale": 1.0,
+    "facade_style": "tracery_front",
+    "window_pattern": "rhythmic",
+    "tower_crown": "openwork",
+    "roof_material": "slate",
+    "ridge_detail": "sparse",
+    "gate_composition": "fortified",
+    "porch_depth": 1.2,
+    "urban_program": "dwelling",
+    "urban_plan": "compact",
+    "front_bays": 3,
+    "floor_height": 3.1,
+    "urban_depth": 7.0,
+    "urban_roof": "gable",
+    "balcony_enable": false,
+    "chimney_count": 1
+  },
+  "seeds": {
+    "layout": 42,
+    "decoration": 101
+  },
+  "module_dependencies": [],
+  "expected_features": {
+    "building_type": "church",
+    "plan_layout": "cross_aisles",
+    "length_bays": 7,
+    "tower_layout": "front_pair_crossing"
+  },
+  "assumptions": [
+    "Hidden elevations inferred; no calibrated dimensions",
+    "Stone/sculpt/stained-glass detailing approximated procedurally"
+  ],
+  "outputs": {
+    "geometry": "geometry/variant_06.obj",
+    "hero": "previews/variant_06_hero.png",
+    "comparison": "comparisons/variant_06.png",
+    "result": "results/variant_06.json"
+  },
+  "district": "landmark",
+  "use": "religious"
+}

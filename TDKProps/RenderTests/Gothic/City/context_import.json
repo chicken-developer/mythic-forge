@@ -1,0 +1,35 @@
+{
+  "status": "passed",
+  "props": [
+    {
+      "id": "Lamp",
+      "asset": "/Game/Gothic/City/Context/SM_City_Lamp.SM_City_Lamp",
+      "triangles": 5476
+    },
+    {
+      "id": "Bench",
+      "asset": "/Game/Gothic/City/Context/SM_City_Bench.SM_City_Bench",
+      "triangles": 2444
+    },
+    {
+      "id": "Fountain",
+      "asset": "/Game/Gothic/City/Context/SM_City_Fountain.SM_City_Fountain",
+      "triangles": 7760
+    },
+    {
+      "id": "Planter",
+      "asset": "/Game/Gothic/City/Context/SM_City_Planter.SM_City_Planter",
+      "triangles": 1336
+    },
+    {
+      "id": "Cypress",
+      "asset": "/Game/Gothic/City/Context/SM_City_Cypress.SM_City_Cypress",
+      "triangles": 2872
+    },
+    {
+      "id": "Wall",
+      "asset": "/Game/Gothic/City/Context/SM_City_Wall.SM_City_Wall",
+      "triangles": 1504
+    }
+  ]
+}

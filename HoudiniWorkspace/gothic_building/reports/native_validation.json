@@ -1,0 +1,1036 @@
+{
+  "status": "passed",
+  "houdini": "22.0.368",
+  "graph_version": "2.2",
+  "results": [
+    {
+      "points": 26009,
+      "primitives": 21233,
+      "surface_area": 5597.500170166755,
+      "reference_surface_area": 5597.500441656178,
+      "reference_primitives": 21233,
+      "surface_area_relative_tolerance": 0.001,
+      "surface_area_loss_tolerance": 2e-05,
+      "relative_area_error": 4.8501902851084625e-08,
+      "maximum_bound_error": 3.8146972514141453e-07,
+      "reversed_normals": 0,
+      "python_sops": 0,
+      "native_nodes": 467,
+      "finite": true,
+      "errors": [],
+      "assembly_audit": {
+        "surface_volume_tests": 133828,
+        "residual_intrusions": 0,
+        "examples": [],
+        "attachment_checks": {
+          "nave_bearing_height": 9.0,
+          "nave_roof_at_wall": 9.0,
+          "eave_gap": 0.0,
+          "tower_rear_plane": 0.43,
+          "aisle_attachment_height": 6.4799999999999995
+        },
+        "trim_stats": [
+          {
+            "module": "nave",
+            "faces_removed": 80,
+            "faces_clipped": 192,
+            "cutters": [
+              "aisle_-1",
+              "aisle_1",
+              "front_tower_-1_body",
+              "front_tower_-1_spire",
+              "front_tower_1_body",
+              "front_tower_1_spire"
+            ]
+          },
+          {
+            "module": "aisle_-1",
+            "faces_removed": 33,
+            "faces_clipped": 34,
+            "cutters": [
+              "nave_envelope",
+              "nave_slab_-1",
+              "nave_slab_1",
+              "aisle_1",
+              "front_tower_-1_body",
+              "front_tower_-1_spire",
+              "front_tower_1_body",
+              "front_tower_1_spire"
+            ]
+          },
+          {
+            "module": "aisle_1",
+            "faces_removed": 33,
+            "faces_clipped": 34,
+            "cutters": [
+              "nave_envelope",
+              "nave_slab_-1",
+              "nave_slab_1",
+              "aisle_-1",
+              "front_tower_-1_body",
+              "front_tower_-1_spire",
+              "front_tower_1_body",
+              "front_tower_1_spire"
+            ]
+          },
+          {
+            "module": "front_tower_-1",
+            "faces_removed": 77,
+            "faces_clipped": 68,
+            "cutters": [
+              "nave_envelope",
+              "nave_slab_-1",
+              "nave_slab_1",
+              "aisle_-1",
+              "aisle_1",
+              "front_tower_1_body",
+              "front_tower_1_spire"
+            ]
+          },
+          {
+            "module": "front_tower_1",
+            "faces_removed": 77,
+            "faces_clipped": 68,
+            "cutters": [
+              "nave_envelope",
+              "nave_slab_-1",
+              "nave_slab_1",
+              "aisle_-1",
+              "aisle_1",
+              "front_tower_-1_body",
+              "front_tower_-1_spire"
+            ]
+          }
+        ]
+      },
+      "seconds": 19.514,
+      "variant_id": "baseline",
+      "build_seconds": 4.929
+    },
+    {
+      "points": 6109,
+      "primitives": 5118,
+      "surface_area": 1618.2783219072944,
+      "reference_surface_area": 1618.278348328649,
+      "reference_primitives": 5118,
+      "surface_area_relative_tolerance": 0.001,
+      "surface_area_loss_tolerance": 2e-05,
+      "relative_area_error": 1.6326829393987763e-08,
+      "maximum_bound_error": 1.5258789076710855e-07,
+      "reversed_normals": 0,
+      "python_sops": 0,
+      "native_nodes": 33,
+      "finite": true,
+      "errors": [],
+      "assembly_audit": {
+        "surface_volume_tests": 0,
+        "residual_intrusions": 0,
+        "examples": [],
+        "attachment_checks": {
+          "nave_bearing_height": 5.5,
+          "nave_roof_at_wall": 5.5,
+          "eave_gap": 0.0,
+          "tower_rear_plane": 0.43,
+          "aisle_attachment_height": null
+        },
+        "trim_stats": [
+          {
+            "module": "nave",
+            "faces_removed": 0,
+            "faces_clipped": 0,
+            "cutters": []
+          }
+        ]
+      },
+      "seconds": 5.902,
+      "variant_id": "variant_01",
+      "build_seconds": 1.104
+    },
+    {
+      "points": 18477,
+      "primitives": 14559,
+      "surface_area": 3279.2312066506092,
+      "reference_surface_area": 3279.2312931603005,
+      "reference_primitives": 14559,
+      "surface_area_relative_tolerance": 0.001,
+      "surface_area_loss_tolerance": 2e-05,
+      "relative_area_error": 2.638108860474279e-08,
+      "maximum_bound_error": 1.5258789076710855e-07,
+      "reversed_normals": 0,
+      "python_sops": 0,
+      "native_nodes": 132,
+      "finite": true,
+      "errors": [],
+      "assembly_audit": {
+        "surface_volume_tests": 18011,
+        "residual_intrusions": 0,
+        "examples": [],
+        "attachment_checks": {
+          "nave_bearing_height": 6.5,
+          "nave_roof_at_wall": 6.5,
+          "eave_gap": 0.0,
+          "tower_rear_plane": 0.43,
+          "aisle_attachment_height": null
+        },
+        "trim_stats": [
+          {
+            "module": "nave",
+            "faces_removed": 9,
+            "faces_clipped": 38,
+            "cutters": [
+              "front_single_body"
+            ]
+          },
+          {
+            "module": "front_single",
+            "faces_removed": 37,
+            "faces_clipped": 61,
+            "cutters": [
+              "nave_envelope",
+              "nave_slab_-1",
+              "nave_slab_1"
+            ]
+          }
+        ]
+      },
+      "seconds": 14.772,
+      "variant_id": "variant_02",
+      "build_seconds": 3.425
+    },
+    {
+      "points": 12911,
+      "primitives": 10421,
+      "surface_area": 1123.7026967844392,
+      "reference_surface_area": 1123.702679887582,
+      "reference_primitives": 10421,
+      "surface_area_relative_tolerance": 0.001,
+      "surface_area_loss_tolerance": 2e-05,
+      "relative_area_error": 1.503676865324027e-08,
+      "maximum_bound_error": 3.8215544506670085e-07,
+      "reversed_normals": 0,
+      "python_sops": 0,
+      "native_nodes": 146,
+      "finite": true,
+      "errors": [],
+      "assembly_audit": {
+        "surface_volume_tests": 68,
+        "residual_intrusions": 0,
+        "examples": [],
+        "attachment_checks": {
+          "eave_gap": 0.0,
+          "nave_roof_at_wall": 9.3,
+          "nave_bearing_height": 9.3,
+          "dormers": [
+            {
+              "id": 0,
+              "front_x": -2.47,
+              "back_x": -1.033945387263856,
+              "z": 1.8666666666666665,
+              "width": 0.95,
+              "host_at_front": 9.454927967037246,
+              "base": 9.354927967037247,
+              "roof_eave": 10.504927967037247,
+              "roof_peak": 11.071010923519497
+            },
+            {
+              "id": 1,
+              "front_x": -2.47,
+              "back_x": -1.033945387263856,
+              "z": 3.733333333333333,
+              "width": 0.95,
+              "host_at_front": 9.454927967037246,
+              "base": 9.354927967037247,
+              "roof_eave": 10.504927967037247,
+              "roof_peak": 11.071010923519497
+            }
+          ]
+        },
+        "trim_stats": [
+          {
+            "module": "main_roof",
+            "faces_removed": 0,
+            "faces_clipped": 2,
+            "cutters": [
+              "dormer_0_opening",
+              "dormer_1_opening"
+            ]
+          }
+        ]
+      },
+      "seconds": 8.385,
+      "variant_id": "variant_03",
+      "build_seconds": 1.62
+    },
+    {
+      "points": 30566,
+      "primitives": 25092,
+      "surface_area": 7002.914884035245,
+      "reference_surface_area": 7002.915285457681,
+      "reference_primitives": 25092,
+      "surface_area_relative_tolerance": 0.001,
+      "surface_area_loss_tolerance": 2e-05,
+      "relative_area_error": 5.732218934653424e-08,
+      "maximum_bound_error": 3.8146972514141453e-07,
+      "reversed_normals": 0,
+      "python_sops": 0,
+      "native_nodes": 467,
+      "finite": true,
+      "errors": [],
+      "assembly_audit": {
+        "surface_volume_tests": 156222,
+        "residual_intrusions": 0,
+        "examples": [],
+        "attachment_checks": {
+          "nave_bearing_height": 9.0,
+          "nave_roof_at_wall": 9.0,
+          "eave_gap": 0.0,
+          "tower_rear_plane": 0.43,
+          "aisle_attachment_height": 6.4799999999999995
+        },
+        "trim_stats": [
+          {
+            "module": "nave",
+            "faces_removed": 80,
+            "faces_clipped": 192,
+            "cutters": [
+              "aisle_-1",
+              "aisle_1",
+              "front_tower_-1_body",
+              "front_tower_-1_spire",
+              "front_tower_1_body",
+              "front_tower_1_spire"
+            ]
+          },
+          {
+            "module": "aisle_-1",
+            "faces_removed": 33,
+            "faces_clipped": 42,
+            "cutters": [
+              "nave_envelope",
+              "nave_slab_-1",
+              "nave_slab_1",
+              "aisle_1",
+              "front_tower_-1_body",
+              "front_tower_-1_spire",
+              "front_tower_1_body",
+              "front_tower_1_spire"
+            ]
+          },
+          {
+            "module": "aisle_1",
+            "faces_removed": 33,
+            "faces_clipped": 42,
+            "cutters": [
+              "nave_envelope",
+              "nave_slab_-1",
+              "nave_slab_1",
+              "aisle_-1",
+              "front_tower_-1_body",
+              "front_tower_-1_spire",
+              "front_tower_1_body",
+              "front_tower_1_spire"
+            ]
+          },
+          {
+            "module": "front_tower_-1",
+            "faces_removed": 77,
+            "faces_clipped": 68,
+            "cutters": [
+              "nave_envelope",
+              "nave_slab_-1",
+              "nave_slab_1",
+              "aisle_-1",
+              "aisle_1",
+              "front_tower_1_body",
+              "front_tower_1_spire"
+            ]
+          },
+          {
+            "module": "front_tower_1",
+            "faces_removed": 77,
+            "faces_clipped": 68,
+            "cutters": [
+              "nave_envelope",
+              "nave_slab_-1",
+              "nave_slab_1",
+              "aisle_-1",
+              "aisle_1",
+              "front_tower_-1_body",
+              "front_tower_-1_spire"
+            ]
+          }
+        ]
+      },
+      "seconds": 22.409,
+      "variant_id": "variant_04",
+      "build_seconds": 4.433
+    },
+    {
+      "points": 6827,
+      "primitives": 5661,
+      "surface_area": 1640.9728724219137,
+      "reference_surface_area": 1640.9729845286554,
+      "reference_primitives": 5661,
+      "surface_area_relative_tolerance": 0.001,
+      "surface_area_loss_tolerance": 2e-05,
+      "relative_area_error": 6.831723782802373e-08,
+      "maximum_bound_error": 7.629394538355427e-07,
+      "reversed_normals": 0,
+      "python_sops": 0,
+      "native_nodes": 317,
+      "finite": true,
+      "errors": [],
+      "assembly_audit": {
+        "surface_volume_tests": 30706,
+        "residual_intrusions": 0,
+        "examples": [],
+        "attachment_checks": {},
+        "trim_stats": [
+          {
+            "module": "city_gate",
+            "faces_removed": 1,
+            "faces_clipped": 25,
+            "cutters": [
+              "watchtower_body",
+              "watchtower_roof_0",
+              "watchtower_roof_1",
+              "watchtower_roof_2",
+              "stair_turret_body",
+              "stair_turret_cone"
+            ]
+          },
+          {
+            "module": "watchtower",
+            "faces_removed": 19,
+            "faces_clipped": 57,
+            "cutters": [
+              "city_gate",
+              "city_gate_slab_-1",
+              "city_gate_slab_1",
+              "stair_turret_body",
+              "stair_turret_cone"
+            ]
+          },
+          {
+            "module": "stair_turret",
+            "faces_removed": 58,
+            "faces_clipped": 85,
+            "cutters": [
+              "city_gate",
+              "city_gate_slab_-1",
+              "city_gate_slab_1",
+              "watchtower_body",
+              "watchtower_roof_0",
+              "watchtower_roof_1",
+              "watchtower_roof_2"
+            ]
+          }
+        ]
+      },
+      "seconds": 5.131,
+      "variant_id": "variant_05",
+      "build_seconds": 1.428
+    },
+    {
+      "points": 54661,
+      "primitives": 42909,
+      "surface_area": 8819.569079584484,
+      "reference_surface_area": 8813.26919916305,
+      "reference_primitives": 42901,
+      "surface_area_relative_tolerance": 0.001,
+      "surface_area_loss_tolerance": 2e-05,
+      "relative_area_error": 0.0007148176549550206,
+      "maximum_bound_error": 3.8146972691777137e-07,
+      "reversed_normals": 0,
+      "python_sops": 0,
+      "native_nodes": 845,
+      "finite": true,
+      "errors": [],
+      "assembly_audit": {
+        "surface_volume_tests": 707547,
+        "residual_intrusions": 0,
+        "examples": [],
+        "attachment_checks": {
+          "nave_bearing_height": 10.0,
+          "nave_roof_at_wall": 10.0,
+          "eave_gap": 0.0,
+          "tower_rear_plane": 0.43,
+          "aisle_attachment_height": 7.199999999999999
+        },
+        "trim_stats": [
+          {
+            "module": "nave",
+            "faces_removed": 88,
+            "faces_clipped": 214,
+            "cutters": [
+              "aisle_-1",
+              "aisle_1",
+              "transept_envelope",
+              "transept_slab_-1",
+              "transept_slab_1",
+              "front_tower_-1_body",
+              "front_tower_-1_roof_0",
+              "front_tower_-1_roof_1",
+              "front_tower_-1_roof_2",
+              "front_tower_1_body",
+              "front_tower_1_roof_0",
+              "front_tower_1_roof_1",
+              "front_tower_1_roof_2",
+              "crossing_body",
+              "crossing_roof_0",
+              "crossing_roof_1",
+              "crossing_roof_2"
+            ]
+          },
+          {
+            "module": "aisle_-1",
+            "faces_removed": 33,
+            "faces_clipped": 35,
+            "cutters": [
+              "nave_envelope",
+              "nave_slab_-1",
+              "nave_slab_1",
+              "aisle_1",
+              "transept_envelope",
+              "transept_slab_-1",
+              "transept_slab_1",
+              "front_tower_-1_body",
+              "front_tower_-1_roof_0",
+              "front_tower_-1_roof_1",
+              "front_tower_-1_roof_2",
+              "front_tower_1_body",
+              "front_tower_1_roof_0",
+              "front_tower_1_roof_1",
+              "front_tower_1_roof_2",
+              "crossing_body",
+              "crossing_roof_0",
+              "crossing_roof_1",
+              "crossing_roof_2"
+            ]
+          },
+          {
+            "module": "aisle_1",
+            "faces_removed": 33,
+            "faces_clipped": 35,
+            "cutters": [
+              "nave_envelope",
+              "nave_slab_-1",
+              "nave_slab_1",
+              "aisle_-1",
+              "transept_envelope",
+              "transept_slab_-1",
+              "transept_slab_1",
+              "front_tower_-1_body",
+              "front_tower_-1_roof_0",
+              "front_tower_-1_roof_1",
+              "front_tower_-1_roof_2",
+              "front_tower_1_body",
+              "front_tower_1_roof_0",
+              "front_tower_1_roof_1",
+              "front_tower_1_roof_2",
+              "crossing_body",
+              "crossing_roof_0",
+              "crossing_roof_1",
+              "crossing_roof_2"
+            ]
+          },
+          {
+            "module": "transept",
+            "faces_removed": 0,
+            "faces_clipped": 24,
+            "cutters": [
+              "nave_envelope",
+              "nave_slab_-1",
+              "nave_slab_1",
+              "aisle_-1",
+              "aisle_1",
+              "front_tower_-1_body",
+              "front_tower_-1_roof_0",
+              "front_tower_-1_roof_1",
+              "front_tower_-1_roof_2",
+              "front_tower_1_body",
+              "front_tower_1_roof_0",
+              "front_tower_1_roof_1",
+              "front_tower_1_roof_2",
+              "crossing_body",
+              "crossing_roof_0",
+              "crossing_roof_1",
+              "crossing_roof_2"
+            ]
+          },
+          {
+            "module": "front_tower_-1",
+            "faces_removed": 60,
+            "faces_clipped": 68,
+            "cutters": [
+              "nave_envelope",
+              "nave_slab_-1",
+              "nave_slab_1",
+              "aisle_-1",
+              "aisle_1",
+              "transept_envelope",
+              "transept_slab_-1",
+              "transept_slab_1",
+              "front_tower_1_body",
+              "front_tower_1_roof_0",
+              "front_tower_1_roof_1",
+              "front_tower_1_roof_2",
+              "crossing_body",
+              "crossing_roof_0",
+              "crossing_roof_1",
+              "crossing_roof_2"
+            ]
+          },
+          {
+            "module": "front_tower_1",
+            "faces_removed": 60,
+            "faces_clipped": 68,
+            "cutters": [
+              "nave_envelope",
+              "nave_slab_-1",
+              "nave_slab_1",
+              "aisle_-1",
+              "aisle_1",
+              "transept_envelope",
+              "transept_slab_-1",
+              "transept_slab_1",
+              "front_tower_-1_body",
+              "front_tower_-1_roof_0",
+              "front_tower_-1_roof_1",
+              "front_tower_-1_roof_2",
+              "crossing_body",
+              "crossing_roof_0",
+              "crossing_roof_1",
+              "crossing_roof_2"
+            ]
+          },
+          {
+            "module": "crossing",
+            "faces_removed": 18,
+            "faces_clipped": 80,
+            "cutters": [
+              "nave_envelope",
+              "nave_slab_-1",
+              "nave_slab_1",
+              "aisle_-1",
+              "aisle_1",
+              "transept_envelope",
+              "transept_slab_-1",
+              "transept_slab_1",
+              "front_tower_-1_body",
+              "front_tower_-1_roof_0",
+              "front_tower_-1_roof_1",
+              "front_tower_-1_roof_2",
+              "front_tower_1_body",
+              "front_tower_1_roof_0",
+              "front_tower_1_roof_1",
+              "front_tower_1_roof_2"
+            ]
+          }
+        ]
+      },
+      "seconds": 40.993,
+      "variant_id": "variant_06",
+      "build_seconds": 7.714
+    },
+    {
+      "points": 5882,
+      "primitives": 4986,
+      "surface_area": 1516.2393947665878,
+      "reference_surface_area": 1516.2393279227822,
+      "reference_primitives": 4986,
+      "surface_area_relative_tolerance": 0.001,
+      "surface_area_loss_tolerance": 2e-05,
+      "relative_area_error": 4.40852603986714e-08,
+      "maximum_bound_error": 3.8146972514141453e-07,
+      "reversed_normals": 0,
+      "python_sops": 0,
+      "native_nodes": 26,
+      "finite": true,
+      "errors": [],
+      "assembly_audit": {
+        "surface_volume_tests": 0,
+        "residual_intrusions": 0,
+        "examples": [],
+        "attachment_checks": {},
+        "trim_stats": []
+      },
+      "seconds": 3.766,
+      "variant_id": "variant_07",
+      "build_seconds": 0.529
+    },
+    {
+      "points": 27131,
+      "primitives": 22187,
+      "surface_area": 6682.800114256831,
+      "reference_surface_area": 6682.800432285131,
+      "reference_primitives": 22187,
+      "surface_area_relative_tolerance": 0.001,
+      "surface_area_loss_tolerance": 2e-05,
+      "relative_area_error": 4.758907637503529e-08,
+      "maximum_bound_error": 1.1444091789769573e-06,
+      "reversed_normals": 0,
+      "python_sops": 0,
+      "native_nodes": 413,
+      "finite": true,
+      "errors": [],
+      "assembly_audit": {
+        "surface_volume_tests": 140366,
+        "residual_intrusions": 0,
+        "examples": [],
+        "attachment_checks": {
+          "nave_bearing_height": 10.0,
+          "nave_roof_at_wall": 10.0,
+          "eave_gap": 0.0,
+          "tower_rear_plane": 0.43,
+          "aisle_attachment_height": 7.199999999999999
+        },
+        "trim_stats": [
+          {
+            "module": "nave",
+            "faces_removed": 72,
+            "faces_clipped": 162,
+            "cutters": [
+              "aisle_-1",
+              "aisle_1",
+              "front_tower_-1_body",
+              "front_tower_-1_spire",
+              "front_tower_1_body",
+              "front_tower_1_spire"
+            ]
+          },
+          {
+            "module": "aisle_-1",
+            "faces_removed": 39,
+            "faces_clipped": 34,
+            "cutters": [
+              "nave_envelope",
+              "nave_slab_-1",
+              "nave_slab_1",
+              "aisle_1",
+              "front_tower_-1_body",
+              "front_tower_-1_spire",
+              "front_tower_1_body",
+              "front_tower_1_spire"
+            ]
+          },
+          {
+            "module": "aisle_1",
+            "faces_removed": 39,
+            "faces_clipped": 34,
+            "cutters": [
+              "nave_envelope",
+              "nave_slab_-1",
+              "nave_slab_1",
+              "aisle_-1",
+              "front_tower_-1_body",
+              "front_tower_-1_spire",
+              "front_tower_1_body",
+              "front_tower_1_spire"
+            ]
+          },
+          {
+            "module": "front_tower_-1",
+            "faces_removed": 66,
+            "faces_clipped": 82,
+            "cutters": [
+              "nave_envelope",
+              "nave_slab_-1",
+              "nave_slab_1",
+              "aisle_-1",
+              "aisle_1",
+              "front_tower_1_body",
+              "front_tower_1_spire"
+            ]
+          },
+          {
+            "module": "front_tower_1",
+            "faces_removed": 66,
+            "faces_clipped": 82,
+            "cutters": [
+              "nave_envelope",
+              "nave_slab_-1",
+              "nave_slab_1",
+              "aisle_-1",
+              "aisle_1",
+              "front_tower_-1_body",
+              "front_tower_-1_spire"
+            ]
+          }
+        ]
+      },
+      "seconds": 20.01,
+      "variant_id": "variant_08",
+      "build_seconds": 4.194
+    },
+    {
+      "points": 6848,
+      "primitives": 5673,
+      "surface_area": 1836.487365865199,
+      "reference_surface_area": 1836.4873769453525,
+      "reference_primitives": 5673,
+      "surface_area_relative_tolerance": 0.001,
+      "surface_area_loss_tolerance": 2e-05,
+      "relative_area_error": 6.0333403530734486e-09,
+      "maximum_bound_error": 7.629394538355427e-07,
+      "reversed_normals": 0,
+      "python_sops": 0,
+      "native_nodes": 317,
+      "finite": true,
+      "errors": [],
+      "assembly_audit": {
+        "surface_volume_tests": 30784,
+        "residual_intrusions": 0,
+        "examples": [],
+        "attachment_checks": {},
+        "trim_stats": [
+          {
+            "module": "city_gate",
+            "faces_removed": 1,
+            "faces_clipped": 25,
+            "cutters": [
+              "watchtower_body",
+              "watchtower_roof_0",
+              "watchtower_roof_1",
+              "watchtower_roof_2",
+              "stair_turret_body",
+              "stair_turret_cone"
+            ]
+          },
+          {
+            "module": "watchtower",
+            "faces_removed": 19,
+            "faces_clipped": 57,
+            "cutters": [
+              "city_gate",
+              "city_gate_slab_-1",
+              "city_gate_slab_1",
+              "stair_turret_body",
+              "stair_turret_cone"
+            ]
+          },
+          {
+            "module": "stair_turret",
+            "faces_removed": 58,
+            "faces_clipped": 85,
+            "cutters": [
+              "city_gate",
+              "city_gate_slab_-1",
+              "city_gate_slab_1",
+              "watchtower_body",
+              "watchtower_roof_0",
+              "watchtower_roof_1",
+              "watchtower_roof_2"
+            ]
+          }
+        ]
+      },
+      "seconds": 5.361,
+      "variant_id": "variant_09",
+      "build_seconds": 1.462
+    },
+    {
+      "points": 68139,
+      "primitives": 53217,
+      "surface_area": 11902.975675573733,
+      "reference_surface_area": 11902.975735019665,
+      "reference_primitives": 53217,
+      "surface_area_relative_tolerance": 0.001,
+      "surface_area_loss_tolerance": 2e-05,
+      "relative_area_error": 4.994207651626774e-09,
+      "maximum_bound_error": 1.5258789076710855e-06,
+      "reversed_normals": 0,
+      "python_sops": 0,
+      "native_nodes": 845,
+      "finite": true,
+      "errors": [],
+      "assembly_audit": {
+        "surface_volume_tests": 883995,
+        "residual_intrusions": 0,
+        "examples": [],
+        "attachment_checks": {
+          "nave_bearing_height": 12.0,
+          "nave_roof_at_wall": 12.0,
+          "eave_gap": 0.0,
+          "tower_rear_plane": 0.43,
+          "aisle_attachment_height": 8.64
+        },
+        "trim_stats": [
+          {
+            "module": "nave",
+            "faces_removed": 98,
+            "faces_clipped": 256,
+            "cutters": [
+              "aisle_-1",
+              "aisle_1",
+              "transept_envelope",
+              "transept_slab_-1",
+              "transept_slab_1",
+              "front_tower_-1_body",
+              "front_tower_-1_roof_0",
+              "front_tower_-1_roof_1",
+              "front_tower_-1_roof_2",
+              "front_tower_1_body",
+              "front_tower_1_roof_0",
+              "front_tower_1_roof_1",
+              "front_tower_1_roof_2",
+              "crossing_body",
+              "crossing_roof_0",
+              "crossing_roof_1",
+              "crossing_roof_2"
+            ]
+          },
+          {
+            "module": "aisle_-1",
+            "faces_removed": 34,
+            "faces_clipped": 39,
+            "cutters": [
+              "nave_envelope",
+              "nave_slab_-1",
+              "nave_slab_1",
+              "aisle_1",
+              "transept_envelope",
+              "transept_slab_-1",
+              "transept_slab_1",
+              "front_tower_-1_body",
+              "front_tower_-1_roof_0",
+              "front_tower_-1_roof_1",
+              "front_tower_-1_roof_2",
+              "front_tower_1_body",
+              "front_tower_1_roof_0",
+              "front_tower_1_roof_1",
+              "front_tower_1_roof_2",
+              "crossing_body",
+              "crossing_roof_0",
+              "crossing_roof_1",
+              "crossing_roof_2"
+            ]
+          },
+          {
+            "module": "aisle_1",
+            "faces_removed": 34,
+            "faces_clipped": 39,
+            "cutters": [
+              "nave_envelope",
+              "nave_slab_-1",
+              "nave_slab_1",
+              "aisle_-1",
+              "transept_envelope",
+              "transept_slab_-1",
+              "transept_slab_1",
+              "front_tower_-1_body",
+              "front_tower_-1_roof_0",
+              "front_tower_-1_roof_1",
+              "front_tower_-1_roof_2",
+              "front_tower_1_body",
+              "front_tower_1_roof_0",
+              "front_tower_1_roof_1",
+              "front_tower_1_roof_2",
+              "crossing_body",
+              "crossing_roof_0",
+              "crossing_roof_1",
+              "crossing_roof_2"
+            ]
+          },
+          {
+            "module": "transept",
+            "faces_removed": 0,
+            "faces_clipped": 24,
+            "cutters": [
+              "nave_envelope",
+              "nave_slab_-1",
+              "nave_slab_1",
+              "aisle_-1",
+              "aisle_1",
+              "front_tower_-1_body",
+              "front_tower_-1_roof_0",
+              "front_tower_-1_roof_1",
+              "front_tower_-1_roof_2",
+              "front_tower_1_body",
+              "front_tower_1_roof_0",
+              "front_tower_1_roof_1",
+              "front_tower_1_roof_2",
+              "crossing_body",
+              "crossing_roof_0",
+              "crossing_roof_1",
+              "crossing_roof_2"
+            ]
+          },
+          {
+            "module": "front_tower_-1",
+            "faces_removed": 69,
+            "faces_clipped": 80,
+            "cutters": [
+              "nave_envelope",
+              "nave_slab_-1",
+              "nave_slab_1",
+              "aisle_-1",
+              "aisle_1",
+              "transept_envelope",
+              "transept_slab_-1",
+              "transept_slab_1",
+              "front_tower_1_body",
+              "front_tower_1_roof_0",
+              "front_tower_1_roof_1",
+              "front_tower_1_roof_2",
+              "crossing_body",
+              "crossing_roof_0",
+              "crossing_roof_1",
+              "crossing_roof_2"
+            ]
+          },
+          {
+            "module": "front_tower_1",
+            "faces_removed": 69,
+            "faces_clipped": 80,
+            "cutters": [
+              "nave_envelope",
+              "nave_slab_-1",
+              "nave_slab_1",
+              "aisle_-1",
+              "aisle_1",
+              "transept_envelope",
+              "transept_slab_-1",
+              "transept_slab_1",
+              "front_tower_-1_body",
+              "front_tower_-1_roof_0",
+              "front_tower_-1_roof_1",
+              "front_tower_-1_roof_2",
+              "crossing_body",
+              "crossing_roof_0",
+              "crossing_roof_1",
+              "crossing_roof_2"
+            ]
+          },
+          {
+            "module": "crossing",
+            "faces_removed": 18,
+            "faces_clipped": 80,
+            "cutters": [
+              "nave_envelope",
+              "nave_slab_-1",
+              "nave_slab_1",
+              "aisle_-1",
+              "aisle_1",
+              "transept_envelope",
+              "transept_slab_-1",
+              "transept_slab_1",
+              "front_tower_-1_body",
+              "front_tower_-1_roof_0",
+              "front_tower_-1_roof_1",
+              "front_tower_-1_roof_2",
+              "front_tower_1_body",
+              "front_tower_1_roof_0",
+              "front_tower_1_roof_1",
+              "front_tower_1_roof_2"
+            ]
+          }
+        ]
+      },
+      "seconds": 54.431,
+      "variant_id": "variant_10",
+      "build_seconds": 8.874
+    }
+  ],
+  "failures": []
+}

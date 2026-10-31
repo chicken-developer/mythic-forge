@@ -1,0 +1,61 @@
+{
+  "schema_version": 2,
+  "variant_id": "variant_24",
+  "label": "Masons Guildhall",
+  "district": "public",
+  "use": "guildhall",
+  "source_kind": "generated_constrained",
+  "comparison_kind": "city_catalog",
+  "reference_ids": [
+    "master",
+    "preset_01",
+    "preset_05"
+  ],
+  "parameters": {
+    "building_type": "public",
+    "plan_layout": "hall",
+    "length_bays": 5,
+    "bay_length": 4.0,
+    "nave_width": 14.04,
+    "wall_height": 6.9,
+    "wall_thickness": 0.35,
+    "roof_pitch": 44.4,
+    "tower_layout": "none",
+    "tower_floors": 3,
+    "tower_floor_height": 4.0,
+    "spire_height": 0.0,
+    "town_floors": 2,
+    "dormer_count": 0,
+    "detail": 0.68,
+    "stone_palette": "limestone",
+    "gold_accents": false,
+    "clock_enable": false,
+    "global_scale": 1.0,
+    "facade_style": "lancet",
+    "window_pattern": "single",
+    "tower_crown": "canopied",
+    "gate_composition": "fortified",
+    "roof_material": "slate",
+    "ridge_detail": "sparse",
+    "porch_depth": 1.4,
+    "urban_program": "guildhall",
+    "urban_plan": "deep",
+    "front_bays": 5,
+    "floor_height": 3.45,
+    "urban_depth": 10.06,
+    "urban_roof": "stepped",
+    "balcony_enable": false,
+    "chimney_count": 1
+  },
+  "seeds": {
+    "layout": 1353574362,
+    "decoration": 922938766
+  },
+  "assumptions": [
+    "Inferred residential/civic plan within the approved Gothic module language; not a copied architectural survey"
+  ],
+  "outputs": {
+    "geometry": "geometry/variant_24.obj",
+    "result": "results/variant_24.json"
+  }
+}

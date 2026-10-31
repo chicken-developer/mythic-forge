@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "variant_id": "variant_03",
+  "label": "Gothic Townhouse",
+  "complexity": "medium",
+  "comparison_kind": "preset",
+  "source_kind": "input",
+  "reference_ids": [
+    "preset_05"
+  ],
+  "parameters": {
+    "building_type": "townhouse",
+    "plan_layout": "hall",
+    "length_bays": 5,
+    "bay_length": 4.0,
+    "nave_width": 8.0,
+    "wall_height": 9.0,
+    "wall_thickness": 0.35,
+    "roof_pitch": 50.0,
+    "tower_layout": "none",
+    "tower_floors": 3,
+    "tower_floor_height": 4.0,
+    "spire_height": 6.0,
+    "town_floors": 3,
+    "dormer_count": 2,
+    "detail": 0.3,
+    "stone_palette": "limestone",
+    "gold_accents": false,
+    "clock_enable": false,
+    "global_scale": 1.0,
+    "facade_style": "lancet",
+    "window_pattern": "paired",
+    "tower_crown": "pyramid",
+    "roof_material": "copper",
+    "ridge_detail": "sparse",
+    "gate_composition": "fortified",
+    "porch_depth": 0.0,
+    "urban_program": "dwelling",
+    "urban_plan": "compact",
+    "front_bays": 3,
+    "floor_height": 3.1,
+    "urban_depth": 7.0,
+    "urban_roof": "gable",
+    "balcony_enable": false,
+    "chimney_count": 1
+  },
+  "seeds": {
+    "layout": 42,
+    "decoration": 101
+  },
+  "module_dependencies": [],
+  "expected_features": {
+    "building_type": "townhouse",
+    "plan_layout": "hall",
+    "length_bays": 5,
+    "tower_layout": "none"
+  },
+  "assumptions": [
+    "Hidden elevations inferred; no calibrated dimensions",
+    "Stone/sculpt/stained-glass detailing approximated procedurally"
+  ],
+  "outputs": {
+    "geometry": "geometry/variant_03.obj",
+    "hero": "previews/variant_03_hero.png",
+    "comparison": "comparisons/variant_03.png",
+    "result": "results/variant_03.json"
+  },
+  "district": "landmark",
+  "use": "civic"
+}

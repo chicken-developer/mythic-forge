@@ -38,6 +38,28 @@ Content/HoudiniEngine/Temp/*
 !/RenderTests/Gothic/**
 /Tools/Gothic/__pycache__/
 
+# Current prop catalogs, portable Houdini definitions, and validation evidence.
+!/CATALOG_GUIDE.txt
+!/MEDIEVAL_GUIDE.txt
+!/CITY_GUIDE.txt
+!/SourceAssets/Houdini/**
+/SourceAssets/Houdini/**/__pycache__/
+/SourceAssets/Houdini/**/backup/
+/SourceAssets/Houdini/Gothic/production_pipeline.py
+!/SourceAssets/Medieval/mesh_manifest*.json
+!/SourceAssets/Medieval/material_manifest.json
+!/SourceAssets/Medieval/Meshes/*.fbx
+!/SourceAssets/Medieval/Low/*.fbx
+!/SourceAssets/Medieval/High/*.fbx
+!/Tools/Props/**
+/Tools/Props/__pycache__/
+!/Tools/Medieval/build_levels.py
+!/Tools/Medieval/import_assets.py
+!/Tools/Medieval/scene.py
+!/RenderTests/PropsDetail/**
+!/RenderTests/BuildingJoints/**
+!/RenderTests/EditableHDA/**
+
 # OS/platform generated files.
 
 # Windows

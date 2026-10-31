@@ -66,12 +66,17 @@ def camera(label,location,target,focal=35.,aspect=16/9):
 def begin(level):
     dirty=u.EditorLoadingAndSavingUtils.get_dirty_map_packages()
     world=u.get_editor_subsystem(u.UnrealEditorSubsystem).get_editor_world()
-    if dirty and world.get_path_name().split('.')[0]!=level:
+    current=world.get_path_name().split('.')[0]
+    if dirty and current!=level:
         # Preserve intervening user scene edits in a concrete backup before switching.
         name='BeforeCity_'+datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
         assert u.EditorLoadingAndSavingUtils.save_map(world,A+'/Backups/'+name)
-    if u.EditorAssetLibrary.does_asset_exist(level):assert LE.load_level(level)
-    else:assert LE.new_level(level)
+    # Python wrappers to the current World or dirty Packages keep them alive
+    # during map unloading and cause Unreal's world-leak fatal check.
+    del world,dirty
+    if current!=level:
+        if u.EditorAssetLibrary.does_asset_exist(level):assert LE.load_level(level)
+        else:assert LE.new_level(level)
     for a in EA.get_all_level_actors():
         if TAG in [str(t) for t in a.tags]:EA.destroy_actor(a)
 

@@ -1,0 +1,34 @@
+{
+  "status": "passed",
+  "family": "Medieval",
+  "id": "01_townhouse_base",
+  "parameters_changed": {
+    "width_m": 5.3
+  },
+  "outputs": [
+    {
+      "mesh": "/Game/Medieval/Houdini/Working/01_townhouse_base/medieval_building_editable/45EF643F/medieval_building_editable_15261_15266_0_main_geo.medieval_building_editable_15261_15266_0_main_geo",
+      "triangles": 60690,
+      "size_cm": [
+        840.0000305175781,
+        827.9999694824219,
+        1133.2034912109375
+      ],
+      "materials": [
+        "/Game/Medieval/Materials/MI_MD_stone.MI_MD_stone",
+        "/Game/Medieval/Materials/MI_MD_plaster.MI_MD_plaster",
+        "/Game/Medieval/Materials/MI_MD_wood.MI_MD_wood",
+        "/Game/Medieval/Materials/MI_MD_glass.MI_MD_glass",
+        "/Game/Medieval/Materials/MI_MD_teal.MI_MD_teal",
+        "/Game/Medieval/Materials/MI_MD_metal.MI_MD_metal",
+        "/Game/Medieval/Materials/MI_MD_leaf.MI_MD_leaf",
+        "/Game/Medieval/Materials/MI_MD_tile.MI_MD_tile",
+        "/Game/Medieval/Materials/MI_MD_light.MI_MD_light",
+        "/Game/Medieval/Materials/MI_MD_sail.MI_MD_sail",
+        "/Game/Medieval/Materials/MI_MD_canvas.MI_MD_canvas",
+        "/Game/Medieval/Materials/MI_MD_flower.MI_MD_flower"
+      ]
+    }
+  ],
+  "auto_bake": false
+}

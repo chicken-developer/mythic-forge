@@ -1,0 +1,329 @@
+{
+  "variant_id": "variant_10",
+  "effective_config": {
+    "parameters": {
+      "building_type": "church",
+      "plan_layout": "cross_aisles",
+      "length_bays": 7,
+      "bay_length": 4.5,
+      "nave_width": 10.0,
+      "wall_height": 12.0,
+      "wall_thickness": 0.35,
+      "roof_pitch": 50.0,
+      "tower_layout": "front_pair_crossing",
+      "tower_floors": 5,
+      "tower_floor_height": 4.0,
+      "spire_height": 9.0,
+      "town_floors": 3,
+      "dormer_count": 2,
+      "detail": 0.6,
+      "stone_palette": "limestone",
+      "gold_accents": true,
+      "clock_enable": false,
+      "global_scale": 1.0,
+      "facade_style": "tracery_front",
+      "window_pattern": "rhythmic",
+      "tower_crown": "openwork",
+      "roof_material": "slate",
+      "ridge_detail": "sparse",
+      "gate_composition": "fortified",
+      "porch_depth": 1.2
+    },
+    "seeds": {
+      "layout": 42,
+      "decoration": 101
+    }
+  },
+  "generator_sha256": "cb20149f7ee8c761a6d821b7b879d871a106042aed8584bdd88087584db34de3",
+  "runtime": {
+    "python": "3.12.14",
+    "houdini": null
+  },
+  "stages": {
+    "code_generated": true,
+    "static_checked": true,
+    "houdini_cooked": "not_run",
+    "geometry_exported": true,
+    "rendered": true,
+    "hda_packaged": "not_run"
+  },
+  "failures": [],
+  "image_provenance": "offline_geometry_preview",
+  "houdini_cook_seconds": null,
+  "metrics": {
+    "points": 213384,
+    "primitives": 53217,
+    "bounds_min": [
+      -10.325000000000001,
+      0.0,
+      -3.4699999999999998
+    ],
+    "bounds_max": [
+      10.325000000000001,
+      37.6,
+      31.875
+    ],
+    "finite": true,
+    "duplicate_faces": 0,
+    "degenerate_faces": 0,
+    "mesh_sha256": "87f8a9f62875f622a3c88fc2622310aa334b1dc5bd75ca7effc759ee00e0a203"
+  },
+  "core_build_seconds": 45.140892273000645,
+  "spatial_layout": {
+    "units": "metres_before_global_scale",
+    "nave": [
+      -5.0,
+      5.0,
+      0,
+      31.5
+    ],
+    "entrance": {
+      "center": [
+        0,
+        0
+      ],
+      "clear_width": 2.2
+    },
+    "choir": [
+      26.46,
+      31.5
+    ],
+    "crossing": [
+      16.46,
+      26.46
+    ],
+    "transept_bearing": 12.0,
+    "nave_bearing": 12.0,
+    "transept_ridge": 17.958767962971052,
+    "nave_ridge": 17.958767962971052,
+    "functions": [
+      "nave_seating",
+      "central_aisle",
+      "chancel_altar",
+      "side_aisle_circulation",
+      "transept_chapels",
+      "crossing"
+    ],
+    "assumed": true
+  },
+  "observed_features": {
+    "openings": 89,
+    "towers": 3,
+    "dormers": 0,
+    "flying_buttresses": 12
+  },
+  "feature_count_scope": "constructed before interface clipping",
+  "deterministic": true,
+  "assembly_audit": {
+    "surface_volume_tests": 883995,
+    "residual_intrusions": 0,
+    "examples": [],
+    "attachment_checks": {
+      "nave_bearing_height": 12.0,
+      "nave_roof_at_wall": 12.0,
+      "eave_gap": 0.0,
+      "tower_rear_plane": 0.43,
+      "aisle_attachment_height": 8.64
+    },
+    "trim_stats": [
+      {
+        "module": "nave",
+        "faces_removed": 98,
+        "faces_clipped": 256,
+        "cutters": [
+          "aisle_-1",
+          "aisle_1",
+          "transept_envelope",
+          "transept_slab_-1",
+          "transept_slab_1",
+          "front_tower_-1_body",
+          "front_tower_-1_roof_0",
+          "front_tower_-1_roof_1",
+          "front_tower_-1_roof_2",
+          "front_tower_1_body",
+          "front_tower_1_roof_0",
+          "front_tower_1_roof_1",
+          "front_tower_1_roof_2",
+          "crossing_body",
+          "crossing_roof_0",
+          "crossing_roof_1",
+          "crossing_roof_2"
+        ]
+      },
+      {
+        "module": "aisle_-1",
+        "faces_removed": 34,
+        "faces_clipped": 39,
+        "cutters": [
+          "nave_envelope",
+          "nave_slab_-1",
+          "nave_slab_1",
+          "aisle_1",
+          "transept_envelope",
+          "transept_slab_-1",
+          "transept_slab_1",
+          "front_tower_-1_body",
+          "front_tower_-1_roof_0",
+          "front_tower_-1_roof_1",
+          "front_tower_-1_roof_2",
+          "front_tower_1_body",
+          "front_tower_1_roof_0",
+          "front_tower_1_roof_1",
+          "front_tower_1_roof_2",
+          "crossing_body",
+          "crossing_roof_0",
+          "crossing_roof_1",
+          "crossing_roof_2"
+        ]
+      },
+      {
+        "module": "aisle_1",
+        "faces_removed": 34,
+        "faces_clipped": 39,
+        "cutters": [
+          "nave_envelope",
+          "nave_slab_-1",
+          "nave_slab_1",
+          "aisle_-1",
+          "transept_envelope",
+          "transept_slab_-1",
+          "transept_slab_1",
+          "front_tower_-1_body",
+          "front_tower_-1_roof_0",
+          "front_tower_-1_roof_1",
+          "front_tower_-1_roof_2",
+          "front_tower_1_body",
+          "front_tower_1_roof_0",
+          "front_tower_1_roof_1",
+          "front_tower_1_roof_2",
+          "crossing_body",
+          "crossing_roof_0",
+          "crossing_roof_1",
+          "crossing_roof_2"
+        ]
+      },
+      {
+        "module": "transept",
+        "faces_removed": 0,
+        "faces_clipped": 24,
+        "cutters": [
+          "nave_envelope",
+          "nave_slab_-1",
+          "nave_slab_1",
+          "aisle_-1",
+          "aisle_1",
+          "front_tower_-1_body",
+          "front_tower_-1_roof_0",
+          "front_tower_-1_roof_1",
+          "front_tower_-1_roof_2",
+          "front_tower_1_body",
+          "front_tower_1_roof_0",
+          "front_tower_1_roof_1",
+          "front_tower_1_roof_2",
+          "crossing_body",
+          "crossing_roof_0",
+          "crossing_roof_1",
+          "crossing_roof_2"
+        ]
+      },
+      {
+        "module": "front_tower_-1",
+        "faces_removed": 69,
+        "faces_clipped": 80,
+        "cutters": [
+          "nave_envelope",
+          "nave_slab_-1",
+          "nave_slab_1",
+          "aisle_-1",
+          "aisle_1",
+          "transept_envelope",
+          "transept_slab_-1",
+          "transept_slab_1",
+          "front_tower_1_body",
+          "front_tower_1_roof_0",
+          "front_tower_1_roof_1",
+          "front_tower_1_roof_2",
+          "crossing_body",
+          "crossing_roof_0",
+          "crossing_roof_1",
+          "crossing_roof_2"
+        ]
+      },
+      {
+        "module": "front_tower_1",
+        "faces_removed": 69,
+        "faces_clipped": 80,
+        "cutters": [
+          "nave_envelope",
+          "nave_slab_-1",
+          "nave_slab_1",
+          "aisle_-1",
+          "aisle_1",
+          "transept_envelope",
+          "transept_slab_-1",
+          "transept_slab_1",
+          "front_tower_-1_body",
+          "front_tower_-1_roof_0",
+          "front_tower_-1_roof_1",
+          "front_tower_-1_roof_2",
+          "crossing_body",
+          "crossing_roof_0",
+          "crossing_roof_1",
+          "crossing_roof_2"
+        ]
+      },
+      {
+        "module": "crossing",
+        "faces_removed": 18,
+        "faces_clipped": 80,
+        "cutters": [
+          "nave_envelope",
+          "nave_slab_-1",
+          "nave_slab_1",
+          "aisle_-1",
+          "aisle_1",
+          "transept_envelope",
+          "transept_slab_-1",
+          "transept_slab_1",
+          "front_tower_-1_body",
+          "front_tower_-1_roof_0",
+          "front_tower_-1_roof_1",
+          "front_tower_-1_roof_2",
+          "front_tower_1_body",
+          "front_tower_1_roof_0",
+          "front_tower_1_roof_1",
+          "front_tower_1_roof_2"
+        ]
+      }
+    ]
+  },
+  "geometry_origin": "pure_python_core_obj",
+  "camera": {
+    "lo": [
+      -7.574639175257732,
+      -2.9974433556003537,
+      -25.56555770697824
+    ],
+    "hi": [
+      29.342268041237116,
+      40.26154737762091,
+      15.874427803294951
+    ],
+    "projection": "orthographic",
+    "view_direction": [
+      -0.72,
+      0.4,
+      -0.65
+    ],
+    "resolution": [
+      1100,
+      900
+    ],
+    "light_direction": [
+      -0.4,
+      0.8,
+      -0.5
+    ],
+    "ambient": 0.48
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "schema_version": 2,
+  "variant_id": "variant_17",
+  "label": "Merchant Townhouse",
+  "district": "middle",
+  "use": "dwelling",
+  "source_kind": "generated_constrained",
+  "comparison_kind": "city_catalog",
+  "reference_ids": [
+    "master",
+    "preset_01",
+    "preset_05"
+  ],
+  "parameters": {
+    "building_type": "residence",
+    "plan_layout": "hall",
+    "length_bays": 5,
+    "bay_length": 4.0,
+    "nave_width": 7.94,
+    "wall_height": 8.85,
+    "wall_thickness": 0.35,
+    "roof_pitch": 48.8,
+    "tower_layout": "none",
+    "tower_floors": 3,
+    "tower_floor_height": 4.0,
+    "spire_height": 0.0,
+    "town_floors": 3,
+    "dormer_count": 0,
+    "detail": 0.52,
+    "stone_palette": "limestone",
+    "gold_accents": false,
+    "clock_enable": false,
+    "global_scale": 1.0,
+    "facade_style": "lancet",
+    "window_pattern": "single",
+    "tower_crown": "canopied",
+    "gate_composition": "fortified",
+    "roof_material": "slate",
+    "ridge_detail": "sparse",
+    "porch_depth": 0.0,
+    "urban_program": "dwelling",
+    "urban_plan": "deep",
+    "front_bays": 3,
+    "floor_height": 3.1,
+    "urban_depth": 8.53,
+    "urban_roof": "stepped",
+    "balcony_enable": true,
+    "chimney_count": 1
+  },
+  "seeds": {
+    "layout": 2116662374,
+    "decoration": 257961063
+  },
+  "assumptions": [
+    "Inferred residential/civic plan within the approved Gothic module language; not a copied architectural survey"
+  ],
+  "outputs": {
+    "geometry": "geometry/variant_17.obj",
+    "result": "results/variant_17.json"
+  }
+}

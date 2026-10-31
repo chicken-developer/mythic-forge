@@ -1,0 +1,248 @@
+{
+  "version": "5.1-interior",
+  "baseline": "restored v5",
+  "records": [
+    {
+      "id": "01_townhouse_base",
+      "config": "assets/datasets/01_townhouse_base.json",
+      "geometry": "assets/geometry/01_townhouse_base_high.obj",
+      "result": "results/01_townhouse_base.json",
+      "vertices": 41116,
+      "polygons": 42648,
+      "source_sha256": "9a5953edcf5fb9fc7cb4ef23e5b65bf7f5b091f81acdb43556e018a8cdc79561"
+    },
+    {
+      "id": "01_townhouse_compact",
+      "config": "assets/datasets/01_townhouse_compact.json",
+      "geometry": "assets/geometry/01_townhouse_compact_high.obj",
+      "result": "results/01_townhouse_compact.json",
+      "vertices": 40378,
+      "polygons": 41958,
+      "source_sha256": "3419f5bbbee3eff7c8d272f164ddf44c8906a0b4337ca5739c7b778844e2570a"
+    },
+    {
+      "id": "01_townhouse_large",
+      "config": "assets/datasets/01_townhouse_large.json",
+      "geometry": "assets/geometry/01_townhouse_large_high.obj",
+      "result": "results/01_townhouse_large.json",
+      "vertices": 55672,
+      "polygons": 57343,
+      "source_sha256": "a94222f32080b4320c5babad8711e23bfb28f9bfde3c030256dd33a94605132e"
+    },
+    {
+      "id": "01_townhouse_small",
+      "config": "assets/datasets/01_townhouse_small.json",
+      "geometry": "assets/geometry/01_townhouse_small_high.obj",
+      "result": "results/01_townhouse_small.json",
+      "vertices": 22420,
+      "polygons": 23306,
+      "source_sha256": "829bfd461f999c7d67b312eaf6e286e001026876d59758c6d2bb026a44931884"
+    },
+    {
+      "id": "02_round_workshop_base",
+      "config": "assets/datasets/02_round_workshop_base.json",
+      "geometry": "assets/geometry/02_round_workshop_base_high.obj",
+      "result": "results/02_round_workshop_base.json",
+      "vertices": 31662,
+      "polygons": 32822,
+      "source_sha256": "a20f10893957610bed65a05cef154432eebd6d937c185f2f2e96b8437c0921d8"
+    },
+    {
+      "id": "02_round_workshop_compact",
+      "config": "assets/datasets/02_round_workshop_compact.json",
+      "geometry": "assets/geometry/02_round_workshop_compact_high.obj",
+      "result": "results/02_round_workshop_compact.json",
+      "vertices": 27894,
+      "polygons": 28996,
+      "source_sha256": "edd775fc83b068119c6380593866922f83e8c4026d7f08a1048c117db837e4d8"
+    },
+    {
+      "id": "02_round_workshop_large",
+      "config": "assets/datasets/02_round_workshop_large.json",
+      "geometry": "assets/geometry/02_round_workshop_large_high.obj",
+      "result": "results/02_round_workshop_large.json",
+      "vertices": 36136,
+      "polygons": 37068,
+      "source_sha256": "7ee1b161249546c9c29c4fe5257711fe56a49b4a3eeeacd358c6372648181146"
+    },
+    {
+      "id": "02_round_workshop_small",
+      "config": "assets/datasets/02_round_workshop_small.json",
+      "geometry": "assets/geometry/02_round_workshop_small_high.obj",
+      "result": "results/02_round_workshop_small.json",
+      "vertices": 15359,
+      "polygons": 15732,
+      "source_sha256": "c5284675f5c2cb50811da01768b8b81bf59d604e2a75a724ac01b5b9e01df4c9"
+    },
+    {
+      "id": "03_village_inn_base",
+      "config": "assets/datasets/03_village_inn_base.json",
+      "geometry": "assets/geometry/03_village_inn_base_high.obj",
+      "result": "results/03_village_inn_base.json",
+      "vertices": 46152,
+      "polygons": 46771,
+      "source_sha256": "bf5abf368ad9c0f60da03f31784a47cdc411660828fcf3f6e0c5229effc99500"
+    },
+    {
+      "id": "03_village_inn_compact",
+      "config": "assets/datasets/03_village_inn_compact.json",
+      "geometry": "assets/geometry/03_village_inn_compact_high.obj",
+      "result": "results/03_village_inn_compact.json",
+      "vertices": 34400,
+      "polygons": 35152,
+      "source_sha256": "0b88267b2f19f9ec0ea643f614abd5f12d13347c4453f91186f318debcb112f2"
+    },
+    {
+      "id": "03_village_inn_large",
+      "config": "assets/datasets/03_village_inn_large.json",
+      "geometry": "assets/geometry/03_village_inn_large_high.obj",
+      "result": "results/03_village_inn_large.json",
+      "vertices": 66173,
+      "polygons": 67187,
+      "source_sha256": "359eb923a313e5d33a064e7e9cbeda19d20bb2b16199b1195953154d943a8dfe"
+    },
+    {
+      "id": "03_village_inn_small",
+      "config": "assets/datasets/03_village_inn_small.json",
+      "geometry": "assets/geometry/03_village_inn_small_high.obj",
+      "result": "results/03_village_inn_small.json",
+      "vertices": 28811,
+      "polygons": 29550,
+      "source_sha256": "195e8e272c03cb225ebe1bba6b986cc79f61cb701f981ce33fa34a288f18252c"
+    },
+    {
+      "id": "04_windmill_base",
+      "config": "assets/datasets/04_windmill_base.json",
+      "geometry": "assets/geometry/04_windmill_base_high.obj",
+      "result": "results/04_windmill_base.json",
+      "vertices": 20071,
+      "polygons": 20449,
+      "source_sha256": "70f47681b60d6743e944b4d823759c23b39522b54498665c2b70d7edc5ac921f"
+    },
+    {
+      "id": "04_windmill_compact",
+      "config": "assets/datasets/04_windmill_compact.json",
+      "geometry": "assets/geometry/04_windmill_compact_high.obj",
+      "result": "results/04_windmill_compact.json",
+      "vertices": 28014,
+      "polygons": 28911,
+      "source_sha256": "226285dfc0c0962235e2defd2a39e4936c6e4b6be0aa23bedaee85834c084609"
+    },
+    {
+      "id": "04_windmill_large",
+      "config": "assets/datasets/04_windmill_large.json",
+      "geometry": "assets/geometry/04_windmill_large_high.obj",
+      "result": "results/04_windmill_large.json",
+      "vertices": 43941,
+      "polygons": 45582,
+      "source_sha256": "2d1cedc1a964d218b3cc8be73074e7b8c7f876f76221fcc087eb62f9efa13d45"
+    },
+    {
+      "id": "04_windmill_small",
+      "config": "assets/datasets/04_windmill_small.json",
+      "geometry": "assets/geometry/04_windmill_small_high.obj",
+      "result": "results/04_windmill_small.json",
+      "vertices": 17935,
+      "polygons": 18432,
+      "source_sha256": "08d403e3e9ced9abcb13a6c424c7cca1b521db6b3d754e729aa21d6dd82b029d"
+    },
+    {
+      "id": "05_watermill_base",
+      "config": "assets/datasets/05_watermill_base.json",
+      "geometry": "assets/geometry/05_watermill_base_high.obj",
+      "result": "results/05_watermill_base.json",
+      "vertices": 34792,
+      "polygons": 36036,
+      "source_sha256": "a8a331a4155ba69331a30ef5585107f9756e883248c8a1b1cc959de80880db9a"
+    },
+    {
+      "id": "05_watermill_compact",
+      "config": "assets/datasets/05_watermill_compact.json",
+      "geometry": "assets/geometry/05_watermill_compact_high.obj",
+      "result": "results/05_watermill_compact.json",
+      "vertices": 30414,
+      "polygons": 31657,
+      "source_sha256": "754a82be5a613e404ceb42c855925defda2730a13671ef076a64f6c406edd32b"
+    },
+    {
+      "id": "05_watermill_large",
+      "config": "assets/datasets/05_watermill_large.json",
+      "geometry": "assets/geometry/05_watermill_large_high.obj",
+      "result": "results/05_watermill_large.json",
+      "vertices": 45082,
+      "polygons": 46491,
+      "source_sha256": "4d92d7996dd6cb4cc457b5383a1d4fbf696549d9d2d6f573fcd19ac2a52c4e9c"
+    },
+    {
+      "id": "05_watermill_small",
+      "config": "assets/datasets/05_watermill_small.json",
+      "geometry": "assets/geometry/05_watermill_small_high.obj",
+      "result": "results/05_watermill_small.json",
+      "vertices": 18178,
+      "polygons": 18838,
+      "source_sha256": "ae02bf468b70a581028a3ce661c0ad485ceadd37814b4cbcfe292471ed67d7a9"
+    },
+    {
+      "id": "06_cliff_house_base",
+      "config": "assets/datasets/06_cliff_house_base.json",
+      "geometry": "assets/geometry/06_cliff_house_base_high.obj",
+      "result": "results/06_cliff_house_base.json",
+      "vertices": 31814,
+      "polygons": 31904,
+      "source_sha256": "80ebf210731b9ab5d4290e24871c4277b388b3e5a9549176b2d0a4c491f89bc1"
+    },
+    {
+      "id": "06_cliff_house_compact",
+      "config": "assets/datasets/06_cliff_house_compact.json",
+      "geometry": "assets/geometry/06_cliff_house_compact_high.obj",
+      "result": "results/06_cliff_house_compact.json",
+      "vertices": 44691,
+      "polygons": 45524,
+      "source_sha256": "61013e2f0931d7860c71ce23a8138c210e4f6ebfbd9539e0336fca7293801add"
+    },
+    {
+      "id": "06_cliff_house_large",
+      "config": "assets/datasets/06_cliff_house_large.json",
+      "geometry": "assets/geometry/06_cliff_house_large_high.obj",
+      "result": "results/06_cliff_house_large.json",
+      "vertices": 62427,
+      "polygons": 64000,
+      "source_sha256": "e4abfbeda61eb99a8cbabf878ea1395919dca8dc6f67d465b07a155e27881dfb"
+    },
+    {
+      "id": "06_cliff_house_small",
+      "config": "assets/datasets/06_cliff_house_small.json",
+      "geometry": "assets/geometry/06_cliff_house_small_high.obj",
+      "result": "results/06_cliff_house_small.json",
+      "vertices": 25010,
+      "polygons": 24889,
+      "source_sha256": "a1e02e458f8f11e053c8781a8c74309543969d83575b84ea7a3790819045c613"
+    }
+  ],
+  "previews": [
+    {
+      "file": "previews/01_townhouse_base_cutaway.png",
+      "metadata": "previews/01_townhouse_base_cutaway.json",
+      "elapsed_seconds": 16.83670079300282,
+      "sha256": "6fe65a2dab94b8160152fecacdd6fa4d9fdf56ec92753638a678cc4a6eea4e2b"
+    },
+    {
+      "file": "previews/01_townhouse_base_ground.png",
+      "metadata": "previews/01_townhouse_base_ground.json",
+      "elapsed_seconds": 14.757165607999923,
+      "sha256": "aecc9fa8148eaedf654b7aea29174c29f6765471344367d48e2ad36bf7161233"
+    },
+    {
+      "file": "previews/01_townhouse_base_room.png",
+      "metadata": "previews/01_townhouse_base_room.json",
+      "elapsed_seconds": 44.237884477999614,
+      "sha256": "97e5db9dd49c68b029c943a86acc392fb4bc1c2d930fa4f0be7d39c0b63bed44"
+    }
+  ],
+  "geometry_count": 24,
+  "render_count": 3,
+  "hda_packaged": "not_run",
+  "houdini_cooked": "not_run",
+  "image_provenance": "offline_geometry_preview",
+  "limitations": "Basic procedural interiors; not collision/NavMesh or full headroom validated"
+}

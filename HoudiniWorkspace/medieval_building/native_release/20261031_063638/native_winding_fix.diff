@@ -1,0 +1,14 @@
+--- previous_native/build_hda.py
++++ correct_native/build_hda.py
+@@ -1334,8 +1334,9 @@
+     groups={mat:geo.createPrimGroup(mat) for mat in set(m.materials)}
+     for i,face in enumerate(m.faces):
+         poly=geo.createPolygon()
+-        for j,idx in enumerate(face):
+-            vtx=poly.addVertex(pts[idx]);vtx.setAttribValue('uv',m.uvs[i][j]);vtx.setAttribValue('N',m.normals[i])
++        # HOM polygon winding is opposite the right-hand OBJ core. Keep N and UVs.
++        for j in reversed(range(len(face))):
++            vtx=poly.addVertex(pts[face[j]]);vtx.setAttribValue('uv',m.uvs[i][j]);vtx.setAttribValue('N',m.normals[i])
+         poly.setAttribValue('name',m.names[i]);poly.setAttribValue('material_family',m.materials[i]);poly.setAttribValue('Cd',m.colors[i]);groups[m.materials[i]].add(poly)
+     geo.addAttrib(hou.attribType.Global,'generator_version','')
+     geo.addAttrib(hou.attribType.Global,'geometry_sha256','')

@@ -1,0 +1,155 @@
+{
+  "variant_id": "variant_03",
+  "effective_config": {
+    "parameters": {
+      "building_type": "townhouse",
+      "plan_layout": "hall",
+      "length_bays": 5,
+      "bay_length": 4.0,
+      "nave_width": 8.0,
+      "wall_height": 9.0,
+      "wall_thickness": 0.35,
+      "roof_pitch": 50.0,
+      "tower_layout": "none",
+      "tower_floors": 3,
+      "tower_floor_height": 4.0,
+      "spire_height": 6.0,
+      "town_floors": 3,
+      "dormer_count": 2,
+      "detail": 0.3,
+      "stone_palette": "limestone",
+      "gold_accents": false,
+      "clock_enable": false,
+      "global_scale": 1.0,
+      "facade_style": "lancet",
+      "window_pattern": "paired",
+      "tower_crown": "pyramid",
+      "roof_material": "copper",
+      "ridge_detail": "sparse",
+      "gate_composition": "fortified",
+      "porch_depth": 0.0
+    },
+    "seeds": {
+      "layout": 42,
+      "decoration": 101
+    }
+  },
+  "generator_sha256": "cb20149f7ee8c761a6d821b7b879d871a106042aed8584bdd88087584db34de3",
+  "runtime": {
+    "python": "3.12.14",
+    "houdini": null
+  },
+  "stages": {
+    "code_generated": true,
+    "static_checked": true,
+    "houdini_cooked": "not_run",
+    "geometry_exported": true,
+    "rendered": true,
+    "hda_packaged": "not_run"
+  },
+  "failures": [],
+  "image_provenance": "offline_geometry_preview",
+  "houdini_cook_seconds": null,
+  "metrics": {
+    "points": 41993,
+    "primitives": 10421,
+    "bounds_min": [
+      -2.975,
+      0.0,
+      -0.9
+    ],
+    "bounds_max": [
+      2.975,
+      12.738559340744946,
+      5.975
+    ],
+    "finite": true,
+    "duplicate_faces": 0,
+    "degenerate_faces": 0,
+    "mesh_sha256": "8763e83f87e682df98afa4e379a6c17dae32f20570ee7b120ed921f37b145ead"
+  },
+  "core_build_seconds": 1.2438866500015138,
+  "spatial_layout": null,
+  "observed_features": {
+    "openings": 32,
+    "towers": 0,
+    "dormers": 2,
+    "flying_buttresses": 0
+  },
+  "feature_count_scope": "constructed before interface clipping",
+  "deterministic": true,
+  "assembly_audit": {
+    "surface_volume_tests": 68,
+    "residual_intrusions": 0,
+    "examples": [],
+    "attachment_checks": {
+      "eave_gap": 0.0,
+      "nave_roof_at_wall": 9.3,
+      "nave_bearing_height": 9.3,
+      "dormers": [
+        {
+          "id": 0,
+          "front_x": -2.47,
+          "back_x": -1.033945387263856,
+          "z": 1.8666666666666665,
+          "width": 0.95,
+          "host_at_front": 9.454927967037246,
+          "base": 9.354927967037247,
+          "roof_eave": 10.504927967037247,
+          "roof_peak": 11.071010923519497
+        },
+        {
+          "id": 1,
+          "front_x": -2.47,
+          "back_x": -1.033945387263856,
+          "z": 3.733333333333333,
+          "width": 0.95,
+          "host_at_front": 9.454927967037246,
+          "base": 9.354927967037247,
+          "roof_eave": 10.504927967037247,
+          "roof_peak": 11.071010923519497
+        }
+      ]
+    },
+    "trim_stats": [
+      {
+        "module": "main_roof",
+        "faces_removed": 0,
+        "faces_clipped": 2,
+        "cutters": [
+          "dormer_0_opening",
+          "dormer_1_opening"
+        ]
+      }
+    ]
+  },
+  "geometry_origin": "pure_python_core_obj",
+  "camera": {
+    "lo": [
+      -7.574639175257732,
+      -2.9974433556003537,
+      -25.56555770697824
+    ],
+    "hi": [
+      29.342268041237116,
+      40.26154737762091,
+      15.874427803294951
+    ],
+    "projection": "orthographic",
+    "view_direction": [
+      -0.72,
+      0.4,
+      -0.65
+    ],
+    "resolution": [
+      1100,
+      900
+    ],
+    "light_direction": [
+      -0.4,
+      0.8,
+      -0.5
+    ],
+    "ambient": 0.48
+  }
+}

@@ -1,0 +1,337 @@
+{
+  "status": "passed",
+  "materials": [
+    {
+      "family": "plaster",
+      "palette_linear": [
+        0.9,
+        0.82,
+        0.63
+      ],
+      "texture_tint": [
+        1.2476282412669917,
+        1.1736110147129226,
+        0.9913910310342984
+      ],
+      "files": {
+        "basecolor": "E:\\Repos\\HoudiniWorkspace\\medieval_building\\assets\\textures\\plaster_basecolor.png",
+        "normal_opengl": "E:\\Repos\\HoudiniWorkspace\\medieval_building\\assets\\textures\\plaster_normal.png",
+        "roughness": "E:\\Repos\\HoudiniWorkspace\\medieval_building\\assets\\textures\\plaster_roughness.png"
+      },
+      "normal_strength": 0.25,
+      "metallic": 0.0,
+      "roughness_override": null,
+      "emissive": 0
+    },
+    {
+      "family": "wood",
+      "palette_linear": [
+        0.27,
+        0.19,
+        0.12
+      ],
+      "texture_tint": [
+        2.3717121291678724,
+        2.597647810453189,
+        1.7744769912000695
+      ],
+      "files": {
+        "basecolor": "E:\\Repos\\HoudiniWorkspace\\medieval_building\\assets\\textures\\wood_basecolor.png",
+        "normal_opengl": "E:\\Repos\\HoudiniWorkspace\\medieval_building\\assets\\textures\\wood_normal.png",
+        "roughness": "E:\\Repos\\HoudiniWorkspace\\medieval_building\\assets\\textures\\wood_roughness.png"
+      },
+      "normal_strength": 0.25,
+      "metallic": 0.0,
+      "roughness_override": null,
+      "emissive": 0
+    },
+    {
+      "family": "tile",
+      "palette_linear": [
+        0.76,
+        0.24,
+        0.105
+      ],
+      "texture_tint": [
+        10.617378162494834,
+        1.3125818409413743,
+        0.1936072390503747
+      ],
+      "files": {
+        "basecolor": "E:\\Repos\\HoudiniWorkspace\\medieval_building\\assets\\textures\\tile_basecolor.png",
+        "normal_opengl": "E:\\Repos\\HoudiniWorkspace\\medieval_building\\assets\\textures\\tile_normal.png",
+        "roughness": "E:\\Repos\\HoudiniWorkspace\\medieval_building\\assets\\textures\\tile_roughness.png"
+      },
+      "normal_strength": 0.25,
+      "metallic": 0.0,
+      "roughness_override": null,
+      "emissive": 0
+    },
+    {
+      "family": "stone",
+      "palette_linear": [
+        0.58,
+        0.58,
+        0.51
+      ],
+      "texture_tint": [
+        2.156030688941341,
+        2.0602393051138614,
+        1.5879539409888639
+      ],
+      "files": {
+        "basecolor": "E:\\Repos\\HoudiniWorkspace\\medieval_building\\assets\\textures\\stone_basecolor.png",
+        "normal_opengl": "E:\\Repos\\HoudiniWorkspace\\medieval_building\\assets\\textures\\stone_normal.png",
+        "roughness": "E:\\Repos\\HoudiniWorkspace\\medieval_building\\assets\\textures\\stone_roughness.png"
+      },
+      "normal_strength": 0.25,
+      "metallic": 0.0,
+      "roughness_override": null,
+      "emissive": 0
+    },
+    {
+      "family": "teal",
+      "palette_linear": [
+        0.09,
+        0.43,
+        0.43
+      ],
+      "texture_tint": [
+        1.3939784484638835,
+        2.46557292156621,
+        2.42203488854219
+      ],
+      "files": {
+        "basecolor": "E:\\Repos\\HoudiniWorkspace\\medieval_building\\assets\\textures\\teal_basecolor.png",
+        "normal_opengl": "E:\\Repos\\HoudiniWorkspace\\medieval_building\\assets\\textures\\teal_normal.png",
+        "roughness": "E:\\Repos\\HoudiniWorkspace\\medieval_building\\assets\\textures\\teal_roughness.png"
+      },
+      "normal_strength": 0.25,
+      "metallic": 0.0,
+      "roughness_override": null,
+      "emissive": 0
+    },
+    {
+      "family": "glass",
+      "palette_linear": [
+        0.15,
+        0.27,
+        0.28
+      ],
+      "texture_tint": [
+        1.2005156347551373,
+        1.265865913064656,
+        0.7406208206152017
+      ],
+      "files": {
+        "basecolor": "E:\\Repos\\HoudiniWorkspace\\medieval_building\\assets\\textures\\glass_basecolor.png",
+        "normal_opengl": "E:\\Repos\\HoudiniWorkspace\\medieval_building\\assets\\textures\\glass_normal.png",
+        "roughness": "E:\\Repos\\HoudiniWorkspace\\medieval_building\\assets\\textures\\glass_roughness.png"
+      },
+      "normal_strength": 0.25,
+      "metallic": 0.0,
+      "roughness_override": null,
+      "emissive": 0
+    },
+    {
+      "family": "metal",
+      "palette_linear": [
+        0.18,
+        0.19,
+        0.17
+      ],
+      "texture_tint": [
+        2.5635008747603,
+        2.94949490238968,
+        3.240239809127454
+      ],
+      "files": {
+        "basecolor": "E:\\Repos\\HoudiniWorkspace\\medieval_building\\assets\\textures\\metal_basecolor.png",
+        "normal_opengl": "E:\\Repos\\HoudiniWorkspace\\medieval_building\\assets\\textures\\metal_normal.png",
+        "roughness": "E:\\Repos\\HoudiniWorkspace\\medieval_building\\assets\\textures\\metal_roughness.png"
+      },
+      "normal_strength": 0.25,
+      "metallic": 0.65,
+      "roughness_override": null,
+      "emissive": 0
+    },
+    {
+      "family": "canvas",
+      "palette_linear": [
+        0.08,
+        0.47,
+        0.48
+      ],
+      "texture_tint": [
+        0.976957124107482,
+        1.8777628752975792,
+        1.8037889751578358
+      ],
+      "files": {
+        "basecolor": "E:\\Repos\\HoudiniWorkspace\\medieval_building\\assets\\textures\\canvas_basecolor.png",
+        "normal_opengl": "E:\\Repos\\HoudiniWorkspace\\medieval_building\\assets\\textures\\canvas_normal.png",
+        "roughness": "E:\\Repos\\HoudiniWorkspace\\medieval_building\\assets\\textures\\canvas_roughness.png"
+      },
+      "normal_strength": 0.25,
+      "metallic": 0.0,
+      "roughness_override": null,
+      "emissive": 0
+    },
+    {
+      "family": "sail",
+      "palette_linear": [
+        0.91,
+        0.84,
+        0.65
+      ],
+      "texture_tint": [
+        1.2197551472377028,
+        1.299789294271943,
+        1.4387121185335605
+      ],
+      "files": {
+        "basecolor": "E:\\Repos\\HoudiniWorkspace\\medieval_building\\assets\\textures\\sail_basecolor.png",
+        "normal_opengl": "E:\\Repos\\HoudiniWorkspace\\medieval_building\\assets\\textures\\sail_normal.png",
+        "roughness": "E:\\Repos\\HoudiniWorkspace\\medieval_building\\assets\\textures\\sail_roughness.png"
+      },
+      "normal_strength": 0.25,
+      "metallic": 0.0,
+      "roughness_override": null,
+      "emissive": 0
+    },
+    {
+      "family": "ember",
+      "palette_linear": [
+        1.0,
+        0.32,
+        0.025
+      ],
+      "texture_tint": [
+        1.0256851435971281,
+        1.9153605306788688,
+        1.2581653048341852
+      ],
+      "files": {
+        "basecolor": "E:\\Repos\\HoudiniWorkspace\\medieval_building\\assets\\textures\\ember_basecolor.png",
+        "normal_opengl": "E:\\Repos\\HoudiniWorkspace\\medieval_building\\assets\\textures\\ember_normal.png",
+        "roughness": "E:\\Repos\\HoudiniWorkspace\\medieval_building\\assets\\textures\\ember_roughness.png"
+      },
+      "normal_strength": 0.25,
+      "metallic": 0.0,
+      "roughness_override": null,
+      "emissive": 1.5
+    },
+    {
+      "family": "water",
+      "palette_linear": [
+        0.15,
+        0.4,
+        0.47
+      ],
+      "texture_tint": [
+        2.694459862267448,
+        1.4129438671123906,
+        1.3190778138477808
+      ],
+      "files": {
+        "basecolor": "E:\\Repos\\HoudiniWorkspace\\medieval_building\\assets\\textures\\water_basecolor.png",
+        "normal_opengl": "E:\\Repos\\HoudiniWorkspace\\medieval_building\\assets\\textures\\water_normal.png",
+        "roughness": "E:\\Repos\\HoudiniWorkspace\\medieval_building\\assets\\textures\\water_roughness.png"
+      },
+      "normal_strength": 0.25,
+      "metallic": 0.0,
+      "roughness_override": 0.17,
+      "emissive": 0
+    },
+    {
+      "family": "leaf",
+      "palette_linear": [
+        0.28,
+        0.43,
+        0.13
+      ],
+      "texture_tint": [
+        3.6141331717177003,
+        1.93551173246904,
+        4.310905176689548
+      ],
+      "files": {
+        "basecolor": "E:\\Repos\\HoudiniWorkspace\\medieval_building\\assets\\textures\\leaf_basecolor.png",
+        "normal_opengl": "E:\\Repos\\HoudiniWorkspace\\medieval_building\\assets\\textures\\leaf_normal.png",
+        "roughness": "E:\\Repos\\HoudiniWorkspace\\medieval_building\\assets\\textures\\leaf_roughness.png"
+      },
+      "normal_strength": 0.25,
+      "metallic": 0.0,
+      "roughness_override": null,
+      "emissive": 0
+    },
+    {
+      "family": "flower",
+      "palette_linear": [
+        0.94,
+        0.66,
+        0.2
+      ],
+      "texture_tint": [
+        1.1781119112646343,
+        1.5659320813376696,
+        4.340430001539324
+      ],
+      "files": {
+        "basecolor": "E:\\Repos\\HoudiniWorkspace\\medieval_building\\assets\\textures\\flower_basecolor.png",
+        "normal_opengl": "E:\\Repos\\HoudiniWorkspace\\medieval_building\\assets\\textures\\flower_normal.png",
+        "roughness": "E:\\Repos\\HoudiniWorkspace\\medieval_building\\assets\\textures\\flower_roughness.png"
+      },
+      "normal_strength": 0.25,
+      "metallic": 0.0,
+      "roughness_override": null,
+      "emissive": 0
+    },
+    {
+      "family": "light",
+      "palette_linear": [
+        1.0,
+        0.71,
+        0.22
+      ],
+      "texture_tint": [
+        1.0275455464096177,
+        1.0744117242498377,
+        0.9129777329518735
+      ],
+      "files": {
+        "basecolor": "E:\\Repos\\HoudiniWorkspace\\medieval_building\\assets\\textures\\light_basecolor.png",
+        "normal_opengl": "E:\\Repos\\HoudiniWorkspace\\medieval_building\\assets\\textures\\light_normal.png",
+        "roughness": "E:\\Repos\\HoudiniWorkspace\\medieval_building\\assets\\textures\\light_roughness.png"
+      },
+      "normal_strength": 0.25,
+      "metallic": 0.0,
+      "roughness_override": null,
+      "emissive": 1.5
+    },
+    {
+      "family": "rock",
+      "palette_linear": [
+        0.59,
+        0.56,
+        0.45
+      ],
+      "texture_tint": [
+        3.2407786827179526,
+        2.274125403362497,
+        1.6666283366105936
+      ],
+      "files": {
+        "basecolor": "E:\\Repos\\HoudiniWorkspace\\medieval_building\\assets\\textures\\rock_basecolor.png",
+        "normal_opengl": "E:\\Repos\\HoudiniWorkspace\\medieval_building\\assets\\textures\\rock_normal.png",
+        "roughness": "E:\\Repos\\HoudiniWorkspace\\medieval_building\\assets\\textures\\rock_roughness.png"
+      },
+      "normal_strength": 0.25,
+      "metallic": 0.0,
+      "roughness_override": null,
+      "emissive": 0
+    }
+  ],
+  "normal_convention": "OpenGL; Unreal importer flips green",
+  "palette": "storybook_red; existing textures tinted to the approved source palette"
+}

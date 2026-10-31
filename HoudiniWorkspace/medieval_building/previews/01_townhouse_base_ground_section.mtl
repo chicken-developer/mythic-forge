@@ -1,0 +1,75 @@
+newmtl plaster
+Kd 0.9000 0.8200 0.6300
+Ka .2 .2 .2
+Ns 10
+
+newmtl wood
+Kd 0.2700 0.1900 0.1200
+Ka .2 .2 .2
+Ns 10
+
+newmtl tile
+Kd 0.7600 0.2400 0.1050
+Ka .2 .2 .2
+Ns 10
+
+newmtl stone
+Kd 0.5800 0.5800 0.5100
+Ka .2 .2 .2
+Ns 10
+
+newmtl teal
+Kd 0.0900 0.4300 0.4300
+Ka .2 .2 .2
+Ns 10
+
+newmtl glass
+Kd 0.1500 0.2700 0.2800
+Ka .2 .2 .2
+Ns 10
+
+newmtl metal
+Kd 0.1800 0.1900 0.1700
+Ka .2 .2 .2
+Ns 10
+
+newmtl canvas
+Kd 0.0800 0.4700 0.4800
+Ka .2 .2 .2
+Ns 10
+
+newmtl sail
+Kd 0.9100 0.8400 0.6500
+Ka .2 .2 .2
+Ns 10
+
+newmtl ember
+Kd 1.0000 0.3200 0.0250
+Ka .2 .2 .2
+Ns 10
+
+newmtl water
+Kd 0.1500 0.4000 0.4700
+Ka .2 .2 .2
+Ns 10
+
+newmtl leaf
+Kd 0.2800 0.4300 0.1300
+Ka .2 .2 .2
+Ns 10
+
+newmtl flower
+Kd 0.9400 0.6600 0.2000
+Ka .2 .2 .2
+Ns 10
+
+newmtl light
+Kd 1.0000 0.7100 0.2200
+Ka .2 .2 .2
+Ns 10
+
+newmtl rock
+Kd 0.5900 0.5600 0.4500
+Ka .2 .2 .2
+Ns 10
+

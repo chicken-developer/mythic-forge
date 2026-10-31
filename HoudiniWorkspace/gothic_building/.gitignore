@@ -1,0 +1,13 @@
+# Runtime output, temporary HIP/HDA backups and generated validation caches
+__pycache__/
+*.py[cod]
+houdini_output/
+backup/
+*.hip~
+*.hiplc~
+*.hipnc~
+*.hip.lock
+*.hiplc.lock
+*.hipnc.lock
+*.hdalock
+*.autosave

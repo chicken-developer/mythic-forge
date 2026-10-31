@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "variant_id": "variant_05",
+  "label": "Clock Gate",
+  "complexity": "complex",
+  "comparison_kind": "preset",
+  "source_kind": "input",
+  "reference_ids": [
+    "preset_04"
+  ],
+  "parameters": {
+    "building_type": "gatehouse",
+    "plan_layout": "hall",
+    "length_bays": 5,
+    "bay_length": 4.0,
+    "nave_width": 8.0,
+    "wall_height": 9.0,
+    "wall_thickness": 0.35,
+    "roof_pitch": 50.0,
+    "tower_layout": "none",
+    "tower_floors": 4,
+    "tower_floor_height": 4.0,
+    "spire_height": 5.0,
+    "town_floors": 3,
+    "dormer_count": 2,
+    "detail": 0.6,
+    "stone_palette": "sandstone",
+    "gold_accents": false,
+    "clock_enable": true,
+    "global_scale": 1.0,
+    "facade_style": "portal_gallery",
+    "window_pattern": "rhythmic",
+    "tower_crown": "openwork",
+    "roof_material": "copper",
+    "ridge_detail": "sparse",
+    "gate_composition": "urban_asymmetric",
+    "porch_depth": 0.0,
+    "urban_program": "dwelling",
+    "urban_plan": "compact",
+    "front_bays": 3,
+    "floor_height": 3.1,
+    "urban_depth": 7.0,
+    "urban_roof": "gable",
+    "balcony_enable": false,
+    "chimney_count": 1
+  },
+  "seeds": {
+    "layout": 42,
+    "decoration": 101
+  },
+  "module_dependencies": [],
+  "expected_features": {
+    "building_type": "gatehouse",
+    "plan_layout": "hall",
+    "length_bays": 5,
+    "tower_layout": "none"
+  },
+  "assumptions": [
+    "Hidden elevations inferred; no calibrated dimensions",
+    "Stone/sculpt/stained-glass detailing approximated procedurally"
+  ],
+  "outputs": {
+    "geometry": "geometry/variant_05.obj",
+    "hero": "previews/variant_05_hero.png",
+    "comparison": "comparisons/variant_05.png",
+    "result": "results/variant_05.json"
+  },
+  "district": "landmark",
+  "use": "civic"
+}

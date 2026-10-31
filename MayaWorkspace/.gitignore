@@ -1,0 +1,45 @@
+# Keep scenes, workspace.mel, scripts, sourceimages, renders and JSON reports.
+
+# Maya automatic saves, incremental backups, swatches and scene locks.
+autosave/
+AutoSave/
+incrementalSave/
+backup/
+backups/
+.mayaSwatches/
+*.ma.swatches
+*.mb.swatches
+*.ma.lock
+*.mb.lock
+*.bak
+*.bak[0-9]*
+*~
+
+# Generated simulation caches and temporary working data.
+cache/
+caches/
+temp/
+tmp/
+
+# Renderer logs; preserve images in images/ and renders/.
+logs/
+*.log
+*.log.[0-9]*
+arnold_log*.txt
+mayaRenderLog.txt
+
+# Python bytecode, virtual environments and tool caches.
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+
+# OS metadata and editor temporary files.
+.DS_Store
+._*
+Thumbs.db
+Desktop.ini
+*.swp
+*.swo

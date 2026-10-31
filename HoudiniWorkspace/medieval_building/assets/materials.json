@@ -1,0 +1,137 @@
+{
+  "plaster": {
+    "tile_size_m": 7.0,
+    "basecolor": "textures/plaster_basecolor.png",
+    "normal_opengl": "textures/plaster_normal.png",
+    "roughness": "textures/plaster_roughness.png",
+    "height": "textures/plaster_height.png",
+    "normal_strength": 0.35,
+    "metallic": 0.0
+  },
+  "wood": {
+    "tile_size_m": 1.6,
+    "basecolor": "textures/wood_basecolor.png",
+    "normal_opengl": "textures/wood_normal.png",
+    "roughness": "textures/wood_roughness.png",
+    "height": "textures/wood_height.png",
+    "normal_strength": 0.35,
+    "metallic": 0.0
+  },
+  "tile": {
+    "tile_size_m": 0.8,
+    "basecolor": "textures/tile_basecolor.png",
+    "normal_opengl": "textures/tile_normal.png",
+    "roughness": "textures/tile_roughness.png",
+    "height": "textures/tile_height.png",
+    "normal_strength": 0.35,
+    "metallic": 0.0
+  },
+  "stone": {
+    "tile_size_m": 1.1,
+    "basecolor": "textures/stone_basecolor.png",
+    "normal_opengl": "textures/stone_normal.png",
+    "roughness": "textures/stone_roughness.png",
+    "height": "textures/stone_height.png",
+    "normal_strength": 0.35,
+    "metallic": 0.0
+  },
+  "teal": {
+    "tile_size_m": 1.0,
+    "basecolor": "textures/teal_basecolor.png",
+    "normal_opengl": "textures/teal_normal.png",
+    "roughness": "textures/teal_roughness.png",
+    "height": "textures/teal_height.png",
+    "normal_strength": 0.35,
+    "metallic": 0.0
+  },
+  "glass": {
+    "tile_size_m": 1.0,
+    "basecolor": "textures/glass_basecolor.png",
+    "normal_opengl": "textures/glass_normal.png",
+    "roughness": "textures/glass_roughness.png",
+    "height": "textures/glass_height.png",
+    "normal_strength": 0.35,
+    "metallic": 0.0
+  },
+  "metal": {
+    "tile_size_m": 1.0,
+    "basecolor": "textures/metal_basecolor.png",
+    "normal_opengl": "textures/metal_normal.png",
+    "roughness": "textures/metal_roughness.png",
+    "height": "textures/metal_height.png",
+    "normal_strength": 0.35,
+    "metallic": 0.65
+  },
+  "canvas": {
+    "tile_size_m": 1.0,
+    "basecolor": "textures/canvas_basecolor.png",
+    "normal_opengl": "textures/canvas_normal.png",
+    "roughness": "textures/canvas_roughness.png",
+    "height": "textures/canvas_height.png",
+    "normal_strength": 0.35,
+    "metallic": 0.0
+  },
+  "sail": {
+    "tile_size_m": 1.0,
+    "basecolor": "textures/sail_basecolor.png",
+    "normal_opengl": "textures/sail_normal.png",
+    "roughness": "textures/sail_roughness.png",
+    "height": "textures/sail_height.png",
+    "normal_strength": 0.35,
+    "metallic": 0.0
+  },
+  "leaf": {
+    "tile_size_m": 1.0,
+    "basecolor": "textures/leaf_basecolor.png",
+    "normal_opengl": "textures/leaf_normal.png",
+    "roughness": "textures/leaf_roughness.png",
+    "height": "textures/leaf_height.png",
+    "normal_strength": 0.35,
+    "metallic": 0.0
+  },
+  "flower": {
+    "tile_size_m": 1.0,
+    "basecolor": "textures/flower_basecolor.png",
+    "normal_opengl": "textures/flower_normal.png",
+    "roughness": "textures/flower_roughness.png",
+    "height": "textures/flower_height.png",
+    "normal_strength": 0.35,
+    "metallic": 0.0
+  },
+  "light": {
+    "tile_size_m": 1.0,
+    "basecolor": "textures/light_basecolor.png",
+    "normal_opengl": "textures/light_normal.png",
+    "roughness": "textures/light_roughness.png",
+    "height": "textures/light_height.png",
+    "normal_strength": 0.35,
+    "metallic": 0.0
+  },
+  "rock": {
+    "tile_size_m": 3.0,
+    "basecolor": "textures/rock_basecolor.png",
+    "normal_opengl": "textures/rock_normal.png",
+    "roughness": "textures/rock_roughness.png",
+    "height": "textures/rock_height.png",
+    "normal_strength": 0.35,
+    "metallic": 0.0
+  },
+  "water": {
+    "tile_size_m": 1.0,
+    "basecolor": "textures/water_basecolor.png",
+    "normal_opengl": "textures/water_normal.png",
+    "roughness": "textures/water_roughness.png",
+    "height": "textures/water_height.png",
+    "normal_strength": 0.35,
+    "metallic": 0.0
+  },
+  "ember": {
+    "tile_size_m": 1.0,
+    "basecolor": "textures/ember_basecolor.png",
+    "normal_opengl": "textures/ember_normal.png",
+    "roughness": "textures/ember_roughness.png",
+    "height": "textures/ember_height.png",
+    "normal_strength": 0.35,
+    "metallic": 0.0
+  }
+}

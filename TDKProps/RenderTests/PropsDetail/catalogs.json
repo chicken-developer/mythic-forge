@@ -1,0 +1,386 @@
+{
+  "status": "passed",
+  "catalogs": [
+    {
+      "family": "Medieval",
+      "map": "/Game/Medieval/Maps/L_Medieval_Catalog",
+      "entries": [
+        {
+          "id": "01_townhouse_base",
+          "actor": "/Game/Medieval/Maps/L_Medieval_Catalog.L_Medieval_Catalog:PersistentLevel.BP_Medieval_01_townhouse_base_C_1",
+          "blueprint": "/Game/Medieval/Blueprints/BP_Medieval_01_townhouse_base.BP_Medieval_01_townhouse_base_C",
+          "interior_lights": 3,
+          "interior_camera": "CAM_Interior_Medieval_01_townhouse_base"
+        },
+        {
+          "id": "01_townhouse_compact",
+          "actor": "/Game/Medieval/Maps/L_Medieval_Catalog.L_Medieval_Catalog:PersistentLevel.BP_Medieval_01_townhouse_compact_C_0",
+          "blueprint": "/Game/Medieval/Blueprints/BP_Medieval_01_townhouse_compact.BP_Medieval_01_townhouse_compact_C",
+          "interior_lights": 3,
+          "interior_camera": "CAM_Interior_Medieval_01_townhouse_compact"
+        },
+        {
+          "id": "01_townhouse_large",
+          "actor": "/Game/Medieval/Maps/L_Medieval_Catalog.L_Medieval_Catalog:PersistentLevel.BP_Medieval_01_townhouse_large_C_0",
+          "blueprint": "/Game/Medieval/Blueprints/BP_Medieval_01_townhouse_large.BP_Medieval_01_townhouse_large_C",
+          "interior_lights": 3,
+          "interior_camera": "CAM_Interior_Medieval_01_townhouse_large"
+        },
+        {
+          "id": "01_townhouse_small",
+          "actor": "/Game/Medieval/Maps/L_Medieval_Catalog.L_Medieval_Catalog:PersistentLevel.BP_Medieval_01_townhouse_small_C_0",
+          "blueprint": "/Game/Medieval/Blueprints/BP_Medieval_01_townhouse_small.BP_Medieval_01_townhouse_small_C",
+          "interior_lights": 2,
+          "interior_camera": "CAM_Interior_Medieval_01_townhouse_small"
+        },
+        {
+          "id": "02_round_workshop_base",
+          "actor": "/Game/Medieval/Maps/L_Medieval_Catalog.L_Medieval_Catalog:PersistentLevel.BP_Medieval_02_round_workshop_base_C_0",
+          "blueprint": "/Game/Medieval/Blueprints/BP_Medieval_02_round_workshop_base.BP_Medieval_02_round_workshop_base_C",
+          "interior_lights": 2,
+          "interior_camera": "CAM_Interior_Medieval_02_round_workshop_base"
+        },
+        {
+          "id": "02_round_workshop_compact",
+          "actor": "/Game/Medieval/Maps/L_Medieval_Catalog.L_Medieval_Catalog:PersistentLevel.BP_Medieval_02_round_workshop_compact_C_0",
+          "blueprint": "/Game/Medieval/Blueprints/BP_Medieval_02_round_workshop_compact.BP_Medieval_02_round_workshop_compact_C",
+          "interior_lights": 2,
+          "interior_camera": "CAM_Interior_Medieval_02_round_workshop_compact"
+        },
+        {
+          "id": "02_round_workshop_large",
+          "actor": "/Game/Medieval/Maps/L_Medieval_Catalog.L_Medieval_Catalog:PersistentLevel.BP_Medieval_02_round_workshop_large_C_0",
+          "blueprint": "/Game/Medieval/Blueprints/BP_Medieval_02_round_workshop_large.BP_Medieval_02_round_workshop_large_C",
+          "interior_lights": 2,
+          "interior_camera": "CAM_Interior_Medieval_02_round_workshop_large"
+        },
+        {
+          "id": "02_round_workshop_small",
+          "actor": "/Game/Medieval/Maps/L_Medieval_Catalog.L_Medieval_Catalog:PersistentLevel.BP_Medieval_02_round_workshop_small_C_0",
+          "blueprint": "/Game/Medieval/Blueprints/BP_Medieval_02_round_workshop_small.BP_Medieval_02_round_workshop_small_C",
+          "interior_lights": 1,
+          "interior_camera": "CAM_Interior_Medieval_02_round_workshop_small"
+        },
+        {
+          "id": "03_village_inn_base",
+          "actor": "/Game/Medieval/Maps/L_Medieval_Catalog.L_Medieval_Catalog:PersistentLevel.BP_Medieval_03_village_inn_base_C_0",
+          "blueprint": "/Game/Medieval/Blueprints/BP_Medieval_03_village_inn_base.BP_Medieval_03_village_inn_base_C",
+          "interior_lights": 4,
+          "interior_camera": "CAM_Interior_Medieval_03_village_inn_base"
+        },
+        {
+          "id": "03_village_inn_compact",
+          "actor": "/Game/Medieval/Maps/L_Medieval_Catalog.L_Medieval_Catalog:PersistentLevel.BP_Medieval_03_village_inn_compact_C_0",
+          "blueprint": "/Game/Medieval/Blueprints/BP_Medieval_03_village_inn_compact.BP_Medieval_03_village_inn_compact_C",
+          "interior_lights": 3,
+          "interior_camera": "CAM_Interior_Medieval_03_village_inn_compact"
+        },
+        {
+          "id": "03_village_inn_large",
+          "actor": "/Game/Medieval/Maps/L_Medieval_Catalog.L_Medieval_Catalog:PersistentLevel.BP_Medieval_03_village_inn_large_C_0",
+          "blueprint": "/Game/Medieval/Blueprints/BP_Medieval_03_village_inn_large.BP_Medieval_03_village_inn_large_C",
+          "interior_lights": 5,
+          "interior_camera": "CAM_Interior_Medieval_03_village_inn_large"
+        },
+        {
+          "id": "03_village_inn_small",
+          "actor": "/Game/Medieval/Maps/L_Medieval_Catalog.L_Medieval_Catalog:PersistentLevel.BP_Medieval_03_village_inn_small_C_0",
+          "blueprint": "/Game/Medieval/Blueprints/BP_Medieval_03_village_inn_small.BP_Medieval_03_village_inn_small_C",
+          "interior_lights": 3,
+          "interior_camera": "CAM_Interior_Medieval_03_village_inn_small"
+        },
+        {
+          "id": "04_windmill_base",
+          "actor": "/Game/Medieval/Maps/L_Medieval_Catalog.L_Medieval_Catalog:PersistentLevel.BP_Medieval_04_windmill_base_C_0",
+          "blueprint": "/Game/Medieval/Blueprints/BP_Medieval_04_windmill_base.BP_Medieval_04_windmill_base_C",
+          "interior_lights": 1,
+          "interior_camera": "CAM_Interior_Medieval_04_windmill_base"
+        },
+        {
+          "id": "04_windmill_compact",
+          "actor": "/Game/Medieval/Maps/L_Medieval_Catalog.L_Medieval_Catalog:PersistentLevel.BP_Medieval_04_windmill_compact_C_0",
+          "blueprint": "/Game/Medieval/Blueprints/BP_Medieval_04_windmill_compact.BP_Medieval_04_windmill_compact_C",
+          "interior_lights": 2,
+          "interior_camera": "CAM_Interior_Medieval_04_windmill_compact"
+        },
+        {
+          "id": "04_windmill_large",
+          "actor": "/Game/Medieval/Maps/L_Medieval_Catalog.L_Medieval_Catalog:PersistentLevel.BP_Medieval_04_windmill_large_C_0",
+          "blueprint": "/Game/Medieval/Blueprints/BP_Medieval_04_windmill_large.BP_Medieval_04_windmill_large_C",
+          "interior_lights": 3,
+          "interior_camera": "CAM_Interior_Medieval_04_windmill_large"
+        },
+        {
+          "id": "04_windmill_small",
+          "actor": "/Game/Medieval/Maps/L_Medieval_Catalog.L_Medieval_Catalog:PersistentLevel.BP_Medieval_04_windmill_small_C_0",
+          "blueprint": "/Game/Medieval/Blueprints/BP_Medieval_04_windmill_small.BP_Medieval_04_windmill_small_C",
+          "interior_lights": 1,
+          "interior_camera": "CAM_Interior_Medieval_04_windmill_small"
+        },
+        {
+          "id": "05_watermill_base",
+          "actor": "/Game/Medieval/Maps/L_Medieval_Catalog.L_Medieval_Catalog:PersistentLevel.BP_Medieval_05_watermill_base_C_0",
+          "blueprint": "/Game/Medieval/Blueprints/BP_Medieval_05_watermill_base.BP_Medieval_05_watermill_base_C",
+          "interior_lights": 2,
+          "interior_camera": "CAM_Interior_Medieval_05_watermill_base"
+        },
+        {
+          "id": "05_watermill_compact",
+          "actor": "/Game/Medieval/Maps/L_Medieval_Catalog.L_Medieval_Catalog:PersistentLevel.BP_Medieval_05_watermill_compact_C_0",
+          "blueprint": "/Game/Medieval/Blueprints/BP_Medieval_05_watermill_compact.BP_Medieval_05_watermill_compact_C",
+          "interior_lights": 2,
+          "interior_camera": "CAM_Interior_Medieval_05_watermill_compact"
+        },
+        {
+          "id": "05_watermill_large",
+          "actor": "/Game/Medieval/Maps/L_Medieval_Catalog.L_Medieval_Catalog:PersistentLevel.BP_Medieval_05_watermill_large_C_0",
+          "blueprint": "/Game/Medieval/Blueprints/BP_Medieval_05_watermill_large.BP_Medieval_05_watermill_large_C",
+          "interior_lights": 2,
+          "interior_camera": "CAM_Interior_Medieval_05_watermill_large"
+        },
+        {
+          "id": "05_watermill_small",
+          "actor": "/Game/Medieval/Maps/L_Medieval_Catalog.L_Medieval_Catalog:PersistentLevel.BP_Medieval_05_watermill_small_C_0",
+          "blueprint": "/Game/Medieval/Blueprints/BP_Medieval_05_watermill_small.BP_Medieval_05_watermill_small_C",
+          "interior_lights": 1,
+          "interior_camera": "CAM_Interior_Medieval_05_watermill_small"
+        },
+        {
+          "id": "06_cliff_house_base",
+          "actor": "/Game/Medieval/Maps/L_Medieval_Catalog.L_Medieval_Catalog:PersistentLevel.BP_Medieval_06_cliff_house_base_C_0",
+          "blueprint": "/Game/Medieval/Blueprints/BP_Medieval_06_cliff_house_base.BP_Medieval_06_cliff_house_base_C",
+          "interior_lights": 2,
+          "interior_camera": "CAM_Interior_Medieval_06_cliff_house_base"
+        },
+        {
+          "id": "06_cliff_house_compact",
+          "actor": "/Game/Medieval/Maps/L_Medieval_Catalog.L_Medieval_Catalog:PersistentLevel.BP_Medieval_06_cliff_house_compact_C_0",
+          "blueprint": "/Game/Medieval/Blueprints/BP_Medieval_06_cliff_house_compact.BP_Medieval_06_cliff_house_compact_C",
+          "interior_lights": 4,
+          "interior_camera": "CAM_Interior_Medieval_06_cliff_house_compact"
+        },
+        {
+          "id": "06_cliff_house_large",
+          "actor": "/Game/Medieval/Maps/L_Medieval_Catalog.L_Medieval_Catalog:PersistentLevel.BP_Medieval_06_cliff_house_large_C_0",
+          "blueprint": "/Game/Medieval/Blueprints/BP_Medieval_06_cliff_house_large.BP_Medieval_06_cliff_house_large_C",
+          "interior_lights": 4,
+          "interior_camera": "CAM_Interior_Medieval_06_cliff_house_large"
+        },
+        {
+          "id": "06_cliff_house_small",
+          "actor": "/Game/Medieval/Maps/L_Medieval_Catalog.L_Medieval_Catalog:PersistentLevel.BP_Medieval_06_cliff_house_small_C_0",
+          "blueprint": "/Game/Medieval/Blueprints/BP_Medieval_06_cliff_house_small.BP_Medieval_06_cliff_house_small_C",
+          "interior_lights": 2,
+          "interior_camera": "CAM_Interior_Medieval_06_cliff_house_small"
+        }
+      ],
+      "building_count": 24,
+      "point_lights": 59
+    },
+    {
+      "family": "Gothic",
+      "map": "/Game/Gothic/Maps/L_Gothic_Catalog",
+      "entries": [
+        {
+          "id": "variant_01",
+          "actor": "/Game/Gothic/Maps/L_Gothic_Catalog.L_Gothic_Catalog:PersistentLevel.BP_Gothic_variant_01_C_1",
+          "blueprint": "/Game/Gothic/Blueprints/BP_Gothic_variant_01.BP_Gothic_variant_01_C",
+          "interior_lights": 6,
+          "interior_camera": "CAM_Interior_Gothic_variant_01"
+        },
+        {
+          "id": "variant_02",
+          "actor": "/Game/Gothic/Maps/L_Gothic_Catalog.L_Gothic_Catalog:PersistentLevel.BP_Gothic_variant_02_C_0",
+          "blueprint": "/Game/Gothic/Blueprints/BP_Gothic_variant_02.BP_Gothic_variant_02_C",
+          "interior_lights": 13,
+          "interior_camera": "CAM_Interior_Gothic_variant_02"
+        },
+        {
+          "id": "variant_03",
+          "actor": "/Game/Gothic/Maps/L_Gothic_Catalog.L_Gothic_Catalog:PersistentLevel.BP_Gothic_variant_03_C_0",
+          "blueprint": "/Game/Gothic/Blueprints/BP_Gothic_variant_03.BP_Gothic_variant_03_C",
+          "interior_lights": 3,
+          "interior_camera": "CAM_Interior_Gothic_variant_03"
+        },
+        {
+          "id": "variant_04",
+          "actor": "/Game/Gothic/Maps/L_Gothic_Catalog.L_Gothic_Catalog:PersistentLevel.BP_Gothic_variant_04_C_0",
+          "blueprint": "/Game/Gothic/Blueprints/BP_Gothic_variant_04.BP_Gothic_variant_04_C",
+          "interior_lights": 20,
+          "interior_camera": "CAM_Interior_Gothic_variant_04"
+        },
+        {
+          "id": "variant_05",
+          "actor": "/Game/Gothic/Maps/L_Gothic_Catalog.L_Gothic_Catalog:PersistentLevel.BP_Gothic_variant_05_C_0",
+          "blueprint": "/Game/Gothic/Blueprints/BP_Gothic_variant_05.BP_Gothic_variant_05_C",
+          "interior_lights": 10,
+          "interior_camera": "CAM_Interior_Gothic_variant_05"
+        },
+        {
+          "id": "variant_06",
+          "actor": "/Game/Gothic/Maps/L_Gothic_Catalog.L_Gothic_Catalog:PersistentLevel.BP_Gothic_variant_06_C_0",
+          "blueprint": "/Game/Gothic/Blueprints/BP_Gothic_variant_06.BP_Gothic_variant_06_C",
+          "interior_lights": 24,
+          "interior_camera": "CAM_Interior_Gothic_variant_06"
+        },
+        {
+          "id": "variant_07",
+          "actor": "/Game/Gothic/Maps/L_Gothic_Catalog.L_Gothic_Catalog:PersistentLevel.BP_Gothic_variant_07_C_0",
+          "blueprint": "/Game/Gothic/Blueprints/BP_Gothic_variant_07.BP_Gothic_variant_07_C",
+          "interior_lights": 5,
+          "interior_camera": "CAM_Interior_Gothic_variant_07"
+        },
+        {
+          "id": "variant_08",
+          "actor": "/Game/Gothic/Maps/L_Gothic_Catalog.L_Gothic_Catalog:PersistentLevel.BP_Gothic_variant_08_C_0",
+          "blueprint": "/Game/Gothic/Blueprints/BP_Gothic_variant_08.BP_Gothic_variant_08_C",
+          "interior_lights": 18,
+          "interior_camera": "CAM_Interior_Gothic_variant_08"
+        },
+        {
+          "id": "variant_09",
+          "actor": "/Game/Gothic/Maps/L_Gothic_Catalog.L_Gothic_Catalog:PersistentLevel.BP_Gothic_variant_09_C_0",
+          "blueprint": "/Game/Gothic/Blueprints/BP_Gothic_variant_09.BP_Gothic_variant_09_C",
+          "interior_lights": 10,
+          "interior_camera": "CAM_Interior_Gothic_variant_09"
+        },
+        {
+          "id": "variant_10",
+          "actor": "/Game/Gothic/Maps/L_Gothic_Catalog.L_Gothic_Catalog:PersistentLevel.BP_Gothic_variant_10_C_0",
+          "blueprint": "/Game/Gothic/Blueprints/BP_Gothic_variant_10.BP_Gothic_variant_10_C",
+          "interior_lights": 27,
+          "interior_camera": "CAM_Interior_Gothic_variant_10"
+        },
+        {
+          "id": "variant_11",
+          "actor": "/Game/Gothic/Maps/L_Gothic_Catalog.L_Gothic_Catalog:PersistentLevel.BP_Gothic_variant_11_C_0",
+          "blueprint": "/Game/Gothic/Blueprints/BP_Gothic_variant_11.BP_Gothic_variant_11_C",
+          "interior_lights": 1,
+          "interior_camera": "CAM_Interior_Gothic_variant_11"
+        },
+        {
+          "id": "variant_12",
+          "actor": "/Game/Gothic/Maps/L_Gothic_Catalog.L_Gothic_Catalog:PersistentLevel.BP_Gothic_variant_12_C_0",
+          "blueprint": "/Game/Gothic/Blueprints/BP_Gothic_variant_12.BP_Gothic_variant_12_C",
+          "interior_lights": 2,
+          "interior_camera": "CAM_Interior_Gothic_variant_12"
+        },
+        {
+          "id": "variant_13",
+          "actor": "/Game/Gothic/Maps/L_Gothic_Catalog.L_Gothic_Catalog:PersistentLevel.BP_Gothic_variant_13_C_0",
+          "blueprint": "/Game/Gothic/Blueprints/BP_Gothic_variant_13.BP_Gothic_variant_13_C",
+          "interior_lights": 2,
+          "interior_camera": "CAM_Interior_Gothic_variant_13"
+        },
+        {
+          "id": "variant_14",
+          "actor": "/Game/Gothic/Maps/L_Gothic_Catalog.L_Gothic_Catalog:PersistentLevel.BP_Gothic_variant_14_C_0",
+          "blueprint": "/Game/Gothic/Blueprints/BP_Gothic_variant_14.BP_Gothic_variant_14_C",
+          "interior_lights": 2,
+          "interior_camera": "CAM_Interior_Gothic_variant_14"
+        },
+        {
+          "id": "variant_15",
+          "actor": "/Game/Gothic/Maps/L_Gothic_Catalog.L_Gothic_Catalog:PersistentLevel.BP_Gothic_variant_15_C_0",
+          "blueprint": "/Game/Gothic/Blueprints/BP_Gothic_variant_15.BP_Gothic_variant_15_C",
+          "interior_lights": 4,
+          "interior_camera": "CAM_Interior_Gothic_variant_15"
+        },
+        {
+          "id": "variant_16",
+          "actor": "/Game/Gothic/Maps/L_Gothic_Catalog.L_Gothic_Catalog:PersistentLevel.BP_Gothic_variant_16_C_0",
+          "blueprint": "/Game/Gothic/Blueprints/BP_Gothic_variant_16.BP_Gothic_variant_16_C",
+          "interior_lights": 2,
+          "interior_camera": "CAM_Interior_Gothic_variant_16"
+        },
+        {
+          "id": "variant_17",
+          "actor": "/Game/Gothic/Maps/L_Gothic_Catalog.L_Gothic_Catalog:PersistentLevel.BP_Gothic_variant_17_C_0",
+          "blueprint": "/Game/Gothic/Blueprints/BP_Gothic_variant_17.BP_Gothic_variant_17_C",
+          "interior_lights": 3,
+          "interior_camera": "CAM_Interior_Gothic_variant_17"
+        },
+        {
+          "id": "variant_18",
+          "actor": "/Game/Gothic/Maps/L_Gothic_Catalog.L_Gothic_Catalog:PersistentLevel.BP_Gothic_variant_18_C_0",
+          "blueprint": "/Game/Gothic/Blueprints/BP_Gothic_variant_18.BP_Gothic_variant_18_C",
+          "interior_lights": 2,
+          "interior_camera": "CAM_Interior_Gothic_variant_18"
+        },
+        {
+          "id": "variant_19",
+          "actor": "/Game/Gothic/Maps/L_Gothic_Catalog.L_Gothic_Catalog:PersistentLevel.BP_Gothic_variant_19_C_0",
+          "blueprint": "/Game/Gothic/Blueprints/BP_Gothic_variant_19.BP_Gothic_variant_19_C",
+          "interior_lights": 4,
+          "interior_camera": "CAM_Interior_Gothic_variant_19"
+        },
+        {
+          "id": "variant_20",
+          "actor": "/Game/Gothic/Maps/L_Gothic_Catalog.L_Gothic_Catalog:PersistentLevel.BP_Gothic_variant_20_C_0",
+          "blueprint": "/Game/Gothic/Blueprints/BP_Gothic_variant_20.BP_Gothic_variant_20_C",
+          "interior_lights": 3,
+          "interior_camera": "CAM_Interior_Gothic_variant_20"
+        },
+        {
+          "id": "variant_21",
+          "actor": "/Game/Gothic/Maps/L_Gothic_Catalog.L_Gothic_Catalog:PersistentLevel.BP_Gothic_variant_21_C_0",
+          "blueprint": "/Game/Gothic/Blueprints/BP_Gothic_variant_21.BP_Gothic_variant_21_C",
+          "interior_lights": 9,
+          "interior_camera": "CAM_Interior_Gothic_variant_21"
+        },
+        {
+          "id": "variant_22",
+          "actor": "/Game/Gothic/Maps/L_Gothic_Catalog.L_Gothic_Catalog:PersistentLevel.BP_Gothic_variant_22_C_0",
+          "blueprint": "/Game/Gothic/Blueprints/BP_Gothic_variant_22.BP_Gothic_variant_22_C",
+          "interior_lights": 9,
+          "interior_camera": "CAM_Interior_Gothic_variant_22"
+        },
+        {
+          "id": "variant_23",
+          "actor": "/Game/Gothic/Maps/L_Gothic_Catalog.L_Gothic_Catalog:PersistentLevel.BP_Gothic_variant_23_C_0",
+          "blueprint": "/Game/Gothic/Blueprints/BP_Gothic_variant_23.BP_Gothic_variant_23_C",
+          "interior_lights": 8,
+          "interior_camera": "CAM_Interior_Gothic_variant_23"
+        },
+        {
+          "id": "variant_24",
+          "actor": "/Game/Gothic/Maps/L_Gothic_Catalog.L_Gothic_Catalog:PersistentLevel.BP_Gothic_variant_24_C_0",
+          "blueprint": "/Game/Gothic/Blueprints/BP_Gothic_variant_24.BP_Gothic_variant_24_C",
+          "interior_lights": 2,
+          "interior_camera": "CAM_Interior_Gothic_variant_24"
+        },
+        {
+          "id": "variant_25",
+          "actor": "/Game/Gothic/Maps/L_Gothic_Catalog.L_Gothic_Catalog:PersistentLevel.BP_Gothic_variant_25_C_0",
+          "blueprint": "/Game/Gothic/Blueprints/BP_Gothic_variant_25.BP_Gothic_variant_25_C",
+          "interior_lights": 1,
+          "interior_camera": "CAM_Interior_Gothic_variant_25"
+        },
+        {
+          "id": "variant_26",
+          "actor": "/Game/Gothic/Maps/L_Gothic_Catalog.L_Gothic_Catalog:PersistentLevel.BP_Gothic_variant_26_C_0",
+          "blueprint": "/Game/Gothic/Blueprints/BP_Gothic_variant_26.BP_Gothic_variant_26_C",
+          "interior_lights": 6,
+          "interior_camera": "CAM_Interior_Gothic_variant_26"
+        },
+        {
+          "id": "variant_27",
+          "actor": "/Game/Gothic/Maps/L_Gothic_Catalog.L_Gothic_Catalog:PersistentLevel.BP_Gothic_variant_27_C_0",
+          "blueprint": "/Game/Gothic/Blueprints/BP_Gothic_variant_27.BP_Gothic_variant_27_C",
+          "interior_lights": 9,
+          "interior_camera": "CAM_Interior_Gothic_variant_27"
+        },
+        {
+          "id": "variant_28",
+          "actor": "/Game/Gothic/Maps/L_Gothic_Catalog.L_Gothic_Catalog:PersistentLevel.BP_Gothic_variant_28_C_0",
+          "blueprint": "/Game/Gothic/Blueprints/BP_Gothic_variant_28.BP_Gothic_variant_28_C",
+          "interior_lights": 4,
+          "interior_camera": "CAM_Interior_Gothic_variant_28"
+        }
+      ],
+      "building_count": 28,
+      "point_lights": 209
+    }
+  ],
+  "retired_maps": []
+}

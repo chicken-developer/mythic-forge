@@ -1,0 +1,19 @@
+{
+  "status": "passed",
+  "houdini": "22.0.368",
+  "graph_version": "2.2",
+  "fresh_hda_instance": true,
+  "preset_callback": true,
+  "editable_native_modules": true,
+  "manual_edits_preserved": true,
+  "auto_rebuild_can_be_disabled": true,
+  "scale_and_palette_without_rebuild": true,
+  "vertex_uv_and_normals": true,
+  "relocated_scene_reopened": true,
+  "external_project_libraries_uninstalled": true,
+  "embedded_callback_rebuild": true,
+  "python_sops": 0,
+  "saved_preset": "variant_10",
+  "errors": [],
+  "warnings": []
+}

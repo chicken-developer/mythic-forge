@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "family": "Gothic",
+  "hip": "E:\\Repos\\HoudiniWorkspace\\gothic_building\\gothic_building.hip",
+  "hip_sha256": "8a9b13ab8bec97a6bb72ddea4e0d09e5f76dd598d4b1ef470014a6cdf27c6b56",
+  "version": "3.2.0-crafted-joinery",
+  "preset": "variant_01",
+  "lights": 6,
+  "invalid_normals": 0,
+  "runtime": "22.0.368"
+}

@@ -13,15 +13,14 @@ import unreal as u
 def build_catalog(records):
     level='/Game/Gothic/Maps/L_Gothic_Catalog';C.begin(level)
     floor=C.flat('M_Catalog_Floor',(.08,.10,.115));base=C.flat('M_Catalog_Plinth',(.15,.17,.18))
-    clay=u.load_asset('/Game/Gothic/FacadeReview/Materials/M_Facade_Clay') or C.flat('M_Catalog_Clay',(.24,.24,.24),.52)
     C.cube('Catalog_Ground',(0,10000,-30),(59000,40000,60),floor,'Studio')
     entries=[]
     for i,row in enumerate(records):
         x=((i%7)-3)*7200;y=(i//7)*7800
         asset=u.load_asset('/Game/Gothic/Buildings/SM_Gothic_'+row['id']);assert asset,row['id']
-        a=C.mesh(row['id']+' | '+row['label'],asset,(x,y,20),folder='Catalog/'+row['district'])
+        cls=u.EditorAssetLibrary.load_blueprint_class('/Game/Gothic/Blueprints/BP_Gothic_'+row['id'])
+        a=C.spawn(cls,row['id']+' | '+row['label'],(x,y,20),folder='Catalog/'+row['district']) if cls else C.mesh(row['id']+' | '+row['label'],asset,(x,y,20),folder='Catalog/'+row['district'])
         a.tags=[C.TAG,'GothicCatalog',row['id']]
-        for slot in range(len(asset.static_materials)):a.static_mesh_component.set_material(slot,clay)
         w,h,d=[s*100 for s in row['size_m']]
         C.cube('Plinth_'+row['id'],(x,y,8),(max(w+160,1500),d+180,24),base,'Studio')
         label=C.spawn(u.TextRenderActor,'Label_'+row['id'],(x,y-d/2-140,32),(0,-90,0),'Labels')
@@ -79,7 +78,7 @@ def build_city(records):
         light.light_component.set_editor_property('light_color',u.Color(255,175,93,255));light.light_component.set_editor_property('cast_shadows',False)
     C.lighting()
     C.spawn(u.PlayerStart,'PlayerStart_SouthAvenue',(0,-21200,240),(0,90,0),'Gameplay')
-    hero=C.camera('City_Overview',(-48380,-55460,45804),(0,0,1200),32.)
+    hero=C.camera('City_Overview',(-48380,-55460,45804),(-3000,-4000,0),32.)
     C.camera('City_Plan',(0,-1000,85000),(0,0,0),45.,1.)
     C.camera('Civic_Square',(-1000,-2550,440),(1200,1800,750),25.)
     C.camera('Craft_Street',(-14900,-12000,360),(-14900,-7600,600),28.)
@@ -93,9 +92,7 @@ def build_city(records):
 def run():
     records=json.loads((ROOT/'TDKProps/SourceAssets/Gothic/mesh_manifest.json').read_text())['variants']
     assert len(records)==28
-    requested=json.loads((C.R/'scene_request.json').read_text()) if (C.R/'scene_request.json').exists() else {'build':'both'}
-    if requested['build'] in ('both','catalog'):build_catalog(records)
-    if requested['build'] in ('both','city'):build_city(records)
+    build_catalog(records)
     (C.R/'scene_error.txt').unlink(missing_ok=True)
 try:run()
 except Exception:

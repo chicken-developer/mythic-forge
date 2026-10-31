@@ -1,0 +1,29 @@
+﻿Dataset,Name,District,Program,Width_m,Height_m,Depth_m,Game_triangles
+variant_01,Village Chapel,landmark,religious,9.12,11.137,12.86,117914
+variant_02,Town Church,landmark,religious,11.39,12.5,21.83,236598
+variant_03,Gothic Townhouse,landmark,civic,6.0,12.739,6.93,238997
+variant_04,Twin Tower Church,landmark,religious,14.36,18.6,31.18,700694
+variant_05,Clock Gate,landmark,civic,11.943,25.55,4.689,62016
+variant_06,Dark Cathedral,landmark,religious,17.6,31.6,31.18,689983
+variant_07,Civic Watchtower,landmark,civic,4.2,29.6,4.2,115624
+variant_08,Layered Twin Basilica,landmark,religious,16.36,23.8,23.9,590864
+variant_09,Astronomical City Gate,landmark,civic,13.489,30.55,4.689,63465
+variant_10,Ceremonial High Cathedral,landmark,religious,20.7,37.6,35.4,763442
+variant_11,Laborer Cottage,working,dwelling,5.612,5.909,5.642,50614
+variant_12,Narrow Row House,working,dwelling,5.11,8.063,7.118,95882
+variant_13,Artisan Workshop Home,working,shop,6.731,9.525,7.221,115764
+variant_14,Weaver Terrace,working,dwelling,5.653,8.779,8.487,153442
+variant_15,Corner Smithy,working,shop,8.003,9.923,10.176,189880
+variant_16,Neighborhood Tavern,working,inn,8.993,11.104,9.962,147010
+variant_17,Merchant Townhouse,middle,dwelling,8.513,14.105,11.673,282090
+variant_18,Apothecary House,middle,shop,7.995,10.611,8.905,148074
+variant_19,Baker House,middle,shop,9.394,11.74,10.654,275761
+variant_20,Scholar Residence,middle,dwelling,8.738,13.997,9.754,209964
+variant_21,Merchant Courtyard,middle,dwelling,13.48,16.048,16.415,584148
+variant_22,Noble Courtyard Manor,upper,manor,16.96,19.562,18.85,880439
+variant_23,Corner Patrician House,upper,manor,13.86,17.128,17.13,638844
+variant_24,Masons Guildhall,public,guildhall,14.84,14.044,14.102,285135
+variant_25,Covered Market Hall,public,market,17.717,14.703,11.612,128462
+variant_26,Gothic Town Hall,public,townhall,16.73,20.815,18.09,601562
+variant_27,Civic Library,public,library,15.95,13.506,17.88,778575
+variant_28,Public Bath House,public,bathhouse,14.387,10.161,15.985,290744

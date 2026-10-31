@@ -1,0 +1,73 @@
+{
+  "runtime": "22.0.368",
+  "status": "passed",
+  "tests": [
+    {
+      "kind": "medieval_annulus",
+      "quality": "low",
+      "faces": 64,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0
+    },
+    {
+      "kind": "medieval_annulus",
+      "quality": "normal",
+      "faces": 144,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0
+    },
+    {
+      "kind": "medieval_annulus",
+      "quality": "high",
+      "faces": 284,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0
+    },
+    {
+      "kind": "medieval_continuous_arch",
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0
+    },
+    {
+      "kind": "gothic_ring_survives_raw_face_transform",
+      "internal_segment_caps": 0,
+      "faces": 512
+    },
+    {
+      "kind": "gothic_closed_profile",
+      "plane": "xy",
+      "faces": 512,
+      "thickness": [
+        4.180217266082764,
+        4.180217266082764,
+        0.18000000715255737
+      ],
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0
+    },
+    {
+      "kind": "gothic_closed_profile",
+      "plane": "xz",
+      "faces": 512,
+      "thickness": [
+        4.180217266082764,
+        0.18000000715255737,
+        4.180217266082764
+      ],
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0
+    },
+    {
+      "kind": "gothic_closed_profile",
+      "plane": "yz",
+      "faces": 512,
+      "thickness": [
+        0.18000000715255737,
+        4.180217266082764,
+        4.180217266082764
+      ],
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0
+    }
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "meshes": 30,
+  "faces": 7433,
+  "vertices": 8282,
+  "problems": [],
+  "signed_volumes_cm3": {
+    "|Fountain_Model_GRP|Foundation_GRP|Foundation_Slab": 27635812.943,
+    "|Fountain_Model_GRP|Foundation_GRP|Pool_Floor": 12495160.321,
+    "|Fountain_Model_GRP|Foundation_GRP|Basin_Quarter_01": 9544460.145,
+    "|Fountain_Model_GRP|Foundation_GRP|Basin_Quarter_02": 9544461.068,
+    "|Fountain_Model_GRP|Foundation_GRP|Basin_Quarter_03": 9544460.145,
+    "|Fountain_Model_GRP|Foundation_GRP|Basin_Quarter_04": 9544461.073,
+    "|Fountain_Model_GRP|Stairs_GRP|Staircase_01": 3974311.901,
+    "|Fountain_Model_GRP|Stairs_GRP|Staircase_02": 3974311.901,
+    "|Fountain_Model_GRP|Stairs_GRP|Staircase_03": 3974311.901,
+    "|Fountain_Model_GRP|Stairs_GRP|Staircase_04": 3974311.901,
+    "|Fountain_Model_GRP|CentralBody_GRP|Central_Column": 8226974.274,
+    "|Fountain_Model_GRP|CentralBody_GRP|Upper_Bowl": 7330546.45,
+    "|Fountain_Model_GRP|CentralBody_GRP|Central_Base": 13011882.449,
+    "|Fountain_Model_GRP|CentralBody_GRP|Sculpture_Base": 2609357.038,
+    "|Fountain_Model_GRP|Sculpture_GRP|Central_Crystal": 144720.0,
+    "|Fountain_Model_GRP|Sculpture_GRP|Halo_Right_01": 125316.072,
+    "|Fountain_Model_GRP|Sculpture_GRP|Halo_Right_02": 150426.979,
+    "|Fountain_Model_GRP|Sculpture_GRP|Halo_Right_03": 173213.814,
+    "|Fountain_Model_GRP|Sculpture_GRP|Halo_Right_04": 162528.919,
+    "|Fountain_Model_GRP|Sculpture_GRP|Halo_Right_05": 152075.709,
+    "|Fountain_Model_GRP|Sculpture_GRP|Halo_Right_06": 123268.583,
+    "|Fountain_Model_GRP|Sculpture_GRP|Halo_Right_07": 96967.906,
+    "|Fountain_Model_GRP|Sculpture_GRP|Halo_Left_01": 129294.778,
+    "|Fountain_Model_GRP|Sculpture_GRP|Halo_Left_02": 150372.257,
+    "|Fountain_Model_GRP|Sculpture_GRP|Halo_Left_03": 169297.875,
+    "|Fountain_Model_GRP|Sculpture_GRP|Halo_Left_04": 145747.22,
+    "|Fountain_Model_GRP|Sculpture_GRP|Halo_Left_05": 133858.342,
+    "|Fountain_Model_GRP|Sculpture_GRP|Halo_Left_06": 121715.315,
+    "|Fountain_Model_GRP|Sculpture_GRP|Halo_Left_07": 109289.033,
+    "|Fountain_Model_GRP|Sculpture_GRP|Diamond_StoneFrame": 633032.53
+  },
+  "overlapping_uv_faces": [],
+  "repaired_uv_faces": 19,
+  "scene": "E:/Repos/mythic-forge/MayaWorkspace/Fountain_Concept03_Modeling_v003.ma",
+  "saved": true,
+  "materials": "Maya default lambert1 only",
+  "file_textures": [],
+  "lights": [],
+  "joint_fixes": [
+    "united wall/coping/pier/rail sections",
+    "stair landings flush at coping height",
+    "matching slanted halo cuts with narrow seams",
+    "continuous diamond-frame bevel loops",
+    "central pedestal seated on lower pool floor"
+  ],
+  "UV": {
+    "bounds": [
+      [
+        0.001953125,
+        0.001953125
+      ],
+      [
+        0.9939768314361572,
+        0.9980377554893494
+      ]
+    ],
+    "layout": "0-1, uniform density, padded shell rectangles",
+    "connectivity_problems": []
+  },
+  "roots": [
+    "|persp",
+    "|top",
+    "|front",
+    "|side",
+    "|Fountain_Model_GRP"
+  ]
+}

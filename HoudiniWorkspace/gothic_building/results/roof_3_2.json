@@ -1,0 +1,117 @@
+{
+  "variant_id": "roof_3_2",
+  "effective_config": {
+    "parameters": {
+      "building_type": "tower",
+      "plan_layout": "hall",
+      "length_bays": 5,
+      "bay_length": 4.0,
+      "nave_width": 8.0,
+      "wall_height": 6.0,
+      "wall_thickness": 0.35,
+      "roof_pitch": 50.0,
+      "tower_layout": "none",
+      "tower_floors": 3,
+      "tower_floor_height": 4.0,
+      "spire_height": 6.0,
+      "town_floors": 3,
+      "dormer_count": 2,
+      "detail": 0.6,
+      "stone_palette": "limestone",
+      "gold_accents": false,
+      "clock_enable": false,
+      "global_scale": 1.0,
+      "facade_style": "portal_gallery",
+      "window_pattern": "paired",
+      "tower_crown": "canopied",
+      "roof_material": "slate",
+      "ridge_detail": "sparse",
+      "gate_composition": "fortified",
+      "porch_depth": 0.0
+    },
+    "seeds": {
+      "layout": 42,
+      "decoration": 101
+    }
+  },
+  "generator_sha256": "cb20149f7ee8c761a6d821b7b879d871a106042aed8584bdd88087584db34de3",
+  "runtime": {
+    "python": "3.12.14",
+    "houdini": null
+  },
+  "stages": {
+    "code_generated": true,
+    "static_checked": true,
+    "houdini_cooked": "not_run",
+    "geometry_exported": true,
+    "rendered": true,
+    "hda_packaged": "not_run"
+  },
+  "failures": [],
+  "image_provenance": "offline_geometry_preview",
+  "houdini_cook_seconds": null,
+  "metrics": {
+    "points": 14321,
+    "primitives": 3554,
+    "bounds_min": [
+      -2.1,
+      0.0,
+      -2.1
+    ],
+    "bounds_max": [
+      2.1,
+      18.6,
+      2.1
+    ],
+    "finite": true,
+    "duplicate_faces": 0,
+    "degenerate_faces": 0,
+    "mesh_sha256": "3ba54372c516ea335548d1285f2786b816ae8ea1d8d6e720752cec56c83676ff"
+  },
+  "core_build_seconds": 0.44357734299774165,
+  "spatial_layout": null,
+  "observed_features": {
+    "openings": 16,
+    "towers": 1,
+    "dormers": 0,
+    "flying_buttresses": 0
+  },
+  "feature_count_scope": "constructed before interface clipping",
+  "deterministic": true,
+  "assembly_audit": {
+    "surface_volume_tests": 0,
+    "residual_intrusions": 0,
+    "examples": [],
+    "attachment_checks": {},
+    "trim_stats": []
+  },
+  "geometry_origin": "pure_python_core_obj",
+  "camera": {
+    "lo": [
+      -7.574639175257732,
+      -2.9974433556003537,
+      -25.56555770697824
+    ],
+    "hi": [
+      29.342268041237116,
+      40.26154737762091,
+      15.874427803294951
+    ],
+    "projection": "orthographic",
+    "view_direction": [
+      -0.72,
+      0.4,
+      -0.65
+    ],
+    "resolution": [
+      1100,
+      900
+    ],
+    "light_direction": [
+      -0.4,
+      0.8,
+      -0.5
+    ],
+    "ambient": 0.48
+  }
+}

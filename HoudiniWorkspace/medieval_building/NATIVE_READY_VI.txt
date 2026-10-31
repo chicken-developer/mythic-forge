@@ -1,0 +1,28 @@
+﻿MEDIEVAL NATIVE V5.1 — 2026-10-31
+
+Mở medieval_building.hip. Node /obj/medieval_building/generator có menu Building Preset gồm 24 cấu hình.
+Một HDA dùng chung: asset/medieval_building.hda, type quynh::storybook_blockout::5.1.
+24 preset = townhouse, round workshop, village inn, windmill, watermill, cliff house;
+mỗi family có base / small / compact / large. Giữ kiến trúc, seed và bevel nhẹ v5.1.
+HDA chứa Python SOP core và 45 texture nhúng cùng shader, không cần source bên cạnh để cook.
+
+Các lỗi native đã sửa: lưu giao diện tham số vào definition; winding HOM khớp N;
+chuẩn hóa kích thước proxy float32 về micrometre để live blockout khớp parameter mode.
+Geometry core trước write_hou_geometry giữ nguyên hoàn toàn.
+build_hda.py đã cập nhật các lỗi bridge/packaging. create_hda.py khởi tạo parameter mode
+khi đóng gói; dataset JSON gốc giữ nguyên để vẫn dùng live layout theo BLOCKOUT.md.
+
+Nguồn thử nghiệm, diff, baseline backup và báo cáo nằm dưới native_release.
+Bản baseline trước deploy: native_release/20261031_063638/baseline_before_native_deployment.
+HDA được kiểm tra ở process/thư mục riêng chỉ có HDA và verifier: menu, shader binding,
+4 footprint, live blockout và recook kích thước. 24 preset đã cook thật bằng Houdini 22.0.368 Commercial.
+
+Unreal project: E:/Repos/mythic-forge/TDKProps.
+Map /Game/Medieval/Maps/L_Medieval_Village và L_Medieval_Catalog.
+FBX, manifest, layout: TDKProps/SourceAssets/Medieval.
+Ảnh và báo cáo nghiệm thu: TDKProps/RenderTests/Medieval.
+Script triển khai: TDKProps/Tools/Medieval.
+
+Nội thất giữ mức thiết kế cơ bản của nguồn. Cửa vẫn là mesh đóng; thang trong nhà
+chưa được chứng nhận đi lại trong toàn bộ nội thất. Xem báo cáo geometry audit.
+Kiểm thử đi lại/navigation của village được ghi riêng trong báo cáo Unreal.

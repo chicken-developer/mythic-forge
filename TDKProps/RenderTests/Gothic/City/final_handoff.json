@@ -1,0 +1,148 @@
+{
+  "status": "passed",
+  "verified_at": "2026-10-31T06:32:49.421199+07:00",
+  "engine": "5.8.3-58210709+++UE5+Release-5.8",
+  "generator": {
+    "type": "quynh::gothic_building::3.0",
+    "source_hip": "E:\\Repos\\HoudiniWorkspace\\gothic_building\\gothic_building.hip",
+    "hip_sha256": "30294c20d1bf394fac816d5e023e280d49da985344d33ee859f6689623080ea5",
+    "hda_sha256": "406e5e3c9b786458c8deec1b4592fef2b393ad23951dd8c6f9b8264a920ec16a",
+    "datasets": 28,
+    "source_triangles": 9435987,
+    "native_sops": true,
+    "fbx_hashes_verified": 28,
+    "game_high_same_architecture": true
+  },
+  "city": {
+    "map": "/Game/Gothic/Maps/L_Gothic_City",
+    "area_m": [
+      550,
+      550
+    ],
+    "building_types": 28,
+    "building_instances": 361,
+    "district_counts": {
+      "cathedral_close": 3,
+      "public": 11,
+      "working": 134,
+      "middle": 184,
+      "upper": 29
+    },
+    "context_instances": 473,
+    "layout_seed": 91728,
+    "world_building_overlaps": 0,
+    "world_buildings_on_roads": 0
+  },
+  "runtime": {
+    "tested_in": "Play In Editor",
+    "pawn": "/Game/ThirdPerson/Blueprints/BP_ThirdPersonCharacter.BP_ThirdPersonCharacter_C",
+    "building_collision_types": 28,
+    "street_surface_checks": 7,
+    "movement_cm": 1052.1780830218158,
+    "input_method": "live PIE Character.add_movement_input"
+  },
+  "map_sha256": {
+    "L_Gothic_City": "3f5f731a5ea1eabad38203a8e49a3b18b25df8a0a6fcf021912eaafe8e56c19a",
+    "L_Gothic_Catalog": "dcc32f46dd84420825605049c5438cd60c78cc594e7bd756bf4c92b4c9815500",
+    "L_Gothic_Lineup": "c1564b0fde87bfe6222e0230a11cb48da8b0db9f2a68d9f96b6eba77188ae5ab"
+  },
+  "renders": [
+    {
+      "file": "city_overview.png",
+      "size": [
+        3200,
+        1800
+      ],
+      "sha256": "7b3ed3b4b40cb109f6503a3bdf1745f63a502fbc23cda9dcea7f2b4fd1890c51"
+    },
+    {
+      "file": "city_plan.png",
+      "size": [
+        2400,
+        2400
+      ],
+      "sha256": "f382ca419576cd1e850333dc9dc57bde2c028fd59222d9de76fafc10db20b36e"
+    },
+    {
+      "file": "civic_square.png",
+      "size": [
+        2560,
+        1440
+      ],
+      "sha256": "2f77a9b80e89a81f2b68af1500dfcf872e70377aaca78454ab2aac9d83ed6d97"
+    },
+    {
+      "file": "craft_street.png",
+      "size": [
+        2560,
+        1440
+      ],
+      "sha256": "80b2cc34e1958d7753d7575a3da67d2502ddaf65a85905ae77c8dca5f42069d8"
+    },
+    {
+      "file": "merchant_street.png",
+      "size": [
+        2560,
+        1440
+      ],
+      "sha256": "731594184b2f8f78b13e6201fb26bb5659709fc514b48cfb6e74bc02f74d7c68"
+    },
+    {
+      "file": "noble_terraces.png",
+      "size": [
+        2560,
+        1440
+      ],
+      "sha256": "386808d27dacef63128ad53d49fa680bd1d8493accbc74a8705aa7bc7573276a"
+    },
+    {
+      "file": "cathedral_close.png",
+      "size": [
+        2560,
+        1440
+      ],
+      "sha256": "1cc17409d027616ac54ebab2edfcb5cc773c9faed6ccca6eed888dd9aaa1b058"
+    },
+    {
+      "file": "catalog_overview.png",
+      "size": [
+        3200,
+        1800
+      ],
+      "sha256": "d416890e0b45101b8229f50fb4bf9c80fb2a94e20541fe6d2087a2cdde82f7b8"
+    },
+    {
+      "file": "type_11.png",
+      "size": [
+        2560,
+        1440
+      ],
+      "sha256": "c37e32f2e5c361a8b456ab69e50faff09cb12a29cd864a79c84be65ad32c2e3e"
+    },
+    {
+      "file": "type_22.png",
+      "size": [
+        2560,
+        1440
+      ],
+      "sha256": "e4761f25cb5789cf21e7ad13db8d729e284c61bfbe2c632f5687859a9e5cf2dd"
+    },
+    {
+      "file": "type_10.png",
+      "size": [
+        2560,
+        1440
+      ],
+      "sha256": "214d521e79e99fe568b5e954fc3bff43ee5d203a1c1700a171549169bc0280c0"
+    },
+    {
+      "file": "city_play.png",
+      "size": [
+        2560,
+        1440
+      ],
+      "sha256": "4c662e017717049fee702373ecadc46a580a92a8a76414bed1ce17e03d49f880"
+    }
+  ],
+  "scope": "Exterior Nanite assets and playable sample city. Packaged target-platform build and performance budget were not tested."
+}

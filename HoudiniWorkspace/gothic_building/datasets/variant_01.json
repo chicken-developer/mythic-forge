@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "variant_id": "variant_01",
+  "label": "Village Chapel",
+  "complexity": "simple",
+  "comparison_kind": "preset",
+  "source_kind": "input",
+  "reference_ids": [
+    "preset_01"
+  ],
+  "parameters": {
+    "building_type": "church",
+    "plan_layout": "hall",
+    "length_bays": 3,
+    "bay_length": 4.0,
+    "nave_width": 8.0,
+    "wall_height": 5.5,
+    "wall_thickness": 0.35,
+    "roof_pitch": 50.0,
+    "tower_layout": "none",
+    "tower_floors": 3,
+    "tower_floor_height": 4.0,
+    "spire_height": 6.0,
+    "town_floors": 3,
+    "dormer_count": 2,
+    "detail": 0.2,
+    "stone_palette": "limestone",
+    "gold_accents": false,
+    "clock_enable": false,
+    "global_scale": 1.0,
+    "facade_style": "lancet",
+    "window_pattern": "single",
+    "tower_crown": "pyramid",
+    "roof_material": "slate",
+    "ridge_detail": "sparse",
+    "gate_composition": "fortified",
+    "porch_depth": 0.0,
+    "urban_program": "dwelling",
+    "urban_plan": "compact",
+    "front_bays": 3,
+    "floor_height": 3.1,
+    "urban_depth": 7.0,
+    "urban_roof": "gable",
+    "balcony_enable": false,
+    "chimney_count": 1
+  },
+  "seeds": {
+    "layout": 42,
+    "decoration": 101
+  },
+  "module_dependencies": [],
+  "expected_features": {
+    "building_type": "church",
+    "plan_layout": "hall",
+    "length_bays": 3,
+    "tower_layout": "none"
+  },
+  "assumptions": [
+    "Hidden elevations inferred; no calibrated dimensions",
+    "Stone/sculpt/stained-glass detailing approximated procedurally"
+  ],
+  "outputs": {
+    "geometry": "geometry/variant_01.obj",
+    "hero": "previews/variant_01_hero.png",
+    "comparison": "comparisons/variant_01.png",
+    "result": "results/variant_01.json"
+  },
+  "district": "landmark",
+  "use": "religious"
+}

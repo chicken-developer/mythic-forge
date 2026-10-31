@@ -1,0 +1,29 @@
+{
+  "status": "passed",
+  "family": "Gothic",
+  "id": "variant_12",
+  "parameters_changed": {
+    "nave_width": 4.58
+  },
+  "outputs": [
+    {
+      "mesh": "/Game/Gothic/Houdini/Working/variant_12/gothic_building_editable/B37C7294/gothic_building_editable_15271_15649_0_main_geo.gothic_building_editable_15271_15649_0_main_geo",
+      "triangles": 93734,
+      "size_cm": [
+        511.00164794921875,
+        711.8015956878662,
+        806.29443359375
+      ],
+      "materials": [
+        "/Game/Gothic/Materials/City/MI_City_WarmStone.MI_City_WarmStone",
+        "/Game/Gothic/Materials/City/MI_City_Walnut.MI_City_Walnut",
+        "/Game/Gothic/Materials/City/MI_City_Iron.MI_City_Iron",
+        "/Game/Gothic/Materials/City/MI_City_AmberGlass.MI_City_AmberGlass",
+        "/Game/Gothic/Materials/City/MI_City_Plaster.MI_City_Plaster",
+        "/Game/Gothic/Materials/City/MI_City_Ivory.MI_City_Ivory",
+        "/Game/Gothic/Materials/City/MI_City_Slate.MI_City_Slate"
+      ]
+    }
+  ],
+  "auto_bake": false
+}

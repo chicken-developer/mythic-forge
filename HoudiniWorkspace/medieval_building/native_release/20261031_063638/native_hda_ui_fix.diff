@@ -1,0 +1,13 @@
+--- baseline/build_hda.py
++++ native/build_hda.py
+@@ -1503,7 +1503,10 @@
+     path=Path(output_path).with_suffix(suffix);path.parent.mkdir(parents=True,exist_ok=True)
+     if path.exists():raise FileExistsError('Refusing to overwrite existing asset: '+str(path))
+     if not hasattr(asset_node,'createDigitalAsset'):raise RuntimeError('createDigitalAsset unavailable')
++    interface=asset_node.parmTemplateGroup()
+     asset=asset_node.createDigitalAsset(name='quynh::storybook_blockout::5.1',hda_file_name=str(path.resolve()),description='Storybook v5.1 Interior',min_num_inputs=0,max_num_inputs=1)
++    asset.type().definition().updateFromNode(asset)
++    asset.type().definition().setParmTemplateGroup(interface)
+     asset.type().definition().addSection('ParameterSchema.json',json.dumps(SCHEMA))
+     return asset,str(path)
+ 

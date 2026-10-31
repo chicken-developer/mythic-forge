@@ -1,0 +1,51 @@
+{
+  "scene": "E:/Repos/mythic-forge/MayaWorkspace/Fountain_Concept03_Modeling_v002.ma",
+  "meshes": 46,
+  "faces": 7864,
+  "vertices": 8746,
+  "triangles": 12,
+  "quads": 7392,
+  "planar_cap_ngons": 460,
+  "previous_meshes": 916,
+  "previous_faces": 91623,
+  "UV": {
+    "set": "map1",
+    "method": "automatic seams, Unfold3D, multi-object 0-1 layout",
+    "shells": 363,
+    "minimum": [
+      0.00390625,
+      0.00390625
+    ],
+    "maximum": [
+      0.99609375,
+      0.9873242974281311
+    ],
+    "padding": 8,
+    "reference_resolution": 2048,
+    "overlapping_faces": []
+  },
+  "beveled_meshes": 45,
+  "bevel_segments": 2,
+  "materials": [
+    "lambert1",
+    "standardSurface1",
+    "openPBR_shader1",
+    "particleCloud1"
+  ],
+  "file_textures": [],
+  "lights": [],
+  "cameras": [
+    "frontShape",
+    "perspShape",
+    "sideShape",
+    "topShape"
+  ],
+  "dimensions_m": [
+    14.3,
+    7.0878759765625,
+    14.3
+  ],
+  "problems": [],
+  "saved": true,
+  "assigned_material": "lambert1 (Maya default)"
+}

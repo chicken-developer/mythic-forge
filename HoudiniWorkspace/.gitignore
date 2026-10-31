@@ -1,0 +1,47 @@
+# Keep source scenes, HDAs, scripts, exported assets, previews and reports.
+# Ignore generated output by directory so published geometry can still be tracked.
+houdini_output/
+cache/
+caches/
+simcache/
+temp/
+tmp/
+pdgtemp/
+
+# Houdini automatic backups, recovery files and scene locks.
+backup/
+backups/
+autosave/
+.autosave/
+*.autosave
+*.bak
+*.bak[0-9]*
+*.hip.lock
+*.hiplc.lock
+*.hipnc.lock
+*.hdalock
+*~
+
+# Temporary OBJ files left by interrupted geometry exports.
+.*.obj.??????
+
+# Python bytecode, virtual environments and tool caches.
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+
+# Runtime logs; JSON validation reports remain tracked.
+logs/
+*.log
+*.log.[0-9]*
+
+# OS metadata and editor temporary files.
+.DS_Store
+._*
+Thumbs.db
+Desktop.ini
+*.swp
+*.swo

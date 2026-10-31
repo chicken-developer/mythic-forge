@@ -1,0 +1,544 @@
+{
+  "status": "passed",
+  "families": [
+    {
+      "family": "Medieval",
+      "editable_hdas": 24,
+      "reference_buildings": 24,
+      "reference_point_lights": 59,
+      "overlapping_pairs": 0,
+      "records": [
+        {
+          "id": "01_townhouse_base",
+          "parameters_checked": 80,
+          "args": "SourceAssets/Houdini/Medieval/Args/01_townhouse_base.json",
+          "hda_actor": "/Game/Medieval/Maps/L_Medieval_Catalog.L_Medieval_Catalog:PersistentLevel.HoudiniAssetActor_1",
+          "auto_cook": false,
+          "auto_bake": false,
+          "bake_folder": "/Game/Medieval/ManualBakes/01_townhouse_base",
+          "preview_ready": true
+        },
+        {
+          "id": "01_townhouse_compact",
+          "parameters_checked": 80,
+          "args": "SourceAssets/Houdini/Medieval/Args/01_townhouse_compact.json",
+          "hda_actor": "/Game/Medieval/Maps/L_Medieval_Catalog.L_Medieval_Catalog:PersistentLevel.HoudiniAssetActor_2",
+          "auto_cook": false,
+          "auto_bake": false,
+          "bake_folder": "/Game/Medieval/ManualBakes/01_townhouse_compact",
+          "preview_ready": false
+        },
+        {
+          "id": "01_townhouse_large",
+          "parameters_checked": 80,
+          "args": "SourceAssets/Houdini/Medieval/Args/01_townhouse_large.json",
+          "hda_actor": "/Game/Medieval/Maps/L_Medieval_Catalog.L_Medieval_Catalog:PersistentLevel.HoudiniAssetActor_3",
+          "auto_cook": false,
+          "auto_bake": false,
+          "bake_folder": "/Game/Medieval/ManualBakes/01_townhouse_large",
+          "preview_ready": false
+        },
+        {
+          "id": "01_townhouse_small",
+          "parameters_checked": 80,
+          "args": "SourceAssets/Houdini/Medieval/Args/01_townhouse_small.json",
+          "hda_actor": "/Game/Medieval/Maps/L_Medieval_Catalog.L_Medieval_Catalog:PersistentLevel.HoudiniAssetActor_4",
+          "auto_cook": false,
+          "auto_bake": false,
+          "bake_folder": "/Game/Medieval/ManualBakes/01_townhouse_small",
+          "preview_ready": false
+        },
+        {
+          "id": "02_round_workshop_base",
+          "parameters_checked": 80,
+          "args": "SourceAssets/Houdini/Medieval/Args/02_round_workshop_base.json",
+          "hda_actor": "/Game/Medieval/Maps/L_Medieval_Catalog.L_Medieval_Catalog:PersistentLevel.HoudiniAssetActor_5",
+          "auto_cook": false,
+          "auto_bake": false,
+          "bake_folder": "/Game/Medieval/ManualBakes/02_round_workshop_base",
+          "preview_ready": false
+        },
+        {
+          "id": "02_round_workshop_compact",
+          "parameters_checked": 80,
+          "args": "SourceAssets/Houdini/Medieval/Args/02_round_workshop_compact.json",
+          "hda_actor": "/Game/Medieval/Maps/L_Medieval_Catalog.L_Medieval_Catalog:PersistentLevel.HoudiniAssetActor_6",
+          "auto_cook": false,
+          "auto_bake": false,
+          "bake_folder": "/Game/Medieval/ManualBakes/02_round_workshop_compact",
+          "preview_ready": false
+        },
+        {
+          "id": "02_round_workshop_large",
+          "parameters_checked": 80,
+          "args": "SourceAssets/Houdini/Medieval/Args/02_round_workshop_large.json",
+          "hda_actor": "/Game/Medieval/Maps/L_Medieval_Catalog.L_Medieval_Catalog:PersistentLevel.HoudiniAssetActor_7",
+          "auto_cook": false,
+          "auto_bake": false,
+          "bake_folder": "/Game/Medieval/ManualBakes/02_round_workshop_large",
+          "preview_ready": false
+        },
+        {
+          "id": "02_round_workshop_small",
+          "parameters_checked": 80,
+          "args": "SourceAssets/Houdini/Medieval/Args/02_round_workshop_small.json",
+          "hda_actor": "/Game/Medieval/Maps/L_Medieval_Catalog.L_Medieval_Catalog:PersistentLevel.HoudiniAssetActor_8",
+          "auto_cook": false,
+          "auto_bake": false,
+          "bake_folder": "/Game/Medieval/ManualBakes/02_round_workshop_small",
+          "preview_ready": false
+        },
+        {
+          "id": "03_village_inn_base",
+          "parameters_checked": 80,
+          "args": "SourceAssets/Houdini/Medieval/Args/03_village_inn_base.json",
+          "hda_actor": "/Game/Medieval/Maps/L_Medieval_Catalog.L_Medieval_Catalog:PersistentLevel.HoudiniAssetActor_9",
+          "auto_cook": false,
+          "auto_bake": false,
+          "bake_folder": "/Game/Medieval/ManualBakes/03_village_inn_base",
+          "preview_ready": false
+        },
+        {
+          "id": "03_village_inn_compact",
+          "parameters_checked": 80,
+          "args": "SourceAssets/Houdini/Medieval/Args/03_village_inn_compact.json",
+          "hda_actor": "/Game/Medieval/Maps/L_Medieval_Catalog.L_Medieval_Catalog:PersistentLevel.HoudiniAssetActor_10",
+          "auto_cook": false,
+          "auto_bake": false,
+          "bake_folder": "/Game/Medieval/ManualBakes/03_village_inn_compact",
+          "preview_ready": false
+        },
+        {
+          "id": "03_village_inn_large",
+          "parameters_checked": 80,
+          "args": "SourceAssets/Houdini/Medieval/Args/03_village_inn_large.json",
+          "hda_actor": "/Game/Medieval/Maps/L_Medieval_Catalog.L_Medieval_Catalog:PersistentLevel.HoudiniAssetActor_11",
+          "auto_cook": false,
+          "auto_bake": false,
+          "bake_folder": "/Game/Medieval/ManualBakes/03_village_inn_large",
+          "preview_ready": false
+        },
+        {
+          "id": "03_village_inn_small",
+          "parameters_checked": 80,
+          "args": "SourceAssets/Houdini/Medieval/Args/03_village_inn_small.json",
+          "hda_actor": "/Game/Medieval/Maps/L_Medieval_Catalog.L_Medieval_Catalog:PersistentLevel.HoudiniAssetActor_12",
+          "auto_cook": false,
+          "auto_bake": false,
+          "bake_folder": "/Game/Medieval/ManualBakes/03_village_inn_small",
+          "preview_ready": false
+        },
+        {
+          "id": "04_windmill_base",
+          "parameters_checked": 80,
+          "args": "SourceAssets/Houdini/Medieval/Args/04_windmill_base.json",
+          "hda_actor": "/Game/Medieval/Maps/L_Medieval_Catalog.L_Medieval_Catalog:PersistentLevel.HoudiniAssetActor_13",
+          "auto_cook": false,
+          "auto_bake": false,
+          "bake_folder": "/Game/Medieval/ManualBakes/04_windmill_base",
+          "preview_ready": false
+        },
+        {
+          "id": "04_windmill_compact",
+          "parameters_checked": 80,
+          "args": "SourceAssets/Houdini/Medieval/Args/04_windmill_compact.json",
+          "hda_actor": "/Game/Medieval/Maps/L_Medieval_Catalog.L_Medieval_Catalog:PersistentLevel.HoudiniAssetActor_14",
+          "auto_cook": false,
+          "auto_bake": false,
+          "bake_folder": "/Game/Medieval/ManualBakes/04_windmill_compact",
+          "preview_ready": false
+        },
+        {
+          "id": "04_windmill_large",
+          "parameters_checked": 80,
+          "args": "SourceAssets/Houdini/Medieval/Args/04_windmill_large.json",
+          "hda_actor": "/Game/Medieval/Maps/L_Medieval_Catalog.L_Medieval_Catalog:PersistentLevel.HoudiniAssetActor_15",
+          "auto_cook": false,
+          "auto_bake": false,
+          "bake_folder": "/Game/Medieval/ManualBakes/04_windmill_large",
+          "preview_ready": false
+        },
+        {
+          "id": "04_windmill_small",
+          "parameters_checked": 80,
+          "args": "SourceAssets/Houdini/Medieval/Args/04_windmill_small.json",
+          "hda_actor": "/Game/Medieval/Maps/L_Medieval_Catalog.L_Medieval_Catalog:PersistentLevel.HoudiniAssetActor_16",
+          "auto_cook": false,
+          "auto_bake": false,
+          "bake_folder": "/Game/Medieval/ManualBakes/04_windmill_small",
+          "preview_ready": false
+        },
+        {
+          "id": "05_watermill_base",
+          "parameters_checked": 80,
+          "args": "SourceAssets/Houdini/Medieval/Args/05_watermill_base.json",
+          "hda_actor": "/Game/Medieval/Maps/L_Medieval_Catalog.L_Medieval_Catalog:PersistentLevel.HoudiniAssetActor_17",
+          "auto_cook": false,
+          "auto_bake": false,
+          "bake_folder": "/Game/Medieval/ManualBakes/05_watermill_base",
+          "preview_ready": false
+        },
+        {
+          "id": "05_watermill_compact",
+          "parameters_checked": 80,
+          "args": "SourceAssets/Houdini/Medieval/Args/05_watermill_compact.json",
+          "hda_actor": "/Game/Medieval/Maps/L_Medieval_Catalog.L_Medieval_Catalog:PersistentLevel.HoudiniAssetActor_18",
+          "auto_cook": false,
+          "auto_bake": false,
+          "bake_folder": "/Game/Medieval/ManualBakes/05_watermill_compact",
+          "preview_ready": false
+        },
+        {
+          "id": "05_watermill_large",
+          "parameters_checked": 80,
+          "args": "SourceAssets/Houdini/Medieval/Args/05_watermill_large.json",
+          "hda_actor": "/Game/Medieval/Maps/L_Medieval_Catalog.L_Medieval_Catalog:PersistentLevel.HoudiniAssetActor_19",
+          "auto_cook": false,
+          "auto_bake": false,
+          "bake_folder": "/Game/Medieval/ManualBakes/05_watermill_large",
+          "preview_ready": false
+        },
+        {
+          "id": "05_watermill_small",
+          "parameters_checked": 80,
+          "args": "SourceAssets/Houdini/Medieval/Args/05_watermill_small.json",
+          "hda_actor": "/Game/Medieval/Maps/L_Medieval_Catalog.L_Medieval_Catalog:PersistentLevel.HoudiniAssetActor_20",
+          "auto_cook": false,
+          "auto_bake": false,
+          "bake_folder": "/Game/Medieval/ManualBakes/05_watermill_small",
+          "preview_ready": false
+        },
+        {
+          "id": "06_cliff_house_base",
+          "parameters_checked": 80,
+          "args": "SourceAssets/Houdini/Medieval/Args/06_cliff_house_base.json",
+          "hda_actor": "/Game/Medieval/Maps/L_Medieval_Catalog.L_Medieval_Catalog:PersistentLevel.HoudiniAssetActor_21",
+          "auto_cook": false,
+          "auto_bake": false,
+          "bake_folder": "/Game/Medieval/ManualBakes/06_cliff_house_base",
+          "preview_ready": false
+        },
+        {
+          "id": "06_cliff_house_compact",
+          "parameters_checked": 80,
+          "args": "SourceAssets/Houdini/Medieval/Args/06_cliff_house_compact.json",
+          "hda_actor": "/Game/Medieval/Maps/L_Medieval_Catalog.L_Medieval_Catalog:PersistentLevel.HoudiniAssetActor_22",
+          "auto_cook": false,
+          "auto_bake": false,
+          "bake_folder": "/Game/Medieval/ManualBakes/06_cliff_house_compact",
+          "preview_ready": false
+        },
+        {
+          "id": "06_cliff_house_large",
+          "parameters_checked": 80,
+          "args": "SourceAssets/Houdini/Medieval/Args/06_cliff_house_large.json",
+          "hda_actor": "/Game/Medieval/Maps/L_Medieval_Catalog.L_Medieval_Catalog:PersistentLevel.HoudiniAssetActor_23",
+          "auto_cook": false,
+          "auto_bake": false,
+          "bake_folder": "/Game/Medieval/ManualBakes/06_cliff_house_large",
+          "preview_ready": false
+        },
+        {
+          "id": "06_cliff_house_small",
+          "parameters_checked": 80,
+          "args": "SourceAssets/Houdini/Medieval/Args/06_cliff_house_small.json",
+          "hda_actor": "/Game/Medieval/Maps/L_Medieval_Catalog.L_Medieval_Catalog:PersistentLevel.HoudiniAssetActor_24",
+          "auto_cook": false,
+          "auto_bake": false,
+          "bake_folder": "/Game/Medieval/ManualBakes/06_cliff_house_small",
+          "preview_ready": false
+        }
+      ]
+    },
+    {
+      "family": "Gothic",
+      "editable_hdas": 28,
+      "reference_buildings": 28,
+      "reference_point_lights": 209,
+      "overlapping_pairs": 0,
+      "records": [
+        {
+          "id": "variant_01",
+          "parameters_checked": 42,
+          "args": "SourceAssets/Houdini/Gothic/Args/variant_01.json",
+          "hda_actor": "/Game/Gothic/Maps/L_Gothic_Catalog.L_Gothic_Catalog:PersistentLevel.HoudiniAssetActor_1",
+          "auto_cook": false,
+          "auto_bake": false,
+          "bake_folder": "/Game/Gothic/ManualBakes/variant_01",
+          "preview_ready": false
+        },
+        {
+          "id": "variant_02",
+          "parameters_checked": 42,
+          "args": "SourceAssets/Houdini/Gothic/Args/variant_02.json",
+          "hda_actor": "/Game/Gothic/Maps/L_Gothic_Catalog.L_Gothic_Catalog:PersistentLevel.HoudiniAssetActor_2",
+          "auto_cook": false,
+          "auto_bake": false,
+          "bake_folder": "/Game/Gothic/ManualBakes/variant_02",
+          "preview_ready": false
+        },
+        {
+          "id": "variant_03",
+          "parameters_checked": 42,
+          "args": "SourceAssets/Houdini/Gothic/Args/variant_03.json",
+          "hda_actor": "/Game/Gothic/Maps/L_Gothic_Catalog.L_Gothic_Catalog:PersistentLevel.HoudiniAssetActor_3",
+          "auto_cook": false,
+          "auto_bake": false,
+          "bake_folder": "/Game/Gothic/ManualBakes/variant_03",
+          "preview_ready": false
+        },
+        {
+          "id": "variant_04",
+          "parameters_checked": 42,
+          "args": "SourceAssets/Houdini/Gothic/Args/variant_04.json",
+          "hda_actor": "/Game/Gothic/Maps/L_Gothic_Catalog.L_Gothic_Catalog:PersistentLevel.HoudiniAssetActor_4",
+          "auto_cook": false,
+          "auto_bake": false,
+          "bake_folder": "/Game/Gothic/ManualBakes/variant_04",
+          "preview_ready": false
+        },
+        {
+          "id": "variant_05",
+          "parameters_checked": 42,
+          "args": "SourceAssets/Houdini/Gothic/Args/variant_05.json",
+          "hda_actor": "/Game/Gothic/Maps/L_Gothic_Catalog.L_Gothic_Catalog:PersistentLevel.HoudiniAssetActor_5",
+          "auto_cook": false,
+          "auto_bake": false,
+          "bake_folder": "/Game/Gothic/ManualBakes/variant_05",
+          "preview_ready": false
+        },
+        {
+          "id": "variant_06",
+          "parameters_checked": 42,
+          "args": "SourceAssets/Houdini/Gothic/Args/variant_06.json",
+          "hda_actor": "/Game/Gothic/Maps/L_Gothic_Catalog.L_Gothic_Catalog:PersistentLevel.HoudiniAssetActor_6",
+          "auto_cook": false,
+          "auto_bake": false,
+          "bake_folder": "/Game/Gothic/ManualBakes/variant_06",
+          "preview_ready": false
+        },
+        {
+          "id": "variant_07",
+          "parameters_checked": 42,
+          "args": "SourceAssets/Houdini/Gothic/Args/variant_07.json",
+          "hda_actor": "/Game/Gothic/Maps/L_Gothic_Catalog.L_Gothic_Catalog:PersistentLevel.HoudiniAssetActor_7",
+          "auto_cook": false,
+          "auto_bake": false,
+          "bake_folder": "/Game/Gothic/ManualBakes/variant_07",
+          "preview_ready": false
+        },
+        {
+          "id": "variant_08",
+          "parameters_checked": 42,
+          "args": "SourceAssets/Houdini/Gothic/Args/variant_08.json",
+          "hda_actor": "/Game/Gothic/Maps/L_Gothic_Catalog.L_Gothic_Catalog:PersistentLevel.HoudiniAssetActor_8",
+          "auto_cook": false,
+          "auto_bake": false,
+          "bake_folder": "/Game/Gothic/ManualBakes/variant_08",
+          "preview_ready": false
+        },
+        {
+          "id": "variant_09",
+          "parameters_checked": 42,
+          "args": "SourceAssets/Houdini/Gothic/Args/variant_09.json",
+          "hda_actor": "/Game/Gothic/Maps/L_Gothic_Catalog.L_Gothic_Catalog:PersistentLevel.HoudiniAssetActor_9",
+          "auto_cook": false,
+          "auto_bake": false,
+          "bake_folder": "/Game/Gothic/ManualBakes/variant_09",
+          "preview_ready": false
+        },
+        {
+          "id": "variant_10",
+          "parameters_checked": 42,
+          "args": "SourceAssets/Houdini/Gothic/Args/variant_10.json",
+          "hda_actor": "/Game/Gothic/Maps/L_Gothic_Catalog.L_Gothic_Catalog:PersistentLevel.HoudiniAssetActor_10",
+          "auto_cook": false,
+          "auto_bake": false,
+          "bake_folder": "/Game/Gothic/ManualBakes/variant_10",
+          "preview_ready": false
+        },
+        {
+          "id": "variant_11",
+          "parameters_checked": 42,
+          "args": "SourceAssets/Houdini/Gothic/Args/variant_11.json",
+          "hda_actor": "/Game/Gothic/Maps/L_Gothic_Catalog.L_Gothic_Catalog:PersistentLevel.HoudiniAssetActor_11",
+          "auto_cook": false,
+          "auto_bake": false,
+          "bake_folder": "/Game/Gothic/ManualBakes/variant_11",
+          "preview_ready": false
+        },
+        {
+          "id": "variant_12",
+          "parameters_checked": 42,
+          "args": "SourceAssets/Houdini/Gothic/Args/variant_12.json",
+          "hda_actor": "/Game/Gothic/Maps/L_Gothic_Catalog.L_Gothic_Catalog:PersistentLevel.HoudiniAssetActor_12",
+          "auto_cook": false,
+          "auto_bake": false,
+          "bake_folder": "/Game/Gothic/ManualBakes/variant_12",
+          "preview_ready": true
+        },
+        {
+          "id": "variant_13",
+          "parameters_checked": 42,
+          "args": "SourceAssets/Houdini/Gothic/Args/variant_13.json",
+          "hda_actor": "/Game/Gothic/Maps/L_Gothic_Catalog.L_Gothic_Catalog:PersistentLevel.HoudiniAssetActor_13",
+          "auto_cook": false,
+          "auto_bake": false,
+          "bake_folder": "/Game/Gothic/ManualBakes/variant_13",
+          "preview_ready": false
+        },
+        {
+          "id": "variant_14",
+          "parameters_checked": 42,
+          "args": "SourceAssets/Houdini/Gothic/Args/variant_14.json",
+          "hda_actor": "/Game/Gothic/Maps/L_Gothic_Catalog.L_Gothic_Catalog:PersistentLevel.HoudiniAssetActor_14",
+          "auto_cook": false,
+          "auto_bake": false,
+          "bake_folder": "/Game/Gothic/ManualBakes/variant_14",
+          "preview_ready": false
+        },
+        {
+          "id": "variant_15",
+          "parameters_checked": 42,
+          "args": "SourceAssets/Houdini/Gothic/Args/variant_15.json",
+          "hda_actor": "/Game/Gothic/Maps/L_Gothic_Catalog.L_Gothic_Catalog:PersistentLevel.HoudiniAssetActor_15",
+          "auto_cook": false,
+          "auto_bake": false,
+          "bake_folder": "/Game/Gothic/ManualBakes/variant_15",
+          "preview_ready": false
+        },
+        {
+          "id": "variant_16",
+          "parameters_checked": 42,
+          "args": "SourceAssets/Houdini/Gothic/Args/variant_16.json",
+          "hda_actor": "/Game/Gothic/Maps/L_Gothic_Catalog.L_Gothic_Catalog:PersistentLevel.HoudiniAssetActor_16",
+          "auto_cook": false,
+          "auto_bake": false,
+          "bake_folder": "/Game/Gothic/ManualBakes/variant_16",
+          "preview_ready": false
+        },
+        {
+          "id": "variant_17",
+          "parameters_checked": 42,
+          "args": "SourceAssets/Houdini/Gothic/Args/variant_17.json",
+          "hda_actor": "/Game/Gothic/Maps/L_Gothic_Catalog.L_Gothic_Catalog:PersistentLevel.HoudiniAssetActor_17",
+          "auto_cook": false,
+          "auto_bake": false,
+          "bake_folder": "/Game/Gothic/ManualBakes/variant_17",
+          "preview_ready": false
+        },
+        {
+          "id": "variant_18",
+          "parameters_checked": 42,
+          "args": "SourceAssets/Houdini/Gothic/Args/variant_18.json",
+          "hda_actor": "/Game/Gothic/Maps/L_Gothic_Catalog.L_Gothic_Catalog:PersistentLevel.HoudiniAssetActor_18",
+          "auto_cook": false,
+          "auto_bake": false,
+          "bake_folder": "/Game/Gothic/ManualBakes/variant_18",
+          "preview_ready": false
+        },
+        {
+          "id": "variant_19",
+          "parameters_checked": 42,
+          "args": "SourceAssets/Houdini/Gothic/Args/variant_19.json",
+          "hda_actor": "/Game/Gothic/Maps/L_Gothic_Catalog.L_Gothic_Catalog:PersistentLevel.HoudiniAssetActor_19",
+          "auto_cook": false,
+          "auto_bake": false,
+          "bake_folder": "/Game/Gothic/ManualBakes/variant_19",
+          "preview_ready": false
+        },
+        {
+          "id": "variant_20",
+          "parameters_checked": 42,
+          "args": "SourceAssets/Houdini/Gothic/Args/variant_20.json",
+          "hda_actor": "/Game/Gothic/Maps/L_Gothic_Catalog.L_Gothic_Catalog:PersistentLevel.HoudiniAssetActor_20",
+          "auto_cook": false,
+          "auto_bake": false,
+          "bake_folder": "/Game/Gothic/ManualBakes/variant_20",
+          "preview_ready": false
+        },
+        {
+          "id": "variant_21",
+          "parameters_checked": 42,
+          "args": "SourceAssets/Houdini/Gothic/Args/variant_21.json",
+          "hda_actor": "/Game/Gothic/Maps/L_Gothic_Catalog.L_Gothic_Catalog:PersistentLevel.HoudiniAssetActor_21",
+          "auto_cook": false,
+          "auto_bake": false,
+          "bake_folder": "/Game/Gothic/ManualBakes/variant_21",
+          "preview_ready": false
+        },
+        {
+          "id": "variant_22",
+          "parameters_checked": 42,
+          "args": "SourceAssets/Houdini/Gothic/Args/variant_22.json",
+          "hda_actor": "/Game/Gothic/Maps/L_Gothic_Catalog.L_Gothic_Catalog:PersistentLevel.HoudiniAssetActor_22",
+          "auto_cook": false,
+          "auto_bake": false,
+          "bake_folder": "/Game/Gothic/ManualBakes/variant_22",
+          "preview_ready": false
+        },
+        {
+          "id": "variant_23",
+          "parameters_checked": 42,
+          "args": "SourceAssets/Houdini/Gothic/Args/variant_23.json",
+          "hda_actor": "/Game/Gothic/Maps/L_Gothic_Catalog.L_Gothic_Catalog:PersistentLevel.HoudiniAssetActor_23",
+          "auto_cook": false,
+          "auto_bake": false,
+          "bake_folder": "/Game/Gothic/ManualBakes/variant_23",
+          "preview_ready": false
+        },
+        {
+          "id": "variant_24",
+          "parameters_checked": 42,
+          "args": "SourceAssets/Houdini/Gothic/Args/variant_24.json",
+          "hda_actor": "/Game/Gothic/Maps/L_Gothic_Catalog.L_Gothic_Catalog:PersistentLevel.HoudiniAssetActor_24",
+          "auto_cook": false,
+          "auto_bake": false,
+          "bake_folder": "/Game/Gothic/ManualBakes/variant_24",
+          "preview_ready": false
+        },
+        {
+          "id": "variant_25",
+          "parameters_checked": 42,
+          "args": "SourceAssets/Houdini/Gothic/Args/variant_25.json",
+          "hda_actor": "/Game/Gothic/Maps/L_Gothic_Catalog.L_Gothic_Catalog:PersistentLevel.HoudiniAssetActor_25",
+          "auto_cook": false,
+          "auto_bake": false,
+          "bake_folder": "/Game/Gothic/ManualBakes/variant_25",
+          "preview_ready": false
+        },
+        {
+          "id": "variant_26",
+          "parameters_checked": 42,
+          "args": "SourceAssets/Houdini/Gothic/Args/variant_26.json",
+          "hda_actor": "/Game/Gothic/Maps/L_Gothic_Catalog.L_Gothic_Catalog:PersistentLevel.HoudiniAssetActor_26",
+          "auto_cook": false,
+          "auto_bake": false,
+          "bake_folder": "/Game/Gothic/ManualBakes/variant_26",
+          "preview_ready": false
+        },
+        {
+          "id": "variant_27",
+          "parameters_checked": 42,
+          "args": "SourceAssets/Houdini/Gothic/Args/variant_27.json",
+          "hda_actor": "/Game/Gothic/Maps/L_Gothic_Catalog.L_Gothic_Catalog:PersistentLevel.HoudiniAssetActor_27",
+          "auto_cook": false,
+          "auto_bake": false,
+          "bake_folder": "/Game/Gothic/ManualBakes/variant_27",
+          "preview_ready": false
+        },
+        {
+          "id": "variant_28",
+          "parameters_checked": 42,
+          "args": "SourceAssets/Houdini/Gothic/Args/variant_28.json",
+          "hda_actor": "/Game/Gothic/Maps/L_Gothic_Catalog.L_Gothic_Catalog:PersistentLevel.HoudiniAssetActor_28",
+          "auto_cook": false,
+          "auto_bake": false,
+          "bake_folder": "/Game/Gothic/ManualBakes/variant_28",
+          "preview_ready": false
+        }
+      ]
+    }
+  ],
+  "editable_hdas": 52
+}

@@ -1,0 +1,229 @@
+{
+  "runtime": "22.0.368",
+  "license": "licenseCategoryType.Commercial",
+  "generator_sha256": "917ece5df457278e7dbde95e341febb6831d13adcd4b39fc451cff21c7a3a54d",
+  "records": [
+    {
+      "preset": "01_townhouse_base",
+      "status": "passed",
+      "points": 41116,
+      "primitives": 42648,
+      "geometry_sha256": "e3c31c52f70f9b423def92315b852d1778c6fa53e70426e13a095d596270faeb",
+      "warnings": [],
+      "cook_and_export_seconds": 9.674705999999787
+    },
+    {
+      "preset": "01_townhouse_compact",
+      "status": "passed",
+      "points": 40378,
+      "primitives": 41958,
+      "geometry_sha256": "9db852bc766e1d6890aea1b8a508bc9819d6f60544d13c4400741e5e70c1ea20",
+      "warnings": [],
+      "cook_and_export_seconds": 9.62535890000072
+    },
+    {
+      "preset": "01_townhouse_large",
+      "status": "passed",
+      "points": 55672,
+      "primitives": 57343,
+      "geometry_sha256": "fd5dcdb4f435b5e8dabfdd5f7fe81b0dd33836f3c98fc70ebccbac25c2af2241",
+      "warnings": [],
+      "cook_and_export_seconds": 13.931729299998551
+    },
+    {
+      "preset": "01_townhouse_small",
+      "status": "passed",
+      "points": 22420,
+      "primitives": 23306,
+      "geometry_sha256": "86cc9b7c570d9e27d969a018b03030103a587126f6b107676876a6d59653a124",
+      "warnings": [],
+      "cook_and_export_seconds": 6.0879502999996475
+    },
+    {
+      "preset": "02_round_workshop_base",
+      "status": "passed",
+      "points": 31662,
+      "primitives": 32822,
+      "geometry_sha256": "bf34858af911e9a84de69b84085af8afc577835e5e850bf5a14f3038e6c96e45",
+      "warnings": [],
+      "cook_and_export_seconds": 9.542621099999451
+    },
+    {
+      "preset": "02_round_workshop_compact",
+      "status": "passed",
+      "points": 27894,
+      "primitives": 28996,
+      "geometry_sha256": "5cdf8d5b240d37db2f19a5b358d9d036fe42ecf67907802345a66aaa0c135e1c",
+      "warnings": [],
+      "cook_and_export_seconds": 8.443058400000155
+    },
+    {
+      "preset": "02_round_workshop_large",
+      "status": "passed",
+      "points": 36136,
+      "primitives": 37068,
+      "geometry_sha256": "f8e3a4dad26d270099fe0927ea5b1ae3447be161a8a42a14f7f237b38d8adba2",
+      "warnings": [],
+      "cook_and_export_seconds": 10.586464799998794
+    },
+    {
+      "preset": "02_round_workshop_small",
+      "status": "passed",
+      "points": 15359,
+      "primitives": 15732,
+      "geometry_sha256": "598c68ff47b433a67825360e66a13363d02014b75249369c94616dc8ca51d5f2",
+      "warnings": [],
+      "cook_and_export_seconds": 4.193513599999278
+    },
+    {
+      "preset": "03_village_inn_base",
+      "status": "passed",
+      "points": 46152,
+      "primitives": 46771,
+      "geometry_sha256": "3b7165deb65f85165860f883bae78dcc519ff37150b257c9f5da910bfcd1e6e0",
+      "warnings": [],
+      "cook_and_export_seconds": 18.34795679999843
+    },
+    {
+      "preset": "03_village_inn_compact",
+      "status": "passed",
+      "points": 34400,
+      "primitives": 35152,
+      "geometry_sha256": "7c5f7d7690924aa9a8cb657627e841f07047328b1e4523cb83f96a6c79d637ec",
+      "warnings": [],
+      "cook_and_export_seconds": 13.12820499999907
+    },
+    {
+      "preset": "03_village_inn_large",
+      "status": "passed",
+      "points": 66173,
+      "primitives": 67187,
+      "geometry_sha256": "ae2b622fadb6a9cf5fa8c1cd7939954422ed10df7e9bc7838a2093a4712c58be",
+      "warnings": [],
+      "cook_and_export_seconds": 25.3633230000014
+    },
+    {
+      "preset": "03_village_inn_small",
+      "status": "passed",
+      "points": 28811,
+      "primitives": 29550,
+      "geometry_sha256": "b6e8df497d2e6ffd93f3528300773c563d9ae890a483f42c3947d2cba4341aed",
+      "warnings": [],
+      "cook_and_export_seconds": 8.165650200000528
+    },
+    {
+      "preset": "04_windmill_base",
+      "status": "passed",
+      "points": 20071,
+      "primitives": 20449,
+      "geometry_sha256": "501c0eb3a6cee1730a6688b63d9693451dfe7ae6292ac9d53295b0ccd215170e",
+      "warnings": [],
+      "cook_and_export_seconds": 4.66226049999932
+    },
+    {
+      "preset": "04_windmill_compact",
+      "status": "passed",
+      "points": 28014,
+      "primitives": 28911,
+      "geometry_sha256": "4e6719915bbdd5a97f0ee9a14cb89748eb0528ba225af5afcb074069de1c0152",
+      "warnings": [],
+      "cook_and_export_seconds": 6.610019199999442
+    },
+    {
+      "preset": "04_windmill_large",
+      "status": "passed",
+      "points": 43941,
+      "primitives": 45582,
+      "geometry_sha256": "055522f8dc44841088ad4250de22c867f07d6e37316552fb7564110ce1e4372d",
+      "warnings": [],
+      "cook_and_export_seconds": 10.509084999999686
+    },
+    {
+      "preset": "04_windmill_small",
+      "status": "passed",
+      "points": 17935,
+      "primitives": 18432,
+      "geometry_sha256": "1a0753d14f7cc0129d7ac8ed174172dfbdc871102a16bc65ad38633a7d071feb",
+      "warnings": [],
+      "cook_and_export_seconds": 4.32899980000002
+    },
+    {
+      "preset": "05_watermill_base",
+      "status": "passed",
+      "points": 34792,
+      "primitives": 36036,
+      "geometry_sha256": "8ceb363d410b709ee9d7518324812ac23723795cdae6afc289c4cff8416d8fbf",
+      "warnings": [],
+      "cook_and_export_seconds": 9.033628500001214
+    },
+    {
+      "preset": "05_watermill_compact",
+      "status": "passed",
+      "points": 30414,
+      "primitives": 31657,
+      "geometry_sha256": "3cc8b92b593647d0a8c503f27e48f0a178f2e0b0c3ac2fea3755119dab262931",
+      "warnings": [],
+      "cook_and_export_seconds": 9.154208900001322
+    },
+    {
+      "preset": "05_watermill_large",
+      "status": "passed",
+      "points": 45082,
+      "primitives": 46491,
+      "geometry_sha256": "b8e2f2ba3e0c6132619253b29c75be1218a0df189edb49e4a81901e76eb6b32e",
+      "warnings": [],
+      "cook_and_export_seconds": 12.407668300000296
+    },
+    {
+      "preset": "05_watermill_small",
+      "status": "passed",
+      "points": 18178,
+      "primitives": 18838,
+      "geometry_sha256": "051aeb03d4eb7989cb2c213a803849e0afbc65314daaa4210894ab0202e6245e",
+      "warnings": [],
+      "cook_and_export_seconds": 4.153119100001277
+    },
+    {
+      "preset": "06_cliff_house_base",
+      "status": "passed",
+      "points": 31814,
+      "primitives": 31904,
+      "geometry_sha256": "7fd55438b68925865d56b71410ffc99e53a97f58a0c8cc60b80846963ec3199e",
+      "warnings": [],
+      "cook_and_export_seconds": 13.177047900000616
+    },
+    {
+      "preset": "06_cliff_house_compact",
+      "status": "passed",
+      "points": 44691,
+      "primitives": 45524,
+      "geometry_sha256": "4d4678ee95eca55a243fae20308c448df256b97177e364431ffe7f1fad16d2f8",
+      "warnings": [],
+      "cook_and_export_seconds": 17.50443230000019
+    },
+    {
+      "preset": "06_cliff_house_large",
+      "status": "passed",
+      "points": 62427,
+      "primitives": 64000,
+      "geometry_sha256": "4444ebe47cc6c96309b044b11aa70710e82c1e50c98173ecbc7e2c8ac1c95222",
+      "warnings": [],
+      "cook_and_export_seconds": 20.39265879999948
+    },
+    {
+      "preset": "06_cliff_house_small",
+      "status": "passed",
+      "points": 25010,
+      "primitives": 24889,
+      "geometry_sha256": "a3150f9fbfc5729100fc37d28d2743e791cca8ecb4a35b1f7f6ed518851906e0",
+      "warnings": [],
+      "cook_and_export_seconds": 7.830896699999357
+    }
+  ],
+  "status": "passed",
+  "asset_file": "E:\\Repos\\HoudiniWorkspace\\medieval_building\\native_release\\20261031_063638\\all_presets_correct_winding\\Storybook_Building.hda",
+  "type_name": "quynh::storybook_blockout::5.1",
+  "hda_packaged": true,
+  "scene_file": "E:\\Repos\\HoudiniWorkspace\\medieval_building\\native_release\\20261031_063638\\all_presets_correct_winding\\Storybook_Building.hip",
+  "fresh_process_portability": "pending: run verify_hda.py"
+}

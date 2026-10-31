@@ -1,0 +1,78 @@
+# Detect text files; keep source and configuration files normalized to LF.
+* text=auto
+.gitignore text eol=lf
+.gitattributes text eol=lf
+*.py text eol=lf
+*.vfl text eol=lf
+*.vex text eol=lf
+*.h text eol=lf
+*.ps1 text eol=lf
+*.sh text eol=lf
+*.json text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.toml text eol=lf
+*.ini text eol=lf
+*.xml text eol=lf
+*.md text eol=lf
+*.txt text eol=lf
+*.csv text eol=lf
+*.mtl text eol=lf
+*.geo text eol=lf
+*.usda text eol=lf
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Houdini scenes and digital asset libraries require Git LFS.
+*.hip filter=lfs diff=lfs merge=lfs -text
+*.hiplc filter=lfs diff=lfs merge=lfs -text
+*.hipnc filter=lfs diff=lfs merge=lfs -text
+*.hda filter=lfs diff=lfs merge=lfs -text
+*.hdalc filter=lfs diff=lfs merge=lfs -text
+*.hdanc filter=lfs diff=lfs merge=lfs -text
+*.otl filter=lfs diff=lfs merge=lfs -text
+*.otllc filter=lfs diff=lfs merge=lfs -text
+*.otlnc filter=lfs diff=lfs merge=lfs -text
+
+# Published geometry, simulation data and interchange assets outside cache dirs.
+*.bgeo filter=lfs diff=lfs merge=lfs -text
+*.bgeo.sc filter=lfs diff=lfs merge=lfs -text
+*.bgeo.gz filter=lfs diff=lfs merge=lfs -text
+*.geo.sc filter=lfs diff=lfs merge=lfs -text
+*.geo.gz filter=lfs diff=lfs merge=lfs -text
+*.sim filter=lfs diff=lfs merge=lfs -text
+*.sim.gz filter=lfs diff=lfs merge=lfs -text
+*.vdb filter=lfs diff=lfs merge=lfs -text
+*.abc filter=lfs diff=lfs merge=lfs -text
+*.fbx filter=lfs diff=lfs merge=lfs -text
+*.obj filter=lfs diff=lfs merge=lfs -text
+*.usd filter=lfs diff=lfs merge=lfs -text
+*.usdc filter=lfs diff=lfs merge=lfs -text
+*.usdz filter=lfs diff=lfs merge=lfs -text
+
+# Texture sources, reference images and reviewed renders.
+*.png filter=lfs diff=lfs merge=lfs -text
+*.jpg filter=lfs diff=lfs merge=lfs -text
+*.jpeg filter=lfs diff=lfs merge=lfs -text
+*.tif filter=lfs diff=lfs merge=lfs -text
+*.tiff filter=lfs diff=lfs merge=lfs -text
+*.tga filter=lfs diff=lfs merge=lfs -text
+*.bmp filter=lfs diff=lfs merge=lfs -text
+*.webp filter=lfs diff=lfs merge=lfs -text
+*.exr filter=lfs diff=lfs merge=lfs -text
+*.hdr filter=lfs diff=lfs merge=lfs -text
+*.pic filter=lfs diff=lfs merge=lfs -text
+*.piclc filter=lfs diff=lfs merge=lfs -text
+*.picnc filter=lfs diff=lfs merge=lfs -text
+*.rat filter=lfs diff=lfs merge=lfs -text
+*.tx filter=lfs diff=lfs merge=lfs -text
+*.tex filter=lfs diff=lfs merge=lfs -text
+*.psd filter=lfs diff=lfs merge=lfs -text
+*.psb filter=lfs diff=lfs merge=lfs -text
+
+# Animation previews and audio references.
+*.mov filter=lfs diff=lfs merge=lfs -text
+*.mp4 filter=lfs diff=lfs merge=lfs -text
+*.avi filter=lfs diff=lfs merge=lfs -text
+*.wav filter=lfs diff=lfs merge=lfs -text
+*.mp3 filter=lfs diff=lfs merge=lfs -text

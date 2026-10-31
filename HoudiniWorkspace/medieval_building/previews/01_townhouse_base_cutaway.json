@@ -1,0 +1,41 @@
+{
+  "camera": {
+    "eye": [
+      12,
+      10,
+      -19
+    ],
+    "target": [
+      0,
+      4.1,
+      0
+    ],
+    "horizontal_fov": 38
+  },
+  "resolution": [
+    1920,
+    1200
+  ],
+  "supersampling": 1.5,
+  "scene_faces": 19017,
+  "shadow_map": [
+    3072,
+    3072
+  ],
+  "light_direction_to_sun": [
+    -0.4571443992074805,
+    0.706495889684288,
+    -0.5402615626997497
+  ],
+  "renderer": "CPU perspective-correct UV rasterizer with sun shadow map, sky ambient, contact AO, distance haze",
+  "interior_ambient_fill": 0.48,
+  "preview_script_sha256": "4dac90f68819afb3680c8fba5c4096513476b29fb17af6bf9b4413c011bc4026",
+  "mode": "cutaway",
+  "view_type": "render-only cutaway; exported geometry remains complete",
+  "source_sha256": "9a5953edcf5fb9fc7cb4ef23e5b65bf7f5b091f81acdb43556e018a8cdc79561",
+  "renderer_source_sha256": "8e60e20e0cd7dedf711c49f7996fdc81230cabce05cdfec5d87764e8fd218151",
+  "elapsed_seconds": 16.83670079300282,
+  "source_polygons": 42648,
+  "visible_polygons": 18617,
+  "provenance": "offline_geometry_preview"
+}

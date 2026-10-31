@@ -1,0 +1,29 @@
+{
+  "status": "passed",
+  "date": "2026-10-31",
+  "building_presets": 52,
+  "static_meshes": 100,
+  "versions": {
+    "Medieval": "5.3.0-crafted-joinery",
+    "Gothic": "3.2.0-crafted-joinery"
+  },
+  "changes": [
+    "Continuous Medieval opening surrounds and roof edges",
+    "Square bearing ends, fitted braces and timber pegs",
+    "Roof junction flashing at actual mass intersections",
+    "Continuous Gothic corner mouldings and jamb/sill bedding",
+    "Timber grain aligned to the member"
+  ],
+  "geometry_evidence": "joint_regressions.json",
+  "native_unreal_validation": "../PropsDetail/unreal_validation.json",
+  "images": [
+    "medieval_01_townhouse_base_window_before.png",
+    "medieval_01_townhouse_base_window_after.png",
+    "medieval_01_townhouse_base_attic_before.png",
+    "medieval_01_townhouse_base_attic_after.png",
+    "medieval_03_village_inn_base_roof_join_before.png",
+    "medieval_03_village_inn_base_roof_join_after.png",
+    "gothic_variant_12_corner_before.png",
+    "gothic_variant_12_corner_after.png"
+  ]
+}
