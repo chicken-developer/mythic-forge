@@ -1,0 +1,15 @@
+// Instancing data for the explicit reference-specific facade override modules.
+int count=nprimitives(0);vector up={0,1,0};
+string wanted=chs("kind");
+for(int pr=0;pr<count;pr++){
+ string kind=prim(0,"functional_kind",pr);
+ if(wanted=="forge"&&kind!="forge")continue;
+ if(wanted=="hoist"&&kind!="hoist"&&kind!="hoist_hook")continue;
+ if(wanted=="crate"&&kind!="hoist")continue;
+ vector n=prim(0,"facade_normal",pr),u=prim(0,"edge_u",pr);
+ vector p=primuv(0,"P",pr,set(.5,.5,0));p.y=prim(0,"floor_b",pr);
+ if(wanted!="forge")p.y+=float(prim(0,"floor_h",pr))-.28;
+ int pt=addpoint(0,p);matrix3 m=set(u,up,-n);
+ setpointattrib(0,"transform",pt,m);setpointattrib(0,"module_prefix",pt,string(prim(0,"facade_slot",pr))+"/"+kind);
+}
+for(int pr=count-1;pr>=0;pr--)removeprim(0,pr,1);

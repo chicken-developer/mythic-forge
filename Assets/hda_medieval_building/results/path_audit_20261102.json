@@ -1,0 +1,1006 @@
+{
+  "status": "failed",
+  "root": "E:\\Repos\\mythic-forge",
+  "counts": {
+    "python_files": 138,
+    "json_files": 1140,
+    "active_json_files": 72,
+    "manifest_file_paths": 194
+  },
+  "required_entry_points": 12,
+  "resolved_source_roots": 125,
+  "root_checks": [
+    {
+      "file": "Assets/hda_medieval_building/build_hda.py",
+      "name": "ROOT",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building",
+      "exists": true
+    },
+    {
+      "file": "Assets/hda_medieval_building/scripts/bake_variants.py",
+      "name": "ROOT",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building",
+      "exists": true
+    },
+    {
+      "file": "Assets/hda_medieval_building/scripts/bake_variants.py",
+      "name": "PROJECT",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render",
+      "exists": true
+    },
+    {
+      "file": "Assets/hda_medieval_building/scripts/check_configs.py",
+      "name": "ROOT",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building",
+      "exists": true
+    },
+    {
+      "file": "Assets/hda_medieval_building/scripts/check_portable.py",
+      "name": "ROOT",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building",
+      "exists": true
+    },
+    {
+      "file": "Assets/hda_medieval_building/scripts/collect_results.py",
+      "name": "ROOT",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building",
+      "exists": true
+    },
+    {
+      "file": "Assets/hda_medieval_building/scripts/collect_results.py",
+      "name": "P",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render",
+      "exists": true
+    },
+    {
+      "file": "Assets/hda_medieval_building/scripts/create_datasets.py",
+      "name": "ROOT",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building",
+      "exists": true
+    },
+    {
+      "file": "Assets/hda_medieval_building/scripts/diagnose_bake.py",
+      "name": "ROOT",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building",
+      "exists": true
+    },
+    {
+      "file": "Assets/hda_medieval_building/scripts/inspect_scene.py",
+      "name": "ROOT",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building",
+      "exists": true
+    },
+    {
+      "file": "Assets/hda_medieval_building/scripts/render_variant.py",
+      "name": "ROOT",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building",
+      "exists": true
+    },
+    {
+      "file": "Assets/hda_medieval_building/scripts/test_exploded_bake.py",
+      "name": "ROOT",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building",
+      "exists": true
+    },
+    {
+      "file": "Assets/hda_medieval_building/scripts/update_model.py",
+      "name": "ROOT",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building",
+      "exists": true
+    },
+    {
+      "file": "Assets/texture_gothic/build_gothic_materials.py",
+      "name": "ROOT",
+      "path": "E:\\Repos\\mythic-forge",
+      "exists": true
+    },
+    {
+      "file": "Assets/texture_gothic/build_gothic_materials.py",
+      "name": "SRC",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\texture_gothic",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Houdini/Gothic/production_pipeline.py",
+      "name": "ROOT",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render\\SourceAssets\\Houdini\\Gothic",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/assign_materials.py",
+      "name": "ROOT",
+      "path": "E:\\Repos\\mythic-forge",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/build_city_levels.py",
+      "name": "ROOT",
+      "path": "E:\\Repos\\mythic-forge",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/build_facade_review.py",
+      "name": "ROOT",
+      "path": "E:\\Repos\\mythic-forge",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/build_facade_review.py",
+      "name": "SOURCE",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render\\SourceAssets\\Gothic\\FacadeReview",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/build_lineup.py",
+      "name": "ROOT",
+      "path": "E:\\Repos\\mythic-forge",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/build_materials.py",
+      "name": "ROOT",
+      "path": "E:\\Repos\\mythic-forge",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/build_materials.py",
+      "name": "S",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\texture_gothic",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/capture_city.py",
+      "name": "ROOT",
+      "path": "E:\\Repos\\mythic-forge",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/capture_city_views.py",
+      "name": "ROOT",
+      "path": "E:\\Repos\\mythic-forge",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/capture_city_views.py",
+      "name": "TOOLS",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render\\Tools\\Gothic",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/capture_facade_review.py",
+      "name": "ROOT",
+      "path": "E:\\Repos\\mythic-forge",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/city_scene.py",
+      "name": "ROOT",
+      "path": "E:\\Repos\\mythic-forge",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/export_houdini.py",
+      "name": "ROOT",
+      "path": "E:\\Repos\\mythic-forge",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/export_houdini.py",
+      "name": "SOURCE",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_gothic_building",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/finalize_city.py",
+      "name": "ROOT",
+      "path": "E:\\Repos\\mythic-forge",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/finalize_designer.py",
+      "name": "SRC",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\texture_gothic",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/import_city_assets.py",
+      "name": "ROOT",
+      "path": "E:\\Repos\\mythic-forge",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/import_city_assets.py",
+      "name": "SOURCE",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render\\SourceAssets\\Gothic",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/import_city_context.py",
+      "name": "ROOT",
+      "path": "E:\\Repos\\mythic-forge",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/import_meshes.py",
+      "name": "ROOT",
+      "path": "E:\\Repos\\mythic-forge",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/package_city_review.py",
+      "name": "ROOT",
+      "path": "E:\\Repos\\mythic-forge",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/package_city_review.py",
+      "name": "PROJECT",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/package_city_review.py",
+      "name": "SOURCE",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_gothic_building",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/plan_city.py",
+      "name": "ROOT",
+      "path": "E:\\Repos\\mythic-forge",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/plan_city.py",
+      "name": "SOURCE",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render\\SourceAssets\\Gothic",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/relocate_city_sources.py",
+      "name": "REPO",
+      "path": "E:\\Repos\\mythic-forge",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/relocate_city_sources.py",
+      "name": "SOURCE",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_gothic_building",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/test_city_play.py",
+      "name": "ROOT",
+      "path": "E:\\Repos\\mythic-forge",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/test_city_play.py",
+      "name": "TOOLS",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render\\Tools\\Gothic",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/validate_assets.py",
+      "name": "ROOT",
+      "path": "E:\\Repos\\mythic-forge",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/validate_city.py",
+      "name": "ROOT",
+      "path": "E:\\Repos\\mythic-forge",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/audit_native_geometry.py",
+      "name": "P",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/bootstrap_native.py",
+      "name": "PROJECT",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/bootstrap_native.py",
+      "name": "SOURCE",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/build_all_native.py",
+      "name": "PROJECT",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/build_levels.py",
+      "name": "ROOT",
+      "path": "E:\\Repos\\mythic-forge",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/build_levels.py",
+      "name": "P",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/capture.py",
+      "name": "ROOT",
+      "path": "E:\\Repos\\mythic-forge",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/capture_review.py",
+      "name": "ROOT",
+      "path": "E:\\Repos\\mythic-forge",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/capture_views.py",
+      "name": "P",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/capture_views.py",
+      "name": "ROOT",
+      "path": "E:\\Repos\\mythic-forge",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/configure_navigation_agent.py",
+      "name": "P",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/diagnose_sample.py",
+      "name": "ROOT",
+      "path": "E:\\Repos\\mythic-forge",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/export_hill_berms.py",
+      "name": "P",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/export_native.py",
+      "name": "PROJECT",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/export_native.py",
+      "name": "REPO",
+      "path": "E:\\Repos\\mythic-forge",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/finalize_editor.py",
+      "name": "P",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/import_assets.py",
+      "name": "ROOT",
+      "path": "E:\\Repos\\mythic-forge",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/import_assets.py",
+      "name": "P",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/import_assets.py",
+      "name": "S",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render\\SourceAssets\\Medieval",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/install_verified_source.py",
+      "name": "P",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/package_review.py",
+      "name": "P",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/package_review.py",
+      "name": "ROOT",
+      "path": "E:\\Repos\\mythic-forge",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/package_review.py",
+      "name": "S",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render\\SourceAssets\\Medieval",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/plan_footpaths.py",
+      "name": "P",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/plan_footpaths.py",
+      "name": "S",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render\\SourceAssets\\Medieval",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/plan_village.py",
+      "name": "P",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/plan_village.py",
+      "name": "SOURCE",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render\\SourceAssets\\Medieval",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/prepare_materials.py",
+      "name": "PROJECT",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/prepare_materials.py",
+      "name": "REPO",
+      "path": "E:\\Repos\\mythic-forge",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/publish_native.py",
+      "name": "PROJECT",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/refine_village.py",
+      "name": "ROOT",
+      "path": "E:\\Repos\\mythic-forge",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/refine_village.py",
+      "name": "P",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/repair_live_precision.py",
+      "name": "P",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/repair_native_export.py",
+      "name": "PROJECT",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/repair_winding.py",
+      "name": "PROJECT",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/review_sample.py",
+      "name": "ROOT",
+      "path": "E:\\Repos\\mythic-forge",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/scene.py",
+      "name": "ROOT",
+      "path": "E:\\Repos\\mythic-forge",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/scene.py",
+      "name": "P",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/test_village_play.py",
+      "name": "ROOT",
+      "path": "E:\\Repos\\mythic-forge",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/test_village_play.py",
+      "name": "P",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/update_clearance_note.py",
+      "name": "P",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/validate_village.py",
+      "name": "ROOT",
+      "path": "E:\\Repos\\mythic-forge",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/validate_village.py",
+      "name": "P",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/verify_final_native.py",
+      "name": "ROOT",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render\\Tools\\Medieval",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/verify_relocation.py",
+      "name": "PROJECT",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval15/capture_review.py",
+      "name": "P",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval15/capture_review.py",
+      "name": "ROOT",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval15/import_and_test.py",
+      "name": "P",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval15/import_and_test.py",
+      "name": "ROOT",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval15/probe_editor.py",
+      "name": "P",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval15/run_editor_script.py",
+      "name": "ROOT",
+      "path": "E:\\Repos\\mythic-forge",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Props/build_detail_assets.py",
+      "name": "P",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Props/build_detail_assets.py",
+      "name": "SOURCE",
+      "path": "E:\\Repos\\mythic-forge\\Assets",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Props/build_editor_hdas.py",
+      "name": "P",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Props/capture_catalog_detail.py",
+      "name": "P",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Props/capture_joint_detail.py",
+      "name": "P",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Props/capture_skytown_review.py",
+      "name": "P",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Props/collect_light_layout.py",
+      "name": "P",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Props/diagnose_rosette.py",
+      "name": "P",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Props/editable_hda_catalog.py",
+      "name": "P",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Props/finalize_skytown.py",
+      "name": "P",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Props/finish_catalog_review.py",
+      "name": "P",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Props/import_catalog_assets.py",
+      "name": "P",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Props/package_detail_review.py",
+      "name": "P",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Props/package_editable_review.py",
+      "name": "P",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Props/prepare_catalog_args.py",
+      "name": "P",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Props/prepare_skytown_library.py",
+      "name": "P",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Props/probe_editor.py",
+      "name": "P",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render\\Saved\\PropsDetail",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Props/probe_runtime.py",
+      "name": "ROOT",
+      "path": "E:\\Repos\\mythic-forge\\Assets",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Props/promote_round_fix.py",
+      "name": "P",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Props/repair_light_layout.py",
+      "name": "P",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Props/skytown_catalog.py",
+      "name": "P",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Props/update_catalogs.py",
+      "name": "P",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Props/validate_exports.py",
+      "name": "P",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Props/verify_detail_geometry.py",
+      "name": "P",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Props/verify_joinery.py",
+      "name": "P",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Props/verify_portable_detail.py",
+      "name": "P",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render",
+      "exists": true
+    },
+    {
+      "file": "Assets/_render/Tools/Props/verify_source_scene.py",
+      "name": "P",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\_render",
+      "exists": true
+    }
+  ],
+  "failures": [
+    {
+      "file": "Assets/hda_gothic_building/build_hda.py",
+      "issue": "missing required entry point"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Gothic/FacadeReview/facade_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "Assets/hda_gothic_building/references/master.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Gothic/FacadeReview/facade_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "Assets/hda_gothic_building/references/preset_01.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\plaster_basecolor.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\plaster_normal.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\plaster_roughness.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\wood_basecolor.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\wood_normal.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\wood_roughness.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\tile_basecolor.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\tile_normal.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\tile_roughness.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\stone_basecolor.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\stone_normal.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\stone_roughness.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\teal_basecolor.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\teal_normal.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\teal_roughness.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\glass_basecolor.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\glass_normal.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\glass_roughness.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\metal_basecolor.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\metal_normal.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\metal_roughness.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\canvas_basecolor.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\canvas_normal.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\canvas_roughness.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\sail_basecolor.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\sail_normal.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\sail_roughness.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\ember_basecolor.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\ember_normal.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\ember_roughness.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\water_basecolor.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\water_normal.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\water_roughness.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\leaf_basecolor.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\leaf_normal.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\leaf_roughness.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\flower_basecolor.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\flower_normal.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\flower_roughness.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\light_basecolor.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\light_normal.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\light_roughness.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\rock_basecolor.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\rock_normal.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\rock_roughness.png"
+    }
+  ],
+  "limits": "Static source/config audit only; no Houdini cook, Unreal editor or binary asset validation."
+}

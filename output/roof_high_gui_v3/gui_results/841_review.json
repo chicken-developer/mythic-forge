@@ -1,0 +1,33 @@
+{
+  "status": "pass",
+  "result": {
+    "variant_id": "08_normal_house_b",
+    "quality": "legacy_low",
+    "points": 19042,
+    "primitives": 14882,
+    "display_node": "/obj/medieval_modular_v2/BUILDING",
+    "camera": {
+      "t": [
+        18.0,
+        17.5,
+        -21.0
+      ],
+      "r": [
+        -22.152627580061193,
+        141.00900595749454,
+        0.0
+      ],
+      "orthowidth": 14.0
+    },
+    "ui": true,
+    "scene": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\..\\modular_rebuild_v2\\scenes\\variants\\08_normal_house_b.hip",
+    "wire": false,
+    "position_hash": "62e50ef2d41e10d95a22dfd584795176c5205e2fd8e5ee34ebf98620067a3917",
+    "hda_sha256": "90fa34e28094a8d15b560349f3e284619a680a553058937c1b2bccb0484ac687",
+    "hda_type": "mythic::medieval_house::4.0",
+    "definition_library": "E:/Repos/mythic-forge/output/modular_rebuild_v2/asset/medieval_building_modular.hda",
+    "window_minimized": false,
+    "window_visible": true,
+    "hud_text": "08_normal_house_b  |  BEFORE V2 LOW  |  14882 primitives  |  LIVE HOUDINI GUI"
+  }
+}

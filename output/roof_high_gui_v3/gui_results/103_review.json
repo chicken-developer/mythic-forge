@@ -1,0 +1,26 @@
+{
+  "status": "pass",
+  "result": {
+    "variant_id": "04_merchant_house",
+    "quality": "high",
+    "points": 127292,
+    "primitives": 128266,
+    "display_node": "/obj/medieval_roof_high_v3/BUILDING",
+    "camera": {
+      "t": [
+        18.0,
+        15.0,
+        -21.0
+      ],
+      "r": [
+        -22.152627580061193,
+        141.00900595749454,
+        0.0
+      ],
+      "orthowidth": 21.0
+    },
+    "ui": true,
+    "scene": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\scenes\\medieval_building_roof_high_v3.hip",
+    "wire": false
+  }
+}

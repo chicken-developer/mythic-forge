@@ -1,0 +1,39 @@
+{
+	"stats":{
+		"start_time":1793661679,
+		"end_time":1793667762,
+		"idle_time":5959,
+		"log_id":"0xFCFD35B5-0x000012DC-0x6AE91AEB-0x00000232",
+		"persistent_stats":{
+		},
+		"flags":[
+		],
+		"counts":{
+		},
+		"logs":{
+		},
+		"sums_and_counts":{
+		},
+		"strings":{
+		},
+		"checksum":"3ee8bf03681da51f8ed0747bbcc83fe5"
+	},
+	"machine_config":{
+		"houdini_major_version":"22",
+		"houdini_minor_version":"0",
+		"houdini_build_version":"368",
+		"application_name":"houdinifx",
+		"license_category":"Commercial",
+		"platform":"windows-x86_64-cl19.42",
+		"operating_system":"Microsoft Windows 11 Pro x64",
+		"number_of_processors":128,
+		"system_memory":"63.87 GB",
+		"graphics_card":"AMD Radeon RX 6900 XT",
+		"graphics_card_version":"4.6.0 Compatibility Profile Context 26.10.1.261008",
+		"mac_address_hash":"6e037e87b1cb0fcc8c82ff8e7ac424cc",
+		"user_config_version":20140523,
+		"system_resolution":"5120x1440",
+		"cpu_info":"AMD Ryzen Threadripper 3990X 64-Core Processor",
+		"config_hash":"76f71e52ec628fa194e2c2891fbe67b1"
+	}
+}

@@ -1,0 +1,5416 @@
+{
+  "version": "3.3.0-skytown-joinery",
+  "status": "passed",
+  "source_hip": "E:\\Repos\\mythic-forge\\Assets\\hda_gothic_building\\gothic_building.hip",
+  "source_sha256": "8a9b13ab8bec97a6bb72ddea4e0d09e5f76dd598d4b1ef470014a6cdf27c6b56",
+  "approved_reference": "facade_review/gothic_facade_review.hip",
+  "fbx_units": "centimetres",
+  "houdini": "22.0.368",
+  "variants": [
+    {
+      "points": 64266,
+      "triangles": 126802,
+      "size_m": [
+        9.119999885559082,
+        11.137014389038086,
+        12.860000312328339
+      ],
+      "min_m": [
+        -4.559999942779541,
+        0.0,
+        -0.4300000071525574
+      ],
+      "max_m": [
+        4.559999942779541,
+        11.137014389038086,
+        12.430000305175781
+      ],
+      "invalid_normals": 0,
+      "degenerate_triangles": 0,
+      "python_sops": 0,
+      "native_nodes": 382,
+      "sweeps": 17,
+      "bevels": 23,
+      "materials": {
+        "metal": 7896,
+        "glass": 2272,
+        "roof": 374,
+        "trim": 47848,
+        "stone": 66492,
+        "skytown_MI_Furniture01": 1920
+      },
+      "id": "variant_01",
+      "label": "Village Chapel",
+      "district": "landmark",
+      "use": "religious",
+      "file": "Assets/_render/SourceAssets/Gothic/Meshes/SM_Gothic_variant_01.fbx",
+      "quality": "normal",
+      "parameters": {
+        "building_type": "church",
+        "plan_layout": "hall",
+        "length_bays": 3,
+        "bay_length": 4.0,
+        "nave_width": 8.0,
+        "wall_height": 5.5,
+        "wall_thickness": 0.35,
+        "roof_pitch": 50.0,
+        "tower_layout": "none",
+        "tower_floors": 3,
+        "tower_floor_height": 4.0,
+        "spire_height": 6.0,
+        "town_floors": 3,
+        "dormer_count": 2,
+        "detail": 0.2,
+        "stone_palette": "limestone",
+        "gold_accents": false,
+        "clock_enable": false,
+        "global_scale": 1.0,
+        "facade_style": "lancet",
+        "window_pattern": "single",
+        "tower_crown": "pyramid",
+        "roof_material": "slate",
+        "ridge_detail": "sparse",
+        "gate_composition": "fortified",
+        "porch_depth": 0.0,
+        "urban_program": "dwelling",
+        "urban_plan": "compact",
+        "front_bays": 3,
+        "floor_height": 3.1,
+        "urban_depth": 7.0,
+        "urban_roof": "gable",
+        "balcony_enable": false,
+        "chimney_count": 1,
+        "interior_enable": true,
+        "interior_furniture": true,
+        "interior_lighting": true
+      },
+      "seeds": {
+        "layout": 42,
+        "decoration": 101
+      },
+      "fbx_sha256": "d2de9f5c189fbff127c1910ef41dbc0a8ed0615a0bd6d4fa331ed9ed8e8d064f",
+      "seconds": 12.168,
+      "interior_triangles": 2484,
+      "interior_lights": [
+        {
+          "name": "nave_lamp_(0, -1)_light_source/source_0",
+          "position_m": [
+            -2.5600000619888306,
+            4.2099997997283936,
+            -4.000000208616257
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(0, 1)_light_source/source_1",
+          "position_m": [
+            2.5600000619888306,
+            4.2099997997283936,
+            -4.000000208616257
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(1, -1)_light_source/source_2",
+          "position_m": [
+            -2.5600000619888306,
+            4.2099997997283936,
+            -1.4901161193847656e-07
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(1, 1)_light_source/source_3",
+          "position_m": [
+            2.5600000619888306,
+            4.2099997997283936,
+            -1.4901161193847656e-07
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(2, -1)_light_source/source_4",
+          "position_m": [
+            -2.5600000619888306,
+            4.2099997997283936,
+            3.999999850988388
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(2, 1)_light_source/source_5",
+          "position_m": [
+            2.5600000619888306,
+            4.2099997997283936,
+            3.999999850988388
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        }
+      ],
+      "nonfinite_attributes": 0,
+      "degenerate_triangles_removed": 0,
+      "generator_version": "3.3.0-skytown-joinery",
+      "source_origin_m": [
+        0.0,
+        0.0,
+        6.000000149011612
+      ],
+      "polygons": 126802,
+      "source_polygons": 126802,
+      "opening_clearance": {
+        "support_groups": 0,
+        "opening_support_pairs_checked": 0,
+        "minimum_projected_gap_m": null,
+        "blocked_openings": 0
+      },
+      "skytown_assets": [
+        "/Game/SkyTown/Meshes/SM_Furniture01_Bench01"
+      ]
+    },
+    {
+      "points": 145014,
+      "triangles": 270642,
+      "size_m": [
+        11.389999866485596,
+        12.5,
+        21.830000281333923
+      ],
+      "min_m": [
+        -6.829999923706055,
+        0.0,
+        -1.399999976158142
+      ],
+      "max_m": [
+        4.559999942779541,
+        12.5,
+        20.43000030517578
+      ],
+      "invalid_normals": 0,
+      "degenerate_triangles": 0,
+      "python_sops": 0,
+      "native_nodes": 778,
+      "sweeps": 15,
+      "bevels": 50,
+      "materials": {
+        "metal": 17220,
+        "glass": 4880,
+        "stone": 127880,
+        "trim": 100050,
+        "roof": 770,
+        "floor": 1316,
+        "wood": 10360,
+        "skytown_MI_Furniture01": 8166
+      },
+      "id": "variant_02",
+      "label": "Town Church",
+      "district": "landmark",
+      "use": "religious",
+      "file": "Assets/_render/SourceAssets/Gothic/Meshes/SM_Gothic_variant_02.fbx",
+      "quality": "normal",
+      "parameters": {
+        "building_type": "church",
+        "plan_layout": "hall",
+        "length_bays": 5,
+        "bay_length": 4.0,
+        "nave_width": 8.0,
+        "wall_height": 6.5,
+        "wall_thickness": 0.35,
+        "roof_pitch": 50.0,
+        "tower_layout": "front_single",
+        "tower_floors": 3,
+        "tower_floor_height": 4.0,
+        "spire_height": 0.0,
+        "town_floors": 3,
+        "dormer_count": 2,
+        "detail": 0.4,
+        "stone_palette": "sandstone",
+        "gold_accents": false,
+        "clock_enable": false,
+        "global_scale": 1.0,
+        "facade_style": "portal_gallery",
+        "window_pattern": "rhythmic",
+        "tower_crown": "canopied",
+        "roof_material": "oxblood",
+        "ridge_detail": "sparse",
+        "gate_composition": "fortified",
+        "porch_depth": 1.2,
+        "urban_program": "dwelling",
+        "urban_plan": "compact",
+        "front_bays": 3,
+        "floor_height": 3.1,
+        "urban_depth": 7.0,
+        "urban_roof": "gable",
+        "balcony_enable": false,
+        "chimney_count": 1,
+        "interior_enable": true,
+        "interior_furniture": true,
+        "interior_lighting": true
+      },
+      "seeds": {
+        "layout": 42,
+        "decoration": 101
+      },
+      "fbx_sha256": "3bca8d07c1cde0034a00ac0787b8b3e014c98a7135ebf6c50b2ba78fe7df47c9",
+      "seconds": 27.008,
+      "interior_triangles": 25017,
+      "interior_lights": [
+        {
+          "name": "front_single/front_single_interior_lamp_light_source/source_0",
+          "position_m": [
+            -4.473400115966797,
+            3.459999918937683,
+            -8.075000166893005
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "front_single/front_single_interior_lamp_light_source/source_1",
+          "position_m": [
+            -4.473400115966797,
+            7.4599997997283936,
+            -8.075000166893005
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "front_single/front_single_interior_lamp_light_source/source_2",
+          "position_m": [
+            -4.473400115966797,
+            11.46000051498413,
+            -8.075000166893005
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(0, -1)_light_source/source_3",
+          "position_m": [
+            -1.4250000715255737,
+            4.2099997997283936,
+            -7.515000224113464
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(0, 1)_light_source/source_4",
+          "position_m": [
+            3.6950000524520874,
+            4.2099997997283936,
+            -7.515000224113464
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(1, -1)_light_source/source_5",
+          "position_m": [
+            -1.4250000715255737,
+            4.2099997997283936,
+            -3.5150001645088196
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(1, 1)_light_source/source_6",
+          "position_m": [
+            3.6950000524520874,
+            4.2099997997283936,
+            -3.5150001645088196
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(2, -1)_light_source/source_7",
+          "position_m": [
+            -1.4250000715255737,
+            4.2099997997283936,
+            0.4849998354911804
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(2, 1)_light_source/source_8",
+          "position_m": [
+            3.6950000524520874,
+            4.2099997997283936,
+            0.4849998354911804
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(3, -1)_light_source/source_9",
+          "position_m": [
+            -1.4250000715255737,
+            4.2099997997283936,
+            4.48499983549118
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(3, 1)_light_source/source_10",
+          "position_m": [
+            3.6950000524520874,
+            4.2099997997283936,
+            4.48499983549118
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(4, -1)_light_source/source_11",
+          "position_m": [
+            -1.4250000715255737,
+            4.2099997997283936,
+            8.48499983549118
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(4, 1)_light_source/source_12",
+          "position_m": [
+            3.6950000524520874,
+            4.2099997997283936,
+            8.48499983549118
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        }
+      ],
+      "nonfinite_attributes": 0,
+      "degenerate_triangles_removed": 0,
+      "generator_version": "3.3.0-skytown-joinery",
+      "source_origin_m": [
+        -1.1349999904632568,
+        0.0,
+        9.51500016450882
+      ],
+      "polygons": 270642,
+      "source_polygons": 270642,
+      "opening_clearance": {
+        "support_groups": 0,
+        "opening_support_pairs_checked": 0,
+        "minimum_projected_gap_m": null,
+        "blocked_openings": 0
+      },
+      "skytown_assets": [
+        "/Game/SkyTown/Meshes/SM_Furniture01_Bench01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Shelf01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Table01"
+      ]
+    },
+    {
+      "points": 129275,
+      "triangles": 251542,
+      "size_m": [
+        6.0,
+        12.73855972290039,
+        6.930000185966492
+      ],
+      "min_m": [
+        -3.0,
+        0.0,
+        -0.8999999761581421
+      ],
+      "max_m": [
+        3.0,
+        12.73855972290039,
+        6.03000020980835
+      ],
+      "invalid_normals": 0,
+      "degenerate_triangles": 0,
+      "python_sops": 0,
+      "native_nodes": 615,
+      "sweeps": 10,
+      "bevels": 27,
+      "materials": {
+        "floor": 1316,
+        "wood": 9544,
+        "metal": 4260,
+        "glass": 3620,
+        "stone": 55594,
+        "trim": 169450,
+        "skytown_MI_Furniture01": 1250,
+        "skytown_MI_Bed01": 5672,
+        "roof": 836
+      },
+      "id": "variant_03",
+      "label": "Gothic Townhouse",
+      "district": "landmark",
+      "use": "civic",
+      "file": "Assets/_render/SourceAssets/Gothic/Meshes/SM_Gothic_variant_03.fbx",
+      "quality": "normal",
+      "parameters": {
+        "building_type": "townhouse",
+        "plan_layout": "hall",
+        "length_bays": 5,
+        "bay_length": 4.0,
+        "nave_width": 8.0,
+        "wall_height": 9.0,
+        "wall_thickness": 0.35,
+        "roof_pitch": 50.0,
+        "tower_layout": "none",
+        "tower_floors": 3,
+        "tower_floor_height": 4.0,
+        "spire_height": 6.0,
+        "town_floors": 3,
+        "dormer_count": 2,
+        "detail": 0.3,
+        "stone_palette": "limestone",
+        "gold_accents": false,
+        "clock_enable": false,
+        "global_scale": 1.0,
+        "facade_style": "lancet",
+        "window_pattern": "paired",
+        "tower_crown": "pyramid",
+        "roof_material": "copper",
+        "ridge_detail": "sparse",
+        "gate_composition": "fortified",
+        "porch_depth": 0.0,
+        "urban_program": "dwelling",
+        "urban_plan": "compact",
+        "front_bays": 3,
+        "floor_height": 3.1,
+        "urban_depth": 7.0,
+        "urban_roof": "gable",
+        "balcony_enable": false,
+        "chimney_count": 1,
+        "interior_enable": true,
+        "interior_furniture": true,
+        "interior_lighting": true
+      },
+      "seeds": {
+        "layout": 42,
+        "decoration": 101
+      },
+      "fbx_sha256": "038ac2f122ec3b5ec1bd1769f4514bf4b6d13471d3cf713654f36f4e65d02901",
+      "seconds": 20.752,
+      "interior_triangles": 22182,
+      "interior_lights": [
+        {
+          "name": "town_interior_lamp_light_source/source_0",
+          "position_m": [
+            -0.9359999895095825,
+            2.5600000619888306,
+            0.23499995470046997
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "town_interior_lamp_light_source/source_1",
+          "position_m": [
+            -0.9359999895095825,
+            5.6600000858306885,
+            0.23499995470046997
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "town_interior_lamp_light_source/source_2",
+          "position_m": [
+            -0.9359999895095825,
+            8.759999752044678,
+            0.23499995470046997
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        }
+      ],
+      "nonfinite_attributes": 0,
+      "degenerate_triangles_removed": 0,
+      "generator_version": "3.3.0-skytown-joinery",
+      "source_origin_m": [
+        0.0,
+        0.0,
+        2.5650001168251038
+      ],
+      "polygons": 251542,
+      "source_polygons": 251542,
+      "opening_clearance": {
+        "support_groups": 2,
+        "opening_support_pairs_checked": 2,
+        "minimum_projected_gap_m": 0.5339999904632569,
+        "blocked_openings": 0
+      },
+      "skytown_assets": [
+        "/Game/SkyTown/Meshes/SM_Bed01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Bench01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Shelf01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Table01"
+      ]
+    },
+    {
+      "points": 413085,
+      "triangles": 759487,
+      "size_m": [
+        14.359999656677246,
+        18.600000381469727,
+        31.18000030517578
+      ],
+      "min_m": [
+        -7.179999828338623,
+        0.0,
+        -2.75
+      ],
+      "max_m": [
+        7.179999828338623,
+        18.600000381469727,
+        28.43000030517578
+      ],
+      "invalid_normals": 0,
+      "degenerate_triangles": 0,
+      "python_sops": 0,
+      "native_nodes": 1787,
+      "sweeps": 34,
+      "bevels": 69,
+      "materials": {
+        "metal": 26602,
+        "glass": 10844,
+        "trim": 352239,
+        "stone": 332096,
+        "roof": 1024,
+        "wood": 20704,
+        "floor": 2046,
+        "skytown_MI_Furniture01": 13932
+      },
+      "id": "variant_04",
+      "label": "Twin Tower Church",
+      "district": "landmark",
+      "use": "religious",
+      "file": "Assets/_render/SourceAssets/Gothic/Meshes/SM_Gothic_variant_04.fbx",
+      "quality": "normal",
+      "parameters": {
+        "building_type": "church",
+        "plan_layout": "aisles",
+        "length_bays": 7,
+        "bay_length": 4.0,
+        "nave_width": 8.0,
+        "wall_height": 9.0,
+        "wall_thickness": 0.35,
+        "roof_pitch": 50.0,
+        "tower_layout": "front_pair",
+        "tower_floors": 3,
+        "tower_floor_height": 4.0,
+        "spire_height": 6.0,
+        "town_floors": 3,
+        "dormer_count": 2,
+        "detail": 0.6,
+        "stone_palette": "limestone",
+        "gold_accents": false,
+        "clock_enable": false,
+        "global_scale": 1.0,
+        "facade_style": "tracery_front",
+        "window_pattern": "paired",
+        "tower_crown": "canopied",
+        "roof_material": "slate",
+        "ridge_detail": "sparse",
+        "gate_composition": "fortified",
+        "porch_depth": 1.2,
+        "urban_program": "dwelling",
+        "urban_plan": "compact",
+        "front_bays": 3,
+        "floor_height": 3.1,
+        "urban_depth": 7.0,
+        "urban_roof": "gable",
+        "balcony_enable": false,
+        "chimney_count": 1,
+        "interior_enable": true,
+        "interior_furniture": true,
+        "interior_lighting": true
+      },
+      "seeds": {
+        "layout": 42,
+        "decoration": 101
+      },
+      "fbx_sha256": "dc341b029923afb865f5d3500cac6295425ba840a658fa7a65813759a08be099",
+      "seconds": 71.751,
+      "interior_triangles": 143026,
+      "interior_lights": [
+        {
+          "name": "front_tower_-1/front_tower_-1_interior_lamp_light_source/source_0",
+          "position_m": [
+            -4.8064000606536865,
+            3.459999918937683,
+            -13.850000143051147
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "front_tower_-1/front_tower_-1_interior_lamp_light_source/source_1",
+          "position_m": [
+            -4.8064000606536865,
+            7.4599997997283936,
+            -13.850000143051147
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "front_tower_-1/front_tower_-1_interior_lamp_light_source/source_2",
+          "position_m": [
+            -4.8064000606536865,
+            11.46000051498413,
+            -13.850000143051147
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "front_tower_1/front_tower_1_interior_lamp_light_source/source_3",
+          "position_m": [
+            3.769600033760071,
+            3.459999918937683,
+            -13.850000143051147
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "front_tower_1/front_tower_1_interior_lamp_light_source/source_4",
+          "position_m": [
+            3.769600033760071,
+            7.4599997997283936,
+            -13.850000143051147
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "front_tower_1/front_tower_1_interior_lamp_light_source/source_5",
+          "position_m": [
+            3.769600033760071,
+            11.46000051498413,
+            -13.850000143051147
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(0, -1)_light_source/source_6",
+          "position_m": [
+            -2.5600000619888306,
+            4.2099997997283936,
+            -10.840000212192535
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(0, 1)_light_source/source_7",
+          "position_m": [
+            2.5600000619888306,
+            4.2099997997283936,
+            -10.840000212192535
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(1, -1)_light_source/source_8",
+          "position_m": [
+            -2.5600000619888306,
+            4.2099997997283936,
+            -6.840000152587891
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(1, 1)_light_source/source_9",
+          "position_m": [
+            2.5600000619888306,
+            4.2099997997283936,
+            -6.840000152587891
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(2, -1)_light_source/source_10",
+          "position_m": [
+            -2.5600000619888306,
+            4.2099997997283936,
+            -2.8400001525878906
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(2, 1)_light_source/source_11",
+          "position_m": [
+            2.5600000619888306,
+            4.2099997997283936,
+            -2.8400001525878906
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(3, -1)_light_source/source_12",
+          "position_m": [
+            -2.5600000619888306,
+            4.2099997997283936,
+            1.1599998474121094
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(3, 1)_light_source/source_13",
+          "position_m": [
+            2.5600000619888306,
+            4.2099997997283936,
+            1.1599998474121094
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(4, -1)_light_source/source_14",
+          "position_m": [
+            -2.5600000619888306,
+            4.2099997997283936,
+            5.159999847412109
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(4, 1)_light_source/source_15",
+          "position_m": [
+            2.5600000619888306,
+            4.2099997997283936,
+            5.159999847412109
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(5, -1)_light_source/source_16",
+          "position_m": [
+            -2.5600000619888306,
+            4.2099997997283936,
+            9.15999984741211
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(5, 1)_light_source/source_17",
+          "position_m": [
+            2.5600000619888306,
+            4.2099997997283936,
+            9.15999984741211
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(6, -1)_light_source/source_18",
+          "position_m": [
+            -2.5600000619888306,
+            4.2099997997283936,
+            13.15999984741211
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(6, 1)_light_source/source_19",
+          "position_m": [
+            2.5600000619888306,
+            4.2099997997283936,
+            13.15999984741211
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        }
+      ],
+      "nonfinite_attributes": 0,
+      "degenerate_triangles_removed": 0,
+      "generator_version": "3.3.0-skytown-joinery",
+      "source_origin_m": [
+        0.0,
+        0.0,
+        12.84000015258789
+      ],
+      "polygons": 759487,
+      "source_polygons": 759487,
+      "opening_clearance": {
+        "support_groups": 0,
+        "opening_support_pairs_checked": 0,
+        "minimum_projected_gap_m": null,
+        "blocked_openings": 0
+      },
+      "skytown_assets": [
+        "/Game/SkyTown/Meshes/SM_Furniture01_Bench01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Shelf01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Table01"
+      ]
+    },
+    {
+      "points": 102006,
+      "triangles": 189958,
+      "size_m": [
+        11.94304609298706,
+        25.549999237060547,
+        4.6893473863601685
+      ],
+      "min_m": [
+        -6.926962852478027,
+        0.0,
+        -0.3700000047683716
+      ],
+      "max_m": [
+        5.016083240509033,
+        25.549999237060547,
+        4.319347381591797
+      ],
+      "invalid_normals": 0,
+      "degenerate_triangles": 0,
+      "python_sops": 0,
+      "native_nodes": 551,
+      "sweeps": 16,
+      "bevels": 12,
+      "materials": {
+        "floor": 87740,
+        "metal": 16052,
+        "glass": 3046,
+        "stone": 27545,
+        "roof": 542,
+        "trim": 30383,
+        "skytown_MI_Furniture01": 962,
+        "wood": 23688
+      },
+      "id": "variant_05",
+      "label": "Clock Gate",
+      "district": "landmark",
+      "use": "civic",
+      "file": "Assets/_render/SourceAssets/Gothic/Meshes/SM_Gothic_variant_05.fbx",
+      "quality": "normal",
+      "parameters": {
+        "building_type": "gatehouse",
+        "plan_layout": "hall",
+        "length_bays": 5,
+        "bay_length": 4.0,
+        "nave_width": 8.0,
+        "wall_height": 9.0,
+        "wall_thickness": 0.35,
+        "roof_pitch": 50.0,
+        "tower_layout": "none",
+        "tower_floors": 4,
+        "tower_floor_height": 4.0,
+        "spire_height": 5.0,
+        "town_floors": 3,
+        "dormer_count": 2,
+        "detail": 0.6,
+        "stone_palette": "sandstone",
+        "gold_accents": false,
+        "clock_enable": true,
+        "global_scale": 1.0,
+        "facade_style": "portal_gallery",
+        "window_pattern": "rhythmic",
+        "tower_crown": "openwork",
+        "roof_material": "copper",
+        "ridge_detail": "sparse",
+        "gate_composition": "urban_asymmetric",
+        "porch_depth": 0.0,
+        "urban_program": "dwelling",
+        "urban_plan": "compact",
+        "front_bays": 3,
+        "floor_height": 3.1,
+        "urban_depth": 7.0,
+        "urban_roof": "gable",
+        "balcony_enable": false,
+        "chimney_count": 1,
+        "interior_enable": true,
+        "interior_furniture": true,
+        "interior_lighting": true
+      },
+      "seeds": {
+        "layout": 42,
+        "decoration": 101
+      },
+      "fbx_sha256": "9b4a01864c24ff90112b7768bda2676b1533f2777cef255e965427c7c865ea23",
+      "seconds": 18.189,
+      "interior_triangles": 113894,
+      "interior_lights": [
+        {
+          "name": "city_gate/gate_upper_interior_lamp_light_source/source_0",
+          "position_m": [
+            -0.3405601978302002,
+            8.259999752044678,
+            0.025326251983642578
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "city_gate/passage_lamp_light_source/source_1",
+          "position_m": [
+            -1.3485602140426636,
+            4.9100000858306885,
+            0.025326251983642578
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "stair_turret/stair_turret_lamp_light_source/source_2",
+          "position_m": [
+            5.306301116943359,
+            2.393333315849304,
+            0.025326251983642578
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "stair_turret/stair_turret_lamp_light_source/source_3",
+          "position_m": [
+            5.306301116943359,
+            5.326666593551636,
+            0.025326251983642578
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "stair_turret/stair_turret_lamp_light_source/source_4",
+          "position_m": [
+            5.306301116943359,
+            8.259999752044678,
+            0.025326251983642578
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "watchtower/watchtower_lamp_light_source/source_5",
+          "position_m": [
+            -3.2114269733428955,
+            3.459999918937683,
+            0.025326251983642578
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "watchtower/watchtower_lamp_light_source/source_6",
+          "position_m": [
+            -3.2114269733428955,
+            7.4599997997283936,
+            0.025326251983642578
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "watchtower/watchtower_lamp_light_source/source_7",
+          "position_m": [
+            -3.2114269733428955,
+            11.46000051498413,
+            0.025326251983642578
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "watchtower/watchtower_lamp_light_source/source_8",
+          "position_m": [
+            -3.2114269733428955,
+            15.46000051498413,
+            0.025326251983642578
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "watchtower/watchtower_lamp_light_source/source_9",
+          "position_m": [
+            -3.2114269733428955,
+            19.460000038146973,
+            0.025326251983642578
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        }
+      ],
+      "nonfinite_attributes": 0,
+      "degenerate_triangles_removed": 0,
+      "generator_version": "3.3.0-skytown-joinery",
+      "source_origin_m": [
+        -0.9554398059844971,
+        0.0,
+        1.9746736884117126
+      ],
+      "polygons": 189958,
+      "source_polygons": 189958,
+      "opening_clearance": {
+        "support_groups": 0,
+        "opening_support_pairs_checked": 0,
+        "minimum_projected_gap_m": null,
+        "blocked_openings": 0
+      },
+      "skytown_assets": [
+        "/Game/SkyTown/Meshes/SM_Furniture01_Bench01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Shelf01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Table01"
+      ]
+    },
+    {
+      "points": 410402,
+      "triangles": 773335,
+      "size_m": [
+        17.600000381469727,
+        31.600000381469727,
+        31.18000030517578
+      ],
+      "min_m": [
+        -8.800000190734863,
+        0.0,
+        -2.75
+      ],
+      "max_m": [
+        8.800000190734863,
+        31.600000381469727,
+        28.43000030517578
+      ],
+      "invalid_normals": 0,
+      "degenerate_triangles": 0,
+      "python_sops": 0,
+      "native_nodes": 2506,
+      "sweeps": 61,
+      "bevels": 103,
+      "materials": {
+        "gold": 379427,
+        "glass": 10996,
+        "stone": 324828,
+        "roof": 2006,
+        "wood": 37302,
+        "floor": 4370,
+        "skytown_MI_Furniture01": 14406
+      },
+      "id": "variant_06",
+      "label": "Dark Cathedral",
+      "district": "landmark",
+      "use": "religious",
+      "file": "Assets/_render/SourceAssets/Gothic/Meshes/SM_Gothic_variant_06.fbx",
+      "quality": "normal",
+      "parameters": {
+        "building_type": "church",
+        "plan_layout": "cross_aisles",
+        "length_bays": 7,
+        "bay_length": 4.0,
+        "nave_width": 8.0,
+        "wall_height": 10.0,
+        "wall_thickness": 0.35,
+        "roof_pitch": 50.0,
+        "tower_layout": "front_pair_crossing",
+        "tower_floors": 4,
+        "tower_floor_height": 4.0,
+        "spire_height": 9.0,
+        "town_floors": 3,
+        "dormer_count": 2,
+        "detail": 1.0,
+        "stone_palette": "basalt",
+        "gold_accents": true,
+        "clock_enable": false,
+        "global_scale": 1.0,
+        "facade_style": "tracery_front",
+        "window_pattern": "rhythmic",
+        "tower_crown": "openwork",
+        "roof_material": "slate",
+        "ridge_detail": "sparse",
+        "gate_composition": "fortified",
+        "porch_depth": 1.2,
+        "urban_program": "dwelling",
+        "urban_plan": "compact",
+        "front_bays": 3,
+        "floor_height": 3.1,
+        "urban_depth": 7.0,
+        "urban_roof": "gable",
+        "balcony_enable": false,
+        "chimney_count": 1,
+        "interior_enable": true,
+        "interior_furniture": true,
+        "interior_lighting": true
+      },
+      "seeds": {
+        "layout": 42,
+        "decoration": 101
+      },
+      "fbx_sha256": "511108bb0c57a8f61ecd08eca1840a8a3e249e6202f2fc9945baf5e40ed7ea6f",
+      "seconds": 79.478,
+      "interior_triangles": 142098,
+      "interior_lights": [
+        {
+          "name": "crossing/crossing_interior_lamp_light_source/source_0",
+          "position_m": [
+            -1.065600037574768,
+            17.460000038146973,
+            6.679999351501465
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "crossing/crossing_interior_lamp_light_source/source_1",
+          "position_m": [
+            -1.065600037574768,
+            21.460000038146973,
+            6.679999351501465
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "front_tower_-1/front_tower_-1_interior_lamp_light_source/source_2",
+          "position_m": [
+            -4.8064000606536865,
+            3.459999918937683,
+            -13.850000143051147
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "front_tower_-1/front_tower_-1_interior_lamp_light_source/source_3",
+          "position_m": [
+            -4.8064000606536865,
+            7.4599997997283936,
+            -13.850000143051147
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "front_tower_-1/front_tower_-1_interior_lamp_light_source/source_4",
+          "position_m": [
+            -4.8064000606536865,
+            11.46000051498413,
+            -13.850000143051147
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "front_tower_-1/front_tower_-1_interior_lamp_light_source/source_5",
+          "position_m": [
+            -4.8064000606536865,
+            15.46000051498413,
+            -13.850000143051147
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "front_tower_1/front_tower_1_interior_lamp_light_source/source_6",
+          "position_m": [
+            3.769600033760071,
+            3.459999918937683,
+            -13.850000143051147
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "front_tower_1/front_tower_1_interior_lamp_light_source/source_7",
+          "position_m": [
+            3.769600033760071,
+            7.4599997997283936,
+            -13.850000143051147
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "front_tower_1/front_tower_1_interior_lamp_light_source/source_8",
+          "position_m": [
+            3.769600033760071,
+            11.46000051498413,
+            -13.850000143051147
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "front_tower_1/front_tower_1_interior_lamp_light_source/source_9",
+          "position_m": [
+            3.769600033760071,
+            15.46000051498413,
+            -13.850000143051147
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(0, -1)_light_source/source_10",
+          "position_m": [
+            -2.5600000619888306,
+            4.2099997997283936,
+            -10.840000212192535
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(0, 1)_light_source/source_11",
+          "position_m": [
+            2.5600000619888306,
+            4.2099997997283936,
+            -10.840000212192535
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(1, -1)_light_source/source_12",
+          "position_m": [
+            -2.5600000619888306,
+            4.2099997997283936,
+            -6.840000152587891
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(1, 1)_light_source/source_13",
+          "position_m": [
+            2.5600000619888306,
+            4.2099997997283936,
+            -6.840000152587891
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(2, -1)_light_source/source_14",
+          "position_m": [
+            -2.5600000619888306,
+            4.2099997997283936,
+            -2.8400001525878906
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(2, 1)_light_source/source_15",
+          "position_m": [
+            2.5600000619888306,
+            4.2099997997283936,
+            -2.8400001525878906
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(3, -1)_light_source/source_16",
+          "position_m": [
+            -2.5600000619888306,
+            4.2099997997283936,
+            1.1599998474121094
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(3, 1)_light_source/source_17",
+          "position_m": [
+            2.5600000619888306,
+            4.2099997997283936,
+            1.1599998474121094
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(4, -1)_light_source/source_18",
+          "position_m": [
+            -2.5600000619888306,
+            4.2099997997283936,
+            5.159999847412109
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(4, 1)_light_source/source_19",
+          "position_m": [
+            2.5600000619888306,
+            4.2099997997283936,
+            5.159999847412109
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(5, -1)_light_source/source_20",
+          "position_m": [
+            -2.5600000619888306,
+            4.2099997997283936,
+            9.15999984741211
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(5, 1)_light_source/source_21",
+          "position_m": [
+            2.5600000619888306,
+            4.2099997997283936,
+            9.15999984741211
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(6, -1)_light_source/source_22",
+          "position_m": [
+            -2.5600000619888306,
+            4.2099997997283936,
+            13.15999984741211
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(6, 1)_light_source/source_23",
+          "position_m": [
+            2.5600000619888306,
+            4.2099997997283936,
+            13.15999984741211
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        }
+      ],
+      "nonfinite_attributes": 0,
+      "degenerate_triangles_removed": 0,
+      "generator_version": "3.3.0-skytown-joinery",
+      "source_origin_m": [
+        0.0,
+        0.0,
+        12.84000015258789
+      ],
+      "polygons": 773335,
+      "source_polygons": 773335,
+      "opening_clearance": {
+        "support_groups": 0,
+        "opening_support_pairs_checked": 0,
+        "minimum_projected_gap_m": null,
+        "blocked_openings": 0
+      },
+      "skytown_assets": [
+        "/Game/SkyTown/Meshes/SM_Furniture01_Bench01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Shelf01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Table01"
+      ]
+    },
+    {
+      "points": 85404,
+      "triangles": 148286,
+      "size_m": [
+        4.199999809265137,
+        29.600000381469727,
+        4.199999809265137
+      ],
+      "min_m": [
+        -2.0999999046325684,
+        0.0,
+        -2.0999999046325684
+      ],
+      "max_m": [
+        2.0999999046325684,
+        29.600000381469727,
+        2.0999999046325684
+      ],
+      "invalid_normals": 0,
+      "degenerate_triangles": 0,
+      "python_sops": 0,
+      "native_nodes": 380,
+      "sweeps": 8,
+      "bevels": 22,
+      "materials": {
+        "stone": 66296,
+        "floor": 2444,
+        "wood": 20704,
+        "metal": 6832,
+        "glass": 2844,
+        "trim": 44350,
+        "roof": 6,
+        "skytown_MI_Furniture01": 4810
+      },
+      "id": "variant_07",
+      "label": "Civic Watchtower",
+      "district": "landmark",
+      "use": "civic",
+      "file": "Assets/_render/SourceAssets/Gothic/Meshes/SM_Gothic_variant_07.fbx",
+      "quality": "normal",
+      "parameters": {
+        "building_type": "tower",
+        "plan_layout": "hall",
+        "length_bays": 5,
+        "bay_length": 4.0,
+        "nave_width": 8.0,
+        "wall_height": 9.0,
+        "wall_thickness": 0.35,
+        "roof_pitch": 50.0,
+        "tower_layout": "none",
+        "tower_floors": 5,
+        "tower_floor_height": 4.0,
+        "spire_height": 9.0,
+        "town_floors": 3,
+        "dormer_count": 2,
+        "detail": 0.6,
+        "stone_palette": "limestone",
+        "gold_accents": false,
+        "clock_enable": false,
+        "global_scale": 1.0,
+        "facade_style": "portal_gallery",
+        "window_pattern": "paired",
+        "tower_crown": "canopied",
+        "roof_material": "copper",
+        "ridge_detail": "sparse",
+        "gate_composition": "fortified",
+        "porch_depth": 0.0,
+        "urban_program": "dwelling",
+        "urban_plan": "compact",
+        "front_bays": 3,
+        "floor_height": 3.1,
+        "urban_depth": 7.0,
+        "urban_roof": "gable",
+        "balcony_enable": false,
+        "chimney_count": 1,
+        "interior_enable": true,
+        "interior_furniture": true,
+        "interior_lighting": true
+      },
+      "seeds": {
+        "layout": 42,
+        "decoration": 101
+      },
+      "fbx_sha256": "17da3a4c87f03f5178faefdb745f6c707c80caea9ead7419a4855500246d8aba",
+      "seconds": 13.667,
+      "interior_triangles": 35702,
+      "interior_lights": [
+        {
+          "name": "tower_interior_lamp_light_source/source_0",
+          "position_m": [
+            -0.6480000019073486,
+            3.459999918937683,
+            0.0
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "tower_interior_lamp_light_source/source_1",
+          "position_m": [
+            -0.6480000019073486,
+            7.4599997997283936,
+            0.0
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "tower_interior_lamp_light_source/source_2",
+          "position_m": [
+            -0.6480000019073486,
+            11.46000051498413,
+            0.0
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "tower_interior_lamp_light_source/source_3",
+          "position_m": [
+            -0.6480000019073486,
+            15.46000051498413,
+            0.0
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "tower_interior_lamp_light_source/source_4",
+          "position_m": [
+            -0.6480000019073486,
+            19.460000038146973,
+            0.0
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        }
+      ],
+      "nonfinite_attributes": 0,
+      "degenerate_triangles_removed": 0,
+      "generator_version": "3.3.0-skytown-joinery",
+      "source_origin_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "polygons": 148286,
+      "source_polygons": 148286,
+      "opening_clearance": {
+        "support_groups": 0,
+        "opening_support_pairs_checked": 0,
+        "minimum_projected_gap_m": null,
+        "blocked_openings": 0
+      },
+      "skytown_assets": [
+        "/Game/SkyTown/Meshes/SM_Furniture01_Bench01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Shelf01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Table01"
+      ]
+    },
+    {
+      "points": 356185,
+      "triangles": 656069,
+      "size_m": [
+        16.360000610351562,
+        23.799999237060547,
+        23.90000033378601
+      ],
+      "min_m": [
+        -8.180000305175781,
+        0.0,
+        -3.4700000286102295
+      ],
+      "max_m": [
+        8.180000305175781,
+        23.799999237060547,
+        20.43000030517578
+      ],
+      "invalid_normals": 0,
+      "degenerate_triangles": 0,
+      "python_sops": 0,
+      "native_nodes": 1638,
+      "sweeps": 34,
+      "bevels": 69,
+      "materials": {
+        "metal": 24050,
+        "glass": 9396,
+        "trim": 294331,
+        "stone": 282274,
+        "roof": 1024,
+        "wood": 28844,
+        "floor": 3174,
+        "skytown_MI_Furniture01": 12976
+      },
+      "id": "variant_08",
+      "label": "Layered Twin Basilica",
+      "district": "landmark",
+      "use": "religious",
+      "file": "Assets/_render/SourceAssets/Gothic/Meshes/SM_Gothic_variant_08.fbx",
+      "quality": "normal",
+      "parameters": {
+        "building_type": "church",
+        "plan_layout": "aisles",
+        "length_bays": 5,
+        "bay_length": 4.0,
+        "nave_width": 10.0,
+        "wall_height": 10.0,
+        "wall_thickness": 0.35,
+        "roof_pitch": 40.0,
+        "tower_layout": "front_pair",
+        "tower_floors": 4,
+        "tower_floor_height": 3.8,
+        "spire_height": 8.0,
+        "town_floors": 3,
+        "dormer_count": 2,
+        "detail": 0.6,
+        "stone_palette": "limestone",
+        "gold_accents": false,
+        "clock_enable": false,
+        "global_scale": 1.0,
+        "facade_style": "tracery_front",
+        "window_pattern": "paired",
+        "tower_crown": "canopied",
+        "roof_material": "slate",
+        "ridge_detail": "sparse",
+        "gate_composition": "fortified",
+        "porch_depth": 1.2,
+        "urban_program": "dwelling",
+        "urban_plan": "compact",
+        "front_bays": 3,
+        "floor_height": 3.1,
+        "urban_depth": 7.0,
+        "urban_roof": "gable",
+        "balcony_enable": false,
+        "chimney_count": 1,
+        "interior_enable": true,
+        "interior_furniture": true,
+        "interior_lighting": true
+      },
+      "seeds": {
+        "layout": 42,
+        "decoration": 101
+      },
+      "fbx_sha256": "edfe6e3279faf208697ce1e87e159144ba87f2c73a216506b3a82c5f72c805c9",
+      "seconds": 63.558,
+      "interior_triangles": 126946,
+      "interior_lights": [
+        {
+          "name": "front_tower_-1/front_tower_-1_interior_lamp_light_source/source_0",
+          "position_m": [
+            -6.007999897003174,
+            3.2600001096725464,
+            -9.850000143051147
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "front_tower_-1/front_tower_-1_interior_lamp_light_source/source_1",
+          "position_m": [
+            -6.007999897003174,
+            7.059999704360962,
+            -9.850000143051147
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "front_tower_-1/front_tower_-1_interior_lamp_light_source/source_2",
+          "position_m": [
+            -6.007999897003174,
+            10.860000133514404,
+            -9.850000143051147
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "front_tower_-1/front_tower_-1_interior_lamp_light_source/source_3",
+          "position_m": [
+            -6.007999897003174,
+            14.660000324249268,
+            -9.850000143051147
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "front_tower_1/front_tower_1_interior_lamp_light_source/source_4",
+          "position_m": [
+            4.712000131607056,
+            3.2600001096725464,
+            -9.850000143051147
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "front_tower_1/front_tower_1_interior_lamp_light_source/source_5",
+          "position_m": [
+            4.712000131607056,
+            7.059999704360962,
+            -9.850000143051147
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "front_tower_1/front_tower_1_interior_lamp_light_source/source_6",
+          "position_m": [
+            4.712000131607056,
+            10.860000133514404,
+            -9.850000143051147
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "front_tower_1/front_tower_1_interior_lamp_light_source/source_7",
+          "position_m": [
+            4.712000131607056,
+            14.660000324249268,
+            -9.850000143051147
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(0, -1)_light_source/source_8",
+          "position_m": [
+            -3.1999999284744263,
+            4.2099997997283936,
+            -6.480000197887421
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(0, 1)_light_source/source_9",
+          "position_m": [
+            3.1999999284744263,
+            4.2099997997283936,
+            -6.480000197887421
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(1, -1)_light_source/source_10",
+          "position_m": [
+            -3.1999999284744263,
+            4.2099997997283936,
+            -2.480000138282776
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(1, 1)_light_source/source_11",
+          "position_m": [
+            3.1999999284744263,
+            4.2099997997283936,
+            -2.480000138282776
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(2, -1)_light_source/source_12",
+          "position_m": [
+            -3.1999999284744263,
+            4.2099997997283936,
+            1.5199998617172241
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(2, 1)_light_source/source_13",
+          "position_m": [
+            3.1999999284744263,
+            4.2099997997283936,
+            1.5199998617172241
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(3, -1)_light_source/source_14",
+          "position_m": [
+            -3.1999999284744263,
+            4.2099997997283936,
+            5.519999861717224
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(3, 1)_light_source/source_15",
+          "position_m": [
+            3.1999999284744263,
+            4.2099997997283936,
+            5.519999861717224
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(4, -1)_light_source/source_16",
+          "position_m": [
+            -3.1999999284744263,
+            4.2099997997283936,
+            9.519999861717224
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(4, 1)_light_source/source_17",
+          "position_m": [
+            3.1999999284744263,
+            4.2099997997283936,
+            9.519999861717224
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        }
+      ],
+      "nonfinite_attributes": 0,
+      "degenerate_triangles_removed": 0,
+      "generator_version": "3.3.0-skytown-joinery",
+      "source_origin_m": [
+        0.0,
+        0.0,
+        8.480000138282776
+      ],
+      "polygons": 656069,
+      "source_polygons": 656069,
+      "opening_clearance": {
+        "support_groups": 0,
+        "opening_support_pairs_checked": 0,
+        "minimum_projected_gap_m": null,
+        "blocked_openings": 0
+      },
+      "skytown_assets": [
+        "/Game/SkyTown/Meshes/SM_Furniture01_Bench01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Shelf01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Table01"
+      ]
+    },
+    {
+      "points": 102756,
+      "triangles": 191407,
+      "size_m": [
+        13.488852500915527,
+        30.549999237060547,
+        4.6893473863601685
+      ],
+      "min_m": [
+        -7.819296360015869,
+        0.0,
+        -0.3700000047683716
+      ],
+      "max_m": [
+        5.669556140899658,
+        30.549999237060547,
+        4.319347381591797
+      ],
+      "invalid_normals": 0,
+      "degenerate_triangles": 0,
+      "python_sops": 0,
+      "native_nodes": 551,
+      "sweeps": 16,
+      "bevels": 12,
+      "materials": {
+        "floor": 87740,
+        "metal": 16052,
+        "glass": 3046,
+        "stone": 27522,
+        "roof": 638,
+        "trim": 31759,
+        "skytown_MI_Furniture01": 962,
+        "wood": 23688
+      },
+      "id": "variant_09",
+      "label": "Astronomical City Gate",
+      "district": "landmark",
+      "use": "civic",
+      "file": "Assets/_render/SourceAssets/Gothic/Meshes/SM_Gothic_variant_09.fbx",
+      "quality": "normal",
+      "parameters": {
+        "building_type": "gatehouse",
+        "plan_layout": "hall",
+        "length_bays": 5,
+        "bay_length": 4.0,
+        "nave_width": 9.0,
+        "wall_height": 9.0,
+        "wall_thickness": 0.35,
+        "roof_pitch": 50.0,
+        "tower_layout": "none",
+        "tower_floors": 4,
+        "tower_floor_height": 4.0,
+        "spire_height": 10.0,
+        "town_floors": 3,
+        "dormer_count": 2,
+        "detail": 0.6,
+        "stone_palette": "limestone",
+        "gold_accents": false,
+        "clock_enable": true,
+        "global_scale": 1.0,
+        "facade_style": "tracery_front",
+        "window_pattern": "paired",
+        "tower_crown": "openwork",
+        "roof_material": "copper",
+        "ridge_detail": "sparse",
+        "gate_composition": "urban_asymmetric",
+        "porch_depth": 0.0,
+        "urban_program": "dwelling",
+        "urban_plan": "compact",
+        "front_bays": 3,
+        "floor_height": 3.1,
+        "urban_depth": 7.0,
+        "urban_roof": "gable",
+        "balcony_enable": false,
+        "chimney_count": 1,
+        "interior_enable": true,
+        "interior_furniture": true,
+        "interior_lighting": true
+      },
+      "seeds": {
+        "layout": 42,
+        "decoration": 101
+      },
+      "fbx_sha256": "ea1db0e0ee1746ae684dac8fc4d5ea29aa3e4a045f885b6566a8d180760f2c7f",
+      "seconds": 18.804,
+      "interior_triangles": 113894,
+      "interior_lights": [
+        {
+          "name": "city_gate/gate_upper_interior_lamp_light_source/source_0",
+          "position_m": [
+            -0.38312989473342896,
+            8.259999752044678,
+            0.025326251983642578
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "city_gate/passage_lamp_light_source/source_1",
+          "position_m": [
+            -1.517129898071289,
+            4.9100000858306885,
+            0.025326251983642578
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "stair_turret/stair_turret_lamp_light_source/source_2",
+          "position_m": [
+            6.0442140102386475,
+            2.393333315849304,
+            0.025326251983642578
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "stair_turret/stair_turret_lamp_light_source/source_3",
+          "position_m": [
+            6.0442140102386475,
+            5.326666593551636,
+            0.025326251983642578
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "stair_turret/stair_turret_lamp_light_source/source_4",
+          "position_m": [
+            6.0442140102386475,
+            8.259999752044678,
+            0.025326251983642578
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "watchtower/watchtower_lamp_light_source/source_5",
+          "position_m": [
+            -3.625730037689209,
+            3.459999918937683,
+            0.025326251983642578
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "watchtower/watchtower_lamp_light_source/source_6",
+          "position_m": [
+            -3.625730037689209,
+            7.4599997997283936,
+            0.025326251983642578
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "watchtower/watchtower_lamp_light_source/source_7",
+          "position_m": [
+            -3.625730037689209,
+            11.46000051498413,
+            0.025326251983642578
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "watchtower/watchtower_lamp_light_source/source_8",
+          "position_m": [
+            -3.625730037689209,
+            15.46000051498413,
+            0.025326251983642578
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "watchtower/watchtower_lamp_light_source/source_9",
+          "position_m": [
+            -3.625730037689209,
+            19.460000038146973,
+            0.025326251983642578
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        }
+      ],
+      "nonfinite_attributes": 0,
+      "degenerate_triangles_removed": 0,
+      "generator_version": "3.3.0-skytown-joinery",
+      "source_origin_m": [
+        -1.0748701095581055,
+        0.0,
+        1.9746736884117126
+      ],
+      "polygons": 191407,
+      "source_polygons": 191407,
+      "opening_clearance": {
+        "support_groups": 0,
+        "opening_support_pairs_checked": 0,
+        "minimum_projected_gap_m": null,
+        "blocked_openings": 0
+      },
+      "skytown_assets": [
+        "/Game/SkyTown/Meshes/SM_Furniture01_Bench01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Shelf01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Table01"
+      ]
+    },
+    {
+      "points": 456837,
+      "triangles": 867675,
+      "size_m": [
+        20.700000762939453,
+        37.599998474121094,
+        35.40000033378601
+      ],
+      "min_m": [
+        -10.350000381469727,
+        0.0,
+        -3.4700000286102295
+      ],
+      "max_m": [
+        10.350000381469727,
+        37.599998474121094,
+        31.93000030517578
+      ],
+      "invalid_normals": 0,
+      "degenerate_triangles": 0,
+      "python_sops": 0,
+      "native_nodes": 2599,
+      "sweeps": 68,
+      "bevels": 105,
+      "materials": {
+        "gold": 444866,
+        "glass": 12752,
+        "stone": 333880,
+        "roof": 2006,
+        "wood": 50942,
+        "floor": 5742,
+        "skytown_MI_Furniture01": 17487
+      },
+      "id": "variant_10",
+      "label": "Ceremonial High Cathedral",
+      "district": "landmark",
+      "use": "religious",
+      "file": "Assets/_render/SourceAssets/Gothic/Meshes/SM_Gothic_variant_10.fbx",
+      "quality": "normal",
+      "parameters": {
+        "building_type": "church",
+        "plan_layout": "cross_aisles",
+        "length_bays": 7,
+        "bay_length": 4.5,
+        "nave_width": 10.0,
+        "wall_height": 12.0,
+        "wall_thickness": 0.35,
+        "roof_pitch": 50.0,
+        "tower_layout": "front_pair_crossing",
+        "tower_floors": 5,
+        "tower_floor_height": 4.0,
+        "spire_height": 9.0,
+        "town_floors": 3,
+        "dormer_count": 2,
+        "detail": 0.6,
+        "stone_palette": "limestone",
+        "gold_accents": true,
+        "clock_enable": false,
+        "global_scale": 1.0,
+        "facade_style": "tracery_front",
+        "window_pattern": "rhythmic",
+        "tower_crown": "openwork",
+        "roof_material": "slate",
+        "ridge_detail": "sparse",
+        "gate_composition": "fortified",
+        "porch_depth": 1.2,
+        "urban_program": "dwelling",
+        "urban_plan": "compact",
+        "front_bays": 3,
+        "floor_height": 3.1,
+        "urban_depth": 7.0,
+        "urban_roof": "gable",
+        "balcony_enable": false,
+        "chimney_count": 1,
+        "interior_enable": true,
+        "interior_furniture": true,
+        "interior_lighting": true
+      },
+      "seeds": {
+        "layout": 42,
+        "decoration": 101
+      },
+      "fbx_sha256": "33a717af2505cc0fd3d8e947f73640307048622a3a4730d1da2a333932e68153",
+      "seconds": 89.67,
+      "interior_triangles": 163771,
+      "interior_lights": [
+        {
+          "name": "crossing/crossing_interior_lamp_light_source/source_0",
+          "position_m": [
+            -1.3320000171661377,
+            19.460000038146973,
+            7.229999899864197
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "crossing/crossing_interior_lamp_light_source/source_1",
+          "position_m": [
+            -1.3320000171661377,
+            23.460000038146973,
+            7.229999899864197
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "crossing/crossing_interior_lamp_light_source/source_2",
+          "position_m": [
+            -1.3320000171661377,
+            27.460000038146973,
+            7.229999899864197
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "front_tower_-1/front_tower_-1_interior_lamp_light_source/source_3",
+          "position_m": [
+            -6.007999897003174,
+            3.459999918937683,
+            -15.600000143051147
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "front_tower_-1/front_tower_-1_interior_lamp_light_source/source_4",
+          "position_m": [
+            -6.007999897003174,
+            7.4599997997283936,
+            -15.600000143051147
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "front_tower_-1/front_tower_-1_interior_lamp_light_source/source_5",
+          "position_m": [
+            -6.007999897003174,
+            11.46000051498413,
+            -15.600000143051147
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "front_tower_-1/front_tower_-1_interior_lamp_light_source/source_6",
+          "position_m": [
+            -6.007999897003174,
+            15.46000051498413,
+            -15.600000143051147
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "front_tower_-1/front_tower_-1_interior_lamp_light_source/source_7",
+          "position_m": [
+            -6.007999897003174,
+            19.460000038146973,
+            -15.600000143051147
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "front_tower_1/front_tower_1_interior_lamp_light_source/source_8",
+          "position_m": [
+            4.712000131607056,
+            3.459999918937683,
+            -15.600000143051147
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "front_tower_1/front_tower_1_interior_lamp_light_source/source_9",
+          "position_m": [
+            4.712000131607056,
+            7.4599997997283936,
+            -15.600000143051147
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "front_tower_1/front_tower_1_interior_lamp_light_source/source_10",
+          "position_m": [
+            4.712000131607056,
+            11.46000051498413,
+            -15.600000143051147
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "front_tower_1/front_tower_1_interior_lamp_light_source/source_11",
+          "position_m": [
+            4.712000131607056,
+            15.46000051498413,
+            -15.600000143051147
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "front_tower_1/front_tower_1_interior_lamp_light_source/source_12",
+          "position_m": [
+            4.712000131607056,
+            19.460000038146973,
+            -15.600000143051147
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(0, -1)_light_source/source_13",
+          "position_m": [
+            -3.1999999284744263,
+            4.2099997997283936,
+            -11.980000138282776
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(0, 1)_light_source/source_14",
+          "position_m": [
+            3.1999999284744263,
+            4.2099997997283936,
+            -11.980000138282776
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(1, -1)_light_source/source_15",
+          "position_m": [
+            -3.1999999284744263,
+            4.2099997997283936,
+            -7.480000138282776
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(1, 1)_light_source/source_16",
+          "position_m": [
+            3.1999999284744263,
+            4.2099997997283936,
+            -7.480000138282776
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(2, -1)_light_source/source_17",
+          "position_m": [
+            -3.1999999284744263,
+            4.2099997997283936,
+            -2.980000138282776
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(2, 1)_light_source/source_18",
+          "position_m": [
+            3.1999999284744263,
+            4.2099997997283936,
+            -2.980000138282776
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(3, -1)_light_source/source_19",
+          "position_m": [
+            -3.1999999284744263,
+            4.2099997997283936,
+            1.5199998617172241
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(3, 1)_light_source/source_20",
+          "position_m": [
+            3.1999999284744263,
+            4.2099997997283936,
+            1.5199998617172241
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(4, -1)_light_source/source_21",
+          "position_m": [
+            -3.1999999284744263,
+            4.2099997997283936,
+            6.019999861717224
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(4, 1)_light_source/source_22",
+          "position_m": [
+            3.1999999284744263,
+            4.2099997997283936,
+            6.019999861717224
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(5, -1)_light_source/source_23",
+          "position_m": [
+            -3.1999999284744263,
+            4.2099997997283936,
+            10.519999861717224
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(5, 1)_light_source/source_24",
+          "position_m": [
+            3.1999999284744263,
+            4.2099997997283936,
+            10.519999861717224
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(6, -1)_light_source/source_25",
+          "position_m": [
+            -3.1999999284744263,
+            4.2099997997283936,
+            15.019999861717224
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "nave_lamp_(6, 1)_light_source/source_26",
+          "position_m": [
+            3.1999999284744263,
+            4.2099997997283936,
+            15.019999861717224
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        }
+      ],
+      "nonfinite_attributes": 0,
+      "degenerate_triangles_removed": 0,
+      "generator_version": "3.3.0-skytown-joinery",
+      "source_origin_m": [
+        0.0,
+        0.0,
+        14.230000138282776
+      ],
+      "polygons": 867675,
+      "source_polygons": 867675,
+      "opening_clearance": {
+        "support_groups": 0,
+        "opening_support_pairs_checked": 0,
+        "minimum_projected_gap_m": null,
+        "blocked_openings": 0
+      },
+      "skytown_assets": [
+        "/Game/SkyTown/Meshes/SM_Furniture01_Bench01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Shelf01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Table01"
+      ]
+    },
+    {
+      "points": 23639,
+      "triangles": 46648,
+      "size_m": [
+        5.612189769744873,
+        5.909043312072754,
+        5.642189770936966
+      ],
+      "min_m": [
+        -2.8060948848724365,
+        0.0,
+        -0.26609495282173157
+      ],
+      "max_m": [
+        2.8060948848724365,
+        5.909043312072754,
+        5.376094818115234
+      ],
+      "invalid_normals": 0,
+      "degenerate_triangles": 0,
+      "python_sops": 0,
+      "native_nodes": 193,
+      "sweeps": 5,
+      "bevels": 13,
+      "materials": {
+        "stone": 6340,
+        "floor": 188,
+        "metal": 1316,
+        "glass": 916,
+        "trim": 36432,
+        "roof": 374,
+        "wood": 120,
+        "skytown_MI_Furniture01": 962
+      },
+      "id": "variant_11",
+      "label": "Laborer Cottage",
+      "district": "working",
+      "use": "dwelling",
+      "file": "Assets/_render/SourceAssets/Gothic/Meshes/SM_Gothic_variant_11.fbx",
+      "quality": "normal",
+      "parameters": {
+        "building_type": "residence",
+        "plan_layout": "hall",
+        "length_bays": 5,
+        "bay_length": 4.0,
+        "nave_width": 5.08,
+        "wall_height": 3.0,
+        "wall_thickness": 0.35,
+        "roof_pitch": 48.5,
+        "tower_layout": "none",
+        "tower_floors": 3,
+        "tower_floor_height": 4.0,
+        "spire_height": 0.0,
+        "town_floors": 1,
+        "dormer_count": 0,
+        "detail": 0.22,
+        "stone_palette": "sandstone",
+        "gold_accents": false,
+        "clock_enable": false,
+        "global_scale": 1.0,
+        "facade_style": "lancet",
+        "window_pattern": "single",
+        "tower_crown": "canopied",
+        "gate_composition": "fortified",
+        "roof_material": "slate",
+        "ridge_detail": "sparse",
+        "porch_depth": 0.0,
+        "urban_program": "dwelling",
+        "urban_plan": "compact",
+        "front_bays": 2,
+        "floor_height": 2.91,
+        "urban_depth": 5.11,
+        "urban_roof": "gable",
+        "balcony_enable": false,
+        "chimney_count": 1,
+        "interior_enable": true,
+        "interior_furniture": true,
+        "interior_lighting": true
+      },
+      "seeds": {
+        "layout": 991237134,
+        "decoration": 1124801913
+      },
+      "fbx_sha256": "915d6620801e4799e4aeb3c4b1d5874e3e1044e319923e8c648da44fb2ce4e63",
+      "seconds": 4.454,
+      "interior_triangles": 2654,
+      "interior_lights": [
+        {
+          "name": "street_interior_lamp_light_source/source_0",
+          "position_m": [
+            -0.9144000113010406,
+            2.3700000047683716,
+            1.4901161193847656e-08
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        }
+      ],
+      "nonfinite_attributes": 0,
+      "degenerate_triangles_removed": 0,
+      "generator_version": "3.3.0-skytown-joinery",
+      "source_origin_m": [
+        0.0,
+        0.0,
+        2.5549999326467514
+      ],
+      "polygons": 46648,
+      "source_polygons": 46648,
+      "opening_clearance": {
+        "support_groups": 0,
+        "opening_support_pairs_checked": 0,
+        "minimum_projected_gap_m": null,
+        "blocked_openings": 0
+      },
+      "skytown_assets": [
+        "/Game/SkyTown/Meshes/SM_Furniture01_Bench01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Shelf01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Table01"
+      ]
+    },
+    {
+      "points": 49319,
+      "triangles": 94480,
+      "size_m": [
+        5.110016345977783,
+        8.062944412231445,
+        7.118016421794891
+      ],
+      "min_m": [
+        -2.5550081729888916,
+        0.0,
+        -0.2650081515312195
+      ],
+      "max_m": [
+        2.5550081729888916,
+        8.062944412231445,
+        6.853008270263672
+      ],
+      "invalid_normals": 0,
+      "degenerate_triangles": 0,
+      "python_sops": 0,
+      "native_nodes": 247,
+      "sweeps": 5,
+      "bevels": 15,
+      "materials": {
+        "stone": 11916,
+        "floor": 752,
+        "wood": 4160,
+        "metal": 2688,
+        "glass": 1936,
+        "trim": 68712,
+        "roof": 374,
+        "skytown_MI_Furniture01": 1106,
+        "skytown_MI_Bed01": 2836
+      },
+      "id": "variant_12",
+      "label": "Narrow Row House",
+      "district": "working",
+      "use": "dwelling",
+      "file": "Assets/_render/SourceAssets/Gothic/Meshes/SM_Gothic_variant_12.fbx",
+      "quality": "normal",
+      "parameters": {
+        "building_type": "residence",
+        "plan_layout": "hall",
+        "length_bays": 5,
+        "bay_length": 4.0,
+        "nave_width": 4.58,
+        "wall_height": 5.9,
+        "wall_thickness": 0.35,
+        "roof_pitch": 43.1,
+        "tower_layout": "none",
+        "tower_floors": 3,
+        "tower_floor_height": 4.0,
+        "spire_height": 0.0,
+        "town_floors": 2,
+        "dormer_count": 0,
+        "detail": 0.28,
+        "stone_palette": "sandstone",
+        "gold_accents": false,
+        "clock_enable": false,
+        "global_scale": 1.0,
+        "facade_style": "lancet",
+        "window_pattern": "single",
+        "tower_crown": "canopied",
+        "gate_composition": "fortified",
+        "roof_material": "slate",
+        "ridge_detail": "sparse",
+        "porch_depth": 0.0,
+        "urban_program": "dwelling",
+        "urban_plan": "deep",
+        "front_bays": 2,
+        "floor_height": 2.9,
+        "urban_depth": 5.49,
+        "urban_roof": "gable",
+        "balcony_enable": false,
+        "chimney_count": 1,
+        "interior_enable": true,
+        "interior_furniture": true,
+        "interior_lighting": true
+      },
+      "seeds": {
+        "layout": 1867172084,
+        "decoration": 1479926430
+      },
+      "fbx_sha256": "45e9b14d7171f6389de73bea3a49c68f3a4ac7b4035f8fe749ecaba7d4f480c1",
+      "seconds": 8.404,
+      "interior_triangles": 11806,
+      "interior_lights": [
+        {
+          "name": "street_interior_lamp_light_source/source_0",
+          "position_m": [
+            -0.824400007724762,
+            2.3600000143051147,
+            -2.9802322387695312e-08
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "street_interior_lamp_light_source/source_1",
+          "position_m": [
+            -0.824400007724762,
+            5.259999990463257,
+            -2.9802322387695312e-08
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        }
+      ],
+      "nonfinite_attributes": 0,
+      "degenerate_triangles_removed": 0,
+      "generator_version": "3.3.0-skytown-joinery",
+      "source_origin_m": [
+        0.0,
+        0.0,
+        3.294000059366226
+      ],
+      "polygons": 94480,
+      "source_polygons": 94480,
+      "opening_clearance": {
+        "support_groups": 0,
+        "opening_support_pairs_checked": 0,
+        "minimum_projected_gap_m": null,
+        "blocked_openings": 0
+      },
+      "skytown_assets": [
+        "/Game/SkyTown/Meshes/SM_Bed01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Bench01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Shelf01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Table01"
+      ]
+    },
+    {
+      "points": 58802,
+      "triangles": 111968,
+      "size_m": [
+        6.731322288513184,
+        9.524975776672363,
+        7.2213219702243805
+      ],
+      "min_m": [
+        -3.365661144256592,
+        0.0,
+        -0.2606610357761383
+      ],
+      "max_m": [
+        3.365661144256592,
+        9.524975776672363,
+        6.960660934448242
+      ],
+      "invalid_normals": 0,
+      "degenerate_triangles": 0,
+      "python_sops": 0,
+      "native_nodes": 296,
+      "sweeps": 6,
+      "bevels": 19,
+      "materials": {
+        "stone": 14972,
+        "floor": 752,
+        "wood": 3784,
+        "metal": 2688,
+        "glass": 2352,
+        "trim": 85122,
+        "roof": 374,
+        "skytown_MI_Furniture01": 1924
+      },
+      "id": "variant_13",
+      "label": "Artisan Workshop Home",
+      "district": "working",
+      "use": "shop",
+      "file": "Assets/_render/SourceAssets/Gothic/Meshes/SM_Gothic_variant_13.fbx",
+      "quality": "normal",
+      "parameters": {
+        "building_type": "residence",
+        "plan_layout": "hall",
+        "length_bays": 5,
+        "bay_length": 4.0,
+        "nave_width": 6.21,
+        "wall_height": 5.9,
+        "wall_thickness": 0.35,
+        "roof_pitch": 49.8,
+        "tower_layout": "none",
+        "tower_floors": 3,
+        "tower_floor_height": 4.0,
+        "spire_height": 0.0,
+        "town_floors": 2,
+        "dormer_count": 0,
+        "detail": 0.32,
+        "stone_palette": "sandstone",
+        "gold_accents": false,
+        "clock_enable": false,
+        "global_scale": 1.0,
+        "facade_style": "lancet",
+        "window_pattern": "single",
+        "tower_crown": "canopied",
+        "gate_composition": "fortified",
+        "roof_material": "slate",
+        "ridge_detail": "sparse",
+        "porch_depth": 0.0,
+        "urban_program": "shop",
+        "urban_plan": "compact",
+        "front_bays": 3,
+        "floor_height": 2.86,
+        "urban_depth": 6.7,
+        "urban_roof": "gable",
+        "balcony_enable": false,
+        "chimney_count": 2,
+        "interior_enable": true,
+        "interior_furniture": true,
+        "interior_lighting": true
+      },
+      "seeds": {
+        "layout": 468179515,
+        "decoration": 1025639270
+      },
+      "fbx_sha256": "82cb90be895c4f7808974742a41574863e2ac60a16ab33effa9c0cae763fbcfe",
+      "seconds": 9.351,
+      "interior_triangles": 9412,
+      "interior_lights": [
+        {
+          "name": "street_interior_lamp_light_source/source_0",
+          "position_m": [
+            -1.117799997329712,
+            2.3200000524520874,
+            7.450580596923828e-08
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "street_interior_lamp_light_source/source_1",
+          "position_m": [
+            -1.117799997329712,
+            5.180000066757202,
+            7.450580596923828e-08
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        }
+      ],
+      "nonfinite_attributes": 0,
+      "degenerate_triangles_removed": 0,
+      "generator_version": "3.3.0-skytown-joinery",
+      "source_origin_m": [
+        0.0,
+        0.0,
+        3.349999949336052
+      ],
+      "polygons": 111968,
+      "source_polygons": 111968,
+      "opening_clearance": {
+        "support_groups": 0,
+        "opening_support_pairs_checked": 0,
+        "minimum_projected_gap_m": null,
+        "blocked_openings": 0
+      },
+      "skytown_assets": [
+        "/Game/SkyTown/Meshes/SM_Furniture01_Bench01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Shelf01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Table01"
+      ]
+    },
+    {
+      "points": 77867,
+      "triangles": 152040,
+      "size_m": [
+        5.65305757522583,
+        8.779080390930176,
+        8.487057358026505
+      ],
+      "min_m": [
+        -2.826528787612915,
+        0.0,
+        -0.27152886986732483
+      ],
+      "max_m": [
+        2.826528787612915,
+        8.779080390930176,
+        8.21552848815918
+      ],
+      "invalid_normals": 0,
+      "degenerate_triangles": 0,
+      "python_sops": 0,
+      "native_nodes": 323,
+      "sweeps": 4,
+      "bevels": 16,
+      "materials": {
+        "stone": 18292,
+        "floor": 752,
+        "wood": 4168,
+        "metal": 2688,
+        "glass": 2352,
+        "trim": 119472,
+        "roof": 374,
+        "skytown_MI_Furniture01": 1106,
+        "skytown_MI_Bed01": 2836
+      },
+      "id": "variant_14",
+      "label": "Weaver Terrace",
+      "district": "working",
+      "use": "dwelling",
+      "file": "Assets/_render/SourceAssets/Gothic/Meshes/SM_Gothic_variant_14.fbx",
+      "quality": "normal",
+      "parameters": {
+        "building_type": "residence",
+        "plan_layout": "hall",
+        "length_bays": 5,
+        "bay_length": 4.0,
+        "nave_width": 5.11,
+        "wall_height": 5.9,
+        "wall_thickness": 0.35,
+        "roof_pitch": 45.6,
+        "tower_layout": "none",
+        "tower_floors": 3,
+        "tower_floor_height": 4.0,
+        "spire_height": 0.0,
+        "town_floors": 2,
+        "dormer_count": 0,
+        "detail": 0.3,
+        "stone_palette": "sandstone",
+        "gold_accents": false,
+        "clock_enable": false,
+        "global_scale": 1.0,
+        "facade_style": "lancet",
+        "window_pattern": "single",
+        "tower_crown": "canopied",
+        "gate_composition": "fortified",
+        "roof_material": "slate",
+        "ridge_detail": "sparse",
+        "porch_depth": 0.0,
+        "urban_program": "dwelling",
+        "urban_plan": "deep",
+        "front_bays": 2,
+        "floor_height": 2.96,
+        "urban_depth": 6.62,
+        "urban_roof": "stepped",
+        "balcony_enable": false,
+        "chimney_count": 1,
+        "interior_enable": true,
+        "interior_furniture": true,
+        "interior_lighting": true
+      },
+      "seeds": {
+        "layout": 1284282291,
+        "decoration": 1877984562
+      },
+      "fbx_sha256": "c468faf4b21d0751d6e4dc61942c4bd6eb70eb89533b5cd3f3d2fe2885936345",
+      "seconds": 13.227,
+      "interior_triangles": 11806,
+      "interior_lights": [
+        {
+          "name": "street_interior_lamp_light_source/source_0",
+          "position_m": [
+            -0.9198000431060791,
+            2.4199999570846558,
+            7.450580596923828e-08
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "street_interior_lamp_light_source/source_1",
+          "position_m": [
+            -0.9198000431060791,
+            5.379999876022339,
+            7.450580596923828e-08
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        }
+      ],
+      "nonfinite_attributes": 0,
+      "degenerate_triangles_removed": 0,
+      "generator_version": "3.3.0-skytown-joinery",
+      "source_origin_m": [
+        0.0,
+        0.0,
+        3.9719998091459274
+      ],
+      "polygons": 152040,
+      "source_polygons": 152040,
+      "opening_clearance": {
+        "support_groups": 0,
+        "opening_support_pairs_checked": 0,
+        "minimum_projected_gap_m": null,
+        "blocked_openings": 0
+      },
+      "skytown_assets": [
+        "/Game/SkyTown/Meshes/SM_Bed01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Bench01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Shelf01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Table01"
+      ]
+    },
+    {
+      "points": 95547,
+      "triangles": 183810,
+      "size_m": [
+        8.003416299819946,
+        9.923412322998047,
+        10.17609891295433
+      ],
+      "min_m": [
+        -3.9903666973114014,
+        0.0,
+        -0.2780495584011078
+      ],
+      "max_m": [
+        4.013049602508545,
+        9.923412322998047,
+        9.898049354553223
+      ],
+      "invalid_normals": 0,
+      "degenerate_triangles": 0,
+      "python_sops": 0,
+      "native_nodes": 495,
+      "sweeps": 9,
+      "bevels": 35,
+      "materials": {
+        "stone": 23608,
+        "floor": 1504,
+        "wood": 8224,
+        "metal": 5376,
+        "glass": 3912,
+        "trim": 136590,
+        "roof": 748,
+        "skytown_MI_Furniture01": 3848
+      },
+      "id": "variant_15",
+      "label": "Corner Smithy",
+      "district": "working",
+      "use": "shop",
+      "file": "Assets/_render/SourceAssets/Gothic/Meshes/SM_Gothic_variant_15.fbx",
+      "quality": "normal",
+      "parameters": {
+        "building_type": "residence",
+        "plan_layout": "hall",
+        "length_bays": 5,
+        "bay_length": 4.0,
+        "nave_width": 7.47,
+        "wall_height": 5.9,
+        "wall_thickness": 0.35,
+        "roof_pitch": 45.2,
+        "tower_layout": "none",
+        "tower_floors": 3,
+        "tower_floor_height": 4.0,
+        "spire_height": 0.0,
+        "town_floors": 2,
+        "dormer_count": 0,
+        "detail": 0.32,
+        "stone_palette": "sandstone",
+        "gold_accents": false,
+        "clock_enable": false,
+        "global_scale": 1.0,
+        "facade_style": "lancet",
+        "window_pattern": "single",
+        "tower_crown": "canopied",
+        "gate_composition": "fortified",
+        "roof_material": "slate",
+        "ridge_detail": "sparse",
+        "porch_depth": 0.0,
+        "urban_program": "shop",
+        "urban_plan": "corner",
+        "front_bays": 3,
+        "floor_height": 3.02,
+        "urban_depth": 9.62,
+        "urban_roof": "gable",
+        "balcony_enable": false,
+        "chimney_count": 2,
+        "interior_enable": true,
+        "interior_furniture": true,
+        "interior_lighting": true
+      },
+      "seeds": {
+        "layout": 1768570438,
+        "decoration": 2109212873
+      },
+      "fbx_sha256": "2e42896902314cc1110665102d3f3635e38a7287174c142e5e6240c97af30736",
+      "seconds": 15.631,
+      "interior_triangles": 19576,
+      "interior_lights": [
+        {
+          "name": "corner_wing_interior_lamp_light_source/source_0",
+          "position_m": [
+            1.6918185353279114,
+            2.4799998998641968,
+            2.116400048136711
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "corner_wing_interior_lamp_light_source/source_1",
+          "position_m": [
+            1.6918185353279114,
+            5.499999761581421,
+            2.116400048136711
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "street_interior_lamp_light_source/source_2",
+          "position_m": [
+            -1.3559414148330688,
+            2.4799998998641968,
+            -2.69359989464283
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "street_interior_lamp_light_source/source_3",
+          "position_m": [
+            -1.3559414148330688,
+            5.499999761581421,
+            -2.69359989464283
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        }
+      ],
+      "nonfinite_attributes": 0,
+      "degenerate_triangles_removed": 0,
+      "generator_version": "3.3.0-skytown-joinery",
+      "source_origin_m": [
+        0.011341452598571777,
+        0.0,
+        4.809999898076057
+      ],
+      "polygons": 183810,
+      "source_polygons": 183810,
+      "opening_clearance": {
+        "support_groups": 0,
+        "opening_support_pairs_checked": 0,
+        "minimum_projected_gap_m": null,
+        "blocked_openings": 0
+      },
+      "skytown_assets": [
+        "/Game/SkyTown/Meshes/SM_Furniture01_Bench01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Shelf01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Table01"
+      ]
+    },
+    {
+      "points": 73739,
+      "triangles": 145608,
+      "size_m": [
+        8.993058204650879,
+        11.104375839233398,
+        9.961528420448303
+      ],
+      "min_m": [
+        -4.4965291023254395,
+        0.0,
+        -1.600000023841858
+      ],
+      "max_m": [
+        4.4965291023254395,
+        11.104375839233398,
+        8.361528396606445
+      ],
+      "invalid_normals": 0,
+      "degenerate_triangles": 0,
+      "python_sops": 0,
+      "native_nodes": 339,
+      "sweeps": 8,
+      "bevels": 19,
+      "materials": {
+        "stone": 22110,
+        "floor": 752,
+        "wood": 4168,
+        "metal": 2688,
+        "glass": 2768,
+        "trim": 108432,
+        "roof": 748,
+        "skytown_MI_Furniture01": 1106,
+        "skytown_MI_Bed01": 2836
+      },
+      "id": "variant_16",
+      "label": "Neighborhood Tavern",
+      "district": "working",
+      "use": "inn",
+      "file": "Assets/_render/SourceAssets/Gothic/Meshes/SM_Gothic_variant_16.fbx",
+      "quality": "normal",
+      "parameters": {
+        "building_type": "residence",
+        "plan_layout": "hall",
+        "length_bays": 5,
+        "bay_length": 4.0,
+        "nave_width": 8.45,
+        "wall_height": 5.9,
+        "wall_thickness": 0.35,
+        "roof_pitch": 50.1,
+        "tower_layout": "none",
+        "tower_floors": 3,
+        "tower_floor_height": 4.0,
+        "spire_height": 0.0,
+        "town_floors": 2,
+        "dormer_count": 0,
+        "detail": 0.38,
+        "stone_palette": "sandstone",
+        "gold_accents": false,
+        "clock_enable": false,
+        "global_scale": 1.0,
+        "facade_style": "lancet",
+        "window_pattern": "single",
+        "tower_crown": "canopied",
+        "gate_composition": "fortified",
+        "roof_material": "oxblood",
+        "ridge_detail": "sparse",
+        "porch_depth": 1.4,
+        "urban_program": "inn",
+        "urban_plan": "compact",
+        "front_bays": 3,
+        "floor_height": 2.96,
+        "urban_depth": 8.09,
+        "urban_roof": "gable",
+        "balcony_enable": false,
+        "chimney_count": 2,
+        "interior_enable": true,
+        "interior_furniture": true,
+        "interior_lighting": true
+      },
+      "seeds": {
+        "layout": 1625001162,
+        "decoration": 1229150686
+      },
+      "fbx_sha256": "5c5c3b7be974bddd6d7c41d92251d8c663803d4caa788c26000bcc517de49ca2",
+      "seconds": 12.362,
+      "interior_triangles": 11806,
+      "interior_lights": [
+        {
+          "name": "street_interior_lamp_light_source/source_0",
+          "position_m": [
+            -1.5210000276565552,
+            2.4199999570846558,
+            0.6642358899116516
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "street_interior_lamp_light_source/source_1",
+          "position_m": [
+            -1.5210000276565552,
+            5.379999876022339,
+            0.6642358899116516
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        }
+      ],
+      "nonfinite_attributes": 0,
+      "degenerate_triangles_removed": 0,
+      "generator_version": "3.3.0-skytown-joinery",
+      "source_origin_m": [
+        0.0,
+        0.0,
+        3.3807641863822937
+      ],
+      "polygons": 145608,
+      "source_polygons": 145608,
+      "opening_clearance": {
+        "support_groups": 0,
+        "opening_support_pairs_checked": 0,
+        "minimum_projected_gap_m": null,
+        "blocked_openings": 0
+      },
+      "skytown_assets": [
+        "/Game/SkyTown/Meshes/SM_Bed01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Bench01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Shelf01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Table01"
+      ]
+    },
+    {
+      "points": 141659,
+      "triangles": 278158,
+      "size_m": [
+        8.513487815856934,
+        14.104894179850817,
+        11.672744154930115
+      ],
+      "min_m": [
+        -4.256743907928467,
+        -0.019999999552965164,
+        -1.149999976158142
+      ],
+      "max_m": [
+        4.256743907928467,
+        14.084894180297852,
+        10.522744178771973
+      ],
+      "invalid_normals": 0,
+      "degenerate_triangles": 0,
+      "python_sops": 0,
+      "native_nodes": 448,
+      "sweeps": 7,
+      "bevels": 16,
+      "materials": {
+        "stone": 33994,
+        "floor": 1316,
+        "wood": 9560,
+        "metal": 4536,
+        "glass": 4724,
+        "trim": 216732,
+        "roof": 374,
+        "skytown_MI_Furniture01": 1250,
+        "skytown_MI_Bed01": 5672
+      },
+      "id": "variant_17",
+      "label": "Merchant Townhouse",
+      "district": "middle",
+      "use": "dwelling",
+      "file": "Assets/_render/SourceAssets/Gothic/Meshes/SM_Gothic_variant_17.fbx",
+      "quality": "normal",
+      "parameters": {
+        "building_type": "residence",
+        "plan_layout": "hall",
+        "length_bays": 5,
+        "bay_length": 4.0,
+        "nave_width": 7.94,
+        "wall_height": 8.85,
+        "wall_thickness": 0.35,
+        "roof_pitch": 48.8,
+        "tower_layout": "none",
+        "tower_floors": 3,
+        "tower_floor_height": 4.0,
+        "spire_height": 0.0,
+        "town_floors": 3,
+        "dormer_count": 0,
+        "detail": 0.52,
+        "stone_palette": "limestone",
+        "gold_accents": false,
+        "clock_enable": false,
+        "global_scale": 1.0,
+        "facade_style": "lancet",
+        "window_pattern": "single",
+        "tower_crown": "canopied",
+        "gate_composition": "fortified",
+        "roof_material": "slate",
+        "ridge_detail": "sparse",
+        "porch_depth": 0.0,
+        "urban_program": "dwelling",
+        "urban_plan": "deep",
+        "front_bays": 3,
+        "floor_height": 3.1,
+        "urban_depth": 8.53,
+        "urban_roof": "stepped",
+        "balcony_enable": true,
+        "chimney_count": 1,
+        "interior_enable": true,
+        "interior_furniture": true,
+        "interior_lighting": true
+      },
+      "seeds": {
+        "layout": 2116662374,
+        "decoration": 257961063
+      },
+      "fbx_sha256": "dc8fcd58c784ee746f5947d01762961c8f5f02882f82d71bf3f184341975ebf0",
+      "seconds": 21.883,
+      "interior_triangles": 22182,
+      "interior_lights": [
+        {
+          "name": "street_interior_lamp_light_source/source_0",
+          "position_m": [
+            -1.429199993610382,
+            2.5800000615417957,
+            0.43162792921066284
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "street_interior_lamp_light_source/source_1",
+          "position_m": [
+            -1.429199993610382,
+            5.680000085383654,
+            0.43162792921066284
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "street_interior_lamp_light_source/source_2",
+          "position_m": [
+            -1.429199993610382,
+            8.779999751597643,
+            0.43162792921066284
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        }
+      ],
+      "nonfinite_attributes": 0,
+      "degenerate_triangles_removed": 0,
+      "generator_version": "3.3.0-skytown-joinery",
+      "source_origin_m": [
+        0.0,
+        -0.019999999552965164,
+        4.686372101306915
+      ],
+      "polygons": 278158,
+      "source_polygons": 278158,
+      "opening_clearance": {
+        "support_groups": 2,
+        "opening_support_pairs_checked": 2,
+        "minimum_projected_gap_m": 0.43933331966400146,
+        "blocked_openings": 0
+      },
+      "skytown_assets": [
+        "/Game/SkyTown/Meshes/SM_Bed01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Bench01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Shelf01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Table01"
+      ]
+    },
+    {
+      "points": 69982,
+      "triangles": 138254,
+      "size_m": [
+        7.9952311515808105,
+        10.61097576096654,
+        8.905231714248657
+      ],
+      "min_m": [
+        -3.9976155757904053,
+        -0.019999999552965164,
+        -0.2726156711578369
+      ],
+      "max_m": [
+        3.9976155757904053,
+        10.590975761413574,
+        8.63261604309082
+      ],
+      "invalid_normals": 0,
+      "degenerate_triangles": 0,
+      "python_sops": 0,
+      "native_nodes": 324,
+      "sweeps": 6,
+      "bevels": 19,
+      "materials": {
+        "stone": 17904,
+        "floor": 752,
+        "wood": 4176,
+        "metal": 2688,
+        "glass": 2768,
+        "trim": 107668,
+        "roof": 374,
+        "skytown_MI_Furniture01": 1924
+      },
+      "id": "variant_18",
+      "label": "Apothecary House",
+      "district": "middle",
+      "use": "shop",
+      "file": "Assets/_render/SourceAssets/Gothic/Meshes/SM_Gothic_variant_18.fbx",
+      "quality": "normal",
+      "parameters": {
+        "building_type": "residence",
+        "plan_layout": "hall",
+        "length_bays": 5,
+        "bay_length": 4.0,
+        "nave_width": 7.45,
+        "wall_height": 5.9,
+        "wall_thickness": 0.35,
+        "roof_pitch": 50.5,
+        "tower_layout": "none",
+        "tower_floors": 3,
+        "tower_floor_height": 4.0,
+        "spire_height": 0.0,
+        "town_floors": 2,
+        "dormer_count": 0,
+        "detail": 0.48,
+        "stone_palette": "limestone",
+        "gold_accents": false,
+        "clock_enable": false,
+        "global_scale": 1.0,
+        "facade_style": "lancet",
+        "window_pattern": "single",
+        "tower_crown": "canopied",
+        "gate_composition": "fortified",
+        "roof_material": "slate",
+        "ridge_detail": "sparse",
+        "porch_depth": 0.0,
+        "urban_program": "shop",
+        "urban_plan": "compact",
+        "front_bays": 3,
+        "floor_height": 2.97,
+        "urban_depth": 8.36,
+        "urban_roof": "gable",
+        "balcony_enable": false,
+        "chimney_count": 2,
+        "interior_enable": true,
+        "interior_furniture": true,
+        "interior_lighting": true
+      },
+      "seeds": {
+        "layout": 1160606919,
+        "decoration": 364131823
+      },
+      "fbx_sha256": "771c331fe7fe0e11a486b5f713d4660e2b18bbcb4a0fc962963289d4bc16451c",
+      "seconds": 11.407,
+      "interior_triangles": 9788,
+      "interior_lights": [
+        {
+          "name": "street_interior_lamp_light_source/source_0",
+          "position_m": [
+            -1.340999960899353,
+            2.4499999471008778,
+            -1.1920928955078125e-07
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "street_interior_lamp_light_source/source_1",
+          "position_m": [
+            -1.340999960899353,
+            5.419999856501818,
+            -1.1920928955078125e-07
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        }
+      ],
+      "nonfinite_attributes": 0,
+      "degenerate_triangles_removed": 0,
+      "generator_version": "3.3.0-skytown-joinery",
+      "source_origin_m": [
+        0.0,
+        -0.019999999552965164,
+        4.180000185966492
+      ],
+      "polygons": 138254,
+      "source_polygons": 138254,
+      "opening_clearance": {
+        "support_groups": 0,
+        "opening_support_pairs_checked": 0,
+        "minimum_projected_gap_m": null,
+        "blocked_openings": 0
+      },
+      "skytown_assets": [
+        "/Game/SkyTown/Meshes/SM_Furniture01_Bench01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Shelf01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Table01"
+      ]
+    },
+    {
+      "points": 132106,
+      "triangles": 256870,
+      "size_m": [
+        9.394363403320312,
+        11.73952629044652,
+        10.654363006353378
+      ],
+      "min_m": [
+        -4.697181701660156,
+        -0.019999999552965164,
+        -0.26718172430992126
+      ],
+      "max_m": [
+        4.697181701660156,
+        11.719526290893555,
+        10.387181282043457
+      ],
+      "invalid_normals": 0,
+      "degenerate_triangles": 0,
+      "python_sops": 0,
+      "native_nodes": 645,
+      "sweeps": 8,
+      "bevels": 37,
+      "materials": {
+        "stone": 30642,
+        "floor": 1504,
+        "wood": 8224,
+        "metal": 5376,
+        "glass": 3976,
+        "trim": 202552,
+        "roof": 748,
+        "skytown_MI_Furniture01": 3848
+      },
+      "id": "variant_19",
+      "label": "Baker House",
+      "district": "middle",
+      "use": "shop",
+      "file": "Assets/_render/SourceAssets/Gothic/Meshes/SM_Gothic_variant_19.fbx",
+      "quality": "normal",
+      "parameters": {
+        "building_type": "residence",
+        "plan_layout": "hall",
+        "length_bays": 5,
+        "bay_length": 4.0,
+        "nave_width": 8.86,
+        "wall_height": 5.9,
+        "wall_thickness": 0.35,
+        "roof_pitch": 51.8,
+        "tower_layout": "none",
+        "tower_floors": 3,
+        "tower_floor_height": 4.0,
+        "spire_height": 0.0,
+        "town_floors": 2,
+        "dormer_count": 0,
+        "detail": 0.46,
+        "stone_palette": "limestone",
+        "gold_accents": false,
+        "clock_enable": false,
+        "global_scale": 1.0,
+        "facade_style": "lancet",
+        "window_pattern": "single",
+        "tower_crown": "canopied",
+        "gate_composition": "fortified",
+        "roof_material": "oxblood",
+        "ridge_detail": "sparse",
+        "porch_depth": 0.0,
+        "urban_program": "shop",
+        "urban_plan": "corner",
+        "front_bays": 3,
+        "floor_height": 2.92,
+        "urban_depth": 10.12,
+        "urban_roof": "stepped",
+        "balcony_enable": false,
+        "chimney_count": 2,
+        "interior_enable": true,
+        "interior_furniture": true,
+        "interior_lighting": true
+      },
+      "seeds": {
+        "layout": 90828459,
+        "decoration": 1583140300
+      },
+      "fbx_sha256": "cb1bc13f772553acc34051b6972291710c526ef9592296d1061ebf96f3783f51",
+      "seconds": 22.139,
+      "interior_triangles": 19576,
+      "interior_lights": [
+        {
+          "name": "corner_wing_interior_lamp_light_source/source_0",
+          "position_m": [
+            2.0200799703598022,
+            2.3999999947845936,
+            2.226400300860405
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "corner_wing_interior_lamp_light_source/source_1",
+          "position_m": [
+            2.0200799703598022,
+            5.319999951869249,
+            2.226400300860405
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "street_interior_lamp_light_source/source_2",
+          "position_m": [
+            -1.5947999954223633,
+            2.3999999947845936,
+            -2.8335997611284256
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "street_interior_lamp_light_source/source_3",
+          "position_m": [
+            -1.5947999954223633,
+            5.319999951869249,
+            -2.8335997611284256
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        }
+      ],
+      "nonfinite_attributes": 0,
+      "degenerate_triangles_removed": 0,
+      "generator_version": "3.3.0-skytown-joinery",
+      "source_origin_m": [
+        0.0,
+        -0.019999999552965164,
+        5.059999778866768
+      ],
+      "polygons": 256870,
+      "source_polygons": 256870,
+      "opening_clearance": {
+        "support_groups": 0,
+        "opening_support_pairs_checked": 0,
+        "minimum_projected_gap_m": null,
+        "blocked_openings": 0
+      },
+      "skytown_assets": [
+        "/Game/SkyTown/Meshes/SM_Furniture01_Bench01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Shelf01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Table01"
+      ]
+    },
+    {
+      "points": 107907,
+      "triangles": 206238,
+      "size_m": [
+        8.737842559814453,
+        13.997174758464098,
+        9.753920912742615
+      ],
+      "min_m": [
+        -4.368921279907227,
+        -0.019999999552965164,
+        -1.149999976158142
+      ],
+      "max_m": [
+        4.368921279907227,
+        13.977174758911133,
+        8.603920936584473
+      ],
+      "invalid_normals": 0,
+      "degenerate_triangles": 0,
+      "python_sops": 0,
+      "native_nodes": 352,
+      "sweeps": 6,
+      "bevels": 15,
+      "materials": {
+        "stone": 25938,
+        "floor": 1316,
+        "wood": 9560,
+        "metal": 4536,
+        "glass": 4100,
+        "trim": 153220,
+        "roof": 646,
+        "skytown_MI_Furniture01": 1250,
+        "skytown_MI_Bed01": 5672
+      },
+      "id": "variant_20",
+      "label": "Scholar Residence",
+      "district": "middle",
+      "use": "dwelling",
+      "file": "Assets/_render/SourceAssets/Gothic/Meshes/SM_Gothic_variant_20.fbx",
+      "quality": "normal",
+      "parameters": {
+        "building_type": "residence",
+        "plan_layout": "hall",
+        "length_bays": 5,
+        "bay_length": 4.0,
+        "nave_width": 8.21,
+        "wall_height": 8.85,
+        "wall_thickness": 0.35,
+        "roof_pitch": 52.3,
+        "tower_layout": "none",
+        "tower_floors": 3,
+        "tower_floor_height": 4.0,
+        "spire_height": 0.0,
+        "town_floors": 3,
+        "dormer_count": 0,
+        "detail": 0.54,
+        "stone_palette": "limestone",
+        "gold_accents": false,
+        "clock_enable": false,
+        "global_scale": 1.0,
+        "facade_style": "lancet",
+        "window_pattern": "single",
+        "tower_crown": "canopied",
+        "gate_composition": "fortified",
+        "roof_material": "slate",
+        "ridge_detail": "sparse",
+        "porch_depth": 0.0,
+        "urban_program": "dwelling",
+        "urban_plan": "compact",
+        "front_bays": 3,
+        "floor_height": 2.89,
+        "urban_depth": 8.34,
+        "urban_roof": "hip",
+        "balcony_enable": true,
+        "chimney_count": 1,
+        "interior_enable": true,
+        "interior_furniture": true,
+        "interior_lighting": true
+      },
+      "seeds": {
+        "layout": 1500143408,
+        "decoration": 1197619987
+      },
+      "fbx_sha256": "4f1370557a37a9e7c1d91ac961df2eebe1ecce3f8e0511f59aa21c70edfcaed5",
+      "seconds": 17.365,
+      "interior_triangles": 22182,
+      "interior_lights": [
+        {
+          "name": "street_interior_lamp_light_source/source_0",
+          "position_m": [
+            -1.4778000116348267,
+            2.370000023394823,
+            0.44303959608078003
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "street_interior_lamp_light_source/source_1",
+          "position_m": [
+            -1.4778000116348267,
+            5.260000009089708,
+            0.44303959608078003
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "street_interior_lamp_light_source/source_2",
+          "position_m": [
+            -1.4778000116348267,
+            8.150000590831041,
+            0.44303959608078003
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        }
+      ],
+      "nonfinite_attributes": 0,
+      "degenerate_triangles_removed": 0,
+      "generator_version": "3.3.0-skytown-joinery",
+      "source_origin_m": [
+        0.0,
+        -0.019999999552965164,
+        3.7269604802131653
+      ],
+      "polygons": 206238,
+      "source_polygons": 206238,
+      "opening_clearance": {
+        "support_groups": 2,
+        "opening_support_pairs_checked": 2,
+        "minimum_projected_gap_m": 0.45733330631256097,
+        "blocked_openings": 0
+      },
+      "skytown_assets": [
+        "/Game/SkyTown/Meshes/SM_Bed01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Bench01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Shelf01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Table01"
+      ]
+    },
+    {
+      "points": 289919,
+      "triangles": 571946,
+      "size_m": [
+        13.479578018188477,
+        16.048171538859606,
+        16.41478955745697
+      ],
+      "min_m": [
+        -6.739789009094238,
+        -0.019999999552965164,
+        -1.149999976158142
+      ],
+      "max_m": [
+        6.739789009094238,
+        16.02817153930664,
+        15.264789581298828
+      ],
+      "invalid_normals": 0,
+      "degenerate_triangles": 0,
+      "python_sops": 0,
+      "native_nodes": 785,
+      "sweeps": 10,
+      "bevels": 27,
+      "materials": {
+        "stone": 69422,
+        "floor": 3948,
+        "wood": 26364,
+        "metal": 12768,
+        "glass": 11468,
+        "trim": 426088,
+        "roof": 1122,
+        "skytown_MI_Furniture01": 3750,
+        "skytown_MI_Bed01": 17016
+      },
+      "id": "variant_21",
+      "label": "Merchant Courtyard",
+      "district": "middle",
+      "use": "dwelling",
+      "file": "Assets/_render/SourceAssets/Gothic/Meshes/SM_Gothic_variant_21.fbx",
+      "quality": "normal",
+      "parameters": {
+        "building_type": "residence",
+        "plan_layout": "hall",
+        "length_bays": 5,
+        "bay_length": 4.0,
+        "nave_width": 12.93,
+        "wall_height": 8.85,
+        "wall_thickness": 0.35,
+        "roof_pitch": 47.0,
+        "tower_layout": "none",
+        "tower_floors": 3,
+        "tower_floor_height": 4.0,
+        "spire_height": 0.0,
+        "town_floors": 3,
+        "dormer_count": 0,
+        "detail": 0.58,
+        "stone_palette": "limestone",
+        "gold_accents": false,
+        "clock_enable": false,
+        "global_scale": 1.0,
+        "facade_style": "lancet",
+        "window_pattern": "single",
+        "tower_crown": "canopied",
+        "gate_composition": "fortified",
+        "roof_material": "slate",
+        "ridge_detail": "sparse",
+        "porch_depth": 0.0,
+        "urban_program": "dwelling",
+        "urban_plan": "courtyard",
+        "front_bays": 4,
+        "floor_height": 2.99,
+        "urban_depth": 14.99,
+        "urban_roof": "gable",
+        "balcony_enable": true,
+        "chimney_count": 1,
+        "interior_enable": true,
+        "interior_furniture": true,
+        "interior_lighting": true
+      },
+      "seeds": {
+        "layout": 1112864898,
+        "decoration": 1859230465
+      },
+      "fbx_sha256": "7337bf37ca9a8b9d5c3cf9ca904d34dbe463e76fef8fbe7fe62d64fc7036325d",
+      "seconds": 49.253,
+      "interior_triangles": 64710,
+      "interior_lights": [
+        {
+          "name": "court_wing_-1_interior_lamp_light_source/source_0",
+          "position_m": [
+            -5.306472063064575,
+            2.4699999280273914,
+            3.187605082988739
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "court_wing_-1_interior_lamp_light_source/source_1",
+          "position_m": [
+            -5.306472063064575,
+            5.459999818354845,
+            3.187605082988739
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "court_wing_-1_interior_lamp_light_source/source_2",
+          "position_m": [
+            -5.306472063064575,
+            8.449999827891588,
+            3.187605082988739
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "court_wing_1_interior_lamp_light_source/source_3",
+          "position_m": [
+            4.0031280517578125,
+            2.4699999280273914,
+            3.187605082988739
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "court_wing_1_interior_lamp_light_source/source_4",
+          "position_m": [
+            4.0031280517578125,
+            5.459999818354845,
+            3.187605082988739
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "court_wing_1_interior_lamp_light_source/source_5",
+          "position_m": [
+            4.0031280517578125,
+            8.449999827891588,
+            3.187605082988739
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "street_interior_lamp_light_source/source_6",
+          "position_m": [
+            -2.3274000883102417,
+            2.4699999280273914,
+            -4.307394802570343
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "street_interior_lamp_light_source/source_7",
+          "position_m": [
+            -2.3274000883102417,
+            5.459999818354845,
+            -4.307394802570343
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "street_interior_lamp_light_source/source_8",
+          "position_m": [
+            -2.3274000883102417,
+            8.449999827891588,
+            -4.307394802570343
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        }
+      ],
+      "nonfinite_attributes": 0,
+      "degenerate_triangles_removed": 0,
+      "generator_version": "3.3.0-skytown-joinery",
+      "source_origin_m": [
+        0.0,
+        -0.019999999552965164,
+        7.057394802570343
+      ],
+      "polygons": 571946,
+      "source_polygons": 571946,
+      "opening_clearance": {
+        "support_groups": 3,
+        "opening_support_pairs_checked": 3,
+        "minimum_projected_gap_m": 0.7012499237060545,
+        "blocked_openings": 0,
+        "awning_footing_contacts": 0
+      },
+      "skytown_assets": [
+        "/Game/SkyTown/Meshes/SM_Bed01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Bench01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Shelf01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Table01"
+      ]
+    },
+    {
+      "points": 441865,
+      "triangles": 869466,
+      "size_m": [
+        16.959999084472656,
+        19.562312621623278,
+        18.850000023841858
+      ],
+      "min_m": [
+        -8.479999542236328,
+        -0.019999999552965164,
+        -1.600000023841858
+      ],
+      "max_m": [
+        8.479999542236328,
+        19.542312622070312,
+        17.25
+      ],
+      "invalid_normals": 0,
+      "degenerate_triangles": 0,
+      "python_sops": 0,
+      "native_nodes": 1185,
+      "sweeps": 12,
+      "bevels": 39,
+      "materials": {
+        "stone": 163776,
+        "floor": 3948,
+        "wood": 28008,
+        "metal": 12656,
+        "glass": 14236,
+        "roof": 1496,
+        "trim": 624580,
+        "skytown_MI_Furniture01": 3750,
+        "skytown_MI_Bed01": 17016
+      },
+      "id": "variant_22",
+      "label": "Noble Courtyard Manor",
+      "district": "upper",
+      "use": "manor",
+      "file": "Assets/_render/SourceAssets/Gothic/Meshes/SM_Gothic_variant_22.fbx",
+      "quality": "normal",
+      "parameters": {
+        "building_type": "residence",
+        "plan_layout": "hall",
+        "length_bays": 5,
+        "bay_length": 4.0,
+        "nave_width": 16.16,
+        "wall_height": 10.35,
+        "wall_thickness": 0.35,
+        "roof_pitch": 47.9,
+        "tower_layout": "none",
+        "tower_floors": 3,
+        "tower_floor_height": 4.0,
+        "spire_height": 0.0,
+        "town_floors": 3,
+        "dormer_count": 0,
+        "detail": 0.72,
+        "stone_palette": "limestone",
+        "gold_accents": false,
+        "clock_enable": false,
+        "global_scale": 1.0,
+        "facade_style": "lancet",
+        "window_pattern": "single",
+        "tower_crown": "canopied",
+        "gate_composition": "fortified",
+        "roof_material": "slate",
+        "ridge_detail": "sparse",
+        "porch_depth": 1.4,
+        "urban_program": "manor",
+        "urban_plan": "courtyard",
+        "front_bays": 5,
+        "floor_height": 3.45,
+        "urban_depth": 16.82,
+        "urban_roof": "stepped",
+        "balcony_enable": true,
+        "chimney_count": 2,
+        "interior_enable": true,
+        "interior_furniture": true,
+        "interior_lighting": true
+      },
+      "seeds": {
+        "layout": 359394156,
+        "decoration": 989578542
+      },
+      "fbx_sha256": "36e65cc398f851a595a707391226403c32f6035fbed4eb3f870e34857d251fdd",
+      "seconds": 71.654,
+      "interior_triangles": 66354,
+      "interior_lights": [
+        {
+          "name": "court_wing_-1_interior_lamp_light_source/source_0",
+          "position_m": [
+            -6.6320641040802,
+            2.929999966174364,
+            3.3350003361701965
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "court_wing_-1_interior_lamp_light_source/source_1",
+          "position_m": [
+            -6.6320641040802,
+            6.37999989464879,
+            3.3350003361701965
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "court_wing_-1_interior_lamp_light_source/source_2",
+          "position_m": [
+            -6.6320641040802,
+            9.829999942332506,
+            3.3350003361701965
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "court_wing_1_interior_lamp_light_source/source_3",
+          "position_m": [
+            5.003135919570923,
+            2.929999966174364,
+            3.3350003361701965
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "court_wing_1_interior_lamp_light_source/source_4",
+          "position_m": [
+            5.003135919570923,
+            6.37999989464879,
+            3.3350003361701965
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "court_wing_1_interior_lamp_light_source/source_5",
+          "position_m": [
+            5.003135919570923,
+            9.829999942332506,
+            3.3350003361701965
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "street_interior_lamp_light_source/source_6",
+          "position_m": [
+            -2.9088000059127808,
+            2.929999966174364,
+            -5.074999988079071
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "street_interior_lamp_light_source/source_7",
+          "position_m": [
+            -2.9088000059127808,
+            6.37999989464879,
+            -5.074999988079071
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "street_interior_lamp_light_source/source_8",
+          "position_m": [
+            -2.9088000059127808,
+            9.829999942332506,
+            -5.074999988079071
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        }
+      ],
+      "nonfinite_attributes": 0,
+      "degenerate_triangles_removed": 0,
+      "generator_version": "3.3.0-skytown-joinery",
+      "source_origin_m": [
+        0.0,
+        -0.019999999552965164,
+        7.824999988079071
+      ],
+      "polygons": 869466,
+      "source_polygons": 869466,
+      "opening_clearance": {
+        "support_groups": 2,
+        "opening_support_pairs_checked": 2,
+        "minimum_projected_gap_m": 0.7010000228881836,
+        "blocked_openings": 0
+      },
+      "skytown_assets": [
+        "/Game/SkyTown/Meshes/SM_Bed01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Bench01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Shelf01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Table01"
+      ]
+    },
+    {
+      "points": 322486,
+      "triangles": 638248,
+      "size_m": [
+        13.859999656677246,
+        17.12843658402562,
+        17.12999975681305
+      ],
+      "min_m": [
+        -6.929999828338623,
+        -0.019999999552965164,
+        -1.600000023841858
+      ],
+      "max_m": [
+        6.929999828338623,
+        17.108436584472656,
+        15.529999732971191
+      ],
+      "invalid_normals": 0,
+      "degenerate_triangles": 0,
+      "python_sops": 0,
+      "native_nodes": 888,
+      "sweeps": 12,
+      "bevels": 37,
+      "materials": {
+        "stone": 119068,
+        "floor": 3760,
+        "wood": 28620,
+        "metal": 11480,
+        "glass": 11776,
+        "roof": 1666,
+        "trim": 442074,
+        "skytown_MI_Furniture01": 2788,
+        "skytown_MI_Bed01": 17016
+      },
+      "id": "variant_23",
+      "label": "Corner Patrician House",
+      "district": "upper",
+      "use": "manor",
+      "file": "Assets/_render/SourceAssets/Gothic/Meshes/SM_Gothic_variant_23.fbx",
+      "quality": "normal",
+      "parameters": {
+        "building_type": "residence",
+        "plan_layout": "hall",
+        "length_bays": 5,
+        "bay_length": 4.0,
+        "nave_width": 13.06,
+        "wall_height": 13.8,
+        "wall_thickness": 0.35,
+        "roof_pitch": 50.3,
+        "tower_layout": "none",
+        "tower_floors": 3,
+        "tower_floor_height": 4.0,
+        "spire_height": 0.0,
+        "town_floors": 4,
+        "dormer_count": 0,
+        "detail": 0.76,
+        "stone_palette": "limestone",
+        "gold_accents": false,
+        "clock_enable": false,
+        "global_scale": 1.0,
+        "facade_style": "lancet",
+        "window_pattern": "single",
+        "tower_crown": "canopied",
+        "gate_composition": "fortified",
+        "roof_material": "copper",
+        "ridge_detail": "sparse",
+        "porch_depth": 1.4,
+        "urban_program": "manor",
+        "urban_plan": "corner",
+        "front_bays": 4,
+        "floor_height": 3.45,
+        "urban_depth": 15.1,
+        "urban_roof": "hip",
+        "balcony_enable": true,
+        "chimney_count": 2,
+        "interior_enable": true,
+        "interior_furniture": true,
+        "interior_lighting": true
+      },
+      "seeds": {
+        "layout": 736219413,
+        "decoration": 238725362
+      },
+      "fbx_sha256": "dee8552339c6d31f8c7498ec2f6c265acea40e31e0e0567743edc797b506d7ba",
+      "seconds": 48.483,
+      "interior_triangles": 64312,
+      "interior_lights": [
+        {
+          "name": "corner_wing_interior_lamp_light_source/source_0",
+          "position_m": [
+            2.9776800870895386,
+            2.929999966174364,
+            3.3349998593330383
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "corner_wing_interior_lamp_light_source/source_1",
+          "position_m": [
+            2.9776800870895386,
+            6.37999989464879,
+            3.3349998593330383
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "corner_wing_interior_lamp_light_source/source_2",
+          "position_m": [
+            2.9776800870895386,
+            9.829999942332506,
+            3.3349998593330383
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "corner_wing_interior_lamp_light_source/source_3",
+          "position_m": [
+            2.9776800870895386,
+            13.279999751597643,
+            3.3349998593330383
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "street_interior_lamp_light_source/source_4",
+          "position_m": [
+            -2.3507999181747437,
+            2.929999966174364,
+            -4.214999854564667
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "street_interior_lamp_light_source/source_5",
+          "position_m": [
+            -2.3507999181747437,
+            6.37999989464879,
+            -4.214999854564667
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "street_interior_lamp_light_source/source_6",
+          "position_m": [
+            -2.3507999181747437,
+            9.829999942332506,
+            -4.214999854564667
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "street_interior_lamp_light_source/source_7",
+          "position_m": [
+            -2.3507999181747437,
+            13.279999751597643,
+            -4.214999854564667
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        }
+      ],
+      "nonfinite_attributes": 0,
+      "degenerate_triangles_removed": 0,
+      "generator_version": "3.3.0-skytown-joinery",
+      "source_origin_m": [
+        0.0,
+        -0.019999999552965164,
+        6.964999854564667
+      ],
+      "polygons": 638248,
+      "source_polygons": 638248,
+      "opening_clearance": {
+        "support_groups": 3,
+        "opening_support_pairs_checked": 3,
+        "minimum_projected_gap_m": 0.7174999523162842,
+        "blocked_openings": 0,
+        "awning_footing_contacts": 0
+      },
+      "skytown_assets": [
+        "/Game/SkyTown/Meshes/SM_Bed01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Bench01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Shelf01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Table01"
+      ]
+    },
+    {
+      "points": 141981,
+      "triangles": 278701,
+      "size_m": [
+        14.84000015258789,
+        14.04449226334691,
+        14.101999878883362
+      ],
+      "min_m": [
+        -7.420000076293945,
+        -0.019999999552965164,
+        -1.600000023841858
+      ],
+      "max_m": [
+        7.420000076293945,
+        14.024492263793945,
+        12.501999855041504
+      ],
+      "invalid_normals": 0,
+      "degenerate_triangles": 0,
+      "python_sops": 0,
+      "native_nodes": 520,
+      "sweeps": 7,
+      "bevels": 26,
+      "materials": {
+        "stone": 60354,
+        "floor": 752,
+        "wood": 4544,
+        "metal": 2688,
+        "glass": 4296,
+        "roof": 748,
+        "trim": 199445,
+        "skytown_MI_Furniture01": 4814,
+        "skytown_MI_FruitCrate01": 1060
+      },
+      "id": "variant_24",
+      "label": "Masons Guildhall",
+      "district": "public",
+      "use": "guildhall",
+      "file": "Assets/_render/SourceAssets/Gothic/Meshes/SM_Gothic_variant_24.fbx",
+      "quality": "normal",
+      "parameters": {
+        "building_type": "public",
+        "plan_layout": "hall",
+        "length_bays": 5,
+        "bay_length": 4.0,
+        "nave_width": 14.04,
+        "wall_height": 6.9,
+        "wall_thickness": 0.35,
+        "roof_pitch": 44.4,
+        "tower_layout": "none",
+        "tower_floors": 3,
+        "tower_floor_height": 4.0,
+        "spire_height": 0.0,
+        "town_floors": 2,
+        "dormer_count": 0,
+        "detail": 0.68,
+        "stone_palette": "limestone",
+        "gold_accents": false,
+        "clock_enable": false,
+        "global_scale": 1.0,
+        "facade_style": "lancet",
+        "window_pattern": "single",
+        "tower_crown": "canopied",
+        "gate_composition": "fortified",
+        "roof_material": "slate",
+        "ridge_detail": "sparse",
+        "porch_depth": 1.4,
+        "urban_program": "guildhall",
+        "urban_plan": "deep",
+        "front_bays": 5,
+        "floor_height": 3.45,
+        "urban_depth": 10.06,
+        "urban_roof": "stepped",
+        "balcony_enable": false,
+        "chimney_count": 1,
+        "interior_enable": true,
+        "interior_furniture": true,
+        "interior_lighting": true
+      },
+      "seeds": {
+        "layout": 1353574362,
+        "decoration": 922938766
+      },
+      "fbx_sha256": "1bcca257bc0c543107b9a58125dfbc70ad4d323869a95eff975ff8b11a2acf18",
+      "seconds": 23.445,
+      "interior_triangles": 10164,
+      "interior_lights": [
+        {
+          "name": "street_interior_lamp_light_source/source_0",
+          "position_m": [
+            -2.5272001028060913,
+            2.929999966174364,
+            0.5850000977516174
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "street_interior_lamp_light_source/source_1",
+          "position_m": [
+            -2.5272001028060913,
+            6.37999989464879,
+            0.5850000977516174
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        }
+      ],
+      "nonfinite_attributes": 0,
+      "degenerate_triangles_removed": 0,
+      "generator_version": "3.3.0-skytown-joinery",
+      "source_origin_m": [
+        0.0,
+        -0.019999999552965164,
+        5.450999915599823
+      ],
+      "polygons": 278701,
+      "source_polygons": 278701,
+      "opening_clearance": {
+        "support_groups": 0,
+        "opening_support_pairs_checked": 0,
+        "minimum_projected_gap_m": null,
+        "blocked_openings": 0
+      },
+      "skytown_assets": [
+        "/Game/SkyTown/Meshes/SM_FruitCrate01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Bench01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Shelf01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Table01"
+      ]
+    },
+    {
+      "points": 61589,
+      "triangles": 121708,
+      "size_m": [
+        17.717435836791992,
+        14.703184623271227,
+        11.611516535282135
+      ],
+      "min_m": [
+        -8.858717918395996,
+        -0.019999999552965164,
+        -0.1850000023841858
+      ],
+      "max_m": [
+        8.858717918395996,
+        14.683184623718262,
+        11.42651653289795
+      ],
+      "invalid_normals": 0,
+      "degenerate_triangles": 0,
+      "python_sops": 0,
+      "native_nodes": 257,
+      "sweeps": 5,
+      "bevels": 15,
+      "materials": {
+        "stone": 16088,
+        "floor": 188,
+        "metal": 1316,
+        "glass": 1756,
+        "trim": 96284,
+        "roof": 374,
+        "skytown_MI_Furniture01": 4430,
+        "skytown_MI_FruitCrate01": 1272
+      },
+      "id": "variant_25",
+      "label": "Covered Market Hall",
+      "district": "public",
+      "use": "market",
+      "file": "Assets/_render/SourceAssets/Gothic/Meshes/SM_Gothic_variant_25.fbx",
+      "quality": "normal",
+      "parameters": {
+        "building_type": "public",
+        "plan_layout": "hall",
+        "length_bays": 5,
+        "bay_length": 4.0,
+        "nave_width": 17.09,
+        "wall_height": 3.45,
+        "wall_thickness": 0.35,
+        "roof_pitch": 51.9,
+        "tower_layout": "none",
+        "tower_floors": 3,
+        "tower_floor_height": 4.0,
+        "spire_height": 0.0,
+        "town_floors": 1,
+        "dormer_count": 0,
+        "detail": 0.46,
+        "stone_palette": "limestone",
+        "gold_accents": false,
+        "clock_enable": false,
+        "global_scale": 1.0,
+        "facade_style": "lancet",
+        "window_pattern": "single",
+        "tower_crown": "canopied",
+        "gate_composition": "fortified",
+        "roof_material": "slate",
+        "ridge_detail": "sparse",
+        "porch_depth": 0.0,
+        "urban_program": "market",
+        "urban_plan": "compact",
+        "front_bays": 6,
+        "floor_height": 3.65,
+        "urban_depth": 11.08,
+        "urban_roof": "gable",
+        "balcony_enable": false,
+        "chimney_count": 1,
+        "interior_enable": true,
+        "interior_furniture": true,
+        "interior_lighting": true
+      },
+      "seeds": {
+        "layout": 1886215998,
+        "decoration": 985874953
+      },
+      "fbx_sha256": "4a4d0bc1cae4c07e8930677ba4f609e09cb475beb7c1b6b3fc50893984fff598",
+      "seconds": 10.561,
+      "interior_triangles": 2654,
+      "interior_lights": [
+        {
+          "name": "street_interior_lamp_light_source/source_0",
+          "position_m": [
+            -3.076200008392334,
+            3.13000001385808,
+            -0.08075830340385437
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        }
+      ],
+      "nonfinite_attributes": 0,
+      "degenerate_triangles_removed": 0,
+      "generator_version": "3.3.0-skytown-joinery",
+      "source_origin_m": [
+        0.0,
+        -0.019999999552965164,
+        5.620758265256882
+      ],
+      "polygons": 121708,
+      "source_polygons": 121708,
+      "opening_clearance": {
+        "support_groups": 0,
+        "opening_support_pairs_checked": 0,
+        "minimum_projected_gap_m": null,
+        "blocked_openings": 0
+      },
+      "skytown_assets": [
+        "/Game/SkyTown/Meshes/SM_FruitCrate01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Bench01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Shelf01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Table01"
+      ]
+    },
+    {
+      "points": 297604,
+      "triangles": 585771,
+      "size_m": [
+        16.729999542236328,
+        20.81473495438695,
+        18.089999794960022
+      ],
+      "min_m": [
+        -8.364999771118164,
+        -0.019999999552965164,
+        -1.600000023841858
+      ],
+      "max_m": [
+        8.364999771118164,
+        20.794734954833984,
+        16.489999771118164
+      ],
+      "invalid_normals": 0,
+      "degenerate_triangles": 0,
+      "python_sops": 0,
+      "native_nodes": 900,
+      "sweeps": 12,
+      "bevels": 35,
+      "materials": {
+        "stone": 113796,
+        "floor": 2632,
+        "wood": 17816,
+        "metal": 9536,
+        "glass": 9798,
+        "roof": 1122,
+        "trim": 425299,
+        "skytown_MI_Furniture01": 5772
+      },
+      "id": "variant_26",
+      "label": "Gothic Town Hall",
+      "district": "public",
+      "use": "townhall",
+      "file": "Assets/_render/SourceAssets/Gothic/Meshes/SM_Gothic_variant_26.fbx",
+      "quality": "normal",
+      "parameters": {
+        "building_type": "public",
+        "plan_layout": "hall",
+        "length_bays": 5,
+        "bay_length": 4.0,
+        "nave_width": 15.93,
+        "wall_height": 10.35,
+        "wall_thickness": 0.35,
+        "roof_pitch": 52.0,
+        "tower_layout": "none",
+        "tower_floors": 3,
+        "tower_floor_height": 4.0,
+        "spire_height": 0.0,
+        "town_floors": 3,
+        "dormer_count": 0,
+        "detail": 0.74,
+        "stone_palette": "limestone",
+        "gold_accents": false,
+        "clock_enable": true,
+        "global_scale": 1.0,
+        "facade_style": "lancet",
+        "window_pattern": "single",
+        "tower_crown": "canopied",
+        "gate_composition": "fortified",
+        "roof_material": "copper",
+        "ridge_detail": "sparse",
+        "porch_depth": 1.4,
+        "urban_program": "townhall",
+        "urban_plan": "corner",
+        "front_bays": 5,
+        "floor_height": 3.45,
+        "urban_depth": 16.06,
+        "urban_roof": "stepped",
+        "balcony_enable": false,
+        "chimney_count": 1,
+        "interior_enable": true,
+        "interior_furniture": true,
+        "interior_lighting": true
+      },
+      "seeds": {
+        "layout": 113372342,
+        "decoration": 1193268774
+      },
+      "fbx_sha256": "f7113d730ba3752d88f58bffd3441f11ea113f464b0a6018d01c5838b63fe993",
+      "seconds": 47.552,
+      "interior_triangles": 35348,
+      "interior_lights": [
+        {
+          "name": "corner_wing_interior_lamp_light_source/source_0",
+          "position_m": [
+            3.6320399045944214,
+            2.929999966174364,
+            3.3350003361701965
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "corner_wing_interior_lamp_light_source/source_1",
+          "position_m": [
+            3.6320399045944214,
+            6.37999989464879,
+            3.3350003361701965
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "corner_wing_interior_lamp_light_source/source_2",
+          "position_m": [
+            3.6320399045944214,
+            9.829999942332506,
+            3.3350003361701965
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "street_interior_lamp_light_source/source_3",
+          "position_m": [
+            -2.867400050163269,
+            2.929999966174364,
+            -4.694999873638153
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "street_interior_lamp_light_source/source_4",
+          "position_m": [
+            -2.867400050163269,
+            6.37999989464879,
+            -4.694999873638153
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "street_interior_lamp_light_source/source_5",
+          "position_m": [
+            -2.867400050163269,
+            9.829999942332506,
+            -4.694999873638153
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        }
+      ],
+      "nonfinite_attributes": 0,
+      "degenerate_triangles_removed": 0,
+      "generator_version": "3.3.0-skytown-joinery",
+      "source_origin_m": [
+        0.0,
+        -0.019999999552965164,
+        7.444999873638153
+      ],
+      "polygons": 585771,
+      "source_polygons": 585771,
+      "opening_clearance": {
+        "support_groups": 0,
+        "opening_support_pairs_checked": 0,
+        "minimum_projected_gap_m": null,
+        "blocked_openings": 0
+      },
+      "skytown_assets": [
+        "/Game/SkyTown/Meshes/SM_Furniture01_Bench01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Shelf01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Table01"
+      ]
+    },
+    {
+      "points": 455379,
+      "triangles": 898163,
+      "size_m": [
+        15.949999809265137,
+        13.505816955119371,
+        17.880000710487366
+      ],
+      "min_m": [
+        -7.974999904632568,
+        -0.019999999552965164,
+        -1.600000023841858
+      ],
+      "max_m": [
+        7.974999904632568,
+        13.485816955566406,
+        16.280000686645508
+      ],
+      "invalid_normals": 0,
+      "degenerate_triangles": 0,
+      "python_sops": 0,
+      "native_nodes": 975,
+      "sweeps": 9,
+      "bevels": 37,
+      "materials": {
+        "stone": 152354,
+        "floor": 3948,
+        "wood": 26664,
+        "metal": 12180,
+        "glass": 14348,
+        "roof": 2312,
+        "trim": 534059,
+        "skytown_MI_Furniture01": 8658,
+        "skytown_MI_Books_01": 143640
+      },
+      "id": "variant_27",
+      "label": "Civic Library",
+      "district": "public",
+      "use": "library",
+      "file": "Assets/_render/SourceAssets/Gothic/Meshes/SM_Gothic_variant_27.fbx",
+      "quality": "normal",
+      "parameters": {
+        "building_type": "public",
+        "plan_layout": "hall",
+        "length_bays": 5,
+        "bay_length": 4.0,
+        "nave_width": 15.15,
+        "wall_height": 10.35,
+        "wall_thickness": 0.35,
+        "roof_pitch": 48.5,
+        "tower_layout": "none",
+        "tower_floors": 3,
+        "tower_floor_height": 4.0,
+        "spire_height": 0.0,
+        "town_floors": 3,
+        "dormer_count": 0,
+        "detail": 0.68,
+        "stone_palette": "limestone",
+        "gold_accents": false,
+        "clock_enable": false,
+        "global_scale": 1.0,
+        "facade_style": "lancet",
+        "window_pattern": "single",
+        "tower_crown": "canopied",
+        "gate_composition": "fortified",
+        "roof_material": "slate",
+        "ridge_detail": "sparse",
+        "porch_depth": 1.4,
+        "urban_program": "library",
+        "urban_plan": "courtyard",
+        "front_bays": 5,
+        "floor_height": 3.45,
+        "urban_depth": 15.85,
+        "urban_roof": "hip",
+        "balcony_enable": false,
+        "chimney_count": 1,
+        "interior_enable": true,
+        "interior_furniture": true,
+        "interior_lighting": true
+      },
+      "seeds": {
+        "layout": 150929748,
+        "decoration": 478711242
+      },
+      "fbx_sha256": "0065b57b03168fcc8b061dcd74215a6e72ae16b2b37ee47a9270415630a0184f",
+      "seconds": 90.182,
+      "interior_triangles": 196662,
+      "interior_lights": [
+        {
+          "name": "court_wing_-1_interior_lamp_light_source/source_0",
+          "position_m": [
+            -6.217560052871704,
+            2.929999966174364,
+            3.33499938249588
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "court_wing_-1_interior_lamp_light_source/source_1",
+          "position_m": [
+            -6.217560052871704,
+            6.37999989464879,
+            3.33499938249588
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "court_wing_-1_interior_lamp_light_source/source_2",
+          "position_m": [
+            -6.217560052871704,
+            9.829999942332506,
+            3.33499938249588
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "court_wing_1_interior_lamp_light_source/source_3",
+          "position_m": [
+            4.690439939498901,
+            2.929999966174364,
+            3.33499938249588
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "court_wing_1_interior_lamp_light_source/source_4",
+          "position_m": [
+            4.690439939498901,
+            6.37999989464879,
+            3.33499938249588
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "court_wing_1_interior_lamp_light_source/source_5",
+          "position_m": [
+            4.690439939498901,
+            9.829999942332506,
+            3.33499938249588
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "street_interior_lamp_light_source/source_6",
+          "position_m": [
+            -2.7269999980926514,
+            2.929999966174364,
+            -4.590000331401825
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "street_interior_lamp_light_source/source_7",
+          "position_m": [
+            -2.7269999980926514,
+            6.37999989464879,
+            -4.590000331401825
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "street_interior_lamp_light_source/source_8",
+          "position_m": [
+            -2.7269999980926514,
+            9.829999942332506,
+            -4.590000331401825
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        }
+      ],
+      "nonfinite_attributes": 0,
+      "degenerate_triangles_removed": 0,
+      "generator_version": "3.3.0-skytown-joinery",
+      "source_origin_m": [
+        0.0,
+        -0.019999999552965164,
+        7.340000331401825
+      ],
+      "polygons": 898163,
+      "source_polygons": 898163,
+      "opening_clearance": {
+        "support_groups": 0,
+        "opening_support_pairs_checked": 0,
+        "minimum_projected_gap_m": null,
+        "blocked_openings": 0
+      },
+      "skytown_assets": [
+        "/Game/SkyTown/Meshes/SM_Books01_Item01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Bench01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Shelf01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Table01"
+      ]
+    },
+    {
+      "points": 142740,
+      "triangles": 282437,
+      "size_m": [
+        14.387436866760254,
+        10.161129493266344,
+        15.98478090763092
+      ],
+      "min_m": [
+        -7.193718433380127,
+        -0.019999999552965164,
+        -1.600000023841858
+      ],
+      "max_m": [
+        7.193718433380127,
+        10.141129493713379,
+        14.384780883789062
+      ],
+      "invalid_normals": 0,
+      "degenerate_triangles": 0,
+      "python_sops": 0,
+      "native_nodes": 549,
+      "sweeps": 9,
+      "bevels": 31,
+      "materials": {
+        "stone": 37302,
+        "floor": 1504,
+        "wood": 8968,
+        "metal": 5376,
+        "glass": 5568,
+        "trim": 208365,
+        "roof": 1666,
+        "skytown_MI_Bathtub01": 9464,
+        "skytown_MI_Rope01": 3648,
+        "skytown_MI_Furniture01": 576
+      },
+      "id": "variant_28",
+      "label": "Public Bath House",
+      "district": "public",
+      "use": "bathhouse",
+      "file": "Assets/_render/SourceAssets/Gothic/Meshes/SM_Gothic_variant_28.fbx",
+      "quality": "normal",
+      "parameters": {
+        "building_type": "public",
+        "plan_layout": "hall",
+        "length_bays": 5,
+        "bay_length": 4.0,
+        "nave_width": 13.76,
+        "wall_height": 6.9,
+        "wall_thickness": 0.35,
+        "roof_pitch": 49.7,
+        "tower_layout": "none",
+        "tower_floors": 3,
+        "tower_floor_height": 4.0,
+        "spire_height": 0.0,
+        "town_floors": 2,
+        "dormer_count": 0,
+        "detail": 0.6,
+        "stone_palette": "limestone",
+        "gold_accents": false,
+        "clock_enable": false,
+        "global_scale": 1.0,
+        "facade_style": "lancet",
+        "window_pattern": "single",
+        "tower_crown": "canopied",
+        "gate_composition": "fortified",
+        "roof_material": "copper",
+        "ridge_detail": "sparse",
+        "porch_depth": 1.4,
+        "urban_program": "bathhouse",
+        "urban_plan": "corner",
+        "front_bays": 4,
+        "floor_height": 3.45,
+        "urban_depth": 14.06,
+        "urban_roof": "hip",
+        "balcony_enable": false,
+        "chimney_count": 1,
+        "interior_enable": true,
+        "interior_furniture": true,
+        "interior_lighting": true
+      },
+      "seeds": {
+        "layout": 226986901,
+        "decoration": 950217472
+      },
+      "fbx_sha256": "de383c375da72088b03eb314af237fd2f4d883b756a54cb75431ffd475bd267c",
+      "seconds": 22.732,
+      "interior_triangles": 30168,
+      "interior_lights": [
+        {
+          "name": "corner_wing_interior_lamp_light_source/source_0",
+          "position_m": [
+            3.137279987335205,
+            2.929999966174364,
+            3.3876097798347473
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "corner_wing_interior_lamp_light_source/source_1",
+          "position_m": [
+            3.137279987335205,
+            6.37999989464879,
+            3.3876097798347473
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "street_interior_lamp_light_source/source_2",
+          "position_m": [
+            -2.4768000841140747,
+            2.929999966174364,
+            -3.6423904299736023
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        },
+        {
+          "name": "street_interior_lamp_light_source/source_3",
+          "position_m": [
+            -2.4768000841140747,
+            6.37999989464879,
+            -3.6423904299736023
+          ],
+          "lumens": 650.0,
+          "temperature": 2700.0,
+          "radius_m": 4.5
+        }
+      ],
+      "nonfinite_attributes": 0,
+      "degenerate_triangles_removed": 0,
+      "generator_version": "3.3.0-skytown-joinery",
+      "source_origin_m": [
+        0.0,
+        -0.019999999552965164,
+        6.392390429973602
+      ],
+      "polygons": 282437,
+      "source_polygons": 282437,
+      "opening_clearance": {
+        "support_groups": 0,
+        "opening_support_pairs_checked": 0,
+        "minimum_projected_gap_m": null,
+        "blocked_openings": 0
+      },
+      "skytown_assets": [
+        "/Game/SkyTown/Meshes/SM_Bathtub01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Shelf01"
+      ]
+    }
+  ],
+  "quality": "normal",
+  "source_hda": "E:\\Repos\\mythic-forge\\Assets\\_render\\SourceAssets\\Houdini\\Gothic\\gothic_building.hda",
+  "source_hda_sha256": "c6da3c6719351db039b94845c9e0e1e8063bffa56a02ab437edbd9f0a8248a10",
+  "source_code_sha256": "5aebb0fe7cb175e6a4e188aed824c091c4a789f07e9329f9836deb4335180462",
+  "light_layout_version": 2,
+  "source": "E:\\Repos\\mythic-forge\\Assets\\hda_gothic_building"
+}

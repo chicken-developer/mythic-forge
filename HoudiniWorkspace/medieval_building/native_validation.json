@@ -1,9 +1,0 @@
-{
-  "status": "passed",
-  "houdini": "22.0.368 Commercial",
-  "presets": 24,
-  "native_geometry_report": "E:\\Repos\\HoudiniWorkspace\\medieval_building\\native_release\\20261031_063638\\native_geometry_audit.json",
-  "portable_report": "E:\\Repos\\mythic-forge\\TDKProps\\RenderTests\\Medieval\\portable_verification.json",
-  "unreal_handoff": "E:\\Repos\\mythic-forge\\TDKProps\\RenderTests\\Medieval\\final_handoff.json",
-  "hip_sha256": "216ca827466507a345a6e701c0123937322d5395d210c302ad431e195f9803ac"
-}

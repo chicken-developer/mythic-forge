@@ -1,0 +1,102 @@
+{
+  "houdini": "22.0.368",
+  "graph_modularity": "pass",
+  "records": [
+    {
+      "variant_id": "baseline",
+      "cook_status": "pass",
+      "geometry_parity": "fail",
+      "geometry_acceptance": "pass"
+    },
+    {
+      "variant_id": "01_food_shop",
+      "cook_status": "pass",
+      "geometry_parity": "fail",
+      "geometry_acceptance": "pass"
+    },
+    {
+      "variant_id": "02_general_store",
+      "cook_status": "pass",
+      "geometry_parity": "fail",
+      "geometry_acceptance": "pass"
+    },
+    {
+      "variant_id": "03_herbal_store",
+      "cook_status": "pass",
+      "geometry_parity": "fail",
+      "geometry_acceptance": "pass"
+    },
+    {
+      "variant_id": "04_merchant_house",
+      "cook_status": "pass",
+      "geometry_parity": "fail",
+      "geometry_acceptance": "pass"
+    },
+    {
+      "variant_id": "05_mixed_shop",
+      "cook_status": "pass",
+      "geometry_parity": "fail",
+      "geometry_acceptance": "pass"
+    },
+    {
+      "variant_id": "06_tavern",
+      "cook_status": "pass",
+      "geometry_parity": "fail",
+      "geometry_acceptance": "pass"
+    },
+    {
+      "variant_id": "07_weapon_guild",
+      "cook_status": "pass",
+      "geometry_parity": "fail",
+      "geometry_acceptance": "pass"
+    },
+    {
+      "variant_id": "08_normal_house_b",
+      "cook_status": "pass",
+      "geometry_parity": "fail",
+      "geometry_acceptance": "pass"
+    },
+    {
+      "variant_id": "09_normal_house_c",
+      "cook_status": "pass",
+      "geometry_parity": "fail",
+      "geometry_acceptance": "pass"
+    },
+    {
+      "variant_id": "10_normal_house_c_canopy",
+      "cook_status": "pass",
+      "geometry_parity": "fail",
+      "geometry_acceptance": "pass"
+    },
+    {
+      "variant_id": "11_artisan_house",
+      "cook_status": "pass",
+      "geometry_parity": "fail",
+      "geometry_acceptance": "pass"
+    },
+    {
+      "variant_id": "12_craft_guild_hall",
+      "cook_status": "pass",
+      "geometry_parity": "fail",
+      "geometry_acceptance": "pass"
+    },
+    {
+      "variant_id": "13_material_storage",
+      "cook_status": "pass",
+      "geometry_parity": "fail",
+      "geometry_acceptance": "pass"
+    },
+    {
+      "variant_id": "14_toolmaker_workshop",
+      "cook_status": "pass",
+      "geometry_parity": "fail",
+      "geometry_acceptance": "pass"
+    },
+    {
+      "variant_id": "15_forgehouse",
+      "cook_status": "pass",
+      "geometry_parity": "fail",
+      "geometry_acceptance": "pass"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "results": [
+    "08_normal_house_b",
+    "09_normal_house_c",
+    "10_normal_house_c_canopy",
+    "11_artisan_house",
+    "12_craft_guild_hall",
+    "13_material_storage",
+    "14_toolmaker_workshop",
+    "15_forgehouse"
+  ],
+  "failures": []
+}

@@ -1,0 +1,300 @@
+{
+  "status": "passed",
+  "building_presets": 52,
+  "static_meshes": 100,
+  "exports": [
+    {
+      "family": "Medieval",
+      "quality": "low",
+      "meshes": 24,
+      "version": "5.4.0-skytown-joinery",
+      "opening_support_pairs_checked": 496,
+      "blocked_openings": 0,
+      "skytown_assets": [
+        "/Game/SkyTown/Meshes/SM_Barrel01",
+        "/Game/SkyTown/Meshes/SM_Bed01",
+        "/Game/SkyTown/Meshes/SM_Box01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Bench01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Shelf01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Table01",
+        "/Game/SkyTown/Meshes/SM_IvyFlowers01",
+        "/Game/SkyTown/Meshes/SM_Lamp01",
+        "/Game/SkyTown/Meshes/SM_Tapestry01"
+      ]
+    },
+    {
+      "family": "Medieval",
+      "quality": "normal",
+      "meshes": 24,
+      "version": "5.4.0-skytown-joinery",
+      "opening_support_pairs_checked": 496,
+      "blocked_openings": 0,
+      "skytown_assets": [
+        "/Game/SkyTown/Meshes/SM_Barrel01",
+        "/Game/SkyTown/Meshes/SM_Basket01",
+        "/Game/SkyTown/Meshes/SM_Bed01",
+        "/Game/SkyTown/Meshes/SM_Box01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Bench01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Shelf01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Table01",
+        "/Game/SkyTown/Meshes/SM_IvyFlowers01",
+        "/Game/SkyTown/Meshes/SM_Lamp01",
+        "/Game/SkyTown/Meshes/SM_Tapestry01"
+      ]
+    },
+    {
+      "family": "Medieval",
+      "quality": "high",
+      "meshes": 24,
+      "version": "5.4.0-skytown-joinery",
+      "opening_support_pairs_checked": 496,
+      "blocked_openings": 0,
+      "skytown_assets": [
+        "/Game/SkyTown/Meshes/SM_Barrel01",
+        "/Game/SkyTown/Meshes/SM_Basket01",
+        "/Game/SkyTown/Meshes/SM_Bed01",
+        "/Game/SkyTown/Meshes/SM_Box01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Bench01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Shelf01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Table01",
+        "/Game/SkyTown/Meshes/SM_IvyFlowers01",
+        "/Game/SkyTown/Meshes/SM_Lamp01",
+        "/Game/SkyTown/Meshes/SM_Tapestry01"
+      ]
+    },
+    {
+      "family": "Gothic",
+      "quality": "normal",
+      "meshes": 28,
+      "version": "3.3.0-skytown-joinery",
+      "opening_support_pairs_checked": 14,
+      "blocked_openings": 0,
+      "skytown_assets": [
+        "/Game/SkyTown/Meshes/SM_Bathtub01",
+        "/Game/SkyTown/Meshes/SM_Bed01",
+        "/Game/SkyTown/Meshes/SM_Books01_Item01",
+        "/Game/SkyTown/Meshes/SM_FruitCrate01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Bench01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Shelf01",
+        "/Game/SkyTown/Meshes/SM_Furniture01_Table01"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "family": "Medieval",
+      "version": "5.4.0-skytown-joinery",
+      "hda": "E:\\Repos\\mythic-forge\\HoudiniWorkspace\\medieval_building\\asset\\medieval_building.hda",
+      "hip": "E:\\Repos\\mythic-forge\\HoudiniWorkspace\\medieval_building\\medieval_building.hip",
+      "portable_presets_verified": [
+        "01_townhouse_base",
+        "02_round_workshop_base",
+        "03_village_inn_base",
+        "05_watermill_base",
+        "06_cliff_house_base"
+      ]
+    },
+    {
+      "family": "Gothic",
+      "version": "3.3.0-skytown-joinery",
+      "hda": "E:\\Repos\\mythic-forge\\HoudiniWorkspace\\gothic_building\\asset\\gothic_building.hda",
+      "hip": "E:\\Repos\\mythic-forge\\HoudiniWorkspace\\gothic_building\\gothic_building.hip",
+      "portable_presets_verified": [
+        "variant_01",
+        "variant_03",
+        "variant_05",
+        "variant_17",
+        "variant_21"
+      ]
+    }
+  ],
+  "material_instances": 31,
+  "unreal_hdas": [
+    {
+      "asset": "/Game/Medieval/Houdini/medieval_building_editable.medieval_building_editable",
+      "sha256": "b00254f669d5ddd6aad30b7f7245cc6d755462970994e1d753113ab1c05ad051"
+    },
+    {
+      "asset": "/Game/Gothic/Houdini/gothic_building_editable.gothic_building_editable",
+      "sha256": "8520b3a040e465b953e3cf41960fdd91793fbe73fe42b00c41d2e69753cb2cea"
+    }
+  ],
+  "captures": [
+    {
+      "file": "RenderTests/SkyTown/Medieval_after.png",
+      "size_px": [
+        960,
+        540
+      ],
+      "sha256": "d889ccdc7ec533e36ed9532142af9ebfcce92673de0ee77060de76e7b35312a2",
+      "asset": "/Game/Medieval/Blueprints/BP_Medieval_03_village_inn_base",
+      "view": "overview",
+      "renderer": "Unreal editor HighResShot",
+      "eye_cm": [
+        -1229.125,
+        -3345.25,
+        100872.92254638672
+      ],
+      "target_cm": [
+        153.75,
+        -98.5,
+        100391.92254638672
+      ],
+      "focal_length_mm": 36.0
+    },
+    {
+      "file": "RenderTests/SkyTown/Gothic_after.png",
+      "size_px": [
+        960,
+        540
+      ],
+      "sha256": "58cc9671f39365563535b66c8c293907f8eb70c4fb71ac01b06287b2a81d0270",
+      "asset": "/Game/Gothic/Blueprints/BP_Gothic_variant_17",
+      "view": "overview",
+      "renderer": "Unreal editor HighResShot",
+      "eye_cm": [
+        -1769.2629272460936,
+        -4153.921685791016,
+        101256.64055175781
+      ],
+      "target_cm": [
+        0.0,
+        -3.0517578125e-05,
+        100641.24475097656
+      ],
+      "focal_length_mm": 36.0
+    },
+    {
+      "file": "RenderTests/SkyTown/SM_House02_reference.png",
+      "size_px": [
+        960,
+        540
+      ],
+      "sha256": "e3ee1f5a9dfc009a1b2361c4d6861825a4299451fdc87ad6e79cb4a8b4fe4e6a",
+      "asset": "/Game/SkyTown/Meshes/SM_House02",
+      "view": "overview",
+      "renderer": "Unreal editor HighResShot",
+      "eye_cm": [
+        -1201.1982910156248,
+        -2836.1613708496097,
+        100854.35182495117
+      ],
+      "target_cm": [
+        -0.09881591796875,
+        -16.188690185546875,
+        100436.57809448242
+      ],
+      "focal_length_mm": 36.0
+    },
+    {
+      "file": "RenderTests/SkyTown/medieval_joint.png",
+      "size_px": [
+        960,
+        540
+      ],
+      "sha256": "7f68811113a3f1217bc13f09e5acb063d4507557afee5a074fbbea5a49e1eb72",
+      "asset": "/Game/Medieval/Blueprints/BP_Medieval_03_village_inn_base",
+      "view": "joint",
+      "renderer": "Unreal editor HighResShot",
+      "eye_cm": [
+        -203.33333333333337,
+        -600.0,
+        100230.0
+      ],
+      "target_cm": [
+        -213.33333333333337,
+        -280.0,
+        100215.0
+      ],
+      "focal_length_mm": 24.0
+    },
+    {
+      "file": "RenderTests/SkyTown/gothic_joint.png",
+      "size_px": [
+        960,
+        540
+      ],
+      "sha256": "4e2b577f85dd2803bc7d867901f01fc416edb8c798e6107209a5f703db419d10",
+      "asset": "/Game/Gothic/Blueprints/BP_Gothic_variant_17",
+      "view": "joint",
+      "renderer": "Unreal editor HighResShot",
+      "eye_cm": [
+        -274.6666666666667,
+        -828.6372101306915,
+        100225.1999999553
+      ],
+      "target_cm": [
+        -264.6666666666667,
+        -468.6372101306915,
+        100218.9999999553
+      ],
+      "focal_length_mm": 24.0
+    },
+    {
+      "file": "RenderTests/SkyTown/medieval_interior.png",
+      "size_px": [
+        960,
+        540
+      ],
+      "sha256": "e628eb3e99af277f1b66ee98766e23129c66e3f31fb559926a1c58f5719db074",
+      "asset": "/Game/Medieval/Blueprints/BP_Medieval_03_village_inn_base",
+      "view": "interior",
+      "renderer": "Unreal editor HighResShot",
+      "eye_cm": [
+        -179.20000000000002,
+        -128.8,
+        100200.0
+      ],
+      "target_cm": [
+        -179.20000000000002,
+        179.2,
+        100165.0
+      ],
+      "focal_length_mm": 24.0
+    },
+    {
+      "file": "RenderTests/SkyTown/gothic_interior.png",
+      "size_px": [
+        960,
+        540
+      ],
+      "sha256": "00cb87afc0b8cbd819ed7d869b50dd75af64b8121287a1304101ab68011ee728",
+      "asset": "/Game/Gothic/Blueprints/BP_Gothic_variant_17",
+      "view": "interior",
+      "renderer": "Unreal editor HighResShot",
+      "eye_cm": [
+        -222.32000000000002,
+        -298.0372101306915,
+        100176.9999999553
+      ],
+      "target_cm": [
+        -174.68,
+        213.76278986930845,
+        100136.9999999553
+      ],
+      "focal_length_mm": 24.0
+    },
+    {
+      "file": "RenderTests/SkyTown/gothic_wide_balcony.png",
+      "size_px": [
+        960,
+        540
+      ],
+      "sha256": "9460bf4654c5b054e13dac178d34f17ba2be0b1e1d96e9f3b71b15ee35e39395",
+      "asset": "/Game/Gothic/Blueprints/BP_Gothic_variant_21",
+      "view": "balcony",
+      "renderer": "Unreal editor HighResShot",
+      "eye_cm": [
+        0.0,
+        -1505.7394802570343,
+        100245.9999999553
+      ],
+      "target_cm": [
+        0.0,
+        -705.7394802570343,
+        100275.9999999553
+      ],
+      "focal_length_mm": 24.0
+    }
+  ]
+}

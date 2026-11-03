@@ -1,0 +1,170 @@
+{
+  "status": "pass",
+  "result": {
+    "templates": [
+      {
+        "name": "standardfolder3",
+        "label": "Standard",
+        "hidden": false,
+        "type": "parmTemplateType.Folder"
+      },
+      {
+        "name": "standardfolder3_1",
+        "label": "Spare",
+        "hidden": false,
+        "type": "parmTemplateType.Folder"
+      },
+      {
+        "name": "label1",
+        "label": "Input #1 Label",
+        "hidden": false,
+        "type": "parmTemplateType.String"
+      },
+      {
+        "name": "label2",
+        "label": "Input #2 Label",
+        "hidden": false,
+        "type": "parmTemplateType.String"
+      },
+      {
+        "name": "label3",
+        "label": "Input #3 Label",
+        "hidden": false,
+        "type": "parmTemplateType.String"
+      },
+      {
+        "name": "label4",
+        "label": "Input #4 Label",
+        "hidden": false,
+        "type": "parmTemplateType.String"
+      }
+    ],
+    "quality_hidden": false,
+    "quality_template": "# Code for parameter template\nhou_parm_template = hou.StringParmTemplate(\"preview_quality\", \"Preview Quality\", 1, default_value=([\"high\"]), naming_scheme=hou.parmNamingScheme.Base1, string_type=hou.stringParmType.Regular, menu_items=([\"low\",\"high\"]), menu_labels=([\"LOW\",\"HIGH\"]), icon_names=([]), item_generator_script=\"\", item_generator_script_language=hou.scriptLanguage.Python, menu_type=hou.menuType.Normal)\n",
+    "dormer_nodes": [
+      [
+        "outer_wall_volume",
+        "box",
+        []
+      ],
+      [
+        "interior_void",
+        "box",
+        []
+      ],
+      [
+        "hollow_dormer_walls",
+        "boolean::2.0",
+        [
+          "outer_wall_volume",
+          "interior_void"
+        ]
+      ],
+      [
+        "shared_window_aperture",
+        "null",
+        [
+          "IN_window_aperture"
+        ]
+      ],
+      [
+        "place_front_aperture",
+        "xform",
+        [
+          "shared_window_aperture"
+        ]
+      ],
+      [
+        "extrude_window_cutter",
+        "polyextrude::2.0",
+        [
+          "place_front_aperture"
+        ]
+      ],
+      [
+        "cut_actual_window_opening",
+        "boolean::2.0",
+        [
+          "hollow_dormer_walls",
+          "extrude_window_cutter"
+        ]
+      ],
+      [
+        "wall_material",
+        "attribwrangle",
+        [
+          "cut_actual_window_opening"
+        ]
+      ],
+      [
+        "gable_profiles",
+        "attribwrangle",
+        []
+      ],
+      [
+        "extrude_gables",
+        "polyextrude::2.0",
+        [
+          "gable_profiles"
+        ]
+      ],
+      [
+        "pitched_roof_profiles",
+        "attribwrangle",
+        []
+      ],
+      [
+        "extrude_roof_thickness",
+        "polyextrude::2.0",
+        [
+          "pitched_roof_profiles"
+        ]
+      ],
+      [
+        "reused_window_kit",
+        "null",
+        [
+          "IN_window_geometry"
+        ]
+      ],
+      [
+        "place_window_on_front",
+        "xform",
+        [
+          "reused_window_kit"
+        ]
+      ],
+      [
+        "merge_dormer_kit",
+        "merge",
+        [
+          "wall_material",
+          "extrude_gables",
+          "extrude_roof_thickness",
+          "place_window_on_front"
+        ]
+      ],
+      [
+        "join_profile_seams",
+        "clean",
+        [
+          "merge_dormer_kit"
+        ]
+      ],
+      [
+        "vertex_normals",
+        "normal",
+        [
+          "join_profile_seams"
+        ]
+      ],
+      [
+        "OUT_DORMER",
+        "output",
+        [
+          "vertex_normals"
+        ]
+      ]
+    ]
+  }
+}

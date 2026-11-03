@@ -1,0 +1,51 @@
+{
+  "status": "pass",
+  "python_files_compiled": 26,
+  "syntax_errors": [],
+  "original_source_files_checked": 29,
+  "changed_originals": [],
+  "dataset_copy_mismatches": [],
+  "validators": [
+    {
+      "args": [
+        "E:\\Repos\\mythic-forge\\output\\modular_rebuild_v2\\tooling\\design-hda-building\\scripts\\validate_module_graph.py",
+        "E:\\Repos\\mythic-forge\\output\\modular_rebuild_v2\\module_graph.json"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: 19 modules, build order: layout.semantic_layout -> shell.body_shell -> shell.facade_layout -> openings.kits -> openings.attachments -> openings.windows -> openings.doors -> openings.wall_cuts -> roof.dormers -> roof.surfaces_tiles -> roof.trim -> details.facade -> details.interior -> details.balcony -> details.utilities -> details.site -> details.furnishing -> uv_material.surfacing -> output.game_export\nNOTE: This validates JSON contracts only; a Houdini graph/cook audit is still required.\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "E:\\Repos\\mythic-forge\\output\\modular_rebuild_v2\\tooling\\design-hda-building\\scripts\\validate_dataset.py",
+        "E:\\Repos\\mythic-forge\\output\\modular_rebuild_v2\\manifest_group_1.json",
+        "--require-images"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: 5 config records (structure only; not Houdini/visual validation)\nWARNING: Missing complexity coverage: complex\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "E:\\Repos\\mythic-forge\\output\\modular_rebuild_v2\\tooling\\design-hda-building\\scripts\\validate_dataset.py",
+        "E:\\Repos\\mythic-forge\\output\\modular_rebuild_v2\\manifest_group_2.json",
+        "--require-images"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: 5 config records (structure only; not Houdini/visual validation)\nWARNING: Missing complexity coverage: simple\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "E:\\Repos\\mythic-forge\\output\\modular_rebuild_v2\\tooling\\design-hda-building\\scripts\\validate_dataset.py",
+        "E:\\Repos\\mythic-forge\\output\\modular_rebuild_v2\\manifest_group_3.json",
+        "--require-images"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: 5 config records (structure only; not Houdini/visual validation)\nWARNING: Missing complexity coverage: medium\n",
+      "stderr": ""
+    }
+  ],
+  "require_images": true,
+  "scope": "Static only; Houdini cook, rendering, portability and Unreal status have separate evidence."
+}

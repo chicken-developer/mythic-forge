@@ -1,0 +1,197 @@
+# This module provides the functions for calculating the sun elevation
+# and azimuth given the geographical location and time.
+
+import math
+
+
+################################################################################
+# functions that perform the main calculation of sun's azimuth and elevation
+
+def getSunAzimuthAndElevation( latitude, longitude, 
+                               day_of_year, hour_of_day, min_of_hour, 
+                               time_zone = -1,
+                               daylight_saving_time = False ):
+    """ Returns the azimuth (angle clockwise from north) and elevation
+        (angle up from horizon) of the sun.
+
+        latitude, longitude - is the geographical location specified as
+                              decimal degrees (eg, 64.123456)
+        day_of_year - the day number in a non-leap year (value: 1 - 365)
+        hour_of_day - the 24hr format (value: 0 - 23)
+        min_of_hour - the minut of the hour (value: 0 - 59)
+        time_zone   - the timezone in hours from UTC (value: 0 -23) 
+                      eg UTC = 0, MST = +7. 
+                      The value of -1, uses the default time zone for the
+                      given longitude.
+        daylight_saving_time - if true if time is in daylight saving time mode
+    """
+    if time_zone < 0:
+        time_zone = calculateDefaultTimeZone( longitude )
+    local_solar_frac_day_of_year = calculateSolarDayOfYear( longitude,
+                   day_of_year, hour_of_day, min_of_hour, 
+                   time_zone, daylight_saving_time )
+    return getSunAzimuthAndElevationDOY( latitude, longitude, 
+                                         local_solar_frac_day_of_year )
+
+
+def getSunAzimuthAndElevationDOY( latitude, longitude, 
+                                  local_solar_frac_day_of_year ):
+    """ Returns the azimuth (angle clockwise from north) and elevation
+        (angle up from horizon) of the sun
+        
+        latitude, longitude - is the geographical location specified as
+            decimal degrees (eg, 64.123455)
+
+        local_solar_frac_day_of_year - specifies the day of the non-leap year 
+            (365 days) and time of day (local to longitude) as decimal fraction 
+            (eg, 
+            January 1st 6 a.m. GMT -> 0.25
+            March 1st 12:00 noon GMT -> 59.5
+    """ 
+    # preliminary calculations
+    latitude_rad          = math.radians( latitude )
+    time_of_year_rad      = getDayAngle( local_solar_frac_day_of_year ) 
+    solar_declination_rad = getSunDeclination( time_of_year_rad )
+    hour_angle_rad        = getHourAngle( 
+                                math.modf( local_solar_frac_day_of_year)[0] )
+
+    # elevation calculation
+    zenith_cos = (math.sin( latitude_rad ) * 
+                  math.sin( solar_declination_rad ) 
+                  + 
+                  math.cos( latitude_rad ) * 
+                  math.cos( solar_declination_rad ) * 
+                  math.cos( hour_angle_rad ))
+    zenith_cos = clamp( zenith_cos, -1.0, 1.0 )
+    zenith_rad = math.acos( zenith_cos )
+    elevation  = 90.0 - math.degrees( zenith_rad )
+
+    # azimuth calculations
+    azimuth_cos_den = math.cos( latitude_rad ) * math.sin( zenith_rad )
+    if( math.fabs( azimuth_cos_den ) > 0.001 ):
+        azimuth_cos_num = (math.sin( latitude_rad ) * math.cos( zenith_rad ) -
+                           math.sin( solar_declination_rad ))
+        azimuth_cos     = azimuth_cos_num / azimuth_cos_den 
+        azimuth_cos     = clamp( azimuth_cos, -1.0, 1.0 )
+        azimuth         = 180 - math.degrees( math.acos( azimuth_cos ))
+        if hour_angle_rad > 0.0:
+            azimuth = -azimuth
+    else:
+        azimuth = 180.0 if latitude > 0 else 0
+    
+    if azimuth < 0.0:
+        azimuth += 360.0
+
+
+    return (azimuth, elevation)
+
+
+################################################################################
+# conversion functions used by the node expressions
+
+def getDayOfYear( month, day ):
+    """ Returns the day of the year given the month and day of the month.
+        A non-leap year is assumed; January = 1.
+    """
+    # if leap year, k =1
+    k = 2
+    return math.floor((275 * month)/9) - k*math.floor((month + 9)/12) + day - 30
+
+
+def getHourOfDay( hour, spec ):
+    """ Returns an hour of the day (0 - 23) based on the specification
+        spec = 0 if hour is A.M.
+        spec = 1 if hour is P.M.
+        spec = 3 if hour is 24hr
+    """
+    if spec == 0 and hour == 12:
+        return 0
+    elif spec == 0:
+        return hour
+    elif spec == 1 and hour != 12:
+        return hour + 12
+    return hour
+
+
+################################################################################
+# helper functions
+
+def clamp( x, min, max ):
+    """ Clamps x to within [min, max] interval.
+    """
+    if( x > max ):
+        x = max
+    elif( x < min ):
+        x = min
+    return x
+
+
+def getDayAngle( day_of_year ):
+    """ Convert the time of year expressed in days into the 
+        (fractional year) expressed in radians.
+    """
+    return (2 * math.pi * day_of_year) / 365
+
+
+def getEquationOfTime( time_of_year_rad ):
+    """ Calculates the equation of time (a difference between the aparent
+        and mean time) in minutes.
+    """
+    return 229.18 * (
+            0.000075 +
+            0.001868 * math.cos(     time_of_year_rad ) -
+            0.032077 * math.sin(     time_of_year_rad ) -
+            0.014615 * math.cos( 2 * time_of_year_rad ) -
+            0.040849 * math.sin( 2 * time_of_year_rad ))
+
+
+def getSunDeclination( year_in_radians ):
+    """ Calculates the sun declination (angle the line from earth to sun
+        makes with the equatorial plane).
+    """
+    return (0.006918 -
+            0.399912 * math.cos(     year_in_radians ) +
+            0.070257 * math.sin(     year_in_radians ) -
+            0.006758 * math.cos( 2 * year_in_radians ) +
+            0.000907 * math.sin( 2 * year_in_radians ) -
+            0.002697 * math.cos( 3 * year_in_radians ) +
+            0.00148  * math.sin( 3 * year_in_radians ))
+
+
+def getHourAngle( fraction_of_day ):
+    """ Calculates the solar hour angle based on time
+    """
+    return (2 * fraction_of_day - 1) * math.pi
+
+
+def calculateDefaultTimeZone( longitude ):
+    """ Calculates the default time zone for the given longitude.
+    """
+    longitude = math.fmod( longitude + 7.5, 360.0 ) 
+    if longitude < 0.0:
+        longitude += 360.0
+    return math.floor( longitude / 15.0 )
+
+
+def getTimeZoneAdjustment( longitude, time_zone ):
+    """ Calculates the time deviation within the time zone in minutes.
+    """
+    return 60 * time_zone - 4 * longitude
+
+
+def calculateSolarDayOfYear( longitude,
+                             day_of_year, hour_of_day, min_of_hour, 
+                             time_zone, daylight_saving_time ):
+    """ Calculates the fractional solar day of year for the given time.
+    """
+    if daylight_saving_time:
+        hour_of_day -= 1
+
+    solar_day_of_year = (day_of_year - 1)
+    solar_time_of_day = (hour_of_day * 60.0 + 
+                         min_of_hour +
+                         getEquationOfTime( getDayAngle( solar_day_of_year )) +
+                         getTimeZoneAdjustment( longitude, time_zone ))
+
+    return solar_day_of_year + (solar_time_of_day / 1440.0)
+

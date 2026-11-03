@@ -1,0 +1,39 @@
+{
+  "status": "pass",
+  "failures": [],
+  "counts": {
+    "source_variants_found": 15,
+    "source_variants_copied_unchanged": 15,
+    "dataset_migrations": 0,
+    "baseline_count": 1,
+    "cooked": 16,
+    "geometry_passed": 16,
+    "rendered": 16,
+    "failed": 0,
+    "module_count": 19,
+    "stage_count": 7,
+    "regression_tests": 17,
+    "duplicates_before": 633,
+    "duplicates_after": 0,
+    "degenerate_before": 41,
+    "degenerate_after": 0,
+    "cook_seconds_min": 0.7706207999999606,
+    "cook_seconds_max": 2.9881492000004073,
+    "cook_seconds_median": 1.1086375499999122
+  },
+  "hda_sha256": "90fa34e28094a8d15b560349f3e284619a680a553058937c1b2bccb0484ac687",
+  "stages": {
+    "code_generated": "pass",
+    "static_checked": "pass",
+    "houdini_cooked": "pass",
+    "geometry_exported": "pass",
+    "rendered": "pass",
+    "hda_packaged": "pass"
+  },
+  "remaining_scope": "See evaluation.md: arbitrary roof junction solver, normal rebake, Unreal and full all-angle structural QA.",
+  "repository_path_audit": {
+    "status": "failed",
+    "failure_count": 47,
+    "scope": "Missing resources in pre-existing retired review manifests; not modified by this task."
+  }
+}

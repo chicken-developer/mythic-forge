@@ -1,0 +1,67 @@
+
+void part(float x;float y;float z;vector size;int pr;string module;string label;string material;vector color;float angle)
+{
+    if(min(size)<.005)return;
+    vector n=prim(0,"facade_normal",pr);n=normalize(set(n.x,0.,n.z));
+    vector up=set(0.,1.,0.),u=normalize(cross(n,up));
+    vector center=primuv(0,"P",pr,set(.5,.5,0.));center.y=y;
+    float a=radians(angle);vector ux=u*cos(a)+up*sin(a),uy=-u*sin(a)+up*cos(a);
+    matrix3 m=set(ux*size.x,uy*size.y,-n*size.z);
+    int pt=addpoint(0,center+u*x+n*z);
+    string role=prim(0,"role",pr),slot=prim(0,"facade_slot",pr);
+    setpointattrib(0,"transform",pt,m,"set");
+    setpointattrib(0,"name",pt,"facade/"+slot+"/"+module+"/"+label,"set");
+    setpointattrib(0,"material_family",pt,material,"set");
+    setpointattrib(0,"Cd",pt,color,"set");
+    setpointattrib(0,"role",pt,role,"set");setpointattrib(0,"role_id",pt,role=="main"?0:1,"set");
+    setpointattrib(0,"facade_slot",pt,slot,"set");setpointattrib(0,"facade_module",pt,module,"set");
+    setpointattrib(0,"component",pt,"facade_details","set");
+}
+
+void frame(float y;float w;float h;float depth;int pr;string module)
+{
+    vector wood=set(.27,.19,.12);
+    for(int side=-1;side<=1;side+=2)
+    {
+        part(side*(w-.065)*.5,y,depth*.5,set(.065,h,depth),pr,module,"jamb_"+itoa(side),"wood",wood,0.);
+        part(0.,y+side*(h-.065)*.5,depth*.5,set(w,.065,depth),pr,module,"rail_"+itoa(side),"wood",wood,0.);
+    }
+}
+
+void safe_band(int pr;export float y;export float height)
+{
+    float base=prim(0,"floor_b",pr),fh=prim(0,"floor_h",pr);
+    string opening=prim(0,"opening",pr);y=base+fh*.60;height=min(1.,fh*.45);
+    if(opening=="W")
+    {
+        float wh=min(ch("../../window_height_m"),fh-.4);
+        float gap=max(.12,fh*.52-wh*.5-.10);
+        height=min(height,gap-.06);y=base+gap*.5;
+    }
+    else if(opening=="D")
+    {
+        float dh=min(ch("../../door_height_m"),fh-.4),gap=max(.12,fh-dh-.08);
+        height=min(height,gap-.06);y=base+dh+.04+gap*.5;
+    }
+}
+
+int original=nprimitives(0);
+for(int pr=0;pr<original;pr++)
+{
+    if(!int(prim(0,"hero_selected",pr)))continue;
+    string module=prim(0,"hero_kind",pr);float y,h;safe_band(pr,y,h);
+    float width=min(.46,float(prim(0,"bay_width",pr))*.42);
+    if(module=="banner")
+    {
+        part(0.,y,.17,set(width,h,.028),pr,module,"cloth","canvas",set(.10,.37,.40),0.);
+        part(0.,y+h*.5+.045,.14,set(width+.16,.045,.075),pr,module,"pole","metal",set(.14,.15,.14),0.);
+        part(0.,y,.19,set(width*.13,h*.65,.012),pr,module,"stripe","sail",set(.84,.72,.40),0.);
+    }
+    else
+    {
+        float size=min(width,h*.65);
+        part(0.,y,.12,set(size,size,.08),pr,module,"shield","wood",set(.25,.14,.075),45.);
+        part(0.,y,.17,set(size*.55,size*.55,.04),pr,module,"emblem","metal",set(.56,.40,.16),45.);
+    }
+}
+for(int p=original-1;p>=0;p--)removeprim(0,p,1);

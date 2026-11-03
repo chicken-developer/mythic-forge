@@ -1,0 +1,29 @@
+float roof_y(float x;float span;float h;float curve;float top){float q=abs(x)/span;return top+h*(1-q)+curve*pow(q,4.);}
+int old=nprimitives(0);
+if(chs("../roof_shape")=="gable")for(int src=0;src<old;src++){
+ string role=prim(0,"role",src);if((role!="main"&&role!="wing")||int(prim(0,"is_round",src)))continue;
+ int count=role=="main"?clamp(chi("../dormer_count"),0,2):clamp(chi("../wing_dormer_count"),0,1);
+ if(!count)continue;
+ float w=prim(0,"width",src),d=prim(0,"depth",src),h=prim(0,"roof_h",src);
+ float top=prim(0,"top_y",src),e=prim(0,"eave",src),curve=prim(0,"curve",src),angle=prim(0,"rot_y",src);
+ float span=w*.5+e,front=span-.32,rise=ch("../dormer_wall_h")+ch("../dormer_roof_h")+.04;
+ float base=roof_y(front,span,h,curve,top)-.08,target=base+rise+.10;
+ if(target>top+h-.08)error("Dormer cannot fit under the host ridge: %s",role);
+ float lo=0,hi=front;
+ for(int step=0;step<24;step++){float x=(lo+hi)*.5;if(roof_y(x,span,h,curve,top)>target)lo=x;else hi=x;}
+ float back=max(.05,(lo+hi)*.5-.12),depth=front-back,centerx=(front+back)*.5;
+ matrix3 rot=ident();rotate(rot,radians(angle),{0,1,0});vector center=prim(0,"role_center",src);
+ for(int k=0;k<count;k++){
+  float z=(k-(count-1)*.5)*2.25;
+  if(abs(z)+ch("../dormer_width")*.5>d*.5-.2)error("Dormer exceeds host ridge span");
+  vector horizontal=set(centerx,0,z)*rot;
+  int pt=addpoint(0,set(center.x+horizontal.x,base,center.z+horizontal.z));
+  matrix3 frame=ident();scale(frame,set(1,1,depth/ch("../dormer_proto_depth")));rotate(frame,radians(angle-90),{0,1,0});
+  setpointattrib(0,"transform",pt,frame);setpointattrib(0,"dormer_id",pt,k);
+  setpointattrib(0,"role_id",pt,int(prim(0,"role_id",src)));setpointattrib(0,"roof_patch_id",pt,"roof/"+itoa(int(prim(0,"role_id",src))));
+  setpointattrib(0,"dormer_depth",pt,depth);setpointattrib(0,"cut_height",pt,max(h+2.,3.));
+  setpointattrib(0,"dormer_rotation",pt,angle-90);setpointattrib(0,"base_y",pt,base);
+  setpointattrib(0,"front_host_y",pt,roof_y(front,span,h,curve,top));setpointattrib(0,"ridge_clearance",pt,top+h-(base+rise));
+ }
+}
+for(int p=old-1;p>=0;p--)removeprim(0,p,1);

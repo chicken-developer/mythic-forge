@@ -1,0 +1,6 @@
+
+if(!chi("../../shutters_enable")) return;
+float w=ch("../../window_width_m"),f=ch("../../frame_width_m"),panel=w*.34;
+for(int side=-1;side<=1;side+=2)
+    for(int i=0;i<3;i++)
+        addpoint(0,set(side*(w*.5+f+panel*.5)+(i-1)*panel/3.,-.02,-.08));

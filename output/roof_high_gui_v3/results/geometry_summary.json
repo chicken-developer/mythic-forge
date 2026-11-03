@@ -1,0 +1,11 @@
+{
+  "houdini": "22.0.368",
+  "license": "licenseCategoryType.Commercial",
+  "variant_count": 15,
+  "baseline_count": 1,
+  "geometry_exports": 32,
+  "graph_status": "pass",
+  "status": "pass",
+  "failed": [],
+  "screenshots": "separate GUI pass; this runner never renders images"
+}

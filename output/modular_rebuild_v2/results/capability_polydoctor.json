@@ -1,0 +1,328 @@
+{
+  "type": "polydoctor",
+  "parameters": {
+    "group": {
+      "label": "Group",
+      "value": "",
+      "menu": []
+    },
+    "maxpasses": {
+      "label": "Max Passes",
+      "value": "50",
+      "menu": []
+    },
+    "randomseed": {
+      "label": "Random Seed",
+      "value": "3",
+      "menu": []
+    },
+    "stdswitcher1": {
+      "label": "stdswitcher",
+      "value": "0",
+      "menu": []
+    },
+    "illformed": {
+      "label": "Ill-Formed",
+      "value": "2",
+      "menu": [
+        "ignore",
+        "mark",
+        "repair"
+      ]
+    },
+    "manyedges": {
+      "label": "5+ Edges",
+      "value": "2",
+      "menu": [
+        "ignore",
+        "mark",
+        "repair"
+      ]
+    },
+    "nonconvex": {
+      "label": "Non-Convex",
+      "value": "2",
+      "menu": [
+        "ignore",
+        "mark",
+        "repair"
+      ]
+    },
+    "overlapping": {
+      "label": "Overlapping",
+      "value": "2",
+      "menu": [
+        "ignore",
+        "mark",
+        "repair"
+      ]
+    },
+    "pairoverlaps": {
+      "label": "Pair Overlaps",
+      "value": "0",
+      "menu": []
+    },
+    "intersect": {
+      "label": "Self-Intersecting",
+      "value": "1",
+      "menu": [
+        "ignore",
+        "mark",
+        "repair"
+      ]
+    },
+    "thickness": {
+      "label": "Thickness",
+      "value": "0.0001",
+      "menu": []
+    },
+    "glosmallarea": {
+      "label": "Globally Small Areas",
+      "value": "0",
+      "menu": [
+        "ignore",
+        "mark",
+        "repair"
+      ]
+    },
+    "gloareathres": {
+      "label": "Global Area Threshold",
+      "value": "1e-06",
+      "menu": []
+    },
+    "locsmallarea": {
+      "label": "Locally Small Areas",
+      "value": "0",
+      "menu": [
+        "ignore",
+        "mark",
+        "repair"
+      ]
+    },
+    "locareathres": {
+      "label": "Local Area Threshold",
+      "value": "0.01",
+      "menu": []
+    },
+    "nonuni": {
+      "label": "Non-Uniform",
+      "value": "0",
+      "menu": [
+        "ignore",
+        "mark",
+        "repair"
+      ]
+    },
+    "unithres": {
+      "label": "Uniformity Threshold",
+      "value": "0.01",
+      "menu": []
+    },
+    "glosmalledge": {
+      "label": "Globally Small Edges",
+      "value": "0",
+      "menu": [
+        "ignore",
+        "mark",
+        "repair"
+      ]
+    },
+    "gloedgethres": {
+      "label": "Global Edge Threshold",
+      "value": "0.001",
+      "menu": []
+    },
+    "locsmalledge": {
+      "label": "Locally Small Edges",
+      "value": "0",
+      "menu": [
+        "ignore",
+        "mark",
+        "repair"
+      ]
+    },
+    "locedgethres": {
+      "label": "Local Edge Threshold",
+      "value": "0.3",
+      "menu": []
+    },
+    "disconnectpt": {
+      "label": "Disconnected Points",
+      "value": "0",
+      "menu": [
+        "ignore",
+        "mark",
+        "repair"
+      ]
+    },
+    "nonmanifoldpt": {
+      "label": "Non-Manifold Points",
+      "value": "0",
+      "menu": [
+        "ignore",
+        "mark",
+        "repair"
+      ]
+    },
+    "ignorewindings": {
+      "label": "Ignore Winding of Input Polygons",
+      "value": "1",
+      "menu": []
+    },
+    "preferlargeangles": {
+      "label": "Prefer Larger Angles Between Neighboring Polygons",
+      "value": "0",
+      "menu": []
+    },
+    "vismaxmanifold": {
+      "label": "Visualize Maximal Manifold Patches",
+      "value": "0",
+      "menu": []
+    },
+    "exportmanifoldnumbers": {
+      "label": "Create Manifold Number Attribute",
+      "value": "0",
+      "menu": []
+    },
+    "fixwindings": {
+      "label": "Correct Winding of Polygons to Majority in their Manifold Patch",
+      "value": "0",
+      "menu": []
+    },
+    "deletesmallmanifolds": {
+      "label": "Delete Small Manifold Patches",
+      "value": "0",
+      "menu": []
+    },
+    "smallmanifoldsize": {
+      "label": "Primitive Threshold",
+      "value": "0",
+      "menu": []
+    },
+    "usevalidpoly": {
+      "label": "Valid Polygons",
+      "value": "1",
+      "menu": []
+    },
+    "validpoly": {
+      "label": "Valid Polygons",
+      "value": "valid_poly",
+      "menu": []
+    },
+    "userepairedpoly": {
+      "label": "Repaired Polygons",
+      "value": "1",
+      "menu": []
+    },
+    "repairedpoly": {
+      "label": "Repaired Polygons",
+      "value": "repaired_poly",
+      "menu": []
+    },
+    "usevalidpts": {
+      "label": "Valid Points",
+      "value": "1",
+      "menu": []
+    },
+    "validpts": {
+      "label": "Valid Points",
+      "value": "valid_pt",
+      "menu": []
+    },
+    "usemodifiedpts": {
+      "label": "Modified Points",
+      "value": "1",
+      "menu": []
+    },
+    "modifiedpts": {
+      "label": "Modified Points",
+      "value": "modified_pt",
+      "menu": []
+    },
+    "creategrps": {
+      "label": "Create a group for each attribute",
+      "value": "0",
+      "menu": []
+    },
+    "visinvalidpts": {
+      "label": "visinvalidpts",
+      "value": "0",
+      "menu": []
+    },
+    "visinvalidptsfgr": {
+      "label": "Invalid Points",
+      "value": "0.9",
+      "menu": []
+    },
+    "visinvalidptsfgg": {
+      "label": "Invalid Points",
+      "value": "0.0",
+      "menu": []
+    },
+    "visinvalidptsfgb": {
+      "label": "Invalid Points",
+      "value": "0.0",
+      "menu": []
+    },
+    "visrepairedpts": {
+      "label": "visrepairedpts",
+      "value": "0",
+      "menu": []
+    },
+    "visrepairedptsfgr": {
+      "label": "Repaired Points",
+      "value": "0.0",
+      "menu": []
+    },
+    "visrepairedptsfgg": {
+      "label": "Repaired Points",
+      "value": "0.0",
+      "menu": []
+    },
+    "visrepairedptsfgb": {
+      "label": "Repaired Points",
+      "value": "0.9",
+      "menu": []
+    },
+    "visinvalidpolys": {
+      "label": "visinvalidpolys",
+      "value": "0",
+      "menu": []
+    },
+    "visinvalidpolysfgr": {
+      "label": "Invalid Polygons",
+      "value": "0.9",
+      "menu": []
+    },
+    "visinvalidpolysfgg": {
+      "label": "Invalid Polygons",
+      "value": "0.0",
+      "menu": []
+    },
+    "visinvalidpolysfgb": {
+      "label": "Invalid Polygons",
+      "value": "0.0",
+      "menu": []
+    },
+    "visrepairedpolys": {
+      "label": "visrepairedpolys",
+      "value": "0",
+      "menu": []
+    },
+    "visrepairedpolysfgr": {
+      "label": "Repaired Polygons",
+      "value": "0.0",
+      "menu": []
+    },
+    "visrepairedpolysfgg": {
+      "label": "Repaired Polygons",
+      "value": "0.0",
+      "menu": []
+    },
+    "visrepairedpolysfgb": {
+      "label": "Repaired Polygons",
+      "value": "0.9",
+      "menu": []
+    }
+  }
+}

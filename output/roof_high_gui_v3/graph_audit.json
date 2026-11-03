@@ -1,0 +1,2176 @@
+{
+  "houdini_version": "22.0.368",
+  "license": "licenseCategoryType.Commercial",
+  "graph_modularity": "pass",
+  "violations": [],
+  "module_count": 22,
+  "stages": [
+    {
+      "name": "LAYOUT",
+      "path": "/obj/medieval_roof_high_v3/BUILDING/LAYOUT",
+      "type": "subnet",
+      "input_count": 0,
+      "actual_inputs": [],
+      "expected_inputs": [],
+      "published_outputs": {
+        "layout.semantic_layout:role_plans": 0,
+        "layout.semantic_layout:floor_plans": 1,
+        "layout.semantic_layout:storey_mass": 2,
+        "layout.semantic_layout:roof_plans": 3
+      },
+      "max_inputs": 4,
+      "max_outputs": 11
+    },
+    {
+      "name": "SHELL",
+      "path": "/obj/medieval_roof_high_v3/BUILDING/SHELL",
+      "type": "subnet",
+      "input_count": 3,
+      "actual_inputs": [
+        [
+          0,
+          "LAYOUT",
+          1
+        ],
+        [
+          1,
+          "LAYOUT",
+          2
+        ],
+        [
+          2,
+          "LAYOUT",
+          3
+        ]
+      ],
+      "expected_inputs": [
+        [
+          0,
+          "LAYOUT",
+          1
+        ],
+        [
+          1,
+          "LAYOUT",
+          2
+        ],
+        [
+          2,
+          "LAYOUT",
+          3
+        ]
+      ],
+      "published_outputs": {
+        "shell.body_shell:uncut_shell": 0,
+        "shell.body_shell:solid_body": 1,
+        "shell.facade_layout:visible_bays": 2,
+        "shell.facade_layout:opening_points": 3
+      },
+      "max_inputs": 4,
+      "max_outputs": 11
+    },
+    {
+      "name": "OPENINGS",
+      "path": "/obj/medieval_roof_high_v3/BUILDING/OPENINGS",
+      "type": "mythic::medieval_stage_openings::3.0",
+      "input_count": 5,
+      "actual_inputs": [
+        [
+          0,
+          "LAYOUT",
+          0
+        ],
+        [
+          1,
+          "LAYOUT",
+          3
+        ],
+        [
+          2,
+          "SHELL",
+          1
+        ],
+        [
+          3,
+          "SHELL",
+          3
+        ],
+        [
+          4,
+          "SHELL",
+          0
+        ]
+      ],
+      "expected_inputs": [
+        [
+          0,
+          "LAYOUT",
+          0
+        ],
+        [
+          1,
+          "LAYOUT",
+          3
+        ],
+        [
+          2,
+          "SHELL",
+          1
+        ],
+        [
+          3,
+          "SHELL",
+          3
+        ],
+        [
+          4,
+          "SHELL",
+          0
+        ]
+      ],
+      "published_outputs": {
+        "openings.kits:window_geometry": 0,
+        "openings.kits:window_aperture": 1,
+        "openings.kits:door_geometry": 2,
+        "openings.kits:door_aperture": 3,
+        "openings.attachments:attachment_geometry": 4,
+        "openings.attachments:bay_cutters": 5,
+        "openings.attachments:replacement_metadata": 6,
+        "openings.windows:window_geometry": 7,
+        "openings.windows:window_cutters": 8,
+        "openings.doors:door_geometry": 9,
+        "openings.doors:door_cutters": 10,
+        "openings.wall_cuts:walls": 11
+      },
+      "max_inputs": 5,
+      "max_outputs": 12
+    },
+    {
+      "name": "ROOF",
+      "path": "/obj/medieval_roof_high_v3/BUILDING/ROOF",
+      "type": "mythic::medieval_stage_roof::3.0",
+      "input_count": 4,
+      "actual_inputs": [
+        [
+          0,
+          "LAYOUT",
+          3
+        ],
+        [
+          1,
+          "OPENINGS",
+          0
+        ],
+        [
+          2,
+          "OPENINGS",
+          1
+        ],
+        [
+          3,
+          "SHELL",
+          1
+        ]
+      ],
+      "expected_inputs": [
+        [
+          0,
+          "LAYOUT",
+          3
+        ],
+        [
+          1,
+          "OPENINGS",
+          0
+        ],
+        [
+          2,
+          "OPENINGS",
+          1
+        ],
+        [
+          3,
+          "SHELL",
+          1
+        ]
+      ],
+      "published_outputs": {
+        "roof.dormers:dormer_geometry": 0,
+        "roof.dormers:dormer_cutters": 1,
+        "roof.surfaces_tiles:roof_shell": 2,
+        "roof.surfaces_tiles:roof_tiles": 3,
+        "roof.trim:roof_trim": 4,
+        "roof.patch_surfaces:raw_surfaces": 5,
+        "roof.junctions:roof_top": 6,
+        "roof.junctions:roof_volume": 7,
+        "roof.junctions:roof_shell": 8,
+        "roof.junctions:junction_trim": 9
+      },
+      "max_inputs": 4,
+      "max_outputs": 10
+    },
+    {
+      "name": "DETAILS",
+      "path": "/obj/medieval_roof_high_v3/BUILDING/DETAILS",
+      "type": "mythic::medieval_stage_details::3.0",
+      "input_count": 5,
+      "actual_inputs": [
+        [
+          0,
+          "SHELL",
+          2
+        ],
+        [
+          1,
+          "LAYOUT",
+          3
+        ],
+        [
+          2,
+          "LAYOUT",
+          1
+        ],
+        [
+          3,
+          "LAYOUT",
+          0
+        ],
+        [
+          4,
+          "SHELL",
+          1
+        ]
+      ],
+      "expected_inputs": [
+        [
+          0,
+          "SHELL",
+          2
+        ],
+        [
+          1,
+          "LAYOUT",
+          3
+        ],
+        [
+          2,
+          "LAYOUT",
+          1
+        ],
+        [
+          3,
+          "LAYOUT",
+          0
+        ],
+        [
+          4,
+          "SHELL",
+          1
+        ]
+      ],
+      "published_outputs": {
+        "details.facade:structural_timber": 0,
+        "details.facade:facade_details": 1,
+        "details.interior:interior": 2,
+        "details.balcony:balcony": 3,
+        "details.utilities:utilities": 4,
+        "details.site:site": 5,
+        "details.furnishing:furnishing": 6
+      },
+      "max_inputs": 5,
+      "max_outputs": 7
+    },
+    {
+      "name": "UV_MATERIAL",
+      "path": "/obj/medieval_roof_high_v3/BUILDING/UV_MATERIAL",
+      "type": "mythic::medieval_stage_uv_material::3.0",
+      "input_count": 16,
+      "actual_inputs": [
+        [
+          0,
+          "OPENINGS",
+          11
+        ],
+        [
+          1,
+          "DETAILS",
+          0
+        ],
+        [
+          2,
+          "OPENINGS",
+          7
+        ],
+        [
+          3,
+          "OPENINGS",
+          9
+        ],
+        [
+          4,
+          "ROOF",
+          2
+        ],
+        [
+          5,
+          "ROOF",
+          3
+        ],
+        [
+          6,
+          "ROOF",
+          0
+        ],
+        [
+          7,
+          "ROOF",
+          4
+        ],
+        [
+          8,
+          "DETAILS",
+          2
+        ],
+        [
+          9,
+          "DETAILS",
+          4
+        ],
+        [
+          10,
+          "DETAILS",
+          5
+        ],
+        [
+          11,
+          "DETAILS",
+          6
+        ],
+        [
+          12,
+          "DETAILS",
+          3
+        ],
+        [
+          13,
+          "DETAILS",
+          1
+        ],
+        [
+          14,
+          "OPENINGS",
+          4
+        ],
+        [
+          15,
+          "ROOF",
+          9
+        ]
+      ],
+      "expected_inputs": [
+        [
+          0,
+          "OPENINGS",
+          11
+        ],
+        [
+          1,
+          "DETAILS",
+          0
+        ],
+        [
+          2,
+          "OPENINGS",
+          7
+        ],
+        [
+          3,
+          "OPENINGS",
+          9
+        ],
+        [
+          4,
+          "ROOF",
+          2
+        ],
+        [
+          5,
+          "ROOF",
+          3
+        ],
+        [
+          6,
+          "ROOF",
+          0
+        ],
+        [
+          7,
+          "ROOF",
+          4
+        ],
+        [
+          8,
+          "DETAILS",
+          2
+        ],
+        [
+          9,
+          "DETAILS",
+          4
+        ],
+        [
+          10,
+          "DETAILS",
+          5
+        ],
+        [
+          11,
+          "DETAILS",
+          6
+        ],
+        [
+          12,
+          "DETAILS",
+          3
+        ],
+        [
+          13,
+          "DETAILS",
+          1
+        ],
+        [
+          14,
+          "OPENINGS",
+          4
+        ],
+        [
+          15,
+          "ROOF",
+          9
+        ]
+      ],
+      "published_outputs": {
+        "uv_material.surfacing:building": 0
+      },
+      "max_inputs": 16,
+      "max_outputs": 1
+    },
+    {
+      "name": "OUTPUT",
+      "path": "/obj/medieval_roof_high_v3/BUILDING/OUTPUT",
+      "type": "subnet",
+      "input_count": 1,
+      "actual_inputs": [
+        [
+          0,
+          "UV_MATERIAL",
+          0
+        ]
+      ],
+      "expected_inputs": [
+        [
+          0,
+          "UV_MATERIAL",
+          0
+        ]
+      ],
+      "published_outputs": {
+        "output.detail_levels:low": 0,
+        "output.detail_levels:high": 1,
+        "output.detail_levels:selected": 2,
+        "output.game_export:geometry": 3
+      },
+      "max_inputs": 4,
+      "max_outputs": 11
+    }
+  ],
+  "modules": [
+    {
+      "module_id": "layout.semantic_layout",
+      "path": "/obj/medieval_roof_high_v3/BUILDING/LAYOUT/semantic_layout",
+      "type": "subnet",
+      "parent": "/obj/medieval_roof_high_v3/BUILDING/LAYOUT",
+      "owner": "mythic.medieval.modular_rebuild",
+      "actual_input_wires": [],
+      "expected_input_wires": [],
+      "outputs": [
+        "role_plans",
+        "floor_plans",
+        "storey_mass",
+        "roof_plans"
+      ],
+      "debug_endpoint": "/obj/medieval_roof_high_v3/BUILDING/LAYOUT/semantic_layout/OUT_DEBUG",
+      "direct_children": 7,
+      "descendants": 18,
+      "node_types": {
+        "object_merge": 1,
+        "subnet": 1,
+        "grid": 1,
+        "attribwrangle": 3,
+        "polyextrude::2.0": 1,
+        "blast": 1,
+        "null": 2,
+        "output": 8
+      }
+    },
+    {
+      "module_id": "shell.body_shell",
+      "path": "/obj/medieval_roof_high_v3/BUILDING/SHELL/body_shell",
+      "type": "subnet",
+      "parent": "/obj/medieval_roof_high_v3/BUILDING/SHELL",
+      "owner": "mythic.medieval.modular_rebuild",
+      "actual_input_wires": [
+        {
+          "input": 0,
+          "source": "LAYOUT",
+          "source_output": 1,
+          "indirect_input": 0
+        },
+        {
+          "input": 1,
+          "source": "LAYOUT",
+          "source_output": 2,
+          "indirect_input": 1
+        }
+      ],
+      "expected_input_wires": [
+        {
+          "input": 0,
+          "source": "LAYOUT",
+          "source_output": 1,
+          "indirect_input": 0
+        },
+        {
+          "input": 1,
+          "source": "LAYOUT",
+          "source_output": 2,
+          "indirect_input": 1
+        }
+      ],
+      "outputs": [
+        "uncut_shell",
+        "solid_body"
+      ],
+      "debug_endpoint": "/obj/medieval_roof_high_v3/BUILDING/SHELL/body_shell/OUT_DEBUG",
+      "direct_children": 10,
+      "descendants": 10,
+      "node_types": {
+        "boolean::2.0": 3,
+        "attribwrangle": 1,
+        "polyextrude::2.0": 1,
+        "null": 3,
+        "output": 2
+      }
+    },
+    {
+      "module_id": "shell.facade_layout",
+      "path": "/obj/medieval_roof_high_v3/BUILDING/SHELL/facade_layout",
+      "type": "subnet",
+      "parent": "/obj/medieval_roof_high_v3/BUILDING/SHELL",
+      "owner": "mythic.medieval.modular_rebuild",
+      "actual_input_wires": [
+        {
+          "input": 0,
+          "source": "LAYOUT",
+          "source_output": 2,
+          "indirect_input": 1
+        },
+        {
+          "input": 1,
+          "source": "SHELL/body_shell",
+          "source_output": 1,
+          "indirect_input": null
+        },
+        {
+          "input": 2,
+          "source": "LAYOUT",
+          "source_output": 3,
+          "indirect_input": 2
+        }
+      ],
+      "expected_input_wires": [
+        {
+          "input": 0,
+          "source": "LAYOUT",
+          "source_output": 2,
+          "indirect_input": 1
+        },
+        {
+          "input": 1,
+          "source": "SHELL/body_shell",
+          "source_output": 1,
+          "indirect_input": null
+        },
+        {
+          "input": 2,
+          "source": "LAYOUT",
+          "source_output": 3,
+          "indirect_input": 2
+        }
+      ],
+      "outputs": [
+        "visible_bays",
+        "opening_points"
+      ],
+      "debug_endpoint": "/obj/medieval_roof_high_v3/BUILDING/SHELL/facade_layout/OUT_DEBUG",
+      "direct_children": 13,
+      "descendants": 13,
+      "node_types": {
+        "blast": 1,
+        "attribwrangle": 5,
+        "merge": 1,
+        "null": 4,
+        "output": 2
+      }
+    },
+    {
+      "module_id": "openings.kits",
+      "path": "/obj/medieval_roof_high_v3/BUILDING/OPENINGS/kits",
+      "type": "subnet",
+      "parent": "/obj/medieval_roof_high_v3/BUILDING/OPENINGS",
+      "owner": "mythic.medieval.modular_rebuild",
+      "actual_input_wires": [],
+      "expected_input_wires": [],
+      "outputs": [
+        "window_geometry",
+        "window_aperture",
+        "door_geometry",
+        "door_aperture"
+      ],
+      "debug_endpoint": "/obj/medieval_roof_high_v3/BUILDING/OPENINGS/kits/OUT_DEBUG",
+      "direct_children": 9,
+      "descendants": 48,
+      "node_types": {
+        "subnet": 2,
+        "attribwrangle": 14,
+        "null": 5,
+        "polyextrude::2.0": 7,
+        "xform": 1,
+        "box": 3,
+        "copytopoints::2.0": 2,
+        "merge": 2,
+        "clean": 2,
+        "normal": 2,
+        "output": 8
+      }
+    },
+    {
+      "module_id": "openings.attachments",
+      "path": "/obj/medieval_roof_high_v3/BUILDING/OPENINGS/attachments",
+      "type": "mythic::medieval_function_openings_attachments::3.0",
+      "parent": "/obj/medieval_roof_high_v3/BUILDING/OPENINGS",
+      "owner": "mythic.medieval.modular_rebuild",
+      "actual_input_wires": [
+        {
+          "input": 0,
+          "source": "LAYOUT",
+          "source_output": 0,
+          "indirect_input": 0
+        },
+        {
+          "input": 1,
+          "source": "LAYOUT",
+          "source_output": 3,
+          "indirect_input": 1
+        },
+        {
+          "input": 2,
+          "source": "OPENINGS/kits",
+          "source_output": 0,
+          "indirect_input": null
+        },
+        {
+          "input": 3,
+          "source": "OPENINGS/kits",
+          "source_output": 1,
+          "indirect_input": null
+        },
+        {
+          "input": 4,
+          "source": "SHELL",
+          "source_output": 1,
+          "indirect_input": 2
+        }
+      ],
+      "expected_input_wires": [
+        {
+          "input": 0,
+          "source": "LAYOUT",
+          "source_output": 0,
+          "indirect_input": 0
+        },
+        {
+          "input": 1,
+          "source": "LAYOUT",
+          "source_output": 3,
+          "indirect_input": 1
+        },
+        {
+          "input": 2,
+          "source": "OPENINGS/kits",
+          "source_output": 0,
+          "indirect_input": null
+        },
+        {
+          "input": 3,
+          "source": "OPENINGS/kits",
+          "source_output": 1,
+          "indirect_input": null
+        },
+        {
+          "input": 4,
+          "source": "SHELL",
+          "source_output": 1,
+          "indirect_input": 2
+        }
+      ],
+      "outputs": [
+        "attachment_geometry",
+        "bay_cutters",
+        "replacement_metadata"
+      ],
+      "debug_endpoint": "/obj/medieval_roof_high_v3/BUILDING/OPENINGS/attachments/OUT_DEBUG",
+      "direct_children": 46,
+      "descendants": 46,
+      "node_types": {
+        "null": 11,
+        "attribwrangle": 10,
+        "box": 2,
+        "copytopoints::2.0": 5,
+        "tube": 1,
+        "merge": 3,
+        "polyextrude::2.0": 3,
+        "skin": 1,
+        "boolean::2.0": 3,
+        "normal": 1,
+        "output": 3,
+        "blast": 3
+      }
+    },
+    {
+      "module_id": "openings.windows",
+      "path": "/obj/medieval_roof_high_v3/BUILDING/OPENINGS/windows",
+      "type": "subnet",
+      "parent": "/obj/medieval_roof_high_v3/BUILDING/OPENINGS",
+      "owner": "mythic.medieval.modular_rebuild",
+      "actual_input_wires": [
+        {
+          "input": 0,
+          "source": "SHELL",
+          "source_output": 3,
+          "indirect_input": 3
+        },
+        {
+          "input": 1,
+          "source": "OPENINGS/kits",
+          "source_output": 0,
+          "indirect_input": null
+        },
+        {
+          "input": 2,
+          "source": "OPENINGS/kits",
+          "source_output": 1,
+          "indirect_input": null
+        },
+        {
+          "input": 3,
+          "source": "OPENINGS/attachments",
+          "source_output": 2,
+          "indirect_input": null
+        }
+      ],
+      "expected_input_wires": [
+        {
+          "input": 0,
+          "source": "SHELL",
+          "source_output": 3,
+          "indirect_input": 3
+        },
+        {
+          "input": 1,
+          "source": "OPENINGS/kits",
+          "source_output": 0,
+          "indirect_input": null
+        },
+        {
+          "input": 2,
+          "source": "OPENINGS/kits",
+          "source_output": 1,
+          "indirect_input": null
+        },
+        {
+          "input": 3,
+          "source": "OPENINGS/attachments",
+          "source_output": 2,
+          "indirect_input": null
+        }
+      ],
+      "outputs": [
+        "window_geometry",
+        "window_cutters"
+      ],
+      "debug_endpoint": "/obj/medieval_roof_high_v3/BUILDING/OPENINGS/windows/OUT_DEBUG",
+      "direct_children": 14,
+      "descendants": 14,
+      "node_types": {
+        "attribwrangle": 1,
+        "blast": 1,
+        "copytopoints::2.0": 2,
+        "null": 6,
+        "xform": 1,
+        "polyextrude::2.0": 1,
+        "output": 2
+      }
+    },
+    {
+      "module_id": "openings.doors",
+      "path": "/obj/medieval_roof_high_v3/BUILDING/OPENINGS/doors",
+      "type": "subnet",
+      "parent": "/obj/medieval_roof_high_v3/BUILDING/OPENINGS",
+      "owner": "mythic.medieval.modular_rebuild",
+      "actual_input_wires": [
+        {
+          "input": 0,
+          "source": "SHELL",
+          "source_output": 3,
+          "indirect_input": 3
+        },
+        {
+          "input": 1,
+          "source": "OPENINGS/kits",
+          "source_output": 2,
+          "indirect_input": null
+        },
+        {
+          "input": 2,
+          "source": "OPENINGS/kits",
+          "source_output": 3,
+          "indirect_input": null
+        }
+      ],
+      "expected_input_wires": [
+        {
+          "input": 0,
+          "source": "SHELL",
+          "source_output": 3,
+          "indirect_input": 3
+        },
+        {
+          "input": 1,
+          "source": "OPENINGS/kits",
+          "source_output": 2,
+          "indirect_input": null
+        },
+        {
+          "input": 2,
+          "source": "OPENINGS/kits",
+          "source_output": 3,
+          "indirect_input": null
+        }
+      ],
+      "outputs": [
+        "door_geometry",
+        "door_cutters"
+      ],
+      "debug_endpoint": "/obj/medieval_roof_high_v3/BUILDING/OPENINGS/doors/OUT_DEBUG",
+      "direct_children": 12,
+      "descendants": 12,
+      "node_types": {
+        "blast": 1,
+        "copytopoints::2.0": 2,
+        "null": 5,
+        "xform": 1,
+        "polyextrude::2.0": 1,
+        "output": 2
+      }
+    },
+    {
+      "module_id": "openings.wall_cuts",
+      "path": "/obj/medieval_roof_high_v3/BUILDING/OPENINGS/wall_cuts",
+      "type": "mythic::medieval_module_openings_wall_cuts::3.0",
+      "parent": "/obj/medieval_roof_high_v3/BUILDING/OPENINGS",
+      "owner": "mythic.medieval.modular_rebuild",
+      "actual_input_wires": [
+        {
+          "input": 0,
+          "source": "OPENINGS/attachments",
+          "source_output": 1,
+          "indirect_input": null
+        },
+        {
+          "input": 1,
+          "source": "OPENINGS/windows",
+          "source_output": 1,
+          "indirect_input": null
+        },
+        {
+          "input": 2,
+          "source": "OPENINGS/doors",
+          "source_output": 1,
+          "indirect_input": null
+        },
+        {
+          "input": 3,
+          "source": "SHELL",
+          "source_output": 0,
+          "indirect_input": 4
+        },
+        {
+          "input": 4,
+          "source": "LAYOUT",
+          "source_output": 3,
+          "indirect_input": 1
+        }
+      ],
+      "expected_input_wires": [
+        {
+          "input": 0,
+          "source": "OPENINGS/attachments",
+          "source_output": 1,
+          "indirect_input": null
+        },
+        {
+          "input": 1,
+          "source": "OPENINGS/windows",
+          "source_output": 1,
+          "indirect_input": null
+        },
+        {
+          "input": 2,
+          "source": "OPENINGS/doors",
+          "source_output": 1,
+          "indirect_input": null
+        },
+        {
+          "input": 3,
+          "source": "SHELL",
+          "source_output": 0,
+          "indirect_input": 4
+        },
+        {
+          "input": 4,
+          "source": "LAYOUT",
+          "source_output": 3,
+          "indirect_input": 1
+        }
+      ],
+      "outputs": [
+        "walls"
+      ],
+      "debug_endpoint": "/obj/medieval_roof_high_v3/BUILDING/OPENINGS/wall_cuts/OUT_DEBUG",
+      "direct_children": 5,
+      "descendants": 15,
+      "node_types": {
+        "null": 5,
+        "merge": 2,
+        "subnet": 1,
+        "boolean::2.0": 2,
+        "attribwrangle": 2,
+        "polyextrude::2.0": 1,
+        "output": 2
+      }
+    },
+    {
+      "module_id": "roof.dormers",
+      "path": "/obj/medieval_roof_high_v3/BUILDING/ROOF/dormers",
+      "type": "mythic::medieval_function_roof_dormers::3.0",
+      "parent": "/obj/medieval_roof_high_v3/BUILDING/ROOF",
+      "owner": "mythic.medieval.modular_rebuild",
+      "actual_input_wires": [
+        {
+          "input": 0,
+          "source": "LAYOUT",
+          "source_output": 3,
+          "indirect_input": 0
+        },
+        {
+          "input": 1,
+          "source": "OPENINGS",
+          "source_output": 0,
+          "indirect_input": 1
+        },
+        {
+          "input": 2,
+          "source": "OPENINGS",
+          "source_output": 1,
+          "indirect_input": 2
+        },
+        {
+          "input": 3,
+          "source": "ROOF/ridge_valley_solver",
+          "source_output": 1,
+          "indirect_input": null
+        },
+        {
+          "input": 4,
+          "source": "ROOF/ridge_valley_solver",
+          "source_output": 2,
+          "indirect_input": null
+        }
+      ],
+      "expected_input_wires": [
+        {
+          "input": 0,
+          "source": "LAYOUT",
+          "source_output": 3,
+          "indirect_input": 0
+        },
+        {
+          "input": 1,
+          "source": "OPENINGS",
+          "source_output": 0,
+          "indirect_input": 1
+        },
+        {
+          "input": 2,
+          "source": "OPENINGS",
+          "source_output": 1,
+          "indirect_input": 2
+        },
+        {
+          "input": 3,
+          "source": "ROOF/ridge_valley_solver",
+          "source_output": 1,
+          "indirect_input": null
+        },
+        {
+          "input": 4,
+          "source": "ROOF/ridge_valley_solver",
+          "source_output": 2,
+          "indirect_input": null
+        }
+      ],
+      "outputs": [
+        "dormer_geometry",
+        "dormer_cutters"
+      ],
+      "debug_endpoint": "/obj/medieval_roof_high_v3/BUILDING/ROOF/dormers/OUT_DEBUG",
+      "direct_children": 19,
+      "descendants": 41,
+      "node_types": {
+        "attribwrangle": 9,
+        "subnet": 1,
+        "box": 4,
+        "boolean::2.0": 3,
+        "null": 8,
+        "xform": 2,
+        "polyextrude::2.0": 4,
+        "merge": 1,
+        "clean": 1,
+        "normal": 1,
+        "output": 3,
+        "copytopoints::2.0": 3,
+        "reverse": 1
+      }
+    },
+    {
+      "module_id": "roof.surfaces_tiles",
+      "path": "/obj/medieval_roof_high_v3/BUILDING/ROOF/surfaces_tiles",
+      "type": "mythic::medieval_function_roof_surfaces_tiles::3.0",
+      "parent": "/obj/medieval_roof_high_v3/BUILDING/ROOF",
+      "owner": "mythic.medieval.modular_rebuild",
+      "actual_input_wires": [
+        {
+          "input": 0,
+          "source": "LAYOUT",
+          "source_output": 3,
+          "indirect_input": 0
+        },
+        {
+          "input": 1,
+          "source": "SHELL",
+          "source_output": 1,
+          "indirect_input": 3
+        },
+        {
+          "input": 2,
+          "source": "ROOF/dormers",
+          "source_output": 1,
+          "indirect_input": null
+        },
+        {
+          "input": 3,
+          "source": "ROOF/ridge_valley_solver",
+          "source_output": 2,
+          "indirect_input": null
+        },
+        {
+          "input": 4,
+          "source": "ROOF/ridge_valley_solver",
+          "source_output": 1,
+          "indirect_input": null
+        },
+        {
+          "input": 5,
+          "source": "ROOF/patch_surfaces",
+          "source_output": 0,
+          "indirect_input": null
+        }
+      ],
+      "expected_input_wires": [
+        {
+          "input": 0,
+          "source": "LAYOUT",
+          "source_output": 3,
+          "indirect_input": 0
+        },
+        {
+          "input": 1,
+          "source": "SHELL",
+          "source_output": 1,
+          "indirect_input": 3
+        },
+        {
+          "input": 2,
+          "source": "ROOF/dormers",
+          "source_output": 1,
+          "indirect_input": null
+        },
+        {
+          "input": 3,
+          "source": "ROOF/ridge_valley_solver",
+          "source_output": 2,
+          "indirect_input": null
+        },
+        {
+          "input": 4,
+          "source": "ROOF/ridge_valley_solver",
+          "source_output": 1,
+          "indirect_input": null
+        },
+        {
+          "input": 5,
+          "source": "ROOF/patch_surfaces",
+          "source_output": 0,
+          "indirect_input": null
+        }
+      ],
+      "outputs": [
+        "roof_shell",
+        "roof_tiles"
+      ],
+      "debug_endpoint": "/obj/medieval_roof_high_v3/BUILDING/ROOF/surfaces_tiles/OUT_DEBUG",
+      "direct_children": 23,
+      "descendants": 23,
+      "node_types": {
+        "polyextrude::2.0": 1,
+        "attribwrangle": 6,
+        "box": 1,
+        "copytopoints::2.0": 1,
+        "boolean::2.0": 5,
+        "null": 6,
+        "output": 2,
+        "xform": 1
+      }
+    },
+    {
+      "module_id": "roof.trim",
+      "path": "/obj/medieval_roof_high_v3/BUILDING/ROOF/trim",
+      "type": "subnet",
+      "parent": "/obj/medieval_roof_high_v3/BUILDING/ROOF",
+      "owner": "mythic.medieval.modular_rebuild",
+      "actual_input_wires": [
+        {
+          "input": 0,
+          "source": "LAYOUT",
+          "source_output": 3,
+          "indirect_input": 0
+        },
+        {
+          "input": 1,
+          "source": "ROOF/ridge_valley_solver",
+          "source_output": 1,
+          "indirect_input": null
+        }
+      ],
+      "expected_input_wires": [
+        {
+          "input": 0,
+          "source": "LAYOUT",
+          "source_output": 3,
+          "indirect_input": 0
+        },
+        {
+          "input": 1,
+          "source": "ROOF/ridge_valley_solver",
+          "source_output": 1,
+          "indirect_input": null
+        }
+      ],
+      "outputs": [
+        "roof_trim"
+      ],
+      "debug_endpoint": "/obj/medieval_roof_high_v3/BUILDING/ROOF/trim/OUT_DEBUG",
+      "direct_children": 24,
+      "descendants": 24,
+      "node_types": {
+        "null": 5,
+        "attribwrangle": 6,
+        "polyextrude::2.0": 2,
+        "copytopoints::2.0": 2,
+        "box": 1,
+        "tube": 1,
+        "merge": 2,
+        "clean": 1,
+        "normal": 1,
+        "output": 1,
+        "xform": 1,
+        "boolean::2.0": 1
+      }
+    },
+    {
+      "module_id": "details.facade",
+      "path": "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade",
+      "type": "subnet",
+      "parent": "/obj/medieval_roof_high_v3/BUILDING/DETAILS",
+      "owner": "mythic.medieval.modular_rebuild",
+      "actual_input_wires": [
+        {
+          "input": 0,
+          "source": "SHELL",
+          "source_output": 2,
+          "indirect_input": 0
+        },
+        {
+          "input": 1,
+          "source": "LAYOUT",
+          "source_output": 3,
+          "indirect_input": 1
+        }
+      ],
+      "expected_input_wires": [
+        {
+          "input": 0,
+          "source": "SHELL",
+          "source_output": 2,
+          "indirect_input": 0
+        },
+        {
+          "input": 1,
+          "source": "LAYOUT",
+          "source_output": 3,
+          "indirect_input": 1
+        }
+      ],
+      "outputs": [
+        "structural_timber",
+        "facade_details"
+      ],
+      "debug_endpoint": "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/OUT_DEBUG",
+      "direct_children": 15,
+      "descendants": 143,
+      "node_types": {
+        "sweep::2.0": 1,
+        "merge": 10,
+        "subnet": 2,
+        "null": 5,
+        "attribwrangle": 61,
+        "box": 33,
+        "copytopoints::2.0": 8,
+        "normal": 1,
+        "output": 4,
+        "tube": 11,
+        "boolean::2.0": 6,
+        "torus": 1
+      }
+    },
+    {
+      "module_id": "details.interior",
+      "path": "/obj/medieval_roof_high_v3/BUILDING/DETAILS/interior",
+      "type": "subnet",
+      "parent": "/obj/medieval_roof_high_v3/BUILDING/DETAILS",
+      "owner": "mythic.medieval.modular_rebuild",
+      "actual_input_wires": [
+        {
+          "input": 0,
+          "source": "LAYOUT",
+          "source_output": 1,
+          "indirect_input": 2
+        },
+        {
+          "input": 1,
+          "source": "SHELL",
+          "source_output": 2,
+          "indirect_input": 0
+        }
+      ],
+      "expected_input_wires": [
+        {
+          "input": 0,
+          "source": "LAYOUT",
+          "source_output": 1,
+          "indirect_input": 2
+        },
+        {
+          "input": 1,
+          "source": "SHELL",
+          "source_output": 2,
+          "indirect_input": 0
+        }
+      ],
+      "outputs": [
+        "interior"
+      ],
+      "debug_endpoint": "/obj/medieval_roof_high_v3/BUILDING/DETAILS/interior/OUT_DEBUG",
+      "direct_children": 18,
+      "descendants": 18,
+      "node_types": {
+        "attribwrangle": 6,
+        "polyextrude::2.0": 1,
+        "null": 5,
+        "box": 1,
+        "copytopoints::2.0": 2,
+        "merge": 1,
+        "normal": 1,
+        "output": 1
+      }
+    },
+    {
+      "module_id": "details.balcony",
+      "path": "/obj/medieval_roof_high_v3/BUILDING/DETAILS/balcony",
+      "type": "subnet",
+      "parent": "/obj/medieval_roof_high_v3/BUILDING/DETAILS",
+      "owner": "mythic.medieval.modular_rebuild",
+      "actual_input_wires": [
+        {
+          "input": 0,
+          "source": "LAYOUT",
+          "source_output": 1,
+          "indirect_input": 2
+        }
+      ],
+      "expected_input_wires": [
+        {
+          "input": 0,
+          "source": "LAYOUT",
+          "source_output": 1,
+          "indirect_input": 2
+        }
+      ],
+      "outputs": [
+        "balcony"
+      ],
+      "debug_endpoint": "/obj/medieval_roof_high_v3/BUILDING/DETAILS/balcony/OUT_DEBUG",
+      "direct_children": 12,
+      "descendants": 12,
+      "node_types": {
+        "attribwrangle": 3,
+        "polyextrude::2.0": 1,
+        "box": 1,
+        "copytopoints::2.0": 1,
+        "merge": 1,
+        "normal": 1,
+        "null": 3,
+        "output": 1
+      }
+    },
+    {
+      "module_id": "details.utilities",
+      "path": "/obj/medieval_roof_high_v3/BUILDING/DETAILS/utilities",
+      "type": "subnet",
+      "parent": "/obj/medieval_roof_high_v3/BUILDING/DETAILS",
+      "owner": "mythic.medieval.modular_rebuild",
+      "actual_input_wires": [
+        {
+          "input": 0,
+          "source": "LAYOUT",
+          "source_output": 0,
+          "indirect_input": 3
+        }
+      ],
+      "expected_input_wires": [
+        {
+          "input": 0,
+          "source": "LAYOUT",
+          "source_output": 0,
+          "indirect_input": 3
+        }
+      ],
+      "outputs": [
+        "utilities"
+      ],
+      "debug_endpoint": "/obj/medieval_roof_high_v3/BUILDING/DETAILS/utilities/OUT_DEBUG",
+      "direct_children": 19,
+      "descendants": 49,
+      "node_types": {
+        "null": 4,
+        "attribwrangle": 17,
+        "subnet": 2,
+        "box": 5,
+        "merge": 4,
+        "copytopoints::2.0": 8,
+        "tube": 4,
+        "output": 3,
+        "polyextrude::2.0": 1,
+        "normal": 1
+      }
+    },
+    {
+      "module_id": "details.site",
+      "path": "/obj/medieval_roof_high_v3/BUILDING/DETAILS/site",
+      "type": "subnet",
+      "parent": "/obj/medieval_roof_high_v3/BUILDING/DETAILS",
+      "owner": "mythic.medieval.modular_rebuild",
+      "actual_input_wires": [
+        {
+          "input": 0,
+          "source": "LAYOUT",
+          "source_output": 0,
+          "indirect_input": 3
+        },
+        {
+          "input": 1,
+          "source": "SHELL",
+          "source_output": 1,
+          "indirect_input": 4
+        },
+        {
+          "input": 2,
+          "source": "DETAILS/balcony",
+          "source_output": 0,
+          "indirect_input": null
+        }
+      ],
+      "expected_input_wires": [
+        {
+          "input": 0,
+          "source": "LAYOUT",
+          "source_output": 0,
+          "indirect_input": 3
+        },
+        {
+          "input": 1,
+          "source": "SHELL",
+          "source_output": 1,
+          "indirect_input": 4
+        },
+        {
+          "input": 2,
+          "source": "DETAILS/balcony",
+          "source_output": 0,
+          "indirect_input": null
+        }
+      ],
+      "outputs": [
+        "site"
+      ],
+      "debug_endpoint": "/obj/medieval_roof_high_v3/BUILDING/DETAILS/site/OUT_DEBUG",
+      "direct_children": 32,
+      "descendants": 32,
+      "node_types": {
+        "attribwrangle": 10,
+        "polyextrude::2.0": 2,
+        "null": 6,
+        "box": 3,
+        "copytopoints::2.0": 2,
+        "merge": 2,
+        "normal": 1,
+        "output": 1,
+        "blast": 3,
+        "boolean::2.0": 2
+      }
+    },
+    {
+      "module_id": "details.furnishing",
+      "path": "/obj/medieval_roof_high_v3/BUILDING/DETAILS/furnishing",
+      "type": "subnet",
+      "parent": "/obj/medieval_roof_high_v3/BUILDING/DETAILS",
+      "owner": "mythic.medieval.modular_rebuild",
+      "actual_input_wires": [
+        {
+          "input": 0,
+          "source": "LAYOUT",
+          "source_output": 1,
+          "indirect_input": 2
+        }
+      ],
+      "expected_input_wires": [
+        {
+          "input": 0,
+          "source": "LAYOUT",
+          "source_output": 1,
+          "indirect_input": 2
+        }
+      ],
+      "outputs": [
+        "furnishing"
+      ],
+      "debug_endpoint": "/obj/medieval_roof_high_v3/BUILDING/DETAILS/furnishing/OUT_DEBUG",
+      "direct_children": 20,
+      "descendants": 20,
+      "node_types": {
+        "box": 1,
+        "polybevel::3.0": 1,
+        "attribwrangle": 7,
+        "copytopoints::2.0": 3,
+        "tube": 2,
+        "merge": 1,
+        "normal": 1,
+        "null": 3,
+        "output": 1
+      }
+    },
+    {
+      "module_id": "uv_material.surfacing",
+      "path": "/obj/medieval_roof_high_v3/BUILDING/UV_MATERIAL/surfacing",
+      "type": "mythic::medieval_module_uv_material_surfacing::3.0",
+      "parent": "/obj/medieval_roof_high_v3/BUILDING/UV_MATERIAL",
+      "owner": "mythic.medieval.modular_rebuild",
+      "actual_input_wires": [
+        {
+          "input": 0,
+          "source": "OPENINGS",
+          "source_output": 11,
+          "indirect_input": 0
+        },
+        {
+          "input": 1,
+          "source": "DETAILS",
+          "source_output": 0,
+          "indirect_input": 1
+        },
+        {
+          "input": 2,
+          "source": "OPENINGS",
+          "source_output": 7,
+          "indirect_input": 2
+        },
+        {
+          "input": 3,
+          "source": "OPENINGS",
+          "source_output": 9,
+          "indirect_input": 3
+        },
+        {
+          "input": 4,
+          "source": "ROOF",
+          "source_output": 2,
+          "indirect_input": 4
+        },
+        {
+          "input": 5,
+          "source": "ROOF",
+          "source_output": 3,
+          "indirect_input": 5
+        },
+        {
+          "input": 6,
+          "source": "ROOF",
+          "source_output": 0,
+          "indirect_input": 6
+        },
+        {
+          "input": 7,
+          "source": "ROOF",
+          "source_output": 4,
+          "indirect_input": 7
+        },
+        {
+          "input": 8,
+          "source": "DETAILS",
+          "source_output": 2,
+          "indirect_input": 8
+        },
+        {
+          "input": 9,
+          "source": "DETAILS",
+          "source_output": 4,
+          "indirect_input": 9
+        },
+        {
+          "input": 10,
+          "source": "DETAILS",
+          "source_output": 5,
+          "indirect_input": 10
+        },
+        {
+          "input": 11,
+          "source": "DETAILS",
+          "source_output": 6,
+          "indirect_input": 11
+        },
+        {
+          "input": 12,
+          "source": "DETAILS",
+          "source_output": 3,
+          "indirect_input": 12
+        },
+        {
+          "input": 13,
+          "source": "DETAILS",
+          "source_output": 1,
+          "indirect_input": 13
+        },
+        {
+          "input": 14,
+          "source": "OPENINGS",
+          "source_output": 4,
+          "indirect_input": 14
+        },
+        {
+          "input": 15,
+          "source": "ROOF",
+          "source_output": 9,
+          "indirect_input": 15
+        }
+      ],
+      "expected_input_wires": [
+        {
+          "input": 0,
+          "source": "OPENINGS",
+          "source_output": 11,
+          "indirect_input": 0
+        },
+        {
+          "input": 1,
+          "source": "DETAILS",
+          "source_output": 0,
+          "indirect_input": 1
+        },
+        {
+          "input": 2,
+          "source": "OPENINGS",
+          "source_output": 7,
+          "indirect_input": 2
+        },
+        {
+          "input": 3,
+          "source": "OPENINGS",
+          "source_output": 9,
+          "indirect_input": 3
+        },
+        {
+          "input": 4,
+          "source": "ROOF",
+          "source_output": 2,
+          "indirect_input": 4
+        },
+        {
+          "input": 5,
+          "source": "ROOF",
+          "source_output": 3,
+          "indirect_input": 5
+        },
+        {
+          "input": 6,
+          "source": "ROOF",
+          "source_output": 0,
+          "indirect_input": 6
+        },
+        {
+          "input": 7,
+          "source": "ROOF",
+          "source_output": 4,
+          "indirect_input": 7
+        },
+        {
+          "input": 8,
+          "source": "DETAILS",
+          "source_output": 2,
+          "indirect_input": 8
+        },
+        {
+          "input": 9,
+          "source": "DETAILS",
+          "source_output": 4,
+          "indirect_input": 9
+        },
+        {
+          "input": 10,
+          "source": "DETAILS",
+          "source_output": 5,
+          "indirect_input": 10
+        },
+        {
+          "input": 11,
+          "source": "DETAILS",
+          "source_output": 6,
+          "indirect_input": 11
+        },
+        {
+          "input": 12,
+          "source": "DETAILS",
+          "source_output": 3,
+          "indirect_input": 12
+        },
+        {
+          "input": 13,
+          "source": "DETAILS",
+          "source_output": 1,
+          "indirect_input": 13
+        },
+        {
+          "input": 14,
+          "source": "OPENINGS",
+          "source_output": 4,
+          "indirect_input": 14
+        },
+        {
+          "input": 15,
+          "source": "ROOF",
+          "source_output": 9,
+          "indirect_input": 15
+        }
+      ],
+      "outputs": [
+        "building"
+      ],
+      "debug_endpoint": "/obj/medieval_roof_high_v3/BUILDING/UV_MATERIAL/surfacing/OUT_DEBUG",
+      "direct_children": 4,
+      "descendants": 11,
+      "node_types": {
+        "merge": 1,
+        "subnet": 1,
+        "attribwrangle": 3,
+        "normal": 1,
+        "xform": 1,
+        "null": 2,
+        "output": 2
+      }
+    },
+    {
+      "module_id": "roof.patch_surfaces",
+      "path": "/obj/medieval_roof_high_v3/BUILDING/ROOF/patch_surfaces",
+      "type": "subnet",
+      "parent": "/obj/medieval_roof_high_v3/BUILDING/ROOF",
+      "owner": "mythic.medieval.modular_rebuild",
+      "actual_input_wires": [
+        {
+          "input": 0,
+          "source": "LAYOUT",
+          "source_output": 3,
+          "indirect_input": 0
+        }
+      ],
+      "expected_input_wires": [
+        {
+          "input": 0,
+          "source": "LAYOUT",
+          "source_output": 3,
+          "indirect_input": 0
+        }
+      ],
+      "outputs": [
+        "raw_surfaces"
+      ],
+      "debug_endpoint": "/obj/medieval_roof_high_v3/BUILDING/ROOF/patch_surfaces/OUT_DEBUG",
+      "direct_children": 21,
+      "descendants": 34,
+      "node_types": {
+        "attribwrangle": 6,
+        "blast": 10,
+        "skin": 7,
+        "subnet": 1,
+        "null": 3,
+        "merge": 2,
+        "normal": 1,
+        "output": 2,
+        "reverse": 2
+      }
+    },
+    {
+      "module_id": "roof.junctions",
+      "path": "/obj/medieval_roof_high_v3/BUILDING/ROOF/ridge_valley_solver",
+      "type": "subnet",
+      "parent": "/obj/medieval_roof_high_v3/BUILDING/ROOF",
+      "owner": "mythic.medieval.modular_rebuild",
+      "actual_input_wires": [
+        {
+          "input": 0,
+          "source": "ROOF/patch_surfaces",
+          "source_output": 0,
+          "indirect_input": null
+        }
+      ],
+      "expected_input_wires": [
+        {
+          "input": 0,
+          "source": "ROOF/patch_surfaces",
+          "source_output": 0,
+          "indirect_input": null
+        }
+      ],
+      "outputs": [
+        "roof_top",
+        "roof_volume",
+        "roof_shell",
+        "junction_trim"
+      ],
+      "debug_endpoint": "/obj/medieval_roof_high_v3/BUILDING/ROOF/ridge_valley_solver/OUT_DEBUG",
+      "direct_children": 27,
+      "descendants": 27,
+      "node_types": {
+        "null": 2,
+        "blast": 3,
+        "reverse": 4,
+        "attribwrangle": 7,
+        "polyextrude::2.0": 4,
+        "boolean::2.0": 1,
+        "divide": 1,
+        "polywire": 1,
+        "output": 4
+      }
+    },
+    {
+      "module_id": "output.detail_levels",
+      "path": "/obj/medieval_roof_high_v3/BUILDING/OUTPUT/detail_levels",
+      "type": "subnet",
+      "parent": "/obj/medieval_roof_high_v3/BUILDING/OUTPUT",
+      "owner": "mythic.medieval.modular_rebuild",
+      "actual_input_wires": [
+        {
+          "input": 0,
+          "source": "UV_MATERIAL",
+          "source_output": 0,
+          "indirect_input": 0
+        }
+      ],
+      "expected_input_wires": [
+        {
+          "input": 0,
+          "source": "UV_MATERIAL",
+          "source_output": 0,
+          "indirect_input": 0
+        }
+      ],
+      "outputs": [
+        "low",
+        "high",
+        "selected"
+      ],
+      "debug_endpoint": "/obj/medieval_roof_high_v3/BUILDING/OUTPUT/detail_levels/OUT_DEBUG",
+      "direct_children": 16,
+      "descendants": 16,
+      "node_types": {
+        "null": 2,
+        "attribwrangle": 6,
+        "blast": 2,
+        "polybevel::3.0": 1,
+        "normal": 1,
+        "switch": 1,
+        "output": 3
+      }
+    },
+    {
+      "module_id": "output.game_export",
+      "path": "/obj/medieval_roof_high_v3/BUILDING/OUTPUT/game_export",
+      "type": "subnet",
+      "parent": "/obj/medieval_roof_high_v3/BUILDING/OUTPUT",
+      "owner": "mythic.medieval.modular_rebuild",
+      "actual_input_wires": [
+        {
+          "input": 0,
+          "source": "OUTPUT/detail_levels",
+          "source_output": 2,
+          "indirect_input": null
+        }
+      ],
+      "expected_input_wires": [
+        {
+          "input": 0,
+          "source": "OUTPUT/detail_levels",
+          "source_output": 2,
+          "indirect_input": null
+        }
+      ],
+      "outputs": [
+        "geometry"
+      ],
+      "debug_endpoint": "/obj/medieval_roof_high_v3/BUILDING/OUTPUT/game_export/OUT_DEBUG",
+      "direct_children": 4,
+      "descendants": 4,
+      "node_types": {
+        "null": 2,
+        "attribwrangle": 1,
+        "output": 1
+      }
+    }
+  ],
+  "node_types": {
+    "matnet": 1,
+    "principledshader::2.0": 16,
+    "null": 106,
+    "subnet": 31,
+    "object_merge": 1,
+    "grid": 1,
+    "attribwrangle": 221,
+    "polyextrude::2.0": 31,
+    "blast": 25,
+    "output": 103,
+    "boolean::2.0": 26,
+    "merge": 33,
+    "mythic::medieval_stage_openings::3.0": 1,
+    "xform": 8,
+    "box": 55,
+    "copytopoints::2.0": 41,
+    "clean": 4,
+    "normal": 14,
+    "mythic::medieval_function_openings_attachments::3.0": 1,
+    "tube": 19,
+    "skin": 8,
+    "mythic::medieval_module_openings_wall_cuts::3.0": 1,
+    "mythic::medieval_stage_roof::3.0": 1,
+    "reverse": 7,
+    "divide": 1,
+    "polywire": 1,
+    "mythic::medieval_function_roof_dormers::3.0": 1,
+    "mythic::medieval_function_roof_surfaces_tiles::3.0": 1,
+    "mythic::medieval_stage_details::3.0": 1,
+    "sweep::2.0": 1,
+    "torus": 1,
+    "polybevel::3.0": 2,
+    "mythic::medieval_stage_uv_material::3.0": 1,
+    "mythic::medieval_module_uv_material_surfacing::3.0": 1,
+    "switch": 1
+  },
+  "python_sops": [],
+  "wrangles": [
+    "/obj/medieval_roof_high_v3/BUILDING/LAYOUT/semantic_layout/F_PLAN/ROLE_PLANS",
+    "/obj/medieval_roof_high_v3/BUILDING/LAYOUT/semantic_layout/F_PLAN/FLOOR_PLANS",
+    "/obj/medieval_roof_high_v3/BUILDING/LAYOUT/semantic_layout/F_PLAN/ROOF_PLANS",
+    "/obj/medieval_roof_high_v3/BUILDING/LAYOUT/IDENTITY_layout_semantic_layout_role_plans",
+    "/obj/medieval_roof_high_v3/BUILDING/LAYOUT/IDENTITY_layout_semantic_layout_floor_plans",
+    "/obj/medieval_roof_high_v3/BUILDING/LAYOUT/IDENTITY_layout_semantic_layout_storey_mass",
+    "/obj/medieval_roof_high_v3/BUILDING/LAYOUT/IDENTITY_layout_semantic_layout_roof_plans",
+    "/obj/medieval_roof_high_v3/BUILDING/SHELL/body_shell/INNER_SPACE_PROFILES",
+    "/obj/medieval_roof_high_v3/BUILDING/SHELL/facade_layout/WALL_FACE_PROFILES",
+    "/obj/medieval_roof_high_v3/BUILDING/SHELL/facade_layout/FACADE_BAYS",
+    "/obj/medieval_roof_high_v3/BUILDING/SHELL/facade_layout/VISIBLE_FACADE_BAYS",
+    "/obj/medieval_roof_high_v3/BUILDING/SHELL/facade_layout/FACADE_OPENING_POINTS",
+    "/obj/medieval_roof_high_v3/BUILDING/SHELL/facade_layout/ATTIC_OPENING_POINTS",
+    "/obj/medieval_roof_high_v3/BUILDING/SHELL/IDENTITY_shell_body_shell_uncut_shell",
+    "/obj/medieval_roof_high_v3/BUILDING/SHELL/IDENTITY_shell_body_shell_solid_body",
+    "/obj/medieval_roof_high_v3/BUILDING/SHELL/IDENTITY_shell_facade_layout_visible_bays",
+    "/obj/medieval_roof_high_v3/BUILDING/SHELL/IDENTITY_shell_facade_layout_opening_points",
+    "/obj/medieval_roof_high_v3/BUILDING/OPENINGS/kits/WINDOW_MODULE/clear_aperture_profile",
+    "/obj/medieval_roof_high_v3/BUILDING/OPENINGS/kits/WINDOW_MODULE/frame_arch_profiles",
+    "/obj/medieval_roof_high_v3/BUILDING/OPENINGS/kits/WINDOW_MODULE/glass_material",
+    "/obj/medieval_roof_high_v3/BUILDING/OPENINGS/kits/WINDOW_MODULE/mullion_profiles",
+    "/obj/medieval_roof_high_v3/BUILDING/OPENINGS/kits/WINDOW_MODULE/sill_material",
+    "/obj/medieval_roof_high_v3/BUILDING/OPENINGS/kits/WINDOW_MODULE/shutter_placement_points",
+    "/obj/medieval_roof_high_v3/BUILDING/OPENINGS/kits/WINDOW_MODULE/shutter_material",
+    "/obj/medieval_roof_high_v3/BUILDING/OPENINGS/kits/WINDOW_MODULE/shutter_strap_profiles",
+    "/obj/medieval_roof_high_v3/BUILDING/OPENINGS/kits/DOOR_MODULE/clear_aperture_profile",
+    "/obj/medieval_roof_high_v3/BUILDING/OPENINGS/kits/DOOR_MODULE/frame_arch_profiles",
+    "/obj/medieval_roof_high_v3/BUILDING/OPENINGS/kits/DOOR_MODULE/arched_door_plank_profiles",
+    "/obj/medieval_roof_high_v3/BUILDING/OPENINGS/kits/DOOR_MODULE/hinge_placement_points",
+    "/obj/medieval_roof_high_v3/BUILDING/OPENINGS/kits/DOOR_MODULE/hinge_material",
+    "/obj/medieval_roof_high_v3/BUILDING/OPENINGS/kits/DOOR_MODULE/handle_ring_profiles",
+    "/obj/medieval_roof_high_v3/BUILDING/OPENINGS/attachments/ATTACHMENT_PLACEMENT_DATA",
+    "/obj/medieval_roof_high_v3/BUILDING/OPENINGS/attachments/member_materials_and_names",
+    "/obj/medieval_roof_high_v3/BUILDING/OPENINGS/attachments/shared_datum_roof_profiles",
+    "/obj/medieval_roof_high_v3/BUILDING/OPENINGS/attachments/cupola_octagonal_cap_profiles",
+    "/obj/medieval_roof_high_v3/BUILDING/OPENINGS/attachments/offset_bay_cutter_starts",
+    "/obj/medieval_roof_high_v3/BUILDING/OPENINGS/attachments/attachment_output_metadata",
+    "/obj/medieval_roof_high_v3/BUILDING/OPENINGS/attachments/classify_canopy_members",
+    "/obj/medieval_roof_high_v3/BUILDING/OPENINGS/attachments/canopy_upper_faces",
+    "/obj/medieval_roof_high_v3/BUILDING/OPENINGS/attachments/canopy_tile_placements",
+    "/obj/medieval_roof_high_v3/BUILDING/OPENINGS/attachments/canopy_tile_material",
+    "/obj/medieval_roof_high_v3/BUILDING/OPENINGS/windows/WINDOWS_REPLACED_BY_BAY",
+    "/obj/medieval_roof_high_v3/BUILDING/OPENINGS/wall_cuts/F_WALL_FINISH/GABLE_PROFILES",
+    "/obj/medieval_roof_high_v3/BUILDING/OPENINGS/wall_cuts/F_WALL_FINISH/WALL_MATERIAL",
+    "/obj/medieval_roof_high_v3/BUILDING/OPENINGS/IDENTITY_openings_kits_window_geometry",
+    "/obj/medieval_roof_high_v3/BUILDING/OPENINGS/IDENTITY_openings_kits_window_aperture",
+    "/obj/medieval_roof_high_v3/BUILDING/OPENINGS/IDENTITY_openings_kits_door_geometry",
+    "/obj/medieval_roof_high_v3/BUILDING/OPENINGS/IDENTITY_openings_kits_door_aperture",
+    "/obj/medieval_roof_high_v3/BUILDING/OPENINGS/IDENTITY_openings_attachments_attachment_geometry",
+    "/obj/medieval_roof_high_v3/BUILDING/OPENINGS/IDENTITY_openings_attachments_bay_cutters",
+    "/obj/medieval_roof_high_v3/BUILDING/OPENINGS/IDENTITY_openings_attachments_replacement_metadata",
+    "/obj/medieval_roof_high_v3/BUILDING/OPENINGS/IDENTITY_openings_windows_window_geometry",
+    "/obj/medieval_roof_high_v3/BUILDING/OPENINGS/IDENTITY_openings_windows_window_cutters",
+    "/obj/medieval_roof_high_v3/BUILDING/OPENINGS/IDENTITY_openings_doors_door_geometry",
+    "/obj/medieval_roof_high_v3/BUILDING/OPENINGS/IDENTITY_openings_doors_door_cutters",
+    "/obj/medieval_roof_high_v3/BUILDING/OPENINGS/IDENTITY_openings_wall_cuts_walls",
+    "/obj/medieval_roof_high_v3/BUILDING/ROOF/patch_surfaces/ROOF_SECTION_PROFILES",
+    "/obj/medieval_roof_high_v3/BUILDING/ROOF/patch_surfaces/HIPPED_ROOF_MODULE/analytic_hip_cross_sections",
+    "/obj/medieval_roof_high_v3/BUILDING/ROOF/patch_surfaces/HIPPED_ROOF_MODULE/hip_surface_metadata",
+    "/obj/medieval_roof_high_v3/BUILDING/ROOF/patch_surfaces/DETECT_ROOF_WINDING",
+    "/obj/medieval_roof_high_v3/BUILDING/ROOF/patch_surfaces/ROOF_THICKNESS",
+    "/obj/medieval_roof_high_v3/BUILDING/ROOF/patch_surfaces/canonical_patch_identity",
+    "/obj/medieval_roof_high_v3/BUILDING/ROOF/ridge_valley_solver/volume_direction_0",
+    "/obj/medieval_roof_high_v3/BUILDING/ROOF/ridge_valley_solver/volume_direction_1",
+    "/obj/medieval_roof_high_v3/BUILDING/ROOF/ridge_valley_solver/classify_upper_envelope",
+    "/obj/medieval_roof_high_v3/BUILDING/ROOF/ridge_valley_solver/restore_resolved_patch_ids",
+    "/obj/medieval_roof_high_v3/BUILDING/ROOF/ridge_valley_solver/roof_shell_thickness_direction",
+    "/obj/medieval_roof_high_v3/BUILDING/ROOF/ridge_valley_solver/roof_domain_material",
+    "/obj/medieval_roof_high_v3/BUILDING/ROOF/ridge_valley_solver/ridge_valley_guides",
+    "/obj/medieval_roof_high_v3/BUILDING/ROOF/dormers/dormer_cutter_metadata",
+    "/obj/medieval_roof_high_v3/BUILDING/ROOF/dormers/DORMER_MODULE/wall_material",
+    "/obj/medieval_roof_high_v3/BUILDING/ROOF/dormers/DORMER_MODULE/gable_profiles",
+    "/obj/medieval_roof_high_v3/BUILDING/ROOF/dormers/DORMER_MODULE/pitched_roof_profiles",
+    "/obj/medieval_roof_high_v3/BUILDING/ROOF/dormers/DORMER_MODULE/dormer_tile_placements",
+    "/obj/medieval_roof_high_v3/BUILDING/ROOF/dormers/DORMER_MODULE/dormer_tile_material",
+    "/obj/medieval_roof_high_v3/BUILDING/ROOF/dormers/DORMER_PLACEMENT_DATA",
+    "/obj/medieval_roof_high_v3/BUILDING/ROOF/dormers/DORMER_CUTTER_TRANSFORMS",
+    "/obj/medieval_roof_high_v3/BUILDING/ROOF/dormers/matched_dormer_aperture_profile",
+    "/obj/medieval_roof_high_v3/BUILDING/ROOF/surfaces_tiles/ROOF_SHELL_MATERIAL",
+    "/obj/medieval_roof_high_v3/BUILDING/ROOF/surfaces_tiles/ROOF_TILE_PLACEMENT",
+    "/obj/medieval_roof_high_v3/BUILDING/ROOF/surfaces_tiles/TILE_MATERIAL",
+    "/obj/medieval_roof_high_v3/BUILDING/ROOF/surfaces_tiles/DORMER_ROOF_MATERIAL",
+    "/obj/medieval_roof_high_v3/BUILDING/ROOF/surfaces_tiles/DORMER_TILES_MATERIAL",
+    "/obj/medieval_roof_high_v3/BUILDING/ROOF/surfaces_tiles/tile_candidates_on_resolved_domain",
+    "/obj/medieval_roof_high_v3/BUILDING/ROOF/trim/analytic_edge_profiles",
+    "/obj/medieval_roof_high_v3/BUILDING/ROOF/trim/ridge_cap_profile",
+    "/obj/medieval_roof_high_v3/BUILDING/ROOF/trim/RIDGE_PLACEMENT_DATA",
+    "/obj/medieval_roof_high_v3/BUILDING/ROOF/trim/chimney_stone_material",
+    "/obj/medieval_roof_high_v3/BUILDING/ROOF/trim/chimney_pot_material",
+    "/obj/medieval_roof_high_v3/BUILDING/ROOF/trim/CHIMNEY_PLACEMENT_DATA",
+    "/obj/medieval_roof_high_v3/BUILDING/ROOF/IDENTITY_roof_dormers_dormer_geometry",
+    "/obj/medieval_roof_high_v3/BUILDING/ROOF/IDENTITY_roof_dormers_dormer_cutters",
+    "/obj/medieval_roof_high_v3/BUILDING/ROOF/IDENTITY_roof_surfaces_tiles_roof_shell",
+    "/obj/medieval_roof_high_v3/BUILDING/ROOF/IDENTITY_roof_surfaces_tiles_roof_tiles",
+    "/obj/medieval_roof_high_v3/BUILDING/ROOF/IDENTITY_roof_trim_roof_trim",
+    "/obj/medieval_roof_high_v3/BUILDING/ROOF/IDENTITY_roof_patch_surfaces_raw_surfaces",
+    "/obj/medieval_roof_high_v3/BUILDING/ROOF/IDENTITY_roof_junctions_roof_top",
+    "/obj/medieval_roof_high_v3/BUILDING/ROOF/IDENTITY_roof_junctions_roof_volume",
+    "/obj/medieval_roof_high_v3/BUILDING/ROOF/IDENTITY_roof_junctions_roof_shell",
+    "/obj/medieval_roof_high_v3/BUILDING/ROOF/IDENTITY_roof_junctions_junction_trim",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/FACADE_DETAIL_MODULE/CLASSIFY_MODULES_AND_OVERRIDE_SLOTS",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/FACADE_DETAIL_MODULE/STUD_AND_BRACE_POINTS",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/FACADE_DETAIL_MODULE/FUNCTIONAL_MODULE_POINTS",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/FACADE_DETAIL_MODULE/BUDGETED_HERO_POINTS",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/FACADE_DETAIL_MODULE/REFERENCE_HERO_MODULES/forge_outer_metadata",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/FACADE_DETAIL_MODULE/REFERENCE_HERO_MODULES/furnace_cutter_lower_metadata",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/FACADE_DETAIL_MODULE/REFERENCE_HERO_MODULES/furnace_cutter_arch_metadata",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/FACADE_DETAIL_MODULE/REFERENCE_HERO_MODULES/forge_masonry_metadata",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/FACADE_DETAIL_MODULE/REFERENCE_HERO_MODULES/flue_outer_metadata",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/FACADE_DETAIL_MODULE/REFERENCE_HERO_MODULES/flue_inner_metadata",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/FACADE_DETAIL_MODULE/REFERENCE_HERO_MODULES/forge_flue_metadata",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/FACADE_DETAIL_MODULE/REFERENCE_HERO_MODULES/forge_back_metadata",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/FACADE_DETAIL_MODULE/REFERENCE_HERO_MODULES/forge_hearth_metadata",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/FACADE_DETAIL_MODULE/REFERENCE_HERO_MODULES/flue_band_outer_0_metadata",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/FACADE_DETAIL_MODULE/REFERENCE_HERO_MODULES/flue_band_inner_0_metadata",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/FACADE_DETAIL_MODULE/REFERENCE_HERO_MODULES/flue_band_0_metadata",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/FACADE_DETAIL_MODULE/REFERENCE_HERO_MODULES/flue_band_outer_1_metadata",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/FACADE_DETAIL_MODULE/REFERENCE_HERO_MODULES/flue_band_inner_1_metadata",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/FACADE_DETAIL_MODULE/REFERENCE_HERO_MODULES/flue_band_1_metadata",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/FACADE_DETAIL_MODULE/REFERENCE_HERO_MODULES/flue_band_outer_2_metadata",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/FACADE_DETAIL_MODULE/REFERENCE_HERO_MODULES/flue_band_inner_2_metadata",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/FACADE_DETAIL_MODULE/REFERENCE_HERO_MODULES/flue_band_2_metadata",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/FACADE_DETAIL_MODULE/REFERENCE_HERO_MODULES/arch_stone_0_metadata",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/FACADE_DETAIL_MODULE/REFERENCE_HERO_MODULES/arch_stone_1_metadata",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/FACADE_DETAIL_MODULE/REFERENCE_HERO_MODULES/arch_stone_2_metadata",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/FACADE_DETAIL_MODULE/REFERENCE_HERO_MODULES/arch_stone_3_metadata",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/FACADE_DETAIL_MODULE/REFERENCE_HERO_MODULES/arch_stone_4_metadata",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/FACADE_DETAIL_MODULE/REFERENCE_HERO_MODULES/arch_stone_5_metadata",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/FACADE_DETAIL_MODULE/REFERENCE_HERO_MODULES/arch_stone_6_metadata",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/FACADE_DETAIL_MODULE/REFERENCE_HERO_MODULES/arch_stone_7_metadata",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/FACADE_DETAIL_MODULE/REFERENCE_HERO_MODULES/arch_stone_8_metadata",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/FACADE_DETAIL_MODULE/REFERENCE_HERO_MODULES/arch_stone_9_metadata",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/FACADE_DETAIL_MODULE/REFERENCE_HERO_MODULES/jamb_stone_-1_0_metadata",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/FACADE_DETAIL_MODULE/REFERENCE_HERO_MODULES/jamb_stone_-1_1_metadata",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/FACADE_DETAIL_MODULE/REFERENCE_HERO_MODULES/jamb_stone_-1_2_metadata",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/FACADE_DETAIL_MODULE/REFERENCE_HERO_MODULES/jamb_stone_-1_3_metadata",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/FACADE_DETAIL_MODULE/REFERENCE_HERO_MODULES/jamb_stone_1_0_metadata",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/FACADE_DETAIL_MODULE/REFERENCE_HERO_MODULES/jamb_stone_1_1_metadata",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/FACADE_DETAIL_MODULE/REFERENCE_HERO_MODULES/jamb_stone_1_2_metadata",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/FACADE_DETAIL_MODULE/REFERENCE_HERO_MODULES/jamb_stone_1_3_metadata",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/FACADE_DETAIL_MODULE/REFERENCE_HERO_MODULES/FORGE_DATA",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/FACADE_DETAIL_MODULE/REFERENCE_HERO_MODULES/hoist_jib_metadata",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/FACADE_DETAIL_MODULE/REFERENCE_HERO_MODULES/hoist_wall_post_metadata",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/FACADE_DETAIL_MODULE/REFERENCE_HERO_MODULES/hoist_knee_metadata",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/FACADE_DETAIL_MODULE/REFERENCE_HERO_MODULES/hoist_rope_metadata",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/FACADE_DETAIL_MODULE/REFERENCE_HERO_MODULES/hoist_ring_metadata",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/FACADE_DETAIL_MODULE/REFERENCE_HERO_MODULES/HOIST_DATA",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/FACADE_DETAIL_MODULE/REFERENCE_HERO_MODULES/hoist_crate_body_metadata",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/FACADE_DETAIL_MODULE/REFERENCE_HERO_MODULES/crate_rail_-1_metadata",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/FACADE_DETAIL_MODULE/REFERENCE_HERO_MODULES/crate_rail_1_metadata",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/FACADE_DETAIL_MODULE/REFERENCE_HERO_MODULES/crate_diagonal_a_metadata",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/FACADE_DETAIL_MODULE/REFERENCE_HERO_MODULES/crate_diagonal_b_metadata",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/FACADE_DETAIL_MODULE/REFERENCE_HERO_MODULES/CRATE_DATA",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/FACADE_DETAIL_MODULE/REFERENCE_HERO_MODULES/INSTANCE_NAMES",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/FACADE_DETAIL_MODULE/REFERENCE_HERO_MODULES/GUILD_PIER_DATA",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/FACADE_DETAIL_MODULE/REFERENCE_HERO_MODULES/GUILD_CAP_DATA",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/FACADE_DETAIL_MODULE/REFERENCE_HERO_MODULES/GUILD_METADATA",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/TIMBER_PLACEMENT",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/TIMBER_BRACE_CURVES",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/TIMBER_METADATA",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/facade/GABLE_TRUSS_DATA",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/interior/floor_and_spiral_profiles",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/interior/stair_and_joist_placement",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/interior/member_materials_and_names",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/interior/INTERIOR_WALL_FRAME_DATA",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/interior/INTERIOR_FRAME_METADATA",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/interior/FLOOR_EXTRUSION_METADATA",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/balcony/balcony_deck_profiles",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/balcony/railing_and_bracket_placements",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/balcony/member_names_and_materials",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/utilities/UTILITY_ASSEMBLY_DATA",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/utilities/WINDMILL_MODULE/spar_wood",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/utilities/WINDMILL_MODULE/canvas_material",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/utilities/WINDMILL_MODULE/four_radial_sail_points",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/utilities/WINDMILL_MODULE/hub_metal",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/utilities/WINDMILL_MODULE/axle_wood",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/utilities/WATERWHEEL_MODULE/rim_wood",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/utilities/WATERWHEEL_MODULE/two_rim_points",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/utilities/WATERWHEEL_MODULE/spoke_wood",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/utilities/WATERWHEEL_MODULE/radial_spoke_points",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/utilities/WATERWHEEL_MODULE/paddle_wood",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/utilities/WATERWHEEL_MODULE/twenty_four_paddle_points",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/utilities/WATERWHEEL_MODULE/axle_metal",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/utilities/STILT_CORNER_DATA",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/utilities/post_wood",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/utilities/STILT_FOOTING_DATA",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/utilities/footing_stone",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/site/live_site_bounds",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/site/foundation_plan_profiles",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/site/ground_grade_and_material",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/site/awning_and_canopy_profiles",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/site/entry_and_canopy_placements",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/site/member_names_and_materials",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/site/classify_canopy_members",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/site/canopy_upper_faces",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/site/canopy_tile_placements",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/site/canopy_tile_material",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/furnishing/FURNITURE_PLACEMENT_DATA",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/furnishing/furniture_materials_and_names",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/furnishing/barrel_belly",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/furnishing/BARREL_PLACEMENT_DATA",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/furnishing/barrel_materials_and_names",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/furnishing/MILL_GRINDSTONE_DATA",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/furnishing/grindstone_materials_and_names",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/IDENTITY_details_facade_structural_timber",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/IDENTITY_details_facade_facade_details",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/IDENTITY_details_interior_interior",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/IDENTITY_details_balcony_balcony",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/IDENTITY_details_utilities_utilities",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/IDENTITY_details_site_site",
+    "/obj/medieval_roof_high_v3/BUILDING/DETAILS/IDENTITY_details_furnishing_furnishing",
+    "/obj/medieval_roof_high_v3/BUILDING/UV_MATERIAL/surfacing/F_FINISH/FINAL_COMPONENT_NAMES",
+    "/obj/medieval_roof_high_v3/BUILDING/UV_MATERIAL/surfacing/F_FINISH/METRIC_UV",
+    "/obj/medieval_roof_high_v3/BUILDING/UV_MATERIAL/surfacing/F_FINISH/BIND_MATERIALS",
+    "/obj/medieval_roof_high_v3/BUILDING/OUTPUT/detail_levels/exact_face_cleanup_masks",
+    "/obj/medieval_roof_high_v3/BUILDING/OUTPUT/detail_levels/high_semantic_members",
+    "/obj/medieval_roof_high_v3/BUILDING/OUTPUT/detail_levels/local_feature_bevel_limits",
+    "/obj/medieval_roof_high_v3/BUILDING/OUTPUT/detail_levels/bevel_only_orthogonal_members",
+    "/obj/medieval_roof_high_v3/BUILDING/OUTPUT/detail_levels/restore_high_semantics",
+    "/obj/medieval_roof_high_v3/BUILDING/OUTPUT/detail_levels/high_exact_face_cleanup",
+    "/obj/medieval_roof_high_v3/BUILDING/OUTPUT/game_export/export_semantic_metadata"
+  ],
+  "object_merges": [
+    {
+      "path": "/obj/medieval_roof_high_v3/BUILDING/LAYOUT/semantic_layout/OPTIONAL_BLOCKOUT_INPUT",
+      "path_expression": "chs(\"../../layout_path\")"
+    }
+  ],
+  "root_children": [
+    "materials",
+    "CTRL_BUILDING",
+    "OUT_BUILDING",
+    "LAYOUT",
+    "SHELL",
+    "OPENINGS",
+    "ROOF",
+    "DETAILS",
+    "UV_MATERIAL",
+    "OUTPUT",
+    "PUBLIC_BUILDING_OUTPUT",
+    "PUBLIC_LOW",
+    "PUBLIC_HIGH"
+  ],
+  "final_output": "/obj/medieval_roof_high_v3/BUILDING/OUT_BUILDING",
+  "all_declared_modules_reach_output": true,
+  "source_function_count": 18,
+  "network_capture": "not_run; headless HOM audit, no synthetic screenshot",
+  "parameter_sweeps": "results/regressions.json"
+}

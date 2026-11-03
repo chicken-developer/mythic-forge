@@ -1,0 +1,1 @@
+{"dataset": "08_normal_house_b", "quality": "high", "target": [0.0, 2.4, -4.0], "width": 5.5, "view": "hero", "tag": "08_pitched_canopy_contact_high", "script": "gui_review.py", "id": "721_review"}

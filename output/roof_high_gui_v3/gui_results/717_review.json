@@ -1,0 +1,29 @@
+{
+  "status": "pass",
+  "result": {
+    "variant_id": "06_tavern",
+    "quality": "high",
+    "points": 164676,
+    "primitives": 165625,
+    "display_node": "/obj/medieval_roof_high_v3/BUILDING",
+    "camera": {
+      "t": [
+        17.0,
+        17.2,
+        -23.0
+      ],
+      "r": [
+        -22.152627580061193,
+        141.00900595749454,
+        0.0
+      ],
+      "orthowidth": 7.0
+    },
+    "ui": true,
+    "scene": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\scenes\\medieval_building_roof_high_v3.hip",
+    "wire": true,
+    "window_minimized": false,
+    "window_visible": true,
+    "hud_text": "06_tavern  |  HIGH  |  165625 primitives  |  LIVE HOUDINI GUI"
+  }
+}

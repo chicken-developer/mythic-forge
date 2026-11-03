@@ -1,0 +1,120 @@
+{
+  "status": "passed",
+  "runtime": "22.0.368",
+  "assets": {
+    "SM_Furniture01_Table01": {
+      "triangles": 578,
+      "source": "/Game/SkyTown/Meshes/SM_Furniture01_Table01",
+      "materials": [
+        "/Game/SkyTown/Materials/MI_Furniture01.MI_Furniture01"
+      ]
+    },
+    "SM_Furniture01_Bench01": {
+      "triangles": 240,
+      "source": "/Game/SkyTown/Meshes/SM_Furniture01_Bench01",
+      "materials": [
+        "/Game/SkyTown/Materials/MI_Furniture01.MI_Furniture01"
+      ]
+    },
+    "SM_Furniture01_Chair01": {
+      "triangles": 344,
+      "source": "/Game/SkyTown/Meshes/SM_Furniture01_Chair01",
+      "materials": [
+        "/Game/SkyTown/Materials/MI_Furniture01.MI_Furniture01"
+      ]
+    },
+    "SM_Furniture01_Shelf01": {
+      "triangles": 144,
+      "source": "/Game/SkyTown/Meshes/SM_Furniture01_Shelf01",
+      "materials": [
+        "/Game/SkyTown/Materials/MI_Furniture01.MI_Furniture01"
+      ]
+    },
+    "SM_Furniture01_Rack01": {
+      "triangles": 496,
+      "source": "/Game/SkyTown/Meshes/SM_Furniture01_Rack01",
+      "materials": [
+        "/Game/SkyTown/Materials/MI_Furniture01.MI_Furniture01"
+      ]
+    },
+    "SM_Bed01": {
+      "triangles": 2860,
+      "source": "/Game/SkyTown/Meshes/SM_Bed01",
+      "materials": [
+        "/Game/SkyTown/Materials/MI_Bed01.MI_Bed01"
+      ]
+    },
+    "SM_Barrel01": {
+      "triangles": 6588,
+      "source": "/Game/SkyTown/Meshes/SM_Barrel01",
+      "materials": [
+        "/Game/SkyTown/Materials/MI_Barrel01.MI_Barrel01"
+      ]
+    },
+    "SM_Box01": {
+      "triangles": 2480,
+      "source": "/Game/SkyTown/Meshes/SM_Box01",
+      "materials": [
+        "/Game/SkyTown/Materials/MI_Box01.MI_Box01"
+      ]
+    },
+    "SM_FruitCrate01": {
+      "triangles": 212,
+      "source": "/Game/SkyTown/Meshes/SM_FruitCrate01",
+      "materials": [
+        "/Game/SkyTown/Materials/MI_FruitCrate01.MI_FruitCrate01"
+      ]
+    },
+    "SM_Basket01": {
+      "triangles": 1302,
+      "source": "/Game/SkyTown/Meshes/SM_Basket01",
+      "materials": [
+        "/Game/SkyTown/Materials/MI_Basket01.MI_Basket01"
+      ]
+    },
+    "SM_Lamp01": {
+      "triangles": 1754,
+      "source": "/Game/SkyTown/Meshes/SM_Lamp01",
+      "materials": [
+        "/Game/SkyTown/Materials/MI_Lamp01.MI_Lamp01"
+      ]
+    },
+    "SM_Ceramics01_Item01": {
+      "triangles": 2432,
+      "source": "/Game/SkyTown/Meshes/SM_Ceramics01_Item01",
+      "materials": [
+        "/Game/SkyTown/Materials/MI_Ceramics01.MI_Ceramics01"
+      ]
+    },
+    "SM_IvyFlowers01": {
+      "triangles": 45,
+      "source": "/Game/SkyTown/Meshes/SM_IvyFlowers01",
+      "materials": [
+        "/Game/SkyTown/Materials/MI_Ivy01.MI_Ivy01",
+        "/Game/SkyTown/Materials/MI_IvyFlower01.MI_IvyFlower01"
+      ]
+    },
+    "SM_Tapestry01": {
+      "triangles": 6,
+      "source": "/Game/SkyTown/Meshes/SM_Tapestry01",
+      "materials": [
+        "/Game/SkyTown/Materials/MI_Tapestry01.MI_Tapestry01"
+      ]
+    },
+    "SM_Bathtub01": {
+      "triangles": 3278,
+      "source": "/Game/SkyTown/Meshes/SM_Bathtub01",
+      "materials": [
+        "/Game/SkyTown/Materials/MI_Bathtub01.MI_Bathtub01",
+        "/Game/SkyTown/Materials/MI_Rope01.MI_Rope01"
+      ]
+    },
+    "SM_Books01_Item01": {
+      "triangles": 456,
+      "source": "/Game/SkyTown/Meshes/SM_Books01_Item01",
+      "materials": [
+        "/Game/SkyTown/Materials/MI_Books_01.MI_Books_01"
+      ]
+    }
+  }
+}

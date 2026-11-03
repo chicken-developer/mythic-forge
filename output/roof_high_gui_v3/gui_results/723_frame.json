@@ -1,0 +1,25 @@
+{
+  "status": "pass",
+  "result": {
+    "network": "/obj/medieval_roof_high_v3/BUILDING/OUTPUT/detail_levels",
+    "nodes": [
+      "IN_building",
+      "exact_face_cleanup_masks",
+      "LOW_VALIDATED",
+      "high_semantic_members",
+      "local_feature_bevel_limits",
+      "bevel_only_orthogonal_members",
+      "HIGH_FEATURE_BEVEL",
+      "restore_high_semantics",
+      "high_exact_face_cleanup",
+      "HIGH_VALIDATED",
+      "HIGH_NORMALS",
+      "DISPLAY_LOW_OR_HIGH",
+      "OUT_low",
+      "OUT_high",
+      "OUT_selected",
+      "OUT_DEBUG"
+    ],
+    "bounds": "[-10.2428, -0.5, 3, 10.3372]"
+  }
+}

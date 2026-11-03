@@ -1,0 +1,27 @@
+int count=nprimitives(0);
+for(int src=0;src<count;src++){
+ vector center=prim(0,"role_center",src);float top=prim(0,"top_y",src),w=prim(0,"width",src),d=prim(0,"depth",src),e=prim(0,"eave",src);
+ float h=prim(0,"roof_h",src),curve=prim(0,"curve",src),angle=prim(0,"rot_y",src);int round=prim(0,"is_round",src),role=prim(0,"role_id",src);
+ matrix3 rot=ident();rotate(rot,radians(angle),{0,1,0});vector axis=set(0,0,1)*rot;
+ if(!round && chs("../roof_shape")=="hipped")continue;
+ if(!round){
+   int n=max(4,int(ceil((w+2*e)/ch("../tile_size_m"))));n+=n%2;
+   for(int end=0;end<2;end++){
+     int pts[];for(int i=0;i<=n;i++){
+       float x=-(w/2+e)+(w+2*e)*i/n,q=abs(x)/(w/2+e);
+       vector p=set(x,top+h*(1-q)+curve*pow(q,4),(end?1:-1)*(d/2+e));p=p*rot+center;
+       int pt=addpoint(0,p);append(pts,pt);setpointattrib(0,"roof_role",pt,role);setpointattrib(0,"roof_axis",pt,axis);
+     }int p=addprim(0,"polyline",pts);setprimattrib(0,"profile_round",p,0);
+   }
+ }else{
+   int steps=max(5,int(ceil(h/ch("../tile_size_m"))));int n=chs("../mesh_quality")=="low"?24:chs("../mesh_quality")=="high"?48:32;
+   for(int ring=0;ring<=steps;ring++){
+     float t=float(ring)/steps,r=lerp(w/2+e,.035,t),y=top+h*t+curve*pow(1-t,4);int pts[];
+     for(int j=0;j<n;j++){
+       float a=2*M_PI*j/n;vector p=center+set(r*cos(a),y,r*sin(a));int pt=addpoint(0,p);append(pts,pt);
+       setpointattrib(0,"roof_role",pt,role);setpointattrib(0,"roof_axis",pt,set(0,0,0));
+     }int p=addprim(0,"poly",pts);setprimattrib(0,"profile_round",p,1);
+   }
+ }
+}
+for(int p=count-1;p>=0;p--)removeprim(0,p,1);

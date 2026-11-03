@@ -1,0 +1,4 @@
+
+int pt=primpoint(0,@primnum,0);
+i@role_id=point(0,"roof_role",pt);s@role=point(0,"roof_role_name",pt);
+s@material_family="tile";s@name="hip_roof/"+s@role;s@component="roof";v@Cd=set(.76,.24,.105);

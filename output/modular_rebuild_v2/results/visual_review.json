@@ -1,0 +1,105 @@
+{
+  "reviewed_date": "2026-11-03",
+  "reviewer": "Codex visual inspection",
+  "scope": "Common hero view/contact sheets, exact before-after comparison for material storage, and real UV checker renders for baseline/forgehouse. Not an all-angle structural certification.",
+  "viewed": [
+    "references/review_group_1.png",
+    "references/review_group_2.png",
+    "references/review_group_3.png",
+    "renders/before_contact_sheet.png",
+    "renders/after_contact_sheet.png",
+    "renders/before/baseline_hero.png",
+    "comparisons/13_material_storage.png",
+    "renders/checker/baseline_uv.png",
+    "renders/checker/15_forgehouse_uv.png"
+  ],
+  "records": {
+    "baseline": {
+      "status": "reviewed_hero_view",
+      "observed": "Massing, roof coverage, facade rhythm and visible attachments match the original cooked hero at the common camera; no new visible silhouette loss.",
+      "fidelity": "Original procedural interpretation retained; concept-specific omissions remain documented."
+    },
+    "01_food_shop": {
+      "status": "reviewed_hero_view",
+      "observed": "Massing, roof coverage, facade rhythm and visible attachments match the original cooked hero at the common camera; no new visible silhouette loss.",
+      "fidelity": "Original procedural interpretation retained; concept-specific omissions remain documented."
+    },
+    "02_general_store": {
+      "status": "reviewed_hero_view",
+      "observed": "Massing, roof coverage, facade rhythm and visible attachments match the original cooked hero at the common camera; no new visible silhouette loss.",
+      "fidelity": "Original procedural interpretation retained; concept-specific omissions remain documented."
+    },
+    "03_herbal_store": {
+      "status": "reviewed_hero_view",
+      "observed": "Massing, roof coverage, facade rhythm and visible attachments match the original cooked hero at the common camera; no new visible silhouette loss.",
+      "fidelity": "Original procedural interpretation retained; concept-specific omissions remain documented."
+    },
+    "04_merchant_house": {
+      "status": "reviewed_hero_view",
+      "observed": "Massing, roof coverage, facade rhythm and visible attachments match the original cooked hero at the common camera; no new visible silhouette loss.",
+      "fidelity": "Original procedural interpretation retained; concept-specific omissions remain documented."
+    },
+    "05_mixed_shop": {
+      "status": "reviewed_hero_view",
+      "observed": "Massing, roof coverage, facade rhythm and visible attachments match the original cooked hero at the common camera; no new visible silhouette loss.",
+      "fidelity": "Original procedural interpretation retained; concept-specific omissions remain documented."
+    },
+    "06_tavern": {
+      "status": "reviewed_hero_view",
+      "observed": "Massing, roof coverage, facade rhythm and visible attachments match the original cooked hero at the common camera; no new visible silhouette loss.",
+      "fidelity": "Original procedural interpretation retained; concept-specific omissions remain documented."
+    },
+    "07_weapon_guild": {
+      "status": "reviewed_hero_view",
+      "observed": "Massing, roof coverage, facade rhythm and visible attachments match the original cooked hero at the common camera; no new visible silhouette loss.",
+      "fidelity": "Original procedural interpretation retained; concept-specific omissions remain documented."
+    },
+    "08_normal_house_b": {
+      "status": "reviewed_hero_view",
+      "observed": "Massing, roof coverage, facade rhythm and visible attachments match the original cooked hero at the common camera; no new visible silhouette loss.",
+      "fidelity": "Original procedural interpretation retained; concept-specific omissions remain documented."
+    },
+    "09_normal_house_c": {
+      "status": "reviewed_hero_view",
+      "observed": "Massing, roof coverage, facade rhythm and visible attachments match the original cooked hero at the common camera; no new visible silhouette loss.",
+      "fidelity": "Original procedural interpretation retained; concept-specific omissions remain documented."
+    },
+    "10_normal_house_c_canopy": {
+      "status": "reviewed_hero_view",
+      "observed": "Massing, roof coverage, facade rhythm and visible attachments match the original cooked hero at the common camera; no new visible silhouette loss.",
+      "fidelity": "Original procedural interpretation retained; concept-specific omissions remain documented."
+    },
+    "11_artisan_house": {
+      "status": "reviewed_hero_view",
+      "observed": "Massing, roof coverage, facade rhythm and visible attachments match the original cooked hero at the common camera; no new visible silhouette loss.",
+      "fidelity": "Original procedural interpretation retained; concept-specific omissions remain documented."
+    },
+    "12_craft_guild_hall": {
+      "status": "reviewed_hero_view",
+      "observed": "Massing, roof coverage, facade rhythm and visible attachments match the original cooked hero at the common camera; no new visible silhouette loss.",
+      "fidelity": "Original procedural interpretation retained; concept-specific omissions remain documented."
+    },
+    "13_material_storage": {
+      "status": "reviewed_hero_view",
+      "observed": "Massing, roof coverage, facade rhythm and visible attachments match the original cooked hero at the common camera; no new visible silhouette loss.",
+      "fidelity": "Original procedural interpretation retained; concept-specific omissions remain documented."
+    },
+    "14_toolmaker_workshop": {
+      "status": "reviewed_hero_view",
+      "observed": "Massing, roof coverage, facade rhythm and visible attachments match the original cooked hero at the common camera; no new visible silhouette loss.",
+      "fidelity": "Original procedural interpretation retained; concept-specific omissions remain documented."
+    },
+    "15_forgehouse": {
+      "status": "reviewed_hero_view",
+      "observed": "Massing, roof coverage, facade rhythm and visible attachments match the original cooked hero at the common camera; no new visible silhouette loss.",
+      "fidelity": "Original procedural interpretation retained; concept-specific omissions remain documented."
+    }
+  },
+  "uv_checker_observation": "Regular projected squares visible on roofs/walls; detailed trim/ornament and arbitrary curved-wall UV seam orientation require further specialist review.",
+  "remaining": [
+    "General ridge/valley solver for arbitrary semantic roof graphs is not implemented.",
+    "No complete self-intersection, support-load or all-angle watertightness certification.",
+    "Normal maps require rebaking for the revised UVs.",
+    "No Unreal editor changes or bake."
+  ]
+}

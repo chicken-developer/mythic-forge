@@ -1,0 +1,23 @@
+Exception in thread Thread-4:
+Traceback (most recent call last):
+  File "E:\SideFX\Houdini 22.0.368\python313\Lib\threading.py", line 1044, in _bootstrap_inner
+    self.run()
+    ~~~~~~~~^^
+  File "E:\SideFX/Houdini 22.0.368/houdini/python3.13libs\houdinihelp\api.py", line 740, in run
+    with ram_index.writer() as w:
+         ~~~~~~~~~~~~~~~~^^
+  File "E:\SideFX\Houdini 22.0.368\python313\Lib\site-packages\whoosh\writing\writing.py", line 870, in __exit__
+    self.commit()
+    ~~~~~~~~~~~^^
+  File "E:\SideFX\Houdini 22.0.368\python313\Lib\site-packages\whoosh\util\__init__.py", line 160, in unclosed_wrapper
+    return method(self, *args, **kwargs)
+  File "E:\SideFX\Houdini 22.0.368\python313\Lib\site-packages\whoosh\writing\writing.py", line 826, in commit
+    self._sync_toc()
+    ~~~~~~~~~~~~~~^^
+  File "E:\SideFX\Houdini 22.0.368\python313\Lib\site-packages\whoosh\writing\writing.py", line 853, in _sync_toc
+    self.session.store.save_toc(self.session, toc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "E:\SideFX\Houdini 22.0.368\python313\Lib\site-packages\whoosh\filedb\filestore.py", line 211, in save_toc
+    assert not self.file_exists(real_filename)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

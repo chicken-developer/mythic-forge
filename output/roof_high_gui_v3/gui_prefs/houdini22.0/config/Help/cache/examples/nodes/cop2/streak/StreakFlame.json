@@ -1,0 +1,1 @@
+{"type": "root", "attrs": {"exampleFile": "StreakFlame.otl", "index": "no", "type": "example"}, "body": [{"type": "title", "indent": 0, "text": ["StreakFlame"]}, {"type": "para", "indent": 0, "text": ["Using the Streak Blur COP to create a candle flame."], "extent": [42, 94]}], "examplefor": "/nodes/cop2/streak", "examplefile": "/examples/nodes/cop2/streak/StreakFlame.otl"}

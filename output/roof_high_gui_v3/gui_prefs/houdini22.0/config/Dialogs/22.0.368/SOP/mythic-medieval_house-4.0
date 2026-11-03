@@ -1,0 +1,1569 @@
+// Magic: 61475e33
+// Automatically generated PSI dialog (PSI version 22.0.368)
+// Tue Nov  3 06:21:30 2026
+
+
+f_tmp = FLOAT_FIELD;	// dialog.top.ui
+
+label1.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center) 
+
+    { WIDTH(0.18) }
+
+    label1.label = PARM_LABEL("Input #1 Label", "label1") WIDTH(1.5);
+    PARM_FIELD(string, "label1") VALUE(label1.val) 
+	LABELREF(label1.label)
+	 HSTRETCH;
+
+    { WIDTH(0.1) }
+}
+
+label2.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center) 
+
+    { WIDTH(0.18) }
+
+    label2.label = PARM_LABEL("Input #2 Label", "label2") WIDTH(1.5);
+    PARM_FIELD(string, "label2") VALUE(label2.val) 
+	LABELREF(label2.label)
+	 HSTRETCH;
+
+    { WIDTH(0.1) }
+}
+
+label3.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center) 
+
+    { WIDTH(0.18) }
+
+    label3.label = PARM_LABEL("Input #3 Label", "label3") WIDTH(1.5);
+    PARM_FIELD(string, "label3") VALUE(label3.val) 
+	LABELREF(label3.label)
+	 HSTRETCH;
+
+    { WIDTH(0.1) }
+}
+
+label4.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center) 
+
+    { WIDTH(0.18) }
+
+    label4.label = PARM_LABEL("Input #4 Label", "label4") WIDTH(1.5);
+    PARM_FIELD(string, "label4") VALUE(label4.val) 
+	LABELREF(label4.label)
+	 HSTRETCH;
+
+    { WIDTH(0.1) }
+}
+
+footprint.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center)
+    HSTRETCH 
+    { WIDTH(0.18) }
+
+    footprint.label = PARM_LABEL_SIMPLE("Footprint", "footprint") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    footprint.menu;
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+width_m.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH 
+ { WIDTH(0.18) }
+
+ width_m.label = PARM_LABEL("Width (m)", "width_m") WIDTH(1.5);
+ PARM(float, 1, "width_m", none, none) RANGE(4.5,14)
+	LOCK_RANGE LABELREF(width_m.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+depth_m.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH 
+ { WIDTH(0.18) }
+
+ depth_m.label = PARM_LABEL("Depth (m)", "depth_m") WIDTH(1.5);
+ PARM(float, 1, "depth_m", none, none) RANGE(4.5,12)
+	LOCK_RANGE LABELREF(depth_m.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+floor_count.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH 
+ { WIDTH(0.18) }
+
+ floor_count.label = PARM_LABEL("Floor Count", "floor_count") WIDTH(1.5);
+ PARM(integer, 1, "floor_count", none, none) RANGE(1,3)
+	LOCK_RANGE LABELREF(floor_count.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+floor_height_m.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH 
+ { WIDTH(0.18) }
+
+ floor_height_m.label = PARM_LABEL("Floor Height (m)", "floor_height_m") WIDTH(1.5);
+ PARM(float, 1, "floor_height_m", none, none) RANGE(2.6,3.4)
+	LOCK_RANGE LABELREF(floor_height_m.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+wall_thickness_m.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH 
+ { WIDTH(0.18) }
+
+ wall_thickness_m.label = PARM_LABEL("Wall Thickness (m)", "wall_thickness_m") WIDTH(1.5);
+ PARM(float, 1, "wall_thickness_m", none, none) RANGE(0.16,0.35)
+	LOCK_RANGE LABELREF(wall_thickness_m.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+upper_overhang_m.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH 
+ { WIDTH(0.18) }
+
+ upper_overhang_m.label = PARM_LABEL("Upper Overhang (m)", "upper_overhang_m") WIDTH(1.5);
+ PARM(float, 1, "upper_overhang_m", none, none) RANGE(0,0.7)
+	LOCK_RANGE LABELREF(upper_overhang_m.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+foundation_mode.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center)
+    HSTRETCH 
+    { WIDTH(0.18) }
+
+    foundation_mode.label = PARM_LABEL_SIMPLE("Foundation Mode", "foundation_mode") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    foundation_mode.menu;
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+foundation_height_m.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH 
+ { WIDTH(0.18) }
+
+ foundation_height_m.label = PARM_LABEL("Foundation Height (m)", "foundation_height_m") WIDTH(1.5);
+ PARM(float, 1, "foundation_height_m", none, none) RANGE(0.2,3.2)
+	LOCK_RANGE LABELREF(foundation_height_m.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+terrain_slope.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH 
+ { WIDTH(0.18) }
+
+ terrain_slope.label = PARM_LABEL("Terrain Slope", "terrain_slope") WIDTH(1.5);
+ PARM(float, 1, "terrain_slope", none, none) RANGE(0,0.55)
+	LOCK_RANGE LABELREF(terrain_slope.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+tower_radius_m.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH 
+ { WIDTH(0.18) }
+
+ tower_radius_m.label = PARM_LABEL("Tower Radius (m)", "tower_radius_m") WIDTH(1.5);
+ PARM(float, 1, "tower_radius_m", none, none) RANGE(1.4,2.3)
+	LOCK_RANGE LABELREF(tower_radius_m.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+tower_extra_height_m.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH 
+ { WIDTH(0.18) }
+
+ tower_extra_height_m.label = PARM_LABEL("Tower Extra Height (m)", "tower_extra_height_m") WIDTH(1.5);
+ PARM(float, 1, "tower_extra_height_m", none, none) RANGE(0,1.5)
+	LOCK_RANGE LABELREF(tower_extra_height_m.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+tower_taper.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH 
+ { WIDTH(0.18) }
+
+ tower_taper.label = PARM_LABEL("Tower Taper", "tower_taper") WIDTH(1.5);
+ PARM(float, 1, "tower_taper", none, none) RANGE(0,0.24)
+	LOCK_RANGE LABELREF(tower_taper.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+wing_width_ratio.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH 
+ { WIDTH(0.18) }
+
+ wing_width_ratio.label = PARM_LABEL("Wing Width Ratio", "wing_width_ratio") WIDTH(1.5);
+ PARM(float, 1, "wing_width_ratio", none, none) RANGE(0.45,0.85)
+	LOCK_RANGE LABELREF(wing_width_ratio.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+wing_depth_ratio.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH 
+ { WIDTH(0.18) }
+
+ wing_depth_ratio.label = PARM_LABEL("Wing Depth Ratio", "wing_depth_ratio") WIDTH(1.5);
+ PARM(float, 1, "wing_depth_ratio", none, none) RANGE(0.5,0.85)
+	LOCK_RANGE LABELREF(wing_depth_ratio.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+wing_floor_count.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH 
+ { WIDTH(0.18) }
+
+ wing_floor_count.label = PARM_LABEL("Wing Floor Count", "wing_floor_count") WIDTH(1.5);
+ PARM(integer, 1, "wing_floor_count", none, none) RANGE(1,3)
+	LOCK_RANGE LABELREF(wing_floor_count.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+wing_roof_ratio.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH 
+ { WIDTH(0.18) }
+
+ wing_roof_ratio.label = PARM_LABEL("Wing Roof Ratio", "wing_roof_ratio") WIDTH(1.5);
+ PARM(float, 1, "wing_roof_ratio", none, none) RANGE(0.55,1)
+	LOCK_RANGE LABELREF(wing_roof_ratio.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+wing_offset_z_m.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH 
+ { WIDTH(0.18) }
+
+ wing_offset_z_m.label = PARM_LABEL("Wing Offset Z (m)", "wing_offset_z_m") WIDTH(1.5);
+ PARM(float, 1, "wing_offset_z_m", none, none) RANGE(-4,4)
+	LOCK_RANGE LABELREF(wing_offset_z_m.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+wing_overlap_m.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH 
+ { WIDTH(0.18) }
+
+ wing_overlap_m.label = PARM_LABEL("Wing Overlap (m)", "wing_overlap_m") WIDTH(1.5);
+ PARM(float, 1, "wing_overlap_m", none, none) RANGE(0.25,1.2)
+	LOCK_RANGE LABELREF(wing_overlap_m.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+tower_offset_z_m.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH 
+ { WIDTH(0.18) }
+
+ tower_offset_z_m.label = PARM_LABEL("Tower Offset Z (m)", "tower_offset_z_m") WIDTH(1.5);
+ PARM(float, 1, "tower_offset_z_m", none, none) RANGE(-2,2)
+	LOCK_RANGE LABELREF(tower_offset_z_m.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+tower_inset_ratio.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH 
+ { WIDTH(0.18) }
+
+ tower_inset_ratio.label = PARM_LABEL("Tower Inset Ratio", "tower_inset_ratio") WIDTH(1.5);
+ PARM(float, 1, "tower_inset_ratio", none, none) RANGE(0.1,0.8)
+	LOCK_RANGE LABELREF(tower_inset_ratio.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+layout_input_enable.gad = ROW
+{
+    HSTRETCH 
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(UI_PARM_TOGGLE_HALIGN_OFFSET) }
+
+    PARM_BUTTON("layout_input_enable", "Layout Input Enable") toggle VALUE(layout_input_enable.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+layout_path.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center) 
+
+    { WIDTH(0.18) }
+
+    layout_path.label = PARM_LABEL("Layout Path", "layout_path") WIDTH(1.5);
+    PARM_FIELD(string, "layout_path") VALUE(layout_path.val) 
+	LABELREF(layout_path.label)
+	 HSTRETCH;
+
+    { WIDTH(0.1) }
+}
+
+front_bays.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center) 
+
+    { WIDTH(0.18) }
+
+    front_bays.label = PARM_LABEL("Front Bays", "front_bays") WIDTH(1.5);
+    PARM_FIELD(string, "front_bays") VALUE(front_bays.val) 
+	LABELREF(front_bays.label)
+	 HSTRETCH;
+
+    { WIDTH(0.1) }
+}
+
+right_bays.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center) 
+
+    { WIDTH(0.18) }
+
+    right_bays.label = PARM_LABEL("Right Bays", "right_bays") WIDTH(1.5);
+    PARM_FIELD(string, "right_bays") VALUE(right_bays.val) 
+	LABELREF(right_bays.label)
+	 HSTRETCH;
+
+    { WIDTH(0.1) }
+}
+
+rear_bays.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center) 
+
+    { WIDTH(0.18) }
+
+    rear_bays.label = PARM_LABEL("Rear Bays", "rear_bays") WIDTH(1.5);
+    PARM_FIELD(string, "rear_bays") VALUE(rear_bays.val) 
+	LABELREF(rear_bays.label)
+	 HSTRETCH;
+
+    { WIDTH(0.1) }
+}
+
+left_bays.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center) 
+
+    { WIDTH(0.18) }
+
+    left_bays.label = PARM_LABEL("Left Bays", "left_bays") WIDTH(1.5);
+    PARM_FIELD(string, "left_bays") VALUE(left_bays.val) 
+	LABELREF(left_bays.label)
+	 HSTRETCH;
+
+    { WIDTH(0.1) }
+}
+
+window_layout_mode.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center)
+    HSTRETCH 
+    { WIDTH(0.18) }
+
+    window_layout_mode.label = PARM_LABEL_SIMPLE("Window Layout Mode", "window_layout_mode") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    window_layout_mode.menu;
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+front_window_count.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH 
+ { WIDTH(0.18) }
+
+ front_window_count.label = PARM_LABEL("Front Window Count", "front_window_count") WIDTH(1.5);
+ PARM(integer, 1, "front_window_count", none, none) RANGE(0,3)
+	LOCK_RANGE LABELREF(front_window_count.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+right_window_count.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH 
+ { WIDTH(0.18) }
+
+ right_window_count.label = PARM_LABEL("Right Window Count", "right_window_count") WIDTH(1.5);
+ PARM(integer, 1, "right_window_count", none, none) RANGE(0,3)
+	LOCK_RANGE LABELREF(right_window_count.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+rear_window_count.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH 
+ { WIDTH(0.18) }
+
+ rear_window_count.label = PARM_LABEL("Rear Window Count", "rear_window_count") WIDTH(1.5);
+ PARM(integer, 1, "rear_window_count", none, none) RANGE(0,3)
+	LOCK_RANGE LABELREF(rear_window_count.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+left_window_count.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH 
+ { WIDTH(0.18) }
+
+ left_window_count.label = PARM_LABEL("Left Window Count", "left_window_count") WIDTH(1.5);
+ PARM(integer, 1, "left_window_count", none, none) RANGE(0,3)
+	LOCK_RANGE LABELREF(left_window_count.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+window_width_m.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH 
+ { WIDTH(0.18) }
+
+ window_width_m.label = PARM_LABEL("Window Width (m)", "window_width_m") WIDTH(1.5);
+ PARM(float, 1, "window_width_m", none, none) RANGE(0.55,1.2)
+	LOCK_RANGE LABELREF(window_width_m.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+window_height_m.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH 
+ { WIDTH(0.18) }
+
+ window_height_m.label = PARM_LABEL("Window Height (m)", "window_height_m") WIDTH(1.5);
+ PARM(float, 1, "window_height_m", none, none) RANGE(0.65,2.2)
+	LOCK_RANGE LABELREF(window_height_m.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+door_width_m.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH 
+ { WIDTH(0.18) }
+
+ door_width_m.label = PARM_LABEL("Door Width (m)", "door_width_m") WIDTH(1.5);
+ PARM(float, 1, "door_width_m", none, none) RANGE(1,3.2)
+	LOCK_RANGE LABELREF(door_width_m.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+door_height_m.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH 
+ { WIDTH(0.18) }
+
+ door_height_m.label = PARM_LABEL("Door Height (m)", "door_height_m") WIDTH(1.5);
+ PARM(float, 1, "door_height_m", none, none) RANGE(1.8,3.2)
+	LOCK_RANGE LABELREF(door_height_m.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+frame_width_m.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH 
+ { WIDTH(0.18) }
+
+ frame_width_m.label = PARM_LABEL("Frame Width (m)", "frame_width_m") WIDTH(1.5);
+ PARM(float, 1, "frame_width_m", none, none) RANGE(0.05,0.2)
+	LOCK_RANGE LABELREF(frame_width_m.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+shutters_enable.gad = ROW
+{
+    HSTRETCH 
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(UI_PARM_TOGGLE_HALIGN_OFFSET) }
+
+    PARM_BUTTON("shutters_enable", "Shutters Enable") toggle VALUE(shutters_enable.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+attic_window_enable.gad = ROW
+{
+    HSTRETCH 
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(UI_PARM_TOGGLE_HALIGN_OFFSET) }
+
+    PARM_BUTTON("attic_window_enable", "Attic Window Enable") toggle VALUE(attic_window_enable.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+round_window_step.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH 
+ { WIDTH(0.18) }
+
+ round_window_step.label = PARM_LABEL("Round Window Step", "round_window_step") WIDTH(1.5);
+ PARM(integer, 1, "round_window_step", none, none) RANGE(4,8)
+	LOCK_RANGE LABELREF(round_window_step.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+timber_pattern.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center)
+    HSTRETCH 
+    { WIDTH(0.18) }
+
+    timber_pattern.label = PARM_LABEL_SIMPLE("Timber Pattern", "timber_pattern") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    timber_pattern.menu;
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+facade_style.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center)
+    HSTRETCH 
+    { WIDTH(0.18) }
+
+    facade_style.label = PARM_LABEL_SIMPLE("Facade Style", "facade_style") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    facade_style.menu;
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+facade_bay_width_m.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH 
+ { WIDTH(0.18) }
+
+ facade_bay_width_m.label = PARM_LABEL("Facade Bay Width (m)", "facade_bay_width_m") WIDTH(1.5);
+ PARM(float, 1, "facade_bay_width_m", none, none) RANGE(0.7,1.8)
+	LOCK_RANGE LABELREF(facade_bay_width_m.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+facade_accent_budget.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH 
+ { WIDTH(0.18) }
+
+ facade_accent_budget.label = PARM_LABEL("Facade Accent Budget", "facade_accent_budget") WIDTH(1.5);
+ PARM(integer, 1, "facade_accent_budget", none, none) RANGE(0,6)
+	LOCK_RANGE LABELREF(facade_accent_budget.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+facade_module_density.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH 
+ { WIDTH(0.18) }
+
+ facade_module_density.label = PARM_LABEL("Facade Module Density", "facade_module_density") WIDTH(1.5);
+ PARM(float, 1, "facade_module_density", none, none) RANGE(0,1)
+	LOCK_RANGE LABELREF(facade_module_density.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+facade_overrides.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center) 
+
+    { WIDTH(0.18) }
+
+    facade_overrides.label = PARM_LABEL("Facade Overrides", "facade_overrides") WIDTH(1.5);
+    PARM_FIELD(string, "facade_overrides") VALUE(facade_overrides.val) 
+	LABELREF(facade_overrides.label)
+	 HSTRETCH;
+
+    { WIDTH(0.1) }
+}
+
+roof_shape.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center)
+    HSTRETCH 
+    { WIDTH(0.18) }
+
+    roof_shape.label = PARM_LABEL_SIMPLE("Roof Shape", "roof_shape") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    roof_shape.menu;
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+roof_height_m.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH 
+ { WIDTH(0.18) }
+
+ roof_height_m.label = PARM_LABEL("Roof Height (m)", "roof_height_m") WIDTH(1.5);
+ PARM(float, 1, "roof_height_m", none, none) RANGE(1.2,5)
+	LOCK_RANGE LABELREF(roof_height_m.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+eave_curve.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH 
+ { WIDTH(0.18) }
+
+ eave_curve.label = PARM_LABEL("Eave Curve", "eave_curve") WIDTH(1.5);
+ PARM(float, 1, "eave_curve", none, none) RANGE(0,0.5)
+	LOCK_RANGE LABELREF(eave_curve.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+eave_depth_m.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH 
+ { WIDTH(0.18) }
+
+ eave_depth_m.label = PARM_LABEL("Eave Depth (m)", "eave_depth_m") WIDTH(1.5);
+ PARM(float, 1, "eave_depth_m", none, none) RANGE(0.25,0.7)
+	LOCK_RANGE LABELREF(eave_depth_m.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+tile_size_m.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH 
+ { WIDTH(0.18) }
+
+ tile_size_m.label = PARM_LABEL("Tile Size (m)", "tile_size_m") WIDTH(1.5);
+ PARM(float, 1, "tile_size_m", none, none) RANGE(0.35,0.65)
+	LOCK_RANGE LABELREF(tile_size_m.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+dormer_count.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH 
+ { WIDTH(0.18) }
+
+ dormer_count.label = PARM_LABEL("Dormer Count", "dormer_count") WIDTH(1.5);
+ PARM(integer, 1, "dormer_count", none, none) RANGE(0,2)
+	LOCK_RANGE LABELREF(dormer_count.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+wing_dormer_count.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH 
+ { WIDTH(0.18) }
+
+ wing_dormer_count.label = PARM_LABEL("Wing Dormer Count", "wing_dormer_count") WIDTH(1.5);
+ PARM(integer, 1, "wing_dormer_count", none, none) RANGE(0,1)
+	LOCK_RANGE LABELREF(wing_dormer_count.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+chimney_count.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH 
+ { WIDTH(0.18) }
+
+ chimney_count.label = PARM_LABEL("Chimney Count", "chimney_count") WIDTH(1.5);
+ PARM(integer, 1, "chimney_count", none, none) RANGE(0,3)
+	LOCK_RANGE LABELREF(chimney_count.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+cupola_enable.gad = ROW
+{
+    HSTRETCH 
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(UI_PARM_TOGGLE_HALIGN_OFFSET) }
+
+    PARM_BUTTON("cupola_enable", "Cupola Enable") toggle VALUE(cupola_enable.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+interior_enable.gad = ROW
+{
+    HSTRETCH 
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(UI_PARM_TOGGLE_HALIGN_OFFSET) }
+
+    PARM_BUTTON("interior_enable", "Interior Enable") toggle VALUE(interior_enable.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+floor_thickness_m.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH 
+ { WIDTH(0.18) }
+
+ floor_thickness_m.label = PARM_LABEL("Floor Thickness (m)", "floor_thickness_m") WIDTH(1.5);
+ PARM(float, 1, "floor_thickness_m", none, none) RANGE(0.06,0.2)
+	LOCK_RANGE LABELREF(floor_thickness_m.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+interior_furniture.gad = ROW
+{
+    HSTRETCH 
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(UI_PARM_TOGGLE_HALIGN_OFFSET) }
+
+    PARM_BUTTON("interior_furniture", "Interior Furniture") toggle VALUE(interior_furniture.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+interior_partitions.gad = ROW
+{
+    HSTRETCH 
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(UI_PARM_TOGGLE_HALIGN_OFFSET) }
+
+    PARM_BUTTON("interior_partitions", "Interior Partitions") toggle VALUE(interior_partitions.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+interior_lighting.gad = ROW
+{
+    HSTRETCH 
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(UI_PARM_TOGGLE_HALIGN_OFFSET) }
+
+    PARM_BUTTON("interior_lighting", "Interior Lighting") toggle VALUE(interior_lighting.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+interior_joist_spacing_m.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH 
+ { WIDTH(0.18) }
+
+ interior_joist_spacing_m.label = PARM_LABEL("Interior Joist Spacing (m)", "interior_joist_spacing_m") WIDTH(1.5);
+ PARM(float, 1, "interior_joist_spacing_m", none, none) RANGE(0.45,1)
+	LOCK_RANGE LABELREF(interior_joist_spacing_m.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+interior_stair_width_m.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH 
+ { WIDTH(0.18) }
+
+ interior_stair_width_m.label = PARM_LABEL("Interior Stair Width (m)", "interior_stair_width_m") WIDTH(1.5);
+ PARM(float, 1, "interior_stair_width_m", none, none) RANGE(0.75,0.9)
+	LOCK_RANGE LABELREF(interior_stair_width_m.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+interior_style.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center)
+    HSTRETCH 
+    { WIDTH(0.18) }
+
+    interior_style.label = PARM_LABEL_SIMPLE("Interior Style", "interior_style") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    interior_style.menu;
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+utility_type.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center)
+    HSTRETCH 
+    { WIDTH(0.18) }
+
+    utility_type.label = PARM_LABEL_SIMPLE("Utility Type", "utility_type") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    utility_type.menu;
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+wheel_radius_m.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH 
+ { WIDTH(0.18) }
+
+ wheel_radius_m.label = PARM_LABEL("Wheel Radius (m)", "wheel_radius_m") WIDTH(1.5);
+ PARM(float, 1, "wheel_radius_m", none, none) RANGE(1.6,2.8)
+	LOCK_RANGE LABELREF(wheel_radius_m.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+rotor_radius_m.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH 
+ { WIDTH(0.18) }
+
+ rotor_radius_m.label = PARM_LABEL("Rotor Radius (m)", "rotor_radius_m") WIDTH(1.5);
+ PARM(float, 1, "rotor_radius_m", none, none) RANGE(2.5,4.2)
+	LOCK_RANGE LABELREF(rotor_radius_m.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+awning_enable.gad = ROW
+{
+    HSTRETCH 
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(UI_PARM_TOGGLE_HALIGN_OFFSET) }
+
+    PARM_BUTTON("awning_enable", "Awning Enable") toggle VALUE(awning_enable.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+entrance_canopy.gad = ROW
+{
+    HSTRETCH 
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(UI_PARM_TOGGLE_HALIGN_OFFSET) }
+
+    PARM_BUTTON("entrance_canopy", "Entrance Canopy") toggle VALUE(entrance_canopy.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+dressing_enable.gad = ROW
+{
+    HSTRETCH 
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(UI_PARM_TOGGLE_HALIGN_OFFSET) }
+
+    PARM_BUTTON("dressing_enable", "Dressing Enable") toggle VALUE(dressing_enable.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+balcony_layout.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center)
+    HSTRETCH 
+    { WIDTH(0.18) }
+
+    balcony_layout.label = PARM_LABEL_SIMPLE("Balcony Layout", "balcony_layout") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    balcony_layout.menu;
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+balcony_depth_m.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH 
+ { WIDTH(0.18) }
+
+ balcony_depth_m.label = PARM_LABEL("Balcony Depth (m)", "balcony_depth_m") WIDTH(1.5);
+ PARM(float, 1, "balcony_depth_m", none, none) RANGE(0.75,1.5)
+	LOCK_RANGE LABELREF(balcony_depth_m.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+workshop_enable.gad = ROW
+{
+    HSTRETCH 
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(UI_PARM_TOGGLE_HALIGN_OFFSET) }
+
+    PARM_BUTTON("workshop_enable", "Workshop Enable") toggle VALUE(workshop_enable.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+workshop_width_m.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH 
+ { WIDTH(0.18) }
+
+ workshop_width_m.label = PARM_LABEL("Workshop Width (m)", "workshop_width_m") WIDTH(1.5);
+ PARM(float, 1, "workshop_width_m", none, none) RANGE(2,3.8)
+	LOCK_RANGE LABELREF(workshop_width_m.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+workshop_depth_m.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH 
+ { WIDTH(0.18) }
+
+ workshop_depth_m.label = PARM_LABEL("Workshop Depth (m)", "workshop_depth_m") WIDTH(1.5);
+ PARM(float, 1, "workshop_depth_m", none, none) RANGE(2.5,5)
+	LOCK_RANGE LABELREF(workshop_depth_m.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+workshop_offset_z_m.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH 
+ { WIDTH(0.18) }
+
+ workshop_offset_z_m.label = PARM_LABEL("Workshop Offset Z (m)", "workshop_offset_z_m") WIDTH(1.5);
+ PARM(float, 1, "workshop_offset_z_m", none, none) RANGE(-2,2)
+	LOCK_RANGE LABELREF(workshop_offset_z_m.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+bay_window_enable.gad = ROW
+{
+    HSTRETCH 
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(UI_PARM_TOGGLE_HALIGN_OFFSET) }
+
+    PARM_BUTTON("bay_window_enable", "Bay Window Enable") toggle VALUE(bay_window_enable.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+scale.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH 
+ { WIDTH(0.18) }
+
+ scale.label = PARM_LABEL("Scale", "scale") WIDTH(1.5);
+ PARM(float, 1, "scale", none, none) RANGE(0.5,2)
+	LOCK_RANGE LABELREF(scale.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+palette.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center)
+    HSTRETCH 
+    { WIDTH(0.18) }
+
+    palette.label = PARM_LABEL_SIMPLE("Palette", "palette") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    palette.menu;
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+detail_level.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center)
+    HSTRETCH 
+    { WIDTH(0.18) }
+
+    detail_level.label = PARM_LABEL_SIMPLE("Detail Level", "detail_level") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    detail_level.menu;
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+mesh_quality.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center)
+    HSTRETCH 
+    { WIDTH(0.18) }
+
+    mesh_quality.label = PARM_LABEL_SIMPLE("Mesh Quality", "mesh_quality") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    mesh_quality.menu;
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+bevel_width_m.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH 
+ { WIDTH(0.18) }
+
+ bevel_width_m.label = PARM_LABEL("Bevel Width (m)", "bevel_width_m") WIDTH(1.5);
+ PARM(float, 1, "bevel_width_m", none, none) RANGE(0.005,0.06)
+	LOCK_RANGE LABELREF(bevel_width_m.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+context_mode.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center)
+    HSTRETCH 
+    { WIDTH(0.18) }
+
+    context_mode.label = PARM_LABEL_SIMPLE("Context Mode", "context_mode") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    context_mode.menu;
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+ground_enable.gad = ROW
+{
+    HSTRETCH 
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(UI_PARM_TOGGLE_HALIGN_OFFSET) }
+
+    PARM_BUTTON("ground_enable", "Ground Enable") toggle VALUE(ground_enable.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+ground_margin_m.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH 
+ { WIDTH(0.18) }
+
+ ground_margin_m.label = PARM_LABEL("Ground Margin (m)", "ground_margin_m") WIDTH(1.5);
+ PARM(float, 1, "ground_margin_m", none, none) RANGE(0,5)
+	LOCK_RANGE LABELREF(ground_margin_m.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+ground_slope_preset.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center)
+    HSTRETCH 
+    { WIDTH(0.18) }
+
+    ground_slope_preset.label = PARM_LABEL_SIMPLE("Ground Slope Preset", "ground_slope_preset") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    ground_slope_preset.menu;
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+ground_slope_amount_m.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH 
+ { WIDTH(0.18) }
+
+ ground_slope_amount_m.label = PARM_LABEL("Ground Slope Amount (m)", "ground_slope_amount_m") WIDTH(1.5);
+ PARM(float, 1, "ground_slope_amount_m", none, none) RANGE(0,10)
+	 LABELREF(ground_slope_amount_m.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+roof_axis.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center)
+    HSTRETCH 
+    { WIDTH(0.18) }
+
+    roof_axis.label = PARM_LABEL_SIMPLE("Roof ridge axis", "roof_axis") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    roof_axis.menu;
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+window_shape.gad = 
+{
+    LAYOUT(horizontal) JUSTIFY(left, center)
+    HSTRETCH 
+    { WIDTH(0.18) }
+
+    window_shape.label = PARM_LABEL_SIMPLE("Window shape", "window_shape") WIDTH(1.5);
+    { WIDTH(0.09) }
+
+    window_shape.menu;
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+awning_span_ratio.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH 
+ { WIDTH(0.18) }
+
+ awning_span_ratio.label = PARM_LABEL("Awning facade span", "awning_span_ratio") WIDTH(1.5);
+ PARM(float, 1, "awning_span_ratio", none, none) RANGE(0.25,0.95)
+	 LABELREF(awning_span_ratio.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+seed_decoration.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH 
+ { WIDTH(0.18) }
+
+ seed_decoration.label = PARM_LABEL("Decoration seed", "seed_decoration") WIDTH(1.5);
+ PARM(integer, 1, "seed_decoration", none, none) RANGE(0,10)
+	 LABELREF(seed_decoration.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+uv_tile_scale.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH 
+ { WIDTH(0.18) }
+
+ uv_tile_scale.label = PARM_LABEL("Uv Tile Scale", "uv_tile_scale") WIDTH(1.5);
+ PARM(float, 1, "uv_tile_scale", none, none) RANGE(0.05,20)
+	LOCK_RANGE LABELREF(uv_tile_scale.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+uv_local_projection.gad = ROW
+{
+    HSTRETCH 
+    { WIDTH(0.18) }
+
+    { WIDTH(1.5) }
+    { WIDTH(UI_PARM_TOGGLE_HALIGN_OFFSET) }
+
+    PARM_BUTTON("uv_local_projection", "Uv Local Projection") toggle VALUE(uv_local_projection.val);
+
+    { HSTRETCH }
+
+    { WIDTH(0.1) }
+}
+
+window_move_id.gad = ROW
+{
+    HSTRETCH JUSTIFY(left, center) 
+
+    { WIDTH(0.18) }
+
+    window_move_id.label = PARM_LABEL("Window Move Id", "window_move_id") WIDTH(1.5);
+    PARM_FIELD(string, "window_move_id") VALUE(window_move_id.val) 
+	LABELREF(window_move_id.label)
+	 HSTRETCH;
+
+    { WIDTH(0.1) }
+}
+
+window_offset_u_m.gad = 
+{
+
+ LAYOUT(horizontal) HSTRETCH 
+ { WIDTH(0.18) }
+
+ window_offset_u_m.label = PARM_LABEL("Window Offset U M", "window_offset_u_m") WIDTH(1.5);
+ PARM(float, 1, "window_offset_u_m", none, none) RANGE(-1,1)
+	LOCK_RANGE LABELREF(window_offset_u_m.label) HSTRETCH;
+
+  { WIDTH(0.1) }
+}
+
+tab0.gad = 
+{
+    LAYOUT(vertical) HSTRETCH
+
+    TABDIALOG2 flat "tab0.gad"
+    { 
+	VALUE(tab0.gad.val) STRETCH(1,0)
+
+	TAB "Plan & storeys"
+	{
+	    LAYOUT(vertical) STRETCH
+
+            HMARGIN(0) VMARGIN(2p) SPACING(0, 2p)
+	    footprint.gad;		
+	    width_m.gad;		
+	    depth_m.gad;		
+	    floor_count.gad;		
+	    floor_height_m.gad;		
+	    wall_thickness_m.gad;		
+	    upper_overhang_m.gad;		
+	    foundation_mode.gad;		
+	    foundation_height_m.gad;		
+	    terrain_slope.gad;		
+	    tower_radius_m.gad;		
+	    tower_extra_height_m.gad;		
+	    tower_taper.gad;		
+	    wing_width_ratio.gad;		
+	    wing_depth_ratio.gad;		
+	    wing_floor_count.gad;		
+	    wing_roof_ratio.gad;		
+	    wing_offset_z_m.gad;		
+	    wing_overlap_m.gad;		
+	    tower_offset_z_m.gad;		
+	    tower_inset_ratio.gad;		
+	    layout_input_enable.gad;		
+	    layout_path.gad;		
+
+	    { STRETCH(1,1) }
+	}
+
+	TAB "Facade & openings"
+	{
+	    LAYOUT(vertical) STRETCH
+
+            HMARGIN(0) VMARGIN(2p) SPACING(0, 2p)
+	    front_bays.gad;		
+	    right_bays.gad;		
+	    rear_bays.gad;		
+	    left_bays.gad;		
+	    window_layout_mode.gad;		
+	    front_window_count.gad;		
+	    right_window_count.gad;		
+	    rear_window_count.gad;		
+	    left_window_count.gad;		
+	    window_width_m.gad;		
+	    window_height_m.gad;		
+	    door_width_m.gad;		
+	    door_height_m.gad;		
+	    frame_width_m.gad;		
+	    shutters_enable.gad;		
+	    attic_window_enable.gad;		
+	    round_window_step.gad;		
+	    timber_pattern.gad;		
+	    facade_style.gad;		
+	    facade_bay_width_m.gad;		
+	    facade_accent_budget.gad;		
+	    facade_module_density.gad;		
+	    facade_overrides.gad;		
+
+	    { STRETCH(1,1) }
+	}
+
+	TAB "Roof"
+	{
+	    LAYOUT(vertical) STRETCH
+
+            HMARGIN(0) VMARGIN(2p) SPACING(0, 2p)
+	    roof_shape.gad;		
+	    roof_height_m.gad;		
+	    eave_curve.gad;		
+	    eave_depth_m.gad;		
+	    tile_size_m.gad;		
+	    dormer_count.gad;		
+	    wing_dormer_count.gad;		
+	    chimney_count.gad;		
+	    cupola_enable.gad;		
+
+	    { STRETCH(1,1) }
+	}
+
+	TAB "Interior & details"
+	{
+	    LAYOUT(vertical) STRETCH
+
+            HMARGIN(0) VMARGIN(2p) SPACING(0, 2p)
+	    interior_enable.gad;		
+	    floor_thickness_m.gad;		
+	    interior_furniture.gad;		
+	    interior_partitions.gad;		
+	    interior_lighting.gad;		
+	    interior_joist_spacing_m.gad;		
+	    interior_stair_width_m.gad;		
+	    interior_style.gad;		
+	    utility_type.gad;		
+	    wheel_radius_m.gad;		
+	    rotor_radius_m.gad;		
+	    awning_enable.gad;		
+	    entrance_canopy.gad;		
+	    dressing_enable.gad;		
+	    balcony_layout.gad;		
+	    balcony_depth_m.gad;		
+	    workshop_enable.gad;		
+	    workshop_width_m.gad;		
+	    workshop_depth_m.gad;		
+	    workshop_offset_z_m.gad;		
+	    bay_window_enable.gad;		
+
+	    { STRETCH(1,1) }
+	}
+
+	TAB "Finish & context"
+	{
+	    LAYOUT(vertical) STRETCH
+
+            HMARGIN(0) VMARGIN(2p) SPACING(0, 2p)
+	    scale.gad;		
+	    palette.gad;		
+	    detail_level.gad;		
+	    mesh_quality.gad;		
+	    bevel_width_m.gad;		
+	    context_mode.gad;		
+	    ground_enable.gad;		
+	    ground_margin_m.gad;		
+	    ground_slope_preset.gad;		
+	    ground_slope_amount_m.gad;		
+
+	    { STRETCH(1,1) }
+	}
+    } 
+}
+
+standardfolder.gad = 
+{
+    LAYOUT(vertical) HSTRETCH
+
+    TABDIALOG2 flat "standardfolder.gad"
+    { 
+	VALUE(standardfolder.gad.val) STRETCH(1,0)
+
+	TAB "Standard"
+	{
+	    LAYOUT(vertical) STRETCH
+
+            HMARGIN(0) VMARGIN(2p) SPACING(0, 2p)
+	    label1.gad;		
+	    label2.gad;		
+	    label3.gad;		
+	    label4.gad;		
+
+	    { STRETCH(1,1) }
+	}
+
+	TAB "Spare"
+	{
+	    LAYOUT(vertical) STRETCH
+
+            HMARGIN(0) VMARGIN(2p) SPACING(0, 2p)
+	    tab0.gad;		
+	    roof_axis.gad;		
+	    window_shape.gad;		
+	    awning_span_ratio.gad;		
+	    seed_decoration.gad;		
+	    uv_tile_scale.gad;		
+	    uv_local_projection.gad;		
+	    window_move_id.gad;		
+	    window_offset_u_m.gad;		
+
+	    { STRETCH(1,1) }
+	}
+    } 
+}
+
+dialog_norm.gad = 
+{
+    LAYOUT(vertical) SPACING(0.02) HSTRETCH 
+    standardfolder.gad; 
+} 
+// dialog.bot.ui
+
+extrastuffstowbar_minimize.val := 1;
+
+dialog = OPENNOTIFIER
+{
+    LAYOUT(vertical) SPACING(0.02) LOOK(bg) VALUE(open.val_) HSTRETCH
+
+    { HEIGHT(1p) LOOK(bg) HSTRETCH }
+
+    dialog_norm.gad;
+}

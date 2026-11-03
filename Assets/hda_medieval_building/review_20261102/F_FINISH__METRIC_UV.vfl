@@ -1,0 +1,3 @@
+
+vector n=prim_normal(0,@primnum,.5,.5);vector p=@P;
+v@uv=abs(n.y)>.6?set(p.x,p.z,0):abs(n.x)>.6?set(p.z,p.y,0):set(p.x,p.y,0);

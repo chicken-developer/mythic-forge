@@ -1,0 +1,1 @@
+{"dataset": "10_normal_house_c_canopy", "quality": "high", "target": [0.0, 2.0, 3.5], "width": 11.0, "view": "rear", "tag": "10_canvas_canopy_rear_high", "script": "gui_review.py", "id": "420_review"}

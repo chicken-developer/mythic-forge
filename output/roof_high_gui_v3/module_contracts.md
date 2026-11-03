@@ -1,0 +1,26 @@
+# Module contracts
+
+| Module | Native network | Inputs | Outputs |
+|---|---|---|---|
+| layout.semantic_layout | LAYOUT/semantic_layout |  | role_plans, floor_plans, storey_mass, roof_plans |
+| shell.body_shell | SHELL/body_shell | plan_floor_plans ← layout.semantic_layout:floor_plans; plan_storey_mass ← layout.semantic_layout:storey_mass | uncut_shell, solid_body |
+| shell.facade_layout | SHELL/facade_layout | plan_storey_mass ← layout.semantic_layout:storey_mass; body_shell_solid_body ← shell.body_shell:solid_body; plan_roof_plans ← layout.semantic_layout:roof_plans | visible_bays, opening_points |
+| openings.kits | OPENINGS/kits |  | window_geometry, window_aperture, door_geometry, door_aperture |
+| openings.attachments | OPENINGS/attachments | plan_role_plans ← layout.semantic_layout:role_plans; plan_roof_plans ← layout.semantic_layout:roof_plans; opening_kits_window_geometry ← openings.kits:window_geometry; opening_kits_window_aperture ← openings.kits:window_aperture; solid_body ← shell.body_shell:solid_body | attachment_geometry, bay_cutters, replacement_metadata |
+| openings.windows | OPENINGS/windows | facade_layout_opening_points ← shell.facade_layout:opening_points; opening_kits_window_geometry ← openings.kits:window_geometry; opening_kits_window_aperture ← openings.kits:window_aperture; attachments_replacement_metadata ← openings.attachments:replacement_metadata | window_geometry, window_cutters |
+| openings.doors | OPENINGS/doors | facade_layout_opening_points ← shell.facade_layout:opening_points; opening_kits_door_geometry ← openings.kits:door_geometry; opening_kits_door_aperture ← openings.kits:door_aperture | door_geometry, door_cutters |
+| openings.wall_cuts | OPENINGS/wall_cuts | attachments_bay_cutters ← openings.attachments:bay_cutters; windows_window_cutters ← openings.windows:window_cutters; doors_door_cutters ← openings.doors:door_cutters; body_shell_uncut_shell ← shell.body_shell:uncut_shell; plan_roof_plans ← layout.semantic_layout:roof_plans | walls |
+| roof.dormers | ROOF/dormers | plan_roof_plans ← layout.semantic_layout:roof_plans; opening_kits_window_geometry ← openings.kits:window_geometry; opening_kits_window_aperture ← openings.kits:window_aperture; roof_interior ← roof.junctions:roof_volume; roof_host ← roof.junctions:roof_shell | dormer_geometry, dormer_cutters |
+| roof.surfaces_tiles | ROOF/surfaces_tiles | plan_roof_plans ← layout.semantic_layout:roof_plans; body_shell_solid_body ← shell.body_shell:solid_body; dormers_dormer_cutters ← roof.dormers:dormer_cutters; resolved_shell ← roof.junctions:roof_shell; roof_interior ← roof.junctions:roof_volume; raw_surfaces ← roof.patch_surfaces:raw_surfaces | roof_shell, roof_tiles |
+| roof.trim | ROOF/trim | plan_roof_plans ← layout.semantic_layout:roof_plans; roof_interior ← roof.junctions:roof_volume | roof_trim |
+| details.facade | DETAILS/facade | facade_layout_visible_bays ← shell.facade_layout:visible_bays; plan_roof_plans ← layout.semantic_layout:roof_plans | structural_timber, facade_details |
+| details.interior | DETAILS/interior | plan_floor_plans ← layout.semantic_layout:floor_plans; facade_layout_visible_bays ← shell.facade_layout:visible_bays | interior |
+| details.balcony | DETAILS/balcony | plan_floor_plans ← layout.semantic_layout:floor_plans | balcony |
+| details.utilities | DETAILS/utilities | plan_role_plans ← layout.semantic_layout:role_plans | utilities |
+| details.site | DETAILS/site | plan_role_plans ← layout.semantic_layout:role_plans; solid_body ← shell.body_shell:solid_body; overhead_access ← details.balcony:balcony | site |
+| details.furnishing | DETAILS/furnishing | plan_floor_plans ← layout.semantic_layout:floor_plans | furnishing |
+| uv_material.surfacing | UV_MATERIAL/surfacing | wall_finish_walls ← openings.wall_cuts:walls; facade_details_structural_timber ← details.facade:structural_timber; windows_window_geometry ← openings.windows:window_geometry; doors_door_geometry ← openings.doors:door_geometry; roof_roof_shell ← roof.surfaces_tiles:roof_shell; roof_roof_tiles ← roof.surfaces_tiles:roof_tiles; dormers_dormer_geometry ← roof.dormers:dormer_geometry; roof_trim_roof_trim ← roof.trim:roof_trim; interior_interior ← details.interior:interior; utilities_utilities ← details.utilities:utilities; site_site ← details.site:site; furnishing_furnishing ← details.furnishing:furnishing; balcony_balcony ← details.balcony:balcony; facade_details_facade_details ← details.facade:facade_details; attachments_attachment_geometry ← openings.attachments:attachment_geometry; roof_junction_trim ← roof.junctions:junction_trim | building |
+| roof.patch_surfaces | ROOF/patch_surfaces | plans ← layout.semantic_layout:roof_plans | raw_surfaces |
+| roof.junctions | ROOF/ridge_valley_solver | patches ← roof.patch_surfaces:raw_surfaces | roof_top, roof_volume, roof_shell, junction_trim |
+| output.detail_levels | OUTPUT/detail_levels | building ← uv_material.surfacing:building | low, high, selected |
+| output.game_export | OUTPUT/game_export | building ← output.detail_levels:selected | geometry |

@@ -1,0 +1,19 @@
+// Geometry QA masks only; native Blast/Clean perform topology removal.
+dict seen={};int duplicates=0,degenerate=0;
+for(int pr=0;pr<nprimitives(0);pr++){
+    int ids[]=primpoints(0,pr);
+    if(len(ids)<3){setprimgroup(0,"qa_remove_degenerate",pr,1);degenerate++;continue;}
+    vector area={0,0,0};string coords[];vector origin=point(0,"P",ids[0]);
+    for(int i=0;i<len(ids);i++){
+        vector a=point(0,"P",ids[i]),b=point(0,"P",ids[(i+1)%len(ids)]);
+        area+=cross(a-origin,b-origin);
+        vector q=rint(a*100000.);
+        append(coords,sprintf("%d,%d,%d",int(q.x),int(q.y),int(q.z)));
+    }
+    if(length(area)*.5<1e-10){setprimgroup(0,"qa_remove_degenerate",pr,1);degenerate++;continue;}
+    coords=sort(coords);string key=join(coords,";");
+    if(isvalidindex(seen,key)){setprimgroup(0,"qa_remove_duplicate",pr,1);duplicates++;}
+    else seen[key]=pr;
+}
+setdetailattrib(0,"qa_removed_duplicates",duplicates);
+setdetailattrib(0,"qa_removed_degenerate",degenerate);

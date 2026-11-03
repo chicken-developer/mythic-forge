@@ -1,0 +1,1 @@
+{"type": "root", "attrs": {"exampleFile": "TransformBlur.otl", "index": "no", "type": "example"}, "body": [{"type": "title", "indent": 0, "text": ["TransformBlur"]}, {"type": "para", "indent": 0, "text": ["Creating motion blur with the transform COP."], "extent": [44, 89]}], "examplefor": "/nodes/cop2/xform", "examplefile": "/examples/nodes/cop2/xform/TransformBlur.otl"}

@@ -1,0 +1,33 @@
+
+int old=nprimitives(0);
+if(chs("../roof_shape")=="gable")for(int role_prim=0;role_prim<old;role_prim++)
+{
+    string role=prim(0,"role",role_prim);
+    int is_round=prim(0,"is_round",role_prim);
+    if((role!="main" && role!="wing") || is_round) continue;
+    int count=role=="main" ? clamp(chi("../dormer_count"),0,2) : clamp(chi("../wing_dormer_count"),0,1);
+    float w=prim(0,"width",role_prim),d=prim(0,"depth",role_prim);
+    float roof_h=prim(0,"roof_h",role_prim),top=prim(0,"top_y",role_prim);
+    float eave=prim(0,"eave",role_prim),curve=prim(0,"curve",role_prim);
+    float rotation=prim(0,"rot_y",role_prim);
+    vector center=prim(0,"role_center",role_prim);
+    float x=w*.29;
+    float q=abs(x)/max(w*.5+eave,1e-5);
+    float base_y=top+roof_h*(1.-q)+curve*pow(q,4.)-.22;
+    matrix3 role_matrix=ident();rotate(role_matrix,radians(rotation),set(0.,1.,0.));
+    matrix3 placement=ident();rotate(placement,radians(rotation-90.),set(0.,1.,0.));
+    for(int k=0;k<count;k++)
+    {
+        float z=(k-(count-1)*.5)*2.25;
+        vector horizontal=set(x,0.,z)*role_matrix;
+        int pt=addpoint(0,set(center.x+horizontal.x,base_y,center.z+horizontal.z));
+        setpointattrib(0,"transform",pt,placement,"set");
+        setpointattrib(0,"dormer_id",pt,k,"set");
+        setpointattrib(0,"role_id",pt,int(prim(0,"role_id",role_prim)),"set");
+        setpointattrib(0,"cut_height",pt,max(roof_h+2.,3.),"set");
+        setpointattrib(0,"dormer_rotation",pt,rotation-90.,"set");
+        setpointattrib(0,"base_y",pt,base_y,"set");
+    }
+}
+// The output is placement data only; the input role polygons are not copied.
+for(int p=old-1;p>=0;p--) removeprim(0,p,1);

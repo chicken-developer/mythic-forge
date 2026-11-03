@@ -1,0 +1,425 @@
+{
+  "schema_version": 1,
+  "records": [
+    {
+      "variant_id": "01_food_shop",
+      "original_dataset": "Assets/hda_medieval_building/datasets/01_food_shop.json",
+      "dataset": "datasets/01_food_shop.json",
+      "sha256": "bbe630146065e5833c8937ea97e0818f155bc92694783a62b8ced14ab9b0c4dd",
+      "seeds": {
+        "decoration": 17
+      },
+      "reference_ids": [
+        "ref_01_food_shop"
+      ],
+      "expected_features": {
+        "floor_count": 1,
+        "entrance_count": 1,
+        "roof_type": "gable",
+        "footprint": "rectangular",
+        "interior_enable": true,
+        "normal_bake_from_high": true
+      },
+      "dependencies": [],
+      "old_type": "mythic::medieval_house::3.0",
+      "new_type": "mythic::medieval_house::4.0",
+      "new_hda": "asset/medieval_building_modular.hda",
+      "scene": "scenes/variants/01_food_shop.hip",
+      "geometry": "geometry/01_food_shop.bgeo.sc",
+      "hero": "previews/01_food_shop_hero.png",
+      "comparison": "comparisons/01_food_shop.png"
+    },
+    {
+      "variant_id": "02_general_store",
+      "original_dataset": "Assets/hda_medieval_building/datasets/02_general_store.json",
+      "dataset": "datasets/02_general_store.json",
+      "sha256": "1908d62e3e0cc1c3fe37fcf0c9f9edd9096a2b7dd191ef421ba9651b9f0f2619",
+      "seeds": {
+        "decoration": 17
+      },
+      "reference_ids": [
+        "ref_02_general_store"
+      ],
+      "expected_features": {
+        "floor_count": 1,
+        "entrance_count": 1,
+        "roof_type": "gable",
+        "footprint": "rectangular",
+        "interior_enable": true,
+        "normal_bake_from_high": true
+      },
+      "dependencies": [],
+      "old_type": "mythic::medieval_house::3.0",
+      "new_type": "mythic::medieval_house::4.0",
+      "new_hda": "asset/medieval_building_modular.hda",
+      "scene": "scenes/variants/02_general_store.hip",
+      "geometry": "geometry/02_general_store.bgeo.sc",
+      "hero": "previews/02_general_store_hero.png",
+      "comparison": "comparisons/02_general_store.png"
+    },
+    {
+      "variant_id": "03_herbal_store",
+      "original_dataset": "Assets/hda_medieval_building/datasets/03_herbal_store.json",
+      "dataset": "datasets/03_herbal_store.json",
+      "sha256": "427befb9d4a9ac1441a0fa78109a2870f219eae224c1d07421555db49a35e1a8",
+      "seeds": {
+        "decoration": 17
+      },
+      "reference_ids": [
+        "ref_03_herbal_store"
+      ],
+      "expected_features": {
+        "floor_count": 1,
+        "entrance_count": 1,
+        "roof_type": "gable",
+        "footprint": "rectangular",
+        "interior_enable": true,
+        "normal_bake_from_high": true
+      },
+      "dependencies": [],
+      "old_type": "mythic::medieval_house::3.0",
+      "new_type": "mythic::medieval_house::4.0",
+      "new_hda": "asset/medieval_building_modular.hda",
+      "scene": "scenes/variants/03_herbal_store.hip",
+      "geometry": "geometry/03_herbal_store.bgeo.sc",
+      "hero": "previews/03_herbal_store_hero.png",
+      "comparison": "comparisons/03_herbal_store.png"
+    },
+    {
+      "variant_id": "04_merchant_house",
+      "original_dataset": "Assets/hda_medieval_building/datasets/04_merchant_house.json",
+      "dataset": "datasets/04_merchant_house.json",
+      "sha256": "2deee3998b70f526a4c8c6a9369d27cca471201c90acd373cf1e3acb06e4056f",
+      "seeds": {
+        "decoration": 17
+      },
+      "reference_ids": [
+        "ref_04_merchant_house"
+      ],
+      "expected_features": {
+        "floor_count": 2,
+        "entrance_count": 1,
+        "roof_type": "gable",
+        "footprint": "rectangular",
+        "interior_enable": true,
+        "normal_bake_from_high": true
+      },
+      "dependencies": [],
+      "old_type": "mythic::medieval_house::3.0",
+      "new_type": "mythic::medieval_house::4.0",
+      "new_hda": "asset/medieval_building_modular.hda",
+      "scene": "scenes/variants/04_merchant_house.hip",
+      "geometry": "geometry/04_merchant_house.bgeo.sc",
+      "hero": "previews/04_merchant_house_hero.png",
+      "comparison": "comparisons/04_merchant_house.png"
+    },
+    {
+      "variant_id": "05_mixed_shop",
+      "original_dataset": "Assets/hda_medieval_building/datasets/05_mixed_shop.json",
+      "dataset": "datasets/05_mixed_shop.json",
+      "sha256": "18097f527200bfa529cd8f895ff23be9aa3c7a29b513b339de8e0b49979dda05",
+      "seeds": {
+        "decoration": 17
+      },
+      "reference_ids": [
+        "ref_05_mixed_shop"
+      ],
+      "expected_features": {
+        "floor_count": 2,
+        "entrance_count": 1,
+        "roof_type": "gable",
+        "footprint": "rectangular",
+        "interior_enable": true,
+        "normal_bake_from_high": true
+      },
+      "dependencies": [],
+      "old_type": "mythic::medieval_house::3.0",
+      "new_type": "mythic::medieval_house::4.0",
+      "new_hda": "asset/medieval_building_modular.hda",
+      "scene": "scenes/variants/05_mixed_shop.hip",
+      "geometry": "geometry/05_mixed_shop.bgeo.sc",
+      "hero": "previews/05_mixed_shop_hero.png",
+      "comparison": "comparisons/05_mixed_shop.png"
+    },
+    {
+      "variant_id": "06_tavern",
+      "original_dataset": "Assets/hda_medieval_building/datasets/06_tavern.json",
+      "dataset": "datasets/06_tavern.json",
+      "sha256": "1f76e1cf000786521488c477bfe0872efb395a1076770e403bcf3a7147023b78",
+      "seeds": {
+        "decoration": 17
+      },
+      "reference_ids": [
+        "ref_06_tavern"
+      ],
+      "expected_features": {
+        "floor_count": 2,
+        "entrance_count": 1,
+        "roof_type": "gable",
+        "footprint": "l_shape",
+        "interior_enable": true,
+        "normal_bake_from_high": true
+      },
+      "dependencies": [],
+      "old_type": "mythic::medieval_house::3.0",
+      "new_type": "mythic::medieval_house::4.0",
+      "new_hda": "asset/medieval_building_modular.hda",
+      "scene": "scenes/variants/06_tavern.hip",
+      "geometry": "geometry/06_tavern.bgeo.sc",
+      "hero": "previews/06_tavern_hero.png",
+      "comparison": "comparisons/06_tavern.png"
+    },
+    {
+      "variant_id": "07_weapon_guild",
+      "original_dataset": "Assets/hda_medieval_building/datasets/07_weapon_guild.json",
+      "dataset": "datasets/07_weapon_guild.json",
+      "sha256": "bab8b5e5d4e23ba5213f1a7bcd4b38a7e4a513c4375c7e14671236908a367723",
+      "seeds": {
+        "decoration": 17
+      },
+      "reference_ids": [
+        "ref_07_weapon_guild"
+      ],
+      "expected_features": {
+        "floor_count": 2,
+        "entrance_count": 1,
+        "roof_type": "gable",
+        "footprint": "l_shape",
+        "interior_enable": true,
+        "normal_bake_from_high": true
+      },
+      "dependencies": [],
+      "old_type": "mythic::medieval_house::3.0",
+      "new_type": "mythic::medieval_house::4.0",
+      "new_hda": "asset/medieval_building_modular.hda",
+      "scene": "scenes/variants/07_weapon_guild.hip",
+      "geometry": "geometry/07_weapon_guild.bgeo.sc",
+      "hero": "previews/07_weapon_guild_hero.png",
+      "comparison": "comparisons/07_weapon_guild.png"
+    },
+    {
+      "variant_id": "08_normal_house_b",
+      "original_dataset": "Assets/hda_medieval_building/datasets/08_normal_house_b.json",
+      "dataset": "datasets/08_normal_house_b.json",
+      "sha256": "e9c5fd3ac2da6932635972e4b746a39ec8f2120daa6bf15c70f4772c2d2882bb",
+      "seeds": {
+        "decoration": 17
+      },
+      "reference_ids": [
+        "ref_08_normal_house_b"
+      ],
+      "expected_features": {
+        "floor_count": 2,
+        "entrance_count": 1,
+        "roof_type": "gable",
+        "footprint": "rectangular",
+        "interior_enable": true,
+        "normal_bake_from_high": true
+      },
+      "dependencies": [],
+      "old_type": "mythic::medieval_house::3.0",
+      "new_type": "mythic::medieval_house::4.0",
+      "new_hda": "asset/medieval_building_modular.hda",
+      "scene": "scenes/variants/08_normal_house_b.hip",
+      "geometry": "geometry/08_normal_house_b.bgeo.sc",
+      "hero": "previews/08_normal_house_b_hero.png",
+      "comparison": "comparisons/08_normal_house_b.png"
+    },
+    {
+      "variant_id": "09_normal_house_c",
+      "original_dataset": "Assets/hda_medieval_building/datasets/09_normal_house_c.json",
+      "dataset": "datasets/09_normal_house_c.json",
+      "sha256": "6c2263052579198c82238a7fadecd31493c01da9c71c503dfdfb03b824e3453a",
+      "seeds": {
+        "decoration": 17
+      },
+      "reference_ids": [
+        "ref_09_normal_house_c"
+      ],
+      "expected_features": {
+        "floor_count": 2,
+        "entrance_count": 1,
+        "roof_type": "gable",
+        "footprint": "rectangular",
+        "interior_enable": true,
+        "normal_bake_from_high": true
+      },
+      "dependencies": [],
+      "old_type": "mythic::medieval_house::3.0",
+      "new_type": "mythic::medieval_house::4.0",
+      "new_hda": "asset/medieval_building_modular.hda",
+      "scene": "scenes/variants/09_normal_house_c.hip",
+      "geometry": "geometry/09_normal_house_c.bgeo.sc",
+      "hero": "previews/09_normal_house_c_hero.png",
+      "comparison": "comparisons/09_normal_house_c.png"
+    },
+    {
+      "variant_id": "10_normal_house_c_canopy",
+      "original_dataset": "Assets/hda_medieval_building/datasets/10_normal_house_c_canopy.json",
+      "dataset": "datasets/10_normal_house_c_canopy.json",
+      "sha256": "a7d51361f0f6c3398290836b69036cff2ba2b44823b970006ae62f2e155f4ecf",
+      "seeds": {
+        "decoration": 17
+      },
+      "reference_ids": [
+        "ref_10_normal_house_c_canopy"
+      ],
+      "expected_features": {
+        "floor_count": 2,
+        "entrance_count": 1,
+        "roof_type": "gable",
+        "footprint": "rectangular",
+        "interior_enable": true,
+        "normal_bake_from_high": true
+      },
+      "dependencies": [],
+      "old_type": "mythic::medieval_house::3.0",
+      "new_type": "mythic::medieval_house::4.0",
+      "new_hda": "asset/medieval_building_modular.hda",
+      "scene": "scenes/variants/10_normal_house_c_canopy.hip",
+      "geometry": "geometry/10_normal_house_c_canopy.bgeo.sc",
+      "hero": "previews/10_normal_house_c_canopy_hero.png",
+      "comparison": "comparisons/10_normal_house_c_canopy.png"
+    },
+    {
+      "variant_id": "11_artisan_house",
+      "original_dataset": "Assets/hda_medieval_building/datasets/11_artisan_house.json",
+      "dataset": "datasets/11_artisan_house.json",
+      "sha256": "fddea88860a28ff9344fbd3bc847f64ae88d9f4ef12801137764895f00f68296",
+      "seeds": {
+        "decoration": 17
+      },
+      "reference_ids": [
+        "ref_11_artisan_house"
+      ],
+      "expected_features": {
+        "floor_count": 2,
+        "entrance_count": 1,
+        "roof_type": "gable",
+        "footprint": "l_shape",
+        "interior_enable": true,
+        "normal_bake_from_high": true
+      },
+      "dependencies": [],
+      "old_type": "mythic::medieval_house::3.0",
+      "new_type": "mythic::medieval_house::4.0",
+      "new_hda": "asset/medieval_building_modular.hda",
+      "scene": "scenes/variants/11_artisan_house.hip",
+      "geometry": "geometry/11_artisan_house.bgeo.sc",
+      "hero": "previews/11_artisan_house_hero.png",
+      "comparison": "comparisons/11_artisan_house.png"
+    },
+    {
+      "variant_id": "12_craft_guild_hall",
+      "original_dataset": "Assets/hda_medieval_building/datasets/12_craft_guild_hall.json",
+      "dataset": "datasets/12_craft_guild_hall.json",
+      "sha256": "e8cdbd86af9028ec646f0190a7053a09ff4c5c991b8bd949bd11d460002bdf18",
+      "seeds": {
+        "decoration": 17
+      },
+      "reference_ids": [
+        "ref_12_craft_guild_hall"
+      ],
+      "expected_features": {
+        "floor_count": 2,
+        "entrance_count": 1,
+        "roof_type": "gable",
+        "footprint": "rectangular",
+        "interior_enable": true,
+        "normal_bake_from_high": true
+      },
+      "dependencies": [],
+      "old_type": "mythic::medieval_house::3.0",
+      "new_type": "mythic::medieval_house::4.0",
+      "new_hda": "asset/medieval_building_modular.hda",
+      "scene": "scenes/variants/12_craft_guild_hall.hip",
+      "geometry": "geometry/12_craft_guild_hall.bgeo.sc",
+      "hero": "previews/12_craft_guild_hall_hero.png",
+      "comparison": "comparisons/12_craft_guild_hall.png"
+    },
+    {
+      "variant_id": "13_material_storage",
+      "original_dataset": "Assets/hda_medieval_building/datasets/13_material_storage.json",
+      "dataset": "datasets/13_material_storage.json",
+      "sha256": "f34a7396a1cb1b469cebdb7faf1e467e43d5be949b84cbdcae21e58f868afa84",
+      "seeds": {
+        "decoration": 17
+      },
+      "reference_ids": [
+        "ref_13_material_storage"
+      ],
+      "expected_features": {
+        "floor_count": 1,
+        "entrance_count": 1,
+        "roof_type": "gable",
+        "footprint": "rectangular",
+        "interior_enable": true,
+        "normal_bake_from_high": true
+      },
+      "dependencies": [],
+      "old_type": "mythic::medieval_house::3.0",
+      "new_type": "mythic::medieval_house::4.0",
+      "new_hda": "asset/medieval_building_modular.hda",
+      "scene": "scenes/variants/13_material_storage.hip",
+      "geometry": "geometry/13_material_storage.bgeo.sc",
+      "hero": "previews/13_material_storage_hero.png",
+      "comparison": "comparisons/13_material_storage.png"
+    },
+    {
+      "variant_id": "14_toolmaker_workshop",
+      "original_dataset": "Assets/hda_medieval_building/datasets/14_toolmaker_workshop.json",
+      "dataset": "datasets/14_toolmaker_workshop.json",
+      "sha256": "3f0066612ca809a65719a8b7b8de87f5f80a9e5bbeae17582605ff275e6df80c",
+      "seeds": {
+        "decoration": 17
+      },
+      "reference_ids": [
+        "ref_14_toolmaker_workshop"
+      ],
+      "expected_features": {
+        "floor_count": 2,
+        "entrance_count": 1,
+        "roof_type": "gable",
+        "footprint": "l_shape",
+        "interior_enable": true,
+        "normal_bake_from_high": true
+      },
+      "dependencies": [],
+      "old_type": "mythic::medieval_house::3.0",
+      "new_type": "mythic::medieval_house::4.0",
+      "new_hda": "asset/medieval_building_modular.hda",
+      "scene": "scenes/variants/14_toolmaker_workshop.hip",
+      "geometry": "geometry/14_toolmaker_workshop.bgeo.sc",
+      "hero": "previews/14_toolmaker_workshop_hero.png",
+      "comparison": "comparisons/14_toolmaker_workshop.png"
+    },
+    {
+      "variant_id": "15_forgehouse",
+      "original_dataset": "Assets/hda_medieval_building/datasets/15_forgehouse.json",
+      "dataset": "datasets/15_forgehouse.json",
+      "sha256": "4c01e5ce8e981125b4ebdcaa97fc78ebbd8e121281a16a8113c73a4573ca3946",
+      "seeds": {
+        "decoration": 17
+      },
+      "reference_ids": [
+        "ref_15_forgehouse"
+      ],
+      "expected_features": {
+        "floor_count": 2,
+        "entrance_count": 1,
+        "roof_type": "gable",
+        "footprint": "l_shape",
+        "interior_enable": true,
+        "normal_bake_from_high": true
+      },
+      "dependencies": [],
+      "old_type": "mythic::medieval_house::3.0",
+      "new_type": "mythic::medieval_house::4.0",
+      "new_hda": "asset/medieval_building_modular.hda",
+      "scene": "scenes/variants/15_forgehouse.hip",
+      "geometry": "geometry/15_forgehouse.bgeo.sc",
+      "hero": "previews/15_forgehouse_hero.png",
+      "comparison": "comparisons/15_forgehouse.png"
+    }
+  ]
+}

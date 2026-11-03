@@ -1,0 +1,31 @@
+{
+  "status": "pass",
+  "result": {
+    "variant_id": "07_weapon_guild",
+    "quality": "high",
+    "points": 182518,
+    "primitives": 183325,
+    "display_node": "/obj/medieval_roof_high_v3/BUILDING",
+    "camera": {
+      "t": [
+        18.0,
+        15.0,
+        -21.0
+      ],
+      "r": [
+        -22.152627580061193,
+        141.00900595749454,
+        0.0
+      ],
+      "orthowidth": 21.0
+    },
+    "ui": true,
+    "scene": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\scenes\\medieval_building_roof_high_v3.hip",
+    "wire": false,
+    "position_hash": "339bea2250e9da3971306126b6190ca1b97b226be5bde3959ba33f41cc653a8e",
+    "hda_sha256": "a8a473c9d9da841fbcb04aac47a776c5b5d96a58af1d9c834d8286cd708e6302",
+    "window_minimized": false,
+    "window_visible": true,
+    "hud_text": "07_weapon_guild  |  HIGH  |  183325 primitives  |  LIVE HOUDINI GUI"
+  }
+}

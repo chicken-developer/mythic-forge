@@ -1,0 +1,26 @@
+{
+  "status": "pass",
+  "result": {
+    "variant_id": "10_normal_house_c_canopy",
+    "quality": "high",
+    "points": 153782,
+    "primitives": 155086,
+    "display_node": "/obj/medieval_roof_high_v3/BUILDING",
+    "camera": {
+      "t": [
+        17.0,
+        13.0,
+        -24.5
+      ],
+      "r": [
+        -22.152627580061193,
+        141.00900595749454,
+        0.0
+      ],
+      "orthowidth": 10.0
+    },
+    "ui": true,
+    "scene": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\scenes\\medieval_building_roof_high_v3.hip",
+    "wire": false
+  }
+}

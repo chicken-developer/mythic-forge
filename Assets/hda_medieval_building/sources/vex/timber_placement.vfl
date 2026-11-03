@@ -1,0 +1,32 @@
+// One post per bay boundary; continuous plates meet the posts without overlaps.
+void member(vector p;vector u;vector n;vector size;string id){
+ int pt=addpoint(0,p);matrix3 m=set(u*size.x,set(0,1,0)*size.y,-n*size.z);
+ setpointattrib(0,"transform",pt,m);setpointattrib(0,"name",pt,id);
+ setpointattrib(0,"material_family",pt,"wood");setpointattrib(0,"Cd",pt,set(.27,.19,.12));
+}
+int count=nprimitives(0);vector up={0,1,0};
+for(int pr=0;pr<count;pr++){
+ vector n=prim(0,"facade_normal",pr),u=prim(0,"edge_u",pr);
+ float b=prim(0,"floor_b",pr),h=prim(0,"floor_h",pr),w=prim(0,"bay_width",pr);
+ vector c=primuv(0,"P",pr,set(.5,.5,0));c.y=b+h/2;c+=n*.035;
+ string id=prim(0,"bay_id",pr),opening=prim(0,"opening",pr);
+ member(c-u*w/2,u,n,set(.18,h-.12,.21),"timber/"+id+"/post");
+ if(int(prim(0,"bay_i",pr))==int(prim(0,"bay_count",pr))-1)
+  member(c+u*w/2,u,n,set(.18,h-.12,.21),"timber/"+id+"/end_post");
+ for(int j=0;j<2;j++){
+  vector p=c;p.y=b+(j==0?.12:h-.12);
+  member(p,u,n,set(max(.05,w-.17),.18,.22),"timber/"+id+(j==0?"/sill_plate":"/wall_plate"));
+ }
+ string pattern=chs("../timber_pattern");
+ if(opening=="." && pattern!="curved_brace" && pattern!="post"){
+  int diagonals=pattern=="cross_brace"?2:1;
+  for(int j=0;j<diagonals;j++){
+   vector a=c-u*(w/2-.15)-up*(h/2-.26),z=c+u*(w/2-.15)+up*(h/2-.26);
+   if(j==1){float y=a.y;a.y=z.y;z.y=y;}
+   vector along=normalize(z-a),side=normalize(cross(along,n)),depth=cross(side,along);
+   int pt=addpoint(0,(a+z)*.5+n*j*.025);matrix3 m=set(side*.12,along*distance(a,z),depth*.12);
+   setpointattrib(0,"transform",pt,m);setpointattrib(0,"name",pt,"timber/"+id+"/brace_"+itoa(j));
+  }
+ }
+}
+for(int p=count-1;p>=0;p--)removeprim(0,p,1);

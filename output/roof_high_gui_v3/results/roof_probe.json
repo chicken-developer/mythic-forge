@@ -1,0 +1,589 @@
+[
+  {
+    "variant_id": "06_tavern",
+    "nodes": {
+      "ROOF/patch_surfaces/OUT_raw_surfaces": {
+        "points": 72,
+        "primitives": 34,
+        "bounds": [
+          12.300000190734863,
+          2.2799997329711914,
+          8.5
+        ],
+        "primitive_roof_ids": {
+          "roof/0": 20,
+          "roof/1": 14
+        },
+        "point_roof_ids": {
+          "roof/0": 42,
+          "roof/1": 30
+        }
+      },
+      "ROOF/ridge_valley_solver/OUT_roof_top": {
+        "points": 85,
+        "primitives": 81,
+        "bounds": [
+          12.300000190734863,
+          2.2799997329711914,
+          8.5
+        ],
+        "primitive_roof_ids": {
+          "roof/0": 40,
+          "roof/1": 41
+        },
+        "point_roof_ids": {
+          "roof/0": 42,
+          "roof/1": 43
+        }
+      },
+      "ROOF/ridge_valley_solver/OUT_roof_shell": {
+        "points": 170,
+        "primitives": 247,
+        "bounds": [
+          12.300000190734863,
+          2.4099998474121094,
+          8.5
+        ],
+        "primitive_roof_ids": {
+          "roof/0": 121,
+          "roof/1": 126
+        },
+        "point_roof_ids": {
+          "roof/0": 84,
+          "roof/1": 86
+        }
+      },
+      "ROOF/surfaces_tiles/ROOF_TILE_PLACEMENT": {
+        "points": 1204,
+        "primitives": 0,
+        "bounds": [
+          11.884248733520508,
+          2.1690917015075684,
+          8.317151069641113
+        ],
+        "primitive_roof_ids": {},
+        "point_roof_ids": {
+          "roof/0": 840,
+          "roof/1": 364
+        }
+      },
+      "ROOF/surfaces_tiles/tile_candidates_on_resolved_domain": {
+        "points": 1064,
+        "primitives": 0,
+        "bounds": [
+          11.884248733520508,
+          2.1690917015075684,
+          8.317151069641113
+        ],
+        "primitive_roof_ids": {},
+        "point_roof_ids": {
+          "roof/0": 840,
+          "roof/1": 224
+        }
+      },
+      "ROOF/surfaces_tiles/TILE_MATERIAL": {
+        "points": 8512,
+        "primitives": 6384,
+        "bounds": [
+          12.281999588012695,
+          2.3238329887390137,
+          8.538760662078857
+        ],
+        "primitive_roof_ids": {
+          "roof/0": 5040,
+          "roof/1": 1344
+        },
+        "point_roof_ids": {
+          "roof/0": 6720,
+          "roof/1": 1792
+        }
+      },
+      "ROOF/surfaces_tiles/clip_tiles_to_roof_envelope": {
+        "points": 8512,
+        "primitives": 6384,
+        "bounds": [
+          12.281999588012695,
+          2.3238329887390137,
+          8.538760662078857
+        ],
+        "primitive_roof_ids": {
+          "roof/0": 5040,
+          "roof/1": 1344
+        },
+        "point_roof_ids": {
+          "roof/0": 6720,
+          "roof/1": 1792
+        }
+      },
+      "ROOF/surfaces_tiles/TRIM_TILES_AGAINST_BODY": {
+        "points": 8512,
+        "primitives": 6384,
+        "bounds": [
+          12.281999588012695,
+          2.3238329887390137,
+          8.538760662078857
+        ],
+        "primitive_roof_ids": {
+          "roof/0": 5040,
+          "roof/1": 1344
+        },
+        "point_roof_ids": {
+          "roof/0": 6720,
+          "roof/1": 1792
+        }
+      },
+      "ROOF/surfaces_tiles/OUT_roof_tiles": {
+        "points": 8484,
+        "primitives": 6356,
+        "bounds": [
+          12.281999588012695,
+          2.3238329887390137,
+          8.538760662078857
+        ],
+        "primitive_roof_ids": {
+          "roof/0": 4978,
+          "": 34,
+          "roof/1": 1344
+        },
+        "point_roof_ids": {
+          "roof/0": 6568,
+          "": 124,
+          "roof/1": 1792
+        }
+      },
+      "ROOF/dormers/DORMER_PLACEMENT_DATA": {
+        "points": 1,
+        "primitives": 0,
+        "bounds": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "point_roof_ids": {
+          "roof/0": 1
+        }
+      },
+      "OUTPUT/detail_levels/OUT_low": {
+        "points": 26144,
+        "primitives": 20924,
+        "bounds": [
+          13.199999332427979,
+          8.886326901614666,
+          10.105000019073486
+        ],
+        "primitive_roof_ids": {
+          "": 14271,
+          "roof/0": 5176,
+          "roof/1": 1477
+        },
+        "point_roof_ids": {
+          "": 17584,
+          "roof/0": 6663,
+          "roof/1": 1897
+        }
+      },
+      "OUTPUT/detail_levels/OUT_high": {
+        "points": 248425,
+        "primitives": 251112,
+        "bounds": [
+          13.199999332427979,
+          8.886326901614666,
+          10.105000019073486
+        ],
+        "primitive_roof_ids": {
+          "": 146968,
+          "roof/0": 82031,
+          "roof/1": 22113
+        },
+        "point_roof_ids": {
+          "": 147822,
+          "roof/0": 78979,
+          "roof/1": 21624
+        }
+      }
+    }
+  },
+  {
+    "variant_id": "08_normal_house_b",
+    "nodes": {
+      "ROOF/patch_surfaces/OUT_raw_surfaces": {
+        "points": 42,
+        "primitives": 20,
+        "bounds": [
+          9.379999160766602,
+          2.179999828338623,
+          7.980000972747803
+        ],
+        "primitive_roof_ids": {
+          "roof/0": 20
+        },
+        "point_roof_ids": {
+          "roof/0": 42
+        }
+      },
+      "ROOF/ridge_valley_solver/OUT_roof_top": {
+        "points": 42,
+        "primitives": 40,
+        "bounds": [
+          9.379999160766602,
+          2.179999828338623,
+          7.980000972747803
+        ],
+        "primitive_roof_ids": {
+          "roof/0": 40
+        },
+        "point_roof_ids": {
+          "roof/0": 42
+        }
+      },
+      "ROOF/ridge_valley_solver/OUT_roof_shell": {
+        "points": 84,
+        "primitives": 122,
+        "bounds": [
+          9.379999160766602,
+          2.309999942779541,
+          7.980000972747803
+        ],
+        "primitive_roof_ids": {
+          "roof/0": 122
+        },
+        "point_roof_ids": {
+          "roof/0": 84
+        }
+      },
+      "ROOF/surfaces_tiles/ROOF_TILE_PLACEMENT": {
+        "points": 880,
+        "primitives": 0,
+        "bounds": [
+          8.953635692596436,
+          2.0740036964416504,
+          7.810432434082031
+        ],
+        "primitive_roof_ids": {},
+        "point_roof_ids": {
+          "roof/0": 880
+        }
+      },
+      "ROOF/surfaces_tiles/tile_candidates_on_resolved_domain": {
+        "points": 880,
+        "primitives": 0,
+        "bounds": [
+          8.953635692596436,
+          2.0740036964416504,
+          7.810432434082031
+        ],
+        "primitive_roof_ids": {},
+        "point_roof_ids": {
+          "roof/0": 880
+        }
+      },
+      "ROOF/surfaces_tiles/TILE_MATERIAL": {
+        "points": 7040,
+        "primitives": 5280,
+        "bounds": [
+          9.361999034881592,
+          2.2234511375427246,
+          8.019316673278809
+        ],
+        "primitive_roof_ids": {
+          "roof/0": 5280
+        },
+        "point_roof_ids": {
+          "roof/0": 7040
+        }
+      },
+      "ROOF/surfaces_tiles/clip_tiles_to_roof_envelope": {
+        "points": 7040,
+        "primitives": 5280,
+        "bounds": [
+          9.361999034881592,
+          2.2234511375427246,
+          8.019316673278809
+        ],
+        "primitive_roof_ids": {
+          "roof/0": 5280
+        },
+        "point_roof_ids": {
+          "roof/0": 7040
+        }
+      },
+      "ROOF/surfaces_tiles/TRIM_TILES_AGAINST_BODY": {
+        "points": 7040,
+        "primitives": 5280,
+        "bounds": [
+          9.361999034881592,
+          2.2234511375427246,
+          8.019316673278809
+        ],
+        "primitive_roof_ids": {
+          "roof/0": 5280
+        },
+        "point_roof_ids": {
+          "roof/0": 7040
+        }
+      },
+      "ROOF/surfaces_tiles/OUT_roof_tiles": {
+        "points": 6940,
+        "primitives": 5202,
+        "bounds": [
+          9.361999034881592,
+          2.2234511375427246,
+          8.019316673278809
+        ],
+        "primitive_roof_ids": {
+          "roof/0": 5170,
+          "": 32
+        },
+        "point_roof_ids": {
+          "roof/0": 6818,
+          "": 122
+        }
+      },
+      "ROOF/dormers/DORMER_PLACEMENT_DATA": {
+        "points": 1,
+        "primitives": 0,
+        "bounds": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "point_roof_ids": {
+          "roof/0": 1
+        }
+      },
+      "OUTPUT/detail_levels/OUT_low": {
+        "points": 19072,
+        "primitives": 14878,
+        "bounds": [
+          10.0,
+          8.834652058780193,
+          8.84600019454956
+        ],
+        "primitive_roof_ids": {
+          "": 9510,
+          "roof/0": 5368
+        },
+        "point_roof_ids": {
+          "": 12149,
+          "roof/0": 6923
+        }
+      },
+      "OUTPUT/detail_levels/OUT_high": {
+        "points": 172276,
+        "primitives": 173845,
+        "bounds": [
+          10.0,
+          8.834652058780193,
+          8.84600019454956
+        ],
+        "primitive_roof_ids": {
+          "": 88787,
+          "roof/0": 85058
+        },
+        "point_roof_ids": {
+          "": 90308,
+          "roof/0": 81968
+        }
+      }
+    }
+  },
+  {
+    "variant_id": "11_artisan_house",
+    "nodes": {
+      "ROOF/patch_surfaces/OUT_raw_surfaces": {
+        "points": 68,
+        "primitives": 32,
+        "bounds": [
+          10.264000654220581,
+          5.0299999713897705,
+          8.300000190734863
+        ],
+        "primitive_roof_ids": {
+          "roof/0": 18,
+          "roof/1": 14
+        },
+        "point_roof_ids": {
+          "roof/0": 38,
+          "roof/1": 30
+        }
+      },
+      "ROOF/ridge_valley_solver/OUT_roof_top": {
+        "points": 68,
+        "primitives": 64,
+        "bounds": [
+          10.264000654220581,
+          5.0299999713897705,
+          8.300000190734863
+        ],
+        "primitive_roof_ids": {
+          "roof/0": 36,
+          "roof/1": 28
+        },
+        "point_roof_ids": {
+          "roof/0": 38,
+          "roof/1": 30
+        }
+      },
+      "ROOF/ridge_valley_solver/OUT_roof_shell": {
+        "points": 136,
+        "primitives": 196,
+        "bounds": [
+          10.264000654220581,
+          5.159999847412109,
+          8.300000190734863
+        ],
+        "primitive_roof_ids": {
+          "roof/0": 110,
+          "roof/1": 86
+        },
+        "point_roof_ids": {
+          "roof/0": 76,
+          "roof/1": 60
+        }
+      },
+      "ROOF/surfaces_tiles/ROOF_TILE_PLACEMENT": {
+        "points": 940,
+        "primitives": 0,
+        "bounds": [
+          9.965581178665161,
+          4.871535778045654,
+          7.885000705718994
+        ],
+        "primitive_roof_ids": {},
+        "point_roof_ids": {
+          "roof/0": 720,
+          "roof/1": 220
+        }
+      },
+      "ROOF/surfaces_tiles/tile_candidates_on_resolved_domain": {
+        "points": 852,
+        "primitives": 0,
+        "bounds": [
+          9.965581178665161,
+          4.871535778045654,
+          7.885000705718994
+        ],
+        "primitive_roof_ids": {},
+        "point_roof_ids": {
+          "roof/0": 720,
+          "roof/1": 132
+        }
+      },
+      "ROOF/surfaces_tiles/TILE_MATERIAL": {
+        "points": 6816,
+        "primitives": 5112,
+        "bounds": [
+          10.278154850006104,
+          5.071274518966675,
+          8.28200101852417
+        ],
+        "primitive_roof_ids": {
+          "roof/0": 4320,
+          "roof/1": 792
+        },
+        "point_roof_ids": {
+          "roof/0": 5760,
+          "roof/1": 1056
+        }
+      },
+      "ROOF/surfaces_tiles/clip_tiles_to_roof_envelope": {
+        "points": 6816,
+        "primitives": 5112,
+        "bounds": [
+          10.278154850006104,
+          5.071274518966675,
+          8.28200101852417
+        ],
+        "primitive_roof_ids": {
+          "roof/0": 4320,
+          "roof/1": 792
+        },
+        "point_roof_ids": {
+          "roof/0": 5760,
+          "roof/1": 1056
+        }
+      },
+      "ROOF/surfaces_tiles/TRIM_TILES_AGAINST_BODY": {
+        "points": 6816,
+        "primitives": 5112,
+        "bounds": [
+          10.278154850006104,
+          5.071274518966675,
+          8.28200101852417
+        ],
+        "primitive_roof_ids": {
+          "roof/0": 4320,
+          "roof/1": 792
+        },
+        "point_roof_ids": {
+          "roof/0": 5760,
+          "roof/1": 1056
+        }
+      },
+      "ROOF/surfaces_tiles/OUT_roof_tiles": {
+        "points": 6816,
+        "primitives": 5112,
+        "bounds": [
+          10.278154850006104,
+          5.071274518966675,
+          8.28200101852417
+        ],
+        "primitive_roof_ids": {
+          "roof/0": 4320,
+          "roof/1": 792
+        },
+        "point_roof_ids": {
+          "roof/0": 5760,
+          "roof/1": 1056
+        }
+      },
+      "ROOF/dormers/DORMER_PLACEMENT_DATA": {
+        "points": 0,
+        "primitives": 0,
+        "bounds": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "OUTPUT/detail_levels/OUT_low": {
+        "points": 20675,
+        "primitives": 16599,
+        "bounds": [
+          11.164000511169434,
+          8.95768367499113,
+          9.44599962234497
+        ],
+        "primitive_roof_ids": {
+          "": 11274,
+          "roof/1": 884,
+          "roof/0": 4441
+        },
+        "point_roof_ids": {
+          "": 13682,
+          "roof/1": 1122,
+          "roof/0": 5871
+        }
+      },
+      "OUTPUT/detail_levels/OUT_high": {
+        "points": 198682,
+        "primitives": 200971,
+        "bounds": [
+          11.164000511169434,
+          8.95768367499113,
+          9.44599962234497
+        ],
+        "primitive_roof_ids": {
+          "": 117105,
+          "roof/1": 13054,
+          "roof/0": 70812
+        },
+        "point_roof_ids": {
+          "": 116356,
+          "roof/1": 12750,
+          "roof/0": 69576
+        }
+      }
+    }
+  }
+]

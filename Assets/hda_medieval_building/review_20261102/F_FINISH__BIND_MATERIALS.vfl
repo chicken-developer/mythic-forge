@@ -1,0 +1,1 @@
+s@shop_materialpath=chs("material_root")+"/"+s@material_family;

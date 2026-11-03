@@ -1,0 +1,140 @@
+{
+  "public_parameter_migration": "identity; no original dataset edits",
+  "source_paths_to_new_paths": {
+    "OPTIONAL_BLOCKOUT_INPUT": "LAYOUT/semantic_layout/OPTIONAL_BLOCKOUT_INPUT",
+    "F_PLAN": "LAYOUT/semantic_layout/F_PLAN",
+    "F_BODY_SHELL": "SHELL/body_shell",
+    "F_FACADE_LAYOUT": "SHELL/facade_layout",
+    "F_OPENING_KITS": "OPENINGS/kits",
+    "F_ATTACHMENTS": "OPENINGS/attachments",
+    "F_WINDOWS": "OPENINGS/windows",
+    "F_DOORS": "OPENINGS/doors",
+    "BAY_CONNECTOR_CUTTERS": "OPENINGS/wall_cuts/BAY_CONNECTOR_CUTTERS",
+    "ALL_OPENING_CUTTERS": "OPENINGS/wall_cuts/ALL_OPENING_CUTTERS",
+    "F_WALL_FINISH": "OPENINGS/wall_cuts/F_WALL_FINISH",
+    "F_DORMERS": "ROOF/dormers",
+    "F_ROOF": "ROOF/surfaces_tiles",
+    "F_ROOF_TRIM": "ROOF/trim",
+    "F_FACADE_DETAILS": "DETAILS/facade",
+    "F_INTERIOR": "DETAILS/interior",
+    "F_BALCONY": "DETAILS/balcony",
+    "F_UTILITIES": "DETAILS/utilities",
+    "F_SITE": "DETAILS/site",
+    "F_FURNISHING": "DETAILS/furnishing",
+    "MERGE_BUILDING": "UV_MATERIAL/surfacing/MERGE_BUILDING",
+    "F_FINISH": "UV_MATERIAL/surfacing/F_FINISH"
+  },
+  "legacy_object_merges_replaced_by_connectors": [
+    "/obj/medieval_roof_high_v3/BUILDING/OPENINGS/kits/RETURN_window_aperture",
+    "/obj/medieval_roof_high_v3/BUILDING/OPENINGS/kits/RETURN_door_aperture",
+    "/obj/medieval_roof_high_v3/BUILDING/ROOF/dormers/DORMER_MODULE/reused_window_kit",
+    "/obj/medieval_roof_high_v3/BUILDING/ROOF/dormers/DORMER_MODULE/shared_window_aperture"
+  ],
+  "stage_inputs": {
+    "LAYOUT": {},
+    "SHELL": {
+      "layout.semantic_layout:floor_plans": 0,
+      "layout.semantic_layout:storey_mass": 1,
+      "layout.semantic_layout:roof_plans": 2
+    },
+    "OPENINGS": {
+      "layout.semantic_layout:role_plans": 0,
+      "layout.semantic_layout:roof_plans": 1,
+      "shell.body_shell:solid_body": 2,
+      "shell.facade_layout:opening_points": 3,
+      "shell.body_shell:uncut_shell": 4
+    },
+    "ROOF": {
+      "layout.semantic_layout:roof_plans": 0,
+      "openings.kits:window_geometry": 1,
+      "openings.kits:window_aperture": 2,
+      "shell.body_shell:solid_body": 3
+    },
+    "DETAILS": {
+      "shell.facade_layout:visible_bays": 0,
+      "layout.semantic_layout:roof_plans": 1,
+      "layout.semantic_layout:floor_plans": 2,
+      "layout.semantic_layout:role_plans": 3,
+      "shell.body_shell:solid_body": 4
+    },
+    "UV_MATERIAL": {
+      "openings.wall_cuts:walls": 0,
+      "details.facade:structural_timber": 1,
+      "openings.windows:window_geometry": 2,
+      "openings.doors:door_geometry": 3,
+      "roof.surfaces_tiles:roof_shell": 4,
+      "roof.surfaces_tiles:roof_tiles": 5,
+      "roof.dormers:dormer_geometry": 6,
+      "roof.trim:roof_trim": 7,
+      "details.interior:interior": 8,
+      "details.utilities:utilities": 9,
+      "details.site:site": 10,
+      "details.furnishing:furnishing": 11,
+      "details.balcony:balcony": 12,
+      "details.facade:facade_details": 13,
+      "openings.attachments:attachment_geometry": 14,
+      "roof.junctions:junction_trim": 15
+    },
+    "OUTPUT": {
+      "uv_material.surfacing:building": 0
+    }
+  },
+  "stage_outputs": {
+    "LAYOUT": {
+      "layout.semantic_layout:role_plans": 0,
+      "layout.semantic_layout:floor_plans": 1,
+      "layout.semantic_layout:storey_mass": 2,
+      "layout.semantic_layout:roof_plans": 3
+    },
+    "SHELL": {
+      "shell.body_shell:uncut_shell": 0,
+      "shell.body_shell:solid_body": 1,
+      "shell.facade_layout:visible_bays": 2,
+      "shell.facade_layout:opening_points": 3
+    },
+    "OPENINGS": {
+      "openings.kits:window_geometry": 0,
+      "openings.kits:window_aperture": 1,
+      "openings.kits:door_geometry": 2,
+      "openings.kits:door_aperture": 3,
+      "openings.attachments:attachment_geometry": 4,
+      "openings.attachments:bay_cutters": 5,
+      "openings.attachments:replacement_metadata": 6,
+      "openings.windows:window_geometry": 7,
+      "openings.windows:window_cutters": 8,
+      "openings.doors:door_geometry": 9,
+      "openings.doors:door_cutters": 10,
+      "openings.wall_cuts:walls": 11
+    },
+    "ROOF": {
+      "roof.dormers:dormer_geometry": 0,
+      "roof.dormers:dormer_cutters": 1,
+      "roof.surfaces_tiles:roof_shell": 2,
+      "roof.surfaces_tiles:roof_tiles": 3,
+      "roof.trim:roof_trim": 4,
+      "roof.patch_surfaces:raw_surfaces": 5,
+      "roof.junctions:roof_top": 6,
+      "roof.junctions:roof_volume": 7,
+      "roof.junctions:roof_shell": 8,
+      "roof.junctions:junction_trim": 9
+    },
+    "DETAILS": {
+      "details.facade:structural_timber": 0,
+      "details.facade:facade_details": 1,
+      "details.interior:interior": 2,
+      "details.balcony:balcony": 3,
+      "details.utilities:utilities": 4,
+      "details.site:site": 5,
+      "details.furnishing:furnishing": 6
+    },
+    "UV_MATERIAL": {
+      "uv_material.surfacing:building": 0
+    },
+    "OUTPUT": {
+      "output.detail_levels:low": 0,
+      "output.detail_levels:high": 1,
+      "output.detail_levels:selected": 2,
+      "output.game_export:geometry": 3
+    }
+  }
+}

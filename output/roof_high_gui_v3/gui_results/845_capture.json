@@ -1,0 +1,17 @@
+{
+  "status": "pass",
+  "result": {
+    "path": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\screenshots\\final\\11_artisan_house_before_roof_gui.png",
+    "dimensions": [
+      1600,
+      1000
+    ],
+    "provenance": "houdini_gui_window_screenshot",
+    "window_title": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\..\\modular_rebuild_v2\\scenes\\variants\\11_artisan_house.hip - Houdini FX 22.0.368 - Py3.13",
+    "houdini": "22.0.368",
+    "ui_available": true,
+    "window_minimized": false,
+    "window_visible": true,
+    "hud_text": "11_artisan_house  |  BEFORE V2 LOW  |  17020 primitives  |  LIVE HOUDINI GUI"
+  }
+}

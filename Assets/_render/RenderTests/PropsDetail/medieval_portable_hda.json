@@ -1,0 +1,59 @@
+{
+  "family": "Medieval",
+  "runtime": "22.0.368",
+  "source_imports": false,
+  "status": "passed",
+  "hda_sha256": "aa77a53d086e8de1c0d864685658159389ce65ee7a28d3acd20b66861b3d7cd4",
+  "records": [
+    {
+      "id": "01_townhouse_base",
+      "points": 40424,
+      "polygons": 47661,
+      "lights": 3,
+      "maximum_light_position_error_m": 0.0,
+      "connected_light_sources_checked": true,
+      "invalid_normals": 0,
+      "seconds": 16.002
+    },
+    {
+      "id": "02_round_workshop_base",
+      "points": 30107,
+      "polygons": 31772,
+      "lights": 2,
+      "maximum_light_position_error_m": 0.0,
+      "connected_light_sources_checked": true,
+      "invalid_normals": 0,
+      "seconds": 11.189
+    },
+    {
+      "id": "03_village_inn_base",
+      "points": 44583,
+      "polygons": 48836,
+      "lights": 4,
+      "maximum_light_position_error_m": 0.0,
+      "connected_light_sources_checked": true,
+      "invalid_normals": 0,
+      "seconds": 21.465
+    },
+    {
+      "id": "05_watermill_base",
+      "points": 33748,
+      "polygons": 39201,
+      "lights": 2,
+      "maximum_light_position_error_m": 0.0,
+      "connected_light_sources_checked": true,
+      "invalid_normals": 0,
+      "seconds": 14.638
+    },
+    {
+      "id": "06_cliff_house_base",
+      "points": 31785,
+      "polygons": 34397,
+      "lights": 2,
+      "maximum_light_position_error_m": 0.0,
+      "connected_light_sources_checked": true,
+      "invalid_normals": 0,
+      "seconds": 15.096
+    }
+  ]
+}

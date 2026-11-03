@@ -1,0 +1,51 @@
+
+int count=nprimitives(0),style=0;
+string value=chs("../../facade_style");
+if(value=="A")style=1;else if(value=="B")style=2;else if(value=="C")style=3;
+float density=clamp(ch("../../facade_module_density"),0.,1.);
+int high=chs("../../detail_level")!="low",budget=max(0,chi("../../facade_accent_budget"));
+dict overrides={};string text=strip(chs("../../facade_overrides"));
+if(len(text)>1)overrides=json_loads(text,0);
+string sides[]=array("front","right","rear","left");
+int candidates[];float scores[];
+for(int pr=0;pr<count;pr++)
+{
+    string role=prim(0,"role",pr),opening=prim(0,"opening",pr);
+    int side=clamp(int(prim(0,"side",pr)),0,3),floor=int(prim(0,"floor_i",pr)),bay=int(prim(0,"bay_i",pr));
+    string slot=role+"."+sides[side]+"."+itoa(floor)+"."+itoa(bay);
+    string oldslot=prim(0,"bay_id",pr),module="",structure="",functional="",hero="";
+    int explicit=isvalidindex(overrides,slot)||isvalidindex(overrides,oldslot);
+    if(isvalidindex(overrides,slot))module=overrides[slot];
+    else if(isvalidindex(overrides,oldslot))module=overrides[oldslot];
+    float score=rand(float(pr)*71.731+.137);
+    int selected=score<density,solid=opening!="W"&&opening!="D";
+    if(explicit)
+    {
+        if(module=="studs"||module=="brace")structure=module;
+        else if(module=="banner"||module=="crest")hero=module;
+        else if(module!="plain")functional=module;
+    }
+    else if(selected)
+    {
+        if(style>=1&&solid)structure="studs";
+        if(style>=2&&high)
+        {
+            if(opening=="W")functional="planter";
+            else if(solid)functional=pr%3==0?"niche":pr%3==1?"service":"sign";
+        }
+        if(style>=3&&high&&solid)hero=pr%2==0?"banner":"crest";
+    }
+    if(!solid)structure="";
+    if(!solid && functional!="sign" && functional!="planter" && functional!="oriel")functional="";
+    if(opening=="D"&&(functional=="planter"||functional=="oriel"))functional="";
+    setprimattrib(0,"facade_slot",pr,slot,"set");
+    setprimattrib(0,"structural_kind",pr,structure,"set");
+    setprimattrib(0,"functional_kind",pr,functional,"set");
+    setprimattrib(0,"hero_kind",pr,hero,"set");
+    setprimattrib(0,"has_override",pr,explicit,"set");
+    setprimattrib(0,"hero_selected",pr,0,"set");
+    if(hero!=""){append(candidates,pr);append(scores,(explicit?-1.:0.)+score);}
+}
+int order[]=argsort(scores);
+for(int i=0;i<min(budget,len(order));i++)
+    setprimattrib(0,"hero_selected",candidates[order[i]],1,"set");

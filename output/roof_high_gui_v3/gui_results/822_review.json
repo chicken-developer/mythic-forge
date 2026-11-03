@@ -1,0 +1,31 @@
+{
+  "status": "pass",
+  "result": {
+    "variant_id": "13_material_storage",
+    "quality": "high",
+    "points": 100566,
+    "primitives": 102062,
+    "display_node": "/obj/medieval_roof_high_v3/BUILDING",
+    "camera": {
+      "t": [
+        18.0,
+        15.0,
+        -21.0
+      ],
+      "r": [
+        -22.152627580061193,
+        141.00900595749454,
+        0.0
+      ],
+      "orthowidth": 21.0
+    },
+    "ui": true,
+    "scene": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\scenes\\medieval_building_roof_high_v3.hip",
+    "wire": false,
+    "position_hash": "59c1f169434206d80ebd7fdc47c9af55e6362f85ca922264f95e03ea24c3928e",
+    "hda_sha256": "a8a473c9d9da841fbcb04aac47a776c5b5d96a58af1d9c834d8286cd708e6302",
+    "window_minimized": false,
+    "window_visible": true,
+    "hud_text": "13_material_storage  |  HIGH  |  102062 primitives  |  LIVE HOUDINI GUI"
+  }
+}

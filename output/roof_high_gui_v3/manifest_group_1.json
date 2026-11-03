@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "asset_name": "medieval_building",
+  "generator": "build_hda.py",
+  "parameter_schema": "parameter_schema.json",
+  "baseline": "datasets/baseline.json",
+  "references": [
+    {
+      "reference_id": "ref_baseline",
+      "role": "baseline",
+      "path": "references/ConceptArt_05_NormalHouse_02_V1.png"
+    },
+    {
+      "reference_id": "ref_01_food_shop",
+      "role": "variant",
+      "path": "references/ConceptArt_04_FoodShop_V1.png",
+      "sha256": "9bfc471b74dabf52aa53a4bf7f7ecd39de29e10ed9422da6b8aec18dd00adb88"
+    },
+    {
+      "reference_id": "ref_02_general_store",
+      "role": "variant",
+      "path": "references/ConceptArt_04_GeneralStore_V1.png",
+      "sha256": "f4ed87a00129eae265c9216bdb45b8cc64dfbf05fcf7f8c4538fc7bfcc8b17bf"
+    },
+    {
+      "reference_id": "ref_03_herbal_store",
+      "role": "variant",
+      "path": "references/ConceptArt_04_HerbalStore_V1.png",
+      "sha256": "a304b5efb0abab4cab1f4b4132ab802a12a45ad31dc3c4716088d919700132aa"
+    },
+    {
+      "reference_id": "ref_04_merchant_house",
+      "role": "variant",
+      "path": "references/ConceptArt_04_MerchantHouse_V1.png",
+      "sha256": "c1a8724f951fd8d3de392559336512b00f353a9a0372c78704cc305317f5669a"
+    },
+    {
+      "reference_id": "ref_05_mixed_shop",
+      "role": "variant",
+      "path": "references/ConceptArt_04_MixedShop_V1.png",
+      "sha256": "38d5359a3ec158c638797dcbec016d3a4149776346222d67c2152317376cbaa9"
+    }
+  ],
+  "datasets": [
+    "datasets/01_food_shop.json",
+    "datasets/02_general_store.json",
+    "datasets/03_herbal_store.json",
+    "datasets/04_merchant_house.json",
+    "datasets/05_mixed_shop.json"
+  ],
+  "requested_variant_count": 15,
+  "target_houdini_version": "22.0.368",
+  "camera": {
+    "projection": "orthographic",
+    "target": [
+      1,
+      4,
+      0
+    ],
+    "delta": [
+      17,
+      11,
+      -21
+    ],
+    "orthowidth_m": 21,
+    "framing": "common hero camera across all 16 records; detail views separately labelled"
+  },
+  "render_backend": "houdini_gui_window_screenshot",
+  "bake_backend": "not_run",
+  "normal_format": "DirectX tangent space, MikkT, 0..1, linear PNG",
+  "reference_fidelity": "Parametric reconstructions; concept props, bespoke signs, plants and guild turrets are approximations or omitted.",
+  "hda_type": "mythic::medieval_house::4.1",
+  "hda_file": "asset/medieval_building_modular.hda",
+  "hda_sha256": "a8a473c9d9da841fbcb04aac47a776c5b5d96a58af1d9c834d8286cd708e6302",
+  "generator_version": "2026.11.03-roof-high-gui-v3",
+  "preview_backend": "Actual visible Houdini GUI native window capture; viewport crop from same pixels; no OpenGL ROP",
+  "normal_bake_status": "not_run; source expected_features are preserved requirements, not measured completion",
+  "unreal_status": "not_run",
+  "effective_quality": "high"
+}

@@ -1,0 +1,33 @@
+{
+  "status": "pass",
+  "result": {
+    "variant_id": "07_weapon_guild",
+    "quality": "legacy_low",
+    "points": 31268,
+    "primitives": 24650,
+    "display_node": "/obj/medieval_modular_v2/BUILDING",
+    "camera": {
+      "t": [
+        18.0,
+        17.5,
+        -21.0
+      ],
+      "r": [
+        -22.152627580061193,
+        141.00900595749454,
+        0.0
+      ],
+      "orthowidth": 14.0
+    },
+    "ui": true,
+    "scene": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\..\\modular_rebuild_v2\\scenes\\variants\\07_weapon_guild.hip",
+    "wire": false,
+    "position_hash": "6a62240f1995a03d6b8200da7b1ab45f5595734e363d400944d3f03b1af40918",
+    "hda_sha256": "90fa34e28094a8d15b560349f3e284619a680a553058937c1b2bccb0484ac687",
+    "hda_type": "mythic::medieval_house::4.0",
+    "definition_library": "E:/Repos/mythic-forge/output/modular_rebuild_v2/asset/medieval_building_modular.hda",
+    "window_minimized": false,
+    "window_visible": true,
+    "hud_text": "07_weapon_guild  |  BEFORE V2 LOW  |  24650 primitives  |  LIVE HOUDINI GUI"
+  }
+}

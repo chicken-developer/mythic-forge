@@ -1,0 +1,65 @@
+{
+  "version": "3.0",
+  "props": [
+    {
+      "id": "Lamp",
+      "file": "Assets/_render/SourceAssets/Gothic/Context/SM_City_Lamp.fbx",
+      "triangles": 5476,
+      "materials": {
+        "metal": 5288,
+        "lampglass": 188
+      },
+      "sha256": "3c72b16d50cd49a1c2e837ee9ff39ebb7519938dcdd2fd7cad0e02d003c2d262"
+    },
+    {
+      "id": "Bench",
+      "file": "Assets/_render/SourceAssets/Gothic/Context/SM_City_Bench.fbx",
+      "triangles": 2444,
+      "materials": {
+        "wood": 1316,
+        "metal": 1128
+      },
+      "sha256": "70f5842c8725584338f0fb304462530faa0ba9502b69cb0912c3e406405f9a0a"
+    },
+    {
+      "id": "Fountain",
+      "file": "Assets/_render/SourceAssets/Gothic/Context/SM_City_Fountain.fbx",
+      "triangles": 7760,
+      "materials": {
+        "stone": 6996,
+        "water": 764
+      },
+      "sha256": "36a24581ae361024eb675d3d3c1063f5f3b8d66afb1f2b9d1f971cc7585cbdc6"
+    },
+    {
+      "id": "Planter",
+      "file": "Assets/_render/SourceAssets/Gothic/Context/SM_City_Planter.fbx",
+      "triangles": 1336,
+      "materials": {
+        "stone": 1148,
+        "soil": 188
+      },
+      "sha256": "3224d22fc85ec21120606b45cd34bd3c2afb228d1afabad64726a06c14827ce8"
+    },
+    {
+      "id": "Cypress",
+      "file": "Assets/_render/SourceAssets/Gothic/Context/SM_City_Cypress.fbx",
+      "triangles": 2872,
+      "materials": {
+        "wood": 1116,
+        "foliage": 1756
+      },
+      "sha256": "435c1c4243c980e64b0a940e71fc35d9aa2a42bebce9e56fa9daacc39f0a5f47"
+    },
+    {
+      "id": "Wall",
+      "file": "Assets/_render/SourceAssets/Gothic/Context/SM_City_Wall.fbx",
+      "triangles": 1504,
+      "materials": {
+        "stone": 1316,
+        "trim": 188
+      },
+      "sha256": "6cbdb8f4146f2bf8b401d0fa6e86334edfff8c7b71796ce8c3273600e532ee44"
+    }
+  ]
+}

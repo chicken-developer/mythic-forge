@@ -1,0 +1,138 @@
+{
+  "status": "pass",
+  "hda_sha256": "a8a473c9d9da841fbcb04aac47a776c5b5d96a58af1d9c834d8286cd708e6302",
+  "hero_screenshots": 16,
+  "extra_screenshots": 24,
+  "all_native_gui": true,
+  "all_v3_gui_mesh_hashes_match_exports": true,
+  "cards": [
+    {
+      "id": "baseline",
+      "hero": "previews/baseline_hero.png",
+      "full": "screenshots/final/baseline_high_hero_gui.png",
+      "comparison": "comparisons/baseline.png",
+      "low": 15224,
+      "high": 125720
+    },
+    {
+      "id": "01_food_shop",
+      "hero": "previews/01_food_shop_hero.png",
+      "full": "screenshots/final/01_food_shop_high_hero_gui.png",
+      "comparison": "comparisons/01_food_shop.png",
+      "low": 9601,
+      "high": 91229
+    },
+    {
+      "id": "02_general_store",
+      "hero": "previews/02_general_store_hero.png",
+      "full": "screenshots/final/02_general_store_high_hero_gui.png",
+      "comparison": "comparisons/02_general_store.png",
+      "low": 11156,
+      "high": 115968
+    },
+    {
+      "id": "03_herbal_store",
+      "hero": "previews/03_herbal_store_hero.png",
+      "full": "screenshots/final/03_herbal_store_high_hero_gui.png",
+      "comparison": "comparisons/03_herbal_store.png",
+      "low": 10206,
+      "high": 92110
+    },
+    {
+      "id": "04_merchant_house",
+      "hero": "previews/04_merchant_house_hero.png",
+      "full": "screenshots/final/04_merchant_house_high_hero_gui.png",
+      "comparison": "comparisons/04_merchant_house.png",
+      "low": 14458,
+      "high": 129530
+    },
+    {
+      "id": "05_mixed_shop",
+      "hero": "previews/05_mixed_shop_hero.png",
+      "full": "screenshots/final/05_mixed_shop_high_hero_gui.png",
+      "comparison": "comparisons/05_mixed_shop.png",
+      "low": 16537,
+      "high": 160749
+    },
+    {
+      "id": "06_tavern",
+      "hero": "previews/06_tavern_hero.png",
+      "full": "screenshots/final/06_tavern_high_hero_gui.png",
+      "comparison": "comparisons/06_tavern.png",
+      "low": 21161,
+      "high": 165625
+    },
+    {
+      "id": "07_weapon_guild",
+      "hero": "previews/07_weapon_guild_hero.png",
+      "full": "screenshots/final/07_weapon_guild_high_hero_gui.png",
+      "comparison": "comparisons/07_weapon_guild.png",
+      "low": 23957,
+      "high": 183325
+    },
+    {
+      "id": "08_normal_house_b",
+      "hero": "previews/08_normal_house_b_hero.png",
+      "full": "screenshots/final/08_normal_house_b_high_hero_gui.png",
+      "comparison": "comparisons/08_normal_house_b.png",
+      "low": 15224,
+      "high": 125720
+    },
+    {
+      "id": "09_normal_house_c",
+      "hero": "previews/09_normal_house_c_hero.png",
+      "full": "screenshots/final/09_normal_house_c_high_hero_gui.png",
+      "comparison": "comparisons/09_normal_house_c.png",
+      "low": 16336,
+      "high": 146884
+    },
+    {
+      "id": "10_normal_house_c_canopy",
+      "hero": "previews/10_normal_house_c_canopy_hero.png",
+      "full": "screenshots/final/10_normal_house_c_canopy_high_hero_gui.png",
+      "comparison": "comparisons/10_normal_house_c_canopy.png",
+      "low": 16902,
+      "high": 155086
+    },
+    {
+      "id": "11_artisan_house",
+      "hero": "previews/11_artisan_house_hero.png",
+      "full": "screenshots/final/11_artisan_house_high_hero_gui.png",
+      "comparison": "comparisons/11_artisan_house.png",
+      "low": 16709,
+      "high": 133321
+    },
+    {
+      "id": "12_craft_guild_hall",
+      "hero": "previews/12_craft_guild_hall_hero.png",
+      "full": "screenshots/final/12_craft_guild_hall_high_hero_gui.png",
+      "comparison": "comparisons/12_craft_guild_hall.png",
+      "low": 21272,
+      "high": 202308
+    },
+    {
+      "id": "13_material_storage",
+      "hero": "previews/13_material_storage_hero.png",
+      "full": "screenshots/final/13_material_storage_high_hero_gui.png",
+      "comparison": "comparisons/13_material_storage.png",
+      "low": 8610,
+      "high": 102062
+    },
+    {
+      "id": "14_toolmaker_workshop",
+      "hero": "previews/14_toolmaker_workshop_hero.png",
+      "full": "screenshots/final/14_toolmaker_workshop_high_hero_gui.png",
+      "comparison": "comparisons/14_toolmaker_workshop.png",
+      "low": 16603,
+      "high": 131419
+    },
+    {
+      "id": "15_forgehouse",
+      "hero": "previews/15_forgehouse_hero.png",
+      "full": "screenshots/final/15_forgehouse_high_hero_gui.png",
+      "comparison": "comparisons/15_forgehouse.png",
+      "low": 22157,
+      "high": 190357
+    }
+  ]
+}

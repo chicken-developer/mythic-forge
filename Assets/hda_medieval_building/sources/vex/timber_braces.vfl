@@ -1,0 +1,22 @@
+// Short curved knee braces connect a post to its bearing plate.
+// They do not form full-height ornamental arches in otherwise empty bays.
+int count=nprimitives(0);vector up={0,1,0};
+if(chs("../timber_pattern")=="curved_brace")for(int pr=0;pr<count;pr++){
+ if(prim(0,"opening",pr)!=".")continue;
+ vector n=prim(0,"facade_normal",pr),u=prim(0,"edge_u",pr);
+ float b=prim(0,"floor_b",pr),h=prim(0,"floor_h",pr),w=prim(0,"bay_width",pr);
+ vector c=primuv(0,"P",pr,set(.5,.5,0));c+=n*.08;
+ float run=min(.70,max(.15,w*.30)),drop=min(.80,h*.30);
+ for(int side=-1;side<=1;side+=2){
+  vector a=c+u*side*(w*.5-.08);a.y=b+h-.16-drop;
+  vector z=c+u*side*(w*.5-.08-run);z.y=b+h-.16;
+  int pts[];
+  for(int j=0;j<=6;j++){
+   float t=j/6.;vector p=lerp(a,z,t)+u*side*(sin(t*M_PI)*run*.12);
+   append(pts,addpoint(0,p));
+  }
+  int curve=addprim(0,"polyline",pts);
+  setprimattrib(0,"name",curve,"timber/"+string(prim(0,"bay_id",pr))+"/knee_"+itoa(side));
+ }
+}
+for(int p=count-1;p>=0;p--)removeprim(0,p,1);

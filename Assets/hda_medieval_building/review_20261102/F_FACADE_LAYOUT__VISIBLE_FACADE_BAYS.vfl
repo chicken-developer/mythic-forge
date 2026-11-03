@@ -1,0 +1,4 @@
+
+vector center=primuv(0,"P",@primnum,set(.5,.5,0));vector n=v@facade_normal;
+// Keep the shared facade stream on the actual exterior after role union.
+if(xyzdist(1,center+n*.02)>.055)removeprim(0,@primnum,1);

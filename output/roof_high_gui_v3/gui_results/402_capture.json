@@ -1,0 +1,14 @@
+{
+  "status": "pass",
+  "result": {
+    "path": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\screenshots\\final\\06_tavern_low_roof_gui.png",
+    "dimensions": [
+      1600,
+      1000
+    ],
+    "provenance": "houdini_gui_window_screenshot",
+    "window_title": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\scenes\\medieval_building_roof_high_v3.hip - Houdini FX 22.0.368 - Py3.13",
+    "houdini": "22.0.368",
+    "ui_available": true
+  }
+}

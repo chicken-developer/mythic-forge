@@ -1,0 +1,168 @@
+{
+  "schema_version": 1,
+  "asset_name": "medieval_building",
+  "generator": "build_hda.py",
+  "parameter_schema": "parameter_schema.json",
+  "baseline": "datasets/baseline.json",
+  "references": [
+    {
+      "reference_id": "ref_baseline",
+      "role": "baseline",
+      "path": "references/ConceptArt_05_NormalHouse_02_V1.png"
+    },
+    {
+      "reference_id": "ref_01_food_shop",
+      "role": "variant",
+      "path": "references/ConceptArt_04_FoodShop_V1.png",
+      "sha256": "9bfc471b74dabf52aa53a4bf7f7ecd39de29e10ed9422da6b8aec18dd00adb88"
+    },
+    {
+      "reference_id": "ref_02_general_store",
+      "role": "variant",
+      "path": "references/ConceptArt_04_GeneralStore_V1.png",
+      "sha256": "f4ed87a00129eae265c9216bdb45b8cc64dfbf05fcf7f8c4538fc7bfcc8b17bf"
+    },
+    {
+      "reference_id": "ref_03_herbal_store",
+      "role": "variant",
+      "path": "references/ConceptArt_04_HerbalStore_V1.png",
+      "sha256": "a304b5efb0abab4cab1f4b4132ab802a12a45ad31dc3c4716088d919700132aa"
+    },
+    {
+      "reference_id": "ref_04_merchant_house",
+      "role": "variant",
+      "path": "references/ConceptArt_04_MerchantHouse_V1.png",
+      "sha256": "c1a8724f951fd8d3de392559336512b00f353a9a0372c78704cc305317f5669a"
+    },
+    {
+      "reference_id": "ref_05_mixed_shop",
+      "role": "variant",
+      "path": "references/ConceptArt_04_MixedShop_V1.png",
+      "sha256": "38d5359a3ec158c638797dcbec016d3a4149776346222d67c2152317376cbaa9"
+    },
+    {
+      "reference_id": "ref_06_tavern",
+      "role": "variant",
+      "path": "references/ConceptArt_04_Tarven_V1.png",
+      "sha256": "1f7664d3a1c3245300b53f9b3c9793a3014df1c34b8f0400f2e68525b966e498"
+    },
+    {
+      "reference_id": "ref_07_weapon_guild",
+      "role": "variant",
+      "path": "references/ConceptArt_04_WeaponGuild_V1.png",
+      "sha256": "95eaf26288a107dc5d539d74b668a0922123ea7182a248dcfbf2c085213ad148"
+    },
+    {
+      "reference_id": "ref_08_normal_house_b",
+      "role": "variant",
+      "path": "references/ConceptArt_05_NormalHouse_02_V1.png",
+      "sha256": "68a00531916dad9dcf56f877516477840e031aa42f411f298df5e41d9d1ce0c0"
+    },
+    {
+      "reference_id": "ref_09_normal_house_c",
+      "role": "variant",
+      "path": "references/ConceptArt_05_NormalHouse_03_V1.png",
+      "sha256": "6244a3237535f9384142f3350fa9096473bc54fbd173d2f0608c83a07266924e"
+    },
+    {
+      "reference_id": "ref_10_normal_house_c_canopy",
+      "role": "variant",
+      "path": "references/ConceptArt_05_NormalHouse_V1.png",
+      "sha256": "6244a3237535f9384142f3350fa9096473bc54fbd173d2f0608c83a07266924e"
+    },
+    {
+      "reference_id": "ref_11_artisan_house",
+      "role": "variant",
+      "path": "references/ConceptArt_06_ArtisanHouse_v1.png",
+      "sha256": "46cce4b03a3aacd2df5806a1095921f3fb375fba405541209643de9fa29c13fc"
+    },
+    {
+      "reference_id": "ref_12_craft_guild_hall",
+      "role": "variant",
+      "path": "references/ConceptArt_06_CraftGuildHall_v1.png",
+      "sha256": "d069193fbebfb88b7b80d1c506f4bf85e89d5be8505ad6c766631e0045b6e9bd"
+    },
+    {
+      "reference_id": "ref_13_material_storage",
+      "role": "variant",
+      "path": "references/ConceptArt_06_MarterialStorageBuilding_v1.png",
+      "sha256": "a91db81f61d6c2b47961ed75f9f1febd1507eed8849b52ace212cad92959ea01"
+    },
+    {
+      "reference_id": "ref_14_toolmaker_workshop",
+      "role": "variant",
+      "path": "references/ConceptArt_06_ToolmakerWorkshop_v1.png",
+      "sha256": "4545cd3cb71b07fddf2433d15aa7b3da4965872ebddb2d8b6588b6b53cd38d9c"
+    },
+    {
+      "reference_id": "ref_15_forgehouse",
+      "role": "variant",
+      "path": "references/ConceptArt_07_Forgehouse_V1.png",
+      "sha256": "7043dbd40a7f4ef135e7001603f2b5e6d7310c5fdf16ca67c35d8dd45a2bbd75"
+    }
+  ],
+  "datasets": [
+    "datasets/01_food_shop.json",
+    "datasets/02_general_store.json",
+    "datasets/03_herbal_store.json",
+    "datasets/04_merchant_house.json",
+    "datasets/05_mixed_shop.json",
+    "datasets/06_tavern.json",
+    "datasets/07_weapon_guild.json",
+    "datasets/08_normal_house_b.json",
+    "datasets/09_normal_house_c.json",
+    "datasets/10_normal_house_c_canopy.json",
+    "datasets/11_artisan_house.json",
+    "datasets/12_craft_guild_hall.json",
+    "datasets/13_material_storage.json",
+    "datasets/14_toolmaker_workshop.json",
+    "datasets/15_forgehouse.json"
+  ],
+  "requested_variant_count": 15,
+  "target_houdini_version": "22.0.368",
+  "camera": {
+    "projection": "orthographic",
+    "common_bounds_min": [
+      -6.599999904632568,
+      -0.11999999731779099,
+      -6.159999847412109
+    ],
+    "common_bounds_max": [
+      9.09999942779541,
+      9.65000057220459,
+      5.830000400543213
+    ],
+    "target": [
+      1.249999761581421,
+      4.765000287443399,
+      -0.16499972343444824
+    ],
+    "position": [
+      16.24999976158142,
+      15.7650002874434,
+      -19.16499972343445
+    ],
+    "rotation": [
+      -24.437323507289097,
+      141.70983680775691,
+      0.0
+    ],
+    "orthowidth": 25,
+    "resolution": [
+      900,
+      900
+    ]
+  },
+  "render_backend": "Houdini OpenGL ROP; one process per dataset",
+  "bake_backend": "houdini_copernicus_bakegeometrytextures::2.0",
+  "normal_format": "DirectX tangent space, MikkT, 0..1, linear PNG",
+  "reference_fidelity": "Parametric reconstructions with native guild turrets, furnace/flue and hoists; bespoke emblems, plants, unique props and fire simulation remain simplified or omitted.",
+  "hda_type": "mythic::medieval_house::4.0",
+  "hda_file": "asset/medieval_building_modular.hda",
+  "hda_sha256": "90fa34e28094a8d15b560349f3e284619a680a553058937c1b2bccb0484ac687",
+  "module_graph": "module_graph.json",
+  "extension_schema": "extension_schema.json",
+  "normal_bake_status": "not_run; source expected_features preserved; new UV requires a new bake",
+  "unreal_status": "not_run; user requested no Unreal changes",
+  "generator_version": "2026.11.03-modular-v2"
+}

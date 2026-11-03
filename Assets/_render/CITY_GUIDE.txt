@@ -1,0 +1,10 @@
+﻿GOTHIC PROP CATALOG
+
+Xem CATALOG_GUIDE.txt cho bàn giao hiện tại.
+Map: /Game/Gothic/Maps/L_Gothic_Catalog (28 preset).
+Dùng BP_Gothic_* trong /Game/Gothic/Blueprints để có nội thất và Point Light.
+Catalog dùng vật liệu thật của asset. Rose/clock rings là tube kín liền mạch từ HDA.
+HIP/HDA gốc đã cập nhật tại E:/Repos/mythic-forge/Assets/hda_gothic_building.
+Bản HDA tự chứa và code: SourceAssets/Houdini/Gothic.
+Ảnh trước/sau và báo cáo: RenderTests/PropsDetail.
+City, lineup và facade review cũ đã ngừng dùng; checkpoint nằm trong Saved/PropsDetail.

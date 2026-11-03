@@ -1,0 +1,266 @@
+{
+  "variant_id": "11_artisan_house",
+  "effective_config": {
+    "schema_version": 1,
+    "variant_id": "11_artisan_house",
+    "label": "Artisan house",
+    "complexity": "complex",
+    "comparison_kind": "preset",
+    "source_kind": "input",
+    "reference_ids": [
+      "ref_11_artisan_house"
+    ],
+    "parameters": {
+      "footprint": "l_shape",
+      "width_m": 6.8,
+      "depth_m": 7.4,
+      "floor_count": 2,
+      "floor_height_m": 2.65,
+      "wall_thickness_m": 0.22,
+      "upper_overhang_m": 0.14,
+      "foundation_mode": "stone",
+      "foundation_height_m": 0.35,
+      "terrain_slope": 0.0,
+      "tower_radius_m": 1.7,
+      "tower_extra_height_m": 0.8,
+      "tower_taper": 0.0,
+      "wing_width_ratio": 0.48,
+      "wing_depth_ratio": 0.58,
+      "wing_floor_count": 1,
+      "wing_roof_ratio": 0.64,
+      "wing_offset_z_m": 0.3,
+      "wing_overlap_m": 0.7,
+      "tower_offset_z_m": 0.8,
+      "tower_inset_ratio": 0.42,
+      "layout_input_enable": false,
+      "layout_path": "",
+      "front_bays": "WDW/WDW",
+      "right_bays": "W.W/W.W",
+      "rear_bays": "W.W/W.W",
+      "left_bays": "W.W/W.W",
+      "window_layout_mode": "pattern",
+      "front_window_count": 2,
+      "right_window_count": 1,
+      "rear_window_count": 1,
+      "left_window_count": 1,
+      "window_width_m": 0.95,
+      "window_height_m": 1.2,
+      "door_width_m": 1.25,
+      "door_height_m": 2.1,
+      "frame_width_m": 0.09,
+      "shutters_enable": false,
+      "attic_window_enable": false,
+      "round_window_step": 5,
+      "timber_pattern": "curved_brace",
+      "facade_style": "B",
+      "facade_bay_width_m": 1.15,
+      "facade_accent_budget": 2,
+      "facade_module_density": 0.65,
+      "facade_overrides": "{}",
+      "roof_shape": "gable",
+      "roof_height_m": 2.5,
+      "eave_curve": 0.12,
+      "eave_depth_m": 0.45,
+      "tile_size_m": 0.43,
+      "dormer_count": 0,
+      "wing_dormer_count": 0,
+      "chimney_count": 1,
+      "cupola_enable": false,
+      "interior_enable": true,
+      "floor_thickness_m": 0.12,
+      "interior_furniture": true,
+      "interior_partitions": false,
+      "interior_lighting": true,
+      "interior_joist_spacing_m": 0.65,
+      "interior_stair_width_m": 0.85,
+      "interior_style": "auto",
+      "utility_type": "none",
+      "wheel_radius_m": 2.3,
+      "rotor_radius_m": 3.6,
+      "awning_enable": false,
+      "entrance_canopy": true,
+      "dressing_enable": true,
+      "balcony_layout": "front",
+      "balcony_depth_m": 1.0,
+      "workshop_enable": false,
+      "workshop_width_m": 2.7,
+      "workshop_depth_m": 3.2,
+      "workshop_offset_z_m": 0.6,
+      "bay_window_enable": false,
+      "scale": 1.0,
+      "palette": "slate_blue",
+      "detail_level": "high",
+      "mesh_quality": "normal",
+      "bevel_width_m": 0.025,
+      "context_mode": "paving",
+      "ground_enable": true,
+      "ground_margin_m": 0.9,
+      "ground_slope_preset": "flat",
+      "ground_slope_amount_m": 0.0,
+      "roof_axis": "z",
+      "window_shape": "rectangular",
+      "awning_span_ratio": 0.78
+    },
+    "seeds": {
+      "decoration": 17
+    },
+    "module_dependencies": [],
+    "expected_features": {
+      "floor_count": 2,
+      "entrance_count": 1,
+      "roof_type": "gable",
+      "footprint": "l_shape",
+      "interior_enable": true,
+      "normal_bake_from_high": true
+    },
+    "assumptions": [
+      "Dimensions are modeling targets, not surveyed measurements.",
+      "Hidden interiors follow the existing native floor/stair grammar.",
+      "Bespoke reference props, vegetation, signage and sculpted ornament are outside this base-color architectural bake."
+    ],
+    "outputs": {
+      "geometry": "geometry/11_artisan_house.bgeo.sc",
+      "hero": "previews/11_artisan_house_hero.png",
+      "comparison": "comparisons/11_artisan_house.png",
+      "result": "results/11_artisan_house.json"
+    }
+  },
+  "generator_version": "2026.11-medieval-layout-2",
+  "generator_sha256": "97dc6411103542504bee95ab795b0729a0b2b3bffc766765af39f9629b27772a",
+  "hip_sha256": "2cdbe43a3cc98b08c759fe3ab4220de1a9d57880782a731d43b8a86d103ea3a2",
+  "houdini": "22.0.368",
+  "seconds": 50.183047700003954,
+  "stages": {
+    "code_generated": "pass",
+    "static_checked": "pass",
+    "houdini_cooked": "pass",
+    "geometry_exported": "pass",
+    "normal_baked": "pass",
+    "rendered": "pass",
+    "unreal_imported": "not_run"
+  },
+  "low": {
+    "points": 21540,
+    "primitives": 36485,
+    "bounds_m": [
+      11.164000511169434,
+      8.95768367499113,
+      9.44599962234497
+    ],
+    "finite_attributes": true,
+    "degenerate_faces": 0,
+    "uv_min": [
+      0.0,
+      0.0
+    ],
+    "uv_max": [
+      0.9999945759773254,
+      0.44339320063591003
+    ],
+    "materials": {
+      "plaster": 970,
+      "wood": 18712,
+      "glass": 228,
+      "metal": 1604,
+      "tile": 14167,
+      "stone": 72,
+      "rock": 12,
+      "roof": 20,
+      "canvas": 176,
+      "light": 176,
+      "leaf": 260,
+      "sail": 88
+    },
+    "position_sha256": "66a252f1b56c7750e22f96a5f8ecfaa1e4d9214d87f4c7135625ee7e815dd882"
+  },
+  "high": {
+    "points": 209341,
+    "primitives": 411480,
+    "bounds_m": [
+      11.164000511169434,
+      8.95768367499113,
+      9.44599962234497
+    ],
+    "finite_attributes": true,
+    "degenerate_faces": 0,
+    "uv_min": [
+      -6.113011477282271e-05,
+      -5.581432196777314e-05
+    ],
+    "uv_max": [
+      1.000004529953003,
+      0.4433963894844055
+    ],
+    "materials": {
+      "plaster": 970,
+      "wood": 171104,
+      "glass": 228,
+      "metal": 25404,
+      "tile": 211914,
+      "stone": 1128,
+      "rock": 12,
+      "roof": 20,
+      "canvas": 176,
+      "light": 176,
+      "leaf": 260,
+      "sail": 88
+    },
+    "position_sha256": "503e0d90292e165fd15babef2ac6d48fb735ccd77557997744e31655db9b5988"
+  },
+  "bake": {
+    "resolution": [
+      4096,
+      4096
+    ],
+    "nonflat_pixels": 6750002,
+    "normal_sha256": "ade39617ced94f0f0f00ac46a3a5ea830b2c5100780ccdb42f3aa050338f6c96",
+    "backend": "Houdini Copernicus bakegeometrytextures::2.0",
+    "normal_space": "DirectX / MikkT / linear",
+    "high_trace_piece_attribute": "bake_piece",
+    "projection_isolation": "native exploded connected components, identical low/high translations"
+  },
+  "opening_envelope_violations": [],
+  "image_provenance": "houdini_geometry_render",
+  "render_backend": "Houdini OpenGL ROP",
+  "files": {
+    "mesh": "E:\\Repos\\mythic-forge\\Assets\\_render\\SourceAssets\\Medieval15\\Meshes\\SM_MD15_11_artisan_house.fbx",
+    "high_mesh": "E:\\Repos\\mythic-forge\\Assets\\_render\\SourceAssets\\Medieval15\\High\\SM_MD15_11_artisan_house_High.fbx",
+    "normal": "E:\\Repos\\mythic-forge\\Assets\\_render\\SourceAssets\\Medieval15\\Normals\\11_artisan_house_Normal_DX.png"
+  },
+  "geometry_readback": {
+    "low": {
+      "primitives": 36485,
+      "invalid_normals": 0,
+      "finite_attributes": true,
+      "uv_bounds": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.9999945759773254,
+          0.44339320063591003
+        ]
+      ],
+      "nonpacked_primitives": 0
+    },
+    "high": {
+      "primitives": 411480,
+      "invalid_normals": 0,
+      "finite_attributes": true,
+      "uv_bounds": [
+        [
+          -6.113011477282271e-05,
+          -5.581432196777314e-05
+        ],
+        [
+          1.000004529953003,
+          0.4433963894844055
+        ]
+      ],
+      "nonpacked_primitives": 0
+    }
+  },
+  "fbx_sha256": "e67c62f5b3375737103f43c2267251476286c30b3a9f232a9f424015f49a06d5",
+  "high_fbx_sha256": "2ab6199006153403c5aeb4348c222f45515d538d2a2034cabcd24dd79de256f5"
+}

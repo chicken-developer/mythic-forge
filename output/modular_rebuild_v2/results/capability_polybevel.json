@@ -1,0 +1,331 @@
+{
+  "type": "polybevel::3.0",
+  "parameters": {
+    "group": {
+      "label": "Group",
+      "value": "",
+      "menu": []
+    },
+    "grouptype": {
+      "label": "Group Type",
+      "value": "3",
+      "menu": [
+        "prims",
+        "points",
+        "edges",
+        "guess"
+      ]
+    },
+    "ignoregroup": {
+      "label": "ignoregroup",
+      "value": "0",
+      "menu": []
+    },
+    "ignorebridgededges": {
+      "label": "Ignore Polygon Bridge Edges",
+      "value": "1",
+      "menu": []
+    },
+    "ignoresharededges": {
+      "label": "Ignore Edges Shared Between Group Polygons",
+      "value": "0",
+      "menu": []
+    },
+    "ignoreflatedges": {
+      "label": "Ignore Flat Edges (Coplanar Incident Polygons)",
+      "value": "0",
+      "menu": []
+    },
+    "ignoreflatpoints": {
+      "label": "Ignore Flat Points (Coplanar Incident Polygon)",
+      "value": "0",
+      "menu": []
+    },
+    "ignoreinlinepoints": {
+      "label": "Ignore Inline Points (Incident Polygons on Two Planes)",
+      "value": "0",
+      "menu": []
+    },
+    "flatangle": {
+      "label": "Maximum Normal Angle",
+      "value": "2.0",
+      "menu": []
+    },
+    "offsettingsection": {
+      "label": "offsettingsection",
+      "value": "0",
+      "menu": []
+    },
+    "offset": {
+      "label": "Distance",
+      "value": "0.0",
+      "menu": []
+    },
+    "useoffsetscale": {
+      "label": "useoffsetscale",
+      "value": "0",
+      "menu": [
+        "unscaled",
+        "byattrib"
+      ]
+    },
+    "pointscaleattr": {
+      "label": "Point Offset Scale",
+      "value": "pscale",
+      "menu": []
+    },
+    "sliding": {
+      "label": "Slide on Ring Edges",
+      "value": "0",
+      "menu": [
+        "auto",
+        "always",
+        "never"
+      ]
+    },
+    "asymtol": {
+      "label": "Asymmetry Tolerance",
+      "value": "0.5",
+      "menu": []
+    },
+    "slideedges": {
+      "label": "Always Slide On",
+      "value": "",
+      "menu": []
+    },
+    "collisionsandlimits": {
+      "label": "collisionsandlimits",
+      "value": "0",
+      "menu": []
+    },
+    "detectcollisions": {
+      "label": "Detect Collisions",
+      "value": "1",
+      "menu": []
+    },
+    "restrictslides": {
+      "label": "Restrict Sliding to Ring Edges",
+      "value": "1",
+      "menu": []
+    },
+    "limit": {
+      "label": "Stop Loops",
+      "value": "1",
+      "menu": [
+        "never",
+        "individually",
+        "simultaneously"
+      ]
+    },
+    "stopatslideend": {
+      "label": "When a Point Reaches End of Its Slide",
+      "value": "1",
+      "menu": []
+    },
+    "stopatpinches": {
+      "label": "When the Offset Front Pinches",
+      "value": "1",
+      "menu": []
+    },
+    "pinchangle": {
+      "label": "Pinch Angle",
+      "value": "0.0",
+      "menu": []
+    },
+    "stopatcollisions": {
+      "label": "When the Offset Front Collides with Itself",
+      "value": "1",
+      "menu": []
+    },
+    "filletsection": {
+      "label": "filletsection",
+      "value": "0",
+      "menu": []
+    },
+    "filletshape": {
+      "label": "Shape",
+      "value": "4",
+      "menu": [
+        "none",
+        "solid",
+        "crease",
+        "chamfer",
+        "round"
+      ]
+    },
+    "divisions": {
+      "label": "Divisions",
+      "value": "1",
+      "menu": []
+    },
+    "profilesampling": {
+      "label": "profilesampling",
+      "value": "0",
+      "menu": [
+        "uniform",
+        "adaptive",
+        "controlpoints"
+      ]
+    },
+    "convexity": {
+      "label": "Convexity",
+      "value": "1.0",
+      "menu": []
+    },
+    "profilesource": {
+      "label": "Profile",
+      "value": "0",
+      "menu": [
+        "basic",
+        "ramp",
+        "external"
+      ]
+    },
+    "profilegroup": {
+      "label": "profilegroup",
+      "value": "0",
+      "menu": []
+    },
+    "profilescale": {
+      "label": "Scale",
+      "value": "1.0",
+      "menu": []
+    },
+    "reverseprofile": {
+      "label": "Reverse",
+      "value": "0",
+      "menu": []
+    },
+    "symmetrizeprofile": {
+      "label": "Symmetrize",
+      "value": "1",
+      "menu": []
+    },
+    "profiledirection": {
+      "label": "Direction Overrides",
+      "value": "",
+      "menu": []
+    },
+    "profileramp": {
+      "label": "Profile Ramp",
+      "value": "<hou.Ramp is_color=False num_keys=2 data=((t=0, 0.5), (t=1, 0.5))>",
+      "menu": []
+    },
+    "flatboost": {
+      "label": "Flat Edge Profile Boost",
+      "value": "30.0",
+      "menu": []
+    },
+    "outputgroupssection": {
+      "label": "outputgroupssection",
+      "value": "0",
+      "menu": []
+    },
+    "useptfilletgroup": {
+      "label": "useptfilletgroup",
+      "value": "0",
+      "menu": []
+    },
+    "ptfilletgroup": {
+      "label": "Point Fillet Polygons",
+      "value": "pointfilletpolys",
+      "menu": []
+    },
+    "useptfilletedges": {
+      "label": "useptfilletedges",
+      "value": "0",
+      "menu": []
+    },
+    "ptfilletedges": {
+      "label": "Point Fillet Edges",
+      "value": "pointfilletedges",
+      "menu": []
+    },
+    "useedgefilletgroup": {
+      "label": "useedgefilletgroup",
+      "value": "0",
+      "menu": []
+    },
+    "edgeprims": {
+      "label": "Edge Fillet Polygons",
+      "value": "edgefilletpolys",
+      "menu": []
+    },
+    "useoffsetedges": {
+      "label": "useoffsetedges",
+      "value": "0",
+      "menu": []
+    },
+    "offsetedges": {
+      "label": "Offset Edges",
+      "value": "offsetedges",
+      "menu": []
+    },
+    "useoffsetpoints": {
+      "label": "useoffsetpoints",
+      "value": "0",
+      "menu": []
+    },
+    "offsetpoints": {
+      "label": "Offset Points",
+      "value": "offsetpoints",
+      "menu": []
+    },
+    "usemergedpoints": {
+      "label": "usemergedpoints",
+      "value": "0",
+      "menu": []
+    },
+    "mergedpoints": {
+      "label": "Merged Points",
+      "value": "mergedpoints",
+      "menu": []
+    },
+    "profileramp1pos": {
+      "label": "Position",
+      "value": "0.0",
+      "menu": []
+    },
+    "profileramp1value": {
+      "label": "Value",
+      "value": "0.5",
+      "menu": []
+    },
+    "profileramp1interp": {
+      "label": "Interpolation",
+      "value": "2",
+      "menu": [
+        "constant",
+        "linear",
+        "catmull-rom",
+        "monotonecubic",
+        "bezier",
+        "bspline",
+        "hermite"
+      ]
+    },
+    "profileramp2pos": {
+      "label": "Position",
+      "value": "1.0",
+      "menu": []
+    },
+    "profileramp2value": {
+      "label": "Value",
+      "value": "0.5",
+      "menu": []
+    },
+    "profileramp2interp": {
+      "label": "Interpolation",
+      "value": "2",
+      "menu": [
+        "constant",
+        "linear",
+        "catmull-rom",
+        "monotonecubic",
+        "bezier",
+        "bspline",
+        "hermite"
+      ]
+    }
+  }
+}

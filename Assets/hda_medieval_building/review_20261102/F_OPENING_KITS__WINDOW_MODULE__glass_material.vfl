@@ -1,0 +1,2 @@
+
+s@material_family="glass";s@name="window_glass";v@Cd=set(.10,.24,.27);f@extrude_distance=.025;

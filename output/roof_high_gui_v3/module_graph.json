@@ -1,0 +1,1320 @@
+{
+  "schema_version": 1,
+  "asset_name": "medieval_building_roof_high_v3",
+  "final_module": "output.game_export",
+  "owner": "mythic.medieval.modular_rebuild",
+  "version": "2026.11.03-roof-high-gui-v3",
+  "modules": [
+    {
+      "module_id": "layout.semantic_layout",
+      "stage": "LAYOUT",
+      "path": "LAYOUT/semantic_layout",
+      "owner": "mythic.medieval.modular_rebuild",
+      "version": 2,
+      "responsibility": "Resolve canonical role, floor, wall and roof guides",
+      "inputs": {},
+      "outputs": [
+        "role_plans",
+        "floor_plans",
+        "storey_mass",
+        "roof_plans"
+      ],
+      "params": [
+        "depth_m",
+        "eave_curve",
+        "eave_depth_m",
+        "floor_count",
+        "floor_height_m",
+        "footprint",
+        "foundation_height_m",
+        "layout_input_enable",
+        "layout_path",
+        "mesh_quality",
+        "roof_axis",
+        "roof_height_m",
+        "tower_extra_height_m",
+        "tower_inset_ratio",
+        "tower_offset_z_m",
+        "tower_radius_m",
+        "tower_taper",
+        "upper_overhang_m",
+        "width_m",
+        "wing_depth_ratio",
+        "wing_floor_count",
+        "wing_offset_z_m",
+        "wing_overlap_m",
+        "wing_roof_ratio",
+        "wing_width_ratio"
+      ],
+      "attributes": [
+        "name",
+        "material_family",
+        "module_id",
+        "part_role"
+      ],
+      "depends_on": [],
+      "debug_endpoint": "LAYOUT/semantic_layout/OUT_DEBUG",
+      "source_members": [
+        "OPTIONAL_BLOCKOUT_INPUT",
+        "F_PLAN"
+      ],
+      "source_output": "F_PLAN",
+      "routes": [],
+      "input_classes": {}
+    },
+    {
+      "module_id": "shell.body_shell",
+      "stage": "SHELL",
+      "path": "SHELL/body_shell",
+      "owner": "mythic.medieval.modular_rebuild",
+      "version": 2,
+      "responsibility": "Construct thick body shell and solid host volumes",
+      "inputs": {
+        "plan_floor_plans": "layout.semantic_layout:floor_plans",
+        "plan_storey_mass": "layout.semantic_layout:storey_mass"
+      },
+      "outputs": [
+        "uncut_shell",
+        "solid_body"
+      ],
+      "params": [
+        "wall_thickness_m"
+      ],
+      "attributes": [
+        "name",
+        "material_family",
+        "module_id",
+        "part_role"
+      ],
+      "depends_on": [
+        "layout.semantic_layout"
+      ],
+      "debug_endpoint": "SHELL/body_shell/OUT_DEBUG",
+      "source_members": [
+        "F_BODY_SHELL"
+      ],
+      "source_output": "F_BODY_SHELL",
+      "routes": [
+        {
+          "port": "plan_floor_plans",
+          "member": "F_BODY_SHELL",
+          "input": 0
+        },
+        {
+          "port": "plan_storey_mass",
+          "member": "F_BODY_SHELL",
+          "input": 1
+        }
+      ],
+      "input_classes": {
+        "plan_floor_plans": "semantic",
+        "plan_storey_mass": "semantic"
+      }
+    },
+    {
+      "module_id": "shell.facade_layout",
+      "stage": "SHELL",
+      "path": "SHELL/facade_layout",
+      "owner": "mythic.medieval.modular_rebuild",
+      "version": 2,
+      "responsibility": "Resolve visible stable facade bays and hosted opening points",
+      "inputs": {
+        "plan_storey_mass": "layout.semantic_layout:storey_mass",
+        "body_shell_solid_body": "shell.body_shell:solid_body",
+        "plan_roof_plans": "layout.semantic_layout:roof_plans"
+      },
+      "outputs": [
+        "visible_bays",
+        "opening_points"
+      ],
+      "params": [
+        "attic_window_enable",
+        "door_height_m",
+        "door_width_m",
+        "floor_thickness_m",
+        "frame_width_m",
+        "front_bays",
+        "front_window_count",
+        "left_bays",
+        "left_window_count",
+        "rear_bays",
+        "rear_window_count",
+        "right_bays",
+        "right_window_count",
+        "round_window_step",
+        "shutters_enable",
+        "wall_thickness_m",
+        "window_height_m",
+        "window_layout_mode",
+        "window_width_m",
+        "window_move_id",
+        "window_offset_u_m"
+      ],
+      "attributes": [
+        "name",
+        "material_family",
+        "module_id",
+        "part_role"
+      ],
+      "depends_on": [
+        "layout.semantic_layout",
+        "shell.body_shell"
+      ],
+      "debug_endpoint": "SHELL/facade_layout/OUT_DEBUG",
+      "source_members": [
+        "F_FACADE_LAYOUT"
+      ],
+      "source_output": "F_FACADE_LAYOUT",
+      "routes": [
+        {
+          "port": "plan_storey_mass",
+          "member": "F_FACADE_LAYOUT",
+          "input": 0
+        },
+        {
+          "port": "body_shell_solid_body",
+          "member": "F_FACADE_LAYOUT",
+          "input": 1
+        },
+        {
+          "port": "plan_roof_plans",
+          "member": "F_FACADE_LAYOUT",
+          "input": 2
+        }
+      ],
+      "input_classes": {
+        "plan_storey_mass": "semantic",
+        "body_shell_solid_body": "geometry",
+        "plan_roof_plans": "semantic"
+      }
+    },
+    {
+      "module_id": "openings.kits",
+      "stage": "OPENINGS",
+      "path": "OPENINGS/kits",
+      "owner": "mythic.medieval.modular_rebuild",
+      "version": 2,
+      "responsibility": "Construct shared window and door geometry and apertures",
+      "inputs": {},
+      "outputs": [
+        "window_geometry",
+        "window_aperture",
+        "door_geometry",
+        "door_aperture"
+      ],
+      "params": [
+        "door_height_m",
+        "door_width_m",
+        "frame_width_m",
+        "shutters_enable",
+        "window_height_m",
+        "window_shape",
+        "window_width_m"
+      ],
+      "attributes": [
+        "name",
+        "material_family",
+        "module_id",
+        "part_role"
+      ],
+      "depends_on": [],
+      "debug_endpoint": "OPENINGS/kits/OUT_DEBUG",
+      "source_members": [
+        "F_OPENING_KITS"
+      ],
+      "source_output": "F_OPENING_KITS",
+      "routes": [],
+      "input_classes": {}
+    },
+    {
+      "module_id": "openings.attachments",
+      "stage": "OPENINGS",
+      "path": "OPENINGS/attachments",
+      "owner": "mythic.medieval.modular_rebuild",
+      "version": 2,
+      "responsibility": "Resolve bay-window replacement hosts and attached opening cutters",
+      "inputs": {
+        "plan_role_plans": "layout.semantic_layout:role_plans",
+        "plan_roof_plans": "layout.semantic_layout:roof_plans",
+        "opening_kits_window_geometry": "openings.kits:window_geometry",
+        "opening_kits_window_aperture": "openings.kits:window_aperture",
+        "solid_body": "shell.body_shell:solid_body"
+      },
+      "outputs": [
+        "attachment_geometry",
+        "bay_cutters",
+        "replacement_metadata"
+      ],
+      "params": [
+        "bay_window_enable",
+        "cupola_enable",
+        "footprint",
+        "frame_width_m",
+        "front_bays",
+        "upper_overhang_m",
+        "wall_thickness_m",
+        "window_height_m",
+        "window_layout_mode",
+        "window_width_m",
+        "workshop_depth_m",
+        "workshop_enable",
+        "workshop_offset_z_m",
+        "workshop_width_m"
+      ],
+      "attributes": [
+        "name",
+        "material_family",
+        "module_id",
+        "part_role"
+      ],
+      "depends_on": [
+        "layout.semantic_layout",
+        "openings.kits",
+        "shell.body_shell"
+      ],
+      "debug_endpoint": "OPENINGS/attachments/OUT_DEBUG",
+      "source_members": [
+        "F_ATTACHMENTS"
+      ],
+      "source_output": "F_ATTACHMENTS",
+      "routes": [
+        {
+          "port": "plan_role_plans",
+          "member": "F_ATTACHMENTS",
+          "input": 0
+        },
+        {
+          "port": "plan_roof_plans",
+          "member": "F_ATTACHMENTS",
+          "input": 1
+        },
+        {
+          "port": "opening_kits_window_geometry",
+          "member": "F_ATTACHMENTS",
+          "input": 2
+        },
+        {
+          "port": "opening_kits_window_aperture",
+          "member": "F_ATTACHMENTS",
+          "input": 3
+        },
+        {
+          "port": "solid_body",
+          "member": "F_ATTACHMENTS",
+          "input": 4
+        }
+      ],
+      "input_classes": {
+        "plan_role_plans": "semantic",
+        "plan_roof_plans": "semantic",
+        "opening_kits_window_geometry": "geometry",
+        "opening_kits_window_aperture": "geometry"
+      }
+    },
+    {
+      "module_id": "openings.windows",
+      "stage": "OPENINGS",
+      "path": "OPENINGS/windows",
+      "owner": "mythic.medieval.modular_rebuild",
+      "version": 2,
+      "responsibility": "Place window kits and export their matching cutters",
+      "inputs": {
+        "facade_layout_opening_points": "shell.facade_layout:opening_points",
+        "opening_kits_window_geometry": "openings.kits:window_geometry",
+        "opening_kits_window_aperture": "openings.kits:window_aperture",
+        "attachments_replacement_metadata": "openings.attachments:replacement_metadata"
+      },
+      "outputs": [
+        "window_geometry",
+        "window_cutters"
+      ],
+      "params": [
+        "wall_thickness_m"
+      ],
+      "attributes": [
+        "name",
+        "material_family",
+        "module_id",
+        "part_role"
+      ],
+      "depends_on": [
+        "shell.facade_layout",
+        "openings.kits",
+        "openings.attachments"
+      ],
+      "debug_endpoint": "OPENINGS/windows/OUT_DEBUG",
+      "source_members": [
+        "F_WINDOWS"
+      ],
+      "source_output": "F_WINDOWS",
+      "routes": [
+        {
+          "port": "facade_layout_opening_points",
+          "member": "F_WINDOWS",
+          "input": 0
+        },
+        {
+          "port": "opening_kits_window_geometry",
+          "member": "F_WINDOWS",
+          "input": 1
+        },
+        {
+          "port": "opening_kits_window_aperture",
+          "member": "F_WINDOWS",
+          "input": 2
+        },
+        {
+          "port": "attachments_replacement_metadata",
+          "member": "F_WINDOWS",
+          "input": 3
+        }
+      ],
+      "input_classes": {
+        "facade_layout_opening_points": "semantic",
+        "opening_kits_window_geometry": "geometry",
+        "opening_kits_window_aperture": "geometry",
+        "attachments_replacement_metadata": "geometry"
+      }
+    },
+    {
+      "module_id": "openings.doors",
+      "stage": "OPENINGS",
+      "path": "OPENINGS/doors",
+      "owner": "mythic.medieval.modular_rebuild",
+      "version": 2,
+      "responsibility": "Place entrances and export matching through-wall cutters",
+      "inputs": {
+        "facade_layout_opening_points": "shell.facade_layout:opening_points",
+        "opening_kits_door_geometry": "openings.kits:door_geometry",
+        "opening_kits_door_aperture": "openings.kits:door_aperture"
+      },
+      "outputs": [
+        "door_geometry",
+        "door_cutters"
+      ],
+      "params": [
+        "wall_thickness_m"
+      ],
+      "attributes": [
+        "name",
+        "material_family",
+        "module_id",
+        "part_role"
+      ],
+      "depends_on": [
+        "shell.facade_layout",
+        "openings.kits"
+      ],
+      "debug_endpoint": "OPENINGS/doors/OUT_DEBUG",
+      "source_members": [
+        "F_DOORS"
+      ],
+      "source_output": "F_DOORS",
+      "routes": [
+        {
+          "port": "facade_layout_opening_points",
+          "member": "F_DOORS",
+          "input": 0
+        },
+        {
+          "port": "opening_kits_door_geometry",
+          "member": "F_DOORS",
+          "input": 1
+        },
+        {
+          "port": "opening_kits_door_aperture",
+          "member": "F_DOORS",
+          "input": 2
+        }
+      ],
+      "input_classes": {
+        "facade_layout_opening_points": "semantic",
+        "opening_kits_door_geometry": "geometry",
+        "opening_kits_door_aperture": "geometry"
+      }
+    },
+    {
+      "module_id": "openings.wall_cuts",
+      "stage": "OPENINGS",
+      "path": "OPENINGS/wall_cuts",
+      "owner": "mythic.medieval.modular_rebuild",
+      "version": 2,
+      "responsibility": "Union aperture streams and cut the thick wall and gable shell",
+      "inputs": {
+        "attachments_bay_cutters": "openings.attachments:bay_cutters",
+        "windows_window_cutters": "openings.windows:window_cutters",
+        "doors_door_cutters": "openings.doors:door_cutters",
+        "body_shell_uncut_shell": "shell.body_shell:uncut_shell",
+        "plan_roof_plans": "layout.semantic_layout:roof_plans"
+      },
+      "outputs": [
+        "walls"
+      ],
+      "params": [
+        "roof_shape",
+        "tile_size_m",
+        "wall_thickness_m"
+      ],
+      "attributes": [
+        "name",
+        "material_family",
+        "module_id",
+        "part_role"
+      ],
+      "depends_on": [
+        "openings.attachments",
+        "openings.windows",
+        "openings.doors",
+        "shell.body_shell",
+        "layout.semantic_layout"
+      ],
+      "debug_endpoint": "OPENINGS/wall_cuts/OUT_DEBUG",
+      "source_members": [
+        "BAY_CONNECTOR_CUTTERS",
+        "ALL_OPENING_CUTTERS",
+        "F_WALL_FINISH"
+      ],
+      "source_output": "F_WALL_FINISH",
+      "routes": [
+        {
+          "port": "attachments_bay_cutters",
+          "member": "BAY_CONNECTOR_CUTTERS",
+          "input": 0
+        },
+        {
+          "port": "windows_window_cutters",
+          "member": "ALL_OPENING_CUTTERS",
+          "input": 0
+        },
+        {
+          "port": "doors_door_cutters",
+          "member": "ALL_OPENING_CUTTERS",
+          "input": 1
+        },
+        {
+          "port": "body_shell_uncut_shell",
+          "member": "F_WALL_FINISH",
+          "input": 0
+        },
+        {
+          "port": "plan_roof_plans",
+          "member": "F_WALL_FINISH",
+          "input": 1
+        }
+      ],
+      "input_classes": {
+        "attachments_bay_cutters": "geometry",
+        "windows_window_cutters": "geometry",
+        "doors_door_cutters": "geometry",
+        "body_shell_uncut_shell": "geometry",
+        "plan_roof_plans": "semantic"
+      }
+    },
+    {
+      "module_id": "roof.dormers",
+      "stage": "ROOF",
+      "path": "ROOF/dormers",
+      "owner": "mythic.medieval.modular_rebuild",
+      "version": 2,
+      "responsibility": "Build roof-hosted dormers and their aperture stream",
+      "inputs": {
+        "plan_roof_plans": "layout.semantic_layout:roof_plans",
+        "opening_kits_window_geometry": "openings.kits:window_geometry",
+        "opening_kits_window_aperture": "openings.kits:window_aperture",
+        "roof_interior": "roof.junctions:roof_volume",
+        "roof_host": "roof.junctions:roof_shell"
+      },
+      "outputs": [
+        "dormer_geometry",
+        "dormer_cutters"
+      ],
+      "params": [
+        "dormer_count",
+        "frame_width_m",
+        "roof_shape",
+        "window_height_m",
+        "window_width_m",
+        "wing_dormer_count"
+      ],
+      "attributes": [
+        "name",
+        "material_family",
+        "module_id",
+        "part_role"
+      ],
+      "depends_on": [
+        "layout.semantic_layout",
+        "openings.kits",
+        "roof.junctions"
+      ],
+      "debug_endpoint": "ROOF/dormers/OUT_DEBUG",
+      "source_members": [
+        "F_DORMERS"
+      ],
+      "source_output": "F_DORMERS",
+      "routes": [
+        {
+          "port": "plan_roof_plans",
+          "member": "F_DORMERS",
+          "input": 0
+        },
+        {
+          "port": "opening_kits_window_geometry",
+          "member": "F_DORMERS",
+          "input": 1
+        },
+        {
+          "port": "opening_kits_window_aperture",
+          "member": "F_DORMERS",
+          "input": 2
+        },
+        {
+          "port": "roof_interior",
+          "member": "F_DORMERS",
+          "input": 3
+        },
+        {
+          "port": "roof_host",
+          "member": "F_DORMERS",
+          "input": 4
+        }
+      ],
+      "input_classes": {
+        "plan_roof_plans": "semantic",
+        "opening_kits_window_geometry": "geometry",
+        "opening_kits_window_aperture": "geometry"
+      }
+    },
+    {
+      "module_id": "roof.surfaces_tiles",
+      "stage": "ROOF",
+      "path": "ROOF/surfaces_tiles",
+      "owner": "mythic.medieval.modular_rebuild",
+      "version": 2,
+      "responsibility": "Construct roof surfaces, thickness, tiles and body/dormer trimming",
+      "inputs": {
+        "plan_roof_plans": "layout.semantic_layout:roof_plans",
+        "body_shell_solid_body": "shell.body_shell:solid_body",
+        "dormers_dormer_cutters": "roof.dormers:dormer_cutters",
+        "resolved_shell": "roof.junctions:roof_shell",
+        "roof_interior": "roof.junctions:roof_volume",
+        "raw_surfaces": "roof.patch_surfaces:raw_surfaces"
+      },
+      "outputs": [
+        "roof_shell",
+        "roof_tiles"
+      ],
+      "params": [
+        "mesh_quality",
+        "roof_shape",
+        "tile_size_m"
+      ],
+      "attributes": [
+        "name",
+        "material_family",
+        "module_id",
+        "part_role"
+      ],
+      "depends_on": [
+        "layout.semantic_layout",
+        "shell.body_shell",
+        "roof.dormers",
+        "roof.junctions",
+        "roof.patch_surfaces"
+      ],
+      "debug_endpoint": "ROOF/surfaces_tiles/OUT_DEBUG",
+      "source_members": [
+        "F_ROOF"
+      ],
+      "source_output": "F_ROOF",
+      "routes": [
+        {
+          "port": "plan_roof_plans",
+          "member": "F_ROOF",
+          "input": 0
+        },
+        {
+          "port": "body_shell_solid_body",
+          "member": "F_ROOF",
+          "input": 1
+        },
+        {
+          "port": "dormers_dormer_cutters",
+          "member": "F_ROOF",
+          "input": 2
+        },
+        {
+          "port": "resolved_shell",
+          "member": "F_ROOF",
+          "input": 3
+        },
+        {
+          "port": "roof_interior",
+          "member": "F_ROOF",
+          "input": 4
+        },
+        {
+          "port": "raw_surfaces",
+          "member": "F_ROOF",
+          "input": 5
+        }
+      ],
+      "input_classes": {
+        "plan_roof_plans": "semantic",
+        "body_shell_solid_body": "geometry",
+        "dormers_dormer_cutters": "geometry"
+      }
+    },
+    {
+      "module_id": "roof.trim",
+      "stage": "ROOF",
+      "path": "ROOF/trim",
+      "owner": "mythic.medieval.modular_rebuild",
+      "version": 2,
+      "responsibility": "Construct eave boards, ridges and supported chimneys",
+      "inputs": {
+        "plan_roof_plans": "layout.semantic_layout:roof_plans",
+        "roof_interior": "roof.junctions:roof_volume"
+      },
+      "outputs": [
+        "roof_trim"
+      ],
+      "params": [
+        "chimney_count",
+        "roof_shape",
+        "tile_size_m"
+      ],
+      "attributes": [
+        "name",
+        "material_family",
+        "module_id",
+        "part_role"
+      ],
+      "depends_on": [
+        "layout.semantic_layout",
+        "roof.junctions"
+      ],
+      "debug_endpoint": "ROOF/trim/OUT_DEBUG",
+      "source_members": [
+        "F_ROOF_TRIM"
+      ],
+      "source_output": "F_ROOF_TRIM",
+      "routes": [
+        {
+          "port": "plan_roof_plans",
+          "member": "F_ROOF_TRIM",
+          "input": 0
+        },
+        {
+          "port": "roof_interior",
+          "member": "F_ROOF_TRIM",
+          "input": 1
+        }
+      ],
+      "input_classes": {
+        "plan_roof_plans": "semantic"
+      }
+    },
+    {
+      "module_id": "details.facade",
+      "stage": "DETAILS",
+      "path": "DETAILS/facade",
+      "owner": "mythic.medieval.modular_rebuild",
+      "version": 2,
+      "responsibility": "Build facade timbers and reference-specific supported modules",
+      "inputs": {
+        "facade_layout_visible_bays": "shell.facade_layout:visible_bays",
+        "plan_roof_plans": "layout.semantic_layout:roof_plans"
+      },
+      "outputs": [
+        "structural_timber",
+        "facade_details"
+      ],
+      "params": [
+        "attic_window_enable",
+        "detail_level",
+        "door_height_m",
+        "facade_accent_budget",
+        "facade_bay_width_m",
+        "facade_module_density",
+        "facade_overrides",
+        "facade_style",
+        "roof_shape",
+        "timber_pattern",
+        "window_height_m",
+        "window_width_m"
+      ],
+      "attributes": [
+        "name",
+        "material_family",
+        "module_id",
+        "part_role"
+      ],
+      "depends_on": [
+        "shell.facade_layout",
+        "layout.semantic_layout"
+      ],
+      "debug_endpoint": "DETAILS/facade/OUT_DEBUG",
+      "source_members": [
+        "F_FACADE_DETAILS"
+      ],
+      "source_output": "F_FACADE_DETAILS",
+      "routes": [
+        {
+          "port": "facade_layout_visible_bays",
+          "member": "F_FACADE_DETAILS",
+          "input": 0
+        },
+        {
+          "port": "plan_roof_plans",
+          "member": "F_FACADE_DETAILS",
+          "input": 1
+        }
+      ],
+      "input_classes": {
+        "facade_layout_visible_bays": "semantic",
+        "plan_roof_plans": "semantic"
+      }
+    },
+    {
+      "module_id": "details.interior",
+      "stage": "DETAILS",
+      "path": "DETAILS/interior",
+      "owner": "mythic.medieval.modular_rebuild",
+      "version": 2,
+      "responsibility": "Construct floors, stairs and interior structural frames",
+      "inputs": {
+        "plan_floor_plans": "layout.semantic_layout:floor_plans",
+        "facade_layout_visible_bays": "shell.facade_layout:visible_bays"
+      },
+      "outputs": [
+        "interior"
+      ],
+      "params": [
+        "floor_thickness_m",
+        "interior_enable",
+        "interior_joist_spacing_m",
+        "interior_stair_width_m",
+        "wall_thickness_m"
+      ],
+      "attributes": [
+        "name",
+        "material_family",
+        "module_id",
+        "part_role"
+      ],
+      "depends_on": [
+        "layout.semantic_layout",
+        "shell.facade_layout"
+      ],
+      "debug_endpoint": "DETAILS/interior/OUT_DEBUG",
+      "source_members": [
+        "F_INTERIOR"
+      ],
+      "source_output": "F_INTERIOR",
+      "routes": [
+        {
+          "port": "plan_floor_plans",
+          "member": "F_INTERIOR",
+          "input": 0
+        },
+        {
+          "port": "facade_layout_visible_bays",
+          "member": "F_INTERIOR",
+          "input": 1
+        }
+      ],
+      "input_classes": {
+        "plan_floor_plans": "semantic",
+        "facade_layout_visible_bays": "semantic"
+      }
+    },
+    {
+      "module_id": "details.balcony",
+      "stage": "DETAILS",
+      "path": "DETAILS/balcony",
+      "owner": "mythic.medieval.modular_rebuild",
+      "version": 2,
+      "responsibility": "Construct supported upper access balconies",
+      "inputs": {
+        "plan_floor_plans": "layout.semantic_layout:floor_plans"
+      },
+      "outputs": [
+        "balcony"
+      ],
+      "params": [
+        "balcony_depth_m",
+        "balcony_layout",
+        "utility_type",
+        "wall_thickness_m"
+      ],
+      "attributes": [
+        "name",
+        "material_family",
+        "module_id",
+        "part_role"
+      ],
+      "depends_on": [
+        "layout.semantic_layout"
+      ],
+      "debug_endpoint": "DETAILS/balcony/OUT_DEBUG",
+      "source_members": [
+        "F_BALCONY"
+      ],
+      "source_output": "F_BALCONY",
+      "routes": [
+        {
+          "port": "plan_floor_plans",
+          "member": "F_BALCONY",
+          "input": 0
+        }
+      ],
+      "input_classes": {
+        "plan_floor_plans": "semantic"
+      }
+    },
+    {
+      "module_id": "details.utilities",
+      "stage": "DETAILS",
+      "path": "DETAILS/utilities",
+      "owner": "mythic.medieval.modular_rebuild",
+      "version": 2,
+      "responsibility": "Construct the original wind and water utility grammar",
+      "inputs": {
+        "plan_role_plans": "layout.semantic_layout:role_plans"
+      },
+      "outputs": [
+        "utilities"
+      ],
+      "params": [
+        "context_mode",
+        "foundation_mode",
+        "rotor_radius_m",
+        "terrain_slope",
+        "utility_type",
+        "wheel_radius_m"
+      ],
+      "attributes": [
+        "name",
+        "material_family",
+        "module_id",
+        "part_role"
+      ],
+      "depends_on": [
+        "layout.semantic_layout"
+      ],
+      "debug_endpoint": "DETAILS/utilities/OUT_DEBUG",
+      "source_members": [
+        "F_UTILITIES"
+      ],
+      "source_output": "F_UTILITIES",
+      "routes": [
+        {
+          "port": "plan_role_plans",
+          "member": "F_UTILITIES",
+          "input": 0
+        }
+      ],
+      "input_classes": {
+        "plan_role_plans": "semantic"
+      }
+    },
+    {
+      "module_id": "details.site",
+      "stage": "DETAILS",
+      "path": "DETAILS/site",
+      "owner": "mythic.medieval.modular_rebuild",
+      "version": 2,
+      "responsibility": "Construct ground contact, entry steps and supported canopies",
+      "inputs": {
+        "plan_role_plans": "layout.semantic_layout:role_plans",
+        "solid_body": "shell.body_shell:solid_body",
+        "overhead_access": "details.balcony:balcony"
+      },
+      "outputs": [
+        "site"
+      ],
+      "params": [
+        "awning_enable",
+        "awning_span_ratio",
+        "door_width_m",
+        "entrance_canopy",
+        "foundation_mode",
+        "front_bays",
+        "ground_enable",
+        "ground_margin_m",
+        "ground_slope_amount_m",
+        "ground_slope_preset",
+        "terrain_slope"
+      ],
+      "attributes": [
+        "name",
+        "material_family",
+        "module_id",
+        "part_role"
+      ],
+      "depends_on": [
+        "layout.semantic_layout",
+        "shell.body_shell",
+        "details.balcony"
+      ],
+      "debug_endpoint": "DETAILS/site/OUT_DEBUG",
+      "source_members": [
+        "F_SITE"
+      ],
+      "source_output": "F_SITE",
+      "routes": [
+        {
+          "port": "plan_role_plans",
+          "member": "F_SITE",
+          "input": 0
+        },
+        {
+          "port": "solid_body",
+          "member": "F_SITE",
+          "input": 1
+        },
+        {
+          "port": "overhead_access",
+          "member": "F_SITE",
+          "input": 2
+        }
+      ],
+      "input_classes": {
+        "plan_role_plans": "semantic"
+      }
+    },
+    {
+      "module_id": "details.furnishing",
+      "stage": "DETAILS",
+      "path": "DETAILS/furnishing",
+      "owner": "mythic.medieval.modular_rebuild",
+      "version": 2,
+      "responsibility": "Construct the original interior and workshop furnishing",
+      "inputs": {
+        "plan_floor_plans": "layout.semantic_layout:floor_plans"
+      },
+      "outputs": [
+        "furnishing"
+      ],
+      "params": [
+        "bevel_width_m",
+        "detail_level",
+        "dressing_enable",
+        "floor_thickness_m",
+        "interior_enable",
+        "interior_furniture",
+        "interior_lighting",
+        "interior_partitions",
+        "interior_stair_width_m",
+        "interior_style",
+        "mesh_quality",
+        "utility_type",
+        "wall_thickness_m",
+        "workshop_enable"
+      ],
+      "attributes": [
+        "name",
+        "material_family",
+        "module_id",
+        "part_role"
+      ],
+      "depends_on": [
+        "layout.semantic_layout"
+      ],
+      "debug_endpoint": "DETAILS/furnishing/OUT_DEBUG",
+      "source_members": [
+        "F_FURNISHING"
+      ],
+      "source_output": "F_FURNISHING",
+      "routes": [
+        {
+          "port": "plan_floor_plans",
+          "member": "F_FURNISHING",
+          "input": 0
+        }
+      ],
+      "input_classes": {
+        "plan_floor_plans": "semantic"
+      }
+    },
+    {
+      "module_id": "uv_material.surfacing",
+      "stage": "UV_MATERIAL",
+      "path": "UV_MATERIAL/surfacing",
+      "owner": "mythic.medieval.modular_rebuild",
+      "version": 2,
+      "responsibility": "Assemble original part ordering and apply metric UV, normals and materials",
+      "inputs": {
+        "wall_finish_walls": "openings.wall_cuts:walls",
+        "facade_details_structural_timber": "details.facade:structural_timber",
+        "windows_window_geometry": "openings.windows:window_geometry",
+        "doors_door_geometry": "openings.doors:door_geometry",
+        "roof_roof_shell": "roof.surfaces_tiles:roof_shell",
+        "roof_roof_tiles": "roof.surfaces_tiles:roof_tiles",
+        "dormers_dormer_geometry": "roof.dormers:dormer_geometry",
+        "roof_trim_roof_trim": "roof.trim:roof_trim",
+        "interior_interior": "details.interior:interior",
+        "utilities_utilities": "details.utilities:utilities",
+        "site_site": "details.site:site",
+        "furnishing_furnishing": "details.furnishing:furnishing",
+        "balcony_balcony": "details.balcony:balcony",
+        "facade_details_facade_details": "details.facade:facade_details",
+        "attachments_attachment_geometry": "openings.attachments:attachment_geometry",
+        "roof_junction_trim": "roof.junctions:junction_trim"
+      },
+      "outputs": [
+        "building"
+      ],
+      "params": [
+        "palette",
+        "scale",
+        "seed_decoration",
+        "uv_tile_scale",
+        "uv_local_projection"
+      ],
+      "attributes": [
+        "name",
+        "material_family",
+        "module_id",
+        "part_role"
+      ],
+      "depends_on": [
+        "openings.wall_cuts",
+        "details.facade",
+        "openings.windows",
+        "openings.doors",
+        "roof.surfaces_tiles",
+        "roof.dormers",
+        "roof.trim",
+        "details.interior",
+        "details.utilities",
+        "details.site",
+        "details.furnishing",
+        "details.balcony",
+        "openings.attachments",
+        "roof.junctions"
+      ],
+      "debug_endpoint": "UV_MATERIAL/surfacing/OUT_DEBUG",
+      "source_members": [
+        "MERGE_BUILDING",
+        "F_FINISH"
+      ],
+      "source_output": "F_FINISH",
+      "routes": [
+        {
+          "port": "wall_finish_walls",
+          "member": "MERGE_BUILDING",
+          "input": 0
+        },
+        {
+          "port": "facade_details_structural_timber",
+          "member": "MERGE_BUILDING",
+          "input": 1
+        },
+        {
+          "port": "windows_window_geometry",
+          "member": "MERGE_BUILDING",
+          "input": 2
+        },
+        {
+          "port": "doors_door_geometry",
+          "member": "MERGE_BUILDING",
+          "input": 3
+        },
+        {
+          "port": "roof_roof_shell",
+          "member": "MERGE_BUILDING",
+          "input": 4
+        },
+        {
+          "port": "roof_roof_tiles",
+          "member": "MERGE_BUILDING",
+          "input": 5
+        },
+        {
+          "port": "dormers_dormer_geometry",
+          "member": "MERGE_BUILDING",
+          "input": 6
+        },
+        {
+          "port": "roof_trim_roof_trim",
+          "member": "MERGE_BUILDING",
+          "input": 7
+        },
+        {
+          "port": "interior_interior",
+          "member": "MERGE_BUILDING",
+          "input": 8
+        },
+        {
+          "port": "utilities_utilities",
+          "member": "MERGE_BUILDING",
+          "input": 9
+        },
+        {
+          "port": "site_site",
+          "member": "MERGE_BUILDING",
+          "input": 10
+        },
+        {
+          "port": "furnishing_furnishing",
+          "member": "MERGE_BUILDING",
+          "input": 11
+        },
+        {
+          "port": "balcony_balcony",
+          "member": "MERGE_BUILDING",
+          "input": 12
+        },
+        {
+          "port": "facade_details_facade_details",
+          "member": "MERGE_BUILDING",
+          "input": 13
+        },
+        {
+          "port": "attachments_attachment_geometry",
+          "member": "MERGE_BUILDING",
+          "input": 14
+        },
+        {
+          "port": "roof_junction_trim",
+          "member": "MERGE_BUILDING",
+          "input": 15
+        }
+      ],
+      "input_classes": {
+        "wall_finish_walls": "geometry",
+        "facade_details_structural_timber": "geometry",
+        "windows_window_geometry": "geometry",
+        "doors_door_geometry": "geometry",
+        "roof_roof_shell": "geometry",
+        "roof_roof_tiles": "geometry",
+        "dormers_dormer_geometry": "geometry",
+        "roof_trim_roof_trim": "geometry",
+        "interior_interior": "geometry",
+        "utilities_utilities": "geometry",
+        "site_site": "geometry",
+        "furnishing_furnishing": "geometry",
+        "balcony_balcony": "geometry",
+        "facade_details_facade_details": "geometry",
+        "attachments_attachment_geometry": "geometry"
+      }
+    },
+    {
+      "module_id": "roof.patch_surfaces",
+      "stage": "ROOF",
+      "path": "ROOF/patch_surfaces",
+      "owner": "mythic.medieval.modular_rebuild",
+      "version": 3,
+      "responsibility": "Skin each roof role independently; never bridge different buildings",
+      "inputs": {
+        "plans": "layout.semantic_layout:roof_plans"
+      },
+      "outputs": [
+        "raw_surfaces"
+      ],
+      "params": [
+        "roof_shape",
+        "tile_size_m",
+        "mesh_quality"
+      ],
+      "attributes": [
+        "name",
+        "material_family",
+        "roof_patch_id",
+        "module_id",
+        "part_role"
+      ],
+      "depends_on": [
+        "layout.semantic_layout"
+      ],
+      "debug_endpoint": "ROOF/patch_surfaces/OUT_DEBUG"
+    },
+    {
+      "module_id": "roof.junctions",
+      "stage": "ROOF",
+      "path": "ROOF/ridge_valley_solver",
+      "owner": "mythic.medieval.modular_rebuild",
+      "version": 3,
+      "responsibility": "Union closed downward roof volumes, retain the upper envelope and publish actual junction geometry",
+      "inputs": {
+        "patches": "roof.patch_surfaces:raw_surfaces"
+      },
+      "outputs": [
+        "roof_top",
+        "roof_volume",
+        "roof_shell",
+        "junction_trim"
+      ],
+      "params": [],
+      "attributes": [
+        "name",
+        "material_family",
+        "roof_patch_id",
+        "module_id",
+        "part_role"
+      ],
+      "depends_on": [
+        "roof.patch_surfaces"
+      ],
+      "debug_endpoint": "ROOF/ridge_valley_solver/OUT_DEBUG"
+    },
+    {
+      "module_id": "output.detail_levels",
+      "stage": "OUTPUT",
+      "path": "OUTPUT/detail_levels",
+      "owner": "mythic.medieval.modular_rebuild",
+      "version": 3,
+      "responsibility": "Publish distinct LOW/HIGH geometry with local feature-limited native bevel",
+      "inputs": {
+        "building": "uv_material.surfacing:building"
+      },
+      "outputs": [
+        "low",
+        "high",
+        "selected"
+      ],
+      "params": [
+        "preview_quality",
+        "bevel_width_m"
+      ],
+      "attributes": [
+        "name",
+        "material_family",
+        "roof_patch_id",
+        "module_id",
+        "part_role"
+      ],
+      "depends_on": [
+        "uv_material.surfacing"
+      ],
+      "debug_endpoint": "OUTPUT/detail_levels/OUT_DEBUG"
+    },
+    {
+      "module_id": "output.game_export",
+      "stage": "OUTPUT",
+      "path": "OUTPUT/game_export",
+      "owner": "mythic.medieval.modular_rebuild",
+      "version": 2,
+      "responsibility": "Publish stable export metadata and final inspectable geometry",
+      "inputs": {
+        "building": "output.detail_levels:selected"
+      },
+      "outputs": [
+        "geometry"
+      ],
+      "params": [],
+      "attributes": [
+        "name",
+        "material_family",
+        "module_id",
+        "part_role"
+      ],
+      "depends_on": [
+        "output.detail_levels"
+      ],
+      "debug_endpoint": "OUTPUT/game_export/OUT_DEBUG"
+    }
+  ]
+}

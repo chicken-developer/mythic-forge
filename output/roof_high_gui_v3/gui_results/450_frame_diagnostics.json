@@ -1,0 +1,16 @@
+{
+  "status": "pass",
+  "result": {
+    "setVisibleBounds": "\n\nsetVisibleBounds(self, bounds, transition_time=0.0, max_scale=0.0,\nset_center_when_scale_rejected=False)\n\n    Sets the visible bounds of the network editor viewing area,\n    expressed in network space coordinates. This method will never alter\n    the screen space size or location of the network editor. If the area\n    specified by the bounds parameter has a different aspect ratio from\n    the actual network editor, this method will automatically adjust the\n    bounds to ensure that the area specified is fully visible.\n\n\n    bounds\n        A hou.BoundingRect specifying the area that should be visible in\n        the network editor.\n\n    transition_time\n        The amount of time, in seconds, over which the network editor\n        will animate the transition from the current visible bounds to\n        the new visible bounds.\n\n    max_scale\n        If set to a non-zero value, this parameter controls the maximum\n        zoom level that will be allowed. The default maximum scale used\n        by the network editor code is 100.\n\n    set_centered_when_scale_rejected\n        If set to True, but the new zoom level is determined to be the\n        same as the previous zoom, no change is made to the bounds at\n        all. This prevents a bounds change, that was intended as a pure\n        zoom, from inadvertently panning the view if the zoom doesn't\n        actually change.\n\n\n",
+    "homeToSelection": "\nhomeToSelection(self)\n\n    Centers the nodes within the network editor to show the current\n    selection. This method wraps a call to\n    hou.NetworkEditor.setVisibleBounds.\n\n",
+    "pane_methods": [
+      "isMaximized",
+      "isSplitMaximized",
+      "setIsMaximized",
+      "setIsSplitMaximized"
+    ],
+    "selected": [
+      "/obj/medieval_roof_high_v3/BUILDING/OUTPUT/detail_levels/OUT_DEBUG"
+    ]
+  }
+}

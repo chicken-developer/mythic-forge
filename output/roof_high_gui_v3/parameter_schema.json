@@ -1,0 +1,453 @@
+{
+  "schema_version": 1,
+  "parameters": {
+    "footprint": {
+      "type": "string",
+      "default": "rectangular",
+      "enum": [
+        "rectangular",
+        "round",
+        "l_shape",
+        "hybrid"
+      ]
+    },
+    "width_m": {
+      "type": "number",
+      "default": 8.2
+    },
+    "depth_m": {
+      "type": "number",
+      "default": 6.4
+    },
+    "floor_count": {
+      "type": "integer",
+      "default": 2
+    },
+    "floor_height_m": {
+      "type": "number",
+      "default": 2.65
+    },
+    "wall_thickness_m": {
+      "type": "number",
+      "default": 0.22
+    },
+    "upper_overhang_m": {
+      "type": "number",
+      "default": 0.16
+    },
+    "foundation_mode": {
+      "type": "string",
+      "default": "stone",
+      "enum": [
+        "stone",
+        "stilts",
+        "hybrid"
+      ]
+    },
+    "foundation_height_m": {
+      "type": "number",
+      "default": 0.35
+    },
+    "terrain_slope": {
+      "type": "number",
+      "default": 0.0
+    },
+    "tower_radius_m": {
+      "type": "number",
+      "default": 1.7
+    },
+    "tower_extra_height_m": {
+      "type": "number",
+      "default": 0.8
+    },
+    "tower_taper": {
+      "type": "number",
+      "default": 0.0
+    },
+    "wing_width_ratio": {
+      "type": "number",
+      "default": 0.7
+    },
+    "wing_depth_ratio": {
+      "type": "number",
+      "default": 0.62
+    },
+    "wing_floor_count": {
+      "type": "integer",
+      "default": 1
+    },
+    "wing_roof_ratio": {
+      "type": "number",
+      "default": 0.72
+    },
+    "wing_offset_z_m": {
+      "type": "number",
+      "default": -1.3
+    },
+    "wing_overlap_m": {
+      "type": "number",
+      "default": 0.65
+    },
+    "tower_offset_z_m": {
+      "type": "number",
+      "default": 0.8
+    },
+    "tower_inset_ratio": {
+      "type": "number",
+      "default": 0.42
+    },
+    "layout_input_enable": {
+      "type": "boolean",
+      "default": false
+    },
+    "layout_path": {
+      "type": "string",
+      "default": ""
+    },
+    "front_bays": {
+      "type": "string",
+      "default": "WDW/W.W"
+    },
+    "right_bays": {
+      "type": "string",
+      "default": "W.W/W.W"
+    },
+    "rear_bays": {
+      "type": "string",
+      "default": "W.W/W.W"
+    },
+    "left_bays": {
+      "type": "string",
+      "default": "W.W/W.W"
+    },
+    "window_layout_mode": {
+      "type": "string",
+      "default": "pattern",
+      "enum": [
+        "pattern",
+        "count"
+      ]
+    },
+    "front_window_count": {
+      "type": "integer",
+      "default": 2
+    },
+    "right_window_count": {
+      "type": "integer",
+      "default": 1
+    },
+    "rear_window_count": {
+      "type": "integer",
+      "default": 1
+    },
+    "left_window_count": {
+      "type": "integer",
+      "default": 1
+    },
+    "window_width_m": {
+      "type": "number",
+      "default": 0.95
+    },
+    "window_height_m": {
+      "type": "number",
+      "default": 1.25
+    },
+    "door_width_m": {
+      "type": "number",
+      "default": 1.25
+    },
+    "door_height_m": {
+      "type": "number",
+      "default": 2.05
+    },
+    "frame_width_m": {
+      "type": "number",
+      "default": 0.09
+    },
+    "shutters_enable": {
+      "type": "boolean",
+      "default": true
+    },
+    "attic_window_enable": {
+      "type": "boolean",
+      "default": false
+    },
+    "round_window_step": {
+      "type": "integer",
+      "default": 5
+    },
+    "timber_pattern": {
+      "type": "string",
+      "default": "curved_brace",
+      "enum": [
+        "simple",
+        "cross_brace",
+        "curved_brace"
+      ]
+    },
+    "facade_style": {
+      "type": "string",
+      "default": "B",
+      "enum": [
+        "legacy",
+        "A",
+        "B",
+        "C"
+      ]
+    },
+    "facade_bay_width_m": {
+      "type": "number",
+      "default": 1.15
+    },
+    "facade_accent_budget": {
+      "type": "integer",
+      "default": 2
+    },
+    "facade_module_density": {
+      "type": "number",
+      "default": 0.65
+    },
+    "facade_overrides": {
+      "type": "string",
+      "default": "{}"
+    },
+    "roof_shape": {
+      "type": "string",
+      "default": "gable",
+      "enum": [
+        "gable",
+        "hipped",
+        "conical"
+      ]
+    },
+    "roof_height_m": {
+      "type": "number",
+      "default": 2.15
+    },
+    "eave_curve": {
+      "type": "number",
+      "default": 0.14
+    },
+    "eave_depth_m": {
+      "type": "number",
+      "default": 0.45
+    },
+    "tile_size_m": {
+      "type": "number",
+      "default": 0.4
+    },
+    "dormer_count": {
+      "type": "integer",
+      "default": 1
+    },
+    "wing_dormer_count": {
+      "type": "integer",
+      "default": 0
+    },
+    "chimney_count": {
+      "type": "integer",
+      "default": 1
+    },
+    "cupola_enable": {
+      "type": "boolean",
+      "default": false
+    },
+    "interior_enable": {
+      "type": "boolean",
+      "default": true
+    },
+    "floor_thickness_m": {
+      "type": "number",
+      "default": 0.12
+    },
+    "interior_furniture": {
+      "type": "boolean",
+      "default": true
+    },
+    "interior_partitions": {
+      "type": "boolean",
+      "default": true
+    },
+    "interior_lighting": {
+      "type": "boolean",
+      "default": true
+    },
+    "interior_joist_spacing_m": {
+      "type": "number",
+      "default": 0.65
+    },
+    "interior_stair_width_m": {
+      "type": "number",
+      "default": 0.85
+    },
+    "interior_style": {
+      "type": "string",
+      "default": "auto",
+      "enum": [
+        "auto",
+        "home",
+        "inn",
+        "workshop",
+        "mill"
+      ]
+    },
+    "utility_type": {
+      "type": "string",
+      "default": "none",
+      "enum": [
+        "none",
+        "windmill",
+        "waterwheel"
+      ]
+    },
+    "wheel_radius_m": {
+      "type": "number",
+      "default": 2.3
+    },
+    "rotor_radius_m": {
+      "type": "number",
+      "default": 3.6
+    },
+    "awning_enable": {
+      "type": "boolean",
+      "default": false
+    },
+    "entrance_canopy": {
+      "type": "boolean",
+      "default": true
+    },
+    "dressing_enable": {
+      "type": "boolean",
+      "default": true
+    },
+    "balcony_layout": {
+      "type": "string",
+      "default": "none",
+      "enum": [
+        "none",
+        "front",
+        "wrap",
+        "ring"
+      ]
+    },
+    "balcony_depth_m": {
+      "type": "number",
+      "default": 1.0
+    },
+    "workshop_enable": {
+      "type": "boolean",
+      "default": false
+    },
+    "workshop_width_m": {
+      "type": "number",
+      "default": 2.7
+    },
+    "workshop_depth_m": {
+      "type": "number",
+      "default": 3.2
+    },
+    "workshop_offset_z_m": {
+      "type": "number",
+      "default": 0.6
+    },
+    "bay_window_enable": {
+      "type": "boolean",
+      "default": false
+    },
+    "scale": {
+      "type": "number",
+      "default": 1.0
+    },
+    "palette": {
+      "type": "string",
+      "default": "storybook_red",
+      "enum": [
+        "storybook_red",
+        "slate_blue"
+      ]
+    },
+    "detail_level": {
+      "type": "string",
+      "default": "high",
+      "enum": [
+        "low",
+        "high"
+      ]
+    },
+    "mesh_quality": {
+      "type": "string",
+      "default": "normal",
+      "enum": [
+        "low",
+        "normal",
+        "high"
+      ]
+    },
+    "bevel_width_m": {
+      "type": "number",
+      "default": 0.025
+    },
+    "context_mode": {
+      "type": "string",
+      "default": "paving",
+      "enum": [
+        "paving",
+        "water_channel",
+        "cliff"
+      ]
+    },
+    "ground_enable": {
+      "type": "boolean",
+      "default": true
+    },
+    "ground_margin_m": {
+      "type": "number",
+      "default": 1.3
+    },
+    "ground_slope_preset": {
+      "type": "string",
+      "default": "flat",
+      "enum": [
+        "legacy",
+        "flat",
+        "x_pos",
+        "x_neg",
+        "z_pos",
+        "z_neg"
+      ]
+    },
+    "ground_slope_amount_m": {
+      "type": "number",
+      "default": 0.0
+    },
+    "roof_axis": {
+      "type": "string",
+      "default": "x",
+      "enum": [
+        "z",
+        "x"
+      ]
+    },
+    "window_shape": {
+      "type": "string",
+      "default": "rectangular",
+      "enum": [
+        "rectangular",
+        "arched"
+      ]
+    },
+    "awning_span_ratio": {
+      "type": "number",
+      "default": 0.78
+    }
+  },
+  "seed_mapping": {
+    "decoration": "seed_decoration"
+  },
+  "constraints": [
+    "One ground-floor entrance D on front facade.",
+    "Pattern rows contain only W D . and have equal bay counts per elevation.",
+    "All full shutter envelopes fit between structural posts.",
+    "Rectangular gable and L-shape variants retain native roof junctions."
+  ]
+}

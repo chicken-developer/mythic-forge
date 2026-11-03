@@ -1,0 +1,17 @@
+int count=nprimitives(0);float tile=max(.16,ch("../tile_size_m"));
+for(int src=0;src<count;src++){
+ int ids[]=primpoints(0,src);if(len(ids)!=4)continue;
+ vector p0=point(0,"P",ids[0]),p1=point(0,"P",ids[1]),p2=point(0,"P",ids[2]),p3=point(0,"P",ids[3]);
+ float a=(distance(p0,p1)+distance(p3,p2))/2,b=(distance(p0,p3)+distance(p1,p2))/2;
+ int nu=max(1,int(ceil(a/tile))),nv=max(1,int(ceil(b/tile)));
+ for(int i=0;i<nu;i++)for(int j=0;j<nv;j++){
+   float u=(i+.5)/nu,v=(j+.5)/nv;
+   vector left=lerp(p0,p1,u),right=lerp(p3,p2,u),pos=lerp(left,right,v);
+   vector tu=normalize(lerp(p1-p0,p2-p3,v)),tv=normalize(lerp(p3-p0,p2-p1,u));
+   vector normal=normalize(cross(tu,tv));if(normal.y<0)normal=-normal;
+   tv=normalize(cross(tu,normal));matrix3 frame=set(tu*max(.03,a/nu-.018),normal*.06,tv*max(.03,b/nv-.018));
+   int pt=addpoint(0,pos+normal*.035);setpointattrib(0,"transform",pt,frame);
+   setpointattrib(0,"material_family",pt,"tile");setpointattrib(0,"Cd",pt,set(.76,.24,.105));setpointattrib(0,"name",pt,"tile_"+itoa(src)+"_"+itoa(i)+"_"+itoa(j));
+ }
+}
+for(int p=count-1;p>=0;p--)removeprim(0,p,1);

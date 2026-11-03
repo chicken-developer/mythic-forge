@@ -1,0 +1,1995 @@
+{
+  "files": [
+    {
+      "path": "analysis.md",
+      "size_bytes": 2747,
+      "sha256": "79dfe9ad31901acd61080d429778ae329a35cab29e94db3809bf49573b66b806"
+    },
+    {
+      "path": "asset/medieval_building_modular.hda",
+      "size_bytes": 470595,
+      "sha256": "90fa34e28094a8d15b560349f3e284619a680a553058937c1b2bccb0484ac687"
+    },
+    {
+      "path": "asset/medieval_modular_modules.hda",
+      "size_bytes": 175033,
+      "sha256": "ac26b1371dc3e3ca981600394cb689643e271ce60f19aa2e1aa7a07a5448f01f"
+    },
+    {
+      "path": "audit_baseline.py",
+      "size_bytes": 3108,
+      "sha256": "3a9f69fa5acf2499218a60a58301855d1285b8133114629080b626b3ecc4516b"
+    },
+    {
+      "path": "audit_uv.py",
+      "size_bytes": 1895,
+      "sha256": "9f46bcfe10dd44db7901bc521fa3d7c7e43f2e548fdc3b3c36c642bb675124dc"
+    },
+    {
+      "path": "build_hda.py",
+      "size_bytes": 5586,
+      "sha256": "6fa1589fc1f22e91401e7e08cb04292c3e21865fb1ba977274f6b118f6aedf54"
+    },
+    {
+      "path": "check_portable.py",
+      "size_bytes": 2256,
+      "sha256": "ae0d21144b6578ada9704455a587776c77d79d8ccaeaf95f6deed9116f3fb984"
+    },
+    {
+      "path": "check_regressions.py",
+      "size_bytes": 8879,
+      "sha256": "a10dcc90228cd5e06fac36629a7eee74ca741b91ec57bfd0bfe1419503cd6796"
+    },
+    {
+      "path": "comparisons/01_food_shop.png",
+      "size_bytes": 1134723,
+      "sha256": "bb5a1505edc7ebbdf89f4a17dec52916a11c4f85cd92bf96b8da999adaae9a07"
+    },
+    {
+      "path": "comparisons/02_general_store.png",
+      "size_bytes": 945806,
+      "sha256": "f3871dcdc382c60c6b103e118d68360943bd9e8a795798ab770e20be0c91cb05"
+    },
+    {
+      "path": "comparisons/03_herbal_store.png",
+      "size_bytes": 976120,
+      "sha256": "fef6df54af0616c8fbebe41d164ba2ef3436a1c7e6d00a74a4f0ec8bd74271a2"
+    },
+    {
+      "path": "comparisons/04_merchant_house.png",
+      "size_bytes": 928153,
+      "sha256": "06bed03e2b0238006ee78003ce3c7c4ae384c37571be3ac7f503a5ed29a50a8f"
+    },
+    {
+      "path": "comparisons/05_mixed_shop.png",
+      "size_bytes": 965748,
+      "sha256": "73e2a38404bd29dc0c6cae77dda4b347a821ea214d1ee10ebee7643870ef76a6"
+    },
+    {
+      "path": "comparisons/06_tavern.png",
+      "size_bytes": 1001151,
+      "sha256": "331307f7e645e53d881ca8c6d542250588a44bb88f88d08248bcf85fb740c96e"
+    },
+    {
+      "path": "comparisons/07_weapon_guild.png",
+      "size_bytes": 1084582,
+      "sha256": "2696eaf58003237c7b62135a47742e342b84b25da97e4fd697a8e21ba19d574e"
+    },
+    {
+      "path": "comparisons/08_normal_house_b.png",
+      "size_bytes": 895234,
+      "sha256": "3c3266a6b5583f01091db2bf4a6fd07622a08b15e39094f81745c752fe970531"
+    },
+    {
+      "path": "comparisons/09_normal_house_c.png",
+      "size_bytes": 912396,
+      "sha256": "ff2bc22008010ad97932e0ce2a07aeea92f03b37683de45415b1c8753a043356"
+    },
+    {
+      "path": "comparisons/10_normal_house_c_canopy.png",
+      "size_bytes": 929584,
+      "sha256": "16251d5db8224ee8f28cecd8c8847a24b822703b8d995352c49df7f776e91763"
+    },
+    {
+      "path": "comparisons/11_artisan_house.png",
+      "size_bytes": 1154040,
+      "sha256": "614e88976743ec81bbef3224dafc57038b5026f8f201abbd8de874aa32183bcd"
+    },
+    {
+      "path": "comparisons/12_craft_guild_hall.png",
+      "size_bytes": 1153697,
+      "sha256": "cbef5b54a78d9e80e3017e9f988c7319b629974f90575960dcd18cc31eac7820"
+    },
+    {
+      "path": "comparisons/13_material_storage.png",
+      "size_bytes": 1101583,
+      "sha256": "5c05cf1602e3307940c227f3a974d67ac7ba9455d0dd61b831ae1dc13989a252"
+    },
+    {
+      "path": "comparisons/14_toolmaker_workshop.png",
+      "size_bytes": 1053149,
+      "sha256": "f3554ea34e025646f78e92a2d8c12b95c7f0ec14bf039a1a79eb73918079ccbf"
+    },
+    {
+      "path": "comparisons/15_forgehouse.png",
+      "size_bytes": 1431127,
+      "sha256": "1194fb612fe5bd4f6f0bed1020d2b865a0a2f966226aad28f904ffde0ae09b34"
+    },
+    {
+      "path": "comparisons/baseline.png",
+      "size_bytes": 894772,
+      "sha256": "169b413fc042b50e29cab95d832652a7b6b03c74d3b815d50a5b320f5cb8faec"
+    },
+    {
+      "path": "datasets/01_food_shop.json",
+      "size_bytes": 3716,
+      "sha256": "bbe630146065e5833c8937ea97e0818f155bc92694783a62b8ced14ab9b0c4dd"
+    },
+    {
+      "path": "datasets/02_general_store.json",
+      "size_bytes": 3702,
+      "sha256": "1908d62e3e0cc1c3fe37fcf0c9f9edd9096a2b7dd191ef421ba9651b9f0f2619"
+    },
+    {
+      "path": "datasets/03_herbal_store.json",
+      "size_bytes": 3783,
+      "sha256": "427befb9d4a9ac1441a0fa78109a2870f219eae224c1d07421555db49a35e1a8"
+    },
+    {
+      "path": "datasets/04_merchant_house.json",
+      "size_bytes": 3725,
+      "sha256": "2deee3998b70f526a4c8c6a9369d27cca471201c90acd373cf1e3acb06e4056f"
+    },
+    {
+      "path": "datasets/05_mixed_shop.json",
+      "size_bytes": 3714,
+      "sha256": "18097f527200bfa529cd8f895ff23be9aa3c7a29b513b339de8e0b49979dda05"
+    },
+    {
+      "path": "datasets/06_tavern.json",
+      "size_bytes": 3671,
+      "sha256": "1f76e1cf000786521488c477bfe0872efb395a1076770e403bcf3a7147023b78"
+    },
+    {
+      "path": "datasets/07_weapon_guild.json",
+      "size_bytes": 3736,
+      "sha256": "bab8b5e5d4e23ba5213f1a7bcd4b38a7e4a513c4375c7e14671236908a367723"
+    },
+    {
+      "path": "datasets/08_normal_house_b.json",
+      "size_bytes": 3727,
+      "sha256": "e9c5fd3ac2da6932635972e4b746a39ec8f2120daa6bf15c70f4772c2d2882bb"
+    },
+    {
+      "path": "datasets/09_normal_house_c.json",
+      "size_bytes": 3867,
+      "sha256": "6c2263052579198c82238a7fadecd31493c01da9c71c503dfdfb03b824e3453a"
+    },
+    {
+      "path": "datasets/10_normal_house_c_canopy.json",
+      "size_bytes": 3916,
+      "sha256": "a7d51361f0f6c3398290836b69036cff2ba2b44823b970006ae62f2e155f4ecf"
+    },
+    {
+      "path": "datasets/11_artisan_house.json",
+      "size_bytes": 3711,
+      "sha256": "fddea88860a28ff9344fbd3bc847f64ae88d9f4ef12801137764895f00f68296"
+    },
+    {
+      "path": "datasets/12_craft_guild_hall.json",
+      "size_bytes": 4012,
+      "sha256": "e8cdbd86af9028ec646f0190a7053a09ff4c5c991b8bd949bd11d460002bdf18"
+    },
+    {
+      "path": "datasets/13_material_storage.json",
+      "size_bytes": 3754,
+      "sha256": "f34a7396a1cb1b469cebdb7faf1e467e43d5be949b84cbdcae21e58f868afa84"
+    },
+    {
+      "path": "datasets/14_toolmaker_workshop.json",
+      "size_bytes": 3815,
+      "sha256": "3f0066612ca809a65719a8b7b8de87f5f80a9e5bbeae17582605ff275e6df80c"
+    },
+    {
+      "path": "datasets/15_forgehouse.json",
+      "size_bytes": 3865,
+      "sha256": "4c01e5ce8e981125b4ebdcaa97fc78ebbd8e121281a16a8113c73a4573ca3946"
+    },
+    {
+      "path": "datasets/baseline.json",
+      "size_bytes": 3682,
+      "sha256": "f338aec8967c3a7bdf48eb31313c0fa920d7932359f5d6cd1e11dc2951bc20f7"
+    },
+    {
+      "path": "diagnose_geometry.py",
+      "size_bytes": 2287,
+      "sha256": "a2525aa06133cf9addb80b17e101fe650dfd918ae57feedc4e0cb0b215591e50"
+    },
+    {
+      "path": "diagnose_parity.py",
+      "size_bytes": 1135,
+      "sha256": "94b8b4b30655a4e7755b7b603d00d3bc921b8bff7b0348b930bb4f99eea4dff0"
+    },
+    {
+      "path": "evaluate_hda.py",
+      "size_bytes": 6905,
+      "sha256": "28ff4b008be18d09c66262f86c1d97b458afa3e343033742fc314f63b837bcfe"
+    },
+    {
+      "path": "evaluation.md",
+      "size_bytes": 11061,
+      "sha256": "0b78b4170a4477533a5dce059880d8e00a9eb703843f6237c7d9950c6b28db86"
+    },
+    {
+      "path": "extension_schema.json",
+      "size_bytes": 614,
+      "sha256": "7c3defcfc23eddf9d6efaf281a2e3040405f38624fc8d6cc368a999d1716db8f"
+    },
+    {
+      "path": "finalize_package.py",
+      "size_bytes": 16991,
+      "sha256": "49f621350bd4e89a29df26f36a88e89d85d43282ccae2a7796bb17accc624e82"
+    },
+    {
+      "path": "geometry/01_food_shop.bgeo.sc",
+      "size_bytes": 459980,
+      "sha256": "30c62b6359486fb066e2747f0b9e5b6cfa0ae55ecb3c676ad268e4590f724a48"
+    },
+    {
+      "path": "geometry/02_general_store.bgeo.sc",
+      "size_bytes": 521733,
+      "sha256": "dda9e42709ca6d126adf4f0b29d29a32146613719f867c3407e877d1d9c8b574"
+    },
+    {
+      "path": "geometry/03_herbal_store.bgeo.sc",
+      "size_bytes": 491132,
+      "sha256": "873189ca54778cdf0838a3f5082c241d79969b181bee53c005e2c97af47fad2e"
+    },
+    {
+      "path": "geometry/04_merchant_house.bgeo.sc",
+      "size_bytes": 620713,
+      "sha256": "e02164825ec7ba0f4ec8923c1204edfda91efd600dcc67a058f3368f591df56f"
+    },
+    {
+      "path": "geometry/05_mixed_shop.bgeo.sc",
+      "size_bytes": 699674,
+      "sha256": "e3d081ff4b2313876c9377a206c6f2bbb37cefeee7c9ec35af5b723070303096"
+    },
+    {
+      "path": "geometry/06_tavern.bgeo.sc",
+      "size_bytes": 1057827,
+      "sha256": "c6781afdd9d7541cf0d6ef488789d1b3a09c2d9088a5a6e12288089b75b4df72"
+    },
+    {
+      "path": "geometry/07_weapon_guild.bgeo.sc",
+      "size_bytes": 1120022,
+      "sha256": "8b05c36f891f21832d2aedbc1b27ec21f697d0dc1e853782b4e2bf2292bfd115"
+    },
+    {
+      "path": "geometry/08_normal_house_b.bgeo.sc",
+      "size_bytes": 647546,
+      "sha256": "f061f8399ef3fbbdd6181b36b137f72807762913907c2efffa3bdfe0c0dd4714"
+    },
+    {
+      "path": "geometry/09_normal_house_c.bgeo.sc",
+      "size_bytes": 728134,
+      "sha256": "f1ed4820fc3884b591b7a89077d77e5955ea00afdac015303dc245758a0edfd6"
+    },
+    {
+      "path": "geometry/10_normal_house_c_canopy.bgeo.sc",
+      "size_bytes": 761929,
+      "sha256": "48dbb200f9b0c78a0c55208ec09a788104cc63c22f2d4e90f9102248df65741a"
+    },
+    {
+      "path": "geometry/11_artisan_house.bgeo.sc",
+      "size_bytes": 813532,
+      "sha256": "3e5684ac3d1e157c736f0d9f81b7ac943eca7bb90ee587009c80747a1ff0419e"
+    },
+    {
+      "path": "geometry/12_craft_guild_hall.bgeo.sc",
+      "size_bytes": 841063,
+      "sha256": "95f756ba4ec092bfee5ef49d771173a7f42fd7335838c8205285361a9ed96441"
+    },
+    {
+      "path": "geometry/13_material_storage.bgeo.sc",
+      "size_bytes": 428842,
+      "sha256": "1c17780ebf671e98b2e13070890baca616d218a279b75392281e7c42c890ae7e"
+    },
+    {
+      "path": "geometry/14_toolmaker_workshop.bgeo.sc",
+      "size_bytes": 836259,
+      "sha256": "6b4ed8267ebb752a05acb8c25fd0258b89a5522bce8b6833dbc0e2afe87cd82e"
+    },
+    {
+      "path": "geometry/15_forgehouse.bgeo.sc",
+      "size_bytes": 1040521,
+      "sha256": "11a03afecaf086204503d79b2a80dbee79cc20422ef23dc78fedf41e2c8c9904"
+    },
+    {
+      "path": "geometry/after/01_food_shop.bgeo.sc",
+      "size_bytes": 459980,
+      "sha256": "30c62b6359486fb066e2747f0b9e5b6cfa0ae55ecb3c676ad268e4590f724a48"
+    },
+    {
+      "path": "geometry/after/02_general_store.bgeo.sc",
+      "size_bytes": 521733,
+      "sha256": "dda9e42709ca6d126adf4f0b29d29a32146613719f867c3407e877d1d9c8b574"
+    },
+    {
+      "path": "geometry/after/03_herbal_store.bgeo.sc",
+      "size_bytes": 491132,
+      "sha256": "873189ca54778cdf0838a3f5082c241d79969b181bee53c005e2c97af47fad2e"
+    },
+    {
+      "path": "geometry/after/04_merchant_house.bgeo.sc",
+      "size_bytes": 620713,
+      "sha256": "e02164825ec7ba0f4ec8923c1204edfda91efd600dcc67a058f3368f591df56f"
+    },
+    {
+      "path": "geometry/after/05_mixed_shop.bgeo.sc",
+      "size_bytes": 699674,
+      "sha256": "e3d081ff4b2313876c9377a206c6f2bbb37cefeee7c9ec35af5b723070303096"
+    },
+    {
+      "path": "geometry/after/06_tavern.bgeo.sc",
+      "size_bytes": 1057827,
+      "sha256": "c6781afdd9d7541cf0d6ef488789d1b3a09c2d9088a5a6e12288089b75b4df72"
+    },
+    {
+      "path": "geometry/after/07_weapon_guild.bgeo.sc",
+      "size_bytes": 1120022,
+      "sha256": "8b05c36f891f21832d2aedbc1b27ec21f697d0dc1e853782b4e2bf2292bfd115"
+    },
+    {
+      "path": "geometry/after/08_normal_house_b.bgeo.sc",
+      "size_bytes": 647546,
+      "sha256": "f061f8399ef3fbbdd6181b36b137f72807762913907c2efffa3bdfe0c0dd4714"
+    },
+    {
+      "path": "geometry/after/09_normal_house_c.bgeo.sc",
+      "size_bytes": 728134,
+      "sha256": "f1ed4820fc3884b591b7a89077d77e5955ea00afdac015303dc245758a0edfd6"
+    },
+    {
+      "path": "geometry/after/10_normal_house_c_canopy.bgeo.sc",
+      "size_bytes": 761929,
+      "sha256": "48dbb200f9b0c78a0c55208ec09a788104cc63c22f2d4e90f9102248df65741a"
+    },
+    {
+      "path": "geometry/after/11_artisan_house.bgeo.sc",
+      "size_bytes": 813532,
+      "sha256": "3e5684ac3d1e157c736f0d9f81b7ac943eca7bb90ee587009c80747a1ff0419e"
+    },
+    {
+      "path": "geometry/after/12_craft_guild_hall.bgeo.sc",
+      "size_bytes": 841063,
+      "sha256": "95f756ba4ec092bfee5ef49d771173a7f42fd7335838c8205285361a9ed96441"
+    },
+    {
+      "path": "geometry/after/13_material_storage.bgeo.sc",
+      "size_bytes": 428842,
+      "sha256": "1c17780ebf671e98b2e13070890baca616d218a279b75392281e7c42c890ae7e"
+    },
+    {
+      "path": "geometry/after/14_toolmaker_workshop.bgeo.sc",
+      "size_bytes": 836259,
+      "sha256": "6b4ed8267ebb752a05acb8c25fd0258b89a5522bce8b6833dbc0e2afe87cd82e"
+    },
+    {
+      "path": "geometry/after/15_forgehouse.bgeo.sc",
+      "size_bytes": 1040521,
+      "sha256": "11a03afecaf086204503d79b2a80dbee79cc20422ef23dc78fedf41e2c8c9904"
+    },
+    {
+      "path": "geometry/after/baseline.bgeo.sc",
+      "size_bytes": 647546,
+      "sha256": "6bd052a41ae973e89b287432453d32273f5842602cf3fa1a69493f4a46fc6d4e"
+    },
+    {
+      "path": "geometry/baseline.bgeo.sc",
+      "size_bytes": 647546,
+      "sha256": "6bd052a41ae973e89b287432453d32273f5842602cf3fa1a69493f4a46fc6d4e"
+    },
+    {
+      "path": "geometry/before/01_food_shop.bgeo.sc",
+      "size_bytes": 460841,
+      "sha256": "d5521e6f4a585100b894c52fa12780b0ccf7df6f5a510adf6ee3613ca5f7fdd8"
+    },
+    {
+      "path": "geometry/before/02_general_store.bgeo.sc",
+      "size_bytes": 529869,
+      "sha256": "f471ffcc1ff3eb29db022f20441ee862e3342f54babc1759bff08c6587eaae80"
+    },
+    {
+      "path": "geometry/before/03_herbal_store.bgeo.sc",
+      "size_bytes": 490518,
+      "sha256": "18ddac5d1206c09956b6c2565975fe2ed16b7f87a955e0699d324fc5b0d61298"
+    },
+    {
+      "path": "geometry/before/04_merchant_house.bgeo.sc",
+      "size_bytes": 618272,
+      "sha256": "643d714c226fc1c9a12ce315c58cea6bc4f38cd2ff6568a0c8ca5164af9c01b2"
+    },
+    {
+      "path": "geometry/before/05_mixed_shop.bgeo.sc",
+      "size_bytes": 708795,
+      "sha256": "934f1c5ae4b139b7b8c2528846c928edf5ab7f78096aef484dbf48483cf9bfc6"
+    },
+    {
+      "path": "geometry/before/06_tavern.bgeo.sc",
+      "size_bytes": 1008607,
+      "sha256": "80aa21b112a471ffb2d032493498f1aa7880a1ccab89b2af0300bf655a3c92dd"
+    },
+    {
+      "path": "geometry/before/07_weapon_guild.bgeo.sc",
+      "size_bytes": 1071981,
+      "sha256": "97a52e59359e02dc497eeef2c41aaea013aa87d75b8bdf3613c95d090f15deb1"
+    },
+    {
+      "path": "geometry/before/08_normal_house_b.bgeo.sc",
+      "size_bytes": 640685,
+      "sha256": "1334b00d18059cb57755aee67c7c8268e0eefc73581394d44299442cdec071c0"
+    },
+    {
+      "path": "geometry/before/09_normal_house_c.bgeo.sc",
+      "size_bytes": 725167,
+      "sha256": "161d6bd786865b5bea7cf86a09e78480411cfdccb9e3b6f0944c1747ef3592f4"
+    },
+    {
+      "path": "geometry/before/10_normal_house_c_canopy.bgeo.sc",
+      "size_bytes": 758326,
+      "sha256": "6cdf77ddab15642cfe3e012195d728cc915dbe680765e7ac5c647f73546fc6bd"
+    },
+    {
+      "path": "geometry/before/11_artisan_house.bgeo.sc",
+      "size_bytes": 784416,
+      "sha256": "85afa72f7892747a90b53686499f1ce620a755f642187702e20f9f6eba62416a"
+    },
+    {
+      "path": "geometry/before/12_craft_guild_hall.bgeo.sc",
+      "size_bytes": 848730,
+      "sha256": "bb9394af96928a096ba7c6ef3c63a4bb376960f07465f27b69636decdf03e10a"
+    },
+    {
+      "path": "geometry/before/13_material_storage.bgeo.sc",
+      "size_bytes": 441389,
+      "sha256": "9b42c5742f853123388379864861fd51f25063dbfb8ea3f74896ec8f38ca4729"
+    },
+    {
+      "path": "geometry/before/14_toolmaker_workshop.bgeo.sc",
+      "size_bytes": 817237,
+      "sha256": "6ea3b0b57e27ab8ddd29efb993ea54a60ba4f28decc79c8c23a2202d667cc2d0"
+    },
+    {
+      "path": "geometry/before/15_forgehouse.bgeo.sc",
+      "size_bytes": 1030120,
+      "sha256": "e8446043771d372a2f68ad9efae6777f1e50867e255d388ef1f6551182497fa8"
+    },
+    {
+      "path": "geometry/before/baseline.bgeo.sc",
+      "size_bytes": 641157,
+      "sha256": "63a768b9c536d9d7198ced9bc26f80f4f9a2d2611db4a41972eedc2a4f53dba5"
+    },
+    {
+      "path": "graph_audit.json",
+      "size_bytes": 58464,
+      "sha256": "dcfdcf5ca3ddd7f115e2f3f84bfad5f7832554680c23597bef216299cd6bbd88"
+    },
+    {
+      "path": "hda_builder/__init__.py",
+      "size_bytes": 66,
+      "sha256": "e9d199c2e8fb8d9657e980dc441650e36ac823d352877dc41a8935af80614a2b"
+    },
+    {
+      "path": "hda_builder/corrections.py",
+      "size_bytes": 5982,
+      "sha256": "53c1fcc76e1fe2a5403ffeaa8e7ab14ec431ca58fcee3178dcac8fe09eb01993"
+    },
+    {
+      "path": "hda_builder/evidence.py",
+      "size_bytes": 4868,
+      "sha256": "668ef62ad304ddb3f26bfd129afbd9ae10d94103a983d7308d3afd0ba386006f"
+    },
+    {
+      "path": "hda_builder/graph_audit.py",
+      "size_bytes": 5850,
+      "sha256": "b9afe5d5992a5bafee75567c5fd2da6f1ceae081c89adaa22bbd9315606101c5"
+    },
+    {
+      "path": "hda_builder/graph_core.py",
+      "size_bytes": 5939,
+      "sha256": "e1ad105b38ab28b58f27e04adabf062188333ccfc4cedebc845bd69d2c4d9555"
+    },
+    {
+      "path": "hda_builder/migrate.py",
+      "size_bytes": 8144,
+      "sha256": "0cbbcd87af938ea2df282768e1484b6cf87a501ffdda115e07ab624325b695de"
+    },
+    {
+      "path": "hda_builder/registry.py",
+      "size_bytes": 6249,
+      "sha256": "6fbaff4bcaed5d3d561185bf87bab962a1ee2ed4e8e50447072e185d4533f145"
+    },
+    {
+      "path": "hda_builder/schema.py",
+      "size_bytes": 4757,
+      "sha256": "5a8829bba8b40bafbf492fdefa80aacd08608548dea18ed579ea588eaf0e0079"
+    },
+    {
+      "path": "inventory_workspace.py",
+      "size_bytes": 5791,
+      "sha256": "b279488ab68d24793561219f8ae5270a3008ccf9a0d837ecdcfff7e700309d75"
+    },
+    {
+      "path": "manifest.json",
+      "size_bytes": 6122,
+      "sha256": "32bdb039dba2f3ba86290d8409666ae2137094edca96616a9ec528ab8cebb1c3"
+    },
+    {
+      "path": "manifest_group_1.json",
+      "size_bytes": 2240,
+      "sha256": "73afd97b3b380fb1b5f82bf567e9259e5dde811a6702e563b6dfc7df2c8484d9"
+    },
+    {
+      "path": "manifest_group_2.json",
+      "size_bytes": 2261,
+      "sha256": "6c359684326e8211629d8f2071d004bd2aa7ecc3e76ab26b15bc8dacece96bd4"
+    },
+    {
+      "path": "manifest_group_3.json",
+      "size_bytes": 2294,
+      "sha256": "4dda50f4093313ea6731f726ea7678cc2b1a661244cd4c0f4018143aaf9943b2"
+    },
+    {
+      "path": "module_contracts.md",
+      "size_bytes": 6503,
+      "sha256": "44ffdb5e2897896ab24e010f4d591766acea46b58c044481f4202a931e518e22"
+    },
+    {
+      "path": "module_graph.json",
+      "size_bytes": 32293,
+      "sha256": "b14a66551c0d42044269d9e4be8868c035f3cb3b97d131c0e06b0374d2a1f12f"
+    },
+    {
+      "path": "package_handoff.py",
+      "size_bytes": 1940,
+      "sha256": "9e9a5ee68f1340be98d3926d15296535f72db7787d7de680e4985392c5725635"
+    },
+    {
+      "path": "parameter_schema.json",
+      "size_bytes": 9106,
+      "sha256": "08ee490fd6293ba08f6a54ecd94bbcd5964c828c401779a6bfa147c7b298a436"
+    },
+    {
+      "path": "previews/01_food_shop_hero.png",
+      "size_bytes": 97117,
+      "sha256": "8e13ec8551e0758f3b8dce199675fd487509a698b6c417c5fb7b94fdd9dee13a"
+    },
+    {
+      "path": "previews/02_general_store_hero.png",
+      "size_bytes": 109536,
+      "sha256": "1959c28803be9a83226590376b7b91a90336e98a1b4b7428847c54a1898d8c0c"
+    },
+    {
+      "path": "previews/03_herbal_store_hero.png",
+      "size_bytes": 96519,
+      "sha256": "b4e6a7288d6b08de0c8894a4cbfb088c470e3eac9731b97751e6cca58db1606a"
+    },
+    {
+      "path": "previews/04_merchant_house_hero.png",
+      "size_bytes": 121350,
+      "sha256": "1bd37f2501e4c1919de041ba758bb502049ddc14b037939f2abcdc98224d799e"
+    },
+    {
+      "path": "previews/05_mixed_shop_hero.png",
+      "size_bytes": 147103,
+      "sha256": "46f13abed2413791d6dfb5a87a0c226e177b2c68415fece55d2493dd582dfd49"
+    },
+    {
+      "path": "previews/06_tavern_hero.png",
+      "size_bytes": 144742,
+      "sha256": "98093b009a85d8b9e45829f9449c8bc8ddec688a0488126af0607fee09ae8f99"
+    },
+    {
+      "path": "previews/07_weapon_guild_hero.png",
+      "size_bytes": 155547,
+      "sha256": "52e808b8adcfce8595eda5ddd6683252fc634138c4742d2ee1ed4ee2a1761731"
+    },
+    {
+      "path": "previews/08_normal_house_b_hero.png",
+      "size_bytes": 122146,
+      "sha256": "dc657974bd2426e40a351df09bd22a55bb1b2493065f47dab61e01b6562d3467"
+    },
+    {
+      "path": "previews/09_normal_house_c_hero.png",
+      "size_bytes": 136219,
+      "sha256": "01fc67b8fe86d5ccc9555acad2a210c1f096786d384d8b25944ffc46cde3ab1e"
+    },
+    {
+      "path": "previews/10_normal_house_c_canopy_hero.png",
+      "size_bytes": 152350,
+      "sha256": "a5fa70adb3cb7d402c6b04a7ce63df9bbe548a5e6e27b3a0c3cd0a688d057776"
+    },
+    {
+      "path": "previews/11_artisan_house_hero.png",
+      "size_bytes": 130962,
+      "sha256": "0da0b33038d154440b9f847391d79b82d39b26e58774bb3728d43c14159ebc42"
+    },
+    {
+      "path": "previews/12_craft_guild_hall_hero.png",
+      "size_bytes": 172896,
+      "sha256": "e079e6ec39f37b2685796118cd4483a94c267a0aa6b77e8f82af8677e9732a64"
+    },
+    {
+      "path": "previews/13_material_storage_hero.png",
+      "size_bytes": 112998,
+      "sha256": "8db0b58f57523f56257034b2aa8c368ae081f9dff74602ed8a65c44561cee930"
+    },
+    {
+      "path": "previews/14_toolmaker_workshop_hero.png",
+      "size_bytes": 127487,
+      "sha256": "0062577a470c9f0a6b543a95e541ef3f8ce0f76ec8224b1b89ffb8f52065f7f9"
+    },
+    {
+      "path": "previews/15_forgehouse_hero.png",
+      "size_bytes": 167437,
+      "sha256": "49cd0d93c0e372890425e1c35d18825d6ade0615883323e75833014b8cabc394"
+    },
+    {
+      "path": "previews/baseline_hero.png",
+      "size_bytes": 121912,
+      "sha256": "b5ae678fbfb8ce30f4ba20582377e7a0cce8fd21a05d0b319a624b954cefe6ec"
+    },
+    {
+      "path": "probe_blast.py",
+      "size_bytes": 1687,
+      "sha256": "4869614481a3d22bbe90cd98b365ca977c44b761f82f46cd54a0684470018832"
+    },
+    {
+      "path": "probe_cleanup.py",
+      "size_bytes": 876,
+      "sha256": "bbce4269506613e3b2a5f834783764760dd110032d50cdc9dba10e152c66b06d"
+    },
+    {
+      "path": "probe_ports.py",
+      "size_bytes": 1109,
+      "sha256": "1f7cea31ca58cc74efb55be94a147add0159280921e30da6d4277277ed8d41fc"
+    },
+    {
+      "path": "probe_scene.py",
+      "size_bytes": 1724,
+      "sha256": "49a12e7e0ec3601fca5e5e32151a2d4dafda10643b23c6e8054052c0220c0069"
+    },
+    {
+      "path": "README.md",
+      "size_bytes": 1482,
+      "sha256": "d8b0f2e389568635fdb59e64ae65849572200d181ac987d262e0832f78986265"
+    },
+    {
+      "path": "references/ConceptArt_04_FoodShop_V1.png",
+      "size_bytes": 2504112,
+      "sha256": "9bfc471b74dabf52aa53a4bf7f7ecd39de29e10ed9422da6b8aec18dd00adb88"
+    },
+    {
+      "path": "references/ConceptArt_04_GeneralStore_V1.png",
+      "size_bytes": 2227338,
+      "sha256": "f4ed87a00129eae265c9216bdb45b8cc64dfbf05fcf7f8c4538fc7bfcc8b17bf"
+    },
+    {
+      "path": "references/ConceptArt_04_HerbalStore_V1.png",
+      "size_bytes": 2393435,
+      "sha256": "a304b5efb0abab4cab1f4b4132ab802a12a45ad31dc3c4716088d919700132aa"
+    },
+    {
+      "path": "references/ConceptArt_04_MerchantHouse_V1.png",
+      "size_bytes": 2151837,
+      "sha256": "c1a8724f951fd8d3de392559336512b00f353a9a0372c78704cc305317f5669a"
+    },
+    {
+      "path": "references/ConceptArt_04_MixedShop_V1.png",
+      "size_bytes": 2123674,
+      "sha256": "38d5359a3ec158c638797dcbec016d3a4149776346222d67c2152317376cbaa9"
+    },
+    {
+      "path": "references/ConceptArt_04_Tarven_V1.png",
+      "size_bytes": 2348091,
+      "sha256": "1f7664d3a1c3245300b53f9b3c9793a3014df1c34b8f0400f2e68525b966e498"
+    },
+    {
+      "path": "references/ConceptArt_04_WeaponGuild_V1.png",
+      "size_bytes": 2553793,
+      "sha256": "95eaf26288a107dc5d539d74b668a0922123ea7182a248dcfbf2c085213ad148"
+    },
+    {
+      "path": "references/ConceptArt_05_NormalHouse_02_V1.png",
+      "size_bytes": 2058639,
+      "sha256": "68a00531916dad9dcf56f877516477840e031aa42f411f298df5e41d9d1ce0c0"
+    },
+    {
+      "path": "references/ConceptArt_05_NormalHouse_03_V1.png",
+      "size_bytes": 2049650,
+      "sha256": "6244a3237535f9384142f3350fa9096473bc54fbd173d2f0608c83a07266924e"
+    },
+    {
+      "path": "references/ConceptArt_05_NormalHouse_V1.png",
+      "size_bytes": 2049650,
+      "sha256": "6244a3237535f9384142f3350fa9096473bc54fbd173d2f0608c83a07266924e"
+    },
+    {
+      "path": "references/ConceptArt_06_ArtisanHouse_v1.png",
+      "size_bytes": 2441502,
+      "sha256": "46cce4b03a3aacd2df5806a1095921f3fb375fba405541209643de9fa29c13fc"
+    },
+    {
+      "path": "references/ConceptArt_06_CraftGuildHall_v1.png",
+      "size_bytes": 2287776,
+      "sha256": "d069193fbebfb88b7b80d1c506f4bf85e89d5be8505ad6c766631e0045b6e9bd"
+    },
+    {
+      "path": "references/ConceptArt_06_MarterialStorageBuilding_v1.png",
+      "size_bytes": 2347219,
+      "sha256": "a91db81f61d6c2b47961ed75f9f1febd1507eed8849b52ace212cad92959ea01"
+    },
+    {
+      "path": "references/ConceptArt_06_ToolmakerWorkshop_v1.png",
+      "size_bytes": 2170781,
+      "sha256": "4545cd3cb71b07fddf2433d15aa7b3da4965872ebddb2d8b6588b6b53cd38d9c"
+    },
+    {
+      "path": "references/ConceptArt_07_Forgehouse_V1.png",
+      "size_bytes": 2519456,
+      "sha256": "7043dbd40a7f4ef135e7001603f2b5e6d7310c5fdf16ca67c35d8dd45a2bbd75"
+    },
+    {
+      "path": "references/review_group_1.png",
+      "size_bytes": 1393402,
+      "sha256": "bff75d4cea45b663a7950fcd5d2065808e765d7c32c4a6a94a267a6959d4842b"
+    },
+    {
+      "path": "references/review_group_2.png",
+      "size_bytes": 1056966,
+      "sha256": "4feb171a36744a428981e1de688281e242d46c39e0216f408d07f862caadef4b"
+    },
+    {
+      "path": "references/review_group_3.png",
+      "size_bytes": 1625228,
+      "sha256": "a14e6484b1fac43a27df20e8af06046ba255f70bd09c2e54830c13c37f2a63b9"
+    },
+    {
+      "path": "render_artifacts.py",
+      "size_bytes": 7341,
+      "sha256": "ef4c0ad869f677454212f71985d05162d9ce80e47e36368e618d95938036b038"
+    },
+    {
+      "path": "renders/after/01_food_shop_hero.png",
+      "size_bytes": 97117,
+      "sha256": "8e13ec8551e0758f3b8dce199675fd487509a698b6c417c5fb7b94fdd9dee13a"
+    },
+    {
+      "path": "renders/after/01_food_shop_render.json",
+      "size_bytes": 5154,
+      "sha256": "b5215b2966b8b767c7ab22c89504a5d17e8763987d68ccd32733c16ea40729be"
+    },
+    {
+      "path": "renders/after/02_general_store_hero.png",
+      "size_bytes": 109536,
+      "sha256": "1959c28803be9a83226590376b7b91a90336e98a1b4b7428847c54a1898d8c0c"
+    },
+    {
+      "path": "renders/after/02_general_store_render.json",
+      "size_bytes": 5148,
+      "sha256": "b6e3594fb515b34d1158814cb85e9dc1d76dfa79e3fadc5cbf14e8d72e80c149"
+    },
+    {
+      "path": "renders/after/03_herbal_store_hero.png",
+      "size_bytes": 96519,
+      "sha256": "b4e6a7288d6b08de0c8894a4cbfb088c470e3eac9731b97751e6cca58db1606a"
+    },
+    {
+      "path": "renders/after/03_herbal_store_render.json",
+      "size_bytes": 5227,
+      "sha256": "bfbd8e56b37e1a02f6ef9e68da7a5c70e80cfb8abe86579d3dbc26a049bd567f"
+    },
+    {
+      "path": "renders/after/04_merchant_house_hero.png",
+      "size_bytes": 121350,
+      "sha256": "1bd37f2501e4c1919de041ba758bb502049ddc14b037939f2abcdc98224d799e"
+    },
+    {
+      "path": "renders/after/04_merchant_house_render.json",
+      "size_bytes": 5173,
+      "sha256": "feb057b666d1388a2185c7adc5dfa95cbcaf08826b4825e7859bd7ae70345dc2"
+    },
+    {
+      "path": "renders/after/05_mixed_shop_hero.png",
+      "size_bytes": 147103,
+      "sha256": "46f13abed2413791d6dfb5a87a0c226e177b2c68415fece55d2493dd582dfd49"
+    },
+    {
+      "path": "renders/after/05_mixed_shop_render.json",
+      "size_bytes": 5154,
+      "sha256": "c3acc925f08aa4513621fe4704520c863fda6ec210422a8bfc1042d3e72f2bd5"
+    },
+    {
+      "path": "renders/after/06_tavern_hero.png",
+      "size_bytes": 144742,
+      "sha256": "98093b009a85d8b9e45829f9449c8bc8ddec688a0488126af0607fee09ae8f99"
+    },
+    {
+      "path": "renders/after/06_tavern_render.json",
+      "size_bytes": 5103,
+      "sha256": "5ab20f060dace62950b4063029c086e7ed3c1d8e685a9ef2f6cd43f505c6a595"
+    },
+    {
+      "path": "renders/after/07_weapon_guild_hero.png",
+      "size_bytes": 155547,
+      "sha256": "52e808b8adcfce8595eda5ddd6683252fc634138c4742d2ee1ed4ee2a1761731"
+    },
+    {
+      "path": "renders/after/07_weapon_guild_render.json",
+      "size_bytes": 5180,
+      "sha256": "e190973a9cb7ca1a6fb14f79c92dc9f9e7ad3248c456d1754e4c513e2740e6d9"
+    },
+    {
+      "path": "renders/after/08_normal_house_b_hero.png",
+      "size_bytes": 122146,
+      "sha256": "dc657974bd2426e40a351df09bd22a55bb1b2493065f47dab61e01b6562d3467"
+    },
+    {
+      "path": "renders/after/08_normal_house_b_render.json",
+      "size_bytes": 5175,
+      "sha256": "e3f4123350e29246f85b3868ffee0bb0100fd42c5fac861b5f423dbcc71d7ef3"
+    },
+    {
+      "path": "renders/after/09_normal_house_c_hero.png",
+      "size_bytes": 136219,
+      "sha256": "01fc67b8fe86d5ccc9555acad2a210c1f096786d384d8b25944ffc46cde3ab1e"
+    },
+    {
+      "path": "renders/after/09_normal_house_c_render.json",
+      "size_bytes": 5317,
+      "sha256": "acfb320f43371c4136abd88385f2f9210b263df7d2ab04b6be35a98bda2d4a35"
+    },
+    {
+      "path": "renders/after/10_normal_house_c_canopy_hero.png",
+      "size_bytes": 152350,
+      "sha256": "a5fa70adb3cb7d402c6b04a7ce63df9bbe548a5e6e27b3a0c3cd0a688d057776"
+    },
+    {
+      "path": "renders/after/10_normal_house_c_canopy_render.json",
+      "size_bytes": 5380,
+      "sha256": "531a0251292d90fd523f15b47616c496408a6fa29099117057a5eb44561e861e"
+    },
+    {
+      "path": "renders/after/11_artisan_house_hero.png",
+      "size_bytes": 130962,
+      "sha256": "0da0b33038d154440b9f847391d79b82d39b26e58774bb3728d43c14159ebc42"
+    },
+    {
+      "path": "renders/after/11_artisan_house_render.json",
+      "size_bytes": 5157,
+      "sha256": "f360cf021480dbf2ea9841f70533a6fceebe77f1f8176f43ff40b3d602604650"
+    },
+    {
+      "path": "renders/after/12_craft_guild_hall_hero.png",
+      "size_bytes": 172896,
+      "sha256": "e079e6ec39f37b2685796118cd4483a94c267a0aa6b77e8f82af8677e9732a64"
+    },
+    {
+      "path": "renders/after/12_craft_guild_hall_render.json",
+      "size_bytes": 5466,
+      "sha256": "45b4de966aca50e1e132de5eb9923410b22d3c6083eeea91e0b3fab37fdaa3fd"
+    },
+    {
+      "path": "renders/after/13_material_storage_hero.png",
+      "size_bytes": 112998,
+      "sha256": "8db0b58f57523f56257034b2aa8c368ae081f9dff74602ed8a65c44561cee930"
+    },
+    {
+      "path": "renders/after/13_material_storage_render.json",
+      "size_bytes": 5206,
+      "sha256": "ccef4960d670b312d9aa6727aa6d6f9b63fe3c0f8894c6536c9b3787ee1a7a70"
+    },
+    {
+      "path": "renders/after/14_toolmaker_workshop_hero.png",
+      "size_bytes": 127487,
+      "sha256": "0062577a470c9f0a6b543a95e541ef3f8ce0f76ec8224b1b89ffb8f52065f7f9"
+    },
+    {
+      "path": "renders/after/14_toolmaker_workshop_render.json",
+      "size_bytes": 5271,
+      "sha256": "624d457a1620e048510031d799e14d0897dbb03c91234fc435631e876ac674b0"
+    },
+    {
+      "path": "renders/after/15_forgehouse_hero.png",
+      "size_bytes": 167437,
+      "sha256": "49cd0d93c0e372890425e1c35d18825d6ade0615883323e75833014b8cabc394"
+    },
+    {
+      "path": "renders/after/15_forgehouse_render.json",
+      "size_bytes": 5307,
+      "sha256": "a22f2b6c2b0d3b1e5495d80da15ab8110e5a7eac70c23f515999b7997127b4c3"
+    },
+    {
+      "path": "renders/after/baseline_hero.png",
+      "size_bytes": 121912,
+      "sha256": "b5ae678fbfb8ce30f4ba20582377e7a0cce8fd21a05d0b319a624b954cefe6ec"
+    },
+    {
+      "path": "renders/after/baseline_render.json",
+      "size_bytes": 5112,
+      "sha256": "c4d5c27ea6fd3a2f5186e26ce3433ec0b6381c09039732fb33cd4c74b96c7d48"
+    },
+    {
+      "path": "renders/after_contact_sheet.png",
+      "size_bytes": 496115,
+      "sha256": "1dee42bc96d4b1870b4a4f3018df6947d994d451bd407741a75c4708d1e1d621"
+    },
+    {
+      "path": "renders/before/01_food_shop_hero.png",
+      "size_bytes": 97032,
+      "sha256": "230c235a2937fd060ec3891e019d72dc700bc969ee618fcb979b3a9590eba074"
+    },
+    {
+      "path": "renders/before/01_food_shop_render.json",
+      "size_bytes": 5132,
+      "sha256": "01eede8b28cbeb3d7566b80a916b3c7717e29fe3fd76d5b7130254f7930fb4e0"
+    },
+    {
+      "path": "renders/before/02_general_store_hero.png",
+      "size_bytes": 109600,
+      "sha256": "68e79d85683d66c24aa2596dfd1caaf9a895990f16f969a013b24bfac89a3d13"
+    },
+    {
+      "path": "renders/before/02_general_store_render.json",
+      "size_bytes": 5126,
+      "sha256": "8f5e62f1da9eea7b41348b7584a96acb6c04704411f944fa8e0f436be317fb72"
+    },
+    {
+      "path": "renders/before/03_herbal_store_hero.png",
+      "size_bytes": 96503,
+      "sha256": "06a45dea8af2025e32403e723f70851494246bcff94afd0ba697da963bde2eea"
+    },
+    {
+      "path": "renders/before/03_herbal_store_render.json",
+      "size_bytes": 5205,
+      "sha256": "b84740abbd45a21b928acbbac49eaffe093a2d0eaf1be281017df4fe9e3abe9e"
+    },
+    {
+      "path": "renders/before/04_merchant_house_hero.png",
+      "size_bytes": 121449,
+      "sha256": "365709b0efe88fc16a4b0e9232fa4986c65cd9f4dbc7be94f08c481698d4a405"
+    },
+    {
+      "path": "renders/before/04_merchant_house_render.json",
+      "size_bytes": 5151,
+      "sha256": "79d099c98a6a7d98c05b16b4c366bc53aa3b20d96b587542b0e507f5c250bfbf"
+    },
+    {
+      "path": "renders/before/05_mixed_shop_hero.png",
+      "size_bytes": 147046,
+      "sha256": "788e9a4867f70927badbfc1cdad0207986153780c3a17aad263510a53e5c402b"
+    },
+    {
+      "path": "renders/before/05_mixed_shop_render.json",
+      "size_bytes": 5132,
+      "sha256": "cbdc508b930ae15738f68ff7fb0b4d40238025f7b58de10ebe4cacecf26e31dd"
+    },
+    {
+      "path": "renders/before/06_tavern_hero.png",
+      "size_bytes": 144845,
+      "sha256": "862be7e961ff7da034404fe596a2e756ab1b4c8cc8eef1433a050acf227eac92"
+    },
+    {
+      "path": "renders/before/06_tavern_render.json",
+      "size_bytes": 5081,
+      "sha256": "6702b498d5b7040f904d22e265c4f64db6123abc6c836a1fa36c60802bd22d0a"
+    },
+    {
+      "path": "renders/before/07_weapon_guild_hero.png",
+      "size_bytes": 155580,
+      "sha256": "f783e13802011ab588a633e45faf36031a954f04988809fabf2770e6489cceca"
+    },
+    {
+      "path": "renders/before/07_weapon_guild_render.json",
+      "size_bytes": 5158,
+      "sha256": "0864c5913d607a42c4e0e5dad3621cf0815d8f7d6fdc17468c2e63b0f7f4b54c"
+    },
+    {
+      "path": "renders/before/08_normal_house_b_hero.png",
+      "size_bytes": 122180,
+      "sha256": "c41fd67e40a4b7c448cd64020239fd776e151d5a7878928cfc885f9cf1a9de42"
+    },
+    {
+      "path": "renders/before/08_normal_house_b_render.json",
+      "size_bytes": 5153,
+      "sha256": "9cb87b2bd18ce5e20e7f83efbc4c0ea1ede8377ca1b09b63d22a084a53490a7e"
+    },
+    {
+      "path": "renders/before/09_normal_house_c_hero.png",
+      "size_bytes": 136333,
+      "sha256": "8cc5f1e44ab1ead329b71f00f0d32ba354a83210deef8cb56fe6639d79dfeb52"
+    },
+    {
+      "path": "renders/before/09_normal_house_c_render.json",
+      "size_bytes": 5295,
+      "sha256": "650392e361712a1ac960d551286bc2beb614ac2bf9f65c974dcc05c6a368b9bc"
+    },
+    {
+      "path": "renders/before/10_normal_house_c_canopy_hero.png",
+      "size_bytes": 152366,
+      "sha256": "bf36a676eacb7df7ac163386a002a6ae59a19f6d0b1ca1d623c21c6c1d42d51d"
+    },
+    {
+      "path": "renders/before/10_normal_house_c_canopy_render.json",
+      "size_bytes": 5358,
+      "sha256": "02fe180489df0c8e038031a797f929a267c8e7db110f025f038d1296a45f6aeb"
+    },
+    {
+      "path": "renders/before/11_artisan_house_hero.png",
+      "size_bytes": 131064,
+      "sha256": "c61e40fa54ea6f36108ac80b546a803ba84662a5cff511b317fc62b430d04526"
+    },
+    {
+      "path": "renders/before/11_artisan_house_render.json",
+      "size_bytes": 5135,
+      "sha256": "51d0ffee6166ff434dd06778462ff9cc3721298fd5081efc5ec4f1b95b94de7a"
+    },
+    {
+      "path": "renders/before/12_craft_guild_hall_hero.png",
+      "size_bytes": 173036,
+      "sha256": "43b3ecfa0f06ed3292edc53c9dbe3ecf0c94261c174bd8e64bf99e64d37ba25f"
+    },
+    {
+      "path": "renders/before/12_craft_guild_hall_render.json",
+      "size_bytes": 5444,
+      "sha256": "261b0b6fac0f4bef6238523df91a2b35603608a9f1677f475786358985066672"
+    },
+    {
+      "path": "renders/before/13_material_storage_hero.png",
+      "size_bytes": 113128,
+      "sha256": "2f2d0fb493e9e8470edc9c96f28a1c42307433014f213d8ae505a7ec77d5101d"
+    },
+    {
+      "path": "renders/before/13_material_storage_render.json",
+      "size_bytes": 5184,
+      "sha256": "57b185011d8c7682c35e4e290b9dc73781366d1afad6584aa240f97e2fcf05b7"
+    },
+    {
+      "path": "renders/before/14_toolmaker_workshop_hero.png",
+      "size_bytes": 127533,
+      "sha256": "a82209bbbbb1fc14fe4842ef77fde859e07a4d28f91430b6765418da4d5d090b"
+    },
+    {
+      "path": "renders/before/14_toolmaker_workshop_render.json",
+      "size_bytes": 5249,
+      "sha256": "173292dfeb287c7b3e88c9dcb73ac0f9cb2bf46c286f428b9b01efd4d09cf373"
+    },
+    {
+      "path": "renders/before/15_forgehouse_hero.png",
+      "size_bytes": 167463,
+      "sha256": "8ff87e81a0f0463ed53412b6fa07f3218fb619fdfc1da799eda131165cf3d0b2"
+    },
+    {
+      "path": "renders/before/15_forgehouse_render.json",
+      "size_bytes": 5285,
+      "sha256": "232bd4b097c8acf8beb2536ecbefe5b6c13f590ba77424d9bc0f26c61cdf0942"
+    },
+    {
+      "path": "renders/before/baseline_hero.png",
+      "size_bytes": 121921,
+      "sha256": "23459bad4c006cd9caa543f90772422260b959c07d3f89c49fdcfe2e2098bc94"
+    },
+    {
+      "path": "renders/before/baseline_render.json",
+      "size_bytes": 5090,
+      "sha256": "a17a2e1523214f8ddb2ff7a9ecba4fe30c509cce0b8de8c7ef88a1e0659cf83b"
+    },
+    {
+      "path": "renders/before_contact_sheet.png",
+      "size_bytes": 496295,
+      "sha256": "0e4ba2aa1191b33a72043a31e803a68d30873a6f9b6c9961f8146c89945389af"
+    },
+    {
+      "path": "renders/checker/15_forgehouse_uv.json",
+      "size_bytes": 5306,
+      "sha256": "12aa0e0033900e28ddd08b0b84a9653e95380278a98daaf147c34aa45e0ffc1e"
+    },
+    {
+      "path": "renders/checker/15_forgehouse_uv.png",
+      "size_bytes": 152595,
+      "sha256": "d48281225470d66e0ec5db673e3fd3204600e4184db4e8a382058e915084f871"
+    },
+    {
+      "path": "renders/checker/baseline_uv.json",
+      "size_bytes": 5111,
+      "sha256": "047df0e4a34d2d1ce1aee9729ace2ff47afa774894357aef612fc72ab1a5411f"
+    },
+    {
+      "path": "renders/checker/baseline_uv.png",
+      "size_bytes": 104155,
+      "sha256": "31c801a850ffb95e0d3ed2348c95642a5974d48fb6dd7e551feb150cba9fcb1d"
+    },
+    {
+      "path": "renders/checker_texture.png",
+      "size_bytes": 375,
+      "sha256": "82faeb8e216e836410ee57c85744670f24085d89ce43a89c034ef711deb15d93"
+    },
+    {
+      "path": "results/01_food_shop.json",
+      "size_bytes": 149198,
+      "sha256": "e871f659a1bf4eda1d798f7c18f5ead719f4c12c50f5a7a7d353ae6bee449918"
+    },
+    {
+      "path": "results/02_general_store.json",
+      "size_bytes": 185531,
+      "sha256": "4cd75ede580fcb275e7b181058fd94cab6056d51b680eeb7883bb4da78920597"
+    },
+    {
+      "path": "results/03_herbal_store.json",
+      "size_bytes": 149702,
+      "sha256": "55ddd812b235106a408ed04c03c9d8829245882bd33007d507021e3783d71c6b"
+    },
+    {
+      "path": "results/04_merchant_house.json",
+      "size_bytes": 192564,
+      "sha256": "e6b4af5d3a84318cc01076f965e34c1b351638d2a342f97fecdf73bce516d246"
+    },
+    {
+      "path": "results/05_mixed_shop.json",
+      "size_bytes": 245538,
+      "sha256": "407736b4a95f2647e63efa92ce646d0e51a2fb47533e24d62158bff880f7037a"
+    },
+    {
+      "path": "results/06_tavern.json",
+      "size_bytes": 255687,
+      "sha256": "d4cdccacf868b2679b6057680df492e97adf3c2424cd6404f214f3b7544ab45a"
+    },
+    {
+      "path": "results/07_weapon_guild.json",
+      "size_bytes": 286213,
+      "sha256": "cd8d1b884fbda2631e183be54d92863d3e99ab65ccf3a6da11ef536a87bbad3b"
+    },
+    {
+      "path": "results/08_normal_house_b.json",
+      "size_bytes": 186581,
+      "sha256": "5bd5b3ab0c057cc4d88dc3e7f7b05c642870b9c17935c012ac59c58a838e970f"
+    },
+    {
+      "path": "results/09_normal_house_c.json",
+      "size_bytes": 218563,
+      "sha256": "2fa205bb18e8343da7aec69bde1fb22cafbd8d67e2f481a49c0d6b36200d7fe1"
+    },
+    {
+      "path": "results/10_normal_house_c_canopy.json",
+      "size_bytes": 222765,
+      "sha256": "9809fc97d0457afcf1c22d213713141562eddeacd95d5c7b3c2191a49a5731a2"
+    },
+    {
+      "path": "results/11_artisan_house.json",
+      "size_bytes": 198929,
+      "sha256": "eade80adc8738dcf9c58a7dab23e03410bc5db4968ed84103d45690efa689f36"
+    },
+    {
+      "path": "results/12_craft_guild_hall.json",
+      "size_bytes": 299396,
+      "sha256": "21896739d36cd68e11c8b80ef36c1b7122c12d35599fdc29cc6719e56b64d491"
+    },
+    {
+      "path": "results/13_material_storage.json",
+      "size_bytes": 168196,
+      "sha256": "2fdb85f099b92f9ad08b5c33ae221296592f742f71663eaa882147e13b077f12"
+    },
+    {
+      "path": "results/14_toolmaker_workshop.json",
+      "size_bytes": 204833,
+      "sha256": "2c8f852adc5c84c4aeb191bec306a7591e34f744736fd9c3cccdfffa8046f643"
+    },
+    {
+      "path": "results/15_forgehouse.json",
+      "size_bytes": 289367,
+      "sha256": "1dbb5ac2075a3efe044e4ba44c1cb1abe442b8329e5ed8e6f7d59def32da178f"
+    },
+    {
+      "path": "results/after/01_food_shop.json",
+      "size_bytes": 149198,
+      "sha256": "e871f659a1bf4eda1d798f7c18f5ead719f4c12c50f5a7a7d353ae6bee449918"
+    },
+    {
+      "path": "results/after/02_general_store.json",
+      "size_bytes": 185531,
+      "sha256": "4cd75ede580fcb275e7b181058fd94cab6056d51b680eeb7883bb4da78920597"
+    },
+    {
+      "path": "results/after/03_herbal_store.json",
+      "size_bytes": 149702,
+      "sha256": "55ddd812b235106a408ed04c03c9d8829245882bd33007d507021e3783d71c6b"
+    },
+    {
+      "path": "results/after/04_merchant_house.json",
+      "size_bytes": 192564,
+      "sha256": "e6b4af5d3a84318cc01076f965e34c1b351638d2a342f97fecdf73bce516d246"
+    },
+    {
+      "path": "results/after/05_mixed_shop.json",
+      "size_bytes": 245538,
+      "sha256": "407736b4a95f2647e63efa92ce646d0e51a2fb47533e24d62158bff880f7037a"
+    },
+    {
+      "path": "results/after/06_tavern.json",
+      "size_bytes": 255687,
+      "sha256": "d4cdccacf868b2679b6057680df492e97adf3c2424cd6404f214f3b7544ab45a"
+    },
+    {
+      "path": "results/after/07_weapon_guild.json",
+      "size_bytes": 286213,
+      "sha256": "cd8d1b884fbda2631e183be54d92863d3e99ab65ccf3a6da11ef536a87bbad3b"
+    },
+    {
+      "path": "results/after/08_normal_house_b.json",
+      "size_bytes": 186581,
+      "sha256": "5bd5b3ab0c057cc4d88dc3e7f7b05c642870b9c17935c012ac59c58a838e970f"
+    },
+    {
+      "path": "results/after/09_normal_house_c.json",
+      "size_bytes": 218563,
+      "sha256": "2fa205bb18e8343da7aec69bde1fb22cafbd8d67e2f481a49c0d6b36200d7fe1"
+    },
+    {
+      "path": "results/after/10_normal_house_c_canopy.json",
+      "size_bytes": 222765,
+      "sha256": "9809fc97d0457afcf1c22d213713141562eddeacd95d5c7b3c2191a49a5731a2"
+    },
+    {
+      "path": "results/after/11_artisan_house.json",
+      "size_bytes": 198929,
+      "sha256": "eade80adc8738dcf9c58a7dab23e03410bc5db4968ed84103d45690efa689f36"
+    },
+    {
+      "path": "results/after/12_craft_guild_hall.json",
+      "size_bytes": 299396,
+      "sha256": "21896739d36cd68e11c8b80ef36c1b7122c12d35599fdc29cc6719e56b64d491"
+    },
+    {
+      "path": "results/after/13_material_storage.json",
+      "size_bytes": 168196,
+      "sha256": "2fdb85f099b92f9ad08b5c33ae221296592f742f71663eaa882147e13b077f12"
+    },
+    {
+      "path": "results/after/14_toolmaker_workshop.json",
+      "size_bytes": 204833,
+      "sha256": "2c8f852adc5c84c4aeb191bec306a7591e34f744736fd9c3cccdfffa8046f643"
+    },
+    {
+      "path": "results/after/15_forgehouse.json",
+      "size_bytes": 289367,
+      "sha256": "1dbb5ac2075a3efe044e4ba44c1cb1abe442b8329e5ed8e6f7d59def32da178f"
+    },
+    {
+      "path": "results/after/baseline.json",
+      "size_bytes": 186501,
+      "sha256": "de63b88223c58996ebe074a5a4d06128e15bca6cf30fc7b3f0739728ae25d5d9"
+    },
+    {
+      "path": "results/baseline.json",
+      "size_bytes": 186501,
+      "sha256": "de63b88223c58996ebe074a5a4d06128e15bca6cf30fc7b3f0739728ae25d5d9"
+    },
+    {
+      "path": "results/baseline.log",
+      "size_bytes": 1526,
+      "sha256": "c460b925759c72aed0b7f93af09ae58b01f2c71432afb9c13649ccfba8db722d"
+    },
+    {
+      "path": "results/baseline_defects.json",
+      "size_bytes": 11574,
+      "sha256": "5af26b2b5ed7cce11018218beaf49888a8f6a6ed45ffa7d48012081e67d1be61"
+    },
+    {
+      "path": "results/baseline_final_check.log",
+      "size_bytes": 98,
+      "sha256": "e1ed7a93e80f1acabae2850d7cba8b867b9f805f0871e045a837e91d21af8fbf"
+    },
+    {
+      "path": "results/baseline_summary.json",
+      "size_bytes": 1325,
+      "sha256": "0b53c847722ee311cf6458e17540179601f8220b3f4f223195e41786171a56c1"
+    },
+    {
+      "path": "results/before/01_food_shop.json",
+      "size_bytes": 143114,
+      "sha256": "bf5a8ea618a03ce6acd5d25b2bc8dd0c9d9ccebbd434dc8ca6d588659f37a842"
+    },
+    {
+      "path": "results/before/02_general_store.json",
+      "size_bytes": 179440,
+      "sha256": "a1130af7f69c42eb73928e62647edad6fe43477f84a83f826ff8600589380520"
+    },
+    {
+      "path": "results/before/03_herbal_store.json",
+      "size_bytes": 143613,
+      "sha256": "2bd526b79cf64a003f03ef2aadff085ce4add22f0fcb9f750d8cba11734ee12a"
+    },
+    {
+      "path": "results/before/04_merchant_house.json",
+      "size_bytes": 183379,
+      "sha256": "d7303c77a68191ee3e00bb8cf1d8e10c89041f5bac5c24e1013d05e409f3b5e6"
+    },
+    {
+      "path": "results/before/05_mixed_shop.json",
+      "size_bytes": 236360,
+      "sha256": "eec9d6048079042925e16a53cf068735e4a7ab8560f0a30d15ebf851ed76acbf"
+    },
+    {
+      "path": "results/before/06_tavern.json",
+      "size_bytes": 245269,
+      "sha256": "354213cdf3f432cb24a0555f37d6ea0a2693f9b66bdf99b3f0888e3bf52b2e2f"
+    },
+    {
+      "path": "results/before/07_weapon_guild.json",
+      "size_bytes": 275360,
+      "sha256": "de1961eb1125c3edbc296b09133924c47953cf4e52e69d1a9608a026f2e0bfd7"
+    },
+    {
+      "path": "results/before/08_normal_house_b.json",
+      "size_bytes": 177397,
+      "sha256": "7223a0fc8a9a53c6e1e51fc892c7adf1d41bf3069009869918c1256de51e40b5"
+    },
+    {
+      "path": "results/before/09_normal_house_c.json",
+      "size_bytes": 209466,
+      "sha256": "2f1aec4867eb21179a174d6aa39201326e1b1bbcf0c9ab66890f36385dd69652"
+    },
+    {
+      "path": "results/before/10_normal_house_c_canopy.json",
+      "size_bytes": 213706,
+      "sha256": "e49a7ada6f9ef3a4c08fbc015b3d63381944bf973459822affafc01bcf84e4c1"
+    },
+    {
+      "path": "results/before/11_artisan_house.json",
+      "size_bytes": 188742,
+      "sha256": "b2549fea5177647011dbf395e0df87aecafad7109ca5c4c761d0d1ae9fd75f7d"
+    },
+    {
+      "path": "results/before/12_craft_guild_hall.json",
+      "size_bytes": 291711,
+      "sha256": "7417063af96f2285943213c0b0965ab86aee862a5f8c6c6e9a8ed8201dba4893"
+    },
+    {
+      "path": "results/before/13_material_storage.json",
+      "size_bytes": 162881,
+      "sha256": "07a967bd48eb55c0155beb2d1b5618407bd599d7d4086a73a99dfdef5de56656"
+    },
+    {
+      "path": "results/before/14_toolmaker_workshop.json",
+      "size_bytes": 195313,
+      "sha256": "f21dea289454ed08d9040c0e9b1b1d7df2cd360307a8bb4be58cab2683cb112e"
+    },
+    {
+      "path": "results/before/15_forgehouse.json",
+      "size_bytes": 280179,
+      "sha256": "2e8f25027cea90e1156dec7df18d0016aaa9c7afd357fce13d92334fc90f2495"
+    },
+    {
+      "path": "results/before/baseline.json",
+      "size_bytes": 177333,
+      "sha256": "4a63b4adeeb4cbebbb1205c1977ed5caeed3f97bbdcb24f1e678d96ec3656aee"
+    },
+    {
+      "path": "results/blast_cleanup_probe.json",
+      "size_bytes": 846132,
+      "sha256": "454023710ea378b4f2c32e79133dee874a04b417bbeaef15d5e2b032c6ae7f47"
+    },
+    {
+      "path": "results/blast_probe.log",
+      "size_bytes": 1324,
+      "sha256": "a333bc4d98dde2db3011fe2cfa4fe413976d1b0c3f4115677417071880854a83"
+    },
+    {
+      "path": "results/build.log",
+      "size_bytes": 234,
+      "sha256": "5b7c80aed4af14643d22de8bd8f8f7fc44433d1237014799a1ce2f33e8eeb541"
+    },
+    {
+      "path": "results/build_errors.json",
+      "size_bytes": 10081,
+      "sha256": "d2043e89aa67aa9f527edda1bbc01e49bf316210019785478db9290d5ac6b541"
+    },
+    {
+      "path": "results/camera.json",
+      "size_bytes": 582,
+      "sha256": "599cb5b6837bcb1a718ebbea59105eec306712f853c1c996d5de3d3d417ea99c"
+    },
+    {
+      "path": "results/capability_clean.json",
+      "size_bytes": 1978,
+      "sha256": "cf7f20725a8cf6869b708e0227d5513328be66864cc18b2cc4e5a07c1352415c"
+    },
+    {
+      "path": "results/capability_polybevel.json",
+      "size_bytes": 7123,
+      "sha256": "4ea4d93217747eb3810d1282752915dd9c193279b64555ff58cc1b7c86af7af4"
+    },
+    {
+      "path": "results/capability_polydoctor.json",
+      "size_bytes": 6887,
+      "sha256": "08313bea17359f29876ffb49c7d526f114c54ee795f95bac83ff6be13e5831d7"
+    },
+    {
+      "path": "results/checker_baseline.log",
+      "size_bytes": 48,
+      "sha256": "85a9fb210405d6221565e2efdb12c570585f3c592b94a1f4e2888d5bd9ede56d"
+    },
+    {
+      "path": "results/checker_forge.log",
+      "size_bytes": 58,
+      "sha256": "5316459e7e02055701b740be0a1f8f2f3b52b5302de2ec5c258113723e417052"
+    },
+    {
+      "path": "results/cleanup_probe.json",
+      "size_bytes": 357256,
+      "sha256": "2a17cf2b01b706352456b8ba2441a6b5d82aa92a921054622267aa6a76aed990"
+    },
+    {
+      "path": "results/evaluate.log",
+      "size_bytes": 2352,
+      "sha256": "fccf53865e888b62ff6327e4fc4cb91706fd91a249abd5a781341c905d99e8e8"
+    },
+    {
+      "path": "results/evaluation_summary.json",
+      "size_bytes": 2588,
+      "sha256": "a1b99f6fdecc03a92b927af9d5ce86fdb0dfdeb4a7baf9aaa4e040e4fa1056fc"
+    },
+    {
+      "path": "results/final_summary.json",
+      "size_bytes": 1224,
+      "sha256": "4ceec0d2d4110fa218cbd7acd245237b6962d1bbe078c3d4335457e76aeba7d3"
+    },
+    {
+      "path": "results/finalize.log",
+      "size_bytes": 970,
+      "sha256": "98823b54b3fc1466740bd45be2665d908b463d75361b5b71f9595c824aaeca20"
+    },
+    {
+      "path": "results/inventory.log",
+      "size_bytes": 366,
+      "sha256": "a3d7baa9c66eb3f88ce43c831576145fe6e6b498ac66c24ad14d7b82775fdccd"
+    },
+    {
+      "path": "results/migration.json",
+      "size_bytes": 4862,
+      "sha256": "44bed87f4eb15a0f2a8385da0be16540db9a584e4f6112760fcb7412122d3c6f"
+    },
+    {
+      "path": "results/package.log",
+      "size_bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "results/portability.json",
+      "size_bytes": 2142,
+      "sha256": "c2d6937390e1d13f5ff32f7f21099e4f9f662521c666a9f0cdf1ed3ea214dc4e"
+    },
+    {
+      "path": "results/portable.log",
+      "size_bytes": 42,
+      "sha256": "499030af027e80601fb305d5d13ec402f43e4eef7fdbd630108a3b160f38a5f2"
+    },
+    {
+      "path": "results/pure_refactor/evaluation_summary.json",
+      "size_bytes": 1980,
+      "sha256": "4490e92803b75cc5e0efa750a06daa355cd6be69583a469105ed4a499ea13345"
+    },
+    {
+      "path": "results/pure_refactor/records/01_food_shop.json",
+      "size_bytes": 144137,
+      "sha256": "eee353ebf93eebacc3d07bb61ffb37912df73d6f97923e34396a9cd32410cef9"
+    },
+    {
+      "path": "results/pure_refactor/records/02_general_store.json",
+      "size_bytes": 180467,
+      "sha256": "9d3ae5b5e0db3cb75620e0e0492a2e3b1ce2eb47f48a5edab36b976fb3dbfbec"
+    },
+    {
+      "path": "results/pure_refactor/records/03_herbal_store.json",
+      "size_bytes": 144636,
+      "sha256": "fc72ede91e29b52f868db42d01bdb840aab670a6a9d16a912af97b209ec17eab"
+    },
+    {
+      "path": "results/pure_refactor/records/04_merchant_house.json",
+      "size_bytes": 184402,
+      "sha256": "7d8875079c01c4471ccaed93dd775f4114f4a906955cf581b81ec7eaa6e6e6cb"
+    },
+    {
+      "path": "results/pure_refactor/records/05_mixed_shop.json",
+      "size_bytes": 237383,
+      "sha256": "d2a0d28de6b773bb3e7780d378dac34374ccb60e431c72c539e5dfa3c9d89019"
+    },
+    {
+      "path": "results/pure_refactor/records/06_tavern.json",
+      "size_bytes": 246292,
+      "sha256": "da270f28f9bbb0edd9a326ee9355cf7aa1ef5438a26ce6c812c35306e478481c"
+    },
+    {
+      "path": "results/pure_refactor/records/07_weapon_guild.json",
+      "size_bytes": 276383,
+      "sha256": "2edd0aa4ec045c11b040a3f52169449dd46cd05c0e13c5b6997dc2147b6e2e24"
+    },
+    {
+      "path": "results/pure_refactor/records/08_normal_house_b.json",
+      "size_bytes": 178421,
+      "sha256": "b4e518cda711c1ef1922c1fccacf97f5d3d22172b311b1e49851b1d74a6ab63a"
+    },
+    {
+      "path": "results/pure_refactor/records/09_normal_house_c.json",
+      "size_bytes": 210464,
+      "sha256": "ce5e96e401355f81a159b2a2fa80a43a40d77812305e33a95fa06bf644a750e8"
+    },
+    {
+      "path": "results/pure_refactor/records/10_normal_house_c_canopy.json",
+      "size_bytes": 214698,
+      "sha256": "9f8c7bc1ed2409384a339850ecd808b3a92a80761bdaffece9a3ee89ea612457"
+    },
+    {
+      "path": "results/pure_refactor/records/11_artisan_house.json",
+      "size_bytes": 189734,
+      "sha256": "97d3fb2f016b045d73fcb2c33dec6d9fb33805d02a67c9e353ce0abf144b1310"
+    },
+    {
+      "path": "results/pure_refactor/records/12_craft_guild_hall.json",
+      "size_bytes": 292709,
+      "sha256": "5fc311f4d8438f06385e82fbd2dd71d5f1c6fc1ff53fcbc0615f71111826a798"
+    },
+    {
+      "path": "results/pure_refactor/records/13_material_storage.json",
+      "size_bytes": 163881,
+      "sha256": "c03298e6d5473a1396839ef0ae01c44e662e7d20ed09ca2c148bd99a2c2be9cc"
+    },
+    {
+      "path": "results/pure_refactor/records/14_toolmaker_workshop.json",
+      "size_bytes": 196303,
+      "sha256": "69e7240d859dea81945f1353aaa33d130b801fb145e4f5455b60a2bb2bc06443"
+    },
+    {
+      "path": "results/pure_refactor/records/15_forgehouse.json",
+      "size_bytes": 281206,
+      "sha256": "611e619150f89c61bccbe3a955c91404d40277e682feda7ed596fb4584a1144d"
+    },
+    {
+      "path": "results/pure_refactor/records/baseline.json",
+      "size_bytes": 178358,
+      "sha256": "e31f05937843c06189f659f793ec7c5f4ba36654f67903a467a961b478ceafb0"
+    },
+    {
+      "path": "results/regressions.json",
+      "size_bytes": 20397,
+      "sha256": "4e5dd47e3b054c152430bd841abece0c72a8043045bb1ee4bcdc1982a602f739"
+    },
+    {
+      "path": "results/regressions.log",
+      "size_bytes": 1146,
+      "sha256": "8f003dff9b1281512395b9a763adc4d96eaf316e75e0445244acf144f1c3260d"
+    },
+    {
+      "path": "results/render_after.json",
+      "size_bytes": 83,
+      "sha256": "bffb50d6f2a11799da3703e46e4466df8a610c95a22a98da76b2540334c87d63"
+    },
+    {
+      "path": "results/render_after_01_food_shop.log",
+      "size_bytes": 27,
+      "sha256": "0ccb80862e6d6d0774bbf8b77d3265f210c3b210a6f5221e69474afc956628c9"
+    },
+    {
+      "path": "results/render_after_02_general_store.log",
+      "size_bytes": 31,
+      "sha256": "df68520582ab19a625476fa6317556c556308ffc2edb71a090b4e2a82aac410b"
+    },
+    {
+      "path": "results/render_after_03_herbal_store.log",
+      "size_bytes": 30,
+      "sha256": "15cfc0fdc50d2b70c0710092821f3db9234a637d5fd2d74dc3bdfc8976636046"
+    },
+    {
+      "path": "results/render_after_04_merchant_house.log",
+      "size_bytes": 32,
+      "sha256": "fdf254fc0d48be38e60034ccde688acba268f2a51473ada7fe888aa3c4cdb77e"
+    },
+    {
+      "path": "results/render_after_05_mixed_shop.log",
+      "size_bytes": 28,
+      "sha256": "eac1cef0fe327fee2741687fc5498b46db1f2f7500dce5302013f23bf5dbc8ea"
+    },
+    {
+      "path": "results/render_after_06_tavern.log",
+      "size_bytes": 24,
+      "sha256": "b975abfec5731fcfa2b98edc0b9cac8ded32d0bf5db83baa3f7a48ac47b181a7"
+    },
+    {
+      "path": "results/render_after_07_weapon_guild.log",
+      "size_bytes": 30,
+      "sha256": "7917fbd5340875c860a3125b8b1a8ca38b41014282c0b51fe88f370d3e646e84"
+    },
+    {
+      "path": "results/render_after_08_normal_house_b.log",
+      "size_bytes": 32,
+      "sha256": "5d2fb9fdda4933c3e8b6497f6ba9d3a5fea3bf5c2e98fe6ea4aa2322c44b422a"
+    },
+    {
+      "path": "results/render_after_09_normal_house_c.log",
+      "size_bytes": 32,
+      "sha256": "2d490265f6afb15123f1475efe9ef46fca47fe2a2085144d0e3715ea8b43c46a"
+    },
+    {
+      "path": "results/render_after_10_normal_house_c_canopy.log",
+      "size_bytes": 39,
+      "sha256": "42fbff60413fa7fddfa183c8b0dbf893dae5a26e7658634c188c5ce9d3e443fe"
+    },
+    {
+      "path": "results/render_after_11_artisan_house.log",
+      "size_bytes": 31,
+      "sha256": "93ba5eaa269b2e6eecaff574a1c580aea95d73720ad30fdb702256c5777863fe"
+    },
+    {
+      "path": "results/render_after_12_craft_guild_hall.log",
+      "size_bytes": 34,
+      "sha256": "9972fc83c7a262ebb77d1b1b27c9c0856157d52b96c1fd08b713cb5c0afe0009"
+    },
+    {
+      "path": "results/render_after_13_material_storage.log",
+      "size_bytes": 34,
+      "sha256": "743090b1140ec359377ed130aa93271ec3ebc1e15ca4cf8c6c5e4985db034e64"
+    },
+    {
+      "path": "results/render_after_14_toolmaker_workshop.log",
+      "size_bytes": 36,
+      "sha256": "941c837c3343ac9ded87f220f49cc7f186581a5e7bf95f6824ed89ca1dba3e20"
+    },
+    {
+      "path": "results/render_after_15_forgehouse.log",
+      "size_bytes": 28,
+      "sha256": "191a27242b75c53c5cb3b237940f732e5b049fef61a38004a4f8bf7e5a6a5d33"
+    },
+    {
+      "path": "results/render_after_baseline.log",
+      "size_bytes": 23,
+      "sha256": "7c2b940afd89f7733f449ec2be196395ed04b4e4562cb8429135f739ac55cb6b"
+    },
+    {
+      "path": "results/render_batch_after.log",
+      "size_bytes": 1400,
+      "sha256": "039d3a232219c6df790aa86e4100e67efd62bb31cb5406659dcda59392df887e"
+    },
+    {
+      "path": "results/render_batch_before.log",
+      "size_bytes": 1358,
+      "sha256": "6104e72958ac380f576992a9adf5df8adce1d9fde1a3dcab7108e148af8fc9b8"
+    },
+    {
+      "path": "results/render_before.json",
+      "size_bytes": 83,
+      "sha256": "bffb50d6f2a11799da3703e46e4466df8a610c95a22a98da76b2540334c87d63"
+    },
+    {
+      "path": "results/render_before.log",
+      "size_bytes": 344970,
+      "sha256": "f14e29c9fbe20cfb7d2a93dcdf744e462350fb83ec529ec5baaeaac7bfba6643"
+    },
+    {
+      "path": "results/render_before_01_food_shop.log",
+      "size_bytes": 28,
+      "sha256": "aaa753d0dd3e6d58dfe9e6949a0330a4cb15874ef8cb01b59496bfd94569944c"
+    },
+    {
+      "path": "results/render_before_02_general_store.log",
+      "size_bytes": 32,
+      "sha256": "fb5602f980868dc2612b68156a751b7f6fbde32ecbee8f6880903fd33162d5a0"
+    },
+    {
+      "path": "results/render_before_03_herbal_store.log",
+      "size_bytes": 31,
+      "sha256": "76d4ad1b0c43a700c87009df044a10731eae9fe557c2b11d1b81692ebcc6e651"
+    },
+    {
+      "path": "results/render_before_04_merchant_house.log",
+      "size_bytes": 33,
+      "sha256": "c13229944dd3439051f71ca2fd08bef350a25f97dbda3e4ac2381d8b42570eaf"
+    },
+    {
+      "path": "results/render_before_05_mixed_shop.log",
+      "size_bytes": 29,
+      "sha256": "a8a1b98e0bff065fa90536c906be11bc9053b404d8cb406769c2e2c693770b23"
+    },
+    {
+      "path": "results/render_before_06_tavern.log",
+      "size_bytes": 25,
+      "sha256": "771523f790510172d8910da9eb1555916c9445ed7812cec4f503921b69cbdc7c"
+    },
+    {
+      "path": "results/render_before_07_weapon_guild.log",
+      "size_bytes": 31,
+      "sha256": "cc05416a079cc610796b1db9a57c22106e644bdd3accf1a5160319cb03bb7265"
+    },
+    {
+      "path": "results/render_before_08_normal_house_b.log",
+      "size_bytes": 33,
+      "sha256": "b26fc4e74ecff716bb9448b78517f845298e1ac337d6658881c9eb39d1d48c37"
+    },
+    {
+      "path": "results/render_before_09_normal_house_c.log",
+      "size_bytes": 33,
+      "sha256": "a630c8006d5aa55ce4fa7d4428a35446c113de79172ee94f9efd188ba99a8afb"
+    },
+    {
+      "path": "results/render_before_10_normal_house_c_canopy.log",
+      "size_bytes": 40,
+      "sha256": "d237b81d612f6bbb2fd74f65b8c03f989018bba98435f0c4c31c0266a2cf28ee"
+    },
+    {
+      "path": "results/render_before_11_artisan_house.log",
+      "size_bytes": 32,
+      "sha256": "681703500d3c6dfcce4df9b192a807a5733dd48fca8ec9791a328ca30c2b7b0a"
+    },
+    {
+      "path": "results/render_before_12_craft_guild_hall.log",
+      "size_bytes": 35,
+      "sha256": "abcf2ef2d89d50c8ddefaf6d7d18ce214bcec844994fda7ff43cafb38c57a5e4"
+    },
+    {
+      "path": "results/render_before_13_material_storage.log",
+      "size_bytes": 35,
+      "sha256": "8fbbbcbfee7c7315e82b7716461a1aea3af710b7fb4a4b061211dd46212f3a23"
+    },
+    {
+      "path": "results/render_before_14_toolmaker_workshop.log",
+      "size_bytes": 37,
+      "sha256": "0191dc8df76f9619f5f9c8060dd7550596c150dac2c92c1cbbd2a90c80b47cba"
+    },
+    {
+      "path": "results/render_before_15_forgehouse.log",
+      "size_bytes": 29,
+      "sha256": "02142a6ffe7305804e0f05ca195fd97cae241c2a5b647d5de72390c1ab1dd81a"
+    },
+    {
+      "path": "results/repo_path_audit.json",
+      "size_bytes": 11728,
+      "sha256": "a3e6d55ae9b1944a2dae5e2b591ca4fee38a55622aaf80fff48fd28bfafad5f6"
+    },
+    {
+      "path": "results/repo_path_audit.log",
+      "size_bytes": 23958,
+      "sha256": "4d13ec1254b56025d4326d5965c080e369a6d1f89023ae4b843dd2d27ccb0fcc"
+    },
+    {
+      "path": "results/source_fingerprints.json",
+      "size_bytes": 3829,
+      "sha256": "17ab7eb702e52f32fb72eda7e8b0e5c047429b6fc2d76f8c2e570bc4b1a12f07"
+    },
+    {
+      "path": "results/source_inventory.json",
+      "size_bytes": 1015838,
+      "sha256": "fb07334e490c41405a0912e28b3f0a5da398df3ff141041a51871924e56de0b0"
+    },
+    {
+      "path": "results/static.log",
+      "size_bytes": 1836,
+      "sha256": "cca2fce19c70aed111a6038867aa086e00b1454562a8522c977da39bbda5ca0e"
+    },
+    {
+      "path": "results/static_checks.json",
+      "size_bytes": 2550,
+      "sha256": "36871033134c199a8b6d19f0ea446e7c2de96730093a4281d291e5dc850aed19"
+    },
+    {
+      "path": "results/surface_parity_09_normal_house_c.json",
+      "size_bytes": 42807,
+      "sha256": "40906ac3373efaf82f473bee2b6ef4a59e7858a3eb72299cc0550778a1eafe3b"
+    },
+    {
+      "path": "results/surface_parity_diagnostic.json",
+      "size_bytes": 1006,
+      "sha256": "416b007fe9b3d8e35e3aa1dce1d49942ce70fce4a5183049a6c3ada89c1439e1"
+    },
+    {
+      "path": "results/uv_density.json",
+      "size_bytes": 44108,
+      "sha256": "769cc0dfae1e2f5396898b13ff96749757b1da2fe35853a9680250f11063b5f4"
+    },
+    {
+      "path": "results/uv_density.log",
+      "size_bytes": 920,
+      "sha256": "b9fb058e462fd8d1e450547dd9a62f94844fa1f1e23d24695f494ba5161cf555"
+    },
+    {
+      "path": "results/visual_review.json",
+      "size_bytes": 6748,
+      "sha256": "cc69ec56ad46f9eb4f79ca7f1049f978a4f6f64b7ed59bcb77cf62492ca0c274"
+    },
+    {
+      "path": "results/workspace_inventory.json",
+      "size_bytes": 646948,
+      "sha256": "361a1c87a7f716ee59450c8d87f884e308546dbc0a0997cae6275ad3c2c6c7d0"
+    },
+    {
+      "path": "run_render_batch.py",
+      "size_bytes": 2377,
+      "sha256": "242b30d583e74781b95356c1c5fda5a1301691ebd2e8f3e42dbe714c34a35b2d"
+    },
+    {
+      "path": "scenes/medieval_building_modular_v2.hip",
+      "size_bytes": 19300199,
+      "sha256": "90cf8d084e54af2e467c9e5bdce3ef2efbb6488fd61ac4c99e039226fb91b42f"
+    },
+    {
+      "path": "scenes/source_snapshot.hip",
+      "size_bytes": 20961886,
+      "sha256": "9ea8bf103a29c18a8a91c5b201d0cb8f74ebe5728618095d739aaf1f1c315156"
+    },
+    {
+      "path": "scenes/variants/01_food_shop.hip",
+      "size_bytes": 19300220,
+      "sha256": "9b7a9c117fbd468ec90af72cd6ce0d777330c1fd3988f681ded4afa798ff65d3"
+    },
+    {
+      "path": "scenes/variants/02_general_store.hip",
+      "size_bytes": 19300197,
+      "sha256": "8adf9adb1b50a3b8d294ade4ca102cdca1263ade2ee5195db5a5392dcdcee6a5"
+    },
+    {
+      "path": "scenes/variants/03_herbal_store.hip",
+      "size_bytes": 19300281,
+      "sha256": "53ce1991c7f283664f5ef86dc0c865f88281f8722faa548b901546ea7ae728c2"
+    },
+    {
+      "path": "scenes/variants/04_merchant_house.hip",
+      "size_bytes": 19300215,
+      "sha256": "0898c9f7fde9e25256876848c31fb737546c2e2ee873822e665f849cd7c24618"
+    },
+    {
+      "path": "scenes/variants/05_mixed_shop.hip",
+      "size_bytes": 19300210,
+      "sha256": "da410d264411a04b30cefc599839117f7ed1b92809a205478259592ed0d2a14d"
+    },
+    {
+      "path": "scenes/variants/06_tavern.hip",
+      "size_bytes": 19300194,
+      "sha256": "b31bc8cc9974db56d900d5057e53e7168b143b042c5070847f40323d890ca8e5"
+    },
+    {
+      "path": "scenes/variants/07_weapon_guild.hip",
+      "size_bytes": 19300226,
+      "sha256": "84a7d8d028cf55ac4cb8f09d13b291a1710d6a73b43315e7a26afb21c26e7d3f"
+    },
+    {
+      "path": "scenes/variants/08_normal_house_b.hip",
+      "size_bytes": 19300217,
+      "sha256": "88a1986e8e195b4905f9c539091d42ee18834c9fc0c3aef4d3b56388348b910c"
+    },
+    {
+      "path": "scenes/variants/09_normal_house_c.hip",
+      "size_bytes": 19300216,
+      "sha256": "8a1ffe4281a83bbc801dbe96aeb557b3b36e26e15827c8e04a8c34e09895f0c0"
+    },
+    {
+      "path": "scenes/variants/10_normal_house_c_canopy.hip",
+      "size_bytes": 19300228,
+      "sha256": "6596a74b094e483ed0f4f86fdec6b9f671c17e40dd83b92d79ca9f6e1b09c921"
+    },
+    {
+      "path": "scenes/variants/11_artisan_house.hip",
+      "size_bytes": 19300209,
+      "sha256": "f135a1564f6821d254ab3339f7c88b9d4a39fe24d6e336d5f43da321358c6277"
+    },
+    {
+      "path": "scenes/variants/12_craft_guild_hall.hip",
+      "size_bytes": 19300386,
+      "sha256": "1ce08c5cc94b8bccad8d97eb77f5cb479fae2079f14be5d70f659bf0b6ce9706"
+    },
+    {
+      "path": "scenes/variants/13_material_storage.hip",
+      "size_bytes": 19300236,
+      "sha256": "8600d26361b17c22fdcd1a007be4d4abba7e891d1cc58bf8478e7ebb9359a6f7"
+    },
+    {
+      "path": "scenes/variants/14_toolmaker_workshop.hip",
+      "size_bytes": 19300290,
+      "sha256": "4709953e65a2fc32f46ecef0b0ddad007cc01e6b0fb3523212174877c8e74eec"
+    },
+    {
+      "path": "scenes/variants/15_forgehouse.hip",
+      "size_bytes": 19300262,
+      "sha256": "9026a8277d373a8127efc7d91cf9792c49716c691f7f0d73cd4f1397adc03024"
+    },
+    {
+      "path": "scenes/variants/baseline.hip",
+      "size_bytes": 19300199,
+      "sha256": "90cf8d084e54af2e467c9e5bdce3ef2efbb6488fd61ac4c99e039226fb91b42f"
+    },
+    {
+      "path": "static_checks.py",
+      "size_bytes": 2821,
+      "sha256": "76df5c1331f67f95628b8505c83184e1eeb5c9919f95c87f1de4d3cedc49baa2"
+    },
+    {
+      "path": "tooling/design-hda-building/agents/openai.yaml",
+      "size_bytes": 688,
+      "sha256": "50b4cc220f46adf8771161d50af90598e8709e478e20527dc653991f185489eb"
+    },
+    {
+      "path": "tooling/design-hda-building/assets/case_a_semantic_demo.json",
+      "size_bytes": 2559,
+      "sha256": "d22a028b5f49c186a7093ff3d8e7a328369fde16b8b8b703386f763edc7644f9"
+    },
+    {
+      "path": "tooling/design-hda-building/assets/icon.svg",
+      "size_bytes": 1738,
+      "sha256": "8936b24f674a1250d999e2c2b5901374fb4240426f32bd1ae340c352a90d617d"
+    },
+    {
+      "path": "tooling/design-hda-building/assets/stylized-material-reference.png",
+      "size_bytes": 887203,
+      "sha256": "2760305585bb9ab1afbe889527bdcdf141f268ee81bab15352679593caef9703"
+    },
+    {
+      "path": "tooling/design-hda-building/references/concept-workflow.md",
+      "size_bytes": 29172,
+      "sha256": "b559515f52b343a43f39325a7fd24d0881ae63e3dd301a01aaefe749fea38d34"
+    },
+    {
+      "path": "tooling/design-hda-building/references/context-aware-editor-pipeline.md",
+      "size_bytes": 8777,
+      "sha256": "f2561e413eb27a660ff9ce4eb94bf22b0c23eda8cace3242a8d49c7305716db3"
+    },
+    {
+      "path": "tooling/design-hda-building/references/dataset-contract.md",
+      "size_bytes": 5674,
+      "sha256": "c2f671e876559e9dfdc4ebbc8ec73a3a8df422225424bc7db45ffc8caeb26731"
+    },
+    {
+      "path": "tooling/design-hda-building/references/hybrid-sop-workflow.md",
+      "size_bytes": 11400,
+      "sha256": "b5537c6f58bedb10b3aa2c52d69ca96a45c12c7ecdfdf8e71822b94e7d1858c2"
+    },
+    {
+      "path": "tooling/design-hda-building/references/implementation-contract.md",
+      "size_bytes": 14096,
+      "sha256": "0b6e8ff760037dcebfe6197cbcd2cfa5db002f612273c7af005d8d8c6f20526a"
+    },
+    {
+      "path": "tooling/design-hda-building/references/modular-sop-architecture.md",
+      "size_bytes": 14766,
+      "sha256": "09157e7db427c073b2d811c4385ddbc01426cbaca72eb0bc74f0ba3b8bf8c34f"
+    },
+    {
+      "path": "tooling/design-hda-building/scripts/preflight_case_a.py",
+      "size_bytes": 23019,
+      "sha256": "d366082ee58ad83bda9a888a4f8e062040767b4baeca7152b1c856a8f82d0b49"
+    },
+    {
+      "path": "tooling/design-hda-building/scripts/validate_dataset.py",
+      "size_bytes": 9393,
+      "sha256": "b25af0dfa502ab0e2c837a93c0abe66786dde35da5ebf346d9b6142047d6783a"
+    },
+    {
+      "path": "tooling/design-hda-building/scripts/validate_module_graph.py",
+      "size_bytes": 10933,
+      "sha256": "7c62b75bfc6d60e0b126451e1d94b6bf8239dfa9afe10640f1cdafa96e9f059b"
+    },
+    {
+      "path": "tooling/design-hda-building/SKILL.md",
+      "size_bytes": 20448,
+      "sha256": "c20bf3e59e8b1c1a64426484f4542ce3a2cc159fe8b9ca14e3655044c2aafe97"
+    },
+    {
+      "path": "variant_mapping.json",
+      "size_bytes": 15772,
+      "sha256": "dc8bf73155d227385c14476a1b2aa917cea8a02e5c9413f69ee0bee85cddd094"
+    },
+    {
+      "path": "vex/mark_duplicate_degenerate.vfl",
+      "size_bytes": 980,
+      "sha256": "891b900859f5a5de469fe9669e49504d69e3898dc008c28be812dc8d4aed3e92"
+    }
+  ],
+  "omitted": "__pycache__, auto-backups, relocated test duplicate and failed/probe scene binaries; diagnostic JSON/logs and pure-refactor parity records retained."
+}

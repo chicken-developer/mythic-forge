@@ -1,0 +1,15 @@
+interface:
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+  display_name: HDA Building — Hybrid SOP
+  short_description: Python dựng SOP graph, VEX rules, native UV và QA
+  default_prompt: Dùng $design-hda-building phân tích ảnh sample và 5–10 biến thể
+    của tôi; tạo Hybrid HDA với Python HOM dựng native SOP graph, VEX rules, UV nodes
+    và dataset/ảnh kiểm chứng. Không dựng toàn bộ mesh bằng Python SOP.
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

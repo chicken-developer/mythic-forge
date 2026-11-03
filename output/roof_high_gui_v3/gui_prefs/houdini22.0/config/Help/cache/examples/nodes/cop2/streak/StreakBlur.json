@@ -1,0 +1,1 @@
+{"type": "root", "attrs": {"exampleFile": "StreakBlur.otl", "index": "no", "type": "example"}, "body": [{"type": "title", "indent": 0, "text": ["StreakBlur"]}, {"type": "para", "indent": 0, "text": ["This example shows the basic uses of Streak Blur."], "extent": [41, 91]}], "examplefor": "/nodes/cop2/streak", "examplefile": "/examples/nodes/cop2/streak/StreakBlur.otl"}

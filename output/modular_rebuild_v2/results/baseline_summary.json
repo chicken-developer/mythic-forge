@@ -1,0 +1,69 @@
+{
+  "houdini": "22.0.368",
+  "records": [
+    {
+      "variant_id": "baseline",
+      "status": "pass"
+    },
+    {
+      "variant_id": "01_food_shop",
+      "status": "pass"
+    },
+    {
+      "variant_id": "02_general_store",
+      "status": "pass"
+    },
+    {
+      "variant_id": "03_herbal_store",
+      "status": "pass"
+    },
+    {
+      "variant_id": "04_merchant_house",
+      "status": "pass"
+    },
+    {
+      "variant_id": "05_mixed_shop",
+      "status": "pass"
+    },
+    {
+      "variant_id": "06_tavern",
+      "status": "pass"
+    },
+    {
+      "variant_id": "07_weapon_guild",
+      "status": "pass"
+    },
+    {
+      "variant_id": "08_normal_house_b",
+      "status": "pass"
+    },
+    {
+      "variant_id": "09_normal_house_c",
+      "status": "pass"
+    },
+    {
+      "variant_id": "10_normal_house_c_canopy",
+      "status": "pass"
+    },
+    {
+      "variant_id": "11_artisan_house",
+      "status": "pass"
+    },
+    {
+      "variant_id": "12_craft_guild_hall",
+      "status": "pass"
+    },
+    {
+      "variant_id": "13_material_storage",
+      "status": "pass"
+    },
+    {
+      "variant_id": "14_toolmaker_workshop",
+      "status": "pass"
+    },
+    {
+      "variant_id": "15_forgehouse",
+      "status": "pass"
+    }
+  ]
+}

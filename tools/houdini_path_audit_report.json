@@ -1,0 +1,54 @@
+{
+  "status": "passed",
+  "runtime": "22.0.368",
+  "files": [
+    {
+      "file": "Assets/hda_medieval_building/medieval_building.hip",
+      "kind": "scene",
+      "textures_checked": 48,
+      "failures": []
+    },
+    {
+      "file": "Assets/hda_gothic_building/gothic_building.hip",
+      "kind": "scene",
+      "textures_checked": 0,
+      "failures": []
+    },
+    {
+      "file": "Assets/hda_medieval_building/asset/medieval_house_functions.hda",
+      "kind": "hda_instance",
+      "type": "mythic::medieval_house::2.0",
+      "textures_checked": 0,
+      "failures": []
+    },
+    {
+      "file": "Assets/hda_medieval_building/asset/medieval_house_procedural.hda",
+      "kind": "hda_instance",
+      "type": "mythic::medieval_house::1.0",
+      "textures_checked": 0,
+      "failures": []
+    },
+    {
+      "file": "Assets/hda_gothic_building/asset/gothic_building.hda",
+      "kind": "hda_instance",
+      "type": "quynh::gothic_building::3.0",
+      "textures_checked": 0,
+      "failures": []
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Houdini/Medieval/medieval_building.hda",
+      "kind": "hda_instance",
+      "type": "quynh::storybook_blockout::5.1",
+      "textures_checked": 0,
+      "failures": []
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Houdini/Gothic/gothic_building.hda",
+      "kind": "hda_instance",
+      "type": "quynh::gothic_building::3.0",
+      "textures_checked": 0,
+      "failures": []
+    }
+  ],
+  "limits": "Manual file-reference audit only; geometry cook, rendering and Unreal editor not run."
+}

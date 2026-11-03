@@ -1,0 +1,14 @@
+{
+  "ui_available": true,
+  "houdini": "22.0.368",
+  "title": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\scenes\\medieval_building_roof_high_v3.hip - Houdini FX 22.0.368 - Py3.13",
+  "screens": [
+    {
+      "name": "Odyssey G93SC",
+      "size": [
+        5120,
+        1440
+      ]
+    }
+  ]
+}

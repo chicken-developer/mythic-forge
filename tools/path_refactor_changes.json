@@ -1,0 +1,635 @@
+{
+  "review_date": "2026-11-02",
+  "changed_existing_text_files": 123,
+  "by_extension": {
+    ".md": 9,
+    ".py": 94,
+    ".json": 10,
+    ".txt": 10
+  },
+  "changed_files": [
+    {
+      "file": "ThreeDreamingKnights/imp_plan_m05_6_itemization_equipment_demo.md",
+      "before_sha256": "c29e8cb01d78229dc75510e7215e31ab9b4ef9d4d760b76665719f7be7197ce6",
+      "after_sha256": "a9b164f10769b04dbd354523d78812f618fb6491fbd7b44ef0dfc74aac2a3b44"
+    },
+    {
+      "file": "ThreeDreamingKnights/imp_plan_m05_5_skills_attributes_ui.md",
+      "before_sha256": "5ad36027a3e03d603b5a46b6b1000b42a1b072442117d5ac06abac6fb9dfad7a",
+      "after_sha256": "215bfdbe2ec1f59ca1d590012ee3c73eb42f6cde30ee88eddaa14f2e0ade358d"
+    },
+    {
+      "file": "ThreeDreamingKnights/FINAL_REPORT_M5_6.md",
+      "before_sha256": "2300afdabf5731f2796120532099db20b960438b02a51339e55b3cacc0d4321b",
+      "after_sha256": "acf658974d77eea532496abc323d9622c327491456b8140bde8a5445ab933366"
+    },
+    {
+      "file": "ThreeDreamingKnights/FINAL_REPORT_M5_5.md",
+      "before_sha256": "ccabcc6dc9fec86d19e03a89a29c9967aa98feb452c6a98982955ac7eab60ed1",
+      "after_sha256": "1f7faa0b0964be291079c5ff62180bccf9d6938132ae4b94aa95bc0f49ea5c11"
+    },
+    {
+      "file": "ThreeDreamingKnights/M5_5/imp_plan_m05_5_skills_attributes_ui.md",
+      "before_sha256": "5ad36027a3e03d603b5a46b6b1000b42a1b072442117d5ac06abac6fb9dfad7a",
+      "after_sha256": "215bfdbe2ec1f59ca1d590012ee3c73eb42f6cde30ee88eddaa14f2e0ade358d"
+    },
+    {
+      "file": "ThreeDreamingKnights/README.md",
+      "before_sha256": "e5bc727fa034fa1fa63d015629a6f186086372ded1eea255076bea8765ac64a6",
+      "after_sha256": "f5d7c16d85cda33f916a5286eb5d3f47acbec9665136f41de952ad6398217ec0"
+    },
+    {
+      "file": "Assets/_render/Tools/Props/verify_source_scene.py",
+      "before_sha256": "1142ec8d61cdfd0c025774288841e40575a4c3d085d3cbaf9ffed2b85d041985",
+      "after_sha256": "83e908c33276b6f6c95687c845261ae3360193f57e3ec16868c39456dfa629c8"
+    },
+    {
+      "file": "Assets/_render/Tools/Props/verify_portable_detail.py",
+      "before_sha256": "57e6a2e1760f030d522bb176a2414f255000aa32745b0bb2c9a94d8eda9f5d27",
+      "after_sha256": "bea3f71c0e2c9b65fe5fda01ca3a902a215f56aa5812cdecc5758b5a91d6f12a"
+    },
+    {
+      "file": "Assets/_render/Tools/Props/validate_exports.py",
+      "before_sha256": "2f21db219be04f1968d43ad8e4e8805f036bc940fd394667dda0091c3f853a01",
+      "after_sha256": "9ecf5fee1c112e43afd962db6d3d19164cbbf6cbb7b6b1e76310984f7b15f6f3"
+    },
+    {
+      "file": "Assets/_render/Tools/Props/update_catalogs.py",
+      "before_sha256": "f16207c6640ee13871ff3f7ee7d2b663dfcf590c2dc6ce0f1aea9ee27c8b8bc8",
+      "after_sha256": "4b0eb32332d2d0b2a0160c3f1ab2b13b51bbd6486d42a4dea2300b57ada29d97"
+    },
+    {
+      "file": "Assets/_render/Tools/Props/submit_editor_once.py",
+      "before_sha256": "bad03e3df7a2b15a7943c02a4f4376ed343bac3235a0dc3dd2a55036efc8ca0e",
+      "after_sha256": "8d05da4d2de4b279956dc33a6017d3af258d57c82579fc69eaa64c7ee392faa5"
+    },
+    {
+      "file": "Assets/_render/Tools/Props/promote_round_fix.py",
+      "before_sha256": "c6a58f0ff0199cc35e97d230bcab1abc8f8341c1ab44549fc9f193de9557ba23",
+      "after_sha256": "65d0a36623f6dd7051d6a9ef6831e3a3cc6f01ee8d2ec104e1890f2ea2b03f2b"
+    },
+    {
+      "file": "Assets/_render/Tools/Props/probe_runtime.py",
+      "before_sha256": "7f0c24dd793bd2f65fa34367126b1dca4705126d232284e3d87183d1441929ee",
+      "after_sha256": "264ad94a8e9a7a33305c31c7b2e7b9187910690d948c5df9355c7aa9142745a7"
+    },
+    {
+      "file": "Assets/_render/Tools/Props/probe_editor.py",
+      "before_sha256": "72da4ff7493c88e9d16849378a9e2d15d6e0922b6f154d6a9276232d11c728cf",
+      "after_sha256": "bd7856b3a5dbed2258fbf6152f8ade0d580189d14a1f5cf2df6cbc33f08256c6"
+    },
+    {
+      "file": "Assets/_render/Tools/Props/import_catalog_assets.py",
+      "before_sha256": "f94d5b76cfda2e58671da1e450e09a5db61731c9af048e04b539a7be8110a84c",
+      "after_sha256": "efbc684f44b286f07e2c45188b1913301c0903f91a896b4b31a38399d4641886"
+    },
+    {
+      "file": "Assets/_render/Tools/Props/finish_catalog_review.py",
+      "before_sha256": "68fc901790a348cd1a395a5f25fbe87f96de520345e4b5748c377da3599bc290",
+      "after_sha256": "75b07e6daa7e20aba817564f8b5d351464d700935659b56126a6552f34066b20"
+    },
+    {
+      "file": "Assets/_render/Tools/Props/finalize_skytown.py",
+      "before_sha256": "24b7a7893cfa255b5a1c9339dbad779567bdaa2afe5ff2e94685a8c2d23928cd",
+      "after_sha256": "212c424f35f197d49a4a8167c74f73e9ad128cedff502cb9ac2a1b480e6c44d9"
+    },
+    {
+      "file": "Assets/_render/Tools/Props/editable_hda_catalog.py",
+      "before_sha256": "1e21476de6c8e78717010726e87768713cd106dd3db3354613db6da1860d0227",
+      "after_sha256": "091499737c46b4536147a3489ca92a2eb1bcec104236763dc138a17abadd0c47"
+    },
+    {
+      "file": "Assets/_render/Tools/Props/diagnose_rosette.py",
+      "before_sha256": "7835e7fc9bd7f0550f76a6d74419d385aaaaf7bc6d7538b3e42b1311c68ae543",
+      "after_sha256": "6b5d7cdb2cff3b94120b82e95162f192233ba1df2a7d0fc8be11850371f0c36a"
+    },
+    {
+      "file": "Assets/_render/Tools/Props/capture_joint_detail.py",
+      "before_sha256": "92a798bfb1c5ccfc584cd76e13f8b9c285c5bb7f2726f2cc21e4d78291997f21",
+      "after_sha256": "cca04efdba60e5d167fad792973112669591a4b5e032932a63d32eb3d0dcd519"
+    },
+    {
+      "file": "Assets/_render/Tools/Props/capture_catalog_detail.py",
+      "before_sha256": "a0b9679ba4503d6b2cfdecf97e71d3ff94be0d2ce44e602e0d4cd1d44ba45bc0",
+      "after_sha256": "74d420004360642270bc9d3d3bd022911ff8b0c2e1d6b71218f9acaabe23ee63"
+    },
+    {
+      "file": "Assets/_render/Tools/Props/build_detail_assets.py",
+      "before_sha256": "a46dce60828840551a09df12809dbf922a1353589c2566b525887f7c832d23b6",
+      "after_sha256": "8c52cf6dce82336665111cae80bd08409dc9572846c5289f446e262464fc77f6"
+    },
+    {
+      "file": "Assets/_render/Tools/Props/audit_blueprint.py",
+      "before_sha256": "f7b1fa48d5012ddf307dd9e96cadc029bfbaeee483430e9366cdd58f8caa3a28",
+      "after_sha256": "a3b80fc0757321713ea80585f26485655c13f42aad46388434edcd4377b72f43"
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/validate_village.py",
+      "before_sha256": "50a15871bd57519b011e20093aa76108222e311907e2a07e70ea0eee3c9bb0f3",
+      "after_sha256": "6115f86990e623fbfd8f96c062254df8d1be8afa9a969a7f9b243c727f90e6fb"
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/test_village_play.py",
+      "before_sha256": "39fd0098464464c61b8bfc522b4b754bbab861ef9d71092d2a311aa2b052167a",
+      "after_sha256": "f817d06ef6e9c3f91750142877cb3fff2763b2b2d980f93ab9205336286c8c6e"
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/scene.py",
+      "before_sha256": "a5f3dfba323dd4e0911f9bca0d2e2ec2cd90059ad29e7be4cbff5b36963c3b6e",
+      "after_sha256": "09fcd485f24ead826829f398fb6cef66ebb4564b14edca5376d8363047714762"
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/review_sample.py",
+      "before_sha256": "63d66a79a6087c5558739d48eaf2695671ca4f69bfd7c9dcbc69903ebb18460b",
+      "after_sha256": "4b6bc9f1c86bae34c82dc08c3b0fd9de4211c1675211a393403c316819b7e93e"
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/refine_village.py",
+      "before_sha256": "d940e1e4ae34bdc5c6f7ab01632cee4486f1d746e397dfee9e7f85b7e36ac29a",
+      "after_sha256": "f1a89425b31fe1c3bb56211f852d5c73241edb5df53fdb00927fc8af0d7efc5c"
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/rebuild_navigation.py",
+      "before_sha256": "094826083770cd6c943d357ed41aa6adb7f24ae2e0ed0f993f72d58037f19c9e",
+      "after_sha256": "ade73756f7c7304b3b73593e7b76d00b97914b15e2892618687ccf17aa49e954"
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/prepare_materials.py",
+      "before_sha256": "f7aeec70e7d25868903c17b3f766de5209a6c52366b932db8f4f805c2c8c269b",
+      "after_sha256": "fd9696e9643cb424a3354924ecebe98ed3e999eeb9b106073c0ffab7afca200a"
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/package_review.py",
+      "before_sha256": "200c4116a8f337ba935d72263545a631add5338f26abc73ac0d523f8874c390e",
+      "after_sha256": "d6c2466f34f58fb57a3084e69b27857976a30fbe50142234d6761f4e3dc14a20"
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/install_verified_source.py",
+      "before_sha256": "42d1836c233cd55500075e470de4221dc15d846e979240bb23ef1956322c761d",
+      "after_sha256": "e3eb9f55eb60411fceae72aa6d15a3d9cdf1f744b340793064ac22f0e28e2561"
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/import_assets.py",
+      "before_sha256": "3a56cca0d408b4e270dc46dec488289910290bba6380f00c25b71568e65b8f2a",
+      "after_sha256": "a1bfeea4f6430f1673fdeb05c89a3f1bb60d8079143d093c65e983cef3fbd595"
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/finalize_editor.py",
+      "before_sha256": "307c7a72e15cb981da866c24336bc638195bc0d73cd0e95f47cee374203a3022",
+      "after_sha256": "d0d260b902a8334fdc8783c4590048f5eea3f49d85b3a4b2cf6c28ae55353288"
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/export_native.py",
+      "before_sha256": "7ea43f89789e0e3b399d1cfc6638a78b92e4c7681e9144d3a20ad84ef52e20f9",
+      "after_sha256": "6cc42c9d034b1c46115f90cc44e0ba78722b35e8834e06c05238db12ab523d84"
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/diagnose_sample.py",
+      "before_sha256": "748e3e5498c0778fcfda3c5fcc79387e2578d46d9e822121f1ac885171e8131c",
+      "after_sha256": "560e8fb9882f73c780d838fed556d7c7393d60c97318ad52ca7a3653ce6433d2"
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/configure_navigation_agent.py",
+      "before_sha256": "f4c3fb3fb348debed47d6456179986c4c465889c95ecd242994bf0e5179f2a0d",
+      "after_sha256": "b96fc7b489a627dfdc217b62238673d601928d2b4a57bb84c07214d018aa8562"
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/capture_views.py",
+      "before_sha256": "b1b5fb5a5abc4ca185769081fb82fca9cee01aeb16a158334dd0c6d0a7c091a9",
+      "after_sha256": "bc0bb601993b969648f4e0473049d86703ddf2d294c21f85f3c80fb5b6a2d22b"
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/capture_review.py",
+      "before_sha256": "4450d0c6447ea66f5e7c02f46298c1332b1727cb3e63fe1746337c0b879e49b0",
+      "after_sha256": "53fd339d5625076c398437ae630e8115aaa9d2d01fbfd74299f82d63e182a0d6"
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/capture.py",
+      "before_sha256": "a882b7f6d0271fe5c10b14045b1012308b6bfd0f3c9612d76bd1b93419ab893a",
+      "after_sha256": "a391464d61fec13476c6cc812024d1218f1dbb4247acf1a3d482b839ec8aa77c"
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/build_levels.py",
+      "before_sha256": "815b819a9be35688ae3fab1dac67a5a592510fc1e3a91e11ddba5b141818a354",
+      "after_sha256": "884cd421ef692c4114acb87a799441822fbe9edf4c1e826ee419736d2c18cb79"
+    },
+    {
+      "file": "Assets/_render/Tools/Medieval/bootstrap_native.py",
+      "before_sha256": "a51ca074ec827fabdfa897fb84188791bfe9abb5d9120914ec83d8c80d8dba89",
+      "after_sha256": "f54149ec22dbd0ec8cf7e2a527bd28081a4b134de7e28825110d7ee7d7e6c7cc"
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/validate_textures.py",
+      "before_sha256": "079631aebc1a9143c128aea1761c75f02d3321edb89ad100b6983a8d53a39eff",
+      "after_sha256": "6e3921d09860388e4fd5e4029dc02c817667eb844312bb805f7cf5e6148ceb13"
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/validate_city.py",
+      "before_sha256": "7f941bcce0f1658eebe73e84ad960b992b782a2f0d6d94d85d0cd926603b4050",
+      "after_sha256": "467dc48ae20e92af79e87e3719501af3d0f21a301cb7207c4ab27ae5e76454f3"
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/validate_assets.py",
+      "before_sha256": "327c52c8dd5deac2684dd3f5bf6cb19b9772c9860f25951954470da24ed54524",
+      "after_sha256": "fa7b01c65dc1d8f14e4c743227397a3a85dd4240bde33e268c7155b95a19e182"
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/test_city_play.py",
+      "before_sha256": "7159afbb026effb709988c9c1c87e16265a358255ef01c4f8364e1474f75e1a0",
+      "after_sha256": "66c0ec096a4d2626a91cf299c19a6ee8ff5607f798be895349c8ff77e5086c03"
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/show_designer_source.py",
+      "before_sha256": "f24a8ce0dff3e6de66b776284ea6c8730b9120206205385dc3cd8dc74c58795c",
+      "after_sha256": "1b124e278bb384b81eabca4950ead3e222e1c68e24d546f53b8cb4a4c8d35718"
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/run_app_script.py",
+      "before_sha256": "fda4d7f59f82416bbae8fe1e8b5d5f25ffabc67db118391606b7a8cd7d58232f",
+      "after_sha256": "5a4d86de00866384a42c2beff867eae440418bb9ccf7bc02d5e6e90d8dc371dd"
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/relocate_city_sources.py",
+      "before_sha256": "c0f26712fc2979852130a965af1c3c9f40180fa9cf851cf9be688289204d6278",
+      "after_sha256": "a516cbf920e25f587935cafad22e72952b83fa76a8983e14141b3341a64ce2c0"
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/record_city_movement.py",
+      "before_sha256": "4e495c468a80678175fa4037403645f2b1cb1ae99879f85b7cb48d015b854eb5",
+      "after_sha256": "38ad0f94363437d8b5fb6e6f3a9da5ce017f05cb0135a649cf5a326f426c728a"
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/polish_scene.py",
+      "before_sha256": "bc6271e62c2a3f5eb10002d6db1f1abf4c378030b31e58f77528e57a923b5649",
+      "after_sha256": "a15d61faddb89fb8b8c027f71fda9640221b9107ce3d5667d9ec46d4d3ce4594"
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/plan_city.py",
+      "before_sha256": "19b28567242a3de0777698b024f8283a31f24c50fe9264ece673fc58cf7078b5",
+      "after_sha256": "f0a0fbe1e991d19b689e4fcaf27e1cc79b023febcadd4856ac59f673e6a6084b"
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/package_city_review.py",
+      "before_sha256": "e888ad64bf8bf296bb99a9afc5d0e57e7a95013110427c64765635391570a764",
+      "after_sha256": "3174a3911d3f1d80c62fd662a38c7488a7edda0fa99b832b8b35252919667385"
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/inspect_facade_editor.py",
+      "before_sha256": "9f7c83d3becc3f5d9361bd521f8ab41bf2e5b73fbca35505ccc8bf0877d53b38",
+      "after_sha256": "b89e7ac2c48720f9d37cb5dcc40cbde3aa3305acc7a72961b5938305fc333f82"
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/import_meshes.py",
+      "before_sha256": "54c6e8f1532c8118c9d1172ad193bcfcddf68b0ca59130df741324cf6c177d99",
+      "after_sha256": "2bb81be1b9099149175e77d8f53688b44b9b9462b0b3f21c55c039741f2ee861"
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/import_city_context.py",
+      "before_sha256": "d34260fb034b4dffa2ef7e60b8ce06d17ecab4b717b1dded36a8c5b404323ec4",
+      "after_sha256": "77bc0870fa071120b2611944f2c48f7293be5f12cf4d85c0a12af511c3ceeb09"
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/import_city_assets.py",
+      "before_sha256": "01befca4fd0fcdc3b080ef692d691190a3a33d0225feacc8e27f0fc13de9d37b",
+      "after_sha256": "349cf08e458ce54f35629af7d72f558e441cf6c8577aa82c7e4296385175e096"
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/finish_facade_view.py",
+      "before_sha256": "a2006aa90ac4ecbee2c40bda8c4d2d0a7a9d79b7cf75915d055672656460c428",
+      "after_sha256": "9aa453df6294feb662bfb547ad0393bcc0dd6a8e18cc8174949f6bfe54609d16"
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/finalize_designer.py",
+      "before_sha256": "7448e4d4aa25d95f9d4989598c0ebff67e6ce3596034324aa549b02ad08abb3d",
+      "after_sha256": "393f5e4046f885ebadb40f06161287fc2056ca5a19ed4cfbe92a0bb89f924fcb"
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/finalize_city.py",
+      "before_sha256": "02ec5e3c77e5dbd62c6a79fbb183957f0288eae8f4423095f56849c85821018d",
+      "after_sha256": "044bd07d3f91a61b678fd4c8a0ddcfae75c63b611afba45ba16c0a0c1a4e0682"
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/export_houdini.py",
+      "before_sha256": "aec399ca96a609c018ed5ae4febdbc6b003b3ebc4c2b676c37c1d74f842cd12f",
+      "after_sha256": "08c2778d5b97fdfdd7d7e4ca98338e4d0032268a634b053b3d6e3daa40a71060"
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/desktop.py",
+      "before_sha256": "8fae261188694e4cab4efb34d8723cc1e723e209142621dd302f673703e40e2e",
+      "after_sha256": "f1e990eb312df4f5859b012bec528ef312bf6778d5b384d65305ea4e532a417c"
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/city_scene.py",
+      "before_sha256": "fb575040f4dd161205730a6597052944e5be52ba5dec4e21a4c5dff7f178a70b",
+      "after_sha256": "09420883984f8c2d48306d1df3b755d8719db5200ead8bb9047806490b7c39d3"
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/check_play.py",
+      "before_sha256": "0bba5d841506f866ad22d33d8980183ed8ce12a3a693066e5fc28d99dc96edc5",
+      "after_sha256": "b71754c28d8c9dbc55c715d48cbc8da7baa0e9763e126abc462ab556b457afa5"
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/check_facade_play.py",
+      "before_sha256": "6494322a9813adcaf39ba87314ca36bcc6c9d344c14d3c40ecc0163d6817f80e",
+      "after_sha256": "8e390aacfebfb0937e8d43fbf367bbadb752d024dd508d5b2ca671a4d0efa348"
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/capture_variant_10.py",
+      "before_sha256": "617eff8c5bad4d9c29d59203caa9e69e2b13f372611909afc14a62fa6f5c84ce",
+      "after_sha256": "c09b0c9b835fba272a98978218bf2286e40b144bf3c3ab655b7b705c2f792e8d"
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/capture_variant_03.py",
+      "before_sha256": "9243d4a9eb5963857b50dc4878906f7cdd6c2c9aa4b9e5be1cc3d1e995862c09",
+      "after_sha256": "191a77c174153f37971e9ef0ea97f4146098ad5e17aa16076dc7ecd41129882c"
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/capture_lineup.py",
+      "before_sha256": "f432f66d59a10aa1892d8775dfb7d68af9b1de2e60cc7a1d76e3ab4902cea558",
+      "after_sha256": "de86346bcfeae1e59eed361892ae029844030f93840f4da9294d7c3a16e6a44c"
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/capture_Group_C.py",
+      "before_sha256": "e186621109e933b41a9a5e76933d7ebd8f02109760baa0df426f2837955fa5cc",
+      "after_sha256": "957cdcd58efa8129a595a2483c81489add21a436d1382d6a2ae7a371df88593d"
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/capture_Group_B.py",
+      "before_sha256": "efc7ca8ee16632f02ddff151645102b4124f0ec8f2eaedcdabba70851c544718",
+      "after_sha256": "1fa28f26b9d1b5bd499b0f0ad6f64e8fae34acf0b33f0cbfde2c5101edebf0de"
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/capture_Group_A.py",
+      "before_sha256": "4355fd30111a05d1fb116b38b5258ad39659bda37b7fa7fdd69f0dcd5da3721c",
+      "after_sha256": "923f070cf422e237bc285045127b281628886d6aa5d7fbd78103eb930fc409d7"
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/capture_facade_review.py",
+      "before_sha256": "1d25d2142b6a1116e1f77449863ea2c2aedd8722cf078c71f3a9e3d812c9fb1c",
+      "after_sha256": "4de9cf4af3b326a20fc50225303590637faab0cb3d4e1dd416b432046b3a23c1"
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/capture_city_views.py",
+      "before_sha256": "9c51f173ffc9286fc68c9646fd4f0b33af9cf2586367a51329c4e988049e7c41",
+      "after_sha256": "6c24e1d01900bbd7564f9021fe83a037aab3631668b5f840807b55374cf2696c"
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/capture_city_play.py",
+      "before_sha256": "1a963c9c4c7e1502a796758cee2cff1c748300b24f6b8a6ceeaaf8211da958ec",
+      "after_sha256": "b4ac433e79e451707221ad96d8d6be7f26df22c3b6a2ff2b868a65b6c1a15d8c"
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/capture_city.py",
+      "before_sha256": "cb7e95dcb50f40afe696f259ceb19468647f31460f93a466438ceecc1a844718",
+      "after_sha256": "fa8448d330abbf6b351ec924e1227b5baa5199fab33c2d978f6847b4ce3a24f2"
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/build_materials.py",
+      "before_sha256": "c7ae38fc39874945ac76f41da2fe699d17290e059f5cf7abd85e76b535006159",
+      "after_sha256": "136a152287d753c7af9809441f78b05b5e6ddc1ef56e2c2a22ffd85df07debcf"
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/build_lineup.py",
+      "before_sha256": "d2337de4f3c02519e94187edb80dd6aa3ad21fc2ac1e505f7e63a25af9c25665",
+      "after_sha256": "b8aa289f1be387fb67cfd9192b7da2e453a532d269b99cecefc84c5ee72fea12"
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/build_facade_review.py",
+      "before_sha256": "872434356a22db1c02a2b6925983a10d91cb9f0208d26796b0b582908ee5dc6f",
+      "after_sha256": "c9f7d4eb46f427d631f2f373a025a8adeb8e280999835e9da3e627a79d5d4c19"
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/build_city_levels.py",
+      "before_sha256": "0cc7d013d32281716149a4f439bb56e8088894fc8f06236943197c574c098a54",
+      "after_sha256": "b15194cf422016959b2606351172b19cf17298794a63f1a2215b68f3494c2acd"
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/assign_materials.py",
+      "before_sha256": "a37e6d96f56fd2e18d1536bfef16bbe0a1e0d306604f260a1ff74a5713e78ebb",
+      "after_sha256": "6e2a7844f735845cad8171fc5a62267e8f2afb592b2d0b2053ec8bff4634d477"
+    },
+    {
+      "file": "Assets/_render/Tools/Gothic/assemble_test_level.py",
+      "before_sha256": "6fedd824ca7e6fcff645a6c30c8fe2edc04f1dd7c2bd8ecfd471163830e237c9",
+      "after_sha256": "c9f74aa89e18a91aaa0fdd9c417794b3cb983f58054ae60f01669a395f30aef2"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/mesh_manifest_low.json",
+      "before_sha256": "aedc841260c8d00fdcb8e194d6d9fbef9cca5e0a5684a889c4dfd4f9bfd2895d",
+      "after_sha256": "d193318179ba8bccbfd4e811226e19d5fa16bfba17beedb32d77030c87f48d94"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/mesh_manifest_high.json",
+      "before_sha256": "9eebe6cd00531dd37145b87e3cca5e9dc8a0b8e7082c0a6fa054dbd2b8ac031d",
+      "after_sha256": "719f697cb130a213d0808d094af80cb48ec3ebe18a5416b3b82d4a2ef45f2ab3"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/mesh_manifest.json",
+      "before_sha256": "d1c24a4f0aa4634d1d619df2be6fcfeb3cbe3e057dbe7bf3b08f9066235765e6",
+      "after_sha256": "cee9ec7edfdcb5652d3b39b165ab717ddc157389d6d47302a187dffcde8a80f5"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "before_sha256": "24c10c18f4eb69ffc1d13df98087766f0a481c5cd5c90f7edac097b699a157f3",
+      "after_sha256": "e982b09b9f5c184f6bc4fe4fa266977129decdaac9b2563fdc729c607d020a7a"
+    },
+    {
+      "file": "Assets/README.md",
+      "before_sha256": "a90f3c35a4ac5ea87605203907b5e78bdbf481f86ba84694b4eee37fef1904df",
+      "after_sha256": "7a045ee2458905b7a7423b53f6507f3b999d845d35ea0d83aa2731920f4b987f"
+    },
+    {
+      "file": "Assets/texture_gothic/README.txt",
+      "before_sha256": "635dc49e9ee1e8eab665341771201ccf0a92ee4cfc272e02c1059d05bde153a6",
+      "after_sha256": "a92fe9a77b8fe5acc63ecd5cd004062fb9dfe43296b10aa375e7d99e95092863"
+    },
+    {
+      "file": "Assets/texture_gothic/build_gothic_materials.py",
+      "before_sha256": "8362a679813af7d13b014d14b72bb4e5256911fb65db0d53212432ec0d7935ab",
+      "after_sha256": "3e6b6a7a126e214d897c8421f968306a876750561ee11a9e915f76046eed79ed"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Houdini/Gothic/production_pipeline.py",
+      "before_sha256": "b081933fb8300a5900f124b55073eb398c1c8d2915cc6a041adfd86e80874954",
+      "after_sha256": "a78adeeb39600fa41ea37369446ddd74d630b340e074aff35bcec63b81bac806"
+    },
+    {
+      "file": "Assets/hda_medieval_building/native_review/SAMPLE_REFERENCE.txt",
+      "before_sha256": "71d010dededd16c441acdf09cb01a58aad9004d5d13d19004a687fb68c05f1ab",
+      "after_sha256": "ddd61fd5395beaa3d1dfa3f11126063695af4dd9995a8d7523bead83b275ffb3"
+    },
+    {
+      "file": "Assets/hda_gothic_building/promote_final_exports.py",
+      "before_sha256": "515c0dfcc4de7edd6fbb6f4fe5d4cd92129153e0fad8c736bcc311d868b219ee",
+      "after_sha256": "f42ae1dbe1156d0f77d7670086e0ca92e1b637f42d565d8040f0a46c65377d7b"
+    },
+    {
+      "file": "Assets/hda_gothic_building/production_pipeline.py",
+      "before_sha256": "b081933fb8300a5900f124b55073eb398c1c8d2915cc6a041adfd86e80874954",
+      "after_sha256": "a78adeeb39600fa41ea37369446ddd74d630b340e074aff35bcec63b81bac806"
+    },
+    {
+      "file": "Assets/hda_gothic_building/build_city_context.py",
+      "before_sha256": "9cf73359f4e1b1a7a86142bab77bdbe65c4db3df07ba308d43c152f4c01d74cb",
+      "after_sha256": "36ff936796deb30547008f7d4297ead10fc1ea2f5b391f3492cdaa56109266ba"
+    },
+    {
+      "file": "Assets/hda_medieval_building/native_review/inspect_samples.py",
+      "before_sha256": "6d0d15fea4f417348bfd797e363ddf0c64834bb47f724b651b3a4d8cdfc0eff7",
+      "after_sha256": "072f322d69165837b7825feb14ada616cd2eeee01d5272f462a32ff6adfa66c4"
+    },
+    {
+      "file": "Assets/hda_medieval_building/native_review/deploy_live.py",
+      "before_sha256": "7c2fb964c3d3b51367ef7745a148222490b82071247aaf355bfd64062a62019c",
+      "after_sha256": "08787514a64418bfc8b2428aba95cd410dcb349848bd02677b660092eb94c5f2"
+    },
+    {
+      "file": "Assets/hda_medieval_building/native_review/refresh_live_interface.py",
+      "before_sha256": "d6343c497bacca930ac55743de55d22fbe3652a18a2bb3af38217fb3f79ec71d",
+      "after_sha256": "96f75c0d58c1e6136aef468a495569158121064badfc19b26f608ecf5e620c6e"
+    },
+    {
+      "file": "Assets/hda_medieval_building/native_review/probe_nodes.py",
+      "before_sha256": "48b113adc3072753fcaa13b329a7972549064aa7ac50e43bd28929c93ee23571",
+      "after_sha256": "5168f7faa6a0d7a9bc7871c5dec4d677b34bee5d7f819cf66968d08a66d0c35f"
+    },
+    {
+      "file": "Assets/hda_medieval_building/native_review/capture_live.py",
+      "before_sha256": "7ee213171b31dfafce79914cc198c642c6d78740c1af2022ac7fe92dcf6b0370",
+      "after_sha256": "afac1c94d47077936f8e5323aea92de664142da05123a68eff9e419604997336"
+    },
+    {
+      "file": "Assets/hda_medieval_building/native_review/candidate_failure.txt",
+      "before_sha256": "b11cabf5a2b500c3ae24b3ed0bb2a7bf6f9c73777d1627acbf4a74953dbbab1e",
+      "after_sha256": "f03c661e64297c08a44cff029d24807a23f8e0f5df0a74e2384c7b535f713e5a"
+    },
+    {
+      "file": "Assets/_render/CITY_GUIDE.txt",
+      "before_sha256": "2314f750bce64965c166f63bdb73637f4673cb30b7eeb7bb9794c324bdab959b",
+      "after_sha256": "4279974b6dc0e6675933d8f8de96e242fd0d48dfd40d913183022266935aaeef"
+    },
+    {
+      "file": "Assets/_render/CATALOG_GUIDE.txt",
+      "before_sha256": "11f087f06992ff29e10b0129e161575b6a8390e97fa61bd262869f0c9577ed04",
+      "after_sha256": "af46b0b4418d27c18f1d8680eb4b0fd9cd5b607874fa3a83a500cac5c2b7dd33"
+    },
+    {
+      "file": "Assets/hda_gothic_building/facade_review/finalize_review.py",
+      "before_sha256": "22bf4df30a8f234ccdfe9a21dd1361b9c23e7f484c2340c7d22ee5131e55ecb5",
+      "after_sha256": "dd4b026c9c4fac271c125ba953db31146df9468919ccc8c7b073e08763460be9"
+    },
+    {
+      "file": "Assets/hda_gothic_building/facade_review/build_facade.py",
+      "before_sha256": "323e0da67fdf26ff9aa2405d9f03cfe4abf1a0de728efb635231b1da2ca729c0",
+      "after_sha256": "19c9031e754ff9d2b82ff26b5abc822bb9bd279d92277234220d716e77d6c268"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Gothic/mesh_manifest.json",
+      "before_sha256": "630db54bcf0f67a8c88101f55050aceaac7295489f1c8c0f03a59454c1c8a2d5",
+      "after_sha256": "f314d2d053a3dd2a35bed8b04dd018d8f9a2aed002bbef5de8fbfdd3bbdb0ebb"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Gothic/FacadeReview/facade_manifest.json",
+      "before_sha256": "62194cc959348b9e168d703f325e8693d3d23866f1bb05b3d82a4735c5a22944",
+      "after_sha256": "87b1f1615e7182acd403fe42fb35da3fe14f5fc38a0bf75eb3bde2b4ff7a39e9"
+    },
+    {
+      "file": "Assets/hda_medieval_building/MANUAL_PROCEDURAL_VI.txt",
+      "before_sha256": "88f66d6424c522ce4cbf71a6edd6e4d67738d3abd3c64d52d9a3d7f7f6571935",
+      "after_sha256": "403516614f9055eea6610a7fd8331d5682950abf76c7449021eee751a61d203d"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Gothic/Context/context_manifest.json",
+      "before_sha256": "560177f8217040a24370c84cf89229b9b26d34fac2c1d354143c697fa6883003",
+      "after_sha256": "8815eeb8d7c5bb5f64218c5c5aa343f361a10bda5bd8073b368130f5fd6ac869"
+    },
+    {
+      "file": "Assets/hda_medieval_building/NATIVE_READY_VI.txt",
+      "before_sha256": "6b9ec0605cbb894e2693cd66e6b02b8222dab6b0fb3badac4f160b7904b529eb",
+      "after_sha256": "92e04573468a1498bf51b15a9409be94af26191f5e6afafc5585e838baa0f375"
+    },
+    {
+      "file": "Assets/hda_medieval_building/NATIVE_NODES_VI.txt",
+      "before_sha256": "71cd0105fcbaaf11f9a9e808ebfbc064ca1caf614dc2f29d4f42473619808d31",
+      "after_sha256": "3490910a2eadd47a5b1ccae2e9c0f7151ecfe661aca608ddbccea1d832c49309"
+    },
+    {
+      "file": "Assets/hda_medieval_building/house_rebuild/preview_live.py",
+      "before_sha256": "592db7104b175415835afeb6dbd4b0b62a5d4e6bbf4763d88c2dbb6e0fb18c10",
+      "after_sha256": "e6cd9e9da5cffee280bc53f021c432bab4bab49af4280b9b1fa4780729867f0a"
+    },
+    {
+      "file": "Assets/hda_medieval_building/house_rebuild/build_house.py",
+      "before_sha256": "964c6e749ce79f7c9108fba8723026696ec66571d67e0fa112859bb7a5068bb6",
+      "after_sha256": "0013fdeefad53d01f25129bb8189f73276017550e1445e55c46b2ccce48d9684"
+    },
+    {
+      "file": "Assets/hda_medieval_building/house_rebuild/audit_house_reference.py",
+      "before_sha256": "27ef1f11526a9dc8da808fc0e902f75e3b81f6df1f382e1cbcd0b21257d6bc31",
+      "after_sha256": "248305fe502072ec97dfbbcc569cc839cd45d4f2f4cf147c1645900423c76ed9"
+    },
+    {
+      "file": "Assets/hda_medieval_building/house_rebuild/deploy_live.py",
+      "before_sha256": "aa82ac28e8829f01a5d8e6b1831dca97eef67ecbe8a45c8e3754049c376167cd",
+      "after_sha256": "dd7f3f244474c19c07223a27ac149c0ce4f68e44375bef6f8ecc2f70b456bece"
+    },
+    {
+      "file": "Assets/hda_medieval_building/house_rebuild/capture_live.py",
+      "before_sha256": "26cf5cc23723965ba28f2b595b4e6b39af2d40185f3fe4274fe617213918ee00",
+      "after_sha256": "0fda642af2135b75928d80b13f78cbea1ce60599f8c205fa89311b5a21ccb651"
+    },
+    {
+      "file": "Assets/hda_medieval_building/house_rebuild/function_refactor/REVIEW_VI.md",
+      "before_sha256": "7d008d1ff90472a253702115e559256323b33199e6a69af321324cab58d02aab",
+      "after_sha256": "0390aae76928db588c9e29e0362fb005644b30941c78b8903b264e24a8753307"
+    },
+    {
+      "file": "Assets/_render/RenderTests/Gothic/HANDOFF.txt",
+      "before_sha256": "d0340096a480ca3254161e630e0f50afef21e02a17486ead41f5b4330e10e373",
+      "after_sha256": "3f39618f90734ab769be55cfd88218b8a76b4804c5158c26b2c60030ce9ed64f"
+    },
+    {
+      "file": "Assets/_render/MEDIEVAL_GUIDE.txt",
+      "before_sha256": "6ad450a36e6e7e7119ee9b577984facd73f28086b3ff8359c0a42a952216ae74",
+      "after_sha256": "071b75ec1147c0f8906fd53285a1b7be8613f57bd4d13cb999fee75da3e71e66"
+    },
+    {
+      "file": "Assets/hda_medieval_building/AGENTS.md",
+      "before_sha256": "2598fd8fdefd91f0b0399a0b925d1259726df56ef931a37aee7011c1908769c9",
+      "after_sha256": "7f8ea2986f5b2711a8bea76ad32bdc58aa5e18d51e880c9f3d84f778c92e4f86"
+    },
+    {
+      "file": "Assets/hda_medieval_building/house_rebuild/function_refactor/project/orchestration.json",
+      "before_sha256": "a99ab1eac65e114743a7e1de9255efb69e4373128a09a8cc9f0eddd58c1c6a9e",
+      "after_sha256": "0783a48acf5e6c037b7151e31de930e77555f3cf051b35e17fbd73d42bca1c6d"
+    },
+    {
+      "file": "Assets/hda_medieval_building/house_rebuild/function_refactor/deploy_live_functions.py",
+      "before_sha256": "e8f00bce3c47c683d196b37213fa3e9450eb36fc65992018c5c06e0940a84ca8",
+      "after_sha256": "d38fa5f352221dc859ec6976f3546b904a9de081ae11979019f4eb9d8d0a3405"
+    },
+    {
+      "file": "Assets/hda_medieval_building/house_rebuild/function_refactor/capture_current.py",
+      "before_sha256": "6128654da46ab89377003be8182a786085dbbeaf559245d488ffb61f5b2d1116",
+      "after_sha256": "e449377e40f010371570605c9c6259724cda68573b1b55616686cddec708ec90"
+    },
+    {
+      "file": "Assets/hda_medieval_building/house_rebuild/function_refactor/project/assets_manifest.json",
+      "before_sha256": "f0d572be02f5999b49e8d5c49b08fee9b6422c5225db1933366dc257e2221629",
+      "after_sha256": "f816f50943d2423fe60b3c3685837591fb1c632ca98ae126777aa03f620c7020"
+    },
+    {
+      "file": "Assets/_render/Saved/MedievalReview/native_state.json",
+      "before_sha256": "85308a1d2a6e49aa3c26050238dcb77b4633e09f2e1e4d41051eb90190830d7f",
+      "after_sha256": "89f72b8556af8f5fe21ffd4ae0d4e474097bb7d24eabe9e54afddcbdf1946338"
+    }
+  ],
+  "new_source_and_memory_files": [
+    "AGENTS.md",
+    "MEMORY.md",
+    "tools/audit_paths.py",
+    "tools/audit_houdini_paths.py"
+  ],
+  "hip_texture_repair_report": "tools/houdini_texture_path_repair.json",
+  "scope": "Paths and project working memory; historical JSON evidence and HDA definitions preserved."
+}

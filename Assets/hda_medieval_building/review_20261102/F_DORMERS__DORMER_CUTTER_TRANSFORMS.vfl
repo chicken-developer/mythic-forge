@@ -1,0 +1,4 @@
+
+matrix3 m=ident();scale(m,set(1.,f@cut_height,1.));
+rotate(m,radians(f@dormer_rotation),set(0.,1.,0.));
+3@transform=m;

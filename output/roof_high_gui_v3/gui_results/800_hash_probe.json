@@ -1,0 +1,31 @@
+{
+  "status": "pass",
+  "result": {
+    "variant_id": "10_normal_house_c_canopy",
+    "quality": "high",
+    "points": 153790,
+    "primitives": 155086,
+    "display_node": "/obj/medieval_roof_high_v3/BUILDING",
+    "camera": {
+      "t": [
+        18.0,
+        15.0,
+        -21.0
+      ],
+      "r": [
+        -22.152627580061193,
+        141.00900595749454,
+        0.0
+      ],
+      "orthowidth": 21.0
+    },
+    "ui": true,
+    "scene": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\scenes\\medieval_building_roof_high_v3.hip",
+    "wire": false,
+    "position_hash": "d93f426a13d3fdb2d55f8a4251510a17f9e61bac5a11fa3ffd18c61086515cd2",
+    "hda_sha256": "a8a473c9d9da841fbcb04aac47a776c5b5d96a58af1d9c834d8286cd708e6302",
+    "window_minimized": false,
+    "window_visible": true,
+    "hud_text": "10_normal_house_c_canopy  |  HIGH  |  155086 primitives  |  LIVE HOUDINI GUI"
+  }
+}

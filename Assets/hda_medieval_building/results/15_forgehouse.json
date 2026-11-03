@@ -1,0 +1,265 @@
+{
+  "variant_id": "15_forgehouse",
+  "effective_config": {
+    "schema_version": 1,
+    "variant_id": "15_forgehouse",
+    "label": "Forgehouse",
+    "complexity": "complex",
+    "comparison_kind": "preset",
+    "source_kind": "input",
+    "reference_ids": [
+      "ref_15_forgehouse"
+    ],
+    "parameters": {
+      "footprint": "l_shape",
+      "width_m": 9.2,
+      "depth_m": 9.2,
+      "floor_count": 2,
+      "floor_height_m": 2.65,
+      "wall_thickness_m": 0.22,
+      "upper_overhang_m": 0.14,
+      "foundation_mode": "stone",
+      "foundation_height_m": 0.35,
+      "terrain_slope": 0.0,
+      "tower_radius_m": 1.7,
+      "tower_extra_height_m": 0.8,
+      "tower_taper": 0.0,
+      "wing_width_ratio": 0.5,
+      "wing_depth_ratio": 0.62,
+      "wing_floor_count": 1,
+      "wing_roof_ratio": 0.75,
+      "wing_offset_z_m": -1.5,
+      "wing_overlap_m": 1.0,
+      "tower_offset_z_m": 0.8,
+      "tower_inset_ratio": 0.42,
+      "layout_input_enable": false,
+      "layout_path": "",
+      "front_bays": ".DW/W.W",
+      "right_bays": "W.W/W.W",
+      "rear_bays": "W.W/W.W",
+      "left_bays": "W.W/W.W",
+      "window_layout_mode": "pattern",
+      "front_window_count": 2,
+      "right_window_count": 1,
+      "rear_window_count": 1,
+      "left_window_count": 1,
+      "window_width_m": 0.95,
+      "window_height_m": 1.2,
+      "door_width_m": 1.25,
+      "door_height_m": 2.1,
+      "frame_width_m": 0.09,
+      "shutters_enable": false,
+      "attic_window_enable": false,
+      "round_window_step": 5,
+      "timber_pattern": "curved_brace",
+      "facade_style": "C",
+      "facade_bay_width_m": 1.15,
+      "facade_accent_budget": 2,
+      "facade_module_density": 0.65,
+      "facade_overrides": "{\"main.front.0.0\": \"forge\", \"main.front.1.1\": \"banner\"}",
+      "roof_shape": "gable",
+      "roof_height_m": 3.1,
+      "eave_curve": 0.38,
+      "eave_depth_m": 0.45,
+      "tile_size_m": 0.43,
+      "dormer_count": 1,
+      "wing_dormer_count": 0,
+      "chimney_count": 0,
+      "cupola_enable": true,
+      "interior_enable": true,
+      "floor_thickness_m": 0.12,
+      "interior_furniture": true,
+      "interior_partitions": false,
+      "interior_lighting": true,
+      "interior_joist_spacing_m": 0.65,
+      "interior_stair_width_m": 0.85,
+      "interior_style": "workshop",
+      "utility_type": "none",
+      "wheel_radius_m": 2.3,
+      "rotor_radius_m": 3.6,
+      "awning_enable": false,
+      "entrance_canopy": false,
+      "dressing_enable": true,
+      "balcony_layout": "none",
+      "balcony_depth_m": 1.0,
+      "workshop_enable": false,
+      "workshop_width_m": 2.7,
+      "workshop_depth_m": 3.2,
+      "workshop_offset_z_m": 0.6,
+      "bay_window_enable": false,
+      "scale": 1.0,
+      "palette": "slate_blue",
+      "detail_level": "high",
+      "mesh_quality": "normal",
+      "bevel_width_m": 0.025,
+      "context_mode": "paving",
+      "ground_enable": true,
+      "ground_margin_m": 0.9,
+      "ground_slope_preset": "flat",
+      "ground_slope_amount_m": 0.0,
+      "roof_axis": "z",
+      "window_shape": "arched",
+      "awning_span_ratio": 0.78
+    },
+    "seeds": {
+      "decoration": 17
+    },
+    "module_dependencies": [],
+    "expected_features": {
+      "floor_count": 2,
+      "entrance_count": 1,
+      "roof_type": "gable",
+      "footprint": "l_shape",
+      "interior_enable": true,
+      "normal_bake_from_high": true
+    },
+    "assumptions": [
+      "Dimensions are modeling targets, not surveyed measurements.",
+      "Hidden interiors follow the existing native floor/stair grammar.",
+      "Bespoke reference props, vegetation, signage and sculpted ornament are outside this base-color architectural bake.",
+      "Native furnace mouth and hollow industrial flue are included; fire simulation and bespoke bell are omitted."
+    ],
+    "outputs": {
+      "geometry": "geometry/15_forgehouse.bgeo.sc",
+      "hero": "previews/15_forgehouse_hero.png",
+      "comparison": "comparisons/15_forgehouse.png",
+      "result": "results/15_forgehouse.json"
+    }
+  },
+  "generator_version": "2026.11-medieval-layout-2",
+  "generator_sha256": "97dc6411103542504bee95ab795b0729a0b2b3bffc766765af39f9629b27772a",
+  "hip_sha256": "2cdbe43a3cc98b08c759fe3ab4220de1a9d57880782a731d43b8a86d103ea3a2",
+  "houdini": "22.0.368",
+  "seconds": 70.30788089999987,
+  "stages": {
+    "code_generated": "pass",
+    "static_checked": "pass",
+    "houdini_cooked": "pass",
+    "geometry_exported": "pass",
+    "normal_baked": "pass",
+    "rendered": "pass",
+    "unreal_imported": "not_run"
+  },
+  "low": {
+    "points": 28929,
+    "primitives": 48979,
+    "bounds_m": [
+      14.599998950958252,
+      9.77000056952238,
+      11.65999984741211
+    ],
+    "finite_attributes": true,
+    "degenerate_faces": 0,
+    "uv_min": [
+      0.0,
+      0.0
+    ],
+    "uv_max": [
+      0.999970018863678,
+      0.48049676418304443
+    ],
+    "materials": {
+      "plaster": 1785,
+      "wood": 20758,
+      "glass": 1008,
+      "metal": 2472,
+      "tile": 21952,
+      "stone": 520,
+      "rock": 12,
+      "light": 188,
+      "leaf": 260,
+      "canvas": 12,
+      "sail": 12
+    },
+    "position_sha256": "ba8d76e1b2891875df2c6cdc4d5a0a776b81115886a06fa4e7a57191ebdd3576"
+  },
+  "high": {
+    "points": 283961,
+    "primitives": 558403,
+    "bounds_m": [
+      14.599998950958252,
+      9.77000056952238,
+      11.65999984741211
+    ],
+    "finite_attributes": true,
+    "degenerate_faces": 0,
+    "uv_min": [
+      -5.8285346312914044e-05,
+      -5.6532520829932764e-05
+    ],
+    "uv_max": [
+      0.9999910593032837,
+      0.4804990887641907
+    ],
+    "materials": {
+      "plaster": 1785,
+      "wood": 177487,
+      "glass": 1008,
+      "metal": 38880,
+      "tile": 331571,
+      "stone": 7188,
+      "rock": 12,
+      "light": 188,
+      "leaf": 260,
+      "canvas": 12,
+      "sail": 12
+    },
+    "position_sha256": "af612e2ee3d224285e5f9afa3961a3371d57d02a5fe09157651fce72b82ffefe"
+  },
+  "bake": {
+    "resolution": [
+      4096,
+      4096
+    ],
+    "nonflat_pixels": 8357487,
+    "normal_sha256": "8698076eaeb25394af678b59dc4fe96f86d43f506b4aa3e1e6d7a978b3b8b097",
+    "backend": "Houdini Copernicus bakegeometrytextures::2.0",
+    "normal_space": "DirectX / MikkT / linear",
+    "high_trace_piece_attribute": "bake_piece",
+    "projection_isolation": "native exploded connected components, identical low/high translations"
+  },
+  "opening_envelope_violations": [],
+  "image_provenance": "houdini_geometry_render",
+  "render_backend": "Houdini OpenGL ROP",
+  "files": {
+    "mesh": "E:\\Repos\\mythic-forge\\Assets\\_render\\SourceAssets\\Medieval15\\Meshes\\SM_MD15_15_forgehouse.fbx",
+    "high_mesh": "E:\\Repos\\mythic-forge\\Assets\\_render\\SourceAssets\\Medieval15\\High\\SM_MD15_15_forgehouse_High.fbx",
+    "normal": "E:\\Repos\\mythic-forge\\Assets\\_render\\SourceAssets\\Medieval15\\Normals\\15_forgehouse_Normal_DX.png"
+  },
+  "geometry_readback": {
+    "low": {
+      "primitives": 48979,
+      "invalid_normals": 0,
+      "finite_attributes": true,
+      "uv_bounds": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.999970018863678,
+          0.48049676418304443
+        ]
+      ],
+      "nonpacked_primitives": 0
+    },
+    "high": {
+      "primitives": 558403,
+      "invalid_normals": 0,
+      "finite_attributes": true,
+      "uv_bounds": [
+        [
+          -5.8285346312914044e-05,
+          -5.6532520829932764e-05
+        ],
+        [
+          0.9999910593032837,
+          0.4804990887641907
+        ]
+      ],
+      "nonpacked_primitives": 0
+    }
+  },
+  "fbx_sha256": "cb7001a16cacb5f73f723bf745df98ccba6b92580882a10f42bef7cb3c4687ef",
+  "high_fbx_sha256": "46f0ec59de34e7b93642a479a545034b54ad624c8eb34e0e9f2a1791abad04c4"
+}

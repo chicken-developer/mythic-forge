@@ -1,0 +1,507 @@
+[
+  {
+    "prim": 4919,
+    "name": "roof_shell_42",
+    "material": "tile",
+    "area": 1.2194009643553743,
+    "issue": "duplicate",
+    "previous": {
+      "prim": 4908,
+      "name": "roof_shell_42",
+      "material": "tile",
+      "area": 1.2194009643553743
+    }
+  },
+  {
+    "prim": 4925,
+    "name": "roof_shell_46",
+    "material": "tile",
+    "area": 1.2194009643553743,
+    "issue": "duplicate",
+    "previous": {
+      "prim": 4920,
+      "name": "roof_shell_46",
+      "material": "tile",
+      "area": 1.2194009643553743
+    }
+  },
+  {
+    "prim": 4931,
+    "name": "roof_shell_50",
+    "material": "tile",
+    "area": 1.2194009643553743,
+    "issue": "duplicate",
+    "previous": {
+      "prim": 4926,
+      "name": "roof_shell_50",
+      "material": "tile",
+      "area": 1.2194009643553743
+    }
+  },
+  {
+    "prim": 4937,
+    "name": "roof_shell_54",
+    "material": "tile",
+    "area": 1.2194009643553743,
+    "issue": "duplicate",
+    "previous": {
+      "prim": 4932,
+      "name": "roof_shell_54",
+      "material": "tile",
+      "area": 1.2194009643553743
+    }
+  },
+  {
+    "prim": 4943,
+    "name": "roof_shell_58",
+    "material": "tile",
+    "area": 1.2194009643553743,
+    "issue": "duplicate",
+    "previous": {
+      "prim": 4938,
+      "name": "roof_shell_58",
+      "material": "tile",
+      "area": 1.2194009643553743
+    }
+  },
+  {
+    "prim": 4949,
+    "name": "roof_shell_62",
+    "material": "tile",
+    "area": 1.2194009643553743,
+    "issue": "duplicate",
+    "previous": {
+      "prim": 4944,
+      "name": "roof_shell_62",
+      "material": "tile",
+      "area": 1.2194009643553743
+    }
+  },
+  {
+    "prim": 4955,
+    "name": "roof_shell_66",
+    "material": "tile",
+    "area": 1.2194009643553743,
+    "issue": "duplicate",
+    "previous": {
+      "prim": 4950,
+      "name": "roof_shell_66",
+      "material": "tile",
+      "area": 1.2194009643553743
+    }
+  },
+  {
+    "prim": 4961,
+    "name": "roof_shell_70",
+    "material": "tile",
+    "area": 1.2194009643553736,
+    "issue": "duplicate",
+    "previous": {
+      "prim": 4956,
+      "name": "roof_shell_70",
+      "material": "tile",
+      "area": 1.2194009643553736
+    }
+  },
+  {
+    "prim": 4967,
+    "name": "roof_shell_74",
+    "material": "tile",
+    "area": 1.2194009643553738,
+    "issue": "duplicate",
+    "previous": {
+      "prim": 4962,
+      "name": "roof_shell_74",
+      "material": "tile",
+      "area": 1.2194009643553738
+    }
+  },
+  {
+    "prim": 4973,
+    "name": "roof_shell_78",
+    "material": "tile",
+    "area": 1.2194009643553738,
+    "issue": "duplicate",
+    "previous": {
+      "prim": 4968,
+      "name": "roof_shell_78",
+      "material": "tile",
+      "area": 1.2194009643553738
+    }
+  },
+  {
+    "prim": 4979,
+    "name": "roof_shell_82",
+    "material": "tile",
+    "area": 1.2194009643553738,
+    "issue": "duplicate",
+    "previous": {
+      "prim": 4974,
+      "name": "roof_shell_82",
+      "material": "tile",
+      "area": 1.2194009643553738
+    }
+  },
+  {
+    "prim": 4985,
+    "name": "roof_shell_86",
+    "material": "tile",
+    "area": 1.2194009643553736,
+    "issue": "duplicate",
+    "previous": {
+      "prim": 4980,
+      "name": "roof_shell_86",
+      "material": "tile",
+      "area": 1.2194009643553736
+    }
+  },
+  {
+    "prim": 4991,
+    "name": "roof_shell_90",
+    "material": "tile",
+    "area": 1.2194009643553743,
+    "issue": "duplicate",
+    "previous": {
+      "prim": 4986,
+      "name": "roof_shell_90",
+      "material": "tile",
+      "area": 1.2194009643553743
+    }
+  },
+  {
+    "prim": 5000,
+    "name": "roof_shell_94",
+    "material": "tile",
+    "area": 0.5284503951548922,
+    "issue": "duplicate",
+    "previous": {
+      "prim": 4993,
+      "name": "roof_shell_94",
+      "material": "tile",
+      "area": 0.5284503951548922
+    }
+  },
+  {
+    "prim": 5006,
+    "name": "roof_shell_94",
+    "material": "tile",
+    "area": 0.5284504261493348,
+    "issue": "duplicate",
+    "previous": {
+      "prim": 4992,
+      "name": "roof_shell_94",
+      "material": "tile",
+      "area": 0.5284504261493348
+    }
+  },
+  {
+    "prim": 5014,
+    "name": "roof_shell_98",
+    "material": "tile",
+    "area": 0.5284503951548922,
+    "issue": "duplicate",
+    "previous": {
+      "prim": 5001,
+      "name": "roof_shell_98",
+      "material": "tile",
+      "area": 0.5284503951548922
+    }
+  },
+  {
+    "prim": 5015,
+    "name": "roof_shell_98",
+    "material": "tile",
+    "area": 0.5284504261493348,
+    "issue": "duplicate",
+    "previous": {
+      "prim": 5007,
+      "name": "roof_shell_98",
+      "material": "tile",
+      "area": 0.5284504261493348
+    }
+  },
+  {
+    "prim": 5024,
+    "name": "roof_shell_102",
+    "material": "tile",
+    "area": 1.1810435873030671,
+    "issue": "duplicate",
+    "previous": {
+      "prim": 5016,
+      "name": "roof_shell_102",
+      "material": "tile",
+      "area": 1.1810435873030671
+    }
+  },
+  {
+    "prim": 5033,
+    "name": "roof_shell_106",
+    "material": "tile",
+    "area": 1.2194009643553743,
+    "issue": "duplicate",
+    "previous": {
+      "prim": 5025,
+      "name": "roof_shell_106",
+      "material": "tile",
+      "area": 1.2194009643553743
+    }
+  },
+  {
+    "prim": 5039,
+    "name": "roof_shell_110",
+    "material": "tile",
+    "area": 1.2194009643553743,
+    "issue": "duplicate",
+    "previous": {
+      "prim": 5034,
+      "name": "roof_shell_110",
+      "material": "tile",
+      "area": 1.2194009643553743
+    }
+  },
+  {
+    "prim": 5040,
+    "name": "roof_shell_114",
+    "material": "tile",
+    "area": 1.2194009643553743,
+    "issue": "duplicate",
+    "previous": {
+      "prim": 4914,
+      "name": "roof_shell_114",
+      "material": "tile",
+      "area": 1.2194009643553743
+    }
+  },
+  {
+    "prim": 10416,
+    "name": "dormer_wall",
+    "material": "plaster",
+    "area": 0.0,
+    "issue": "degenerate",
+    "positions": [
+      [
+        -0.6400001049041748,
+        6.554865837097168,
+        -1.4632000923156738
+      ],
+      [
+        -0.5500001311302185,
+        6.554865837097168,
+        -1.5532000064849854
+      ]
+    ]
+  },
+  {
+    "prim": 10418,
+    "name": "dormer_wall",
+    "material": "plaster",
+    "area": 0.0,
+    "issue": "degenerate",
+    "positions": [
+      [
+        -0.5500001311302185,
+        7.904865741729736,
+        -1.5532000064849854
+      ],
+      [
+        -0.6400001049041748,
+        7.904865741729736,
+        -1.4632000923156738
+      ]
+    ]
+  },
+  {
+    "prim": 10420,
+    "name": "dormer_wall",
+    "material": "plaster",
+    "area": 0.0,
+    "issue": "degenerate",
+    "positions": [
+      [
+        -0.6400001049041748,
+        7.904865741729736,
+        -2.643199920654297
+      ],
+      [
+        -0.4750000834465027,
+        7.8298659324646,
+        -2.643199920654297
+      ]
+    ]
+  },
+  {
+    "prim": 10422,
+    "name": "dormer_wall",
+    "material": "plaster",
+    "area": 0.0,
+    "issue": "degenerate",
+    "positions": [
+      [
+        -0.4750000834465027,
+        7.8298659324646,
+        -2.5532000064849854
+      ],
+      [
+        -0.5500001311302185,
+        7.904865741729736,
+        -2.5532000064849854
+      ]
+    ]
+  },
+  {
+    "prim": 12037,
+    "name": "interior/main/floor_1_void_baluster_1_0",
+    "material": "wood",
+    "area": 0.04140007362366305,
+    "issue": "duplicate",
+    "previous": {
+      "prim": 12025,
+      "name": "interior/main/floor_1_void_baluster_0_8",
+      "material": "wood",
+      "area": 0.04140007362366305
+    }
+  },
+  {
+    "prim": 12038,
+    "name": "interior/main/floor_1_void_baluster_1_0",
+    "material": "wood",
+    "area": 0.04140007362366305,
+    "issue": "duplicate",
+    "previous": {
+      "prim": 12026,
+      "name": "interior/main/floor_1_void_baluster_0_8",
+      "material": "wood",
+      "area": 0.04140007362366305
+    }
+  },
+  {
+    "prim": 12039,
+    "name": "interior/main/floor_1_void_baluster_1_0",
+    "material": "wood",
+    "area": 0.04140007362366305,
+    "issue": "duplicate",
+    "previous": {
+      "prim": 12027,
+      "name": "interior/main/floor_1_void_baluster_0_8",
+      "material": "wood",
+      "area": 0.04140007362366305
+    }
+  },
+  {
+    "prim": 12040,
+    "name": "interior/main/floor_1_void_baluster_1_0",
+    "material": "wood",
+    "area": 0.04140007362366305,
+    "issue": "duplicate",
+    "previous": {
+      "prim": 12028,
+      "name": "interior/main/floor_1_void_baluster_0_8",
+      "material": "wood",
+      "area": 0.04140007362366305
+    }
+  },
+  {
+    "prim": 12041,
+    "name": "interior/main/floor_1_void_baluster_1_0",
+    "material": "wood",
+    "area": 0.002025006866460899,
+    "issue": "duplicate",
+    "previous": {
+      "prim": 12029,
+      "name": "interior/main/floor_1_void_baluster_0_8",
+      "material": "wood",
+      "area": 0.002025006866460899
+    }
+  },
+  {
+    "prim": 12042,
+    "name": "interior/main/floor_1_void_baluster_1_0",
+    "material": "wood",
+    "area": 0.002025006866460899,
+    "issue": "duplicate",
+    "previous": {
+      "prim": 12030,
+      "name": "interior/main/floor_1_void_baluster_0_8",
+      "material": "wood",
+      "area": 0.002025006866460899
+    }
+  },
+  {
+    "prim": 12085,
+    "name": "interior/main/floor_1_void_baluster_2_0",
+    "material": "wood",
+    "area": 0.04140007362366305,
+    "issue": "duplicate",
+    "previous": {
+      "prim": 12073,
+      "name": "interior/main/floor_1_void_baluster_1_6",
+      "material": "wood",
+      "area": 0.04140007362366305
+    }
+  },
+  {
+    "prim": 12086,
+    "name": "interior/main/floor_1_void_baluster_2_0",
+    "material": "wood",
+    "area": 0.04140007362366305,
+    "issue": "duplicate",
+    "previous": {
+      "prim": 12074,
+      "name": "interior/main/floor_1_void_baluster_1_6",
+      "material": "wood",
+      "area": 0.04140007362366305
+    }
+  },
+  {
+    "prim": 12087,
+    "name": "interior/main/floor_1_void_baluster_2_0",
+    "material": "wood",
+    "area": 0.04140007362366305,
+    "issue": "duplicate",
+    "previous": {
+      "prim": 12075,
+      "name": "interior/main/floor_1_void_baluster_1_6",
+      "material": "wood",
+      "area": 0.04140007362366305
+    }
+  },
+  {
+    "prim": 12088,
+    "name": "interior/main/floor_1_void_baluster_2_0",
+    "material": "wood",
+    "area": 0.04140007362366305,
+    "issue": "duplicate",
+    "previous": {
+      "prim": 12076,
+      "name": "interior/main/floor_1_void_baluster_1_6",
+      "material": "wood",
+      "area": 0.04140007362366305
+    }
+  },
+  {
+    "prim": 12089,
+    "name": "interior/main/floor_1_void_baluster_2_0",
+    "material": "wood",
+    "area": 0.002025006866460899,
+    "issue": "duplicate",
+    "previous": {
+      "prim": 12077,
+      "name": "interior/main/floor_1_void_baluster_1_6",
+      "material": "wood",
+      "area": 0.002025006866460899
+    }
+  },
+  {
+    "prim": 12090,
+    "name": "interior/main/floor_1_void_baluster_2_0",
+    "material": "wood",
+    "area": 0.002025006866460899,
+    "issue": "duplicate",
+    "previous": {
+      "prim": 12078,
+      "name": "interior/main/floor_1_void_baluster_1_6",
+      "material": "wood",
+      "area": 0.002025006866460899
+    }
+  }
+]

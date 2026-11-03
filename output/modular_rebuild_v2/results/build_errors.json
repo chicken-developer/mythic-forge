@@ -1,0 +1,210 @@
+{
+  "errors": [
+    {
+      "path": "OUT_BUILDING",
+      "messages": [
+        "Invalid source /obj/medieval_modular_v2/BUILDING/OPENINGS/kits/WINDOW_MODULE/OUT_WINDOW.\n(Error:       Conflicting output node with the same output index found at: \"PUBLIC_APERTURE\")."
+      ]
+    },
+    {
+      "path": "OPENINGS/kits",
+      "messages": [
+        "Invalid source /obj/medieval_modular_v2/BUILDING/OPENINGS/kits/WINDOW_MODULE/OUT_WINDOW.\n(Error:       Conflicting output node with the same output index found at: \"PUBLIC_APERTURE\")."
+      ]
+    },
+    {
+      "path": "OPENINGS/kits/WINDOW_MODULE",
+      "messages": [
+        "Invalid source /obj/medieval_modular_v2/BUILDING/OPENINGS/kits/WINDOW_MODULE/OUT_WINDOW.\n(Error:       Conflicting output node with the same output index found at: \"PUBLIC_APERTURE\")."
+      ]
+    },
+    {
+      "path": "OPENINGS/kits/WINDOW_MODULE/OUT_WINDOW",
+      "messages": [
+        "Conflicting output node with the same output index found at: \"PUBLIC_APERTURE\""
+      ]
+    },
+    {
+      "path": "OPENINGS/kits/OUT_window_geometry",
+      "messages": [
+        "Invalid source /obj/medieval_modular_v2/BUILDING/OPENINGS/kits/WINDOW_MODULE/OUT_WINDOW.\n(Error:       Conflicting output node with the same output index found at: \"PUBLIC_APERTURE\")."
+      ]
+    },
+    {
+      "path": "OPENINGS/OUT_DEBUG",
+      "messages": [
+        "Invalid source /obj/medieval_modular_v2/BUILDING/OPENINGS/kits/WINDOW_MODULE/OUT_WINDOW.\n(Error:       Conflicting output node with the same output index found at: \"PUBLIC_APERTURE\")."
+      ]
+    },
+    {
+      "path": "UV_MATERIAL",
+      "messages": [
+        "Invalid source /obj/medieval_modular_v2/BUILDING/OPENINGS/kits/WINDOW_MODULE/OUT_WINDOW.\n(Error:       Conflicting output node with the same output index found at: \"PUBLIC_APERTURE\")."
+      ]
+    },
+    {
+      "path": "UV_MATERIAL/surfacing",
+      "messages": [
+        "Invalid source /obj/medieval_modular_v2/BUILDING/OPENINGS/kits/WINDOW_MODULE/OUT_WINDOW.\n(Error:       Conflicting output node with the same output index found at: \"PUBLIC_APERTURE\")."
+      ]
+    },
+    {
+      "path": "UV_MATERIAL/surfacing/MERGE_BUILDING",
+      "messages": [
+        "Invalid source /obj/medieval_modular_v2/BUILDING/OPENINGS/kits/WINDOW_MODULE/OUT_WINDOW.\n(Error:       Conflicting output node with the same output index found at: \"PUBLIC_APERTURE\")."
+      ]
+    },
+    {
+      "path": "UV_MATERIAL/surfacing/F_FINISH",
+      "messages": [
+        "Invalid source /obj/medieval_modular_v2/BUILDING/OPENINGS/kits/WINDOW_MODULE/OUT_WINDOW.\n(Error:       Conflicting output node with the same output index found at: \"PUBLIC_APERTURE\")."
+      ]
+    },
+    {
+      "path": "UV_MATERIAL/surfacing/F_FINISH/FINAL_COMPONENT_NAMES",
+      "messages": [
+        "Invalid source /obj/medieval_modular_v2/BUILDING/OPENINGS/kits/WINDOW_MODULE/OUT_WINDOW.\n(Error:       Conflicting output node with the same output index found at: \"PUBLIC_APERTURE\")."
+      ]
+    },
+    {
+      "path": "UV_MATERIAL/surfacing/F_FINISH/FINAL_COMPONENT_NAMES/attribvop1",
+      "messages": [
+        "Invalid source /obj/medieval_modular_v2/BUILDING/OPENINGS/kits/WINDOW_MODULE/OUT_WINDOW.\n(Error:       Conflicting output node with the same output index found at: \"PUBLIC_APERTURE\")."
+      ]
+    },
+    {
+      "path": "UV_MATERIAL/surfacing/F_FINISH/CALCULATE_NORMALS",
+      "messages": [
+        "Invalid source /obj/medieval_modular_v2/BUILDING/OPENINGS/kits/WINDOW_MODULE/OUT_WINDOW.\n(Error:       Conflicting output node with the same output index found at: \"PUBLIC_APERTURE\")."
+      ]
+    },
+    {
+      "path": "UV_MATERIAL/surfacing/F_FINISH/METRIC_UV",
+      "messages": [
+        "Invalid source /obj/medieval_modular_v2/BUILDING/OPENINGS/kits/WINDOW_MODULE/OUT_WINDOW.\n(Error:       Conflicting output node with the same output index found at: \"PUBLIC_APERTURE\")."
+      ]
+    },
+    {
+      "path": "UV_MATERIAL/surfacing/F_FINISH/METRIC_UV/attribvop1",
+      "messages": [
+        "Invalid source /obj/medieval_modular_v2/BUILDING/OPENINGS/kits/WINDOW_MODULE/OUT_WINDOW.\n(Error:       Conflicting output node with the same output index found at: \"PUBLIC_APERTURE\")."
+      ]
+    },
+    {
+      "path": "UV_MATERIAL/surfacing/F_FINISH/BIND_MATERIALS",
+      "messages": [
+        "Invalid source /obj/medieval_modular_v2/BUILDING/OPENINGS/kits/WINDOW_MODULE/OUT_WINDOW.\n(Error:       Conflicting output node with the same output index found at: \"PUBLIC_APERTURE\")."
+      ]
+    },
+    {
+      "path": "UV_MATERIAL/surfacing/F_FINISH/BIND_MATERIALS/attribvop1",
+      "messages": [
+        "Invalid source /obj/medieval_modular_v2/BUILDING/OPENINGS/kits/WINDOW_MODULE/OUT_WINDOW.\n(Error:       Conflicting output node with the same output index found at: \"PUBLIC_APERTURE\")."
+      ]
+    },
+    {
+      "path": "UV_MATERIAL/surfacing/F_FINISH/GLOBAL_SCALE",
+      "messages": [
+        "Invalid source /obj/medieval_modular_v2/BUILDING/OPENINGS/kits/WINDOW_MODULE/OUT_WINDOW.\n(Error:       Conflicting output node with the same output index found at: \"PUBLIC_APERTURE\")."
+      ]
+    },
+    {
+      "path": "UV_MATERIAL/surfacing/F_FINISH/IN_assembled_building",
+      "messages": [
+        "Invalid source /obj/medieval_modular_v2/BUILDING/OPENINGS/kits/WINDOW_MODULE/OUT_WINDOW.\n(Error:       Conflicting output node with the same output index found at: \"PUBLIC_APERTURE\")."
+      ]
+    },
+    {
+      "path": "UV_MATERIAL/surfacing/F_FINISH/OUT_building",
+      "messages": [
+        "Invalid source /obj/medieval_modular_v2/BUILDING/OPENINGS/kits/WINDOW_MODULE/OUT_WINDOW.\n(Error:       Conflicting output node with the same output index found at: \"PUBLIC_APERTURE\")."
+      ]
+    },
+    {
+      "path": "UV_MATERIAL/surfacing/OUT_building",
+      "messages": [
+        "Invalid source /obj/medieval_modular_v2/BUILDING/OPENINGS/kits/WINDOW_MODULE/OUT_WINDOW.\n(Error:       Conflicting output node with the same output index found at: \"PUBLIC_APERTURE\")."
+      ]
+    },
+    {
+      "path": "UV_MATERIAL/OUT_uv_material_surfacing_building",
+      "messages": [
+        "Invalid source /obj/medieval_modular_v2/BUILDING/OPENINGS/kits/WINDOW_MODULE/OUT_WINDOW.\n(Error:       Conflicting output node with the same output index found at: \"PUBLIC_APERTURE\")."
+      ]
+    },
+    {
+      "path": "OUTPUT",
+      "messages": [
+        "Invalid source /obj/medieval_modular_v2/BUILDING/OPENINGS/kits/WINDOW_MODULE/OUT_WINDOW.\n(Error:       Conflicting output node with the same output index found at: \"PUBLIC_APERTURE\")."
+      ]
+    },
+    {
+      "path": "OUTPUT/game_export",
+      "messages": [
+        "Invalid source /obj/medieval_modular_v2/BUILDING/OPENINGS/kits/WINDOW_MODULE/OUT_WINDOW.\n(Error:       Conflicting output node with the same output index found at: \"PUBLIC_APERTURE\")."
+      ]
+    },
+    {
+      "path": "OUTPUT/game_export/IN_building",
+      "messages": [
+        "Invalid source /obj/medieval_modular_v2/BUILDING/OPENINGS/kits/WINDOW_MODULE/OUT_WINDOW.\n(Error:       Conflicting output node with the same output index found at: \"PUBLIC_APERTURE\")."
+      ]
+    },
+    {
+      "path": "OUTPUT/game_export/export_semantic_metadata",
+      "messages": [
+        "Invalid source /obj/medieval_modular_v2/BUILDING/OPENINGS/kits/WINDOW_MODULE/OUT_WINDOW.\n(Error:       Conflicting output node with the same output index found at: \"PUBLIC_APERTURE\")."
+      ]
+    },
+    {
+      "path": "OUTPUT/game_export/export_semantic_metadata/attribvop1",
+      "messages": [
+        "Invalid source /obj/medieval_modular_v2/BUILDING/OPENINGS/kits/WINDOW_MODULE/OUT_WINDOW.\n(Error:       Conflicting output node with the same output index found at: \"PUBLIC_APERTURE\")."
+      ]
+    },
+    {
+      "path": "OUTPUT/game_export/OUT_geometry",
+      "messages": [
+        "Invalid source /obj/medieval_modular_v2/BUILDING/OPENINGS/kits/WINDOW_MODULE/OUT_WINDOW.\n(Error:       Conflicting output node with the same output index found at: \"PUBLIC_APERTURE\")."
+      ]
+    },
+    {
+      "path": "OUTPUT/OUT_output_game_export_geometry",
+      "messages": [
+        "Invalid source /obj/medieval_modular_v2/BUILDING/OPENINGS/kits/WINDOW_MODULE/OUT_WINDOW.\n(Error:       Conflicting output node with the same output index found at: \"PUBLIC_APERTURE\")."
+      ]
+    },
+    {
+      "path": "PUBLIC_BUILDING_OUTPUT",
+      "messages": [
+        "Invalid source /obj/medieval_modular_v2/BUILDING/OPENINGS/kits/WINDOW_MODULE/OUT_WINDOW.\n(Error:       Conflicting output node with the same output index found at: \"PUBLIC_APERTURE\")."
+      ]
+    }
+  ],
+  "warnings": [
+    {
+      "path": "UV_MATERIAL/surfacing/F_FINISH/FINAL_COMPONENT_NAMES",
+      "messages": [
+        "Invalid source /obj/medieval_modular_v2/BUILDING/OPENINGS/kits/WINDOW_MODULE/OUT_WINDOW.\n(Error:       Conflicting output node with the same output index found at: \"PUBLIC_APERTURE\")."
+      ]
+    },
+    {
+      "path": "UV_MATERIAL/surfacing/F_FINISH/METRIC_UV",
+      "messages": [
+        "Invalid source /obj/medieval_modular_v2/BUILDING/OPENINGS/kits/WINDOW_MODULE/OUT_WINDOW.\n(Error:       Conflicting output node with the same output index found at: \"PUBLIC_APERTURE\")."
+      ]
+    },
+    {
+      "path": "UV_MATERIAL/surfacing/F_FINISH/BIND_MATERIALS",
+      "messages": [
+        "Invalid source /obj/medieval_modular_v2/BUILDING/OPENINGS/kits/WINDOW_MODULE/OUT_WINDOW.\n(Error:       Conflicting output node with the same output index found at: \"PUBLIC_APERTURE\")."
+      ]
+    },
+    {
+      "path": "OUTPUT/game_export/export_semantic_metadata",
+      "messages": [
+        "Invalid source /obj/medieval_modular_v2/BUILDING/OPENINGS/kits/WINDOW_MODULE/OUT_WINDOW.\n(Error:       Conflicting output node with the same output index found at: \"PUBLIC_APERTURE\")."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "status": "pass",
+  "result": {
+    "variant_id": "11_artisan_house",
+    "quality": "legacy_low",
+    "points": 21508,
+    "primitives": 17020,
+    "display_node": "/obj/medieval_modular_v2/BUILDING",
+    "camera": {
+      "t": [
+        18.0,
+        17.5,
+        -21.0
+      ],
+      "r": [
+        -22.152627580061193,
+        141.00900595749454,
+        0.0
+      ],
+      "orthowidth": 14.0
+    },
+    "ui": true,
+    "scene": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\..\\modular_rebuild_v2\\scenes\\variants\\11_artisan_house.hip",
+    "wire": false,
+    "position_hash": "e3f2619e05dd0f7a50915814f99c939f79ead3a3f3daa72391a8b6ec5e78e5d3",
+    "hda_sha256": "90fa34e28094a8d15b560349f3e284619a680a553058937c1b2bccb0484ac687",
+    "hda_type": "mythic::medieval_house::4.0",
+    "definition_library": "E:/Repos/mythic-forge/output/modular_rebuild_v2/asset/medieval_building_modular.hda",
+    "window_minimized": false,
+    "window_visible": true,
+    "hud_text": "11_artisan_house  |  BEFORE V2 LOW  |  17020 primitives  |  LIVE HOUDINI GUI"
+  }
+}

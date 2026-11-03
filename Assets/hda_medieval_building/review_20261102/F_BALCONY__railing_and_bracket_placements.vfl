@@ -1,0 +1,109 @@
+
+vector worldpos(vector p;vector center;float angle)
+{
+    float c=cos(radians(angle)),s=sin(radians(angle));
+    return set(center.x+c*p.x+s*p.z,p.y,center.z-s*p.x+c*p.z);
+}
+void deck(vector p[];vector center;float angle;string name;int rid;int level)
+{
+    if(len(p)<3)return;
+    int reverse=dot(cross(p[1]-p[0],p[2]-p[0]),set(0.,-1.,0.))>0.;
+    int poly=addprim(0,"poly");
+    for(int i=0;i<len(p);i++)
+    {
+        int pt=addpoint(0,worldpos(p[reverse ? len(p)-1-i : i],center,angle));addvertex(0,poly,pt);
+        setpointattrib(0,"extrude_direction",pt,set(0.,-1.,0.),"set");
+    }
+    setprimattrib(0,"extrude_distance",poly,.18,"set");setprimattrib(0,"name",poly,name,"set");
+    setprimattrib(0,"material_family",poly,"wood","set");setprimattrib(0,"Cd",poly,set(.27,.19,.12),"set");
+    setprimattrib(0,"role",poly,"main","set");setprimattrib(0,"role_id",poly,rid,"set");
+    setprimattrib(0,"floor_i",poly,level,"set");setprimattrib(0,"component",poly,"balcony","set");
+}
+void rectdeck(float xa;float xb;float za;float zb;float y;vector center;float angle;string name;int rid;int level)
+{
+    vector p[]=array(set(xa,y,za),set(xa,y,zb),set(xb,y,zb),set(xb,y,za));deck(p,center,angle,name,rid,level);
+}
+void beam(vector start;vector end;float width;vector center;float angle;string name;int rid;int level)
+{
+    if(distance(start,end)<.001)return;
+    vector a=worldpos(start,center,angle),b=worldpos(end,center,angle),along=normalize(b-a);
+    vector ref=abs(along.y)<.95 ? set(0.,1.,0.) : set(1.,0.,0.);
+    vector x=normalize(cross(along,ref)),z=cross(x,along);
+    int pt=addpoint(0,(a+b)*.5);matrix3 transform=set(x*width,along*distance(a,b),z*width);
+    setpointattrib(0,"transform",pt,transform,"set");setpointattrib(0,"part_name",pt,name,"set");
+    setpointattrib(0,"part_material",pt,"wood","set");setpointattrib(0,"part_color",pt,set(.27,.19,.12),"set");
+    setpointattrib(0,"role",pt,"main","set");setpointattrib(0,"role_id",pt,rid,"set");setpointattrib(0,"floor_i",pt,level,"set");
+}
+void railing(vector a;vector b;vector center;float angle;string name;int rid;int level)
+{
+    beam(a+set(0.,.96,0.),b+set(0.,.96,0.),.075,center,angle,name+"_top",rid,level);
+    beam(a+set(0.,.12,0.),b+set(0.,.12,0.),.06,center,angle,name+"_bottom",rid,level);
+    int count=max(1,int(ceil(distance(a,b)/.65)));
+    for(int i=0;i<=count;i++)
+    {
+        vector foot=lerp(a,b,float(i)/count);
+        beam(foot,foot+set(0.,1.,0.),.075,center,angle,name+"_post_"+itoa(i),rid,level);
+        if(i==count)continue;
+        vector next=lerp(a,b,float(i+1)/count);
+        beam(foot+set(0.,.18,0.),next+set(0.,.88,0.),.035,center,angle,name+"_diagonal_a_"+itoa(i),rid,level);
+        beam(foot+set(0.,.88,0.),next+set(0.,.18,0.),.035,center,angle,name+"_diagonal_b_"+itoa(i),rid,level);
+    }
+}
+void bracket(vector wall;vector outward;float projection;vector center;float angle;string name;int rid;int level)
+{
+    vector tip=wall+outward*max(.15,projection-.10);
+    beam(wall+set(0.,-.25,0.),tip+set(0.,-.25,0.),.14,center,angle,name+"_joist",rid,level);
+    beam(wall+set(0.,-.90,0.),tip+set(0.,-.25,0.),.13,center,angle,name+"_brace",rid,level);
+}
+
+int original=nprimitives(0);string layout=chs("../balcony_layout");
+if(chi("../balcony_enable") && layout!="none")for(int pr=0;pr<original;pr++)
+{
+    if(string(prim(0,"role",pr))!="main")continue;
+    int level=prim(0,"floor_i",pr),floors=prim(0,"floor_count",pr),round=prim(0,"is_round",pr),rid=prim(0,"role_id",pr);
+    int service=round && floors==1 && chs("../utility_type")=="windmill";
+    if((service && level!=0) || (!service && level!=1))continue;
+    float w=prim(0,"width",pr),d=prim(0,"depth",pr),y=prim(0,"floor_b",pr),angle=prim(0,"rot_y",pr);
+    if(service)y+=float(prim(0,"floor_h",pr))*.7;
+    if(round)d=w;
+    float depth=max(.10,ch("../balcony_depth_m")),t=ch("../wall_thickness_m"),frontwidth=max(.2,min(w-2*t,3.6));
+    vector center=prim(0,"role_center",pr);string prefix="balcony/main/floor_"+itoa(level);
+
+    if(layout=="ring" && round)
+    {
+        float radius=w*.5,outer=radius+depth;int count=32;
+        for(int i=0;i<count;i++)
+        {
+            float a=2*M_PI*i/count,b=2*M_PI*(i+1)/count;
+            railing(set(outer*cos(a),y,outer*sin(a)),set(outer*cos(b),y,outer*sin(b)),center,angle,prefix+"_ring_rail_"+itoa(i),rid,level);
+        }
+        for(int i=0;i<8;i++)
+        {
+            float a=-M_PI*.5-M_PI/16+2*M_PI*i/8;
+            bracket(set(radius*cos(a),y,radius*sin(a)),set(cos(a),0.,sin(a)),depth,center,angle,prefix+"_ring_support_"+itoa(i),rid,level);
+        }
+    }
+    else
+    {
+        vector path[];
+        if(layout=="front")
+        {
+            float back=round ? -sqrt(max(w*w*.25-frontwidth*frontwidth*.25,0.)) : -d*.5;
+            path=array(set(-frontwidth*.5,y,back),set(-frontwidth*.5,y,-d*.5-depth),set(frontwidth*.5,y,-d*.5-depth),set(frontwidth*.5,y,back));
+        }
+        else if(layout=="ring")
+            path=array(set(-w*.5-depth,y,-d*.5-depth),set(w*.5+depth,y,-d*.5-depth),set(w*.5+depth,y,d*.5+depth),set(-w*.5-depth,y,d*.5+depth),set(-w*.5-depth,y,-d*.5-depth));
+        else path=array(set(-w*.5,y,-d*.5),set(-w*.5,y,-d*.5-depth),set(w*.5+depth,y,-d*.5-depth),set(w*.5+depth,y,d*.5),set(w*.5,y,d*.5));
+        for(int i=0;i<len(path)-1;i++)railing(path[i],path[i+1],center,angle,prefix+"_rail_"+itoa(i),rid,level);
+        float width=layout=="front" ? frontwidth : w;
+        for(int i=0;i<3;i++)
+        {
+            float x=lerp(-width*.40,width*.40,i/2.),z=-d*.5;
+            if(round)z=-sqrt(max(w*w*.25-x*x,0.));
+            bracket(set(x,y,z),set(0.,0.,-1.),depth,center,angle,prefix+"_front_support_"+itoa(i),rid,level);
+            if(layout!="front")bracket(set(w*.5,y,lerp(-d*.40,d*.40,i/2.)),set(1.,0.,0.),depth,center,angle,prefix+"_right_support_"+itoa(i),rid,level);
+        }
+    }
+    break;
+}
+for(int pr=original-1;pr>=0;pr--)removeprim(0,pr,1);

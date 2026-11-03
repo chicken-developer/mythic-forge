@@ -1,0 +1,1681 @@
+{
+  "polyextrude::2.0": {
+    "available": true,
+    "parms": {
+      "group": {
+        "value": "",
+        "menu": []
+      },
+      "splittype": {
+        "value": "components",
+        "menu": [
+          "elements",
+          "components"
+        ]
+      },
+      "usesplitgroup": {
+        "value": "off",
+        "menu": []
+      },
+      "splitgroup": {
+        "value": "",
+        "menu": []
+      },
+      "extrusionmode": {
+        "value": "primnormal",
+        "menu": [
+          "primnormal",
+          "pointnormal"
+        ]
+      },
+      "ptnormalsrc": {
+        "value": "precompute",
+        "menu": [
+          "precompute",
+          "existing",
+          "attribute"
+        ]
+      },
+      "ptnormalattrib": {
+        "value": "N",
+        "menu": []
+      },
+      "dist": {
+        "value": "0",
+        "menu": []
+      },
+      "inset": {
+        "value": "0",
+        "menu": []
+      },
+      "twist": {
+        "value": "0",
+        "menu": []
+      },
+      "divs": {
+        "value": "1",
+        "menu": []
+      },
+      "spinetype": {
+        "value": "straight",
+        "menu": [
+          "straight",
+          "curved",
+          "external"
+        ]
+      },
+      "stdswitcher1": {
+        "value": "0",
+        "menu": []
+      },
+      "xformsection": {
+        "value": "0",
+        "menu": []
+      },
+      "xformfront": {
+        "value": "off",
+        "menu": []
+      },
+      "xformspace": {
+        "value": "local",
+        "menu": [
+          "local",
+          "global"
+        ]
+      },
+      "rst": {
+        "value": "srt",
+        "menu": [
+          "srt",
+          "str",
+          "rst",
+          "rts",
+          "tsr",
+          "trs"
+        ]
+      },
+      "xyz": {
+        "value": "xyz",
+        "menu": [
+          "xyz",
+          "xzy",
+          "yxz",
+          "yzx",
+          "zxy",
+          "zyx"
+        ]
+      },
+      "translatex": {
+        "value": "0",
+        "menu": []
+      },
+      "translatey": {
+        "value": "0",
+        "menu": []
+      },
+      "translatez": {
+        "value": "0",
+        "menu": []
+      },
+      "rotatex": {
+        "value": "0",
+        "menu": []
+      },
+      "rotatey": {
+        "value": "0",
+        "menu": []
+      },
+      "rotatez": {
+        "value": "0",
+        "menu": []
+      },
+      "scalex": {
+        "value": "1",
+        "menu": []
+      },
+      "scaley": {
+        "value": "1",
+        "menu": []
+      },
+      "scalez": {
+        "value": "1",
+        "menu": []
+      },
+      "shear1": {
+        "value": "0",
+        "menu": []
+      },
+      "shear2": {
+        "value": "0",
+        "menu": []
+      },
+      "shear3": {
+        "value": "0",
+        "menu": []
+      },
+      "pivotxformsection": {
+        "value": "0",
+        "menu": []
+      },
+      "pivotx": {
+        "value": "0",
+        "menu": []
+      },
+      "pivoty": {
+        "value": "0",
+        "menu": []
+      },
+      "pivotz": {
+        "value": "0",
+        "menu": []
+      },
+      "pivotrotatex": {
+        "value": "0",
+        "menu": []
+      },
+      "pivotrotatey": {
+        "value": "0",
+        "menu": []
+      },
+      "pivotrotatez": {
+        "value": "0",
+        "menu": []
+      },
+      "prexformsection": {
+        "value": "0",
+        "menu": []
+      },
+      "prexform_rst": {
+        "value": "srt",
+        "menu": [
+          "srt",
+          "str",
+          "rst",
+          "rts",
+          "tsr",
+          "trs"
+        ]
+      },
+      "prexform_xyz": {
+        "value": "xyz",
+        "menu": [
+          "xyz",
+          "xzy",
+          "yxz",
+          "yzx",
+          "zxy",
+          "zyx"
+        ]
+      },
+      "prexform_translatex": {
+        "value": "0",
+        "menu": []
+      },
+      "prexform_translatey": {
+        "value": "0",
+        "menu": []
+      },
+      "prexform_translatez": {
+        "value": "0",
+        "menu": []
+      },
+      "prexform_rotatex": {
+        "value": "0",
+        "menu": []
+      },
+      "prexform_rotatey": {
+        "value": "0",
+        "menu": []
+      },
+      "prexform_rotatez": {
+        "value": "0",
+        "menu": []
+      },
+      "prexform_scalex": {
+        "value": "1",
+        "menu": []
+      },
+      "prexform_scaley": {
+        "value": "1",
+        "menu": []
+      },
+      "prexform_scalez": {
+        "value": "1",
+        "menu": []
+      },
+      "prexform_shear1": {
+        "value": "0",
+        "menu": []
+      },
+      "prexform_shear2": {
+        "value": "0",
+        "menu": []
+      },
+      "prexform_shear3": {
+        "value": "0",
+        "menu": []
+      },
+      "outputsection": {
+        "value": "0",
+        "menu": []
+      },
+      "outputfront": {
+        "value": "on",
+        "menu": []
+      },
+      "outputfrontgrp": {
+        "value": "off",
+        "menu": []
+      },
+      "frontgrp": {
+        "value": "extrudeFront",
+        "menu": []
+      },
+      "outputback": {
+        "value": "off",
+        "menu": []
+      },
+      "outputbackgrp": {
+        "value": "off",
+        "menu": []
+      },
+      "backgrp": {
+        "value": "extrudeBack",
+        "menu": []
+      },
+      "outputside": {
+        "value": "on",
+        "menu": []
+      },
+      "outputsidegrp": {
+        "value": "off",
+        "menu": []
+      },
+      "sidegrp": {
+        "value": "extrudeSide",
+        "menu": []
+      },
+      "outputfrontseamgrp": {
+        "value": "off",
+        "menu": []
+      },
+      "frontseamgrp": {
+        "value": "extrudeFrontSeam",
+        "menu": []
+      },
+      "outputbackseamgrp": {
+        "value": "off",
+        "menu": []
+      },
+      "backseamgrp": {
+        "value": "extrudeBackSeam",
+        "menu": []
+      },
+      "preservegroups": {
+        "value": "on",
+        "menu": []
+      },
+      "copyedgegroups": {
+        "value": "off",
+        "menu": []
+      },
+      "insettingsection": {
+        "value": "0",
+        "menu": []
+      },
+      "limitinset": {
+        "value": "on",
+        "menu": []
+      },
+      "commonlimit": {
+        "value": "on",
+        "menu": []
+      },
+      "normalsection": {
+        "value": "0",
+        "menu": []
+      },
+      "addvertexnomrals": {
+        "value": "off",
+        "menu": []
+      },
+      "cuspangle": {
+        "value": "60",
+        "menu": []
+      },
+      "cuspfront": {
+        "value": "on",
+        "menu": []
+      },
+      "cuspback": {
+        "value": "on",
+        "menu": []
+      },
+      "uvssection": {
+        "value": "0",
+        "menu": []
+      },
+      "genuvs": {
+        "value": "on",
+        "menu": []
+      },
+      "uvstyle": {
+        "value": "proprtional",
+        "menu": [
+          "unitsquare",
+          "rectangular",
+          "proprtional"
+        ]
+      },
+      "uvscaling": {
+        "value": "matchuv",
+        "menu": [
+          "fitunitsquare",
+          "match3d",
+          "matchuv"
+        ]
+      },
+      "shapecontrolsection": {
+        "value": "0",
+        "menu": []
+      },
+      "frontmagnitude": {
+        "value": "1",
+        "menu": []
+      },
+      "backmagnitude": {
+        "value": "1",
+        "menu": []
+      },
+      "frontstiffness": {
+        "value": "0",
+        "menu": []
+      },
+      "backstiffness": {
+        "value": "0",
+        "menu": []
+      },
+      "interpolation": {
+        "value": "rotatingframe",
+        "menu": [
+          "linear",
+          "rotatingframe"
+        ]
+      },
+      "spacing": {
+        "value": "arclengthuniform",
+        "menu": [
+          "arclengthuniform",
+          "curvatureadaptive"
+        ]
+      },
+      "externalspinesection": {
+        "value": "0",
+        "menu": []
+      },
+      "reversespinedirection": {
+        "value": "off",
+        "menu": []
+      },
+      "axialrotation": {
+        "value": "0",
+        "menu": []
+      },
+      "frontblend": {
+        "value": "0.1",
+        "menu": []
+      },
+      "backblend": {
+        "value": "0.1",
+        "menu": []
+      },
+      "thicknesssection": {
+        "value": "0",
+        "menu": []
+      },
+      "thicknessscale": {
+        "value": "1",
+        "menu": []
+      },
+      "usethicknessattrib": {
+        "value": "on",
+        "menu": []
+      },
+      "thicknessattrib": {
+        "value": "thickness",
+        "menu": []
+      },
+      "usethicknessramp": {
+        "value": "on",
+        "menu": []
+      },
+      "thicknessramp": {
+        "value": "2",
+        "menu": []
+      },
+      "twistsection": {
+        "value": "0",
+        "menu": []
+      },
+      "usetwistattrib": {
+        "value": "on",
+        "menu": []
+      },
+      "twistattrib": {
+        "value": "twist",
+        "menu": []
+      },
+      "usetwistramp": {
+        "value": "on",
+        "menu": []
+      },
+      "twistramp": {
+        "value": "2",
+        "menu": []
+      },
+      "twistscale": {
+        "value": "180",
+        "menu": []
+      },
+      "localattribs": {
+        "value": "0",
+        "menu": []
+      },
+      "uselocalzscaleattrib": {
+        "value": "off",
+        "menu": []
+      },
+      "localzscaleattrib": {
+        "value": "zscale",
+        "menu": []
+      },
+      "uselocalinsetscaleattrib": {
+        "value": "off",
+        "menu": []
+      },
+      "localinsetscaleattrib": {
+        "value": "insetscale",
+        "menu": []
+      },
+      "uselocaltwistattrib": {
+        "value": "off",
+        "menu": []
+      },
+      "localtwistscaleattrib": {
+        "value": "twistscale",
+        "menu": []
+      },
+      "uselocaldivsattrib": {
+        "value": "off",
+        "menu": []
+      },
+      "locadivscaleattrib": {
+        "value": "divsscale",
+        "menu": []
+      },
+      "localframeattribs": {
+        "value": "0",
+        "menu": []
+      },
+      "uselocalxattrib": {
+        "value": "off",
+        "menu": []
+      },
+      "localxattrib": {
+        "value": "localx",
+        "menu": []
+      },
+      "uselocalzattirb": {
+        "value": "off",
+        "menu": []
+      },
+      "localzattirb": {
+        "value": "localz",
+        "menu": []
+      },
+      "uselocalctrattrib": {
+        "value": "off",
+        "menu": []
+      },
+      "localctrattrib": {
+        "value": "localctr",
+        "menu": []
+      },
+      "thicknessramp1pos": {
+        "value": "0",
+        "menu": []
+      },
+      "thicknessramp1value": {
+        "value": "1",
+        "menu": []
+      },
+      "thicknessramp1interp": {
+        "value": "catmull-rom",
+        "menu": [
+          "constant",
+          "linear",
+          "catmull-rom",
+          "monotonecubic",
+          "bezier",
+          "bspline",
+          "hermite"
+        ]
+      },
+      "thicknessramp2pos": {
+        "value": "1",
+        "menu": []
+      },
+      "thicknessramp2value": {
+        "value": "1",
+        "menu": []
+      },
+      "thicknessramp2interp": {
+        "value": "catmull-rom",
+        "menu": [
+          "constant",
+          "linear",
+          "catmull-rom",
+          "monotonecubic",
+          "bezier",
+          "bspline",
+          "hermite"
+        ]
+      },
+      "twistramp1pos": {
+        "value": "0",
+        "menu": []
+      },
+      "twistramp1value": {
+        "value": "0.5",
+        "menu": []
+      },
+      "twistramp1interp": {
+        "value": "catmull-rom",
+        "menu": [
+          "constant",
+          "linear",
+          "catmull-rom",
+          "monotonecubic",
+          "bezier",
+          "bspline",
+          "hermite"
+        ]
+      },
+      "twistramp2pos": {
+        "value": "1",
+        "menu": []
+      },
+      "twistramp2value": {
+        "value": "0.5",
+        "menu": []
+      },
+      "twistramp2interp": {
+        "value": "catmull-rom",
+        "menu": [
+          "constant",
+          "linear",
+          "catmull-rom",
+          "monotonecubic",
+          "bezier",
+          "bspline",
+          "hermite"
+        ]
+      }
+    }
+  },
+  "boolean::2.0": {
+    "available": true,
+    "parms": {
+      "inputa": {
+        "value": "0",
+        "menu": []
+      },
+      "agroup": {
+        "value": "",
+        "menu": []
+      },
+      "asurface": {
+        "value": "solid",
+        "menu": [
+          "solid",
+          "surface"
+        ]
+      },
+      "resolvea": {
+        "value": "on",
+        "menu": []
+      },
+      "inputb": {
+        "value": "0",
+        "menu": []
+      },
+      "bgroup": {
+        "value": "",
+        "menu": []
+      },
+      "bsurface": {
+        "value": "solid",
+        "menu": [
+          "solid",
+          "surface"
+        ]
+      },
+      "resolveb": {
+        "value": "on",
+        "menu": []
+      },
+      "output": {
+        "value": "0",
+        "menu": []
+      },
+      "booleanop": {
+        "value": "union",
+        "menu": [
+          "union",
+          "intersect",
+          "subtract",
+          "shatter",
+          "custom",
+          "_separator_",
+          "seam",
+          "_separator_",
+          "detect",
+          "resolve"
+        ]
+      },
+      "subtractchoices": {
+        "value": "aminusb",
+        "menu": [
+          "aminusb",
+          "bminusa",
+          "both"
+        ]
+      },
+      "shatterchoices": {
+        "value": "apieces",
+        "menu": [
+          "apieces",
+          "bpieces",
+          "both"
+        ]
+      },
+      "opencurvesonly": {
+        "value": "on",
+        "menu": []
+      },
+      "generateaaseams": {
+        "value": "on",
+        "menu": []
+      },
+      "generatebbseams": {
+        "value": "on",
+        "menu": []
+      },
+      "generateabseams": {
+        "value": "on",
+        "menu": []
+      },
+      "adepth1": {
+        "value": "1",
+        "menu": []
+      },
+      "adepth2": {
+        "value": "1000",
+        "menu": []
+      },
+      "bdepth1": {
+        "value": "1",
+        "menu": []
+      },
+      "bdepth2": {
+        "value": "1000",
+        "menu": []
+      },
+      "windingop": {
+        "value": "arange",
+        "menu": [
+          "arange",
+          "brange",
+          "and",
+          "or",
+          "xor"
+        ]
+      },
+      "mergenbrs": {
+        "value": "off",
+        "menu": []
+      },
+      "detriangulate": {
+        "value": "all",
+        "menu": [
+          "none",
+          "unchanged",
+          "all"
+        ]
+      },
+      "removeinlinepoints": {
+        "value": "on",
+        "menu": []
+      },
+      "uniqueseams": {
+        "value": "off",
+        "menu": []
+      },
+      "correctnormals": {
+        "value": "on",
+        "menu": []
+      },
+      "useaxapolys": {
+        "value": "off",
+        "menu": []
+      },
+      "axapolys": {
+        "value": "axapolys",
+        "menu": []
+      },
+      "useaxbpolys": {
+        "value": "off",
+        "menu": []
+      },
+      "axbpolys": {
+        "value": "axbpolys",
+        "menu": []
+      },
+      "useaxalist": {
+        "value": "off",
+        "menu": []
+      },
+      "axalist": {
+        "value": "axalist",
+        "menu": []
+      },
+      "useaxblist": {
+        "value": "off",
+        "menu": []
+      },
+      "axblist": {
+        "value": "axblist",
+        "menu": []
+      },
+      "collapsetinyedges": {
+        "value": "on",
+        "menu": []
+      },
+      "lengththreshold": {
+        "value": "1e-5",
+        "menu": []
+      },
+      "outputprimgroups": {
+        "value": "0",
+        "menu": []
+      },
+      "useapolys": {
+        "value": "off",
+        "menu": []
+      },
+      "apolys": {
+        "value": "apolys",
+        "menu": []
+      },
+      "useainsideb": {
+        "value": "off",
+        "menu": []
+      },
+      "ainsideb": {
+        "value": "ainsideb",
+        "menu": []
+      },
+      "useaoutsideb": {
+        "value": "off",
+        "menu": []
+      },
+      "aoutsideb": {
+        "value": "aoutsideb",
+        "menu": []
+      },
+      "usebpolys": {
+        "value": "off",
+        "menu": []
+      },
+      "bpolys": {
+        "value": "bpolys",
+        "menu": []
+      },
+      "usebinsidea": {
+        "value": "off",
+        "menu": []
+      },
+      "binsidea": {
+        "value": "binsidea",
+        "menu": []
+      },
+      "useboutsidea": {
+        "value": "off",
+        "menu": []
+      },
+      "boutsidea": {
+        "value": "boutsidea",
+        "menu": []
+      },
+      "useaboverlap": {
+        "value": "off",
+        "menu": []
+      },
+      "aboverlap": {
+        "value": "aboverlap",
+        "menu": []
+      },
+      "useaonlypieces": {
+        "value": "off",
+        "menu": []
+      },
+      "aonlypieces": {
+        "value": "apieces",
+        "menu": []
+      },
+      "usebonlypieces": {
+        "value": "off",
+        "menu": []
+      },
+      "bonlypieces": {
+        "value": "bpieces",
+        "menu": []
+      },
+      "useabpieces": {
+        "value": "off",
+        "menu": []
+      },
+      "abpieces": {
+        "value": "abpieces",
+        "menu": []
+      },
+      "usereversedpolys": {
+        "value": "off",
+        "menu": []
+      },
+      "reversedpolys": {
+        "value": "reversed",
+        "menu": []
+      },
+      "outputedgegroups": {
+        "value": "0",
+        "menu": []
+      },
+      "useaaseamedges": {
+        "value": "off",
+        "menu": []
+      },
+      "aaseamedges": {
+        "value": "aseams",
+        "menu": []
+      },
+      "usebbseamedges": {
+        "value": "off",
+        "menu": []
+      },
+      "bbseamedges": {
+        "value": "bseams",
+        "menu": []
+      },
+      "useabseamedges": {
+        "value": "off",
+        "menu": []
+      },
+      "abseamedges": {
+        "value": "abseams",
+        "menu": []
+      }
+    }
+  },
+  "polybevel::3.0": {
+    "available": true,
+    "parms": {
+      "group": {
+        "value": "",
+        "menu": []
+      },
+      "grouptype": {
+        "value": "guess",
+        "menu": [
+          "prims",
+          "points",
+          "edges",
+          "guess"
+        ]
+      },
+      "ignoregroup": {
+        "value": "0",
+        "menu": []
+      },
+      "ignorebridgededges": {
+        "value": "on",
+        "menu": []
+      },
+      "ignoresharededges": {
+        "value": "off",
+        "menu": []
+      },
+      "ignoreflatedges": {
+        "value": "off",
+        "menu": []
+      },
+      "ignoreflatpoints": {
+        "value": "off",
+        "menu": []
+      },
+      "ignoreinlinepoints": {
+        "value": "off",
+        "menu": []
+      },
+      "flatangle": {
+        "value": "2",
+        "menu": []
+      },
+      "offsettingsection": {
+        "value": "0",
+        "menu": []
+      },
+      "offset": {
+        "value": "0",
+        "menu": []
+      },
+      "useoffsetscale": {
+        "value": "unscaled",
+        "menu": [
+          "unscaled",
+          "byattrib"
+        ]
+      },
+      "pointscaleattr": {
+        "value": "pscale",
+        "menu": []
+      },
+      "sliding": {
+        "value": "auto",
+        "menu": [
+          "auto",
+          "always",
+          "never"
+        ]
+      },
+      "asymtol": {
+        "value": "0.5",
+        "menu": []
+      },
+      "slideedges": {
+        "value": "",
+        "menu": []
+      },
+      "collisionsandlimits": {
+        "value": "0",
+        "menu": []
+      },
+      "detectcollisions": {
+        "value": "on",
+        "menu": []
+      },
+      "restrictslides": {
+        "value": "on",
+        "menu": []
+      },
+      "limit": {
+        "value": "individually",
+        "menu": [
+          "never",
+          "individually",
+          "simultaneously"
+        ]
+      },
+      "stopatslideend": {
+        "value": "on",
+        "menu": []
+      },
+      "stopatpinches": {
+        "value": "on",
+        "menu": []
+      },
+      "pinchangle": {
+        "value": "0",
+        "menu": []
+      },
+      "stopatcollisions": {
+        "value": "on",
+        "menu": []
+      },
+      "filletsection": {
+        "value": "0",
+        "menu": []
+      },
+      "filletshape": {
+        "value": "round",
+        "menu": [
+          "none",
+          "solid",
+          "crease",
+          "chamfer",
+          "round"
+        ]
+      },
+      "divisions": {
+        "value": "1",
+        "menu": []
+      },
+      "profilesampling": {
+        "value": "uniform",
+        "menu": [
+          "uniform",
+          "adaptive",
+          "controlpoints"
+        ]
+      },
+      "convexity": {
+        "value": "1",
+        "menu": []
+      },
+      "profilesource": {
+        "value": "basic",
+        "menu": [
+          "basic",
+          "ramp",
+          "external"
+        ]
+      },
+      "profilegroup": {
+        "value": "0",
+        "menu": []
+      },
+      "profilescale": {
+        "value": "1",
+        "menu": []
+      },
+      "reverseprofile": {
+        "value": "off",
+        "menu": []
+      },
+      "symmetrizeprofile": {
+        "value": "on",
+        "menu": []
+      },
+      "profiledirection": {
+        "value": "",
+        "menu": []
+      },
+      "profileramp": {
+        "value": "2",
+        "menu": []
+      },
+      "flatboost": {
+        "value": "30",
+        "menu": []
+      },
+      "outputgroupssection": {
+        "value": "0",
+        "menu": []
+      },
+      "useptfilletgroup": {
+        "value": "off",
+        "menu": []
+      },
+      "ptfilletgroup": {
+        "value": "pointfilletpolys",
+        "menu": []
+      },
+      "useptfilletedges": {
+        "value": "off",
+        "menu": []
+      },
+      "ptfilletedges": {
+        "value": "pointfilletedges",
+        "menu": []
+      },
+      "useedgefilletgroup": {
+        "value": "off",
+        "menu": []
+      },
+      "edgeprims": {
+        "value": "edgefilletpolys",
+        "menu": []
+      },
+      "useoffsetedges": {
+        "value": "off",
+        "menu": []
+      },
+      "offsetedges": {
+        "value": "offsetedges",
+        "menu": []
+      },
+      "useoffsetpoints": {
+        "value": "off",
+        "menu": []
+      },
+      "offsetpoints": {
+        "value": "offsetpoints",
+        "menu": []
+      },
+      "usemergedpoints": {
+        "value": "off",
+        "menu": []
+      },
+      "mergedpoints": {
+        "value": "mergedpoints",
+        "menu": []
+      },
+      "profileramp1pos": {
+        "value": "0",
+        "menu": []
+      },
+      "profileramp1value": {
+        "value": "0.5",
+        "menu": []
+      },
+      "profileramp1interp": {
+        "value": "catmull-rom",
+        "menu": [
+          "constant",
+          "linear",
+          "catmull-rom",
+          "monotonecubic",
+          "bezier",
+          "bspline",
+          "hermite"
+        ]
+      },
+      "profileramp2pos": {
+        "value": "1",
+        "menu": []
+      },
+      "profileramp2value": {
+        "value": "0.5",
+        "menu": []
+      },
+      "profileramp2interp": {
+        "value": "catmull-rom",
+        "menu": [
+          "constant",
+          "linear",
+          "catmull-rom",
+          "monotonecubic",
+          "bezier",
+          "bspline",
+          "hermite"
+        ]
+      }
+    }
+  },
+  "polywire": {
+    "available": true,
+    "parms": {
+      "group": {
+        "value": "",
+        "menu": []
+      },
+      "radius": {
+        "value": "0.1",
+        "menu": []
+      },
+      "usescaleattrib": {
+        "value": "constant",
+        "menu": [
+          "constant",
+          "attrib"
+        ]
+      },
+      "scaleattrib": {
+        "value": "pscale",
+        "menu": []
+      },
+      "jointcorrect": {
+        "value": "on",
+        "menu": []
+      },
+      "maxscale": {
+        "value": "2",
+        "menu": []
+      },
+      "smooth": {
+        "value": "1",
+        "menu": []
+      },
+      "usesmoothattrib": {
+        "value": "constant",
+        "menu": [
+          "constant",
+          "attrib"
+        ]
+      },
+      "smoothattrib": {
+        "value": "smooth",
+        "menu": []
+      },
+      "maxvalence": {
+        "value": "25",
+        "menu": []
+      },
+      "div": {
+        "value": "4",
+        "menu": []
+      },
+      "usedivattrib": {
+        "value": "constant",
+        "menu": [
+          "constant",
+          "attrib"
+        ]
+      },
+      "divattrib": {
+        "value": "div",
+        "menu": []
+      },
+      "segs": {
+        "value": "1",
+        "menu": []
+      },
+      "usesegsattrib": {
+        "value": "constant",
+        "menu": [
+          "constant",
+          "attrib"
+        ]
+      },
+      "segsattrib": {
+        "value": "segs",
+        "menu": []
+      },
+      "usesegscale": {
+        "value": "on",
+        "menu": []
+      },
+      "segscale1": {
+        "value": "1.0 / $NSEG",
+        "menu": []
+      },
+      "segscale2": {
+        "value": "1.0 - 1.0 / $NSEG",
+        "menu": []
+      },
+      "dotexture": {
+        "value": "on",
+        "menu": []
+      },
+      "uoff": {
+        "value": "0",
+        "menu": []
+      },
+      "textu1": {
+        "value": "0",
+        "menu": []
+      },
+      "textu2": {
+        "value": "1",
+        "menu": []
+      },
+      "usetextvattrib": {
+        "value": "constant",
+        "menu": [
+          "constant",
+          "attrib"
+        ]
+      },
+      "textvattrib": {
+        "value": "arc",
+        "menu": []
+      },
+      "textv1": {
+        "value": "0",
+        "menu": []
+      },
+      "textv2": {
+        "value": "1",
+        "menu": []
+      },
+      "upenable": {
+        "value": "off",
+        "menu": [
+          "off",
+          "on",
+          "attrib"
+        ]
+      },
+      "upvectorx": {
+        "value": "0",
+        "menu": []
+      },
+      "upvectory": {
+        "value": "1",
+        "menu": []
+      },
+      "upvectorz": {
+        "value": "0",
+        "menu": []
+      },
+      "upattrib": {
+        "value": "up",
+        "menu": []
+      }
+    }
+  },
+  "fuse::2.0": {
+    "available": true,
+    "parms": {
+      "querygroup": {
+        "value": "",
+        "menu": []
+      },
+      "usetargetgroup": {
+        "value": "off",
+        "menu": []
+      },
+      "targetgroup": {
+        "value": "",
+        "menu": []
+      },
+      "modifyboth": {
+        "value": "off",
+        "menu": []
+      },
+      "posattrib": {
+        "value": "P",
+        "menu": []
+      },
+      "snapgroup": {
+        "value": "0",
+        "menu": []
+      },
+      "snaptype": {
+        "value": "distancesnap",
+        "menu": [
+          "distancesnap",
+          "gridsnap",
+          "specified"
+        ]
+      },
+      "algorithm": {
+        "value": "lowest",
+        "menu": [
+          "lowest",
+          "closest"
+        ]
+      },
+      "usetol3d": {
+        "value": "on",
+        "menu": []
+      },
+      "tol3d": {
+        "value": "0.001",
+        "menu": []
+      },
+      "targetptattrib": {
+        "value": "snap_to",
+        "menu": []
+      },
+      "targetclass": {
+        "value": "point",
+        "menu": [
+          "point",
+          "vertex",
+          "prim",
+          "detail"
+        ]
+      },
+      "usepositionsnapmethod": {
+        "value": "on",
+        "menu": []
+      },
+      "positionsnapmethod": {
+        "value": "average",
+        "menu": [
+          "average",
+          "lowest",
+          "highest",
+          "max",
+          "min",
+          "mode",
+          "median",
+          "sum",
+          "sumsquare",
+          "rms",
+          "weightedmean",
+          "weightedsum",
+          "minweight",
+          "maxweight"
+        ]
+      },
+      "positionsnapweightname": {
+        "value": "weight",
+        "menu": []
+      },
+      "useradiusattrib": {
+        "value": "off",
+        "menu": []
+      },
+      "radiusattrib": {
+        "value": "pscale",
+        "menu": []
+      },
+      "usematchattrib": {
+        "value": "off",
+        "menu": []
+      },
+      "matchattrib": {
+        "value": "name",
+        "menu": []
+      },
+      "matchtype": {
+        "value": "match",
+        "menu": [
+          "match",
+          "mismatch"
+        ]
+      },
+      "matchtol": {
+        "value": "0",
+        "menu": []
+      },
+      "gridtype": {
+        "value": "spacing",
+        "menu": [
+          "spacing",
+          "lines",
+          "pow2"
+        ]
+      },
+      "gridspacingx": {
+        "value": "0.1",
+        "menu": []
+      },
+      "gridspacingy": {
+        "value": "0.1",
+        "menu": []
+      },
+      "gridspacingz": {
+        "value": "0.1",
+        "menu": []
+      },
+      "gridlinesx": {
+        "value": "10",
+        "menu": []
+      },
+      "gridlinesy": {
+        "value": "10",
+        "menu": []
+      },
+      "gridlinesz": {
+        "value": "10",
+        "menu": []
+      },
+      "gridpow21": {
+        "value": "3",
+        "menu": []
+      },
+      "gridpow22": {
+        "value": "3",
+        "menu": []
+      },
+      "gridpow23": {
+        "value": "3",
+        "menu": []
+      },
+      "gridoffsetx": {
+        "value": "0",
+        "menu": []
+      },
+      "gridoffsety": {
+        "value": "0",
+        "menu": []
+      },
+      "gridoffsetz": {
+        "value": "0",
+        "menu": []
+      },
+      "gridround": {
+        "value": "nearest",
+        "menu": [
+          "nearest",
+          "down",
+          "up"
+        ]
+      },
+      "usegridtol": {
+        "value": "on",
+        "menu": []
+      },
+      "gridtol": {
+        "value": "10",
+        "menu": []
+      },
+      "consolidategroup": {
+        "value": "0",
+        "menu": []
+      },
+      "consolidatesnappedpoints": {
+        "value": "on",
+        "menu": []
+      },
+      "keepconsolidatedpoints": {
+        "value": "off",
+        "menu": []
+      },
+      "deldegen": {
+        "value": "on",
+        "menu": []
+      },
+      "deldegenpoints": {
+        "value": "on",
+        "menu": []
+      },
+      "delunusedpoints": {
+        "value": "off",
+        "menu": []
+      },
+      "outputgroup": {
+        "value": "0",
+        "menu": []
+      },
+      "recomputenml": {
+        "value": "on",
+        "menu": []
+      },
+      "createsnappedgroup": {
+        "value": "off",
+        "menu": []
+      },
+      "snappedgroupname": {
+        "value": "snapped_points",
+        "menu": []
+      },
+      "createsnappedattrib": {
+        "value": "off",
+        "menu": []
+      },
+      "snappedattribname": {
+        "value": "snapped_to",
+        "menu": []
+      },
+      "numpointattribs": {
+        "value": "0",
+        "menu": []
+      },
+      "numgroups": {
+        "value": "0",
+        "menu": []
+      }
+    }
+  },
+  "normal": {
+    "available": true,
+    "parms": {
+      "group": {
+        "value": "",
+        "menu": []
+      },
+      "grouptype": {
+        "value": "guess",
+        "menu": [
+          "guess",
+          "vertices",
+          "edges",
+          "points",
+          "prims"
+        ]
+      },
+      "overridenormal": {
+        "value": "off",
+        "menu": []
+      },
+      "normalattrib": {
+        "value": "N",
+        "menu": []
+      },
+      "construct": {
+        "value": "0",
+        "menu": []
+      },
+      "docompute": {
+        "value": "on",
+        "menu": []
+      },
+      "type": {
+        "value": "typevertex",
+        "menu": [
+          "typepoint",
+          "typevertex",
+          "typeprim",
+          "typedetail"
+        ]
+      },
+      "cuspangle": {
+        "value": "60",
+        "menu": []
+      },
+      "method": {
+        "value": "1",
+        "menu": []
+      },
+      "origifzero": {
+        "value": "on",
+        "menu": []
+      },
+      "modify": {
+        "value": "0",
+        "menu": []
+      },
+      "normalize": {
+        "value": "off",
+        "menu": []
+      },
+      "reverse": {
+        "value": "off",
+        "menu": []
+      }
+    }
+  },
+  "switch": {
+    "available": true,
+    "parms": {
+      "input": {
+        "value": "0",
+        "menu": []
+      }
+    }
+  }
+}

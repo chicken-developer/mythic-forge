@@ -1,0 +1,1 @@
+{"type": "root", "attrs": {"index": "no", "type": "example"}, "body": [{"type": "title", "indent": 0, "text": ["RampBasics"]}, {"type": "para", "indent": 0, "text": ["The basic features of the Ramp COP."], "extent": [12, 48]}], "examplefor": "/nodes/cop2/ramp", "examplefile": "/examples/nodes/cop2/ramp/RampBasics.otl"}

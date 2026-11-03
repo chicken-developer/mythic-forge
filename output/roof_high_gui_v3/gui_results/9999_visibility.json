@@ -1,0 +1,33 @@
+{
+  "status": "pass",
+  "result": {
+    "asset": {
+      "path": "/obj/medieval_roof_high_v3/BUILDING",
+      "prims": 133321,
+      "canvas": 0,
+      "awning_posts": 0
+    },
+    "display": {
+      "path": "/obj/medieval_roof_high_v3/BUILDING/OUT_BUILDING",
+      "prims": 133321,
+      "canvas": 0,
+      "awning_posts": 0
+    },
+    "final": {
+      "path": "/obj/medieval_roof_high_v3/BUILDING/OUT_BUILDING",
+      "prims": 133321,
+      "canvas": 0,
+      "awning_posts": 0
+    },
+    "material": {
+      "opacpointalpha": 1,
+      "opacpackedalpha": 0,
+      "fakecausticsopacity": 0.0,
+      "alphablendmode": "blend",
+      "alphacutoff": 0.5,
+      "basecolor_useTextureAlpha": 0,
+      "Alpha": 1.0,
+      "displayOpacity": 1.0
+    }
+  }
+}

@@ -1,0 +1,1 @@
+{"type": "root", "attrs": {"exampleFile": "StreakTrail.otl", "index": "no", "type": "example"}, "body": [{"type": "title", "indent": 0, "text": ["StreakTrail"]}, {"type": "para", "indent": 0, "text": ["How to use the Streak COP to create motion trails."], "extent": [42, 93]}], "examplefor": "/nodes/cop2/streak", "examplefile": "/examples/nodes/cop2/streak/StreakTrail.otl"}

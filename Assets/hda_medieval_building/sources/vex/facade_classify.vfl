@@ -1,0 +1,37 @@
+// Architectural placement by floor / elevation / bay. No random module selection.
+int count=nprimitives(0),style=0;
+string value=chs("../../facade_style");
+if(value=="A")style=1;else if(value=="B")style=2;else if(value=="C")style=3;
+float density=clamp(ch("../../facade_module_density"),0.,1.);
+int high=chs("../../detail_level")!="low",budget=max(0,chi("../../facade_accent_budget"));
+dict overrides={};string text=strip(chs("../../facade_overrides"));if(len(text)>1)overrides=json_loads(text,0);
+string sides[]=array("front","right","rear","left");int candidates[];float scores[];
+for(int pr=0;pr<count;pr++){
+ string role=prim(0,"role",pr),opening=prim(0,"opening",pr);
+ int side=clamp(int(prim(0,"side",pr)),0,3),floor=int(prim(0,"floor_i",pr)),bay=int(prim(0,"bay_i",pr));
+ int bays=max(1,int(prim(0,"bay_count",pr)));
+ string slot=role+"."+sides[side]+"."+itoa(floor)+"."+itoa(bay),oldslot=prim(0,"bay_id",pr);
+ string module="",structure="",functional="",hero="";
+ int explicit=isvalidindex(overrides,slot)||isvalidindex(overrides,oldslot);
+ if(isvalidindex(overrides,slot))module=overrides[slot];else if(isvalidindex(overrides,oldslot))module=overrides[oldslot];
+ int solid=opening!="W"&&opening!="D";
+ // The same edge windows receive planters on every storey/elevation.
+ int selected=density>0 && (density>=.99 || bay==0 || bay==bays-1);
+ if(explicit){
+  if(module=="studs"||module=="brace")structure=module;
+  else if(module=="banner"||module=="crest")hero=module;
+  else if(module!="plain")functional=module;
+ }else if(selected && high){
+  if(style>=2 && opening=="W" && floor>0 && side!=2)functional="planter";
+  if(style>=3 && solid && floor==1 && side==0)hero="banner";
+ }
+ if(!solid)structure="";
+ if(!solid && functional!="sign"&&functional!="planter"&&functional!="oriel")functional="";
+ if(opening=="D"&&(functional=="planter"||functional=="oriel"))functional="";
+ setprimattrib(0,"facade_slot",pr,slot);setprimattrib(0,"structural_kind",pr,structure);
+ setprimattrib(0,"functional_kind",pr,functional);setprimattrib(0,"hero_kind",pr,hero);
+ setprimattrib(0,"has_override",pr,explicit);setprimattrib(0,"hero_selected",pr,0);
+ if(hero!=""){append(candidates,pr);append(scores,(explicit?-100.:0.)+side*10+abs(bay-(bays-1)*.5));}
+}
+int order[]=argsort(scores);
+for(int i=0;i<min(budget,len(order));i++)setprimattrib(0,"hero_selected",candidates[order[i]],1);

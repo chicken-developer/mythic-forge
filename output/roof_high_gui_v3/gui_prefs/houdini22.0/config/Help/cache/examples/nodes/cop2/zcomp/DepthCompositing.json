@@ -1,0 +1,1 @@
+{"type": "root", "attrs": {"index": "no", "type": "example"}, "body": [{"type": "title", "indent": 0, "text": ["DepthCompositing"]}, {"type": "para", "indent": 0, "text": ["Compositing image with depth information using the Z Composite COP."], "extent": [12, 80]}], "examplefor": "/nodes/cop2/zcomp", "examplefile": "/examples/nodes/cop2/zcomp/DepthCompositing.otl"}

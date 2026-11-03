@@ -1,0 +1,850 @@
+[
+  {
+    "tag": "01_food_shop_high_hero",
+    "spec": {
+      "dataset": "01_food_shop",
+      "quality": "high",
+      "view": "hero",
+      "tag": "01_food_shop_high_hero"
+    },
+    "review": {
+      "variant_id": "01_food_shop",
+      "quality": "high",
+      "points": 90546,
+      "primitives": 91229,
+      "display_node": "/obj/medieval_roof_high_v3/BUILDING",
+      "camera": {
+        "t": [
+          18.0,
+          15.0,
+          -21.0
+        ],
+        "r": [
+          -22.152627580061193,
+          141.00900595749454,
+          0.0
+        ],
+        "orthowidth": 21.0
+      },
+      "ui": true,
+      "scene": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\scenes\\medieval_building_roof_high_v3.hip",
+      "wire": false,
+      "position_hash": "110b161a0e65d957f978b6bd3143d32a0b9c4c3bb2d535efa54f5453d67ae434",
+      "hda_sha256": "a8a473c9d9da841fbcb04aac47a776c5b5d96a58af1d9c834d8286cd708e6302",
+      "window_minimized": false,
+      "window_visible": true,
+      "hud_text": "01_food_shop  |  HIGH  |  91229 primitives  |  LIVE HOUDINI GUI"
+    },
+    "capture": {
+      "path": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\screenshots\\final\\01_food_shop_high_hero_gui.png",
+      "dimensions": [
+        1600,
+        1000
+      ],
+      "provenance": "houdini_gui_window_screenshot",
+      "window_title": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\scenes\\medieval_building_roof_high_v3.hip - Houdini FX 22.0.368 - Py3.13",
+      "houdini": "22.0.368",
+      "ui_available": true,
+      "window_minimized": false,
+      "window_visible": true,
+      "hud_text": "01_food_shop  |  HIGH  |  91229 primitives  |  LIVE HOUDINI GUI"
+    },
+    "image": "screenshots/final/01_food_shop_high_hero_gui.png",
+    "sha256": "2c9784431533a686f11ddf8023279a34b5eb83905b8852cfda7a70b50874d6a6"
+  },
+  {
+    "tag": "02_general_store_high_hero",
+    "spec": {
+      "dataset": "02_general_store",
+      "quality": "high",
+      "view": "hero",
+      "tag": "02_general_store_high_hero"
+    },
+    "review": {
+      "variant_id": "02_general_store",
+      "quality": "high",
+      "points": 114848,
+      "primitives": 115968,
+      "display_node": "/obj/medieval_roof_high_v3/BUILDING",
+      "camera": {
+        "t": [
+          18.0,
+          15.0,
+          -21.0
+        ],
+        "r": [
+          -22.152627580061193,
+          141.00900595749454,
+          0.0
+        ],
+        "orthowidth": 21.0
+      },
+      "ui": true,
+      "scene": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\scenes\\medieval_building_roof_high_v3.hip",
+      "wire": false,
+      "position_hash": "d2afcd3e42fa61f4b9a1006b43f4d4b8aa63290154b6b06d8c712a59798e1b45",
+      "hda_sha256": "a8a473c9d9da841fbcb04aac47a776c5b5d96a58af1d9c834d8286cd708e6302",
+      "window_minimized": false,
+      "window_visible": true,
+      "hud_text": "02_general_store  |  HIGH  |  115968 primitives  |  LIVE HOUDINI GUI"
+    },
+    "capture": {
+      "path": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\screenshots\\final\\02_general_store_high_hero_gui.png",
+      "dimensions": [
+        1600,
+        1000
+      ],
+      "provenance": "houdini_gui_window_screenshot",
+      "window_title": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\scenes\\medieval_building_roof_high_v3.hip - Houdini FX 22.0.368 - Py3.13",
+      "houdini": "22.0.368",
+      "ui_available": true,
+      "window_minimized": false,
+      "window_visible": true,
+      "hud_text": "02_general_store  |  HIGH  |  115968 primitives  |  LIVE HOUDINI GUI"
+    },
+    "image": "screenshots/final/02_general_store_high_hero_gui.png",
+    "sha256": "bf6a4381c5149dd2b871d7bb2324be53105258d557ee80173a4af00318ac8501"
+  },
+  {
+    "tag": "03_herbal_store_high_hero",
+    "spec": {
+      "dataset": "03_herbal_store",
+      "quality": "high",
+      "view": "hero",
+      "tag": "03_herbal_store_high_hero"
+    },
+    "review": {
+      "variant_id": "03_herbal_store",
+      "quality": "high",
+      "points": 91589,
+      "primitives": 92110,
+      "display_node": "/obj/medieval_roof_high_v3/BUILDING",
+      "camera": {
+        "t": [
+          18.0,
+          15.0,
+          -21.0
+        ],
+        "r": [
+          -22.152627580061193,
+          141.00900595749454,
+          0.0
+        ],
+        "orthowidth": 21.0
+      },
+      "ui": true,
+      "scene": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\scenes\\medieval_building_roof_high_v3.hip",
+      "wire": false,
+      "position_hash": "27cae75355b8ff639f7a341f8f2045e2a860329b764262d023d4877e27bbb362",
+      "hda_sha256": "a8a473c9d9da841fbcb04aac47a776c5b5d96a58af1d9c834d8286cd708e6302",
+      "window_minimized": false,
+      "window_visible": true,
+      "hud_text": "03_herbal_store  |  HIGH  |  92110 primitives  |  LIVE HOUDINI GUI"
+    },
+    "capture": {
+      "path": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\screenshots\\final\\03_herbal_store_high_hero_gui.png",
+      "dimensions": [
+        1600,
+        1000
+      ],
+      "provenance": "houdini_gui_window_screenshot",
+      "window_title": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\scenes\\medieval_building_roof_high_v3.hip - Houdini FX 22.0.368 - Py3.13",
+      "houdini": "22.0.368",
+      "ui_available": true,
+      "window_minimized": false,
+      "window_visible": true,
+      "hud_text": "03_herbal_store  |  HIGH  |  92110 primitives  |  LIVE HOUDINI GUI"
+    },
+    "image": "screenshots/final/03_herbal_store_high_hero_gui.png",
+    "sha256": "6a6a1032ea44d00b92b0ec21ade9bcc3ee6dc02dd98a005dc321343bd6c37a0d"
+  },
+  {
+    "tag": "04_merchant_house_high_hero",
+    "spec": {
+      "dataset": "04_merchant_house",
+      "quality": "high",
+      "view": "hero",
+      "tag": "04_merchant_house_high_hero"
+    },
+    "review": {
+      "variant_id": "04_merchant_house",
+      "quality": "high",
+      "points": 128548,
+      "primitives": 129530,
+      "display_node": "/obj/medieval_roof_high_v3/BUILDING",
+      "camera": {
+        "t": [
+          18.0,
+          15.0,
+          -21.0
+        ],
+        "r": [
+          -22.152627580061193,
+          141.00900595749454,
+          0.0
+        ],
+        "orthowidth": 21.0
+      },
+      "ui": true,
+      "scene": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\scenes\\medieval_building_roof_high_v3.hip",
+      "wire": false,
+      "position_hash": "fa638e5e48a1c1536fa3054a3bd0cb2205147b9ae5869a26f898794e0588ee15",
+      "hda_sha256": "a8a473c9d9da841fbcb04aac47a776c5b5d96a58af1d9c834d8286cd708e6302",
+      "window_minimized": false,
+      "window_visible": true,
+      "hud_text": "04_merchant_house  |  HIGH  |  129530 primitives  |  LIVE HOUDINI GUI"
+    },
+    "capture": {
+      "path": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\screenshots\\final\\04_merchant_house_high_hero_gui.png",
+      "dimensions": [
+        1600,
+        1000
+      ],
+      "provenance": "houdini_gui_window_screenshot",
+      "window_title": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\scenes\\medieval_building_roof_high_v3.hip - Houdini FX 22.0.368 - Py3.13",
+      "houdini": "22.0.368",
+      "ui_available": true,
+      "window_minimized": false,
+      "window_visible": true,
+      "hud_text": "04_merchant_house  |  HIGH  |  129530 primitives  |  LIVE HOUDINI GUI"
+    },
+    "image": "screenshots/final/04_merchant_house_high_hero_gui.png",
+    "sha256": "f2c226a016395337e3daa4f97d943b1a6250b6fd372293a432c82f3dae2d937f"
+  },
+  {
+    "tag": "05_mixed_shop_high_hero",
+    "spec": {
+      "dataset": "05_mixed_shop",
+      "quality": "high",
+      "view": "hero",
+      "tag": "05_mixed_shop_high_hero"
+    },
+    "review": {
+      "variant_id": "05_mixed_shop",
+      "quality": "high",
+      "points": 159230,
+      "primitives": 160749,
+      "display_node": "/obj/medieval_roof_high_v3/BUILDING",
+      "camera": {
+        "t": [
+          18.0,
+          15.0,
+          -21.0
+        ],
+        "r": [
+          -22.152627580061193,
+          141.00900595749454,
+          0.0
+        ],
+        "orthowidth": 21.0
+      },
+      "ui": true,
+      "scene": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\scenes\\medieval_building_roof_high_v3.hip",
+      "wire": false,
+      "position_hash": "d0c800854c9c1c54696414ddcc51f529f44ffcd3e751e22615f0bf00db0c57b4",
+      "hda_sha256": "a8a473c9d9da841fbcb04aac47a776c5b5d96a58af1d9c834d8286cd708e6302",
+      "window_minimized": false,
+      "window_visible": true,
+      "hud_text": "05_mixed_shop  |  HIGH  |  160749 primitives  |  LIVE HOUDINI GUI"
+    },
+    "capture": {
+      "path": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\screenshots\\final\\05_mixed_shop_high_hero_gui.png",
+      "dimensions": [
+        1600,
+        1000
+      ],
+      "provenance": "houdini_gui_window_screenshot",
+      "window_title": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\scenes\\medieval_building_roof_high_v3.hip - Houdini FX 22.0.368 - Py3.13",
+      "houdini": "22.0.368",
+      "ui_available": true,
+      "window_minimized": false,
+      "window_visible": true,
+      "hud_text": "05_mixed_shop  |  HIGH  |  160749 primitives  |  LIVE HOUDINI GUI"
+    },
+    "image": "screenshots/final/05_mixed_shop_high_hero_gui.png",
+    "sha256": "ad6bde083caf4644257282c1bace757ff70637dd08578133641e7888f959cffb"
+  },
+  {
+    "tag": "06_tavern_high_hero",
+    "spec": {
+      "dataset": "06_tavern",
+      "quality": "high",
+      "view": "hero",
+      "tag": "06_tavern_high_hero"
+    },
+    "review": {
+      "variant_id": "06_tavern",
+      "quality": "high",
+      "points": 164676,
+      "primitives": 165625,
+      "display_node": "/obj/medieval_roof_high_v3/BUILDING",
+      "camera": {
+        "t": [
+          18.0,
+          15.0,
+          -21.0
+        ],
+        "r": [
+          -22.152627580061193,
+          141.00900595749454,
+          0.0
+        ],
+        "orthowidth": 21.0
+      },
+      "ui": true,
+      "scene": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\scenes\\medieval_building_roof_high_v3.hip",
+      "wire": false,
+      "position_hash": "a6db789671d22bd138bf4c6a2c5a413825fed249611b33c7244f4d4ee736cb70",
+      "hda_sha256": "a8a473c9d9da841fbcb04aac47a776c5b5d96a58af1d9c834d8286cd708e6302",
+      "window_minimized": false,
+      "window_visible": true,
+      "hud_text": "06_tavern  |  HIGH  |  165625 primitives  |  LIVE HOUDINI GUI"
+    },
+    "capture": {
+      "path": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\screenshots\\final\\06_tavern_high_hero_gui.png",
+      "dimensions": [
+        1600,
+        1000
+      ],
+      "provenance": "houdini_gui_window_screenshot",
+      "window_title": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\scenes\\medieval_building_roof_high_v3.hip - Houdini FX 22.0.368 - Py3.13",
+      "houdini": "22.0.368",
+      "ui_available": true,
+      "window_minimized": false,
+      "window_visible": true,
+      "hud_text": "06_tavern  |  HIGH  |  165625 primitives  |  LIVE HOUDINI GUI"
+    },
+    "image": "screenshots/final/06_tavern_high_hero_gui.png",
+    "sha256": "cfdcc35c29e2fb8019452de18c1539654f69f011d6dbce435197ec92326fd897"
+  },
+  {
+    "tag": "07_weapon_guild_high_hero",
+    "spec": {
+      "dataset": "07_weapon_guild",
+      "quality": "high",
+      "view": "hero",
+      "tag": "07_weapon_guild_high_hero"
+    },
+    "review": {
+      "variant_id": "07_weapon_guild",
+      "quality": "high",
+      "points": 182518,
+      "primitives": 183325,
+      "display_node": "/obj/medieval_roof_high_v3/BUILDING",
+      "camera": {
+        "t": [
+          18.0,
+          15.0,
+          -21.0
+        ],
+        "r": [
+          -22.152627580061193,
+          141.00900595749454,
+          0.0
+        ],
+        "orthowidth": 21.0
+      },
+      "ui": true,
+      "scene": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\scenes\\medieval_building_roof_high_v3.hip",
+      "wire": false,
+      "position_hash": "339bea2250e9da3971306126b6190ca1b97b226be5bde3959ba33f41cc653a8e",
+      "hda_sha256": "a8a473c9d9da841fbcb04aac47a776c5b5d96a58af1d9c834d8286cd708e6302",
+      "window_minimized": false,
+      "window_visible": true,
+      "hud_text": "07_weapon_guild  |  HIGH  |  183325 primitives  |  LIVE HOUDINI GUI"
+    },
+    "capture": {
+      "path": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\screenshots\\final\\07_weapon_guild_high_hero_gui.png",
+      "dimensions": [
+        1600,
+        1000
+      ],
+      "provenance": "houdini_gui_window_screenshot",
+      "window_title": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\scenes\\medieval_building_roof_high_v3.hip - Houdini FX 22.0.368 - Py3.13",
+      "houdini": "22.0.368",
+      "ui_available": true,
+      "window_minimized": false,
+      "window_visible": true,
+      "hud_text": "07_weapon_guild  |  HIGH  |  183325 primitives  |  LIVE HOUDINI GUI"
+    },
+    "image": "screenshots/final/07_weapon_guild_high_hero_gui.png",
+    "sha256": "c036d03538163cffb6519ac87f2362b9c88a6a2e486b65c0bc082153fb8568d1"
+  },
+  {
+    "tag": "08_normal_house_b_high_hero",
+    "spec": {
+      "dataset": "08_normal_house_b",
+      "quality": "high",
+      "view": "hero",
+      "tag": "08_normal_house_b_high_hero"
+    },
+    "review": {
+      "variant_id": "08_normal_house_b",
+      "quality": "high",
+      "points": 125256,
+      "primitives": 125720,
+      "display_node": "/obj/medieval_roof_high_v3/BUILDING",
+      "camera": {
+        "t": [
+          18.0,
+          15.0,
+          -21.0
+        ],
+        "r": [
+          -22.152627580061193,
+          141.00900595749454,
+          0.0
+        ],
+        "orthowidth": 21.0
+      },
+      "ui": true,
+      "scene": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\scenes\\medieval_building_roof_high_v3.hip",
+      "wire": false,
+      "position_hash": "15feeed21b00cec9228725831bf6f56f8f467e78360ce8a83c1fa10a0545208f",
+      "hda_sha256": "a8a473c9d9da841fbcb04aac47a776c5b5d96a58af1d9c834d8286cd708e6302",
+      "window_minimized": false,
+      "window_visible": true,
+      "hud_text": "08_normal_house_b  |  HIGH  |  125720 primitives  |  LIVE HOUDINI GUI"
+    },
+    "capture": {
+      "path": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\screenshots\\final\\08_normal_house_b_high_hero_gui.png",
+      "dimensions": [
+        1600,
+        1000
+      ],
+      "provenance": "houdini_gui_window_screenshot",
+      "window_title": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\scenes\\medieval_building_roof_high_v3.hip - Houdini FX 22.0.368 - Py3.13",
+      "houdini": "22.0.368",
+      "ui_available": true,
+      "window_minimized": false,
+      "window_visible": true,
+      "hud_text": "08_normal_house_b  |  HIGH  |  125720 primitives  |  LIVE HOUDINI GUI"
+    },
+    "image": "screenshots/final/08_normal_house_b_high_hero_gui.png",
+    "sha256": "afb6f7e713ae6fcd13cbb0411245409eea85a2cc2cabd62d61b1646077cea5b6"
+  },
+  {
+    "tag": "09_normal_house_c_high_hero",
+    "spec": {
+      "dataset": "09_normal_house_c",
+      "quality": "high",
+      "view": "hero",
+      "tag": "09_normal_house_c_high_hero"
+    },
+    "review": {
+      "variant_id": "09_normal_house_c",
+      "quality": "high",
+      "points": 145710,
+      "primitives": 146884,
+      "display_node": "/obj/medieval_roof_high_v3/BUILDING",
+      "camera": {
+        "t": [
+          18.0,
+          15.0,
+          -21.0
+        ],
+        "r": [
+          -22.152627580061193,
+          141.00900595749454,
+          0.0
+        ],
+        "orthowidth": 21.0
+      },
+      "ui": true,
+      "scene": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\scenes\\medieval_building_roof_high_v3.hip",
+      "wire": false,
+      "position_hash": "1f33372273fb1677e944ca1b1cbfb3b487085290b9534e5e9fff63e5e03f0794",
+      "hda_sha256": "a8a473c9d9da841fbcb04aac47a776c5b5d96a58af1d9c834d8286cd708e6302",
+      "window_minimized": false,
+      "window_visible": true,
+      "hud_text": "09_normal_house_c  |  HIGH  |  146884 primitives  |  LIVE HOUDINI GUI"
+    },
+    "capture": {
+      "path": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\screenshots\\final\\09_normal_house_c_high_hero_gui.png",
+      "dimensions": [
+        1600,
+        1000
+      ],
+      "provenance": "houdini_gui_window_screenshot",
+      "window_title": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\scenes\\medieval_building_roof_high_v3.hip - Houdini FX 22.0.368 - Py3.13",
+      "houdini": "22.0.368",
+      "ui_available": true,
+      "window_minimized": false,
+      "window_visible": true,
+      "hud_text": "09_normal_house_c  |  HIGH  |  146884 primitives  |  LIVE HOUDINI GUI"
+    },
+    "image": "screenshots/final/09_normal_house_c_high_hero_gui.png",
+    "sha256": "d92e9639ff213933f3e09f3c7d40203eb52e9fc9d1c0bfa4d1383fbd87e522c6"
+  },
+  {
+    "tag": "10_normal_house_c_canopy_high_hero",
+    "spec": {
+      "dataset": "10_normal_house_c_canopy",
+      "quality": "high",
+      "view": "hero",
+      "tag": "10_normal_house_c_canopy_high_hero"
+    },
+    "review": {
+      "variant_id": "10_normal_house_c_canopy",
+      "quality": "high",
+      "points": 153790,
+      "primitives": 155086,
+      "display_node": "/obj/medieval_roof_high_v3/BUILDING",
+      "camera": {
+        "t": [
+          18.0,
+          15.0,
+          -21.0
+        ],
+        "r": [
+          -22.152627580061193,
+          141.00900595749454,
+          0.0
+        ],
+        "orthowidth": 21.0
+      },
+      "ui": true,
+      "scene": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\scenes\\medieval_building_roof_high_v3.hip",
+      "wire": false,
+      "position_hash": "d93f426a13d3fdb2d55f8a4251510a17f9e61bac5a11fa3ffd18c61086515cd2",
+      "hda_sha256": "a8a473c9d9da841fbcb04aac47a776c5b5d96a58af1d9c834d8286cd708e6302",
+      "window_minimized": false,
+      "window_visible": true,
+      "hud_text": "10_normal_house_c_canopy  |  HIGH  |  155086 primitives  |  LIVE HOUDINI GUI"
+    },
+    "capture": {
+      "path": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\screenshots\\final\\10_normal_house_c_canopy_high_hero_gui.png",
+      "dimensions": [
+        1600,
+        1000
+      ],
+      "provenance": "houdini_gui_window_screenshot",
+      "window_title": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\scenes\\medieval_building_roof_high_v3.hip - Houdini FX 22.0.368 - Py3.13",
+      "houdini": "22.0.368",
+      "ui_available": true,
+      "window_minimized": false,
+      "window_visible": true,
+      "hud_text": "10_normal_house_c_canopy  |  HIGH  |  155086 primitives  |  LIVE HOUDINI GUI"
+    },
+    "image": "screenshots/final/10_normal_house_c_canopy_high_hero_gui.png",
+    "sha256": "33603af5574b90b7971d4b2984c7425751b47d4423b6e2c07e6a4264a192f7d7"
+  },
+  {
+    "tag": "11_artisan_house_high_hero",
+    "spec": {
+      "dataset": "11_artisan_house",
+      "quality": "high",
+      "view": "hero",
+      "tag": "11_artisan_house_high_hero"
+    },
+    "review": {
+      "variant_id": "11_artisan_house",
+      "quality": "high",
+      "points": 132367,
+      "primitives": 133321,
+      "display_node": "/obj/medieval_roof_high_v3/BUILDING",
+      "camera": {
+        "t": [
+          18.0,
+          15.0,
+          -21.0
+        ],
+        "r": [
+          -22.152627580061193,
+          141.00900595749454,
+          0.0
+        ],
+        "orthowidth": 21.0
+      },
+      "ui": true,
+      "scene": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\scenes\\medieval_building_roof_high_v3.hip",
+      "wire": false,
+      "position_hash": "c219582f184bb1045c52a2664d8312bbb5190ec7a07e4e8b31bcc31ec4fc4197",
+      "hda_sha256": "a8a473c9d9da841fbcb04aac47a776c5b5d96a58af1d9c834d8286cd708e6302",
+      "window_minimized": false,
+      "window_visible": true,
+      "hud_text": "11_artisan_house  |  HIGH  |  133321 primitives  |  LIVE HOUDINI GUI"
+    },
+    "capture": {
+      "path": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\screenshots\\final\\11_artisan_house_high_hero_gui.png",
+      "dimensions": [
+        1600,
+        1000
+      ],
+      "provenance": "houdini_gui_window_screenshot",
+      "window_title": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\scenes\\medieval_building_roof_high_v3.hip - Houdini FX 22.0.368 - Py3.13",
+      "houdini": "22.0.368",
+      "ui_available": true,
+      "window_minimized": false,
+      "window_visible": true,
+      "hud_text": "11_artisan_house  |  HIGH  |  133321 primitives  |  LIVE HOUDINI GUI"
+    },
+    "image": "screenshots/final/11_artisan_house_high_hero_gui.png",
+    "sha256": "c9091198b92613e72edad6603e364ca87d617089931d5ca58b5b095257cd0ec2"
+  },
+  {
+    "tag": "12_craft_guild_hall_high_hero",
+    "spec": {
+      "dataset": "12_craft_guild_hall",
+      "quality": "high",
+      "view": "hero",
+      "tag": "12_craft_guild_hall_high_hero"
+    },
+    "review": {
+      "variant_id": "12_craft_guild_hall",
+      "quality": "high",
+      "points": 200272,
+      "primitives": 202308,
+      "display_node": "/obj/medieval_roof_high_v3/BUILDING",
+      "camera": {
+        "t": [
+          18.0,
+          15.0,
+          -21.0
+        ],
+        "r": [
+          -22.152627580061193,
+          141.00900595749454,
+          0.0
+        ],
+        "orthowidth": 21.0
+      },
+      "ui": true,
+      "scene": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\scenes\\medieval_building_roof_high_v3.hip",
+      "wire": false,
+      "position_hash": "4f47cbfc82f3beaf86ce066ffe0533a1ce4a2a86f75d2f5305c3c994ca3789ed",
+      "hda_sha256": "a8a473c9d9da841fbcb04aac47a776c5b5d96a58af1d9c834d8286cd708e6302",
+      "window_minimized": false,
+      "window_visible": true,
+      "hud_text": "12_craft_guild_hall  |  HIGH  |  202308 primitives  |  LIVE HOUDINI GUI"
+    },
+    "capture": {
+      "path": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\screenshots\\final\\12_craft_guild_hall_high_hero_gui.png",
+      "dimensions": [
+        1600,
+        1000
+      ],
+      "provenance": "houdini_gui_window_screenshot",
+      "window_title": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\scenes\\medieval_building_roof_high_v3.hip - Houdini FX 22.0.368 - Py3.13",
+      "houdini": "22.0.368",
+      "ui_available": true,
+      "window_minimized": false,
+      "window_visible": true,
+      "hud_text": "12_craft_guild_hall  |  HIGH  |  202308 primitives  |  LIVE HOUDINI GUI"
+    },
+    "image": "screenshots/final/12_craft_guild_hall_high_hero_gui.png",
+    "sha256": "8ba003f0c6901ddba69743562ed9d8a15111a67418767af0fb22a92f8adb39ac"
+  },
+  {
+    "tag": "13_material_storage_high_hero",
+    "spec": {
+      "dataset": "13_material_storage",
+      "quality": "high",
+      "view": "hero",
+      "tag": "13_material_storage_high_hero"
+    },
+    "review": {
+      "variant_id": "13_material_storage",
+      "quality": "high",
+      "points": 100566,
+      "primitives": 102062,
+      "display_node": "/obj/medieval_roof_high_v3/BUILDING",
+      "camera": {
+        "t": [
+          18.0,
+          15.0,
+          -21.0
+        ],
+        "r": [
+          -22.152627580061193,
+          141.00900595749454,
+          0.0
+        ],
+        "orthowidth": 21.0
+      },
+      "ui": true,
+      "scene": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\scenes\\medieval_building_roof_high_v3.hip",
+      "wire": false,
+      "position_hash": "59c1f169434206d80ebd7fdc47c9af55e6362f85ca922264f95e03ea24c3928e",
+      "hda_sha256": "a8a473c9d9da841fbcb04aac47a776c5b5d96a58af1d9c834d8286cd708e6302",
+      "window_minimized": false,
+      "window_visible": true,
+      "hud_text": "13_material_storage  |  HIGH  |  102062 primitives  |  LIVE HOUDINI GUI"
+    },
+    "capture": {
+      "path": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\screenshots\\final\\13_material_storage_high_hero_gui.png",
+      "dimensions": [
+        1600,
+        1000
+      ],
+      "provenance": "houdini_gui_window_screenshot",
+      "window_title": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\scenes\\medieval_building_roof_high_v3.hip - Houdini FX 22.0.368 - Py3.13",
+      "houdini": "22.0.368",
+      "ui_available": true,
+      "window_minimized": false,
+      "window_visible": true,
+      "hud_text": "13_material_storage  |  HIGH  |  102062 primitives  |  LIVE HOUDINI GUI"
+    },
+    "image": "screenshots/final/13_material_storage_high_hero_gui.png",
+    "sha256": "2401e8e33f7107149d163c3e5f96b05606de44ded4a8d7486b999a556f44477a"
+  },
+  {
+    "tag": "14_toolmaker_workshop_high_hero",
+    "spec": {
+      "dataset": "14_toolmaker_workshop",
+      "quality": "high",
+      "view": "hero",
+      "tag": "14_toolmaker_workshop_high_hero"
+    },
+    "review": {
+      "variant_id": "14_toolmaker_workshop",
+      "quality": "high",
+      "points": 130554,
+      "primitives": 131419,
+      "display_node": "/obj/medieval_roof_high_v3/BUILDING",
+      "camera": {
+        "t": [
+          18.0,
+          15.0,
+          -21.0
+        ],
+        "r": [
+          -22.152627580061193,
+          141.00900595749454,
+          0.0
+        ],
+        "orthowidth": 21.0
+      },
+      "ui": true,
+      "scene": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\scenes\\medieval_building_roof_high_v3.hip",
+      "wire": false,
+      "position_hash": "d9a1c3cdb94e1cfdea14cd23894336ebfd2a817ea75ad45213ab239f66c691d0",
+      "hda_sha256": "a8a473c9d9da841fbcb04aac47a776c5b5d96a58af1d9c834d8286cd708e6302",
+      "window_minimized": false,
+      "window_visible": true,
+      "hud_text": "14_toolmaker_workshop  |  HIGH  |  131419 primitives  |  LIVE HOUDINI GUI"
+    },
+    "capture": {
+      "path": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\screenshots\\final\\14_toolmaker_workshop_high_hero_gui.png",
+      "dimensions": [
+        1600,
+        1000
+      ],
+      "provenance": "houdini_gui_window_screenshot",
+      "window_title": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\scenes\\medieval_building_roof_high_v3.hip - Houdini FX 22.0.368 - Py3.13",
+      "houdini": "22.0.368",
+      "ui_available": true,
+      "window_minimized": false,
+      "window_visible": true,
+      "hud_text": "14_toolmaker_workshop  |  HIGH  |  131419 primitives  |  LIVE HOUDINI GUI"
+    },
+    "image": "screenshots/final/14_toolmaker_workshop_high_hero_gui.png",
+    "sha256": "c094ed199fd8ff85703c597513a91839095d2f0890c4606a55ea80131e3b944b"
+  },
+  {
+    "tag": "15_forgehouse_high_hero",
+    "spec": {
+      "dataset": "15_forgehouse",
+      "quality": "high",
+      "view": "hero",
+      "tag": "15_forgehouse_high_hero"
+    },
+    "review": {
+      "variant_id": "15_forgehouse",
+      "quality": "high",
+      "points": 189251,
+      "primitives": 190357,
+      "display_node": "/obj/medieval_roof_high_v3/BUILDING",
+      "camera": {
+        "t": [
+          18.0,
+          15.0,
+          -21.0
+        ],
+        "r": [
+          -22.152627580061193,
+          141.00900595749454,
+          0.0
+        ],
+        "orthowidth": 21.0
+      },
+      "ui": true,
+      "scene": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\scenes\\medieval_building_roof_high_v3.hip",
+      "wire": false,
+      "position_hash": "7d8c8bfc8526851b5baa49741b18583f72c791481556b18b14480a0482eecebe",
+      "hda_sha256": "a8a473c9d9da841fbcb04aac47a776c5b5d96a58af1d9c834d8286cd708e6302",
+      "window_minimized": false,
+      "window_visible": true,
+      "hud_text": "15_forgehouse  |  HIGH  |  190357 primitives  |  LIVE HOUDINI GUI"
+    },
+    "capture": {
+      "path": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\screenshots\\final\\15_forgehouse_high_hero_gui.png",
+      "dimensions": [
+        1600,
+        1000
+      ],
+      "provenance": "houdini_gui_window_screenshot",
+      "window_title": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\scenes\\medieval_building_roof_high_v3.hip - Houdini FX 22.0.368 - Py3.13",
+      "houdini": "22.0.368",
+      "ui_available": true,
+      "window_minimized": false,
+      "window_visible": true,
+      "hud_text": "15_forgehouse  |  HIGH  |  190357 primitives  |  LIVE HOUDINI GUI"
+    },
+    "image": "screenshots/final/15_forgehouse_high_hero_gui.png",
+    "sha256": "a35d7fee76d878bc2b043bece77187861c3a8787bdec5c330cd0953abfd48145"
+  },
+  {
+    "tag": "baseline_high_hero",
+    "spec": {
+      "dataset": "baseline",
+      "quality": "high",
+      "view": "hero",
+      "tag": "baseline_high_hero"
+    },
+    "review": {
+      "variant_id": "baseline",
+      "quality": "high",
+      "points": 125256,
+      "primitives": 125720,
+      "display_node": "/obj/medieval_roof_high_v3/BUILDING",
+      "camera": {
+        "t": [
+          18.0,
+          15.0,
+          -21.0
+        ],
+        "r": [
+          -22.152627580061193,
+          141.00900595749454,
+          0.0
+        ],
+        "orthowidth": 21.0
+      },
+      "ui": true,
+      "scene": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\scenes\\medieval_building_roof_high_v3.hip",
+      "wire": false,
+      "position_hash": "15feeed21b00cec9228725831bf6f56f8f467e78360ce8a83c1fa10a0545208f",
+      "hda_sha256": "a8a473c9d9da841fbcb04aac47a776c5b5d96a58af1d9c834d8286cd708e6302",
+      "window_minimized": false,
+      "window_visible": true,
+      "hud_text": "baseline  |  HIGH  |  125720 primitives  |  LIVE HOUDINI GUI"
+    },
+    "capture": {
+      "path": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\screenshots\\final\\baseline_high_hero_gui.png",
+      "dimensions": [
+        1600,
+        1000
+      ],
+      "provenance": "houdini_gui_window_screenshot",
+      "window_title": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\scenes\\medieval_building_roof_high_v3.hip - Houdini FX 22.0.368 - Py3.13",
+      "houdini": "22.0.368",
+      "ui_available": true,
+      "window_minimized": false,
+      "window_visible": true,
+      "hud_text": "baseline  |  HIGH  |  125720 primitives  |  LIVE HOUDINI GUI"
+    },
+    "image": "screenshots/final/baseline_high_hero_gui.png",
+    "sha256": "31c3e602c2a57b5241729040ba4496c2d243e8339e71a716852ed4ef55510904"
+  }
+]

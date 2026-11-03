@@ -1,0 +1,16 @@
+{
+  "asset": "/Game/Medieval/Blueprints/BP_Medieval_03_village_inn_base",
+  "view": "interior",
+  "renderer": "Unreal editor HighResShot",
+  "eye_cm": [
+    -179.20000000000002,
+    -128.8,
+    100200.0
+  ],
+  "target_cm": [
+    -179.20000000000002,
+    179.2,
+    100165.0
+  ],
+  "focal_length_mm": 24.0
+}

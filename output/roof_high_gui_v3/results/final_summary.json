@@ -1,0 +1,50 @@
+{
+  "status": "pass",
+  "houdini": "22.0.368",
+  "hda_type": "mythic::medieval_house::4.1",
+  "hda_sha256": "a8a473c9d9da841fbcb04aac47a776c5b5d96a58af1d9c834d8286cd708e6302",
+  "variants": 15,
+  "baseline": 1,
+  "low_high_exports": 32,
+  "hero_gui_screenshots": 16,
+  "extra_gui_screenshots": 24,
+  "module_count": 22,
+  "stage_count": 7,
+  "python_sops": 0,
+  "regression_tests": 18,
+  "canopy_clearance_records": 8,
+  "original_files_unchanged": 29,
+  "low_primitive_range": [
+    8610,
+    23957
+  ],
+  "high_primitive_range": [
+    91229,
+    202308
+  ],
+  "high_low_ratio_range": [
+    7.652251951412948,
+    11.853890824622532
+  ],
+  "stages": {
+    "code_generated": "pass",
+    "static_checked": "pass",
+    "houdini_cooked": "pass",
+    "geometry_exported": "pass",
+    "gui_screenshots": "pass",
+    "hda_packaged": "pass",
+    "normal_baked": "not_run",
+    "unreal_checked": "not_run"
+  },
+  "image_provenance": "Actual visible Houdini native window screenshot. Crops/comparison sheets are derived from those exact captured pixels; no OpenGL ROP.",
+  "repository_path_audit": {
+    "status": "failed",
+    "failures": 47,
+    "scope": "Pre-existing missing resources in retired review manifests; package-local static checks pass."
+  },
+  "limits": [
+    "High mesh bevels appropriate orthogonal members; sculpted surface detail and final textures are not included.",
+    "Measured roof solver covers the existing 15 datasets and tested legacy grammars; arbitrary T/courtyard roof graphs unsupported.",
+    "Normal rebake, Unreal, collision/LOD and interior walkability not run."
+  ]
+}

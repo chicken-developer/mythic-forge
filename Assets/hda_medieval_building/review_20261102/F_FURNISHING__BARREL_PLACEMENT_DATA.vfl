@@ -1,0 +1,149 @@
+
+string furnishing_style()
+{
+    string style=chs("../interior_style");
+    if(style!="auto")return style;
+    string utility=chs("../utility_type");
+    if(utility=="windmill" || utility=="waterwheel")return "mill";
+    return chi("../workshop_enable") ? "workshop" : "home";
+}
+
+vector worldpos(vector p; vector center; float angle)
+{
+    matrix3 rot=ident();rotate(rot,radians(angle),set(0.,1.,0.));
+    center.y=0.;return p*rot+center;
+}
+
+int clear_of_stairs(vector p;vector size;int pr)
+{
+    float t=ch("../wall_thickness"),sw=ch("../stair_width");
+    float w=prim(0,"width",pr),d=prim(0,"depth",pr),bw=prim(0,"base_width",pr),bd=prim(0,"base_depth",pr);
+    int f=prim(0,"floor_i",pr);
+    if(int(prim(0,"is_round",pr)))
+    {
+        float outer=w*.5-t-.035,hole=f>0 ? min(.98,outer*.57)+.035 : 0.;
+        vector near=set(max(0.,abs(p.x)-size.x*.5),0.,max(0.,abs(p.z)-size.z*.5));
+        vector far=set(abs(p.x)+size.x*.5,0.,abs(p.z)+size.z*.5);
+        return length(far)<outer && length(near)>=hole;
+    }
+    if(abs(p.x)+size.x*.5>w*.5-t-.02 || abs(p.z)+size.z*.5>d*.5-t-.02)return 0;
+    float xhi=bw*.5-t,xlo=xhi-(2.*sw+.16),zhi=bd*.5-t-.10;
+    float run=min(1.9,bd-2.*t-1.35),zlo=zhi-run-sw;
+    return p.x+size.x*.5<=xlo-.035 || p.x-size.x*.5>=xhi+.035 ||
+           p.z+size.z*.5<=zlo-.035 || p.z-size.z*.5>=zhi+.035;
+}
+
+void part(vector p;vector size;int pr;string label;string material;vector color;int external)
+{
+    if(min(size)<.005 || (!external && !clear_of_stairs(p,size,pr)))return;
+    vector center=prim(0,"role_center",pr);float angle=prim(0,"rot_y",pr);
+    matrix3 transform=ident();scale(transform,size);rotate(transform,radians(angle),set(0.,1.,0.));
+    int pt=addpoint(0,worldpos(p,center,angle));
+    string role=prim(0,"role",pr);int f=prim(0,"floor_i",pr);
+    setpointattrib(0,"transform",pt,transform,"set");
+    setpointattrib(0,"part_name",pt,(external?"dressing/":"furnishing/")+role+"/floor_"+itoa(f)+"/"+label,"set");
+    setpointattrib(0,"part_material",pt,material,"set");setpointattrib(0,"part_color",pt,color,"set");
+    setpointattrib(0,"part_component",pt,external?"dressing":"furnishing","set");
+    setpointattrib(0,"role",pt,role,"set");setpointattrib(0,"role_id",pt,int(prim(0,"role_id",pr)),"set");
+    setpointattrib(0,"floor_i",pt,f,"set");
+    setpointattrib(0,"interior_style",pt,furnishing_style(),"set");
+}
+
+void table(vector p;float width;float depth;int pr)
+{
+    vector wood=set(.29,.17,.075);
+    part(p+set(0.,.76,0.),set(width,.10,depth),pr,"table_top","wood",wood,0);
+    for(int a=0;a<2;a++)for(int b=0;b<2;b++)
+        part(p+set((a-.5)*(width-.18),.36,(b-.5)*(depth-.18)),set(.09,.72,.09),pr,"table_leg","wood",wood,0);
+    for(int side=0;side<2;side++)
+    {
+        vector stool=p+set(0.,0.,(side==0?-1.:1.)*(depth*.5+.35));
+        part(stool+set(0.,.43,0.),set(.36,.08,.32),pr,"stool_seat","wood",wood,0);
+        for(int a=0;a<2;a++)for(int b=0;b<2;b++)
+            part(stool+set((a-.5)*.24,.20,(b-.5)*.20),set(.065,.40,.065),pr,"stool_leg","wood",wood,0);
+    }
+}
+
+void shelf(vector p;float width;int pr)
+{
+    if(chs("../detail_level")=="low")return;
+    vector wood=set(.25,.145,.065);
+    for(int side=0;side<2;side++)part(p+set((side-.5)*(width-.075),.73,0.),set(.075,1.46,.30),pr,"shelf_upright","wood",wood,0);
+    for(int k=0;k<3;k++)part(p+set(0.,.22+k*.52,0.),set(width,.065,.30),pr,"shelf_board","wood",wood,0);
+    part(p+set(-width*.19,.41,0.),set(width*.31,.30,.24),pr,"storage_box","wood",set(.38,.25,.12),0);
+    part(p+set(width*.20,.96,0.),set(width*.25,.34,.23),pr,"stored_linen","canvas",set(.55,.62,.56),0);
+}
+
+void bed(vector p;float width;float length;int pr)
+{
+    vector wood=set(.24,.135,.06);
+    part(p+set(0.,.34,0.),set(width,.12,length),pr,"bed_frame","wood",wood,0);
+    for(int a=0;a<2;a++)for(int b=0;b<2;b++)
+        part(p+set((a-.5)*(width-.13),.16,(b-.5)*(length-.15)),set(.10,.32,.10),pr,"bed_leg","wood",wood,0);
+    part(p+set(0.,.49,0.),set(width-.07,.18,length-.08),pr,"bed_mattress","sail",set(.78,.73,.57),0);
+    if(chs("../detail_level")!="low")
+    {
+        part(p+set(0.,.59,length*.13),set(width-.045,.065,length*.65),pr,"bed_blanket","canvas",set(.20,.42,.43),0);
+        part(p+set(0.,.62,-length*.33),set(width-.18,.13,length*.20),pr,"bed_pillow","sail",set(.86,.82,.69),0);
+    }
+    part(p+set(0.,.67,-length*.5+.035),set(width,.63,.075),pr,"bed_headboard","wood",wood,0);
+}
+
+void lantern(vector p;int pr;int external)
+{
+    vector iron=set(.075,.075,.065);
+    part(p,set(.16,.25,.16),pr,"lantern_glow","light",set(1.,.67,.24),external);
+    for(int k=0;k<2;k++)part(p+set(0.,(k-.5)*.31,0.),set(.23,.055,.23),pr,"lantern_cap","metal",iron,external);
+    if(chs("../detail_level")!="low")for(int a=0;a<2;a++)for(int b=0;b<2;b++)
+            part(p+set((a-.5)*.18,0.,(b-.5)*.18),set(.027,.29,.027),pr,"lantern_frame","metal",iron,external);
+    part(p+set(0.,.31,0.),set(.025,.25,.025),pr,"lantern_hanger","metal",iron,external);
+}
+
+void workbench(vector p;float width;int pr)
+{
+    vector wood=set(.28,.17,.075);
+    part(p+set(0.,.86,0.),set(width,.13,.64),pr,"workshop_bench_top","wood",wood,0);
+    for(int a=0;a<2;a++)for(int b=0;b<2;b++)
+        part(p+set((a-.5)*(width-.16),.40,(b-.5)*.48),set(.11,.80,.11),pr,"workshop_bench_leg","wood",wood,0);
+    part(p+set(0.,.24,0.),set(width-.13,.085,.48),pr,"workshop_bench_shelf","wood",wood,0);
+    part(p+set(-width*.24,.40,0.),set(width*.32,.26,.40),pr,"tool_storage_box","wood",set(.39,.26,.12),0);
+}
+
+void toolrack(vector p;float width;int pr)
+{
+    part(p+set(0.,1.24,0.),set(width,.14,.08),pr,"workshop_tool_rack","wood",set(.27,.16,.07),0);
+    if(chs("../detail_level")=="low")return;
+    for(int k=0;k<4;k++)
+    {
+        float x=width*(k-1.5)/4.;
+        part(p+set(x,.97,-.07),set(.045,.56,.045),pr,"tool_handle_"+itoa(k),"wood",set(.38,.25,.12),0);
+        part(p+set(x,1.28,-.07),set(.21,.13,.07),pr,"tool_head_"+itoa(k),"metal",set(.17,.18,.17),0);
+    }
+}
+
+void innbar(vector p;float width;int pr)
+{
+    part(p+set(0.,1.02,0.),set(width,.12,.48),pr,"inn_bar_top","wood",set(.32,.18,.075),0);
+    part(p+set(0.,.48,-.15),set(width-.12,.96,.10),pr,"inn_bar_front","wood",set(.25,.14,.06),0);
+    for(int k=0;k<2;k++)part(p+set((k-.5)*(width-.18),.48,0.),set(.12,.96,.40),pr,"inn_bar_support","wood",set(.25,.14,.06),0);
+    if(chs("../detail_level")!="low")for(int k=0;k<3;k++)
+        part(p+set(width*(k-1)/4.,1.15,0.),set(.10,.16,.10),pr,"inn_bar_cup_"+itoa(k),"stone",set(.48,.39,.28),0);
+}
+
+void flourstore(vector p;float width;int pr)
+{
+    part(p+set(0.,.15,0.),set(width,.28,.52),pr,"mill_storage_box","wood",set(.35,.22,.10),0);
+    int count=max(1,int(floor(width/.40)));
+    for(int k=0;k<count;k++)
+        part(p+set(-width*.5+(k+.5)*width/count,.58,0.),set(min(.36,width/count-.025),.58,.40),pr,"mill_flour_sack_"+itoa(k),"sail",set(.74,.68,.49),0);
+}
+
+int count=nprimitives(0);
+if(chi("../dressing"))for(int pr=0;pr<count;pr++)
+{
+    if(string(prim(0,"role",pr))!="main" || int(prim(0,"floor_i",pr))!=0)continue;
+    float w=prim(0,"base_width",pr),d=prim(0,"base_depth",pr),y=prim(0,"base_h",pr);
+    for(int k=0;k<2;k++)part(set(-w*.5-.52,y+.43,-d*.5+.40+k*.85),set(.62,.86,.62),pr,"exterior_barrel_"+itoa(k),"wood",set(.33,.20,.085),1);
+    break;
+}
+for(int pr=count-1;pr>=0;pr--)removeprim(0,pr,1);

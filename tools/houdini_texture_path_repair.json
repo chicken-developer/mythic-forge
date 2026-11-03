@@ -1,0 +1,255 @@
+{
+  "status": "passed",
+  "runtime": "22.0.368",
+  "scene": "Assets/hda_medieval_building/medieval_building.hip",
+  "backup": "Assets/hda_medieval_building/backup/path_refactor_20261102/medieval_building.hip",
+  "before_sha256": "2d2124e178227400d3c1147eb553a3a965f1da8a062c1a40bcd1e3d33c37f360",
+  "after_sha256": "9f6d43931b91c2f79a8ecdb31a5f47449fb201ca7cabed3eba279c3936b0f180",
+  "texture_paths_repaired": 48,
+  "nodes_verified": 424,
+  "graph_connections_and_other_parameter_values_preserved": true,
+  "saved_scene_reloaded": true,
+  "geometry_cook": "not_run; Manual update mode",
+  "changes": [
+    {
+      "parm": "/obj/medieval_building/materials/canvas/basecolor_texture",
+      "before": "E:/Repos/mythic-forge/HoudiniWorkspace/medieval_building/assets/textures/canvas_basecolor.png",
+      "after": "$HIP/assets/textures/canvas_basecolor.png"
+    },
+    {
+      "parm": "/obj/medieval_building/materials/canvas/baseNormal_texture",
+      "before": "E:/Repos/mythic-forge/HoudiniWorkspace/medieval_building/assets/textures/canvas_normal.png",
+      "after": "$HIP/assets/textures/canvas_normal.png"
+    },
+    {
+      "parm": "/obj/medieval_building/materials/canvas/rough_texture",
+      "before": "E:/Repos/mythic-forge/HoudiniWorkspace/medieval_building/assets/textures/canvas_roughness.png",
+      "after": "$HIP/assets/textures/canvas_roughness.png"
+    },
+    {
+      "parm": "/obj/medieval_building/materials/ember/basecolor_texture",
+      "before": "E:/Repos/mythic-forge/HoudiniWorkspace/medieval_building/assets/textures/ember_basecolor.png",
+      "after": "$HIP/assets/textures/ember_basecolor.png"
+    },
+    {
+      "parm": "/obj/medieval_building/materials/ember/baseNormal_texture",
+      "before": "E:/Repos/mythic-forge/HoudiniWorkspace/medieval_building/assets/textures/ember_normal.png",
+      "after": "$HIP/assets/textures/ember_normal.png"
+    },
+    {
+      "parm": "/obj/medieval_building/materials/ember/rough_texture",
+      "before": "E:/Repos/mythic-forge/HoudiniWorkspace/medieval_building/assets/textures/ember_roughness.png",
+      "after": "$HIP/assets/textures/ember_roughness.png"
+    },
+    {
+      "parm": "/obj/medieval_building/materials/flower/basecolor_texture",
+      "before": "E:/Repos/mythic-forge/HoudiniWorkspace/medieval_building/assets/textures/flower_basecolor.png",
+      "after": "$HIP/assets/textures/flower_basecolor.png"
+    },
+    {
+      "parm": "/obj/medieval_building/materials/flower/baseNormal_texture",
+      "before": "E:/Repos/mythic-forge/HoudiniWorkspace/medieval_building/assets/textures/flower_normal.png",
+      "after": "$HIP/assets/textures/flower_normal.png"
+    },
+    {
+      "parm": "/obj/medieval_building/materials/flower/rough_texture",
+      "before": "E:/Repos/mythic-forge/HoudiniWorkspace/medieval_building/assets/textures/flower_roughness.png",
+      "after": "$HIP/assets/textures/flower_roughness.png"
+    },
+    {
+      "parm": "/obj/medieval_building/materials/glass/basecolor_texture",
+      "before": "E:/Repos/mythic-forge/HoudiniWorkspace/medieval_building/assets/textures/glass_basecolor.png",
+      "after": "$HIP/assets/textures/glass_basecolor.png"
+    },
+    {
+      "parm": "/obj/medieval_building/materials/glass/baseNormal_texture",
+      "before": "E:/Repos/mythic-forge/HoudiniWorkspace/medieval_building/assets/textures/glass_normal.png",
+      "after": "$HIP/assets/textures/glass_normal.png"
+    },
+    {
+      "parm": "/obj/medieval_building/materials/glass/rough_texture",
+      "before": "E:/Repos/mythic-forge/HoudiniWorkspace/medieval_building/assets/textures/glass_roughness.png",
+      "after": "$HIP/assets/textures/glass_roughness.png"
+    },
+    {
+      "parm": "/obj/medieval_building/materials/leaf/basecolor_texture",
+      "before": "E:/Repos/mythic-forge/HoudiniWorkspace/medieval_building/assets/textures/leaf_basecolor.png",
+      "after": "$HIP/assets/textures/leaf_basecolor.png"
+    },
+    {
+      "parm": "/obj/medieval_building/materials/leaf/baseNormal_texture",
+      "before": "E:/Repos/mythic-forge/HoudiniWorkspace/medieval_building/assets/textures/leaf_normal.png",
+      "after": "$HIP/assets/textures/leaf_normal.png"
+    },
+    {
+      "parm": "/obj/medieval_building/materials/leaf/rough_texture",
+      "before": "E:/Repos/mythic-forge/HoudiniWorkspace/medieval_building/assets/textures/leaf_roughness.png",
+      "after": "$HIP/assets/textures/leaf_roughness.png"
+    },
+    {
+      "parm": "/obj/medieval_building/materials/light/basecolor_texture",
+      "before": "E:/Repos/mythic-forge/HoudiniWorkspace/medieval_building/assets/textures/light_basecolor.png",
+      "after": "$HIP/assets/textures/light_basecolor.png"
+    },
+    {
+      "parm": "/obj/medieval_building/materials/light/baseNormal_texture",
+      "before": "E:/Repos/mythic-forge/HoudiniWorkspace/medieval_building/assets/textures/light_normal.png",
+      "after": "$HIP/assets/textures/light_normal.png"
+    },
+    {
+      "parm": "/obj/medieval_building/materials/light/rough_texture",
+      "before": "E:/Repos/mythic-forge/HoudiniWorkspace/medieval_building/assets/textures/light_roughness.png",
+      "after": "$HIP/assets/textures/light_roughness.png"
+    },
+    {
+      "parm": "/obj/medieval_building/materials/metal/basecolor_texture",
+      "before": "E:/Repos/mythic-forge/HoudiniWorkspace/medieval_building/assets/textures/metal_basecolor.png",
+      "after": "$HIP/assets/textures/metal_basecolor.png"
+    },
+    {
+      "parm": "/obj/medieval_building/materials/metal/baseNormal_texture",
+      "before": "E:/Repos/mythic-forge/HoudiniWorkspace/medieval_building/assets/textures/metal_normal.png",
+      "after": "$HIP/assets/textures/metal_normal.png"
+    },
+    {
+      "parm": "/obj/medieval_building/materials/metal/rough_texture",
+      "before": "E:/Repos/mythic-forge/HoudiniWorkspace/medieval_building/assets/textures/metal_roughness.png",
+      "after": "$HIP/assets/textures/metal_roughness.png"
+    },
+    {
+      "parm": "/obj/medieval_building/materials/plaster/basecolor_texture",
+      "before": "E:/Repos/mythic-forge/HoudiniWorkspace/medieval_building/assets/textures/plaster_basecolor.png",
+      "after": "$HIP/assets/textures/plaster_basecolor.png"
+    },
+    {
+      "parm": "/obj/medieval_building/materials/plaster/baseNormal_texture",
+      "before": "E:/Repos/mythic-forge/HoudiniWorkspace/medieval_building/assets/textures/plaster_normal.png",
+      "after": "$HIP/assets/textures/plaster_normal.png"
+    },
+    {
+      "parm": "/obj/medieval_building/materials/plaster/rough_texture",
+      "before": "E:/Repos/mythic-forge/HoudiniWorkspace/medieval_building/assets/textures/plaster_roughness.png",
+      "after": "$HIP/assets/textures/plaster_roughness.png"
+    },
+    {
+      "parm": "/obj/medieval_building/materials/rock/basecolor_texture",
+      "before": "E:/Repos/mythic-forge/HoudiniWorkspace/medieval_building/assets/textures/rock_basecolor.png",
+      "after": "$HIP/assets/textures/rock_basecolor.png"
+    },
+    {
+      "parm": "/obj/medieval_building/materials/rock/baseNormal_texture",
+      "before": "E:/Repos/mythic-forge/HoudiniWorkspace/medieval_building/assets/textures/rock_normal.png",
+      "after": "$HIP/assets/textures/rock_normal.png"
+    },
+    {
+      "parm": "/obj/medieval_building/materials/rock/rough_texture",
+      "before": "E:/Repos/mythic-forge/HoudiniWorkspace/medieval_building/assets/textures/rock_roughness.png",
+      "after": "$HIP/assets/textures/rock_roughness.png"
+    },
+    {
+      "parm": "/obj/medieval_building/materials/roof/basecolor_texture",
+      "before": "E:/Repos/mythic-forge/HoudiniWorkspace/medieval_building/assets/textures/tile_basecolor.png",
+      "after": "$HIP/assets/textures/tile_basecolor.png"
+    },
+    {
+      "parm": "/obj/medieval_building/materials/roof/baseNormal_texture",
+      "before": "E:/Repos/mythic-forge/HoudiniWorkspace/medieval_building/assets/textures/tile_normal.png",
+      "after": "$HIP/assets/textures/tile_normal.png"
+    },
+    {
+      "parm": "/obj/medieval_building/materials/roof/rough_texture",
+      "before": "E:/Repos/mythic-forge/HoudiniWorkspace/medieval_building/assets/textures/tile_roughness.png",
+      "after": "$HIP/assets/textures/tile_roughness.png"
+    },
+    {
+      "parm": "/obj/medieval_building/materials/sail/basecolor_texture",
+      "before": "E:/Repos/mythic-forge/HoudiniWorkspace/medieval_building/assets/textures/sail_basecolor.png",
+      "after": "$HIP/assets/textures/sail_basecolor.png"
+    },
+    {
+      "parm": "/obj/medieval_building/materials/sail/baseNormal_texture",
+      "before": "E:/Repos/mythic-forge/HoudiniWorkspace/medieval_building/assets/textures/sail_normal.png",
+      "after": "$HIP/assets/textures/sail_normal.png"
+    },
+    {
+      "parm": "/obj/medieval_building/materials/sail/rough_texture",
+      "before": "E:/Repos/mythic-forge/HoudiniWorkspace/medieval_building/assets/textures/sail_roughness.png",
+      "after": "$HIP/assets/textures/sail_roughness.png"
+    },
+    {
+      "parm": "/obj/medieval_building/materials/stone/basecolor_texture",
+      "before": "E:/Repos/mythic-forge/HoudiniWorkspace/medieval_building/assets/textures/stone_basecolor.png",
+      "after": "$HIP/assets/textures/stone_basecolor.png"
+    },
+    {
+      "parm": "/obj/medieval_building/materials/stone/baseNormal_texture",
+      "before": "E:/Repos/mythic-forge/HoudiniWorkspace/medieval_building/assets/textures/stone_normal.png",
+      "after": "$HIP/assets/textures/stone_normal.png"
+    },
+    {
+      "parm": "/obj/medieval_building/materials/stone/rough_texture",
+      "before": "E:/Repos/mythic-forge/HoudiniWorkspace/medieval_building/assets/textures/stone_roughness.png",
+      "after": "$HIP/assets/textures/stone_roughness.png"
+    },
+    {
+      "parm": "/obj/medieval_building/materials/teal/basecolor_texture",
+      "before": "E:/Repos/mythic-forge/HoudiniWorkspace/medieval_building/assets/textures/teal_basecolor.png",
+      "after": "$HIP/assets/textures/teal_basecolor.png"
+    },
+    {
+      "parm": "/obj/medieval_building/materials/teal/baseNormal_texture",
+      "before": "E:/Repos/mythic-forge/HoudiniWorkspace/medieval_building/assets/textures/teal_normal.png",
+      "after": "$HIP/assets/textures/teal_normal.png"
+    },
+    {
+      "parm": "/obj/medieval_building/materials/teal/rough_texture",
+      "before": "E:/Repos/mythic-forge/HoudiniWorkspace/medieval_building/assets/textures/teal_roughness.png",
+      "after": "$HIP/assets/textures/teal_roughness.png"
+    },
+    {
+      "parm": "/obj/medieval_building/materials/tile/basecolor_texture",
+      "before": "E:/Repos/mythic-forge/HoudiniWorkspace/medieval_building/assets/textures/tile_basecolor.png",
+      "after": "$HIP/assets/textures/tile_basecolor.png"
+    },
+    {
+      "parm": "/obj/medieval_building/materials/tile/baseNormal_texture",
+      "before": "E:/Repos/mythic-forge/HoudiniWorkspace/medieval_building/assets/textures/tile_normal.png",
+      "after": "$HIP/assets/textures/tile_normal.png"
+    },
+    {
+      "parm": "/obj/medieval_building/materials/tile/rough_texture",
+      "before": "E:/Repos/mythic-forge/HoudiniWorkspace/medieval_building/assets/textures/tile_roughness.png",
+      "after": "$HIP/assets/textures/tile_roughness.png"
+    },
+    {
+      "parm": "/obj/medieval_building/materials/water/basecolor_texture",
+      "before": "E:/Repos/mythic-forge/HoudiniWorkspace/medieval_building/assets/textures/water_basecolor.png",
+      "after": "$HIP/assets/textures/water_basecolor.png"
+    },
+    {
+      "parm": "/obj/medieval_building/materials/water/baseNormal_texture",
+      "before": "E:/Repos/mythic-forge/HoudiniWorkspace/medieval_building/assets/textures/water_normal.png",
+      "after": "$HIP/assets/textures/water_normal.png"
+    },
+    {
+      "parm": "/obj/medieval_building/materials/water/rough_texture",
+      "before": "E:/Repos/mythic-forge/HoudiniWorkspace/medieval_building/assets/textures/water_roughness.png",
+      "after": "$HIP/assets/textures/water_roughness.png"
+    },
+    {
+      "parm": "/obj/medieval_building/materials/wood/basecolor_texture",
+      "before": "E:/Repos/mythic-forge/HoudiniWorkspace/medieval_building/assets/textures/wood_basecolor.png",
+      "after": "$HIP/assets/textures/wood_basecolor.png"
+    },
+    {
+      "parm": "/obj/medieval_building/materials/wood/baseNormal_texture",
+      "before": "E:/Repos/mythic-forge/HoudiniWorkspace/medieval_building/assets/textures/wood_normal.png",
+      "after": "$HIP/assets/textures/wood_normal.png"
+    },
+    {
+      "parm": "/obj/medieval_building/materials/wood/rough_texture",
+      "before": "E:/Repos/mythic-forge/HoudiniWorkspace/medieval_building/assets/textures/wood_roughness.png",
+      "after": "$HIP/assets/textures/wood_roughness.png"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+interface:
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+  display_name: "HDA Building — Modular Hybrid SOP"
+  short_description: "HDA module hóa SOP, context-aware rules, Unreal bake"
+  default_prompt: "Dùng $design-hda-building phân tích reference và 5–10 biến thể; tạo HDA Hybrid SOP trong Houdini 22 với stage/module subnets theo single responsibility, module_graph.json (ports/dependency DAG), graph audit, semantic wall/roof/opening rules, UV/LOD/collision và bake Unreal Editor. Không full Python SOP, không preview Python offline hoặc runtime cook."
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

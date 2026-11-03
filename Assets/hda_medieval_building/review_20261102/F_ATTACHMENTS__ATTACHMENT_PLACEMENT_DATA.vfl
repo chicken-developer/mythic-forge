@@ -1,0 +1,100 @@
+
+int member(vector local;vector size;float yaw;int src;string label;string material;vector color;string group)
+{
+    vector center=prim(0,"role_center",src);center.y=0.;float angle=prim(0,"rot_y",src);
+    matrix3 rot=ident();rotate(rot,radians(angle),set(0.,1.,0.));
+    matrix3 frame=ident();scale(frame,size);rotate(frame,radians(angle+yaw),set(0.,1.,0.));
+    int pt=addpoint(0,local*rot+center);setpointattrib(0,"transform",pt,frame,"set");
+    setpointgroup(0,group,pt,1);
+    setpointattrib(0,"part_name",pt,"attachments/main/"+label,"set");
+    setpointattrib(0,"part_material",pt,material,"set");setpointattrib(0,"part_color",pt,color,"set");
+    setpointattrib(0,"role",pt,"main","set");setpointattrib(0,"role_id",pt,int(prim(0,"role_id",src)),"set");
+    setpointattrib(0,"role_angle",pt,angle,"set");
+    return pt;
+}
+
+void beam(vector a;vector b;float width;int src;string label)
+{
+    float angle=prim(0,"rot_y",src);matrix3 rot=ident();rotate(rot,radians(angle),set(0.,1.,0.));
+    vector along=normalize(b-a),up=set(0.,1.,0.),depth=normalize(cross(along,up));
+    if(length(depth)<.01)depth=set(0.,0.,1.);
+    up=normalize(cross(depth,along));
+    matrix3 frame=set(along*distance(a,b),up*width,depth*width);frame*=rot;
+    int pt=member((a+b)*.5,set(1.,1.,1.),0.,src,label,"wood",set(.26,.15,.065),"box_members");
+    setpointattrib(0,"transform",pt,frame,"set");
+}
+
+int old=nprimitives(0);setdetailattrib(0,"bay_opening_id","","set");
+for(int src=0;src<old;src++)
+{
+    if(string(prim(0,"role",src))!="main")continue;
+    float w=prim(0,"base_width",src),d=prim(0,"base_depth",src),b=prim(0,"base_h",src),fh=prim(0,"floor_h",src);
+    int rounded=prim(0,"is_round",src),floors=prim(0,"floor_count",src);
+    vector wood=set(.26,.15,.065),plaster=set(.88,.81,.64);
+    if(chi("../cupola") && rounded)
+    {
+        float apex=0.;int found=0;
+        for(int roof=0;roof<nprimitives(1);roof++)if(string(prim(1,"role",roof))=="main")
+        {apex=float(prim(1,"top_y",roof))+float(prim(1,"roof_h",roof));found=1;break;}
+        if(found)
+        {
+            member(set(0.,apex+.22,0.),set(1.10,.62,1.10),0.,src,"cupola_glazing","glass",set(.13,.30,.32),"cupola_body");
+            int datum=member(set(0.,apex,0.),set(1.,1.,1.),0.,src,"cupola_datum","tile",wood,"cupola_datum");
+            for(int k=0;k<8;k++)
+            {
+                float a=2.*M_PI*k/8.,mid=a+M_PI/8.;
+                member(set(.55*cos(a),apex+.22,.55*sin(a)),set(.065,.76,.065),0.,src,"cupola_post","wood",wood,"box_members");
+                for(int end=0;end<2;end++)
+                    member(set(.508*cos(mid),apex-.13+end*.70,.508*sin(mid)),set(.43,.12,.09),-degrees(mid)-90.,src,"cupola_band","wood",wood,"box_members");
+            }
+            member(set(0.,apex+1.32,0.),set(.05,.26,.05),0.,src,"cupola_finial","metal",set(.12,.12,.10),"box_members");
+        }
+    }
+    if(chi("../workshop"))
+    {
+        float ww=ch("../workshop_width"),dd=ch("../workshop_depth"),z=ch("../workshop_offset"),cx=w*.5+ww*.5;
+        int datum=member(set(cx,b,z),set(1.,1.,1.),0.,src,"workshop_datum","tile",wood,"workshop_datum");
+        setpointattrib(0,"span_w",datum,ww,"set");setpointattrib(0,"span_d",datum,dd,"set");
+        for(int side=0;side<2;side++)for(int end=0;end<2;end++)
+        {
+            float x=w*.5+.10+side*(ww-.20),height=2.65-.35*(x-w*.5)/ww;
+            member(set(x,b+height*.5,z+(end-.5)*(dd-.20)),set(.15,height,.15),0.,src,"workshop_post","wood",wood,"box_members");
+        }
+        for(int end=0;end<2;end++)beam(set(w*.5,b+2.65,z+(end-.5)*(dd-.10)),set(w*.5+ww,b+2.30,z+(end-.5)*(dd-.10)),.14,src,"workshop_roof_beam");
+        int n=max(3,int(ceil(dd/.30)));
+        for(int k=0;k<n;k++)member(set(cx,b+.035,z-dd*.5+(k+.5)*dd/n),set(ww,.07,dd/n-.008),0.,src,"workshop_deck_board","wood",wood,"box_members");
+        float bench=min(1.7,ww*.65);
+        member(set(cx,b+.90,z),set(bench,.10,.56),0.,src,"workshop_bench_top","wood",wood,"box_members");
+        for(int a=0;a<2;a++)for(int c=0;c<2;c++)member(set(cx+(a-.5)*(bench-.16),b+.43,z+(c-.5)*.40),set(.10,.86,.10),0.,src,"workshop_bench_leg","wood",wood,"box_members");
+    }
+    if(chi("../bay_window") && !rounded && floors>=2)
+    {
+        float over=chs("../footprint")=="rectangular" ? ch("../upper_overhang") : 0.;
+        float upperw=w+2.*over,upperd=d+2.*over;
+        string rows[]=split(chs("../front_bays"),"/");string row=len(rows)>0?rows[min(1,len(rows)-1)]:".W.";
+        int n=max(1,len(row)),slot=0;
+        for(int k=0;k<n;k++)if(row[k:k+1]=="W"){slot=k;break;}
+        if(chs("../window_layout_mode")=="count")slot=0;
+        float bay_width=upperw/n,ww=ch("../window_width"),wh=ch("../window_height"),fw=ch("../frame_width");
+        float sx=min(1.,max(.45,bay_width-.25)/max(.01,ww)),sy=min(1.,(fh-.4)/max(.1,wh));
+        float cx=-upperw*.5+(slot+.5)*bay_width,cy=b+fh+fh*.52,wallz=-upperd*.5-.015,front=wallz-.55;
+        float bw=ww*sx+2.*fw+.16,bh=wh*sy+2.*fw+.16,depth=.55;
+        string opening="main_1_0_"+itoa(slot);setdetailattrib(0,"bay_opening_id",opening,"set");
+        int datum=member(set(cx,cy,front+depth*.5),set(1.,1.,1.),0.,src,"bay_datum","tile",wood,"bay_datum");
+        setpointattrib(0,"span_w",datum,bw,"set");setpointattrib(0,"span_d",datum,depth,"set");setpointattrib(0,"span_h",datum,bh,"set");
+        member(set(cx,cy,front+.04),set(bw,bh,.08),0.,src,"bay_front_wall","plaster",plaster,"box_members");
+        for(int side=0;side<2;side++)member(set(cx+(side-.5)*(bw-.08),cy,front+depth*.5),set(.08,bh,depth),0.,src,"bay_side_wall","plaster",plaster,"box_members");
+        member(set(cx,cy-bh*.5,front+depth*.5),set(bw+.10,.10,depth+.10),0.,src,"bay_floor_sill","wood",wood,"box_members");
+        for(int side=0;side<2;side++)beam(set(cx+(side-.5)*bw*.65,cy-bh*.5-.55,wallz+.025),set(cx+(side-.5)*bw*.65,cy-bh*.5-.03,front+.04),.10,src,"bay_support_brace");
+        int pt=member(set(cx,cy,front-.005),set(sx,sy,1.),0.,src,"bay_front_window","wood",wood,"bay_windows");
+        setpointgroup(0,"bay_cutters",pt,1);
+        for(int side=0;side<2;side++)
+        {
+            pt=member(set(cx+(side-.5)*bw,cy,front+depth*.5),set(.42/max(.01,ww),sy,1.),side==0?90.:-90.,src,"bay_side_window","wood",wood,"bay_windows");
+            setpointgroup(0,"bay_cutters",pt,1);
+        }
+        member(set(cx,cy,wallz),set(sx,sy,1.),0.,src,"bay_wall_connector","cut",wood,"bay_cutters");
+    }
+    break;
+}
+for(int pr=old-1;pr>=0;pr--)removeprim(0,pr,1);

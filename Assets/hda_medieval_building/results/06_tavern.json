@@ -1,0 +1,264 @@
+{
+  "variant_id": "06_tavern",
+  "effective_config": {
+    "schema_version": 1,
+    "variant_id": "06_tavern",
+    "label": "Tavern / inn",
+    "complexity": "complex",
+    "comparison_kind": "preset",
+    "source_kind": "input",
+    "reference_ids": [
+      "ref_06_tavern"
+    ],
+    "parameters": {
+      "footprint": "l_shape",
+      "width_m": 8.0,
+      "depth_m": 7.6,
+      "floor_count": 2,
+      "floor_height_m": 2.65,
+      "wall_thickness_m": 0.22,
+      "upper_overhang_m": 0.14,
+      "foundation_mode": "stone",
+      "foundation_height_m": 0.35,
+      "terrain_slope": 0.0,
+      "tower_radius_m": 1.7,
+      "tower_extra_height_m": 0.8,
+      "tower_taper": 0.0,
+      "wing_width_ratio": 0.55,
+      "wing_depth_ratio": 0.62,
+      "wing_floor_count": 2,
+      "wing_roof_ratio": 0.8,
+      "wing_offset_z_m": -0.7,
+      "wing_overlap_m": 1.0,
+      "tower_offset_z_m": 0.8,
+      "tower_inset_ratio": 0.42,
+      "layout_input_enable": false,
+      "layout_path": "",
+      "front_bays": "WDW/WDW",
+      "right_bays": "W.W/W.W",
+      "rear_bays": "W.W/W.W",
+      "left_bays": "W.W/W.W",
+      "window_layout_mode": "pattern",
+      "front_window_count": 3,
+      "right_window_count": 1,
+      "rear_window_count": 1,
+      "left_window_count": 1,
+      "window_width_m": 0.95,
+      "window_height_m": 1.2,
+      "door_width_m": 1.25,
+      "door_height_m": 2.1,
+      "frame_width_m": 0.09,
+      "shutters_enable": false,
+      "attic_window_enable": false,
+      "round_window_step": 5,
+      "timber_pattern": "curved_brace",
+      "facade_style": "B",
+      "facade_bay_width_m": 1.15,
+      "facade_accent_budget": 2,
+      "facade_module_density": 0.65,
+      "facade_overrides": "{}",
+      "roof_shape": "gable",
+      "roof_height_m": 2.4,
+      "eave_curve": 0.12,
+      "eave_depth_m": 0.45,
+      "tile_size_m": 0.43,
+      "dormer_count": 1,
+      "wing_dormer_count": 0,
+      "chimney_count": 1,
+      "cupola_enable": false,
+      "interior_enable": true,
+      "floor_thickness_m": 0.12,
+      "interior_furniture": true,
+      "interior_partitions": false,
+      "interior_lighting": true,
+      "interior_joist_spacing_m": 0.65,
+      "interior_stair_width_m": 0.85,
+      "interior_style": "auto",
+      "utility_type": "none",
+      "wheel_radius_m": 2.3,
+      "rotor_radius_m": 3.6,
+      "awning_enable": true,
+      "entrance_canopy": false,
+      "dressing_enable": true,
+      "balcony_layout": "front",
+      "balcony_depth_m": 1.0,
+      "workshop_enable": false,
+      "workshop_width_m": 2.7,
+      "workshop_depth_m": 3.2,
+      "workshop_offset_z_m": 0.6,
+      "bay_window_enable": false,
+      "scale": 1.0,
+      "palette": "storybook_red",
+      "detail_level": "high",
+      "mesh_quality": "normal",
+      "bevel_width_m": 0.025,
+      "context_mode": "paving",
+      "ground_enable": true,
+      "ground_margin_m": 0.9,
+      "ground_slope_preset": "flat",
+      "ground_slope_amount_m": 0.0,
+      "roof_axis": "x",
+      "window_shape": "rectangular",
+      "awning_span_ratio": 0.78
+    },
+    "seeds": {
+      "decoration": 17
+    },
+    "module_dependencies": [],
+    "expected_features": {
+      "floor_count": 2,
+      "entrance_count": 1,
+      "roof_type": "gable",
+      "footprint": "l_shape",
+      "interior_enable": true,
+      "normal_bake_from_high": true
+    },
+    "assumptions": [
+      "Dimensions are modeling targets, not surveyed measurements.",
+      "Hidden interiors follow the existing native floor/stair grammar.",
+      "Bespoke reference props, vegetation, signage and sculpted ornament are outside this base-color architectural bake."
+    ],
+    "outputs": {
+      "geometry": "geometry/06_tavern.bgeo.sc",
+      "hero": "previews/06_tavern_hero.png",
+      "comparison": "comparisons/06_tavern.png",
+      "result": "results/06_tavern.json"
+    }
+  },
+  "generator_version": "2026.11-medieval-layout-2",
+  "generator_sha256": "97dc6411103542504bee95ab795b0729a0b2b3bffc766765af39f9629b27772a",
+  "hip_sha256": "2cdbe43a3cc98b08c759fe3ab4220de1a9d57880782a731d43b8a86d103ea3a2",
+  "houdini": "22.0.368",
+  "seconds": 67.52757949999796,
+  "stages": {
+    "code_generated": "pass",
+    "static_checked": "pass",
+    "houdini_cooked": "pass",
+    "geometry_exported": "pass",
+    "normal_baked": "pass",
+    "rendered": "pass",
+    "unreal_imported": "not_run"
+  },
+  "low": {
+    "points": 27491,
+    "primitives": 46427,
+    "bounds_m": [
+      13.199999332427979,
+      8.886326901614666,
+      10.209999561309814
+    ],
+    "finite_attributes": true,
+    "degenerate_faces": 0,
+    "uv_min": [
+      0.0,
+      0.0
+    ],
+    "uv_max": [
+      0.9999656677246094,
+      0.4834059178829193
+    ],
+    "materials": {
+      "plaster": 1092,
+      "wood": 23711,
+      "glass": 252,
+      "metal": 1912,
+      "tile": 18368,
+      "stone": 96,
+      "rock": 12,
+      "canvas": 364,
+      "light": 220,
+      "leaf": 224,
+      "sail": 176
+    },
+    "position_sha256": "8c4eebff5a32eacec62d4e7c481d091c19d350396e122912127b318a39975780"
+  },
+  "high": {
+    "points": 266539,
+    "primitives": 523780,
+    "bounds_m": [
+      13.199999332427979,
+      8.886326901614666,
+      10.209999561309814
+    ],
+    "finite_attributes": true,
+    "degenerate_faces": 0,
+    "uv_min": [
+      -5.6977678468683735e-05,
+      -5.321080971043557e-05
+    ],
+    "uv_max": [
+      0.9999882578849792,
+      0.4834069013595581
+    ],
+    "materials": {
+      "plaster": 1092,
+      "wood": 213358,
+      "glass": 252,
+      "metal": 30704,
+      "tile": 275874,
+      "stone": 1504,
+      "rock": 12,
+      "canvas": 364,
+      "light": 220,
+      "leaf": 224,
+      "sail": 176
+    },
+    "position_sha256": "8cf454541b2aea530278ed4af0bacdd77f30c21aa29d1f6606a073f0522145a2"
+  },
+  "bake": {
+    "resolution": [
+      4096,
+      4096
+    ],
+    "nonflat_pixels": 7046802,
+    "normal_sha256": "1783a32171a0d0f158aa4b0860ac9166b1cc5c5334c87e0046a0b32f81cdce32",
+    "backend": "Houdini Copernicus bakegeometrytextures::2.0",
+    "normal_space": "DirectX / MikkT / linear",
+    "high_trace_piece_attribute": "bake_piece",
+    "projection_isolation": "native exploded connected components, identical low/high translations"
+  },
+  "opening_envelope_violations": [],
+  "image_provenance": "houdini_geometry_render",
+  "render_backend": "Houdini OpenGL ROP",
+  "files": {
+    "mesh": "E:\\Repos\\mythic-forge\\Assets\\_render\\SourceAssets\\Medieval15\\Meshes\\SM_MD15_06_tavern.fbx",
+    "high_mesh": "E:\\Repos\\mythic-forge\\Assets\\_render\\SourceAssets\\Medieval15\\High\\SM_MD15_06_tavern_High.fbx",
+    "normal": "E:\\Repos\\mythic-forge\\Assets\\_render\\SourceAssets\\Medieval15\\Normals\\06_tavern_Normal_DX.png"
+  },
+  "geometry_readback": {
+    "low": {
+      "primitives": 46427,
+      "invalid_normals": 0,
+      "finite_attributes": true,
+      "uv_bounds": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.9999656677246094,
+          0.4834059178829193
+        ]
+      ],
+      "nonpacked_primitives": 0
+    },
+    "high": {
+      "primitives": 523780,
+      "invalid_normals": 0,
+      "finite_attributes": true,
+      "uv_bounds": [
+        [
+          -5.6977678468683735e-05,
+          -5.321080971043557e-05
+        ],
+        [
+          0.9999882578849792,
+          0.4834069013595581
+        ]
+      ],
+      "nonpacked_primitives": 0
+    }
+  },
+  "fbx_sha256": "2831e219834bfab85cdc160524d1b8bea1105bc1d250fc29782207336d4a113e",
+  "high_fbx_sha256": "2e1ff4dde6aaf0b0e6055dad8ab03510649354134fe559a57c24df39937a547e"
+}

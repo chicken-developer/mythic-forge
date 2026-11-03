@@ -1,0 +1,83 @@
+
+vector worldpos(vector p;vector center;float angle)
+{
+    float c=cos(radians(angle)),s=sin(radians(angle));
+    return set(center.x+c*p.x+s*p.z,p.y,center.z-s*p.x+c*p.z);
+}
+float grade(vector p;vector lo;vector hi)
+{
+    string preset=chs("../ground_slope_preset");float amount=ch("../ground_slope_amount_m");
+    if(preset=="flat" || preset=="none")return 0.;
+    if(preset=="legacy" || preset=="")return -ch("../terrain_slope")*(p.x-lo.x);
+    int alongz=find(preset,"z")>=0;
+    float q=alongz ? (p.z-lo.z)/max(hi.z-lo.z,.01) : (p.x-lo.x)/max(hi.x-lo.x,.01);
+    float sign=(find(preset,"neg")>=0 || find(preset,"-")>=0) ? -1. : 1.;
+    return sign*amount*q;
+}
+void solidprofile(vector p[];vector direction;float depth;string material;string name;vector color;string role;int rid)
+{
+    if(len(p)<3 || depth<.001)return;
+    int reverse=dot(cross(p[1]-p[0],p[2]-p[0]),direction)>0.;
+    int poly=addprim(0,"poly");
+    for(int i=0;i<len(p);i++)
+    {
+        int pt=addpoint(0,p[reverse ? len(p)-1-i : i]);addvertex(0,poly,pt);
+        setpointattrib(0,"extrude_direction",pt,direction,"set");
+    }
+    setprimattrib(0,"extrude_distance",poly,depth,"set");
+    setprimattrib(0,"name",poly,name,"set");setprimattrib(0,"material_family",poly,material,"set");
+    setprimattrib(0,"Cd",poly,color,"set");setprimattrib(0,"role",poly,role,"set");
+    setprimattrib(0,"role_id",poly,rid,"set");setprimattrib(0,"component",poly,"site","set");
+}
+void member(vector position;vector size;vector center;float angle;string part;string material;vector color;string role;int rid)
+{
+    if(min(size)<.001)return;
+    float a=radians(angle);vector x=set(cos(a),0.,-sin(a)),z=set(sin(a),0.,cos(a));
+    int pt=addpoint(0,worldpos(position,center,angle));
+    matrix3 transform=set(x*size.x,set(0.,size.y,0.),z*size.z);
+    setpointattrib(0,"transform",pt,transform,"set");
+    setpointattrib(0,"part_name",pt,part,"set");setpointattrib(0,"part_material",pt,material,"set");
+    setpointattrib(0,"part_color",pt,color,"set");setpointattrib(0,"role",pt,role,"set");setpointattrib(0,"role_id",pt,rid,"set");
+}
+void beam(vector start;vector end;float width;vector center;float angle;string part;string role;int rid)
+{
+    vector a=worldpos(start,center,angle),b=worldpos(end,center,angle),along=normalize(b-a);
+    vector ref=abs(along.y)<.95 ? set(0.,1.,0.) : set(1.,0.,0.);
+    vector x=normalize(cross(along,ref)),z=cross(x,along);
+    int pt=addpoint(0,(a+b)*.5);matrix3 transform=set(x*width,along*distance(a,b),z*width);
+    setpointattrib(0,"transform",pt,transform,"set");setpointattrib(0,"part_name",pt,part,"set");
+    setpointattrib(0,"part_material",pt,"wood","set");setpointattrib(0,"part_color",pt,set(.27,.19,.12),"set");
+    setpointattrib(0,"role",pt,role,"set");setpointattrib(0,"role_id",pt,rid,"set");
+}
+
+int count=nprimitives(0);string mode=chs("../foundation_mode");
+for(int pr=0;pr<count;pr++)
+{
+    if(hasprimattrib(0,"floor_i") && int(prim(0,"floor_i",pr))>0)continue;
+    float top=prim(0,"base_h",pr),w=prim(0,"base_width",pr),d=prim(0,"base_depth",pr);
+    if(w<=0)w=prim(0,"width",pr);if(d<=0)d=prim(0,"depth",pr);
+    vector center=prim(0,"role_center",pr);string role=prim(0,"role",pr);int rid=prim(0,"role_id",pr);
+    vector profile[];int vertices[]=primpoints(0,pr);
+    foreach(int source;vertices)
+    {
+        vector p=point(0,"P",source),delta=p-center;delta.y=0.;
+        // Preserve the actual input outline and rotation; pad the plinth 25 cm.
+        if(int(prim(0,"is_round",pr)))delta*=1.+.50/max(w,.01);
+        else
+        {
+            float angle=radians(float(prim(0,"rot_y",pr))),c=cos(angle),s=sin(angle);
+            vector local=set(c*delta.x-s*delta.z,0.,s*delta.x+c*delta.z);
+            local.x*=1.+.50/max(w,.01);local.z*=1.+.50/max(d,.01);
+            delta=set(c*local.x+s*local.z,0.,-s*local.x+c*local.z);
+        }
+        append(profile,set(center.x+delta.x,top,center.z+delta.z));
+    }
+    float depth=mode=="stone" ? max(top,.06) : min(.24,max(top,.06));
+    solidprofile(profile,set(0.,-1.,0.),depth,"stone","site/"+role+"/foundation_cap",set(.39,.38,.35),role,rid);
+    if(mode=="hybrid" && top>.5)
+    {
+        for(int i=0;i<len(profile);i++)profile[i].y=top*.48;
+        solidprofile(profile,set(0.,-1.,0.),top*.48,"stone","site/"+role+"/lower_stone_base",set(.39,.38,.35),role,rid);
+    }
+}
+for(int pr=count-1;pr>=0;pr--)removeprim(0,pr,1);

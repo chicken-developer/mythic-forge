@@ -1,0 +1,20 @@
+{
+  "status": "pass",
+  "result": {
+    "network": "/obj/medieval_roof_high_v3/BUILDING",
+    "nodes": [
+      "OUT_BUILDING",
+      "LAYOUT",
+      "SHELL",
+      "OPENINGS",
+      "ROOF",
+      "DETAILS",
+      "UV_MATERIAL",
+      "OUTPUT",
+      "PUBLIC_BUILDING_OUTPUT",
+      "PUBLIC_LOW",
+      "PUBLIC_HIGH"
+    ],
+    "bounds": "[7.22853, -8.6295, 25.7653, 1.3794]"
+  }
+}

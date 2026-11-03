@@ -1,0 +1,1 @@
+s@material_family="plaster";v@Cd=set(0.9,0.82,0.63);s@component="walls";if(s@name==""||s@material_family=="cut")s@name=s@component+"_"+itoa(@primnum);

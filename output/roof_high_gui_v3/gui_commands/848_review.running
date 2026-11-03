@@ -1,0 +1,1 @@
+{"dataset": "06_tavern", "quality": "low", "target": [0.0, 6.2, -2.0], "width": 7.0, "wire": true, "tag": "06_dormer_low_wire", "script": "gui_review.py", "id": "848_review"}

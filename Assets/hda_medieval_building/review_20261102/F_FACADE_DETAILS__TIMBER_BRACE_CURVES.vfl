@@ -1,0 +1,17 @@
+// Curve data only. One native Sweep generates every curved timber brace.
+int count=nprimitives(0);vector up={0,1,0};
+if(chs("../timber_pattern")=="curved_brace")for(int src=0;src<count;src++){
+ if(prim(0,"opening",src)!=".")continue;
+ vector n=prim(0,"facade_normal",src),u=prim(0,"edge_u",src);
+ float b=prim(0,"floor_b",src),h=prim(0,"floor_h",src),w=prim(0,"bay_width",src);
+ vector center=primuv(0,"P",src,set(.5,.5,0));center.y=b+h/2;center+=n*.08;
+ for(int side=0;side<2;side++){
+  float sign=side?1:-1;vector a=center+u*sign*(w/2-.08);a.y=b+h*.42;
+  vector z=center+u*sign*.04;z.y=b+h-.16;
+  int pts[];for(int i=0;i<=8;i++){
+   float t=float(i)/8;vector p=lerp(a,z,t);p+=u*sign*(sin(t*M_PI)*w*.12);
+   append(pts,addpoint(0,p));
+  }int p=addprim(0,"polyline",pts);setprimattrib(0,"name",p,"curved_brace_"+itoa(src)+"_"+itoa(side));
+ }
+}
+for(int p=count-1;p>=0;p--)removeprim(0,p,1);

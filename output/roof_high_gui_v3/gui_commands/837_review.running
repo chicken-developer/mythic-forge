@@ -1,0 +1,1 @@
+{"dataset": "07_weapon_guild", "quality": "low", "label": "BEFORE V2 LOW", "scene": "../modular_rebuild_v2/scenes/variants/07_weapon_guild.hip", "asset_path": "/obj/medieval_modular_v2/BUILDING", "view": "hero", "target": [1.0, 6.5, 0.0], "width": 14.0, "tag": "07_weapon_guild_before_roof", "script": "gui_review.py", "id": "837_review"}

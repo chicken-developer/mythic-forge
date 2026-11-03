@@ -1,0 +1,250 @@
+{
+  "status": "failed",
+  "root": "E:\\Repos\\mythic-forge",
+  "counts": {
+    "python_files": 139,
+    "json_files": 1147,
+    "active_json_files": 73,
+    "manifest_file_paths": 226
+  },
+  "required_entry_points": 12,
+  "resolved_source_roots": 126,
+  "failures": [
+    {
+      "file": "Assets/_render/SourceAssets/Gothic/FacadeReview/facade_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "Assets/hda_gothic_building/references/master.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Gothic/FacadeReview/facade_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "Assets/hda_gothic_building/references/preset_01.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\plaster_basecolor.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\plaster_normal.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\plaster_roughness.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\wood_basecolor.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\wood_normal.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\wood_roughness.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\tile_basecolor.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\tile_normal.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\tile_roughness.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\stone_basecolor.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\stone_normal.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\stone_roughness.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\teal_basecolor.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\teal_normal.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\teal_roughness.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\glass_basecolor.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\glass_normal.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\glass_roughness.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\metal_basecolor.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\metal_normal.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\metal_roughness.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\canvas_basecolor.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\canvas_normal.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\canvas_roughness.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\sail_basecolor.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\sail_normal.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\sail_roughness.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\ember_basecolor.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\ember_normal.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\ember_roughness.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\water_basecolor.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\water_normal.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\water_roughness.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\leaf_basecolor.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\leaf_normal.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\leaf_roughness.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\flower_basecolor.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\flower_normal.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\flower_roughness.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\light_basecolor.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\light_normal.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\light_roughness.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\rock_basecolor.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\rock_normal.png"
+    },
+    {
+      "file": "Assets/_render/SourceAssets/Medieval/material_manifest.json",
+      "issue": "missing manifest resource",
+      "path": "E:\\Repos\\mythic-forge\\Assets\\hda_medieval_building\\assets\\textures\\rock_roughness.png"
+    }
+  ],
+  "limits": "Static source/config audit only; no Houdini cook, Unreal editor or binary asset validation."
+}

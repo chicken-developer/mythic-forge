@@ -1,0 +1,7 @@
+
+int pt=primpoint(0,@primnum,0);
+s@name=point(0,"part_name",pt);s@material_family=point(0,"part_material",pt);v@Cd=point(0,"part_color",pt);
+s@component=point(0,"part_component",pt);s@role=point(0,"role",pt);
+i@role_id=point(0,"role_id",pt);i@floor_i=point(0,"floor_i",pt);
+s@interior_style=point(0,"interior_style",pt);
+i@light_source=match("*lantern_glow",s@name);f@emission_strength=i@light_source?4.:0.;

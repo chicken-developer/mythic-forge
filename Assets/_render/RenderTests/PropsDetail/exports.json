@@ -1,0 +1,187 @@
+{
+  "status": "passed",
+  "exports": [
+    {
+      "family": "Medieval",
+      "quality": "low",
+      "presets": 24,
+      "triangles": 894778,
+      "interior_lights": 59,
+      "checksum_mismatches": 0,
+      "invalid_normals": 0
+    },
+    {
+      "family": "Medieval",
+      "quality": "normal",
+      "presets": 24,
+      "triangles": 1454460,
+      "interior_lights": 59,
+      "checksum_mismatches": 0,
+      "invalid_normals": 0
+    },
+    {
+      "family": "Medieval",
+      "quality": "high",
+      "presets": 24,
+      "triangles": 1609992,
+      "interior_lights": 59,
+      "checksum_mismatches": 0,
+      "invalid_normals": 0
+    },
+    {
+      "family": "Gothic",
+      "quality": "normal",
+      "presets": 28,
+      "triangles": 10095717,
+      "interior_lights": 209,
+      "checksum_mismatches": 0,
+      "invalid_normals": 0
+    }
+  ],
+  "quality_comparison": [
+    {
+      "id": "01_townhouse_base",
+      "low": 41359,
+      "normal": 73321,
+      "high": 77945
+    },
+    {
+      "id": "01_townhouse_compact",
+      "low": 41252,
+      "normal": 69952,
+      "high": 74504
+    },
+    {
+      "id": "01_townhouse_large",
+      "low": 52603,
+      "normal": 91757,
+      "high": 98957
+    },
+    {
+      "id": "01_townhouse_small",
+      "low": 27208,
+      "normal": 42878,
+      "high": 45086
+    },
+    {
+      "id": "02_round_workshop_base",
+      "low": 35200,
+      "normal": 53628,
+      "high": 61548
+    },
+    {
+      "id": "02_round_workshop_compact",
+      "low": 29302,
+      "normal": 45914,
+      "high": 52498
+    },
+    {
+      "id": "02_round_workshop_large",
+      "low": 39788,
+      "normal": 61236,
+      "high": 72484
+    },
+    {
+      "id": "02_round_workshop_small",
+      "low": 23030,
+      "normal": 31490,
+      "high": 37782
+    },
+    {
+      "id": "03_village_inn_base",
+      "low": 50294,
+      "normal": 78792,
+      "high": 84722
+    },
+    {
+      "id": "03_village_inn_compact",
+      "low": 38575,
+      "normal": 59093,
+      "high": 62853
+    },
+    {
+      "id": "03_village_inn_large",
+      "low": 67605,
+      "normal": 110527,
+      "high": 118293
+    },
+    {
+      "id": "03_village_inn_small",
+      "low": 33808,
+      "normal": 52808,
+      "high": 55938
+    },
+    {
+      "id": "04_windmill_base",
+      "low": 24098,
+      "normal": 36798,
+      "high": 45614
+    },
+    {
+      "id": "04_windmill_compact",
+      "low": 29612,
+      "normal": 46164,
+      "high": 55404
+    },
+    {
+      "id": "04_windmill_large",
+      "low": 43890,
+      "normal": 70870,
+      "high": 84206
+    },
+    {
+      "id": "04_windmill_small",
+      "low": 22040,
+      "normal": 33404,
+      "high": 40344
+    },
+    {
+      "id": "05_watermill_base",
+      "low": 35733,
+      "normal": 61201,
+      "high": 66533
+    },
+    {
+      "id": "05_watermill_compact",
+      "low": 32586,
+      "normal": 54259,
+      "high": 58255
+    },
+    {
+      "id": "05_watermill_large",
+      "low": 44659,
+      "normal": 73881,
+      "high": 80921
+    },
+    {
+      "id": "05_watermill_small",
+      "low": 22700,
+      "normal": 34391,
+      "high": 37463
+    },
+    {
+      "id": "06_cliff_house_base",
+      "low": 32730,
+      "normal": 55925,
+      "high": 62105
+    },
+    {
+      "id": "06_cliff_house_compact",
+      "low": 43737,
+      "normal": 72278,
+      "high": 78926
+    },
+    {
+      "id": "06_cliff_house_large",
+      "low": 54581,
+      "normal": 100502,
+      "high": 108962
+    },
+    {
+      "id": "06_cliff_house_small",
+      "low": 28388,
+      "normal": 43391,
+      "high": 48649
+    }
+  ]
+}

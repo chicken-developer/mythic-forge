@@ -1,0 +1,57 @@
+{
+  "houdini": "22.0.368",
+  "hda_sha256": "90fa34e28094a8d15b560349f3e284619a680a553058937c1b2bccb0484ac687",
+  "relocated_asset": "results/portable/relocated_medieval_building.hda",
+  "definitions": [
+    {
+      "type": "mythic::medieval_house::4.0",
+      "library": "E:\\Repos\\mythic-forge\\output\\modular_rebuild_v2\\results\\portable\\relocated_medieval_building.hda"
+    },
+    {
+      "type": "mythic::medieval_stage_openings::2.0",
+      "library": "E:\\Repos\\mythic-forge\\output\\modular_rebuild_v2\\results\\portable\\relocated_medieval_building.hda"
+    },
+    {
+      "type": "mythic::medieval_stage_roof::2.0",
+      "library": "E:\\Repos\\mythic-forge\\output\\modular_rebuild_v2\\results\\portable\\relocated_medieval_building.hda"
+    },
+    {
+      "type": "mythic::medieval_stage_details::2.0",
+      "library": "E:\\Repos\\mythic-forge\\output\\modular_rebuild_v2\\results\\portable\\relocated_medieval_building.hda"
+    },
+    {
+      "type": "mythic::medieval_stage_uv_material::2.0",
+      "library": "E:\\Repos\\mythic-forge\\output\\modular_rebuild_v2\\results\\portable\\relocated_medieval_building.hda"
+    },
+    {
+      "type": "mythic::medieval_module_openings_wall_cuts::2.0",
+      "library": "E:\\Repos\\mythic-forge\\output\\modular_rebuild_v2\\results\\portable\\relocated_medieval_building.hda"
+    },
+    {
+      "type": "mythic::medieval_module_uv_material_surfacing::2.0",
+      "library": "E:\\Repos\\mythic-forge\\output\\modular_rebuild_v2\\results\\portable\\relocated_medieval_building.hda"
+    }
+  ],
+  "baseline": {
+    "points": 19042,
+    "bounds": [
+      10.0,
+      8.834652058780193,
+      8.84600019454956
+    ],
+    "hash": "6e9e91a5e5f0f7df661f9c98a14942f105ba4221ca3f395f2f4ab3cf2e9f4c4e"
+  },
+  "changed_width": {
+    "points": 19821,
+    "bounds": [
+      10.600000381469727,
+      8.834652058780193,
+      8.84600019454956
+    ],
+    "hash": "48f61de54896130a4827fa09f99bb9aaafbf2575bda85764ec7e8229a119517f"
+  },
+  "errors": [],
+  "external_geometry_files": [],
+  "authoring_scripts_imported": false,
+  "status": "pass"
+}

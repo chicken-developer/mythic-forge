@@ -1,0 +1,72 @@
+{
+  "status": "pass",
+  "result": {
+    "ui": true,
+    "node": "/obj/medieval_modular_v2/BUILDING",
+    "viewport": "panetab1",
+    "viewer_methods": [
+      "_displayRadialMenu",
+      "_qtParentWindow",
+      "_qtScreenGeometry",
+      "createFloatingViewport",
+      "curViewport",
+      "displayRadialMenu",
+      "extraCameras",
+      "findViewport",
+      "getOCIODisplay",
+      "isShowingDisplayOptionsBar",
+      "pinCamera",
+      "qtParentWindow",
+      "qtScreenGeometry",
+      "qtWindow",
+      "resetViewportCamera",
+      "selectedViewport",
+      "setExtraCameras",
+      "setOCIODisplayView",
+      "setShowCameras",
+      "setViewportLayout",
+      "showCameras",
+      "showDisplayOptionsBar",
+      "useViewportLoadMasks",
+      "useViewportOverrides",
+      "usingViewportLoadMasks",
+      "usingViewportOverrides",
+      "viewportLayout",
+      "viewports"
+    ],
+    "viewport_methods": [
+      "camera",
+      "cameraPath",
+      "cameraToModelTransform",
+      "defaultCamera",
+      "exportViewToCameraContinuously",
+      "isCameraLockedToView",
+      "isViewExportedToCameraContinuously",
+      "isViewingThroughExtraCamera",
+      "lockCameraToView",
+      "ndcToCameraTransform",
+      "saveViewToCamera",
+      "setCamera",
+      "setCameraParms",
+      "setDefaultCamera",
+      "useDefaultCamera",
+      "viewPivot",
+      "viewTransform",
+      "viewportToNDCTransform",
+      "windowToViewportTransform"
+    ],
+    "controls": {
+      "detail_level": "high",
+      "mesh_quality": "normal",
+      "footprint": "l_shape",
+      "roof_axis": 1,
+      "dormer_count": 1
+    },
+    "bounds": [
+      13.199999332427979,
+      8.886326901614666,
+      10.209999561309814
+    ],
+    "primitives": 21762
+  }
+}

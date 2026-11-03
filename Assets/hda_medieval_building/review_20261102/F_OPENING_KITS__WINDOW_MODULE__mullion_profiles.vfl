@@ -1,0 +1,30 @@
+
+int profile(vector positions[]; string material; string part; vector color; float depth)
+{
+    int prim = addprim(0, "poly");
+    // Houdini's polygon convention is clockwise viewed from its normal.
+    // The profile faces +Z, extrusion goes into the wall, and its back cap
+    // becomes the visible exterior surface facing -Z.
+    for (int i=len(positions)-1; i>=0; i--)
+    {
+        int pt = addpoint(0, positions[i]);
+        addvertex(0, prim, pt);
+        setpointattrib(0, "extrude_direction", pt, set(0.,0.,1.), "set");
+    }
+    setprimattrib(0, "extrude_distance", prim, depth, "set");
+    setprimattrib(0, "name", prim, part, "set");
+    setprimattrib(0, "material_family", prim, material, "set");
+    setprimattrib(0, "Cd", prim, color, "set");
+    return prim;
+}
+
+void rectangle(float x0; float y0; float x1; float y1; float z;
+               string material; string part; vector color; float depth)
+{
+    vector p[] = array(set(x0,y0,z),set(x1,y0,z),set(x1,y1,z),set(x0,y1,z));
+    profile(p, material, part, color, depth);
+}
+
+float w=ch("../../window_width_m"),h=ch("../../window_height_m");
+rectangle(-.022,-h*.5,.022,h*.5,-.10,"wood","window_mullion",set(.27,.19,.12),.09);
+rectangle(-w*.5,-.10,w*.5,-.057,-.10,"wood","window_transom",set(.27,.19,.12),.09);

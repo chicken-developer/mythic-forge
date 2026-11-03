@@ -1,0 +1,392 @@
+{
+  "variant_id": "13_material_storage",
+  "config": "datasets/13_material_storage.json",
+  "levels": {
+    "low": {
+      "points": 11174,
+      "primitives": 8610,
+      "dimensions": [
+        12.425000190734863,
+        6.5049992725253105,
+        8.84600019454956
+      ],
+      "bounds_min": [
+        -5.5,
+        -0.11999999731779099,
+        -4.546000003814697
+      ],
+      "bounds_max": [
+        6.925000190734863,
+        6.3849992752075195,
+        4.300000190734863
+      ],
+      "finite_positions": true,
+      "uv_present": true,
+      "uv_finite": true,
+      "normals_present": true,
+      "normals_finite": true,
+      "position_hash": "6b00279e3e8cc198f1dfe1bd70aeaac8522dc10cb3b959c98257bbe6e787dc0f",
+      "uv_hash": "92f0a48d299000e3bd5ce2eb68f7dfd686dc941f89f1202b00f9afe52f92504d",
+      "exact_duplicate_polygons": 0,
+      "degenerate_polygons": 0,
+      "material_families": {
+        "plaster": 112,
+        "wood": 1802,
+        "glass": 36,
+        "metal": 704,
+        "tile": 5834,
+        "": 14,
+        "stone": 24,
+        "rock": 6,
+        "light": 52,
+        "leaf": 26
+      },
+      "file": "geometry/13_material_storage_low.bgeo.sc",
+      "sha256": "09406a405208eae2b79314ed5d037f430a8bed4f9a5896827dfb7363704ee9a1"
+    },
+    "high": {
+      "points": 100566,
+      "primitives": 102062,
+      "dimensions": [
+        12.425000190734863,
+        6.5049992725253105,
+        8.84600019454956
+      ],
+      "bounds_min": [
+        -5.5,
+        -0.11999999731779099,
+        -4.546000003814697
+      ],
+      "bounds_max": [
+        6.925000190734863,
+        6.3849992752075195,
+        4.300000190734863
+      ],
+      "finite_positions": true,
+      "uv_present": true,
+      "uv_finite": true,
+      "normals_present": true,
+      "normals_finite": true,
+      "position_hash": "59c1f169434206d80ebd7fdc47c9af55e6362f85ca922264f95e03ea24c3928e",
+      "uv_hash": "fdedbc7719e43f3e4f3af20039c8754008231ce2dfd4d98a43e5e22e9237635c",
+      "exact_duplicate_polygons": 0,
+      "degenerate_polygons": 0,
+      "material_families": {
+        "plaster": 112,
+        "wood": 15306,
+        "glass": 36,
+        "metal": 796,
+        "tile": 85323,
+        "": 13,
+        "stone": 392,
+        "rock": 6,
+        "light": 52,
+        "leaf": 26
+      },
+      "file": "geometry/13_material_storage_high.bgeo.sc",
+      "sha256": "5b62471aab48cd301acbf18d4675f87fdfa2b6d647a726fefb160933f4566e45"
+    }
+  },
+  "roof": {
+    "raw_faces": 24,
+    "top_faces": 48,
+    "top_dimensions": [
+      10.09999942779541,
+      2.4799997806549072,
+      7.700000286102295
+    ],
+    "max_source_surface_error_m": 1.8367420295817283e-07,
+    "raw_faces_mixing_roles": 0,
+    "raw_patch_ids": {
+      "roof/0": 24
+    },
+    "visible_tile_points": {
+      "roof/0": 864
+    },
+    "dormers": []
+  },
+  "canopy": {
+    "roof_faces": {
+      "DETAILS/site": 0,
+      "OPENINGS/attachments": 0
+    },
+    "tile_faces": {
+      "DETAILS/site": 0,
+      "OPENINGS/attachments": 0
+    }
+  },
+  "errors": [],
+  "warnings": [
+    {
+      "path": "SHELL/facade_layout/ALL_OPENING_POINTS",
+      "messages": [
+        "A mis-match of attributes on the inputs was detected.  Some attribute values may not be initialized to expected values, e.g.: aperture_w, floor_i, opening_top, bay_width, outward, ..."
+      ]
+    },
+    {
+      "path": "OPENINGS/kits/WINDOW_MODULE/extrude_shutter_straps",
+      "messages": [
+        "Invalid attribute specification: \"extrude_direction\"."
+      ]
+    },
+    {
+      "path": "OPENINGS/kits/WINDOW_MODULE/merge_opening_parts",
+      "messages": [
+        "A mis-match of attributes on the inputs was detected.  Some attribute values may not be initialized to expected values, i.e.: extrude_direction, extrude_distance, material_family, name, Cd."
+      ]
+    },
+    {
+      "path": "OPENINGS/kits/DOOR_MODULE/merge_opening_parts",
+      "messages": [
+        "A mis-match of attributes on the inputs was detected.  Some attribute values may not be initialized to expected values, i.e.: extrude_direction, extrude_distance."
+      ]
+    },
+    {
+      "path": "OPENINGS/attachments/COPY_TIMBER_AND_BAY_WALLS",
+      "messages": [
+        "'box_members' is not a valid group."
+      ]
+    },
+    {
+      "path": "OPENINGS/attachments/COPY_CUPOLA_BODY",
+      "messages": [
+        "'cupola_body' is not a valid group."
+      ]
+    },
+    {
+      "path": "OPENINGS/attachments/extrude_attachment_roofs",
+      "messages": [
+        "Invalid attribute specification: \"extrude_direction\"."
+      ]
+    },
+    {
+      "path": "OPENINGS/attachments/skin_cupola_cone",
+      "messages": [
+        "Hull type has no rows or columns."
+      ]
+    },
+    {
+      "path": "OPENINGS/attachments/extrude_cupola_cap",
+      "messages": [
+        "Invalid attribute specification: \"extrude_direction\"."
+      ]
+    },
+    {
+      "path": "OPENINGS/attachments/COPY_ORIEL_WINDOWS",
+      "messages": [
+        "'bay_windows' is not a valid group."
+      ]
+    },
+    {
+      "path": "OPENINGS/attachments/OUT_BAY_CONNECTOR",
+      "messages": [
+        "'bay_cutters' is not a valid group."
+      ]
+    },
+    {
+      "path": "OPENINGS/attachments/merge_attachments",
+      "messages": [
+        "A mis-match of attributes on the inputs was detected.  Some attribute values may not be initialized to expected values, e.g.: extrude_direction, floor_h, curve, round_segments, module_id, ..."
+      ]
+    },
+    {
+      "path": "OPENINGS/attachments/canopy_with_supported_architecture",
+      "messages": [
+        "A mis-match of attributes on the inputs was detected.  Some attribute values may not be initialized to expected values, e.g.: extrude_direction, floor_h, curve, round_segments, module_id, ..."
+      ]
+    },
+    {
+      "path": "OPENINGS/wall_cuts/F_WALL_FINISH/WALLS_AND_GABLES",
+      "messages": [
+        "A mis-match of attributes on the inputs was detected.  Some attribute values may not be initialized to expected values, i.e.: Cd, top_y, name, material_family."
+      ]
+    },
+    {
+      "path": "ROOF/patch_surfaces/SKIN_CONE_ROOFS",
+      "messages": [
+        "Hull type has no rows or columns."
+      ]
+    },
+    {
+      "path": "ROOF/patch_surfaces/HIPPED_ROOF_MODULE/skin_role_0",
+      "messages": [
+        "Hull type has no rows or columns."
+      ]
+    },
+    {
+      "path": "ROOF/patch_surfaces/HIPPED_ROOF_MODULE/skin_role_1",
+      "messages": [
+        "Hull type has no rows or columns."
+      ]
+    },
+    {
+      "path": "ROOF/patch_surfaces/HIPPED_ROOF_MODULE/skin_role_2",
+      "messages": [
+        "Hull type has no rows or columns."
+      ]
+    },
+    {
+      "path": "ROOF/patch_surfaces/ROOF_SURFACE",
+      "messages": [
+        "A mis-match of attributes on the inputs was detected.  Some attribute values may not be initialized to expected values, e.g.: roof_role, roof_axis, roof_patch_id, profile_round, Cd, ..."
+      ]
+    },
+    {
+      "path": "ROOF/patch_surfaces/SKIN_GABLE_SECONDARY",
+      "messages": [
+        "Hull type has no rows or columns."
+      ]
+    },
+    {
+      "path": "ROOF/patch_surfaces/SKIN_CONE_SECONDARY",
+      "messages": [
+        "Hull type has no rows or columns."
+      ]
+    },
+    {
+      "path": "ROOF/dormers/DORMER_MODULE/merge_dormer_kit",
+      "messages": [
+        "A mis-match of attributes on the inputs was detected.  Some attribute values may not be initialized to expected values, e.g.: part_role, module_id, N, extrude_direction, material_family, ..."
+      ]
+    },
+    {
+      "path": "ROOF/trim/merge_roof_details",
+      "messages": [
+        "A mis-match of attributes on the inputs was detected.  Some attribute values may not be initialized to expected values, e.g.: width, depth, role_id, curve, round_segments, ..."
+      ]
+    },
+    {
+      "path": "DETAILS/facade/MERGE_TIMBER",
+      "messages": [
+        "A mis-match of attributes on the inputs was detected.  Some attribute values may not be initialized to expected values, e.g.: extrude_direction, width, depth, role_id, curve, ..."
+      ]
+    },
+    {
+      "path": "DETAILS/facade/FACADE_DETAIL_MODULE/REFERENCE_HERO_MODULES/MERGE_INSTANCED_KITS",
+      "messages": [
+        "A mis-match of attributes on the inputs was detected.  Some attribute values may not be initialized to expected values, i.e.: module_prefix."
+      ]
+    },
+    {
+      "path": "DETAILS/facade/FACADE_DETAIL_MODULE/REFERENCE_HERO_MODULES/MERGE_HERO_GEOMETRY",
+      "messages": [
+        "A mis-match of attributes on the inputs was detected.  Some attribute values may not be initialized to expected values, i.e.: module_prefix, Cd."
+      ]
+    },
+    {
+      "path": "DETAILS/interior/merge_interior_structure",
+      "messages": [
+        "A mis-match of attributes on the inputs was detected.  Some attribute values may not be initialized to expected values, e.g.: extrude_direction, width, depth, curve, round_segments, ..."
+      ]
+    },
+    {
+      "path": "DETAILS/balcony/merge_balcony_structure",
+      "messages": [
+        "A mis-match of attributes on the inputs was detected.  Some attribute values may not be initialized to expected values, e.g.: extrude_direction, width, depth, curve, round_segments, ..."
+      ]
+    },
+    {
+      "path": "DETAILS/utilities/place_windmill_on_main_front",
+      "messages": [
+        "'windmill' is not a valid group."
+      ]
+    },
+    {
+      "path": "DETAILS/utilities/place_waterwheel_by_main_right_wall",
+      "messages": [
+        "'waterwheel' is not a valid group."
+      ]
+    },
+    {
+      "path": "DETAILS/site/extrude_entrance_roof",
+      "messages": [
+        "Invalid attribute specification: \"extrude_direction\"."
+      ]
+    },
+    {
+      "path": "DETAILS/site/merge_site_and_entrance",
+      "messages": [
+        "A mis-match of attributes on the inputs was detected.  Some attribute values may not be initialized to expected values, e.g.: extrude_direction, floor_h, curve, round_segments, module_id, ..."
+      ]
+    },
+    {
+      "path": "DETAILS/furnishing/merge_furnishing",
+      "messages": [
+        "A mis-match of attributes on the inputs was detected.  Some attribute values may not be initialized to expected values, e.g.: floor_i, role_id, part_material, interior_style, part_component, ..."
+      ]
+    },
+    {
+      "path": "UV_MATERIAL/surfacing/MERGE_BUILDING",
+      "messages": [
+        "A mis-match of attributes on the inputs was detected.  Some attribute values may not be initialized to expected values, e.g.: name, top_y, side, bay_width, opening_offset_u_m, ..."
+      ]
+    }
+  ],
+  "high_to_low_primitive_ratio": 11.853890824622532,
+  "checks": {
+    "roof_domain": true,
+    "high_is_distinct_geometry": true,
+    "solid_canopy_has_tiles": true,
+    "bounds_preserved_in_high": true,
+    "finite_geometry_uv_normals": true,
+    "no_exact_defective_faces": true,
+    "no_cook_errors": true
+  },
+  "status": "pass",
+  "seconds": 3.0729191999998875,
+  "scene": "scenes/13_material_storage.hip",
+  "gui_screenshot": {
+    "tag": "13_material_storage_high_hero",
+    "spec": {
+      "dataset": "13_material_storage",
+      "quality": "high",
+      "view": "hero",
+      "tag": "13_material_storage_high_hero"
+    },
+    "review": {
+      "variant_id": "13_material_storage",
+      "quality": "high",
+      "points": 100566,
+      "primitives": 102062,
+      "display_node": "/obj/medieval_roof_high_v3/BUILDING",
+      "camera": {
+        "t": [
+          18.0,
+          15.0,
+          -21.0
+        ],
+        "r": [
+          -22.152627580061193,
+          141.00900595749454,
+          0.0
+        ],
+        "orthowidth": 21.0
+      },
+      "ui": true,
+      "scene": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\scenes\\medieval_building_roof_high_v3.hip",
+      "wire": false,
+      "position_hash": "59c1f169434206d80ebd7fdc47c9af55e6362f85ca922264f95e03ea24c3928e",
+      "hda_sha256": "a8a473c9d9da841fbcb04aac47a776c5b5d96a58af1d9c834d8286cd708e6302",
+      "window_minimized": false,
+      "window_visible": true,
+      "hud_text": "13_material_storage  |  HIGH  |  102062 primitives  |  LIVE HOUDINI GUI"
+    },
+    "capture": {
+      "path": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\screenshots\\final\\13_material_storage_high_hero_gui.png",
+      "dimensions": [
+        1600,
+        1000
+      ],
+      "provenance": "houdini_gui_window_screenshot",
+      "window_title": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\scenes\\medieval_building_roof_high_v3.hip - Houdini FX 22.0.368 - Py3.13",
+      "houdini": "22.0.368",
+      "ui_available": true,
+      "window_minimized": false,
+      "window_visible": true,
+      "hud_text": "13_material_storage  |  HIGH  |  102062 primitives  |  LIVE HOUDINI GUI"
+    },
+    "image": "screenshots/final/13_material_storage_high_hero_gui.png",
+    "sha256": "2401e8e33f7107149d163c3e5f96b05606de44ded4a8d7486b999a556f44477a"
+  },
+  "hda_sha256": "a8a473c9d9da841fbcb04aac47a776c5b5d96a58af1d9c834d8286cd708e6302"
+}

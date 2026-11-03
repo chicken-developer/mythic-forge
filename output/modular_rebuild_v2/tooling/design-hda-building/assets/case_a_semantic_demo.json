@@ -1,0 +1,123 @@
+{
+  "schema_version": 1,
+  "building_id": "golem_blacksmith_case_a_demo",
+  "source_kind": "synthetic_diagnostic",
+  "target": "unreal_editor_bake",
+  "style": "storybook_medieval",
+  "seed": 1042,
+  "course_height_m": 0.34,
+  "module_length_m": 1.1,
+  "min_piece_m": 0.12,
+  "walls": [
+    {
+      "id": "front",
+      "start_xz": [0.0, 0.0],
+      "end_xz": [8.0, 0.0],
+      "height_m": 4.6,
+      "thickness_m": 0.32,
+      "surface": "wood_planks"
+    },
+    {
+      "id": "east",
+      "start_xz": [8.0, 0.0],
+      "end_xz": [8.0, 8.0],
+      "height_m": 4.6,
+      "thickness_m": 0.32,
+      "surface": "wood_planks"
+    },
+    {
+      "id": "rear_wing",
+      "start_xz": [8.0, 8.0],
+      "end_xz": [5.0, 8.0],
+      "height_m": 4.6,
+      "thickness_m": 0.32,
+      "surface": "stone"
+    },
+    {
+      "id": "inside_return",
+      "start_xz": [5.0, 8.0],
+      "end_xz": [5.0, 5.0],
+      "height_m": 4.6,
+      "thickness_m": 0.32,
+      "surface": "stone"
+    },
+    {
+      "id": "back",
+      "start_xz": [5.0, 5.0],
+      "end_xz": [0.0, 5.0],
+      "height_m": 4.6,
+      "thickness_m": 0.32,
+      "surface": "plaster"
+    },
+    {
+      "id": "west",
+      "start_xz": [0.0, 5.0],
+      "end_xz": [0.0, 0.0],
+      "height_m": 4.6,
+      "thickness_m": 0.32,
+      "surface": "plaster"
+    }
+  ],
+  "openings": [
+    {
+      "id": "door_01",
+      "wall_id": "front",
+      "kind": "door",
+      "u_m": 0.8,
+      "width_m": 1.4,
+      "sill_m": 0.0,
+      "height_m": 2.4
+    },
+    {
+      "id": "window_01",
+      "wall_id": "front",
+      "kind": "window",
+      "u_m": 3.05,
+      "width_m": 1.1,
+      "sill_m": 1.5,
+      "height_m": 1.6
+    },
+    {
+      "id": "window_02",
+      "wall_id": "front",
+      "kind": "window",
+      "u_m": 5.25,
+      "width_m": 1.15,
+      "sill_m": 1.5,
+      "height_m": 1.6
+    },
+    {
+      "id": "side_window",
+      "wall_id": "east",
+      "kind": "window",
+      "u_m": 5.6,
+      "width_m": 1.1,
+      "sill_m": 1.4,
+      "height_m": 1.55
+    }
+  ],
+  "roof_patches": [
+    {
+      "id": "main_roof",
+      "roof_type": "gable",
+      "footprint_xz": [[0.0, 0.0], [8.0, 0.0], [8.0, 5.0], [0.0, 5.0]],
+      "pitch_deg": 43.0,
+      "eave_m": 0.5
+    },
+    {
+      "id": "wing_roof",
+      "roof_type": "gable",
+      "footprint_xz": [[5.0, 3.0], [8.0, 3.0], [8.0, 8.0], [5.0, 8.0]],
+      "pitch_deg": 47.0,
+      "eave_m": 0.45
+    }
+  ],
+  "roof_junctions": [
+    {
+      "id": "junction_main_wing",
+      "a": "main_roof",
+      "b": "wing_roof",
+      "type": "valley"
+    }
+  ]
+}

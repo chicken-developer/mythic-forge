@@ -1,0 +1,23 @@
+{
+  "status": "pass",
+  "scenes": [
+    "01_food_shop.hip",
+    "02_general_store.hip",
+    "03_herbal_store.hip",
+    "04_merchant_house.hip",
+    "05_mixed_shop.hip",
+    "06_tavern.hip",
+    "07_weapon_guild.hip",
+    "08_normal_house_b.hip",
+    "09_normal_house_c.hip",
+    "10_normal_house_c_canopy.hip",
+    "11_artisan_house.hip",
+    "12_craft_guild_hall.hip",
+    "13_material_storage.hip",
+    "14_toolmaker_workshop.hip",
+    "15_forgehouse.hip",
+    "baseline.hip",
+    "medieval_building_roof_high_v3.hip"
+  ],
+  "removed": "QA_ONLY evaluation stash"
+}

@@ -1,0 +1,1 @@
+{"type": "root", "attrs": {"index": "no", "type": "example"}, "body": [{"type": "title", "indent": 0, "text": ["EmbossMandril"]}, {"type": "para", "indent": 0, "text": ["Embossing images with the Emboss COP."], "extent": [12, 50]}], "examplefor": "/nodes/cop2/emboss", "examplefile": "/examples/nodes/cop2/emboss/EmbossMandril.otl"}

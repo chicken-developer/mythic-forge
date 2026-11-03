@@ -1,0 +1,37 @@
+// Bays are derived from real mass faces, shared by openings and timber.
+int original=nprimitives(0);
+for(int src=0;src<original;src++){
+ vector normal=prim(0,"facade_normal",src),up={0,1,0},right=normalize(cross(normal,up));
+ vector center=primuv(0,"P",src,set(.5,.5,0));float b=prim(0,"floor_b",src),fh=prim(0,"floor_h",src);
+ float minx=1e10,maxx=-1e10;
+ foreach(int pt;primpoints(0,src)){float x=dot(vector(point(0,"P",pt))-center,right);minx=min(minx,x);maxx=max(maxx,x);}
+ float width=maxx-minx;int floor=prim(0,"floor_i",src),round=prim(0,"is_round",src);
+ string role=prim(0,"role",src);matrix3 inv=ident();rotate(inv,radians(-float(prim(0,"rot_y",src))),up);
+ vector localnormal=normal*inv;int side=abs(localnormal.z)>abs(localnormal.x)?(localnormal.z<0?0:2):(localnormal.x>0?1:3);
+ string pattern=side==0?chs("../front_bays"):side==1?chs("../right_bays"):side==2?chs("../rear_bays"):chs("../left_bays");
+ string rows[]=split(pattern,"/");string row=rows[min(floor,len(rows)-1)];int n=max(1,len(row));
+ if(role!="main"){row=".W.";n=3;}
+ int ringindex=0;
+ int segments=max(3,int(prim(0,"round_segments",src)));
+ if(round){vector c=prim(0,"role_center",src);float angle=atan2(center.z-c.z,center.x-c.x);ringindex=(int(floor(angle*segments/(2*M_PI)))+segments)%segments;n=1;}
+ for(int j=0;j<n;j++){
+   float length=width/n;vector baycenter=center+right*(minx+(j+.5)*length);baycenter.y=b+fh/2;
+   string opening=row[j:j+1];
+   if(chs("../window_layout_mode")=="count"){
+     int requested=side==0?chi("../front_window_count"):side==1?chi("../right_window_count"):side==2?chi("../rear_window_count"):chi("../left_window_count");
+     opening=j<requested?"W":".";if(side==0&&floor==0&&j==n/2)opening="D";
+   }
+   if(round){opening=ringindex%max(1,chi("../round_window_step"))==0?"W":".";if(floor==0&&ringindex==int(rint(segments*.75))&&role=="main")opening="D";}
+   if(role!="main" && opening=="D")opening=".";
+   vector a=baycenter-right*length/2-up*fh/2,c=baycenter+right*length/2-up*fh/2;
+   int pts[]=array(addpoint(0,a),addpoint(0,c),addpoint(0,c+up*fh),addpoint(0,a+up*fh));
+   int p=addprim(0,"poly",pts);
+   setprimattrib(0,"facade_normal",p,normal);setprimattrib(0,"edge_u",p,right);
+   setprimattrib(0,"bay_width",p,length);setprimattrib(0,"floor_b",p,b);setprimattrib(0,"floor_h",p,fh);
+   setprimattrib(0,"floor_i",p,floor);setprimattrib(0,"side",p,side);setprimattrib(0,"bay_i",p,j);
+   setprimattrib(0,"opening",p,opening);setprimattrib(0,"role",p,role);
+   string key=role+"_"+itoa(floor)+"_"+itoa(side)+"_"+itoa(j);
+   setprimattrib(0,"bay_id",p,key);setprimattrib(0,"level_key",p,role+"_"+itoa(floor));
+ }
+}
+for(int p=original-1;p>=0;p--)removeprim(0,p,1);

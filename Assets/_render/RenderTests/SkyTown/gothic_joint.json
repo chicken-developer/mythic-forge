@@ -1,0 +1,16 @@
+{
+  "asset": "/Game/Gothic/Blueprints/BP_Gothic_variant_17",
+  "view": "joint",
+  "renderer": "Unreal editor HighResShot",
+  "eye_cm": [
+    -274.6666666666667,
+    -828.6372101306915,
+    100225.1999999553
+  ],
+  "target_cm": [
+    -264.6666666666667,
+    -468.6372101306915,
+    100218.9999999553
+  ],
+  "focal_length_mm": 24.0
+}

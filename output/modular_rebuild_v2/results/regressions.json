@@ -1,0 +1,721 @@
+{
+  "houdini": "22.0.368",
+  "tests": [
+    {
+      "test": "move_window",
+      "target": "main_1_0_0",
+      "distance_m": 0.07999992370605469,
+      "same_host_wall": true,
+      "roof_geometry_stable": true,
+      "opening_and_frame_changed": true,
+      "wall_cut_changed": true,
+      "window_frame_changed": true,
+      "facade_dressing_changed": true,
+      "status": "pass"
+    },
+    {
+      "test": "real_opening_rays",
+      "count": 18,
+      "blocked": [],
+      "status": "pass"
+    },
+    {
+      "test": "uv_tiling",
+      "before": {
+        "points": 19042,
+        "primitives": 14882,
+        "positions": "ed9dcd48e37e1f9151ed6c322eb5903cfae0039aaf39a0b3862d2aa07a35fa05",
+        "names": "582ea56e0d97db86e706bcf01c2ecf4fcc6bc8294225d80d8545ed095b6011bb",
+        "uv": "b34961a6b44e5972d282bcbdcf55649a9eca7f5f0985d1a4595a1b246ae2abb7",
+        "color": "034abeb0b7fe2dc2fa9b302f3ca1e3545cb510cdd01dc2fb85ee001f1a69b26a",
+        "bounds": [
+          10.0,
+          8.834652058780193,
+          8.84600019454956
+        ]
+      },
+      "after": {
+        "points": 19042,
+        "primitives": 14882,
+        "positions": "ed9dcd48e37e1f9151ed6c322eb5903cfae0039aaf39a0b3862d2aa07a35fa05",
+        "names": "582ea56e0d97db86e706bcf01c2ecf4fcc6bc8294225d80d8545ed095b6011bb",
+        "uv": "1f8502ca4b34ae7c76d38d5814360c1a65013df52c424c32fb0544f7a815324b",
+        "color": "034abeb0b7fe2dc2fa9b302f3ca1e3545cb510cdd01dc2fb85ee001f1a69b26a",
+        "bounds": [
+          10.0,
+          8.834652058780193,
+          8.84600019454956
+        ]
+      },
+      "status": "pass"
+    },
+    {
+      "test": "same_config_seed_determinism",
+      "hash_a": {
+        "points": 19042,
+        "primitives": 14882,
+        "positions": "ed9dcd48e37e1f9151ed6c322eb5903cfae0039aaf39a0b3862d2aa07a35fa05",
+        "names": "582ea56e0d97db86e706bcf01c2ecf4fcc6bc8294225d80d8545ed095b6011bb",
+        "uv": "b34961a6b44e5972d282bcbdcf55649a9eca7f5f0985d1a4595a1b246ae2abb7",
+        "color": "034abeb0b7fe2dc2fa9b302f3ca1e3545cb510cdd01dc2fb85ee001f1a69b26a",
+        "bounds": [
+          10.0,
+          8.834652058780193,
+          8.84600019454956
+        ]
+      },
+      "hash_b": {
+        "points": 19042,
+        "primitives": 14882,
+        "positions": "ed9dcd48e37e1f9151ed6c322eb5903cfae0039aaf39a0b3862d2aa07a35fa05",
+        "names": "582ea56e0d97db86e706bcf01c2ecf4fcc6bc8294225d80d8545ed095b6011bb",
+        "uv": "b34961a6b44e5972d282bcbdcf55649a9eca7f5f0985d1a4595a1b246ae2abb7",
+        "color": "034abeb0b7fe2dc2fa9b302f3ca1e3545cb510cdd01dc2fb85ee001f1a69b26a",
+        "bounds": [
+          10.0,
+          8.834652058780193,
+          8.84600019454956
+        ]
+      },
+      "status": "pass"
+    },
+    {
+      "test": "footprint_width_recook",
+      "before": [
+        10.0,
+        8.834652058780193,
+        8.84600019454956
+      ],
+      "after": [
+        10.600000381469727,
+        8.834652058780193,
+        8.84600019454956
+      ],
+      "status": "pass"
+    },
+    {
+      "test": "wing_size_roof_recook",
+      "status": "pass",
+      "before": {
+        "points": 260,
+        "primitives": 194,
+        "positions": "e66c4b02fe5b88867aad709c48dded8beda16758f015a056df6fa3bd1d3eb409",
+        "names": "8071ab54d24941682c7b5143493670f65f6526179679bc5049f5b81874f1e456",
+        "uv": null,
+        "color": "08681e1ed50594352367f13175d414629b03ce8c57bfefd855a3b3a84993addf",
+        "bounds": [
+          10.264000654220581,
+          5.159999847412109,
+          8.300000190734863
+        ]
+      },
+      "after": {
+        "points": 260,
+        "primitives": 194,
+        "positions": "7b61e0cd47ad1bd50dad7b83f1deabd2b11ca724cdfce378ceaf3ffc800570b0",
+        "names": "a55f37e3d1b42db7c56bbcef46f0838e39dc1e9386aad0ac55d0e12e95cf375a",
+        "uv": null,
+        "color": "08681e1ed50594352367f13175d414629b03ce8c57bfefd855a3b3a84993addf",
+        "bounds": [
+          10.944000482559204,
+          5.159999847412109,
+          8.300000190734863
+        ]
+      }
+    },
+    {
+      "test": "invalid_window",
+      "error": "Window outside host bay: front",
+      "no_parameter_mutation": true,
+      "status": "pass"
+    },
+    {
+      "test": "unsupported_t_footprint",
+      "error": "Unsupported footprint: t_shape",
+      "no_parameter_mutation": true,
+      "status": "pass"
+    },
+    {
+      "test": "invalid_conical_host",
+      "error": "Conical roof requires round host",
+      "no_parameter_mutation": true,
+      "status": "pass"
+    },
+    {
+      "test": "missing_explicit_roof_joint",
+      "error": "Missing explicit roof junctions in semantic_graph",
+      "no_parameter_mutation": true,
+      "status": "pass"
+    },
+    {
+      "test": "window_outside_wall",
+      "error": "Window move outside host bay",
+      "no_parameter_mutation": true,
+      "status": "pass"
+    },
+    {
+      "test": "safe_rerun",
+      "status": "pass"
+    },
+    {
+      "test": "range_min",
+      "state": {
+        "points": 6468,
+        "primitives": 5050,
+        "positions": "473fede3692392abfc666bff1b8ca4530f61af3eda0d67c204e902e233cccd31",
+        "names": "9ff466f59ed0c2e86bc8d812410b7f799ebd8aa74515d944b606154e5110458f",
+        "uv": "b634d48b3ad91177e6e07b86c10a4e0b86023e492ebaa1038e3979d19aecb827",
+        "color": "5ecf6a0bf24445f06e1fc92f872c56de3fec8c093db3b5c5c7ea56fa0615ecca",
+        "bounds": [
+          6.300000190734863,
+          6.2409235164523125,
+          6.546000003814697
+        ]
+      },
+      "status": "pass"
+    },
+    {
+      "test": "range_max",
+      "state": {
+        "points": 28770,
+        "primitives": 21845,
+        "positions": "c6d87a4a0b64d3418238628e48af1a6edfe939f68d8280879bdbfec37564b441",
+        "names": "2b19af1aca6975565a5d6286d306a74f54a6a052090f9fc414d1507e52a0c81c",
+        "uv": "18eb943a0c2285d02a628f148d443bdd3249f41e20605c56d5382c09a2028060",
+        "color": "c7e8c0315f888756fb522fe99bb2bc037e2b8a648e73a265625ae715cc712afb",
+        "bounds": [
+          15.800000190734863,
+          11.438294522464275,
+          14.046000003814697
+        ]
+      },
+      "status": "pass"
+    },
+    {
+      "test": "legacy_grammar_hipped",
+      "status": "pass",
+      "state": {
+        "points": 28270,
+        "primitives": 17082,
+        "positions": "5cfed3e0f393f1c3e6d416ab7c08064ccc9981779e91704ce4a3f4c685cbb07c",
+        "names": "a23878405c2105216f09c3788c1138950d079f1f1236ca90f30ba54a74e9aa6e",
+        "uv": "dd1a56142689ffd87229225fd7910c7076b0a1dba7224d0a21c2f05f2b68acbf",
+        "color": "6fe9ef2fe1c546eaa8f4df3ab905d99b1dfb0899e07d28accb3f00c2544a7d97",
+        "bounds": [
+          10.0,
+          8.840564839541912,
+          8.84600019454956
+        ]
+      }
+    },
+    {
+      "test": "legacy_grammar_round_conical",
+      "status": "pass",
+      "state": {
+        "points": 24700,
+        "primitives": 20059,
+        "positions": "432038ef8ce95f558ab16a0ccbc7e70bc1676a0c057e0d4cf1da5050bf6bd288",
+        "names": "73e5897652ac66641e7b737e816d0ee4cabf43f5ce5d87a742ac6d7a43c85583",
+        "uv": "e9aeb2e0dac0a400782feef015dd84af07ce6df989bae7e65b0815ff8707128e",
+        "color": "3fb0ef2bffcaab366efe5deef5686d2177ef77cfb5a8492fd076f0ee9e604c86",
+        "bounds": [
+          10.0,
+          8.820178143680096,
+          10.245999813079834
+        ]
+      }
+    },
+    {
+      "test": "legacy_grammar_hybrid_tower",
+      "status": "pass",
+      "state": {
+        "points": 32999,
+        "primitives": 25972,
+        "positions": "d81f311343c46fa3849e65c8aaa0e334d6910c3e291d9ff1f3cfa744825c55bc",
+        "names": "32a67ce6c1f638941a76e4d173a38500a19cb7f5c9b9fcf8d2250844626e897a",
+        "uv": "ff51c9689b194b0c1067cc643e837be970e2c173657d5ffab89499ce2a6b9aea",
+        "color": "5e112e5391fb98475d79ad80e4100d296a6d1794556f4a63ffea5a6e922f95a3",
+        "bounds": [
+          12.414000034332275,
+          8.838929288089275,
+          8.84600019454956
+        ]
+      }
+    }
+  ],
+  "baseline_opening_relations": [
+    {
+      "opening_id": "main_0_0_0",
+      "wall_id": "main/0/0",
+      "kind": "W",
+      "center": [
+        -2.733333110809326,
+        1.6700000762939453,
+        -3.4150002002716064
+      ],
+      "ray_blocked_by_wall": false,
+      "aperture_w": 0.949999988079071,
+      "aperture_h": 1.2000000476837158
+    },
+    {
+      "opening_id": "main_0_0_1",
+      "wall_id": "main/0/0",
+      "kind": "D",
+      "center": [
+        0.0,
+        1.4877631664276123,
+        -3.4150002002716064
+      ],
+      "ray_blocked_by_wall": false,
+      "aperture_w": 1.25,
+      "aperture_h": 2.0355262756347656
+    },
+    {
+      "opening_id": "main_0_0_2",
+      "wall_id": "main/0/0",
+      "kind": "W",
+      "center": [
+        2.7333335876464844,
+        1.6700000762939453,
+        -3.4150002002716064
+      ],
+      "ray_blocked_by_wall": false,
+      "aperture_w": 0.949999988079071,
+      "aperture_h": 1.2000000476837158
+    },
+    {
+      "opening_id": "main_0_1_0",
+      "wall_id": "main/0/1",
+      "kind": "W",
+      "center": [
+        4.114999771118164,
+        1.6700000762939453,
+        -2.266666889190674
+      ],
+      "ray_blocked_by_wall": false,
+      "aperture_w": 0.949999988079071,
+      "aperture_h": 1.2000000476837158
+    },
+    {
+      "opening_id": "main_0_1_2",
+      "wall_id": "main/0/1",
+      "kind": "W",
+      "center": [
+        4.114999771118164,
+        1.6700000762939453,
+        2.2666664123535156
+      ],
+      "ray_blocked_by_wall": false,
+      "aperture_w": 0.949999988079071,
+      "aperture_h": 1.2000000476837158
+    },
+    {
+      "opening_id": "main_0_2_0",
+      "wall_id": "main/0/2",
+      "kind": "W",
+      "center": [
+        2.733333110809326,
+        1.6700000762939453,
+        3.4150002002716064
+      ],
+      "ray_blocked_by_wall": false,
+      "aperture_w": 0.949999988079071,
+      "aperture_h": 1.2000000476837158
+    },
+    {
+      "opening_id": "main_0_2_2",
+      "wall_id": "main/0/2",
+      "kind": "W",
+      "center": [
+        -2.7333335876464844,
+        1.6700000762939453,
+        3.4150002002716064
+      ],
+      "ray_blocked_by_wall": false,
+      "aperture_w": 0.949999988079071,
+      "aperture_h": 1.2000000476837158
+    },
+    {
+      "opening_id": "main_0_3_0",
+      "wall_id": "main/0/3",
+      "kind": "W",
+      "center": [
+        -4.114999771118164,
+        1.6700000762939453,
+        2.266666889190674
+      ],
+      "ray_blocked_by_wall": false,
+      "aperture_w": 0.949999988079071,
+      "aperture_h": 1.2000000476837158
+    },
+    {
+      "opening_id": "main_0_3_2",
+      "wall_id": "main/0/3",
+      "kind": "W",
+      "center": [
+        -4.114999771118164,
+        1.6700000762939453,
+        -2.2666664123535156
+      ],
+      "ray_blocked_by_wall": false,
+      "aperture_w": 0.949999988079071,
+      "aperture_h": 1.2000000476837158
+    },
+    {
+      "opening_id": "main_1_0_0",
+      "wall_id": "main/1/0",
+      "kind": "W",
+      "center": [
+        -2.8266663551330566,
+        4.320000171661377,
+        -3.555000066757202
+      ],
+      "ray_blocked_by_wall": false,
+      "aperture_w": 0.949999988079071,
+      "aperture_h": 1.2000000476837158
+    },
+    {
+      "opening_id": "main_1_0_1",
+      "wall_id": "main/1/0",
+      "kind": "W",
+      "center": [
+        0.0,
+        4.320000171661377,
+        -3.555000066757202
+      ],
+      "ray_blocked_by_wall": false,
+      "aperture_w": 0.949999988079071,
+      "aperture_h": 1.2000000476837158
+    },
+    {
+      "opening_id": "main_1_0_2",
+      "wall_id": "main/1/0",
+      "kind": "W",
+      "center": [
+        2.826666831970215,
+        4.320000171661377,
+        -3.555000066757202
+      ],
+      "ray_blocked_by_wall": false,
+      "aperture_w": 0.949999988079071,
+      "aperture_h": 1.2000000476837158
+    },
+    {
+      "opening_id": "main_1_1_0",
+      "wall_id": "main/1/1",
+      "kind": "W",
+      "center": [
+        4.25499963760376,
+        4.320000171661377,
+        -2.3600001335144043
+      ],
+      "ray_blocked_by_wall": false,
+      "aperture_w": 0.949999988079071,
+      "aperture_h": 1.2000000476837158
+    },
+    {
+      "opening_id": "main_1_1_2",
+      "wall_id": "main/1/1",
+      "kind": "W",
+      "center": [
+        4.25499963760376,
+        4.320000171661377,
+        2.359999656677246
+      ],
+      "ray_blocked_by_wall": false,
+      "aperture_w": 0.949999988079071,
+      "aperture_h": 1.2000000476837158
+    },
+    {
+      "opening_id": "main_1_2_0",
+      "wall_id": "main/1/2",
+      "kind": "W",
+      "center": [
+        2.8266663551330566,
+        4.320000171661377,
+        3.555000066757202
+      ],
+      "ray_blocked_by_wall": false,
+      "aperture_w": 0.949999988079071,
+      "aperture_h": 1.2000000476837158
+    },
+    {
+      "opening_id": "main_1_2_2",
+      "wall_id": "main/1/2",
+      "kind": "W",
+      "center": [
+        -2.826666831970215,
+        4.320000171661377,
+        3.555000066757202
+      ],
+      "ray_blocked_by_wall": false,
+      "aperture_w": 0.949999988079071,
+      "aperture_h": 1.2000000476837158
+    },
+    {
+      "opening_id": "main_1_3_0",
+      "wall_id": "main/1/3",
+      "kind": "W",
+      "center": [
+        -4.25499963760376,
+        4.320000171661377,
+        2.3600001335144043
+      ],
+      "ray_blocked_by_wall": false,
+      "aperture_w": 0.949999988079071,
+      "aperture_h": 1.2000000476837158
+    },
+    {
+      "opening_id": "main_1_3_2",
+      "wall_id": "main/1/3",
+      "kind": "W",
+      "center": [
+        -4.25499963760376,
+        4.320000171661377,
+        -2.359999656677246
+      ],
+      "ray_blocked_by_wall": false,
+      "aperture_w": 0.949999988079071,
+      "aperture_h": 1.2000000476837158
+    }
+  ],
+  "moved_opening_relations": [
+    {
+      "opening_id": "main_0_0_0",
+      "wall_id": "main/0/0",
+      "kind": "W",
+      "center": [
+        -2.733333110809326,
+        1.6700000762939453,
+        -3.4150002002716064
+      ],
+      "ray_blocked_by_wall": false,
+      "aperture_w": 0.949999988079071,
+      "aperture_h": 1.2000000476837158
+    },
+    {
+      "opening_id": "main_0_0_1",
+      "wall_id": "main/0/0",
+      "kind": "D",
+      "center": [
+        0.0,
+        1.4877631664276123,
+        -3.4150002002716064
+      ],
+      "ray_blocked_by_wall": false,
+      "aperture_w": 1.25,
+      "aperture_h": 2.0355262756347656
+    },
+    {
+      "opening_id": "main_0_0_2",
+      "wall_id": "main/0/0",
+      "kind": "W",
+      "center": [
+        2.7333335876464844,
+        1.6700000762939453,
+        -3.4150002002716064
+      ],
+      "ray_blocked_by_wall": false,
+      "aperture_w": 0.949999988079071,
+      "aperture_h": 1.2000000476837158
+    },
+    {
+      "opening_id": "main_0_1_0",
+      "wall_id": "main/0/1",
+      "kind": "W",
+      "center": [
+        4.114999771118164,
+        1.6700000762939453,
+        -2.266666889190674
+      ],
+      "ray_blocked_by_wall": false,
+      "aperture_w": 0.949999988079071,
+      "aperture_h": 1.2000000476837158
+    },
+    {
+      "opening_id": "main_0_1_2",
+      "wall_id": "main/0/1",
+      "kind": "W",
+      "center": [
+        4.114999771118164,
+        1.6700000762939453,
+        2.2666664123535156
+      ],
+      "ray_blocked_by_wall": false,
+      "aperture_w": 0.949999988079071,
+      "aperture_h": 1.2000000476837158
+    },
+    {
+      "opening_id": "main_0_2_0",
+      "wall_id": "main/0/2",
+      "kind": "W",
+      "center": [
+        2.733333110809326,
+        1.6700000762939453,
+        3.4150002002716064
+      ],
+      "ray_blocked_by_wall": false,
+      "aperture_w": 0.949999988079071,
+      "aperture_h": 1.2000000476837158
+    },
+    {
+      "opening_id": "main_0_2_2",
+      "wall_id": "main/0/2",
+      "kind": "W",
+      "center": [
+        -2.7333335876464844,
+        1.6700000762939453,
+        3.4150002002716064
+      ],
+      "ray_blocked_by_wall": false,
+      "aperture_w": 0.949999988079071,
+      "aperture_h": 1.2000000476837158
+    },
+    {
+      "opening_id": "main_0_3_0",
+      "wall_id": "main/0/3",
+      "kind": "W",
+      "center": [
+        -4.114999771118164,
+        1.6700000762939453,
+        2.266666889190674
+      ],
+      "ray_blocked_by_wall": false,
+      "aperture_w": 0.949999988079071,
+      "aperture_h": 1.2000000476837158
+    },
+    {
+      "opening_id": "main_0_3_2",
+      "wall_id": "main/0/3",
+      "kind": "W",
+      "center": [
+        -4.114999771118164,
+        1.6700000762939453,
+        -2.2666664123535156
+      ],
+      "ray_blocked_by_wall": false,
+      "aperture_w": 0.949999988079071,
+      "aperture_h": 1.2000000476837158
+    },
+    {
+      "opening_id": "main_1_0_0",
+      "wall_id": "main/1/0",
+      "kind": "W",
+      "center": [
+        -2.746666431427002,
+        4.320000171661377,
+        -3.555000066757202
+      ],
+      "ray_blocked_by_wall": false,
+      "aperture_w": 0.949999988079071,
+      "aperture_h": 1.2000000476837158
+    },
+    {
+      "opening_id": "main_1_0_1",
+      "wall_id": "main/1/0",
+      "kind": "W",
+      "center": [
+        0.0,
+        4.320000171661377,
+        -3.555000066757202
+      ],
+      "ray_blocked_by_wall": false,
+      "aperture_w": 0.949999988079071,
+      "aperture_h": 1.2000000476837158
+    },
+    {
+      "opening_id": "main_1_0_2",
+      "wall_id": "main/1/0",
+      "kind": "W",
+      "center": [
+        2.826666831970215,
+        4.320000171661377,
+        -3.555000066757202
+      ],
+      "ray_blocked_by_wall": false,
+      "aperture_w": 0.949999988079071,
+      "aperture_h": 1.2000000476837158
+    },
+    {
+      "opening_id": "main_1_1_0",
+      "wall_id": "main/1/1",
+      "kind": "W",
+      "center": [
+        4.25499963760376,
+        4.320000171661377,
+        -2.3600001335144043
+      ],
+      "ray_blocked_by_wall": false,
+      "aperture_w": 0.949999988079071,
+      "aperture_h": 1.2000000476837158
+    },
+    {
+      "opening_id": "main_1_1_2",
+      "wall_id": "main/1/1",
+      "kind": "W",
+      "center": [
+        4.25499963760376,
+        4.320000171661377,
+        2.359999656677246
+      ],
+      "ray_blocked_by_wall": false,
+      "aperture_w": 0.949999988079071,
+      "aperture_h": 1.2000000476837158
+    },
+    {
+      "opening_id": "main_1_2_0",
+      "wall_id": "main/1/2",
+      "kind": "W",
+      "center": [
+        2.8266663551330566,
+        4.320000171661377,
+        3.555000066757202
+      ],
+      "ray_blocked_by_wall": false,
+      "aperture_w": 0.949999988079071,
+      "aperture_h": 1.2000000476837158
+    },
+    {
+      "opening_id": "main_1_2_2",
+      "wall_id": "main/1/2",
+      "kind": "W",
+      "center": [
+        -2.826666831970215,
+        4.320000171661377,
+        3.555000066757202
+      ],
+      "ray_blocked_by_wall": false,
+      "aperture_w": 0.949999988079071,
+      "aperture_h": 1.2000000476837158
+    },
+    {
+      "opening_id": "main_1_3_0",
+      "wall_id": "main/1/3",
+      "kind": "W",
+      "center": [
+        -4.25499963760376,
+        4.320000171661377,
+        2.3600001335144043
+      ],
+      "ray_blocked_by_wall": false,
+      "aperture_w": 0.949999988079071,
+      "aperture_h": 1.2000000476837158
+    },
+    {
+      "opening_id": "main_1_3_2",
+      "wall_id": "main/1/3",
+      "kind": "W",
+      "center": [
+        -4.25499963760376,
+        4.320000171661377,
+        -2.359999656677246
+      ],
+      "ray_blocked_by_wall": false,
+      "aperture_w": 0.949999988079071,
+      "aperture_h": 1.2000000476837158
+    }
+  ],
+  "status": "pass",
+  "course_note": "Original plaster facades have no masonry/plank course generator; bay framing and window dressing consume opening metadata.",
+  "roof_joint_note": "Original body-trim roof grammar retained; custom explicit roof graphs are rejected, not substituted."
+}

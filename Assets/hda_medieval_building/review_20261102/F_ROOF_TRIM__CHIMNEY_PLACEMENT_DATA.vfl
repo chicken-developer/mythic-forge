@@ -1,0 +1,29 @@
+
+int old=nprimitives(0),count=clamp(chi("../chimney_count"),0,3);
+for(int src=0;src<old;src++)
+{
+    if(string(prim(0,"role",src))!="main")continue;
+    float w=prim(0,"width",src),d=prim(0,"depth",src),top=prim(0,"top_y",src),h=prim(0,"roof_h",src);
+    float e=prim(0,"eave",src),curve=prim(0,"curve",src),angle=prim(0,"rot_y",src);
+    vector center=prim(0,"role_center",src);center.y=0.;
+    matrix3 rot=ident();rotate(rot,radians(angle),set(0.,1.,0.));
+    for(int k=0;k<count;k++)
+    {
+        float x=-w*.23,z=(k-(count-1)*.5)*1.65;
+        float radius=int(prim(0,"is_round",src)) ? length(set(x,0.,z)) : abs(x);
+        float q=radius/max(w*.5+e,1e-5);
+        if(chs("../roof_shape")=="hipped" && !int(prim(0,"is_round",src)))
+        {
+            float tipz=max(.0175,(d-w)*.5);
+            q=max(max(0.,(abs(x)-.0175)/max(w*.5+e-.0175,1e-5)),
+                  max(0.,(abs(z)-tipz)/max(d*.5+e-tipz,1e-5)));
+        }
+        float y=top+h*(1.-q)+curve*pow(q,4.)+.7;
+        int pt=addpoint(0,set(x,y,z)*rot+center);
+        setpointattrib(0,"transform",pt,rot,"set");
+        setpointattrib(0,"chimney_id",pt,k,"set");
+        setpointattrib(0,"role_id",pt,int(prim(0,"role_id",src)),"set");
+    }
+    break;
+}
+for(int p=old-1;p>=0;p--)removeprim(0,p,1);

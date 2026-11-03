@@ -1,0 +1,144 @@
+
+vector worldpos(vector p; vector center; float angle)
+{
+    float c=cos(radians(angle)),s=sin(radians(angle));
+    return set(center.x+c*p.x+s*p.z,p.y,center.z-s*p.x+c*p.z);
+}
+
+void rectprofile(float xa;float xb;float za;float zb;float y;float depth;
+                 vector center;float angle;string part;string role;int rid;int level)
+{
+    if(xb-xa<.005 || zb-za<.005) return;
+    // The source profile faces -Y. Its back cap becomes the walking surface.
+    vector p[]=array(set(xa,y,za),set(xa,y,zb),set(xb,y,zb),set(xb,y,za));
+    int poly=addprim(0,"poly");
+    foreach(vector pos;p)
+    {
+        int pt=addpoint(0,worldpos(pos,center,angle));addvertex(0,poly,pt);
+        setpointattrib(0,"extrude_direction",pt,set(0.,-1.,0.),"set");
+    }
+    setprimattrib(0,"extrude_distance",poly,depth,"set");
+    setprimattrib(0,"name",poly,part,"set");
+    setprimattrib(0,"material_family",poly,"wood","set");
+    setprimattrib(0,"Cd",poly,set(.27,.19,.12),"set");
+    setprimattrib(0,"role",poly,role,"set");
+    setprimattrib(0,"role_id",poly,rid,"set");
+    setprimattrib(0,"floor_i",poly,level,"set");
+    setprimattrib(0,"component",poly,"interior","set");
+}
+
+void plankrect(float xa;float xb;float za;float zb;float y;float depth;
+               vector center;float angle;string prefix;string role;int rid;int level)
+{
+    if(xb-xa<.005 || zb-za<.005) return;
+    int count=max(1,int(ceil((xb-xa)/.28)));
+    for(int i=0;i<count;i++)
+    {
+        float a=lerp(xa,xb,float(i)/count),b=lerp(xa,xb,float(i+1)/count);
+        rectprofile(a+.0015,b-.0015,za,zb,y,depth,center,angle,
+                    prefix+"_board_"+itoa(i),role,rid,level);
+    }
+}
+
+void member(vector position;vector size;vector center;float angle;
+            string part;string material;vector color;string role;int rid;int level)
+{
+    if(min(size)<.001) return;
+    float a=radians(angle);vector x=set(cos(a),0.,-sin(a)),z=set(sin(a),0.,cos(a));
+    int pt=addpoint(0,worldpos(position,center,angle));
+    matrix3 transform=set(x*size.x,set(0.,size.y,0.),z*size.z);
+    setpointattrib(0,"transform",pt,transform,"set");
+    setpointattrib(0,"part_name",pt,part,"set");
+    setpointattrib(0,"part_material",pt,material,"set");
+    setpointattrib(0,"part_color",pt,color,"set");
+    setpointattrib(0,"role",pt,role,"set");setpointattrib(0,"role_id",pt,rid,"set");
+    setpointattrib(0,"floor_i",pt,level,"set");
+}
+
+void beam(vector start;vector end;float width;float depth;vector center;float angle;
+          string part;string role;int rid;int level)
+{
+    vector a=worldpos(start,center,angle),b=worldpos(end,center,angle);
+    vector along=normalize(b-a),ref=abs(along.y)<.95?set(0.,1.,0.):set(1.,0.,0.);
+    vector x=normalize(cross(along,ref)),z=cross(x,along);
+    matrix3 transform=set(x*width,along*distance(a,b),z*depth);
+    int pt=addpoint(0,(a+b)*.5);
+    setpointattrib(0,"transform",pt,transform,"set");
+    setpointattrib(0,"part_name",pt,part,"set");
+    setpointattrib(0,"part_material",pt,"wood","set");
+    setpointattrib(0,"part_color",pt,set(.27,.19,.12),"set");
+    setpointattrib(0,"role",pt,role,"set");setpointattrib(0,"role_id",pt,rid,"set");
+    setpointattrib(0,"floor_i",pt,level,"set");
+}
+
+int count=nprimitives(0);
+float t=ch("../wall_thickness"),th=ch("../floor_thickness"),sw=ch("../stair_width");
+if(chi("../enable")) for(int pr=0;pr<count;pr++)
+{
+    string role=prim(0,"role",pr);int rid=prim(0,"role_id",pr),f=prim(0,"floor_i",pr);
+    float w=prim(0,"width",pr),d=prim(0,"depth",pr),bw=prim(0,"base_width",pr),bd=prim(0,"base_depth",pr);
+    float y=prim(0,"floor_b",pr),fh=prim(0,"floor_h",pr),angle=prim(0,"rot_y",pr);
+    int levels=prim(0,"floor_count",pr),round=prim(0,"is_round",pr);
+    vector center=prim(0,"role_center",pr);
+    string prefix="interior/"+role+"/floor_"+itoa(f);
+    if(round)
+    {
+        float outer=max(.2,w*.5-t-.03),hole=f==0?0.:min(.98,outer*.57);
+        int segments=32;
+        if(f==0)
+        {
+            int poly=addprim(0,"poly");
+            for(int j=0;j<segments;j++)
+            {
+                float a=-2*M_PI*j/segments;
+                int pt=addpoint(0,worldpos(set(outer*cos(a),y+th,outer*sin(a)),center,angle));
+                addvertex(0,poly,pt);setpointattrib(0,"extrude_direction",pt,set(0.,-1.,0.),"set");
+            }
+            setprimattrib(0,"extrude_distance",poly,th,"set");setprimattrib(0,"name",poly,prefix+"_round_floor","set");
+            setprimattrib(0,"material_family",poly,"wood","set");setprimattrib(0,"Cd",poly,set(.27,.19,.12),"set");
+            setprimattrib(0,"role",poly,role,"set");setprimattrib(0,"role_id",poly,rid,"set");setprimattrib(0,"floor_i",poly,f,"set");
+            setprimattrib(0,"component",poly,"interior","set");
+        }
+        else for(int j=0;j<segments;j++)
+        {
+            float a=2*M_PI*j/segments,b=2*M_PI*(j+1)/segments;
+            vector ring[]=array(set(hole*cos(a),y+th,hole*sin(a)),set(hole*cos(b),y+th,hole*sin(b)),
+                                set(outer*cos(b),y+th,outer*sin(b)),set(outer*cos(a),y+th,outer*sin(a)));
+            int poly=addprim(0,"poly");
+            foreach(vector p;ring){int pt=addpoint(0,worldpos(p,center,angle));addvertex(0,poly,pt);setpointattrib(0,"extrude_direction",pt,set(0.,-1.,0.),"set");}
+            setprimattrib(0,"extrude_distance",poly,th,"set");setprimattrib(0,"name",poly,prefix+"_ring_"+itoa(j),"set");
+            setprimattrib(0,"material_family",poly,"wood","set");setprimattrib(0,"Cd",poly,set(.27,.19,.12),"set");
+            setprimattrib(0,"role",poly,role,"set");setprimattrib(0,"role_id",poly,rid,"set");setprimattrib(0,"floor_i",poly,f,"set");
+            setprimattrib(0,"component",poly,"interior","set");
+        }
+        if(f<levels-1)
+        {
+            float stairhole=min(.98,outer*.57),radius=max(.18,stairhole-.025);
+            int steps=max(14,int(ceil(fh/.18)));
+            for(int j=0;j<steps;j++)
+            {
+                float a=-M_PI*.5+2*M_PI*j/steps,b=-M_PI*.5+2*M_PI*(j+1)/steps,h=y+th+(j+1)*fh/steps;
+                vector p[]=array(set(.11*cos(a),h,.11*sin(a)),set(.11*cos(b),h,.11*sin(b)),
+                                 set(radius*cos(b),h,radius*sin(b)),set(radius*cos(a),h,radius*sin(a)));
+                int poly=addprim(0,"poly");
+                foreach(vector pos;p){int pt=addpoint(0,worldpos(pos,center,angle));addvertex(0,poly,pt);setpointattrib(0,"extrude_direction",pt,set(0.,-1.,0.),"set");}
+                setprimattrib(0,"extrude_distance",poly,.06,"set");setprimattrib(0,"name",poly,prefix+"_spiral_tread_"+itoa(j),"set");
+                setprimattrib(0,"material_family",poly,"wood","set");setprimattrib(0,"Cd",poly,set(.27,.19,.12),"set");
+                setprimattrib(0,"role",poly,role,"set");setprimattrib(0,"role_id",poly,rid,"set");setprimattrib(0,"floor_i",poly,f,"set");
+                setprimattrib(0,"component",poly,"interior","set");
+            }
+        }
+        continue;
+    }
+    float xl=-w*.5+t,xr=w*.5-t,zl=-d*.5+t,zr=d*.5-t;
+    float x1=bw*.5-t,x0=x1-(2*sw+.16),z1=bd*.5-t-.10,run=min(1.9,bd-2*t-1.35),z0=z1-run-sw;
+    if(f==0)plankrect(xl,xr,zl,zr,y+th,th,center,angle,prefix,role,rid,f);
+    else
+    {
+        plankrect(xl,x0,zl,zr,y+th,th,center,angle,prefix+"_left",role,rid,f);
+        plankrect(x1,xr,zl,zr,y+th,th,center,angle,prefix+"_right",role,rid,f);
+        plankrect(x0,x1,zl,z0,y+th,th,center,angle,prefix+"_front",role,rid,f);
+        plankrect(x0,x1,z1,zr,y+th,th,center,angle,prefix+"_rear",role,rid,f);
+    }
+}
+for(int pr=count-1;pr>=0;pr--)removeprim(0,pr,1);

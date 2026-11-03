@@ -1,0 +1,26 @@
+{
+  "status": "pass",
+  "result": {
+    "variant_id": "07_weapon_guild",
+    "quality": "legacy_low",
+    "points": 31268,
+    "primitives": 24650,
+    "display_node": "/obj/medieval_modular_v2/BUILDING",
+    "camera": {
+      "t": [
+        18.0,
+        17.5,
+        -21.0
+      ],
+      "r": [
+        -22.152627580061193,
+        141.00900595749454,
+        0.0
+      ],
+      "orthowidth": 14.0
+    },
+    "ui": true,
+    "scene": "E:\\Repos\\mythic-forge\\output\\roof_high_gui_v3\\..\\modular_rebuild_v2\\scenes\\variants\\07_weapon_guild.hip",
+    "wire": false
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "status": "pass",
+  "rows": [
+    {
+      "variant_id": "01_food_shop",
+      "canvas_front_z": -4.865000247955322,
+      "support_front_z": -4.9150004386901855,
+      "balcony_front_z": null,
+      "projection_beyond_balcony_m": null,
+      "status": "pass"
+    },
+    {
+      "variant_id": "02_general_store",
+      "canvas_front_z": -5.065000057220459,
+      "support_front_z": -5.115000247955322,
+      "balcony_front_z": null,
+      "projection_beyond_balcony_m": null,
+      "status": "pass"
+    },
+    {
+      "variant_id": "03_herbal_store",
+      "canvas_front_z": -4.865000247955322,
+      "support_front_z": -4.9150004386901855,
+      "balcony_front_z": null,
+      "projection_beyond_balcony_m": null,
+      "status": "pass"
+    },
+    {
+      "variant_id": "05_mixed_shop",
+      "canvas_front_z": -5.664999961853027,
+      "support_front_z": -5.715000152587891,
+      "balcony_front_z": null,
+      "projection_beyond_balcony_m": null,
+      "status": "pass"
+    },
+    {
+      "variant_id": "06_tavern",
+      "canvas_front_z": -5.287500381469727,
+      "support_front_z": -5.33750057220459,
+      "balcony_front_z": -4.837500095367432,
+      "projection_beyond_balcony_m": 0.4500002861022949,
+      "status": "pass"
+    },
+    {
+      "variant_id": "07_weapon_guild",
+      "canvas_front_z": -5.864999771118164,
+      "support_front_z": -5.914999961853027,
+      "balcony_front_z": null,
+      "projection_beyond_balcony_m": null,
+      "status": "pass"
+    },
+    {
+      "variant_id": "10_normal_house_c_canopy",
+      "canvas_front_z": -5.427499771118164,
+      "support_front_z": -5.477499961853027,
+      "balcony_front_z": -4.977499961853027,
+      "projection_beyond_balcony_m": 0.4499998092651367,
+      "status": "pass"
+    },
+    {
+      "variant_id": "14_toolmaker_workshop",
+      "canvas_front_z": -5.265000343322754,
+      "support_front_z": -5.315000534057617,
+      "balcony_front_z": null,
+      "projection_beyond_balcony_m": null,
+      "status": "pass"
+    }
+  ],
+  "regression": {
+    "test": "balcony_depth_updates_canopy_and_supports",
+    "canvas_shift_m": 0.35000038146972656,
+    "support_shift_m": 0.35000038146972656,
+    "status": "pass"
+  },
+  "scope": "Actual geometry projection beyond balcony; not a structural load/collision certificate."
+}

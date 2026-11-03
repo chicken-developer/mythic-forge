@@ -1,9 +1,0 @@
-{
-  "status": "static_checks_passed",
-  "preset_count": 24,
-  "generator": "5.1.0-interior",
-  "houdini_cooked": false,
-  "native_houdini_launcher": "not_run",
-  "fresh_process_verifier": "not_run",
-  "generator_unchanged_from_v51": true
-}

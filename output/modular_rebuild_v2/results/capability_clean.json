@@ -1,0 +1,95 @@
+{
+  "type": "clean",
+  "parameters": {
+    "fusepts": {
+      "label": "Consolidate Points",
+      "value": "0",
+      "menu": []
+    },
+    "fusedist": {
+      "label": "Consolidate Distance",
+      "value": "0.001",
+      "menu": []
+    },
+    "deldegengeo": {
+      "label": "Remove Degenerate Primitives",
+      "value": "1",
+      "menu": []
+    },
+    "degentol": {
+      "label": "Degenerancy Tolerance",
+      "value": "0.001",
+      "menu": []
+    },
+    "removeunusedgrp": {
+      "label": "Delete Unused Groups",
+      "value": "1",
+      "menu": []
+    },
+    "orientpoly": {
+      "label": "Orient Polygons",
+      "value": "0",
+      "menu": []
+    },
+    "reversewinding": {
+      "label": "Reverse Winding",
+      "value": "0",
+      "menu": []
+    },
+    "fixoverlap": {
+      "label": "Fix Overlaps",
+      "value": "0",
+      "menu": []
+    },
+    "deleteoverlap": {
+      "label": "Delete Overlap Pairs",
+      "value": "1",
+      "menu": []
+    },
+    "delunusedpts": {
+      "label": "Remove Unused Points",
+      "value": "1",
+      "menu": []
+    },
+    "dodelattribs": {
+      "label": "Remove Attributes",
+      "value": "0",
+      "menu": []
+    },
+    "delattribs": {
+      "label": "Remove Attribs",
+      "value": "*",
+      "menu": []
+    },
+    "dodelgroups": {
+      "label": "Remove Groups",
+      "value": "0",
+      "menu": []
+    },
+    "delgroups": {
+      "label": "Remove Groups",
+      "value": "*",
+      "menu": []
+    },
+    "delnans": {
+      "label": "Remove NANs",
+      "value": "1",
+      "menu": []
+    },
+    "make_manifold": {
+      "label": "Manifold-Only Topology",
+      "value": "0",
+      "menu": []
+    },
+    "delete_small": {
+      "label": "Delete Small Manifold Patches",
+      "value": "1",
+      "menu": []
+    },
+    "prim_count": {
+      "label": "Primitive Threshold",
+      "value": "3",
+      "menu": []
+    }
+  }
+}

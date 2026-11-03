@@ -1,1 +1,0 @@
-Initial packaging needs a parameter-driven preset; connect blockout input afterward.

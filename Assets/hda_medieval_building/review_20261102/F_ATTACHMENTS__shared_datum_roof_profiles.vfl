@@ -1,0 +1,33 @@
+
+void roof_profile(vector p[];string label)
+{
+    vector direction=set(0.,-1.,0.);int pr=addprim(0,"poly");
+    int reverse=dot(cross(p[1]-p[0],p[2]-p[0]),direction)>0.;
+    for(int k=0;k<len(p);k++)
+    {
+        int pt=addpoint(0,p[reverse?len(p)-1-k:k]);addvertex(0,pr,pt);
+        setpointattrib(0,"extrude_direction",pt,direction,"set");
+    }
+    setprimattrib(0,"extrude_distance",pr,.08,"set");setprimattrib(0,"material_family",pr,"tile","set");
+    setprimattrib(0,"name",pr,"attachments/main/"+label,"set");setprimattrib(0,"Cd",pr,set(.76,.24,.105),"set");
+}
+
+int old=npoints(0);int workshop[]=expandpointgroup(0,"workshop_datum"),bay[]=expandpointgroup(0,"bay_datum");
+foreach(int marker;workshop)
+{
+    vector center=point(0,"P",marker);float hw=float(point(0,"span_w",marker))*.5+.12,hd=float(point(0,"span_d",marker))*.5+.12;
+    matrix3 rot=ident();rotate(rot,radians(float(point(0,"role_angle",marker))),set(0.,1.,0.));
+    vector p[]=array(set(-hw,2.67,-hd),set(hw,2.28,-hd),set(hw,2.28,hd),set(-hw,2.67,hd));
+    for(int k=0;k<len(p);k++)p[k]=p[k]*rot+center;roof_profile(p,"workshop_lean_to_roof");
+}
+foreach(int marker;bay)
+{
+    vector center=point(0,"P",marker);float hw=float(point(0,"span_w",marker))*.5+.08,hd=float(point(0,"span_d",marker))*.5+.08;
+    float y=float(point(0,"span_h",marker))*.5+.04;matrix3 rot=ident();rotate(rot,radians(float(point(0,"role_angle",marker))),set(0.,1.,0.));
+    for(int side=0;side<2;side++)
+    {
+        float edge=side==0?-hw:hw;vector p[]=array(set(edge,y,-hd),set(0.,y+.28,-hd),set(0.,y+.28,hd),set(edge,y,hd));
+        for(int k=0;k<len(p);k++)p[k]=p[k]*rot+center;roof_profile(p,"bay_pitched_canopy");
+    }
+}
+for(int pt=old-1;pt>=0;pt--)removepoint(0,pt);

@@ -1,0 +1,19 @@
+{
+  "status": "pass",
+  "scope": "Requested visible dormer / wing / pitched canopy repairs, real LOW-HIGH comparison and direct Houdini GUI provenance; not all-angle production certification.",
+  "observed": {
+    "all_16_heroes": "Reviewed as four sheets and representative full native window captures. Complete buildings remain framed at one common hero camera.",
+    "06_tavern": "Dormer front now meets the host slope; dormer roof has tiles. Wing roof has tiles without the former Skin bridge. Front/roof/rear and LOW-HIGH details retained.",
+    "07_weapon_guild": "Main and secondary roof levels remain distinct; wing slopes are tiled. Dormer seats on the host. Rear view retained.",
+    "08_normal_house_b": "Dormer has a tiled cap and embedded front base. Pitched entrance canopy has visible tiles and diagonal wall braces; close capture retained.",
+    "11_artisan_house": "Lower wing roof has tiles, thickness and a terminating ridge against the tall wall; entrance canopy retains its support braces. Front roof and rear view retained.",
+    "low_high": "Same-camera close captures show the bevel geometry in HIGH; LOW/HIGH topology counts and position hashes are separately measured.",
+    "network": "Actual native Houdini network window screenshots accompany the HOM graph audit; no drawn UI substitutes."
+  },
+  "limits": [
+    "Common hero views do not establish structural support or collision validity for all hidden surfaces and arbitrary parameter combinations.",
+    "The fabric awning of variant 10 is not prominent in the shared hero view. Projection and support recook are measured in the mesh; its presentation is not treated as a complete reference-fidelity pass.",
+    "HIGH is feature-limited native bevel geometry with architectural detail. Sculpted wood/stone damage, final textures, a new normal bake and Unreal review are not included."
+  ],
+  "evidence": ["screenshots/final/", "results/gui_capture_all.json", "results/gui_capture_extra.json", "results/variants.json", "results/canopy_clearance.json"]
+}

@@ -1,0 +1,7 @@
+
+int count=nprimitives(0);float t=ch("../wall_thickness_m");
+for(int src=0;src<count;src++){
+ vector center=prim(0,"role_center",src);float w=prim(0,"width",src),d=prim(0,"depth",src);int pts[];
+ foreach(int old;primpoints(0,src)){vector p=point(0,"P",old)-center;p.x*=max(.1,1-2*t/w);p.z*=max(.1,1-2*t/d);p+=center;p.y-=.015;int pt=addpoint(0,p);append(pts,pt);setpointattrib(0,"extrude_direction",pt,set(0,1,0));}
+ int p=addprim(0,"poly",pts);setprimattrib(0,"extrude_distance",p,float(prim(0,"extrude_distance",src))+.03);setprimattrib(0,"inset_distance",p,float(prim(0,"inset_distance",src)));
+}for(int p=count-1;p>=0;p--)removeprim(0,p,1);

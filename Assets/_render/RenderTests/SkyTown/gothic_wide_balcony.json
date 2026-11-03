@@ -1,0 +1,16 @@
+{
+  "asset": "/Game/Gothic/Blueprints/BP_Gothic_variant_21",
+  "view": "balcony",
+  "renderer": "Unreal editor HighResShot",
+  "eye_cm": [
+    0.0,
+    -1505.7394802570343,
+    100245.9999999553
+  ],
+  "target_cm": [
+    0.0,
+    -705.7394802570343,
+    100275.9999999553
+  ],
+  "focal_length_mm": 24.0
+}

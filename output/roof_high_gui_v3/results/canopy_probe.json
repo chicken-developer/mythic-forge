@@ -1,0 +1,253 @@
+[
+  {
+    "id": "08_normal_house_b",
+    "nodes": {
+      "DETAILS/site/canopy_members_only": {
+        "points": 28,
+        "prims": 20,
+        "vertex_counts": {
+          "6": 2,
+          "4": 18
+        },
+        "materials": {
+          "roof": 8,
+          "wood": 12
+        }
+      },
+      "DETAILS/site/canopy_wall_contact": {
+        "points": 36,
+        "prims": 24,
+        "vertex_counts": {
+          "4": 18,
+          "6": 6
+        },
+        "materials": {
+          "wood": 12,
+          "roof": 7,
+          "": 5
+        }
+      },
+      "DETAILS/site/canopy_roof_domain": {
+        "points": 10,
+        "prims": 2,
+        "vertex_counts": {
+          "6": 2
+        },
+        "materials": {
+          "roof": 2
+        }
+      },
+      "DETAILS/site/canopy_tile_placements": {
+        "points": 0,
+        "prims": 0,
+        "vertex_counts": {},
+        "materials": {}
+      },
+      "DETAILS/site/copy_canopy_tiles": {
+        "points": 0,
+        "prims": 0,
+        "vertex_counts": {},
+        "materials": {}
+      },
+      "OPENINGS/attachments/canopy_members_only": {
+        "points": 0,
+        "prims": 0,
+        "vertex_counts": {},
+        "materials": {}
+      },
+      "OPENINGS/attachments/canopy_wall_contact": {
+        "points": 0,
+        "prims": 0,
+        "vertex_counts": {},
+        "materials": {}
+      },
+      "OPENINGS/attachments/canopy_roof_domain": {
+        "points": 0,
+        "prims": 0,
+        "vertex_counts": {},
+        "materials": {}
+      },
+      "OPENINGS/attachments/canopy_tile_placements": {
+        "points": 0,
+        "prims": 0,
+        "vertex_counts": {},
+        "materials": {}
+      },
+      "OPENINGS/attachments/copy_canopy_tiles": {
+        "points": 0,
+        "prims": 0,
+        "vertex_counts": {},
+        "materials": {}
+      }
+    }
+  },
+  {
+    "id": "10_normal_house_c_canopy",
+    "nodes": {
+      "DETAILS/site/canopy_members_only": {
+        "points": 108,
+        "prims": 70,
+        "vertex_counts": {
+          "26": 2,
+          "4": 68
+        },
+        "materials": {
+          "canvas": 28,
+          "wood": 30,
+          "stone": 12
+        }
+      },
+      "DETAILS/site/canopy_wall_contact": {
+        "points": 120,
+        "prims": 80,
+        "vertex_counts": {
+          "4": 51,
+          "5": 10,
+          "6": 2,
+          "3": 2,
+          "7": 6,
+          "8": 5,
+          "12": 2,
+          "9": 2
+        },
+        "materials": {
+          "stone": 12,
+          "canvas": 22,
+          "wood": 45,
+          "": 1
+        }
+      },
+      "DETAILS/site/canopy_roof_domain": {
+        "points": 0,
+        "prims": 0,
+        "vertex_counts": {},
+        "materials": {}
+      },
+      "DETAILS/site/canopy_tile_placements": {
+        "points": 0,
+        "prims": 0,
+        "vertex_counts": {},
+        "materials": {}
+      },
+      "DETAILS/site/copy_canopy_tiles": {
+        "points": 0,
+        "prims": 0,
+        "vertex_counts": {},
+        "materials": {}
+      },
+      "OPENINGS/attachments/canopy_members_only": {
+        "points": 0,
+        "prims": 0,
+        "vertex_counts": {},
+        "materials": {}
+      },
+      "OPENINGS/attachments/canopy_wall_contact": {
+        "points": 0,
+        "prims": 0,
+        "vertex_counts": {},
+        "materials": {}
+      },
+      "OPENINGS/attachments/canopy_roof_domain": {
+        "points": 0,
+        "prims": 0,
+        "vertex_counts": {},
+        "materials": {}
+      },
+      "OPENINGS/attachments/canopy_tile_placements": {
+        "points": 0,
+        "prims": 0,
+        "vertex_counts": {},
+        "materials": {}
+      },
+      "OPENINGS/attachments/copy_canopy_tiles": {
+        "points": 0,
+        "prims": 0,
+        "vertex_counts": {},
+        "materials": {}
+      }
+    }
+  },
+  {
+    "id": "11_artisan_house",
+    "nodes": {
+      "DETAILS/site/canopy_members_only": {
+        "points": 28,
+        "prims": 20,
+        "vertex_counts": {
+          "6": 2,
+          "4": 18
+        },
+        "materials": {
+          "roof": 8,
+          "wood": 12
+        }
+      },
+      "DETAILS/site/canopy_wall_contact": {
+        "points": 32,
+        "prims": 22,
+        "vertex_counts": {
+          "6": 2,
+          "5": 4,
+          "4": 16
+        },
+        "materials": {
+          "roof": 7,
+          "": 3,
+          "wood": 12
+        }
+      },
+      "DETAILS/site/canopy_roof_domain": {
+        "points": 8,
+        "prims": 2,
+        "vertex_counts": {
+          "5": 2
+        },
+        "materials": {
+          "roof": 2
+        }
+      },
+      "DETAILS/site/canopy_tile_placements": {
+        "points": 0,
+        "prims": 0,
+        "vertex_counts": {},
+        "materials": {}
+      },
+      "DETAILS/site/copy_canopy_tiles": {
+        "points": 0,
+        "prims": 0,
+        "vertex_counts": {},
+        "materials": {}
+      },
+      "OPENINGS/attachments/canopy_members_only": {
+        "points": 0,
+        "prims": 0,
+        "vertex_counts": {},
+        "materials": {}
+      },
+      "OPENINGS/attachments/canopy_wall_contact": {
+        "points": 0,
+        "prims": 0,
+        "vertex_counts": {},
+        "materials": {}
+      },
+      "OPENINGS/attachments/canopy_roof_domain": {
+        "points": 0,
+        "prims": 0,
+        "vertex_counts": {},
+        "materials": {}
+      },
+      "OPENINGS/attachments/canopy_tile_placements": {
+        "points": 0,
+        "prims": 0,
+        "vertex_counts": {},
+        "materials": {}
+      },
+      "OPENINGS/attachments/copy_canopy_tiles": {
+        "points": 0,
+        "prims": 0,
+        "vertex_counts": {},
+        "materials": {}
+      }
+    }
+  }
+]

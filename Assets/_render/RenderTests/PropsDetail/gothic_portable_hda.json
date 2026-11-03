@@ -1,0 +1,59 @@
+{
+  "family": "Gothic",
+  "runtime": "22.0.368",
+  "source_imports": false,
+  "status": "passed",
+  "hda_sha256": "fe08257078fef75f37820c1315df11f769fc37895879f2a5467bcce8fa0c1974",
+  "records": [
+    {
+      "id": "variant_01",
+      "points": 64266,
+      "polygons": 126802,
+      "lights": 6,
+      "maximum_light_position_error_m": 0.0,
+      "connected_light_sources_checked": true,
+      "invalid_normals": 0,
+      "seconds": 17.961
+    },
+    {
+      "id": "variant_03",
+      "points": 129275,
+      "polygons": 251542,
+      "lights": 3,
+      "maximum_light_position_error_m": 0.0,
+      "connected_light_sources_checked": true,
+      "invalid_normals": 0,
+      "seconds": 36.048
+    },
+    {
+      "id": "variant_05",
+      "points": 102006,
+      "polygons": 189958,
+      "lights": 10,
+      "maximum_light_position_error_m": 0.0,
+      "connected_light_sources_checked": true,
+      "invalid_normals": 0,
+      "seconds": 28.077
+    },
+    {
+      "id": "variant_17",
+      "points": 141659,
+      "polygons": 278158,
+      "lights": 3,
+      "maximum_light_position_error_m": 0.0,
+      "connected_light_sources_checked": true,
+      "invalid_normals": 0,
+      "seconds": 35.778
+    },
+    {
+      "id": "variant_21",
+      "points": 289919,
+      "polygons": 571946,
+      "lights": 9,
+      "maximum_light_position_error_m": 0.0,
+      "connected_light_sources_checked": true,
+      "invalid_normals": 0,
+      "seconds": 67.635
+    }
+  ]
+}

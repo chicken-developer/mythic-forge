@@ -1,0 +1,37 @@
+{
+  "houdini": "22.0.368",
+  "relocated_hda_sha256": "a8a473c9d9da841fbcb04aac47a776c5b5d96a58af1d9c834d8286cd708e6302",
+  "authoring_scripts_imported": false,
+  "external_geometry_files": [],
+  "low": {
+    "primitives": 15224,
+    "dimensions": [
+      10.0,
+      8.834652058780193,
+      8.84600019454956
+    ],
+    "hash": "83788003a87cd45448da46d5620be94074addf2e76323f822bf4ed42a001ae94"
+  },
+  "high": {
+    "primitives": 125720,
+    "dimensions": [
+      10.0,
+      8.834652058780193,
+      8.84600019454956
+    ],
+    "hash": "f2ae2737a32b428bc162fcd348813c338c49f24ade00ba47678dc9fc185f1789"
+  },
+  "changed_width": {
+    "primitives": 134009,
+    "dimensions": [
+      10.600000381469727,
+      8.834652058780193,
+      8.84600019454956
+    ],
+    "hash": "859e954c616df298f63818388dba08804251ec3e39db43b2377a6ea2eb0c9ec1"
+  },
+  "errors": [],
+  "output_count": 3,
+  "quality_parameter_visible": true,
+  "status": "pass"
+}
