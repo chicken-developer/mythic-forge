@@ -7,7 +7,9 @@ Network inside the HDA (each line = one network box; read top to bottom, left to
          LAYOUT     OUT_FOOTPRINT + OUT_WING_PLAN -> one point per facade bay (s@module, i@floor ...)
          MOD_<T>    one bay in module space, copied onto the LAYOUT points whose s@module == T
   row 1  TRIMS CORE ROOF WINGS DORMERS CANOPY BALCONY TOWER TIMBER BUTTRESS   (each -> OUT_<NAME>)
-  row 2  OUTPUT     merge(all OUT_*) -> ground-storey material -> Cd + unreal_material -> UV -> normals = LOW
+         CORE    closed volumes, or (interior = 1) slabs - stair holes (Boolean) + stair flights
+  row 2  OUTPUT     merge(all OUT_*) -> roof clip (wall parts pulled under pitched roofs near the eave/verge)
+                    -> ground-storey material -> Cd + unreal_material -> UV -> normals -> i@piece = LOW
          HIGH       OUT_OUTPUT -> hardsurface group -> PolyBevel -> normals
          PUBLISH    switch(LOW, HIGH by preview_quality) -> outputs 0 selected / 1 LOW / 2 HIGH
 
@@ -42,7 +44,7 @@ Source of truth: <project>/tools/hbuild/generators/building (do not hand-edit VE
 
 ROW1 = (  # name, family, vex, note, inputs (OUT names of other modules, wired to wrangle inputs 1..3)
     ("TRIMS", "trim", "trims.vfl", "plinth, bands, cornice, pilasters", ("FOOTPRINT",)),
-    ("CORE", "core", "core.vfl", "inset closed volumes (ground + upper)", ("FOOTPRINT",)),
+    ("CORE", "core", "core.vfl", "closed volumes, or interior shell: slabs, ceiling, stairs", ("FOOTPRINT",)),
     ("ROOF", "roof", "roof.vfl", "flat/gable/hip, verge, ridge, chimneys", ("FOOTPRINT",)),
     ("WINGS", "core", "wings.vfl", "wing volumes + roofs", ("WING_PLAN",)),
     ("DORMERS", "roof", "dormers.vfl", "gabled dormers on the main roof", ("FOOTPRINT",)),
@@ -52,6 +54,23 @@ ROW1 = (  # name, family, vex, note, inputs (OUT names of other modules, wired t
     ("TIMBER", "trim", "timber.vfl", "half-timber overlay + gable trusses", ("LAYOUT", "ROOF", "WINGS")),
     ("BUTTRESS", "trim", "buttress.vfl", "stepped buttresses + pinnacles", ("LAYOUT", "FOOTPRINT")),
 )
+
+
+def _set_menu(node, names, label):
+    """Set the first existing menu parm in `names` to the item whose label is `label` (case-insensitive)."""
+    for nm in names:
+        p = node.parm(nm)
+        if p is None:
+            continue
+        if not hasattr(p, "menuLabels"):              # mock hou (tests/dry_run.py)
+            p.set(label)
+            return
+        labels = [x.lower() for x in p.menuLabels()]
+        if label.lower() in labels:
+            p.set(p.menuItems()[labels.index(label.lower())])
+            return
+        raise RuntimeError("%s.%s has no menu item %r (%s)" % (node.name(), nm, label, labels))
+    raise RuntimeError("%s: none of %s exists" % (node.name(), names))
 
 
 def build_network(parent):
@@ -94,19 +113,36 @@ def build_network(parent):
     # ROW 1 ------------------------------------------------------------------
     for j, (name, fam, file, note, ins) in enumerate(ROW1):
         m = b.module(name, fam, j * 2.4, 7, note)
-        g = m.wrangle("geo", 0, 0, vex(file), inputs=[None] + [outs[k] for k in ins])
-        outs[name] = m.finish(g, col=0, row=1)
+        srcs = [outs[k] for k in ins]
+        g = m.wrangle("geo", 0, 0, vex(file), inputs=[None] + srcs)
+        last, row = g, 1
+        if name == "CORE":
+            # interior shell: slabs (geo) - stair holes (Boolean), then the stair flights
+            cut = m.wrangle("stair_holes", 0.8, 0, vex("core_cut.vfl"), inputs=[None] + srcs)
+            bo = m.node("boolean::2.0", "cut_holes", 0, 1, inputs=[g, cut], color_role="generate")
+            _set_menu(bo, ("booleanop", "operation"), "subtract")
+            st = m.wrangle("stairs", 0.8, 1, vex("core_stairs.vfl"), inputs=[None] + srcs)
+            last = m.node("merge", "merge", 0, 2, inputs=[bo, st], color_role="merge")
+            row = 3
+        outs[name] = m.finish(last, col=0, row=row)
         merge_list.append(outs[name])
 
     # OUTPUT (LOW) -------------------------------------------------------------
     m = b.module("OUTPUT", "output", 0, 11, "LOW: material by storey, Cd + unreal_material, UV, normals")
     mg = m.node("merge", "merge", 0, 0, inputs=merge_list, color_role="merge")
-    fm = m.wrangle("floor_mat", 0, 1, vex("floor_mat.vfl", False), run_over="primitives", inputs=[mg],
+    rf = m.wrangle("roof_faces", 0.9, 0.5, vex("roof_faces.vfl", False), run_over="primitives", inputs=[mg],
+                   color_role="filter")
+    rc = m.wrangle("roof_clip", 0, 1, vex("roof_clip.vfl", False), run_over="points", inputs=[mg, rf],
+                   color_role="filter")
+    fm = m.wrangle("floor_mat", 0, 2, vex("floor_mat.vfl", False), run_over="primitives", inputs=[rc],
                    color_role="attrib")
-    look = m.wrangle("look", 0, 2, vex("look.vfl", False), run_over="primitives", inputs=[fm], color_role="attrib")
-    uv = m.wrangle("uv", 0, 3, vex("uv.vfl", False), run_over="vertices", inputs=[look], color_role="attrib")
-    nrm = m.node("normal", "normals", 0, 4, inputs=[uv], color_role="attrib")
-    low = m.finish(nrm, col=0, row=5)
+    look = m.wrangle("look", 0, 3, vex("look.vfl", False), run_over="primitives", inputs=[fm], color_role="attrib")
+    uv = m.wrangle("uv", 0, 4, vex("uv.vfl", False), run_over="vertices", inputs=[look], color_role="attrib")
+    nrm = m.node("normal", "normals", 0, 5, inputs=[uv], color_role="attrib")
+    # point i@piece = connected part (one per box / slab), kept by the HIGH bevel -> high->low bake isolation
+    pc = m.node("connectivity", "pieces", 0, 6, inputs=[nrm], color_role="attrib")
+    pc.parm("attribname").set("piece")
+    low = m.finish(pc, col=0, row=7)
 
     # HIGH ---------------------------------------------------------------------
     m = b.module("HIGH", "output", 2.4, 11, "LOW + PolyBevel on hardsurface parts")

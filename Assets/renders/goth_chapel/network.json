@@ -818,11 +818,99 @@
    }
   },
   {
+   "name": "core_stair_holes",
+   "type": "attribwrangle",
+   "pos": [
+    8.32,
+    -8.05
+   ],
+   "color": [
+    0.6200000047683716,
+    0.4300000071525574,
+    0.8199999928474426
+   ],
+   "inputs": [
+    null,
+    "OUT_FOOTPRINT"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "core_cut_holes",
+   "type": "boolean::2.0",
+   "pos": [
+    6.24,
+    -9.2
+   ],
+   "color": [
+    0.6200000047683716,
+    0.4300000071525574,
+    0.8199999928474426
+   ],
+   "inputs": [
+    "core_geo",
+    "core_stair_holes"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "core_stairs",
+   "type": "attribwrangle",
+   "pos": [
+    8.32,
+    -9.2
+   ],
+   "color": [
+    0.6200000047683716,
+    0.4300000071525574,
+    0.8199999928474426
+   ],
+   "inputs": [
+    null,
+    "OUT_FOOTPRINT"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "core_merge",
+   "type": "merge",
+   "pos": [
+    6.24,
+    -10.35
+   ],
+   "color": [
+    0.41999998688697815,
+    0.6600000262260437,
+    0.41999998688697815
+   ],
+   "inputs": [
+    "core_cut_holes",
+    "core_stairs"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
    "name": "OUT_CORE",
    "type": "null",
    "pos": [
     6.24,
-    -9.2
+    -11.5
    ],
    "color": [
     0.15000000596046448,
@@ -830,7 +918,7 @@
     0.15000000596046448
    ],
    "inputs": [
-    "core_geo"
+    "core_merge"
    ],
    "errors": [],
    "warnings": [],
@@ -1223,11 +1311,54 @@
    }
   },
   {
-   "name": "output_floor_mat",
+   "name": "output_roof_faces",
+   "type": "attribwrangle",
+   "pos": [
+    2.34,
+    -13.225
+   ],
+   "color": [
+    0.28999999165534973,
+    0.6399999856948853,
+    0.6399999856948853
+   ],
+   "inputs": [
+    "output_merge"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "output_roof_clip",
    "type": "attribwrangle",
    "pos": [
     0.0,
     -13.8
+   ],
+   "color": [
+    0.28999999165534973,
+    0.6399999856948853,
+    0.6399999856948853
+   ],
+   "inputs": [
+    "output_merge",
+    "output_roof_faces"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "output_floor_mat",
+   "type": "attribwrangle",
+   "pos": [
+    0.0,
+    -14.95
    ],
    "color": [
     0.8500000238418579,
@@ -1235,7 +1366,7 @@
     0.23000000417232513
    ],
    "inputs": [
-    "output_merge"
+    "output_roof_clip"
    ],
    "errors": [],
    "warnings": [],
@@ -1248,7 +1379,7 @@
    "type": "attribwrangle",
    "pos": [
     0.0,
-    -14.95
+    -16.1
    ],
    "color": [
     0.8500000238418579,
@@ -1269,7 +1400,7 @@
    "type": "attribwrangle",
    "pos": [
     0.0,
-    -16.1
+    -17.25
    ],
    "color": [
     0.8500000238418579,
@@ -1290,7 +1421,7 @@
    "type": "normal",
    "pos": [
     0.0,
-    -17.25
+    -18.4
    ],
    "color": [
     0.8500000238418579,
@@ -1307,11 +1438,32 @@
    }
   },
   {
+   "name": "output_pieces",
+   "type": "connectivity",
+   "pos": [
+    0.0,
+    -19.55
+   ],
+   "color": [
+    0.8500000238418579,
+    0.5699999928474426,
+    0.23000000417232513
+   ],
+   "inputs": [
+    "output_normals"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
    "name": "OUT_OUTPUT",
    "type": "null",
    "pos": [
     0.0,
-    -18.4
+    -20.7
    ],
    "color": [
     0.15000000596046448,
@@ -1319,7 +1471,7 @@
     0.15000000596046448
    ],
    "inputs": [
-    "output_normals"
+    "output_pieces"
    ],
    "errors": [],
    "warnings": [],
@@ -1679,7 +1831,7 @@
   },
   {
    "name": "nb_core",
-   "comment": "CORE - inset closed volumes (ground + upper)",
+   "comment": "CORE - closed volumes, or interior shell: slabs, ceiling, stairs",
    "color": [
     0.44999998807907104,
     0.44999998807907104,
@@ -1687,6 +1839,10 @@
    ],
    "nodes": [
     "core_geo",
+    "core_stair_holes",
+    "core_cut_holes",
+    "core_stairs",
+    "core_merge",
     "OUT_CORE"
    ]
   },
@@ -1804,10 +1960,13 @@
    ],
    "nodes": [
     "output_merge",
+    "output_roof_faces",
+    "output_roof_clip",
     "output_floor_mat",
     "output_look",
     "output_uv",
     "output_normals",
+    "output_pieces",
     "OUT_OUTPUT"
    ]
   },

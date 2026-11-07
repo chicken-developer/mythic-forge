@@ -54,11 +54,11 @@ foreach (float sd; sides) {
         // window
         float ww = dw * 0.55, wh = dh * 0.6;
         vector wc = F + up * (yb + dh * 0.5) + Sd * 0.005;
-        add_obox(wc, set(ww - 2 * fw, wh - 2 * fw, 0.02), R, Sd, "glass", "glass");
-        add_obox(wc - R * ((ww - fw) * 0.5) + Sd * 0.03, set(fw, wh, 0.08), R, Sd, "frame", "frame");
-        add_obox(wc + R * ((ww - fw) * 0.5) + Sd * 0.03, set(fw, wh, 0.08), R, Sd, "frame", "frame");
-        add_obox(wc + up * ((wh - fw) * 0.5) + Sd * 0.03, set(ww, fw, 0.08), R, Sd, "frame", "frame");
-        add_obox(wc - up * ((wh - fw) * 0.5) + Sd * 0.03, set(ww + 0.1, fw, 0.1), R, Sd, "frame", "sill");
+        add_obox(wc, set(ww - 2 * fw, wh - 2 * fw, 0.02), R, Sd, "glass", "dormer_glass");
+        add_obox(wc - R * ((ww - fw) * 0.5) + Sd * 0.03, set(fw, wh, 0.08), R, Sd, "frame", "dormer_frame");
+        add_obox(wc + R * ((ww - fw) * 0.5) + Sd * 0.03, set(fw, wh, 0.08), R, Sd, "frame", "dormer_frame");
+        add_obox(wc + up * ((wh - fw) * 0.5) + Sd * 0.03, set(ww, fw, 0.08), R, Sd, "frame", "dormer_frame");
+        add_obox(wc - up * ((wh - fw) * 0.5) + Sd * 0.03, set(ww + 0.1, fw, 0.1), R, Sd, "frame", "dormer_sill");
         // cheeks
         float _sx_list8[] = array(-1.0, 1.0);
         foreach (float sx; _sx_list8) {

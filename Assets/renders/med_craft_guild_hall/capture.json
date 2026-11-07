@@ -5,14 +5,15 @@
   "persp": true,
   "front": true,
   "side": true,
-  "persp_low": true
+  "persp_low": true,
+  "cutaway": true
  },
- "time": "2026-11-07 22:43:48",
- "points": 10020,
- "prims": 8408,
+ "time": "2026-11-08 03:25:19",
+ "points": 10012,
+ "prims": 8414,
  "size": [
   14.294975280761719,
-  9.080743789672852,
+  9.230743795633316,
   12.494976043701172
  ],
  "preview_quality": 1

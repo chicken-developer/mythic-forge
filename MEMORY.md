@@ -248,3 +248,14 @@ broken PIL, so compare sheets are built outside Houdini (`tools/compare_sheet.py
 References (`Assets/img_refs/`, reorganised by the user 2026-11-08): `medievals_refs/` = building concept sheets
 (one preset each), `medievals_moodboard/` and `gothics_moodboard/` = mood/style only. Gothic has no building
 concept sheets: the three gothic presets are style studies from moodboard images (`"ref_kind": "moodboard"`).
+
+hbuild fixes 2026-11-08: OUTPUT / roof_clip pulls wall-mounted parts (timber, cornice, pilaster, sign, gable
+triangles) 3 cm under pitched roofs near eave / verge (`tools/check_roof_poke.py` -> none left on all 17;
+med_tavern only has windows standing 0.3 m above its lean-to). `interior = 1` on all presets: floor slabs,
+ceiling, switchback stairs with Boolean holes (shell only, no furniture). Bake: `tools/bake_asset.py` ->
+`Assets/_render/SourceAssets/HBuild/<asset>/` (LOW/HIGH FBX, DirectX normal 4096 via Copernicus, pieces isolated
+by the generator's point i@piece; xyzdist-based piece transfer gave ~10% wrong texels). Unreal:
+`Assets/_render/Tools/HBuild/import_render.py` (request `RenderTests/HBuild/request.json`) imports into
+`/Game/HBuild/<asset>` and places LOW + HIGH in `/Game/Levels/NewMap` (Outliner folder HBuild/<asset>), captures
+to `RenderTests/HBuild/<asset>/`.
+

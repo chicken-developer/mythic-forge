@@ -21,16 +21,34 @@ for (int w = 0; w < nprimitives(1); w++) {
     float Hw = gh + (max(nf, 1) - 1) * fh;
     float tp = tan(radians(pitch));
 
-    // core: inset box (rectangle) up to the wing eave
-    vector q[] = array(A - along * t + out * t, B + along * t + out * t, C + along * t - out * t,
-                       A + (C - B) - along * t - out * t);
-    for (int i = 0; i < 4; i++) {
-        vector a = q[i], b = q[(i + 1) % 4];
-        add_poly(array(a, b, b + set(0, Hw, 0), a + set(0, Hw, 0)), cross(normalize(b - a), up), "wall", "core");
+    if (!chi("../interior")) {
+        // core: inset box (rectangle) up to the wing eave
+        vector q[] = array(A - along * t + out * t, B + along * t + out * t, C + along * t - out * t,
+                           A + (C - B) - along * t - out * t);
+        for (int i = 0; i < 4; i++) {
+            vector a = q[i], b = q[(i + 1) % 4];
+            add_poly(array(a, b, b + set(0, Hw, 0), a + set(0, Hw, 0)), cross(normalize(b - a), up), "wall", "core");
+        }
+        vector top[];
+        foreach (vector p; q) append(top, p + set(0, Hw, 0));
+        add_poly(top, up, "roof", "core_top");
+    } else {
+        // interior shell: floor slabs + ceiling, open towards the main wall (the wing has no wall there),
+        // half-way into the side and outer walls
+        float  h2 = t * 0.5;
+        float  ft = ch("../floor_t"), ct = ch("../ceiling_t");
+        string fm = chi("../interior_floor_mat") == 1 ? "stone" : "timber";
+        vector q[] = array(A - along * h2, B + along * h2, C + along * h2 - out * h2, A + (C - B) - along * h2 - out * h2);
+        for (int k = 0; k < max(nf, 1); k++) {
+            vector s0[];
+            foreach (vector p; q) append(s0, p + set(0, (k == 0) ? 0 : gh + (k - 1) * fh, 0));
+            add_slab(s0, up, ft, fm, "floor", k == 0 ? "slab_under" : "ceiling");
+        }
+        float cy = (rtype == 3) ? Hw - max(rt, 0.1) : Hw;   // a flat wing roof sits on the eave line
+        vector s1[];
+        foreach (vector p; q) append(s1, p + set(0, cy, 0));
+        add_slab(s1, up, ct, "wall", "ceiling_top", "ceiling");
     }
-    vector top[];
-    foreach (vector p; q) append(top, p + set(0, Hw, 0));
-    add_poly(top, up, "roof", "core_top");
 
     vector base = O;
     base.y = Hw;

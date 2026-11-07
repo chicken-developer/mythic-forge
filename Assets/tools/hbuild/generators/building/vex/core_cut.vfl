@@ -1,0 +1,24 @@
+// CORE / stair holes: one cutter box per stair flight, around the slab of the storey the flight arrives on
+// (Boolean B input, subtracted from the slabs). Cut faces take material wall / part slab_edge.
+if (!chi("../interior") || !chi("../stairs")) return;
+float t = ch("../wall_t"), gh = ch("../ground_h"), fh = ch("../floor_h"), ft = ch("../floor_t");
+int nfl = chi("../floor_n");
+float w = ch("../stair_w");
+float e = ch("../stair_hole_margin");
+for (int f = 0; f < nfl; f++) {
+    vector o, X, N;
+    float xs, dir, d0, y0, rz, tr;
+    int n;
+    if (!stair_flight(1, f, chi("../front_edge"), chi("../stair_side"), t, gh, fh, nfl, w, ch("../stair_riser"),
+                      ch("../stair_tread"), ch("../stair_u"), ch("../stair_landing"), o, X, N, xs, dir, d0, y0, n, rz, tr))
+        continue;
+    float run = tr * (n - 1);
+    float xa = min(xs, xs + dir * run) - e, xb = max(xs, xs + dir * run) + e;
+    float da = d0 - e, db = d0 + w + e;
+    if (f % 2 == 0) {                                   // lane 0 runs along the wall: open the hole into it
+        if (chi("../stair_side") == 0) db += t; else da -= t;
+    }
+    float y1 = y0 + rz * n;                             // top of the slab the flight arrives on
+    vector c = o + X * ((xa + xb) * 0.5) + N * ((da + db) * 0.5) + set(0, y1 - ft * 0.5, 0);
+    add_obox(c, set(xb - xa, ft + 2 * e, db - da), X, cross(X, {0,1,0}), "wall", "slab_edge");
+}

@@ -295,3 +295,61 @@ function vector[] ring_pts(vector c; vector X; vector Z; float hw; int n; float 
     return out;
 }
 // ===== end helpers =====
+
+// Stair flight f (storey f -> f+1) of the interior shell, inside the ground outline (input `geo`, prim 0).
+// Frame: o = first point of the front edge, X along the front edge, N into the building. Lanes of width w run
+// along X against the stair wall (side 0 = back wall, 1 = front wall); flight f uses lane f % 2 and starts
+// where flight f-1 ended (direction +X for even, -X for odd flights). The tread depth is shared by all
+// flights (from the tallest storey). Returns 0 when there is no flight f or no room for it.
+// Outputs: xs start along X, dir +-1, d0 inner lane edge along N, y0 floor, n risers, rz riser, tr tread.
+int stair_flight(int geo; int f; int front; int side; float t; float gh; float fh; int nfl; float w;
+                 float rmax; float tmax; float u; float land; export vector o; export vector X; export vector N;
+                 export float xs; export float dir; export float d0; export float y0; export int n;
+                 export float rz; export float tr) {
+    if (f < 0 || f >= nfl) return 0;
+    vector up = {0,1,0};
+    int pts[] = primpoints(geo, 0);
+    int np = len(pts);
+    if (np < 3) return 0;
+    int fe = front % np;
+    vector a0 = point(geo, "P", pts[fe]);
+    vector a1 = point(geo, "P", pts[(fe + 1) % np]);
+    X = a1 - a0;
+    X.y = 0;
+    X = normalize(X);
+    N = normalize(cross(up, X));
+    vector c = 0;
+    foreach (int p; pts) c += point(geo, "P", p);
+    c /= np;
+    if (dot(c - a0, N) < 0) N = -N;
+    o = a0;
+    o.y = 0;
+    float xa = 1e9, xb = -1e9, da = 1e9, db = -1e9;
+    foreach (int p; pts) {
+        vector d = point(geo, "P", p) - o;
+        xa = min(xa, dot(d, X)); xb = max(xb, dot(d, X));
+        da = min(da, dot(d, N)); db = max(db, dot(d, N));
+    }
+    float L0 = xa + t + land, L1 = xb - t - land;
+    float avail = L1 - L0;
+    if (avail < tmax * 2 || (db - da) - 2 * t < 2 * w + land) return 0;
+    float hmax = (nfl > 1) ? max(gh, fh) : gh;
+    int nmax = max(2, int(ceil(hmax / rmax)));
+    tr = min(tmax, avail / (nmax - 1));
+    float x = L0 + clamp(u, 0, 1) * max(avail - tr * (nmax - 1), 0);
+    for (int k = 0; k < f; k++) {
+        int nk = max(2, int(ceil(((k == 0) ? gh : fh) / rmax)));
+        x += ((k % 2 == 0) ? 1.0 : -1.0) * tr * (nk - 1);
+    }
+    float h = (f == 0) ? gh : fh;
+    n = max(2, int(ceil(h / rmax)));
+    rz = h / n;
+    y0 = (f == 0) ? 0 : gh + (f - 1) * fh;
+    xs = x;
+    dir = (f % 2 == 0) ? 1.0 : -1.0;
+    float xe = xs + dir * tr * (n - 1);
+    if (min(xs, xe) < xa + t - 1e-3 || max(xs, xe) > xb - t + 1e-3) return 0;
+    int lane = f % 2;
+    d0 = (side == 0) ? db - t - (lane + 1) * w : da + t + lane * w;
+    return 1;
+}

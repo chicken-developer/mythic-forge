@@ -54,3 +54,22 @@ gothic presets are style studies; their sheets label the reference "moodboard (s
   `pilaster_mat` = stone (cream #e2d9c8). A cream centre block between the brick wings would need a per-wing wall
   colour (generator gap).
 - All other assets: no round 3 needed (round 2 accepted; remaining differences are props / modelling work).
+
+## Fixes 2026-11-08 (user feedback: timber showing through roofs, no interiors)
+
+- Roof: wall-mounted parts stuck out of pitched roofs near the eave / verge (top plates and posts, gable-truss
+  collars / king posts / tie beams, cornices, corner pilasters, shop sign bands). Generic fix in the generator
+  (OUTPUT / roof_clip, see building_generator.md). `tools/check_roof_poke.py`: before 11 assets had pokes
+  (timber_plate, timber_gable, cornice, pilaster, sign ...), after: none on all 17.
+- med_tavern: the left lean-to (wing b) reached 4.24 m and cut the upper-storey windows -> pitch 22 -> 15 deg.
+- Interior shell on all 17 presets (`interior = 1`): floor slabs, ceilings, stairs with holes; see `cutaway.png`.
+- Dormer window parts renamed `dormer_frame / dormer_glass / dormer_sill` (bevel list updated) so the roof clip
+  never touches them.
+- roof_clip_gap 1 cm still showed through the roof in the viewport (depth precision) -> 3 cm; gable triangles
+  (rakes exactly in the roof plane) are lowered too.
+- Bake med_tavern: xyzdist piece transfer gave ~10% wrong texels; the generator's point i@piece fixed it (0.4%).
+  1008 HIGH vertices had non-finite UV/N after PolyBevel -> Unreal 5.8 Interchange asserted and the editor
+  crashed on import; bake_asset.py now zeroes them (count in bake.json).
+- Unreal (TDKProps 5.8.4, /Game/Levels/NewMap): LOW 7879 tris (= Houdini), HIGH 48133 of 48286 (Unreal drops
+  degenerate bevel slivers), sizes match. 8 captures in _render/RenderTests/HBuild/med_tavern/.
+  Still visible: one small timber stub at the valley where the tavern's cross gable meets the main roof.

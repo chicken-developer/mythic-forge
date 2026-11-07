@@ -11,7 +11,9 @@ Checks
 """
 import re
 
-ALLOWED_CONSTANT_PARMS = {"snippet", "class", "vex_cwdpath", "group", "outputidx"}   # code / wiring, not shape
+ALLOWED_CONSTANT_PARMS = {"snippet", "class", "vex_cwdpath", "group", "outputidx",   # code / wiring, not shape
+                          "booleanop", "operation",                                   # Boolean mode (subtract)
+                          "attribname"}                                               # attribute names
 DEFAULT_NAME = re.compile(r"^[a-z]+[a-z_]*\d+$")
 
 

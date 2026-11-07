@@ -60,6 +60,10 @@ Content/HoudiniEngine/Temp/*
 !/RenderTests/BuildingJoints/**
 !/RenderTests/EditableHDA/**
 !/RenderTests/SkyTown/**
+!/Tools/HBuild/**
+/Tools/HBuild/__pycache__/
+!/SourceAssets/HBuild/**
+!/RenderTests/HBuild/**
 
 # OS/platform generated files.
 

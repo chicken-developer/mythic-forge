@@ -39,7 +39,8 @@ ROOF_TYPES = ("Flat + parapet", "Gable", "Hip")
 SIDES = ("Front", "Right", "Back", "Left")
 DEFAULT_BEVEL_PARTS = ("frame mullion sill header door bulkhead sign plinth band cornice pilaster coping "
                        "chimney chimney_cap timber_* verge ridge_beam buttress pinnacle tower_band "
-                       "arch_frame rose_frame rose_spoke rose_hub beam post rail baluster bracket balcony_deck")
+                       "arch_frame rose_frame rose_spoke rose_hub beam post rail baluster bracket balcony_deck stair "
+                       "dormer_frame dormer_sill")
 
 
 def _wing(s, on=0):
@@ -182,6 +183,22 @@ PARMS = [
     P("Timber", "timber_rail", "Sill Rail On Window Bays", "toggle", 1),
     P("Timber", "timber_gable", "Gable Trusses", "toggle", 1),
     P("Timber", "timber_collar", "Collar Height (of gable)", "float", 0.5, 0.2, 0.8),
+    # ---------------- Interior (shell only: slabs, ceilings, stairs; no furniture)
+    P("Interior", "interior", "Interior Shell", "toggle", 0,
+      help="hollow storeys: floor slabs, ceiling, stairs (replaces the closed core volumes)"),
+    P("Interior", "floor_t", "Floor Slab Thickness", "float", 0.15, 0.05, 0.6,
+      help="keep <= the window lintel (0.15 m) so a slab never shows in an opening"),
+    P("Interior", "ceiling_t", "Top Ceiling Thickness", "float", 0.12, 0.02, 0.5),
+    P("Interior", "interior_floor_mat", "Floor Material", "menu", 0, menu=("Timber", "Stone")),
+    P("Interior", "stairs", "Stairs", "toggle", 1),
+    P("Interior", "stair_side", "Stair Wall", "menu", 0, menu=("Back wall", "Front wall"),
+      help="relative to the front edge"),
+    P("Interior", "stair_w", "Stair Width", "float", 0.9, 0.6, 2.0),
+    P("Interior", "stair_riser", "Max Riser", "float", 0.19, 0.12, 0.3),
+    P("Interior", "stair_tread", "Max Tread", "float", 0.28, 0.18, 0.5),
+    P("Interior", "stair_u", "Position Along Wall", "float", 0.5, 0.0, 1.0),
+    P("Interior", "stair_landing", "Min Landing", "float", 0.9, 0.3, 3.0),
+    P("Interior", "stair_hole_margin", "Stair Hole Margin", "float", 0.02, 0.0, 0.3),
     # ---------------- Buttress
     P("Buttress", "buttress", "Buttresses", "toggle", 0),
     P("Buttress", "buttress_edges", "On Edges", "menu", 0, menu=("Side walls", "All walls")),
@@ -204,6 +221,16 @@ PARMS = [
     P("Roof", "verge_w", "Verge Board Width", "float", 0.0, 0.0, 0.8, help="timber boards on the gable rakes; 0 = none"),
     P("Roof", "verge_t", "Verge Board Thickness", "float", 0.06, 0.01, 0.3),
     P("Roof", "ridge_w", "Ridge Beam Size", "float", 0.0, 0.0, 0.6, help="0 = none"),
+    P("Roof", "roof_clip", "Clip Wall Parts Under Roof", "float", 0.6, 0.0, 1.5,
+      help="points of wall-mounted parts (timber, cornice, pilaster, sign ...) above a pitched roof by less "
+           "than this, near its eave / verge, are pulled under the roof; 0 = off"),
+    P("Roof", "roof_clip_gap", "Clip Gap Under Roof", "float", 0.03, 0.0, 0.1,
+      help="keep it a few cm: closer than that the viewport depth buffer shows the part through the roof"),
+    P("Roof", "roof_clip_edge", "Clip Within (of roof edge)", "float", 1.0, 0.0, 5.0,
+      help="only points horizontally this close to an edge of the roof face are clipped"),
+    P("Roof", "roof_clip_skip", "Never Clip Parts", "string",
+      "slope hip soffit verge ridge_beam chimney chimney_cap dormer_* tower_* pinnacle* canopy awning* "
+      "core_top parapet coping", help="parts that belong to the roof or stand on it on purpose"),
     P("Roof", "parapet_h", "Parapet Height (flat)", "float", 0.8, 0.0, 3.0),
     P("Roof", "chimney", "Chimney", "toggle", 1),
     P("Roof", "chimney_n", "Chimney Count", "int", 1, 1, 2, help="2 = second one mirrored along the ridge"),

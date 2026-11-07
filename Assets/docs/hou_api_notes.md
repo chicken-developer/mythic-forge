@@ -27,3 +27,19 @@ Each line: `H22.0.368: <call> — <result>`. The 21-era assumptions from the ski
 - H22.0.368: loading the two original hips prints COP handle-binding warnings (`sidefx_transform2d/3d`, `sidefx_hud_*`) from stock COP HDAs; harmless for SOP work.
 - git: the repo is owned by another Windows SID, so git refuses it ("dubious ownership"). Jobs call `git -c safe.directory=E:/Repos/mythic-forge ...` per command instead of changing the global config.
 - Houdini GUI shows a startup dialog "SHFS not properly setup" (third-party package); dismiss it before typing into the Python Shell.
+
+## Findings 2026-11-08 (roof clip, interior shell, bake)
+
+- H22.0.368: VEX `intersect_all(geo, "", orig, dir, pos[], prim[], uvw[], tol, ttol)` drops hits whose t lies within
+  `ttol` of an earlier hit, and t is relative to the ray length: with a 200 m ray and ttol 1e-4 two faces 2 cm apart
+  collapse into one hit, so a wall top coplanar with the roof face hid the roof. Fix: short rays (~2 m), ttol 1e-5,
+  and trace against a roof-only geometry (OUTPUT / `roof_faces`).
+- H22.0.368: VEX `point(1, "P", pt).y` is an ambiguous call (point() is overloaded on the return type); assign to a
+  typed local first (`vector p = point(...); p.y`).
+- H22.0.368: `boolean::2.0` subtract: operation parm `booleanop`, menu label "Subtract" (set via menuItems/menuLabels
+  in build.py `_set_menu`); an empty B input passes A through.
+- H22.0.368: `connectivity` default (point connectivity) writes a POINT attribute (one id per closed box); PolyBevel
+  (polybevel::3.0) interpolates it onto the new bevel points, so `i@piece` matches between LOW and HIGH.
+- H22.0.368: Copernicus `bakegeometrytextures::2.0` + `rop_image` (parms as in tools/bake_asset.py) bakes a 4096
+  normal map of med_tavern in ~15 s; `filmboxfbx` export ROP writes the FBX (geometry export, not a render).
+- H22.0.368: `clip` SOP (capture cutaway only): parms `origin`, `dir`, `clipop` (menu label containing "above").

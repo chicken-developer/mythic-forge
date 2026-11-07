@@ -1,0 +1,3 @@
+// OUTPUT / roof faces (run over primitives): keep only the pitched roof slabs (parts slope / hip). The roof
+// clip shoots its rays at this geometry alone, so a coplanar wall top never hides the roof hit.
+if (s@part != "slope" && s@part != "hip") removeprim(0, @primnum, 1);
