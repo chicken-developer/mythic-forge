@@ -1,0 +1,19 @@
+{
+ "hip": "E:/Repos/mythic-forge/Assets/hip/med_artisan_house.hip",
+ "asset": "med_artisan_house",
+ "views": {
+  "persp": true,
+  "front": true,
+  "side": true,
+  "persp_low": true
+ },
+ "time": "2026-11-07 22:43:16",
+ "points": 18416,
+ "prims": 17391,
+ "size": [
+  12.400001049041748,
+  9.981494903564453,
+  9.252317428588867
+ ],
+ "preview_quality": 1
+}

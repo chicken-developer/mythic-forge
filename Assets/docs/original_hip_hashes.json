@@ -1,0 +1,12 @@
+{
+ "hda_medieval_building/medieval_building.hip": {
+  "sha256": "9ea8bf103a29c18a8a91c5b201d0cb8f74ebe5728618095d739aaf1f1c315156",
+  "bytes": 20961886,
+  "mtime": 1793564477.1869547
+ },
+ "hda_gothic_building/gothic_building.hip": {
+  "sha256": "0e7c98098ad080dfa9043fb0b92bb632ae0c805b2b5735f9ae86dbddd0029c32",
+  "bytes": 28453701,
+  "mtime": 1793477905.9393413
+ }
+}

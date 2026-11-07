@@ -1,0 +1,39 @@
+// CORE: closed inner volumes = footprint inset by wall_t. Ground storey on prim 0 (0 .. ground_h),
+// upper storeys on prim 1 (ground_h .. eave) so a jettied upper floor gets its own wider volume.
+// Hidden behind the facade modules; closes gaps and gives the flat roof its surface.
+void core_volume(int prim; float y0; float y1; float t; string topmat; string toppart) {
+    vector up = {0,1,0};
+    int pts[] = primpoints(1, prim);
+    int np = len(pts);
+    vector q[];
+    for (int i = 0; i < np; i++) {
+        vector p  = point(1, "P", pts[i]);
+        vector pp = point(1, "P", pts[(i - 1 + np) % np]);
+        vector pn = point(1, "P", pts[(i + 1) % np]);
+        vector n1 = normalize(cross(normalize(p - pp), up));
+        vector n2 = normalize(cross(normalize(pn - p), up));
+        vector m  = normalize(n1 + n2);
+        append(q, p - m * (t / max(dot(m, n2), 0.25)));      // mitre offset, clamped on sharp corners
+    }
+    for (int i = 0; i < np; i++) {
+        vector a = q[i];
+        vector b = q[(i + 1) % np];
+        vector side[] = array(a + set(0, y0, 0), b + set(0, y0, 0), b + set(0, y1, 0), a + set(0, y1, 0));
+        add_poly(side, cross(normalize(b - a), up), "wall", "core");
+    }
+    vector top[], bot[];
+    foreach (vector p; q) { append(top, p + set(0, y1, 0)); append(bot, p + set(0, y0, 0)); }
+    add_poly(top, up, topmat, toppart);
+    add_poly(bot, -up, "wall", "core_bottom");
+}
+
+float t   = ch("../wall_t");
+float gh  = ch("../ground_h");
+int   nfl = chi("../floor_n");
+float H   = gh + nfl * ch("../floor_h");
+if (nfl == 0) {
+    core_volume(0, 0, gh, t, "roof", "core_top");
+} else {
+    core_volume(0, 0, gh, t, "wall", "core_floor");
+    core_volume(min(1, nprimitives(1) - 1), gh, H, t, "roof", "core_top");
+}

@@ -1,0 +1,22 @@
+// MOD_D: door bay (nominal height = ground_h). See mod_w0 for module space.
+float bw = ch("../bay_w");
+float H  = ch("../ground_h");
+float t  = ch("../wall_t");
+float dw = min(ch("../door_w"), bw - 0.3);       // keep >= 0.15 m of wall each side
+float dh = min(ch("../door_h"), H - 0.3);
+float fw = ch("../frame_w");
+float fd = ch("../frame_d");
+float side = (bw - dw) * 0.5;
+
+add_box(set(-(bw - side) * 0.5, H * 0.5, -t * 0.5), set(side, H, t), "wall", "wall");
+add_box(set( (bw - side) * 0.5, H * 0.5, -t * 0.5), set(side, H, t), "wall", "wall");
+add_box(set(0, (dh + H) * 0.5, -t * 0.5),           set(dw, H - dh, t), "wall", "wall");
+
+float zc = (fd - t * 0.5) * 0.5;
+float zd = fd + t * 0.5;
+add_box(set(-(dw - fw) * 0.5, dh * 0.5, zc), set(fw, dh, zd), "frame", "frame");
+add_box(set( (dw - fw) * 0.5, dh * 0.5, zc), set(fw, dh, zd), "frame", "frame");
+add_box(set(0, dh - fw * 0.5, zc),           set(dw - 2 * fw, fw, zd), "frame", "frame");
+add_box(set(0, (dh - fw) * 0.5, -t * 0.6),   set(dw - 2 * fw, dh - fw, 0.06), "door", "door");
+if (chi("../win_header"))
+    add_box(set(0, dh + 0.1, 0.03), set(dw + 0.3, 0.2, 0.1), "trim", "header");

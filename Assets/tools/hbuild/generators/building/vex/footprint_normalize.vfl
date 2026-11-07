@@ -1,0 +1,42 @@
+// FOOTPRINT / normalize: one closed polygon on y = 0 whose edges' outward normal is
+// cross(edge_dir, up). Input 1 = rectangle, input 2 = optional curve from the HDA input.
+// Everything downstream reads this polygon (prim 0) and nothing else.
+int src = (chi("../footprint_mode") == 1 && nprimitives(2) > 0) ? 2 : 1;
+int pts[] = primpoints(src, 0);
+vector P[];
+foreach (int pt; pts) {
+    vector p = point(src, "P", pt);
+    p.y = 0;
+    if (len(P) == 0 || distance(p, P[-1]) > 1e-4)    // drop duplicate consecutive points
+        append(P, p);
+}
+if (len(P) > 2 && distance(P[0], P[-1]) < 1e-4)      // closed curve given with a repeated end point
+    pop(P);
+if (len(P) < 3) return;
+float area = 0;                                      // signed area in XZ
+for (int i = 0; i < len(P); i++) {
+    vector a = P[i];
+    vector b = P[(i + 1) % len(P)];
+    area += a.x * b.z - b.x * a.z;
+}
+if (area > 0) P = reverse(P);                        // we want the order with area < 0 (see conventions)
+int ids[];
+foreach (vector p; P) append(ids, addpoint(0, p));
+addprim(0, "poly", ids);
+
+// prim 1 = the upper-floor outline: prim 0 pushed outward by `jetty` (mitre offset). With jetty = 0 it
+// equals prim 0. Ground-floor modules read prim 0, upper floors / roof read prim 1.
+float jt = ch("../jetty");
+vector up = {0,1,0};
+int n = len(P);
+int ids2[];
+for (int i = 0; i < n; i++) {
+    vector p  = P[i];
+    vector pp = P[(i - 1 + n) % n];
+    vector pn = P[(i + 1) % n];
+    vector n1 = normalize(cross(normalize(p - pp), up));
+    vector n2 = normalize(cross(normalize(pn - p), up));
+    vector m  = normalize(n1 + n2);
+    append(ids2, addpoint(0, p + m * (jt / max(dot(m, n2), 0.25))));   // clamp on very sharp corners
+}
+addprim(0, "poly", ids2);

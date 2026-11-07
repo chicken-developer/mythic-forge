@@ -1,0 +1,10 @@
+// HIGH (run over primitives): put hardsurface parts (patterns in bevel_parts, matched on s@part) in the
+// group hs_bevel for PolyBevel. Walls, roof planes, glass and fabric are not in it: they stay flat
+// (their detail comes from Substance Designer).
+string pats[] = split(chs("../bevel_parts"));
+foreach (string p; pats) {
+    if (match(p, s@part)) {
+        setprimgroup(0, "hs_bevel", @primnum, 1);
+        break;
+    }
+}

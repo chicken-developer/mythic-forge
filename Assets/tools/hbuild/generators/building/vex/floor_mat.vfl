@@ -1,0 +1,6 @@
+// OUTPUT / floor material (run over primitives): ground_mat = 1 turns the ground-storey walls into
+// stone (walls and core faces whose centre lies below ground_h). Upper storeys keep "wall".
+if (chi("../ground_mat") == 1 && s@mat_id == "wall" && (s@part == "wall" || s@part == "core" || s@part == "reveal")) {
+    vector c = primuv(0, "P", @primnum, set(0.5, 0.5, 0));
+    if (c.y < ch("../ground_h") - 1e-3) s@mat_id = "stone";
+}

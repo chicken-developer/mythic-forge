@@ -1,0 +1,1855 @@
+{
+ "path": "/obj/med_material_storage/generator",
+ "nodes": [
+  {
+   "name": "OUT",
+   "type": "null",
+   "pos": [
+    12.48,
+    -16.4
+   ],
+   "color": [
+    0.6000000238418579,
+    0.699999988079071,
+    0.7699999809265137
+   ],
+   "inputs": [
+    "OUT_PUBLISH"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": true
+   }
+  },
+  {
+   "name": "footprint_rect",
+   "type": "attribwrangle",
+   "pos": [
+    0.0,
+    0.0
+   ],
+   "color": [
+    0.6200000047683716,
+    0.4300000071525574,
+    0.8199999928474426
+   ],
+   "inputs": [],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "footprint_normalize",
+   "type": "attribwrangle",
+   "pos": [
+    0.0,
+    -1.15
+   ],
+   "color": [
+    0.28999999165534973,
+    0.6399999856948853,
+    0.6399999856948853
+   ],
+   "inputs": [
+    null,
+    "footprint_rect"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "OUT_FOOTPRINT",
+   "type": "null",
+   "pos": [
+    0.0,
+    -2.3
+   ],
+   "color": [
+    0.15000000596046448,
+    0.15000000596046448,
+    0.15000000596046448
+   ],
+   "inputs": [
+    "footprint_normalize"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "wing_plan_geo",
+   "type": "attribwrangle",
+   "pos": [
+    6.24,
+    0.0
+   ],
+   "color": [
+    0.28999999165534973,
+    0.6399999856948853,
+    0.6399999856948853
+   ],
+   "inputs": [
+    null,
+    "OUT_FOOTPRINT"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "OUT_WING_PLAN",
+   "type": "null",
+   "pos": [
+    6.24,
+    -1.15
+   ],
+   "color": [
+    0.15000000596046448,
+    0.15000000596046448,
+    0.15000000596046448
+   ],
+   "inputs": [
+    "wing_plan_geo"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "layout_points",
+   "type": "attribwrangle",
+   "pos": [
+    12.48,
+    0.0
+   ],
+   "color": [
+    0.28999999165534973,
+    0.6399999856948853,
+    0.6399999856948853
+   ],
+   "inputs": [
+    null,
+    "OUT_FOOTPRINT",
+    "OUT_WING_PLAN"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "OUT_LAYOUT",
+   "type": "null",
+   "pos": [
+    12.48,
+    -1.15
+   ],
+   "color": [
+    0.15000000596046448,
+    0.15000000596046448,
+    0.15000000596046448
+   ],
+   "inputs": [
+    "layout_points"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "mod_w0_geo",
+   "type": "attribwrangle",
+   "pos": [
+    18.72,
+    0.0
+   ],
+   "color": [
+    0.6200000047683716,
+    0.4300000071525574,
+    0.8199999928474426
+   ],
+   "inputs": [],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "mod_w0_pts",
+   "type": "attribwrangle",
+   "pos": [
+    20.02,
+    -1.15
+   ],
+   "color": [
+    0.28999999165534973,
+    0.6399999856948853,
+    0.6399999856948853
+   ],
+   "inputs": [
+    "OUT_LAYOUT"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "mod_w0_copy",
+   "type": "copytopoints::2.0",
+   "pos": [
+    18.72,
+    -2.3
+   ],
+   "color": [
+    0.28999999165534973,
+    0.6399999856948853,
+    0.6399999856948853
+   ],
+   "inputs": [
+    "mod_w0_geo",
+    "mod_w0_pts"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "OUT_MOD_W0",
+   "type": "null",
+   "pos": [
+    18.72,
+    -3.45
+   ],
+   "color": [
+    0.15000000596046448,
+    0.15000000596046448,
+    0.15000000596046448
+   ],
+   "inputs": [
+    "mod_w0_copy"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "mod_w_geo",
+   "type": "attribwrangle",
+   "pos": [
+    24.96,
+    0.0
+   ],
+   "color": [
+    0.6200000047683716,
+    0.4300000071525574,
+    0.8199999928474426
+   ],
+   "inputs": [],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "mod_w_pts",
+   "type": "attribwrangle",
+   "pos": [
+    26.26,
+    -1.15
+   ],
+   "color": [
+    0.28999999165534973,
+    0.6399999856948853,
+    0.6399999856948853
+   ],
+   "inputs": [
+    "OUT_LAYOUT"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "mod_w_copy",
+   "type": "copytopoints::2.0",
+   "pos": [
+    24.96,
+    -2.3
+   ],
+   "color": [
+    0.28999999165534973,
+    0.6399999856948853,
+    0.6399999856948853
+   ],
+   "inputs": [
+    "mod_w_geo",
+    "mod_w_pts"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "OUT_MOD_W",
+   "type": "null",
+   "pos": [
+    24.96,
+    -3.45
+   ],
+   "color": [
+    0.15000000596046448,
+    0.15000000596046448,
+    0.15000000596046448
+   ],
+   "inputs": [
+    "mod_w_copy"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "mod_d_geo",
+   "type": "attribwrangle",
+   "pos": [
+    31.2,
+    0.0
+   ],
+   "color": [
+    0.6200000047683716,
+    0.4300000071525574,
+    0.8199999928474426
+   ],
+   "inputs": [],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "mod_d_pts",
+   "type": "attribwrangle",
+   "pos": [
+    32.5,
+    -1.15
+   ],
+   "color": [
+    0.28999999165534973,
+    0.6399999856948853,
+    0.6399999856948853
+   ],
+   "inputs": [
+    "OUT_LAYOUT"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "mod_d_copy",
+   "type": "copytopoints::2.0",
+   "pos": [
+    31.2,
+    -2.3
+   ],
+   "color": [
+    0.28999999165534973,
+    0.6399999856948853,
+    0.6399999856948853
+   ],
+   "inputs": [
+    "mod_d_geo",
+    "mod_d_pts"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "OUT_MOD_D",
+   "type": "null",
+   "pos": [
+    31.2,
+    -3.45
+   ],
+   "color": [
+    0.15000000596046448,
+    0.15000000596046448,
+    0.15000000596046448
+   ],
+   "inputs": [
+    "mod_d_copy"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "mod_s_geo",
+   "type": "attribwrangle",
+   "pos": [
+    37.44,
+    0.0
+   ],
+   "color": [
+    0.6200000047683716,
+    0.4300000071525574,
+    0.8199999928474426
+   ],
+   "inputs": [],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "mod_s_pts",
+   "type": "attribwrangle",
+   "pos": [
+    38.74,
+    -1.15
+   ],
+   "color": [
+    0.28999999165534973,
+    0.6399999856948853,
+    0.6399999856948853
+   ],
+   "inputs": [
+    "OUT_LAYOUT"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "mod_s_copy",
+   "type": "copytopoints::2.0",
+   "pos": [
+    37.44,
+    -2.3
+   ],
+   "color": [
+    0.28999999165534973,
+    0.6399999856948853,
+    0.6399999856948853
+   ],
+   "inputs": [
+    "mod_s_geo",
+    "mod_s_pts"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "OUT_MOD_S",
+   "type": "null",
+   "pos": [
+    37.44,
+    -3.45
+   ],
+   "color": [
+    0.15000000596046448,
+    0.15000000596046448,
+    0.15000000596046448
+   ],
+   "inputs": [
+    "mod_s_copy"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "mod_wa_geo",
+   "type": "attribwrangle",
+   "pos": [
+    43.68,
+    0.0
+   ],
+   "color": [
+    0.6200000047683716,
+    0.4300000071525574,
+    0.8199999928474426
+   ],
+   "inputs": [],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "mod_wa_pts",
+   "type": "attribwrangle",
+   "pos": [
+    44.98,
+    -1.15
+   ],
+   "color": [
+    0.28999999165534973,
+    0.6399999856948853,
+    0.6399999856948853
+   ],
+   "inputs": [
+    "OUT_LAYOUT"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "mod_wa_copy",
+   "type": "copytopoints::2.0",
+   "pos": [
+    43.68,
+    -2.3
+   ],
+   "color": [
+    0.28999999165534973,
+    0.6399999856948853,
+    0.6399999856948853
+   ],
+   "inputs": [
+    "mod_wa_geo",
+    "mod_wa_pts"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "OUT_MOD_WA",
+   "type": "null",
+   "pos": [
+    43.68,
+    -3.45
+   ],
+   "color": [
+    0.15000000596046448,
+    0.15000000596046448,
+    0.15000000596046448
+   ],
+   "inputs": [
+    "mod_wa_copy"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "mod_da_geo",
+   "type": "attribwrangle",
+   "pos": [
+    49.92,
+    0.0
+   ],
+   "color": [
+    0.6200000047683716,
+    0.4300000071525574,
+    0.8199999928474426
+   ],
+   "inputs": [],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "mod_da_pts",
+   "type": "attribwrangle",
+   "pos": [
+    51.22,
+    -1.15
+   ],
+   "color": [
+    0.28999999165534973,
+    0.6399999856948853,
+    0.6399999856948853
+   ],
+   "inputs": [
+    "OUT_LAYOUT"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "mod_da_copy",
+   "type": "copytopoints::2.0",
+   "pos": [
+    49.92,
+    -2.3
+   ],
+   "color": [
+    0.28999999165534973,
+    0.6399999856948853,
+    0.6399999856948853
+   ],
+   "inputs": [
+    "mod_da_geo",
+    "mod_da_pts"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "OUT_MOD_DA",
+   "type": "null",
+   "pos": [
+    49.92,
+    -3.45
+   ],
+   "color": [
+    0.15000000596046448,
+    0.15000000596046448,
+    0.15000000596046448
+   ],
+   "inputs": [
+    "mod_da_copy"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "mod_wr_geo",
+   "type": "attribwrangle",
+   "pos": [
+    56.16,
+    0.0
+   ],
+   "color": [
+    0.6200000047683716,
+    0.4300000071525574,
+    0.8199999928474426
+   ],
+   "inputs": [],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "mod_wr_pts",
+   "type": "attribwrangle",
+   "pos": [
+    57.46,
+    -1.15
+   ],
+   "color": [
+    0.28999999165534973,
+    0.6399999856948853,
+    0.6399999856948853
+   ],
+   "inputs": [
+    "OUT_LAYOUT"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "mod_wr_copy",
+   "type": "copytopoints::2.0",
+   "pos": [
+    56.16,
+    -2.3
+   ],
+   "color": [
+    0.28999999165534973,
+    0.6399999856948853,
+    0.6399999856948853
+   ],
+   "inputs": [
+    "mod_wr_geo",
+    "mod_wr_pts"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "OUT_MOD_WR",
+   "type": "null",
+   "pos": [
+    56.16,
+    -3.45
+   ],
+   "color": [
+    0.15000000596046448,
+    0.15000000596046448,
+    0.15000000596046448
+   ],
+   "inputs": [
+    "mod_wr_copy"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "trims_geo",
+   "type": "attribwrangle",
+   "pos": [
+    0.0,
+    -8.05
+   ],
+   "color": [
+    0.6200000047683716,
+    0.4300000071525574,
+    0.8199999928474426
+   ],
+   "inputs": [
+    null,
+    "OUT_FOOTPRINT"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "OUT_TRIMS",
+   "type": "null",
+   "pos": [
+    0.0,
+    -9.2
+   ],
+   "color": [
+    0.15000000596046448,
+    0.15000000596046448,
+    0.15000000596046448
+   ],
+   "inputs": [
+    "trims_geo"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "core_geo",
+   "type": "attribwrangle",
+   "pos": [
+    6.24,
+    -8.05
+   ],
+   "color": [
+    0.6200000047683716,
+    0.4300000071525574,
+    0.8199999928474426
+   ],
+   "inputs": [
+    null,
+    "OUT_FOOTPRINT"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "OUT_CORE",
+   "type": "null",
+   "pos": [
+    6.24,
+    -9.2
+   ],
+   "color": [
+    0.15000000596046448,
+    0.15000000596046448,
+    0.15000000596046448
+   ],
+   "inputs": [
+    "core_geo"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "roof_geo",
+   "type": "attribwrangle",
+   "pos": [
+    12.48,
+    -8.05
+   ],
+   "color": [
+    0.6200000047683716,
+    0.4300000071525574,
+    0.8199999928474426
+   ],
+   "inputs": [
+    null,
+    "OUT_FOOTPRINT"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "OUT_ROOF",
+   "type": "null",
+   "pos": [
+    12.48,
+    -9.2
+   ],
+   "color": [
+    0.15000000596046448,
+    0.15000000596046448,
+    0.15000000596046448
+   ],
+   "inputs": [
+    "roof_geo"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "wings_geo",
+   "type": "attribwrangle",
+   "pos": [
+    18.72,
+    -8.05
+   ],
+   "color": [
+    0.6200000047683716,
+    0.4300000071525574,
+    0.8199999928474426
+   ],
+   "inputs": [
+    null,
+    "OUT_WING_PLAN"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "OUT_WINGS",
+   "type": "null",
+   "pos": [
+    18.72,
+    -9.2
+   ],
+   "color": [
+    0.15000000596046448,
+    0.15000000596046448,
+    0.15000000596046448
+   ],
+   "inputs": [
+    "wings_geo"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "dormers_geo",
+   "type": "attribwrangle",
+   "pos": [
+    24.96,
+    -8.05
+   ],
+   "color": [
+    0.6200000047683716,
+    0.4300000071525574,
+    0.8199999928474426
+   ],
+   "inputs": [
+    null,
+    "OUT_FOOTPRINT"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "OUT_DORMERS",
+   "type": "null",
+   "pos": [
+    24.96,
+    -9.2
+   ],
+   "color": [
+    0.15000000596046448,
+    0.15000000596046448,
+    0.15000000596046448
+   ],
+   "inputs": [
+    "dormers_geo"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "canopy_geo",
+   "type": "attribwrangle",
+   "pos": [
+    31.2,
+    -8.05
+   ],
+   "color": [
+    0.6200000047683716,
+    0.4300000071525574,
+    0.8199999928474426
+   ],
+   "inputs": [
+    null,
+    "OUT_FOOTPRINT"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "OUT_CANOPY",
+   "type": "null",
+   "pos": [
+    31.2,
+    -9.2
+   ],
+   "color": [
+    0.15000000596046448,
+    0.15000000596046448,
+    0.15000000596046448
+   ],
+   "inputs": [
+    "canopy_geo"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "balcony_geo",
+   "type": "attribwrangle",
+   "pos": [
+    37.44,
+    -8.05
+   ],
+   "color": [
+    0.6200000047683716,
+    0.4300000071525574,
+    0.8199999928474426
+   ],
+   "inputs": [
+    null,
+    "OUT_FOOTPRINT"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "OUT_BALCONY",
+   "type": "null",
+   "pos": [
+    37.44,
+    -9.2
+   ],
+   "color": [
+    0.15000000596046448,
+    0.15000000596046448,
+    0.15000000596046448
+   ],
+   "inputs": [
+    "balcony_geo"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "tower_geo",
+   "type": "attribwrangle",
+   "pos": [
+    43.68,
+    -8.05
+   ],
+   "color": [
+    0.6200000047683716,
+    0.4300000071525574,
+    0.8199999928474426
+   ],
+   "inputs": [
+    null,
+    "OUT_FOOTPRINT"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "OUT_TOWER",
+   "type": "null",
+   "pos": [
+    43.68,
+    -9.2
+   ],
+   "color": [
+    0.15000000596046448,
+    0.15000000596046448,
+    0.15000000596046448
+   ],
+   "inputs": [
+    "tower_geo"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "timber_geo",
+   "type": "attribwrangle",
+   "pos": [
+    49.92,
+    -8.05
+   ],
+   "color": [
+    0.6200000047683716,
+    0.4300000071525574,
+    0.8199999928474426
+   ],
+   "inputs": [
+    null,
+    "OUT_LAYOUT",
+    "OUT_ROOF",
+    "OUT_WINGS"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "OUT_TIMBER",
+   "type": "null",
+   "pos": [
+    49.92,
+    -9.2
+   ],
+   "color": [
+    0.15000000596046448,
+    0.15000000596046448,
+    0.15000000596046448
+   ],
+   "inputs": [
+    "timber_geo"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "buttress_geo",
+   "type": "attribwrangle",
+   "pos": [
+    56.16,
+    -8.05
+   ],
+   "color": [
+    0.6200000047683716,
+    0.4300000071525574,
+    0.8199999928474426
+   ],
+   "inputs": [
+    null,
+    "OUT_LAYOUT",
+    "OUT_FOOTPRINT"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "OUT_BUTTRESS",
+   "type": "null",
+   "pos": [
+    56.16,
+    -9.2
+   ],
+   "color": [
+    0.15000000596046448,
+    0.15000000596046448,
+    0.15000000596046448
+   ],
+   "inputs": [
+    "buttress_geo"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "output_merge",
+   "type": "merge",
+   "pos": [
+    0.0,
+    -12.65
+   ],
+   "color": [
+    0.41999998688697815,
+    0.6600000262260437,
+    0.41999998688697815
+   ],
+   "inputs": [
+    "OUT_MOD_W0",
+    "OUT_MOD_W",
+    "OUT_MOD_D",
+    "OUT_MOD_S",
+    "OUT_MOD_WA",
+    "OUT_MOD_DA",
+    "OUT_MOD_WR",
+    "OUT_TRIMS",
+    "OUT_CORE",
+    "OUT_ROOF",
+    "OUT_WINGS",
+    "OUT_DORMERS",
+    "OUT_CANOPY",
+    "OUT_BALCONY",
+    "OUT_TOWER",
+    "OUT_TIMBER",
+    "OUT_BUTTRESS"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "output_floor_mat",
+   "type": "attribwrangle",
+   "pos": [
+    0.0,
+    -13.8
+   ],
+   "color": [
+    0.8500000238418579,
+    0.5699999928474426,
+    0.23000000417232513
+   ],
+   "inputs": [
+    "output_merge"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "output_look",
+   "type": "attribwrangle",
+   "pos": [
+    0.0,
+    -14.95
+   ],
+   "color": [
+    0.8500000238418579,
+    0.5699999928474426,
+    0.23000000417232513
+   ],
+   "inputs": [
+    "output_floor_mat"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "output_uv",
+   "type": "attribwrangle",
+   "pos": [
+    0.0,
+    -16.1
+   ],
+   "color": [
+    0.8500000238418579,
+    0.5699999928474426,
+    0.23000000417232513
+   ],
+   "inputs": [
+    "output_look"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "output_normals",
+   "type": "normal",
+   "pos": [
+    0.0,
+    -17.25
+   ],
+   "color": [
+    0.8500000238418579,
+    0.5699999928474426,
+    0.23000000417232513
+   ],
+   "inputs": [
+    "output_uv"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "OUT_OUTPUT",
+   "type": "null",
+   "pos": [
+    0.0,
+    -18.4
+   ],
+   "color": [
+    0.15000000596046448,
+    0.15000000596046448,
+    0.15000000596046448
+   ],
+   "inputs": [
+    "output_normals"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "high_group",
+   "type": "attribwrangle",
+   "pos": [
+    6.24,
+    -12.65
+   ],
+   "color": [
+    0.8500000238418579,
+    0.5699999928474426,
+    0.23000000417232513
+   ],
+   "inputs": [
+    "OUT_OUTPUT"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "high_bevel",
+   "type": "polybevel::3.0",
+   "pos": [
+    6.24,
+    -13.8
+   ],
+   "color": [
+    0.6200000047683716,
+    0.4300000071525574,
+    0.8199999928474426
+   ],
+   "inputs": [
+    "high_group"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "high_normals",
+   "type": "normal",
+   "pos": [
+    6.24,
+    -14.95
+   ],
+   "color": [
+    0.8500000238418579,
+    0.5699999928474426,
+    0.23000000417232513
+   ],
+   "inputs": [
+    "high_bevel"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "OUT_HIGH",
+   "type": "null",
+   "pos": [
+    6.24,
+    -16.1
+   ],
+   "color": [
+    0.15000000596046448,
+    0.15000000596046448,
+    0.15000000596046448
+   ],
+   "inputs": [
+    "high_normals"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "publish_select",
+   "type": "switch",
+   "pos": [
+    12.48,
+    -12.65
+   ],
+   "color": [
+    0.41999998688697815,
+    0.6600000262260437,
+    0.41999998688697815
+   ],
+   "inputs": [
+    "OUT_OUTPUT",
+    "OUT_HIGH"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "publish_output_selected",
+   "type": "output",
+   "pos": [
+    12.48,
+    -14.95
+   ],
+   "color": [
+    0.15000000596046448,
+    0.15000000596046448,
+    0.15000000596046448
+   ],
+   "inputs": [
+    "publish_select"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "publish_output_low",
+   "type": "output",
+   "pos": [
+    15.08,
+    -14.95
+   ],
+   "color": [
+    0.15000000596046448,
+    0.15000000596046448,
+    0.15000000596046448
+   ],
+   "inputs": [
+    "OUT_OUTPUT"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "publish_output_high",
+   "type": "output",
+   "pos": [
+    17.68,
+    -14.95
+   ],
+   "color": [
+    0.15000000596046448,
+    0.15000000596046448,
+    0.15000000596046448
+   ],
+   "inputs": [
+    "OUT_HIGH"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "OUT_PUBLISH",
+   "type": "null",
+   "pos": [
+    12.48,
+    -13.8
+   ],
+   "color": [
+    0.15000000596046448,
+    0.15000000596046448,
+    0.15000000596046448
+   ],
+   "inputs": [
+    "publish_select"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  }
+ ],
+ "boxes": [
+  {
+   "name": "nb_footprint",
+   "comment": "FOOTPRINT - rect or input curve -> ground + upper outline",
+   "color": [
+    0.44999998807907104,
+    0.44999998807907104,
+    0.550000011920929
+   ],
+   "nodes": [
+    "footprint_rect",
+    "footprint_normalize",
+    "OUT_FOOTPRINT"
+   ]
+  },
+  {
+   "name": "nb_wing_plan",
+   "comment": "WING_PLAN - wing footprints from the wing slots",
+   "color": [
+    0.5,
+    0.4000000059604645,
+    0.6499999761581421
+   ],
+   "nodes": [
+    "wing_plan_geo",
+    "OUT_WING_PLAN"
+   ]
+  },
+  {
+   "name": "nb_layout",
+   "comment": "LAYOUT - one point per facade bay (main + wings)",
+   "color": [
+    0.5,
+    0.4000000059604645,
+    0.6499999761581421
+   ],
+   "nodes": [
+    "layout_points",
+    "OUT_LAYOUT"
+   ]
+  },
+  {
+   "name": "nb_mod_w0",
+   "comment": "MOD_W0 - Plain wall bay",
+   "color": [
+    0.550000011920929,
+    0.44999998807907104,
+    0.3499999940395355
+   ],
+   "nodes": [
+    "mod_w0_geo",
+    "mod_w0_pts",
+    "mod_w0_copy",
+    "OUT_MOD_W0"
+   ]
+  },
+  {
+   "name": "nb_mod_w",
+   "comment": "MOD_W - Window bay",
+   "color": [
+    0.550000011920929,
+    0.44999998807907104,
+    0.3499999940395355
+   ],
+   "nodes": [
+    "mod_w_geo",
+    "mod_w_pts",
+    "mod_w_copy",
+    "OUT_MOD_W"
+   ]
+  },
+  {
+   "name": "nb_mod_d",
+   "comment": "MOD_D - Door bay",
+   "color": [
+    0.550000011920929,
+    0.44999998807907104,
+    0.3499999940395355
+   ],
+   "nodes": [
+    "mod_d_geo",
+    "mod_d_pts",
+    "mod_d_copy",
+    "OUT_MOD_D"
+   ]
+  },
+  {
+   "name": "nb_mod_s",
+   "comment": "MOD_S - Shopfront bay",
+   "color": [
+    0.550000011920929,
+    0.44999998807907104,
+    0.3499999940395355
+   ],
+   "nodes": [
+    "mod_s_geo",
+    "mod_s_pts",
+    "mod_s_copy",
+    "OUT_MOD_S"
+   ]
+  },
+  {
+   "name": "nb_mod_wa",
+   "comment": "MOD_WA - Arched window bay",
+   "color": [
+    0.550000011920929,
+    0.44999998807907104,
+    0.3499999940395355
+   ],
+   "nodes": [
+    "mod_wa_geo",
+    "mod_wa_pts",
+    "mod_wa_copy",
+    "OUT_MOD_WA"
+   ]
+  },
+  {
+   "name": "nb_mod_da",
+   "comment": "MOD_DA - Arched door bay",
+   "color": [
+    0.550000011920929,
+    0.44999998807907104,
+    0.3499999940395355
+   ],
+   "nodes": [
+    "mod_da_geo",
+    "mod_da_pts",
+    "mod_da_copy",
+    "OUT_MOD_DA"
+   ]
+  },
+  {
+   "name": "nb_mod_wr",
+   "comment": "MOD_WR - Rose window bay",
+   "color": [
+    0.550000011920929,
+    0.44999998807907104,
+    0.3499999940395355
+   ],
+   "nodes": [
+    "mod_wr_geo",
+    "mod_wr_pts",
+    "mod_wr_copy",
+    "OUT_MOD_WR"
+   ]
+  },
+  {
+   "name": "nb_trims",
+   "comment": "TRIMS - plinth, bands, cornice, pilasters",
+   "color": [
+    0.6000000238418579,
+    0.550000011920929,
+    0.3499999940395355
+   ],
+   "nodes": [
+    "trims_geo",
+    "OUT_TRIMS"
+   ]
+  },
+  {
+   "name": "nb_core",
+   "comment": "CORE - inset closed volumes (ground + upper)",
+   "color": [
+    0.44999998807907104,
+    0.44999998807907104,
+    0.44999998807907104
+   ],
+   "nodes": [
+    "core_geo",
+    "OUT_CORE"
+   ]
+  },
+  {
+   "name": "nb_roof",
+   "comment": "ROOF - flat/gable/hip, verge, ridge, chimneys",
+   "color": [
+    0.6000000238418579,
+    0.3499999940395355,
+    0.30000001192092896
+   ],
+   "nodes": [
+    "roof_geo",
+    "OUT_ROOF"
+   ]
+  },
+  {
+   "name": "nb_wings",
+   "comment": "WINGS - wing volumes + roofs",
+   "color": [
+    0.44999998807907104,
+    0.44999998807907104,
+    0.44999998807907104
+   ],
+   "nodes": [
+    "wings_geo",
+    "OUT_WINGS"
+   ]
+  },
+  {
+   "name": "nb_dormers",
+   "comment": "DORMERS - gabled dormers on the main roof",
+   "color": [
+    0.6000000238418579,
+    0.3499999940395355,
+    0.30000001192092896
+   ],
+   "nodes": [
+    "dormers_geo",
+    "OUT_DORMERS"
+   ]
+  },
+  {
+   "name": "nb_canopy",
+   "comment": "CANOPY - porch roofs, fabric awnings, pergolas",
+   "color": [
+    0.550000011920929,
+    0.44999998807907104,
+    0.3499999940395355
+   ],
+   "nodes": [
+    "canopy_geo",
+    "OUT_CANOPY"
+   ]
+  },
+  {
+   "name": "nb_balcony",
+   "comment": "BALCONY - balcony deck + railing",
+   "color": [
+    0.550000011920929,
+    0.44999998807907104,
+    0.3499999940395355
+   ],
+   "nodes": [
+    "balcony_geo",
+    "OUT_BALCONY"
+   ]
+  },
+  {
+   "name": "nb_tower",
+   "comment": "TOWER - towers / turrets / flues with caps",
+   "color": [
+    0.44999998807907104,
+    0.44999998807907104,
+    0.44999998807907104
+   ],
+   "nodes": [
+    "tower_geo",
+    "OUT_TOWER"
+   ]
+  },
+  {
+   "name": "nb_timber",
+   "comment": "TIMBER - half-timber overlay + gable trusses",
+   "color": [
+    0.6000000238418579,
+    0.550000011920929,
+    0.3499999940395355
+   ],
+   "nodes": [
+    "timber_geo",
+    "OUT_TIMBER"
+   ]
+  },
+  {
+   "name": "nb_buttress",
+   "comment": "BUTTRESS - stepped buttresses + pinnacles",
+   "color": [
+    0.6000000238418579,
+    0.550000011920929,
+    0.3499999940395355
+   ],
+   "nodes": [
+    "buttress_geo",
+    "OUT_BUTTRESS"
+   ]
+  },
+  {
+   "name": "nb_output",
+   "comment": "OUTPUT - LOW: material by storey, Cd + unreal_material, UV, normals",
+   "color": [
+    0.30000001192092896,
+    0.5,
+    0.75
+   ],
+   "nodes": [
+    "output_merge",
+    "output_floor_mat",
+    "output_look",
+    "output_uv",
+    "output_normals",
+    "OUT_OUTPUT"
+   ]
+  },
+  {
+   "name": "nb_high",
+   "comment": "HIGH - LOW + PolyBevel on hardsurface parts",
+   "color": [
+    0.30000001192092896,
+    0.5,
+    0.75
+   ],
+   "nodes": [
+    "high_group",
+    "high_bevel",
+    "high_normals",
+    "OUT_HIGH"
+   ]
+  },
+  {
+   "name": "nb_publish",
+   "comment": "PUBLISH - outputs: 0 selected (preview_quality), 1 LOW, 2 HIGH",
+   "color": [
+    0.30000001192092896,
+    0.5,
+    0.75
+   ],
+   "nodes": [
+    "publish_select",
+    "publish_output_selected",
+    "publish_output_low",
+    "publish_output_high",
+    "OUT_PUBLISH"
+   ]
+  }
+ ],
+ "notes": [
+  {
+   "text": "BUILDING GENERATOR  (bldg::building_generator::1.0)\nModules read only OUT_* nulls and HDA parms (ch(\"../name\")). Data flows top -> bottom.\nFOOTPRINT: prim 0 = ground outline, prim 1 = upper outline (jetty). WING_PLAN: one polygon per wing.\nLAYOUT: one point per bay (main + wings): s@module W0 W D S WA DA WR, i@floor i@edge i@bay i@nbays i@poly\n  f@bay_width, orient, scale. Each MOD_<T> builds ONE bay in module space and is copied onto its points.\nRow 2 modules add volumes, roofs, overlays (timber, buttress) and attachments (canopy, balcony, tower).\nOutput prims: s@mat_id s@part v@Cd s@unreal_material, vertex uv + N. Outputs: 0 selected, 1 LOW, 2 HIGH.\nHIGH = LOW + PolyBevel on parts listed in 'HIGH Bevel Parts' (walls / roof planes stay flat for Substance).\nSource of truth: <project>/tools/hbuild/generators/building (do not hand-edit VEX only here).",
+   "pos": [
+    -2.0,
+    5.5
+   ]
+  }
+ ]
+}

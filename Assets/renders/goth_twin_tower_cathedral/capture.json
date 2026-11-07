@@ -1,0 +1,19 @@
+{
+ "hip": "E:/Repos/mythic-forge/Assets/hip/goth_twin_tower_cathedral.hip",
+ "asset": "goth_twin_tower_cathedral",
+ "views": {
+  "persp": true,
+  "front": true,
+  "side": true,
+  "persp_low": true
+ },
+ "time": "2026-11-07 22:42:48",
+ "points": 35817,
+ "prims": 30740,
+ "size": [
+  20.23250102996826,
+  47.0,
+  26.4662504196167
+ ],
+ "preview_quality": 1
+}

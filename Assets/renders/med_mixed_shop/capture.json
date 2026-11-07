@@ -1,0 +1,19 @@
+{
+ "hip": "E:/Repos/mythic-forge/Assets/hip/med_mixed_shop.hip",
+ "asset": "med_mixed_shop",
+ "views": {
+  "persp": true,
+  "front": true,
+  "side": true,
+  "persp_low": true
+ },
+ "time": "2026-11-07 22:48:03",
+ "points": 15965,
+ "prims": 14945,
+ "size": [
+  11.159997940063477,
+  10.403314590454102,
+  11.236231803894043
+ ],
+ "preview_quality": 1
+}

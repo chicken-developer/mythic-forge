@@ -10,6 +10,7 @@
 | `3d_central_fountain/` | Fountain reference assets |
 | `_render/` | [TDKProps Unreal project](_render/TDKProps.uproject), source exports, tools and review results |
 | `_composition/` | [TDKKingdomMap Unreal project](_composition/TDKKingdomMap.uproject) |
+| `tools/`, `hda/`, `presets/`, `specs/`, `hip/`, `renders/`, `docs/` | hbuild building generator (medieval + gothic, one HDA); start at [docs/building_generator.md](docs/building_generator.md) |
 
 Current Medieval source is the editable
 [HIP](hda_medieval_building/medieval_building.hip), with its native graph updater

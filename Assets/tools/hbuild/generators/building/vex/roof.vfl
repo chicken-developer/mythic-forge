@@ -1,0 +1,63 @@
+// ROOF: 0 flat + parapet, 1 gable, 2 hip, on the upper outline (OUT_FOOTPRINT prim 1).
+// Pitched roofs use the oriented bounding rectangle of that outline (axes from edge 0, see roof_frame);
+// roof_axis overrides the ridge direction. Roof planes stay flat slabs (detail comes from Substance).
+// Extras: verge boards + ridge beam (timber), 1-2 chimneys with optional cap.
+int   prim  = min(1, nprimitives(1) - 1);
+int   pts[] = primpoints(1, prim);
+int   np    = len(pts);
+int   type  = chi("../roof_type");
+float t     = ch("../wall_t");
+float H     = ch("../ground_h") + chi("../floor_n") * ch("../floor_h");
+float ov    = ch("../roof_overhang");
+float tp    = tan(radians(ch("../roof_pitch")));
+float rt    = ch("../roof_t");
+vector up   = {0,1,0};
+
+vector p0, R, S;
+float r0, r1, s0, s1;
+roof_frame(1, prim, chi("../roof_axis"), p0, R, S, r0, r1, s0, s1);
+float sm = (s0 + s1) * 0.5;
+vector base = p0;
+base.y = H;
+float ridge_y = 0;
+
+if (type == 0) {
+    // parapet on the wall plane, inward by wall_t, plus a coping cap
+    float ph = ch("../parapet_h");
+    for (int e = 0; e < np && ph > 0; e++) {
+        vector a = point(1, "P", pts[e]);
+        vector b = point(1, "P", pts[(e + 1) % np]);
+        float  L = distance(a, b);
+        vector X = normalize(b - a);
+        vector Z = normalize(cross(X, up));
+        vector c = a + X * (L * 0.5) - Z * (t * 0.5);
+        c.y = H + ph * 0.5;
+        add_obox(c, set(L, ph, t), X, Z, "wall", "parapet");
+        c.y = H + ph + 0.04;
+        add_obox(c, set(L + 0.1, 0.08, t + 0.1), X, Z, "trim", "coping");
+    }
+} else {
+    int hip = (type == 2);
+    ridge_y = gable_roof(base, R, S, r0, r1, s0, s1, tp, ov, ov, rt, hip, 1, 1, "wall");
+    roof_boards(base, R, S, r0, r1, s0, s1, tp, ov, ov, ch("../verge_w"), ch("../verge_t"), ch("../ridge_w"), hip);
+}
+
+if (chi("../chimney")) {
+    float cs  = ch("../chimney_size");
+    float top = max(ridge_y, 0) + ch("../chimney_h");
+    string cm = chi("../chimney_mat") == 1 ? "stone" : "trim";
+    float  cu = ch("../chimney_u");
+    float  cv = ch("../chimney_v");
+    int    n  = clamp(chi("../chimney_n"), 1, 2);
+    for (int i = 0; i < n; i++) {
+        float u = (i == 0) ? cu : 1.0 - cu;                    // second chimney mirrored along the ridge
+        vector c = base + R * (r0 + (r1 - r0) * u) + S * (sm + (s1 - s0) * cv);
+        c.y = H + top * 0.5;
+        add_obox(c, set(cs, top, cs), R, S, cm, "chimney");
+        if (chi("../chimney_cap")) {
+            vector k = c;
+            k.y = H + top + ch("../chimney_cap_h") * 0.5;
+            add_obox(k, set(cs * 1.25, ch("../chimney_cap_h"), cs * 1.25), R, S, cm, "chimney_cap");
+        }
+    }
+}

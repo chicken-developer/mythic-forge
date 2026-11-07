@@ -1,0 +1,93 @@
+// TOWER: up to two tower slots (a, b). Shaft = square or n-sided prism from the ground, `levels`
+// storeys with trim bands and one (arched) window per face per level, cap: 0 flat slab, 1 pyramid /
+// cone / spire (cap_h), optional corner pinnacles (square shafts). Placement relative to the front
+// edge of the ground outline (input 1, prim 0): mode 0 single at (u, v), 1 mirrored pair (+-u, v),
+// 2 one tower on every footprint corner pushed out diagonally by v.
+//   u = position along the front edge (fraction of its length, 0 = middle), v = metres out of the wall.
+void tower_at(vector c; vector X; vector Z; string s) {
+    vector up = {0,1,0};
+    string w = "../tower_" + s;
+    int   sides = chi(w + "_shape") == 0 ? 4 : max(5, chi(w + "_sides"));
+    float hw    = ch(w + "_w") * 0.5;
+    float H     = ch(w + "_h");
+    int   lv    = max(1, chi(w + "_levels"));
+    string mat  = chi(w + "_mat") == 1 ? "stone" : "wall";
+    float lh    = H / lv;
+    vector bot[] = ring_pts(c, X, Z, hw, sides, 0);
+    vector top[] = ring_pts(c, X, Z, hw, sides, H);
+    for (int i = 0; i < sides; i++) {
+        int j = (i + 1) % sides;
+        vector m = (bot[i] + bot[j]) * 0.5 - c;
+        vector o = normalize(set(m.x, 0, m.z));
+        add_poly(array(bot[i], bot[j], top[j], top[i]), o, mat, "tower_wall");
+        // per level: band at the level bottom (above ground) and one window centred on the face
+        vector fx = normalize(bot[j] - bot[i]);
+        float  fwid = distance(bot[i], bot[j]);
+        vector fc = (bot[i] + bot[j]) * 0.5;
+        for (int k = 0; k < lv; k++) {
+            float y = lh * k;
+            if (k > 0 && ch("../band_h") > 0)
+                add_obox(fc + up * y + o * (ch("../band_out") * 0.5), set(fwid + ch("../band_out") * 2, ch("../band_h"), ch("../band_out") + 0.02), fx, o, "trim", "tower_band");
+            float ww = fwid * ch(w + "_win_w");
+            if (ww < 0.3 || ch(w + "_win_h") <= 0) continue;
+            float wh = lh * ch(w + "_win_h");
+            float y0 = y + (lh - wh) * 0.5;
+            int sh = chi("../arch_shape");
+            float rise = arch_rise(ww, sh);
+            vector ap[] = arch_pts(ww, y0 + max(wh - rise, 0.1), sh, chi("../arch_seg"));
+            vector gp[] = array(set(-ww * 0.5, y0, 0), set(ww * 0.5, y0, 0));
+            for (int a = len(ap) - 1; a >= 0; a--) append(gp, ap[a]);
+            vector wp[];
+            foreach (vector p; gp) append(wp, fc + fx * p.x + up * p.y + o * 0.02);
+            add_poly(wp, o, "glass", "tower_window");
+        }
+    }
+    int cap = chi(w + "_cap");
+    float co = ch(w + "_cap_over");
+    if (cap == 0) {
+        vector rim[] = ring_pts(c, X, Z, hw + co, sides, H + 0.3);
+        add_slab(rim, up, 0.3, "trim", "tower_cap", "tower_cap");
+    } else {
+        vector eave[] = ring_pts(c, X, Z, hw + co, sides, H);
+        add_pyramid(eave, c + up * (H + ch(w + "_cap_h")), "roof", "tower_roof");
+    }
+    if (chi(w + "_pinnacles") && sides == 4) {
+        float ps = max(0.2, hw * 0.25);
+        foreach (vector p; top) {
+            vector pc = p + up * (ch(w + "_cap_h") * 0.15);
+            add_obox(pc, set(ps, ch(w + "_cap_h") * 0.3, ps), X, Z, mat, "pinnacle");
+            vector ring[] = ring_pts(pc, X, Z, ps * 0.55, 4, pc.y + ch(w + "_cap_h") * 0.15);
+            add_pyramid(ring, pc + up * (ch(w + "_cap_h") * 0.45), mat, "pinnacle_tip");
+        }
+    }
+}
+
+vector up = {0,1,0};
+int pts[] = primpoints(1, 0);
+int np = len(pts);
+if (np < 3) return;
+int fe = chi("../front_edge") % np;
+vector a = point(1, "P", pts[fe]), b = point(1, "P", pts[(fe + 1) % np]);
+vector X = normalize(b - a);
+vector Z = normalize(cross(X, up));
+float  L = distance(a, b);
+vector mid = (a + b) * 0.5;
+string _s_list6[] = array("a", "b");
+foreach (string s; _s_list6) {
+    string w = "../tower_" + s;
+    if (!chi(w)) continue;
+    int mode = chi(w + "_mode");
+    float u = ch(w + "_u"), v = ch(w + "_v");
+    if (mode == 2) {
+        for (int i = 0; i < np; i++) {
+            vector p  = point(1, "P", pts[i]);
+            vector pp = point(1, "P", pts[(i - 1 + np) % np]);
+            vector pn = point(1, "P", pts[(i + 1) % np]);
+            vector m = normalize(normalize(cross(normalize(p - pp), up)) + normalize(cross(normalize(pn - p), up)));
+            tower_at(p + m * v, X, Z, s);
+        }
+    } else {
+        tower_at(mid + X * (u * L) + Z * v, X, Z, s);
+        if (mode == 1) tower_at(mid - X * (u * L) + Z * v, X, Z, s);
+    }
+}

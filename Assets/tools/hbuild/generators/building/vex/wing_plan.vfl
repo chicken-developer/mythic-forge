@@ -1,0 +1,36 @@
+// WING_PLAN: one closed footprint per enabled wing slot (a, b), placed against a main-body edge.
+// side: 0 front, 1 right, 2 back, 3 left = footprint edge (front_edge + side). Point order makes
+// edge 0 the face against the main body and edge 2 the outer face; cross(edge, up) points outward
+// on every edge (same convention as OUT_FOOTPRINT). Prim attributes carry the wing's own settings.
+int pts[] = primpoints(1, 0);
+int np = len(pts);
+if (np < 3) return;
+int front = chi("../front_edge") % np;
+vector up = {0,1,0};
+string _s_list7[] = array("a", "b");
+foreach (string s; _s_list7) {
+    string w = "../wing_" + s;
+    if (!chi(w)) continue;
+    int e = (front + chi(w + "_side")) % np;
+    vector a = point(1, "P", pts[e]), b = point(1, "P", pts[(e + 1) % np]);
+    vector d = normalize(b - a);
+    vector n = normalize(cross(d, up));
+    vector c = (a + b) * 0.5 + d * ch(w + "_off");
+    float ww = ch(w + "_w"), dd = ch(w + "_d");
+    vector A = c + d * (ww * 0.5), B = c - d * (ww * 0.5);
+    int ids[] = array(addpoint(0, A), addpoint(0, B), addpoint(0, B + n * dd), addpoint(0, A + n * dd));
+    int pr = addprim(0, "poly", ids);
+    setprimattrib(0, "slot", pr, s);
+    int nf = max(1, chi(w + "_floors"));
+    setprimattrib(0, "floors", pr, nf);
+    string pg = chs(w + "_ground"), pu = chs(w + "_upper");
+    setprimattrib(0, "pat_ground", pr, pg);
+    setprimattrib(0, "pat_upper", pr, pu);
+    setprimattrib(0, "attach_edge", pr, 0);
+    setprimattrib(0, "outer_edge", pr, 2);
+    int rt = chi(w + "_roof");
+    float pitch = ch(w + "_pitch"), back = ch(w + "_back");
+    setprimattrib(0, "roof", pr, rt);
+    setprimattrib(0, "pitch", pr, pitch);
+    setprimattrib(0, "back", pr, back);
+}

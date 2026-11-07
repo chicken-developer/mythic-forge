@@ -1,0 +1,19 @@
+{
+ "hip": "E:/Repos/mythic-forge/Assets/hip/med_material_storage.hip",
+ "asset": "med_material_storage",
+ "views": {
+  "persp": true,
+  "front": true,
+  "side": true,
+  "persp_low": true
+ },
+ "time": "2026-11-07 22:55:39",
+ "points": 5230,
+ "prims": 4976,
+ "size": [
+  12.20231819152832,
+  8.556805480271578,
+  7.859999895095825
+ ],
+ "preview_quality": 1
+}

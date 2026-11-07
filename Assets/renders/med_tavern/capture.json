@@ -1,0 +1,19 @@
+{
+ "hip": "E:/Repos/mythic-forge/Assets/hip/med_tavern.hip",
+ "asset": "med_tavern",
+ "views": {
+  "persp": true,
+  "front": true,
+  "side": true,
+  "persp_low": true
+ },
+ "time": "2026-11-07 22:49:15",
+ "points": 24771,
+ "prims": 23255,
+ "size": [
+  15.379999160766602,
+  11.00639820098877,
+  11.59601640701294
+ ],
+ "preview_quality": 1
+}

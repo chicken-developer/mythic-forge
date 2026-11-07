@@ -1,0 +1,109 @@
+// LAYOUT: one point per facade bay, for the main body and for every wing.
+//   input 1 = OUT_FOOTPRINT (prim 0 ground outline, prim 1 upper outline = jettied)
+//   input 2 = OUT_WING_PLAN (one polygon per wing; edge 0 touches the main body, edge 2 is its outer face)
+// Point attributes:
+//   P       bottom-centre of the bay on the wall plane      orient  +Z -> outward facade normal
+//   scale   (fitted width / bay_w, floor height / module nominal height, 1)
+//   s@module token, i@floor (0 = ground), i@edge, i@bay, i@nbays (bays on that edge),
+//   i@poly (0 = main body, 1.. = wing), i@nfloors (storeys of that body), f@bay_width (fitted, metres)
+string pick_module(string pattern; int i; int n; int center_door) {
+    string tok[] = split(pattern);
+    int k = len(tok);
+    if (k == 0) return "W0";
+    if (k == n) return tok[i];                       // exact pattern: one token per bay
+    int di = find(tok, "D");
+    if (center_door && di >= 0) {
+        if (i == n / 2) return "D";                  // door on the centre bay
+        string rest[] = tok;
+        removeindex(rest, di);
+        if (len(rest) == 0) return "W0";
+        return rest[i % len(rest)];
+    }
+    return tok[i % k];                               // otherwise repeat the pattern
+}
+
+// Ground-storey modules are built at ground_h, all others at floor_h (see the MOD_* boxes).
+int ground_module(string m) { return m == "D" || m == "S" || m == "DA"; }
+
+void lay_row(vector p0; vector d; float pilw; float w; int nb; float y0; float h; string pat;
+             int cdoor; int floor; int edge; int poly; int nfloors; float bayw; float gh; float fh) {
+    vector nrm = normalize(cross(d, {0,1,0}));
+    vector4 q = quaternion(atan2(nrm.x, nrm.z), {0,1,0});
+    for (int b = 0; b < nb; b++) {
+        string m = pick_module(pat, b, nb, cdoor);
+        float nominal = ground_module(m) ? gh : fh;
+        vector pos = p0 + d * (pilw + w * (b + 0.5));
+        pos.y = y0;
+        int pt = addpoint(0, pos);
+        setpointattrib(0, "orient", pt, q);
+        setpointattrib(0, "scale",  pt, set(w / bayw, h / nominal, 1));
+        setpointattrib(0, "module", pt, m);
+        setpointattrib(0, "floor",  pt, floor);
+        setpointattrib(0, "edge",   pt, edge);
+        setpointattrib(0, "bay",    pt, b);
+        setpointattrib(0, "nbays",  pt, nb);
+        setpointattrib(0, "poly",   pt, poly);
+        setpointattrib(0, "nfloors", pt, nfloors);
+        setpointattrib(0, "bay_width", pt, w);
+    }
+}
+
+float  bayw  = ch("../bay_w");
+float  gh    = ch("../ground_h");
+float  fh    = ch("../floor_h");
+int    nfl   = chi("../floor_n");
+float  pilw  = ch("../pilaster_w");
+int    cdoor = chi("../center_door");
+
+// ---- main body: bay count from the ground outline so bays stay aligned on every floor
+int    g[]   = primpoints(1, 0);
+int    u[]   = primpoints(1, min(1, nprimitives(1) - 1));
+int    np    = len(g);
+int    front = chi("../front_edge") % max(np, 1);
+for (int e = 0; e < np; e++) {
+    vector a0 = point(1, "P", g[e]),  a1 = point(1, "P", g[(e + 1) % np]);
+    float  L  = distance(a0, a1);
+    if (L < 1e-4) continue;
+    float usable = L - 2 * pilw;
+    if (usable < 0.25 * bayw) continue;              // too short: core wall + pilasters cover it
+    int nb = max(1, int(rint(usable / bayw)));
+    int isfront = (e == front);
+    for (int f = 0; f <= nfl; f++) {
+        vector b0 = (f == 0) ? a0 : point(1, "P", u[e]);
+        vector b1 = (f == 0) ? a1 : point(1, "P", u[(e + 1) % np]);
+        float  Lf = distance(b0, b1);
+        float  y0 = (f == 0) ? 0 : gh + (f - 1) * fh;
+        float  h  = (f == 0) ? gh : fh;
+        string pat = (f == 0) ? chs(isfront ? "../ground_front" : "../ground_side")
+                              : chs(isfront ? "../upper_front"  : "../upper_side");
+        lay_row(b0, normalize(b1 - b0), pilw, (Lf - 2 * pilw) / nb, nb, y0, h, pat,
+                cdoor && f == 0, f, e, 0, nfl + 1, bayw, gh, fh);
+    }
+}
+
+// ---- wings: every edge except the one against the main body; outer face uses the wing's own patterns
+for (int w = 0; w < nprimitives(2); w++) {
+    int wp[] = primpoints(2, w);
+    int nw = len(wp);
+    int wf = prim(2, "floors", w);
+    int wfl = max(1, wf);
+    int attach = prim(2, "attach_edge", w);
+    int outer = prim(2, "outer_edge", w);
+    string pg = prim(2, "pat_ground", w);
+    string pu = prim(2, "pat_upper", w);
+    for (int e = 0; e < nw; e++) {
+        if (e == attach) continue;
+        vector a0 = point(2, "P", wp[e]), a1 = point(2, "P", wp[(e + 1) % nw]);
+        float L = distance(a0, a1);
+        if (L < 0.25 * bayw) continue;
+        int nb = max(1, int(rint(L / bayw)));
+        for (int f = 0; f < wfl; f++) {
+            float  y0 = (f == 0) ? 0 : gh + (f - 1) * fh;
+            float  h  = (f == 0) ? gh : fh;
+            string pat = (e == outer) ? (f == 0 ? pg : pu)
+                                      : chs(f == 0 ? "../ground_side" : "../upper_side");
+            lay_row(a0, normalize(a1 - a0), 0, L / nb, nb, y0, h, pat,
+                    cdoor && f == 0 && e == outer, f, e, w + 1, wfl, bayw, gh, fh);
+        }
+    }
+}

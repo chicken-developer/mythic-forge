@@ -1,0 +1,82 @@
+// DORMERS: dormer_n gabled dormers on the main pitched roof (same frame as ROOF: roof_frame on the
+// upper outline, input 1 prim 1). dormer_side: 0 the slope facing the front, 1 the back slope, 2 both.
+// Each dormer: front wall + window (glass, frame), two cheeks down to the roof, a small gable roof
+// (slabs, roof_t) running back until it meets the main roof plane, and a front gable triangle.
+// dormer_pos = where the front wall stands, as a fraction of the half span from the ridge (0) to the eave line (1).
+if (chi("../dormer_n") <= 0 || chi("../roof_type") == 0) return;
+vector up = {0,1,0};
+int   prim = min(1, nprimitives(1) - 1);
+float H   = ch("../ground_h") + chi("../floor_n") * ch("../floor_h");
+float ov  = ch("../roof_overhang");
+float tp  = tan(radians(ch("../roof_pitch")));
+float rt  = ch("../roof_t");
+float dw  = ch("../dormer_w"), dh = ch("../dormer_h");
+float dp  = tan(radians(ch("../dormer_pitch")));
+float dov = ch("../dormer_ov");
+float fw  = ch("../frame_w");
+int   n   = chi("../dormer_n");
+
+vector p0, R, S;
+float r0, r1, s0, s1;
+roof_frame(1, prim, chi("../roof_axis"), p0, R, S, r0, r1, s0, s1);
+float sm = (s0 + s1) * 0.5;
+float half = (s1 - s0) * 0.5;
+float ry = -ov * tp + (half + ov) * tp;              // main ridge height above the wall top
+vector base = p0;
+base.y = H;
+
+// which slope faces the front (normal of the front edge of the upper outline)
+int pts[] = primpoints(1, prim);
+int np = len(pts);
+int fe = chi("../front_edge") % np;
+vector fn = normalize(cross(normalize(point(1, "P", pts[(fe + 1) % np]) - point(1, "P", pts[fe])), up));
+float sg = dot(S, fn) >= 0 ? 1.0 : -1.0;
+float sides[];
+int ds = chi("../dormer_side");
+if (ds == 0 || ds == 2) append(sides, sg);
+if (ds == 1 || ds == 2) append(sides, -sg);
+
+float xf = half * ch("../dormer_pos");               // horizontal distance ridge -> front wall
+float yb = ry - xf * tp;                              // main roof height at the front wall
+float ye = yb + dh;                                   // dormer eave
+float yr = min(ye + dw * 0.5 * dp, ry - 0.05);        // dormer ridge stays under the main ridge
+float xe = (ry - ye) / tp, xr = (ry - yr) / tp;       // where eave / ridge meet the main roof
+float yeo = ye - dov * dp;                            // eave height at the dormer overhang
+float xeo = (ry - yeo) / tp;
+
+foreach (float sd; sides) {
+    for (int i = 0; i < n; i++) {
+        float rc = r0 + (r1 - r0) * (i + 0.5) / n + ch("../dormer_off");
+        vector Sd = S * sd;
+        // world point: along ridge r, distance x from the ridge line towards this eave, height y
+        vector F  = base + R * rc + S * sm + Sd * xf;     // front wall centre at roof level
+        add_obox(F + up * ((ye + yb) * 0.5 - 0.1) - Sd * 0.06, set(dw, ye - yb + 0.2, 0.12), R, Sd, "wall", "dormer_wall");
+        // window
+        float ww = dw * 0.55, wh = dh * 0.6;
+        vector wc = F + up * (yb + dh * 0.5) + Sd * 0.005;
+        add_obox(wc, set(ww - 2 * fw, wh - 2 * fw, 0.02), R, Sd, "glass", "glass");
+        add_obox(wc - R * ((ww - fw) * 0.5) + Sd * 0.03, set(fw, wh, 0.08), R, Sd, "frame", "frame");
+        add_obox(wc + R * ((ww - fw) * 0.5) + Sd * 0.03, set(fw, wh, 0.08), R, Sd, "frame", "frame");
+        add_obox(wc + up * ((wh - fw) * 0.5) + Sd * 0.03, set(ww, fw, 0.08), R, Sd, "frame", "frame");
+        add_obox(wc - up * ((wh - fw) * 0.5) + Sd * 0.03, set(ww + 0.1, fw, 0.1), R, Sd, "frame", "sill");
+        // cheeks
+        float _sx_list8[] = array(-1.0, 1.0);
+        foreach (float sx; _sx_list8) {
+            vector e = base + R * (rc + sx * dw * 0.5) + S * sm;
+            add_poly(array(e + Sd * xf + up * yb, e + Sd * xf + up * ye, e + Sd * xe + up * ye), R * sx, "wall", "dormer_cheek");
+        }
+        // gable triangle on the front
+        vector g = base + R * rc + S * sm + Sd * xf;
+        add_poly(array(g - R * (dw * 0.5) + up * ye, g + R * (dw * 0.5) + up * ye, g + up * yr), Sd, "wall", "gable");
+        // roof slabs (front overhang dov, running back to the main roof)
+        float _sx_list9[] = array(-1.0, 1.0);
+        foreach (float sx; _sx_list9) {
+            vector c0 = base + R * rc + S * sm;
+            vector sl[] = array(c0 + R * (sx * (dw * 0.5 + dov)) + Sd * (xf + dov) + up * yeo,
+                                c0 + Sd * (xf + dov) + up * yr,
+                                c0 + Sd * xr + up * yr,
+                                c0 + R * (sx * (dw * 0.5 + dov)) + Sd * xeo + up * yeo);
+            add_slab(sl, up_normal(sl), rt, "roof", "dormer_roof", "soffit");
+        }
+    }
+}

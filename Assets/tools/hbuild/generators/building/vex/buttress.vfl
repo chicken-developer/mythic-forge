@@ -1,0 +1,68 @@
+// BUTTRESS: stepped buttresses with a sloped cap and optional pinnacle on the bay boundaries of the
+// ground storey (OUT_LAYOUT, input 1). buttress_edges: 0 = side walls only (edges perpendicular to the
+// front), 1 = every edge. Height = buttress_hr x the wall height of that body. Material stone/wall/trim.
+void buttress_at(vector B; vector X; vector n; float bh; float bw; float bd; int steps; float taper;
+                 float t; int pin; float pin_h; string mat) {
+    vector up = {0,1,0};
+    float seg = bh / steps;
+    float dl = bd;
+    for (int i = 0; i < steps; i++) {
+        float d = bd * (1.0 - taper * i / max(steps - 1, 1));   // depth shrinks by `taper` over the steps
+        dl = d;
+        vector c = B + up * (seg * (i + 0.5)) + n * ((d - t * 0.5) * 0.5);
+        add_obox(c, set(bw, seg, d + t * 0.5), X, n, mat, "buttress");
+    }
+    // sloped cap: from the outer top edge of the last step up to the wall (45 deg weathering)
+    vector o0 = B - X * (bw * 0.5) + n * dl + up * bh, o1 = B + X * (bw * 0.5) + n * dl + up * bh;
+    vector w0 = B - X * (bw * 0.5) + up * (bh + dl), w1 = B + X * (bw * 0.5) + up * (bh + dl);
+    vector i0 = B - X * (bw * 0.5) + up * bh, i1 = B + X * (bw * 0.5) + up * bh;
+    add_poly(array(o0, o1, w1, w0), normalize(n + up), mat, "buttress_cap");
+    add_poly(array(i0, o0, w0), -X, mat, "buttress_cap");
+    add_poly(array(i1, o1, w1), X, mat, "buttress_cap");
+    if (pin && pin_h > 0) {
+        float s = bw * 0.55;
+        vector pc = B + n * (dl * 0.5) + up * (bh + dl * 0.5 + pin_h * 0.2);
+        add_obox(pc, set(s, pin_h * 0.4, s), X, n, mat, "pinnacle");
+        vector ring[] = ring_pts(pc + up * (pin_h * 0.2), X, n, s * 0.55, 4, pc.y + pin_h * 0.2);
+        add_pyramid(ring, pc + up * (pin_h * 0.8), mat, "pinnacle_tip");
+    }
+}
+
+if (!chi("../buttress")) return;
+float bw    = ch("../buttress_w");
+float bd    = ch("../buttress_d");
+float hr    = ch("../buttress_hr");
+int   steps = max(1, chi("../buttress_steps"));
+float taper = ch("../buttress_taper");
+int   alle  = chi("../buttress_edges");
+int   wings = chi("../buttress_wings");
+float pin_h = ch("../pinnacle_h");
+int   pin   = chi("../pinnacle");
+float t     = ch("../wall_t");
+float gh = ch("../ground_h"), fh = ch("../floor_h");
+string mat = chi("../buttress_mat") == 0 ? "wall" : chi("../buttress_mat") == 1 ? "stone" : "trim";
+vector up = {0,1,0};
+
+// front facade normal (main ground outline, edge front_edge)
+int fp[] = primpoints(2, 0);
+int nfp = len(fp);
+int fe = chi("../front_edge") % max(nfp, 1);
+vector fd = normalize(point(2, "P", fp[(fe + 1) % nfp]) - point(2, "P", fp[fe]));
+vector fn = normalize(cross(fd, up));
+
+for (int pt = 0; pt < npoints(1); pt++) {
+    if (point(1, "floor", pt) != 0) continue;
+    int poly = point(1, "poly", pt);
+    if (poly > 0 && !wings) continue;
+    vector4 q = point(1, "orient", pt);
+    vector X = qrotate(q, {1,0,0});
+    vector n = qrotate(q, {0,0,1});
+    if (!alle && abs(dot(n, fn)) > 0.5) continue;              // front / back faces skipped
+    vector P = point(1, "P", pt);
+    float w = point(1, "bay_width", pt);
+    int b = point(1, "bay", pt), nb = point(1, "nbays", pt);
+    int nf = point(1, "nfloors", pt);
+    float bh = (gh + (nf - 1) * fh) * hr;
+    buttress_at(P - X * (w * 0.5), X, n, bh, bw, bd, steps, taper, t, pin, pin_h, mat);
+    if (b == nb - 1) buttress_at(P + X * (w * 0.5), X, n, bh, bw, bd, steps, taper, t, pin, pin_h, mat);
+}
