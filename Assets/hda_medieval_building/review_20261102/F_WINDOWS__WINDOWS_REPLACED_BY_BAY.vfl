@@ -1,3 +1,0 @@
-
-string replaced=detail(1,"bay_opening_id",0);
-if(replaced!="" && s@opening_id==replaced)removepoint(0,@ptnum);

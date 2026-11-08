@@ -1,1 +1,0 @@
-matrix3 m=3@transform;vector inward=normalize(set(0.,0.,1.)*m);@P-=inward*.20;

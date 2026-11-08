@@ -1,6 +1,0 @@
-
-int count=nprimitives(0);for(int src=0;src<count;src++){
- if(!chi("../attic_window_enable")||int(prim(0,"is_round",src))||prim(0,"role",src)!="main"||float(prim(0,"roof_h",src))<1.7)continue;
- vector center=prim(0,"role_center",src);float angle=prim(0,"rot_y",src);matrix3 rot=ident();rotate(rot,radians(angle),{0,1,0});vector p=set(0,float(prim(0,"top_y",src))+.88,-float(prim(0,"depth",src))/2-.015)*rot+center;
- int pt=addpoint(0,p);matrix3 frame=set(set(.72,0,0),set(0,.7,0),set(0,0,1));frame*=rot;setpointattrib(0,"transform",pt,frame);setpointattrib(0,"opening_kind",pt,"W");setpointattrib(0,"opening_id",pt,"attic");
-}for(int p=count-1;p>=0;p--)removeprim(0,p,1);

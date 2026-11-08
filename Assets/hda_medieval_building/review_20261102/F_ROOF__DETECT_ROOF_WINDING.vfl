@@ -1,1 +1,0 @@
-vector n=prim_normal(0,@primnum,.5,.5);setprimgroup(0,"roof_down",@primnum,n.y<0);

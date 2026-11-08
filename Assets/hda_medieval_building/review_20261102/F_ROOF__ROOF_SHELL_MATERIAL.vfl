@@ -1,1 +1,0 @@
-s@material_family="tile";v@Cd=set(0.66,0.19,0.08);s@component="roof_shell";if(s@name==""||s@material_family=="cut")s@name=s@component+"_"+itoa(@primnum);

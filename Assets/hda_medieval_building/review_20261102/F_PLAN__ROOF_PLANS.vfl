@@ -1,3 +1,0 @@
-
-if(i@floor_i!=i@floor_count-1)removeprim(0,@primnum,1);
-else {vector center=primuv(0,"P",@primnum,set(.5,.5,0));f@top_y=center.y;f@width=f@top_width;f@depth=f@top_depth;}

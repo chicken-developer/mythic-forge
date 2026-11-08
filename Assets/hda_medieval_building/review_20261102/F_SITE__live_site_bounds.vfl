@@ -1,4 +1,0 @@
-vector lo,hi;getbbox(0,lo,hi);
-setdetailattrib(0,"extent_x",max(hi.x-lo.x,.1),"set");setdetailattrib(0,"extent_z",max(hi.z-lo.z,.1),"set");
-setdetailattrib(0,"center_x",(lo.x+hi.x)*.5,"set");setdetailattrib(0,"center_z",(lo.z+hi.z)*.5,"set");
-setdetailattrib(0,"plan_lo",lo,"set");setdetailattrib(0,"plan_hi",hi,"set");

@@ -1,7 +1,0 @@
-
-if(s@name==""){
- int pts[]=primpoints(0,@primnum);string instance=point(0,"name",pts[0]);
- s@name=instance!=""?instance:s@material_family+"_"+itoa(@primnum);
-}
-if(s@material_family=="ground")s@material_family="rock";
-s@palette=chs("../palette");

@@ -1,8 +1,0 @@
-
-for(int side=-1;side<=1;side+=2)
-    for(int i=0;i<10;i++)
-    {
-        int pt=addpoint(0,set(side*.42,0.,0.));
-        matrix3 m=ident();rotate(m,2.*M_PI*i/10.,set(1.,0.,0.));
-        setpointattrib(0,"transform",pt,m,"set");
-    }

@@ -1,1 +1,0 @@
-float swell=1.+.12*cos(@P.y*M_PI);@P.x*=swell;@P.z*=swell;
