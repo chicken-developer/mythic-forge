@@ -1311,11 +1311,32 @@
    }
   },
   {
-   "name": "output_roof_faces",
+   "name": "output_pieces",
+   "type": "connectivity",
+   "pos": [
+    0.0,
+    -13.34
+   ],
+   "color": [
+    0.8500000238418579,
+    0.5699999928474426,
+    0.23000000417232513
+   ],
+   "inputs": [
+    "output_merge"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "output_canopy_parts",
    "type": "attribwrangle",
    "pos": [
     2.34,
-    -13.225
+    -13.34
    ],
    "color": [
     0.28999999165534973,
@@ -1323,7 +1344,50 @@
     0.6399999856948853
    ],
    "inputs": [
-    "output_merge"
+    "output_pieces"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "output_canopy_clear",
+   "type": "attribwrangle",
+   "pos": [
+    0.0,
+    -14.03
+   ],
+   "color": [
+    0.28999999165534973,
+    0.6399999856948853,
+    0.6399999856948853
+   ],
+   "inputs": [
+    "output_pieces",
+    "output_canopy_parts"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
+   "name": "output_roof_faces",
+   "type": "attribwrangle",
+   "pos": [
+    2.34,
+    -14.49
+   ],
+   "color": [
+    0.28999999165534973,
+    0.6399999856948853,
+    0.6399999856948853
+   ],
+   "inputs": [
+    "output_canopy_clear"
    ],
    "errors": [],
    "warnings": [],
@@ -1336,7 +1400,7 @@
    "type": "attribwrangle",
    "pos": [
     0.0,
-    -13.8
+    -14.95
    ],
    "color": [
     0.28999999165534973,
@@ -1344,7 +1408,7 @@
     0.6399999856948853
    ],
    "inputs": [
-    "output_merge",
+    "output_canopy_clear",
     "output_roof_faces"
    ],
    "errors": [],
@@ -1358,7 +1422,7 @@
    "type": "attribwrangle",
    "pos": [
     0.0,
-    -14.95
+    -16.1
    ],
    "color": [
     0.8500000238418579,
@@ -1379,7 +1443,7 @@
    "type": "attribwrangle",
    "pos": [
     0.0,
-    -16.1
+    -17.25
    ],
    "color": [
     0.8500000238418579,
@@ -1400,7 +1464,7 @@
    "type": "attribwrangle",
    "pos": [
     0.0,
-    -17.25
+    -18.4
    ],
    "color": [
     0.8500000238418579,
@@ -1421,27 +1485,6 @@
    "type": "normal",
    "pos": [
     0.0,
-    -18.4
-   ],
-   "color": [
-    0.8500000238418579,
-    0.5699999928474426,
-    0.23000000417232513
-   ],
-   "inputs": [
-    "output_uv"
-   ],
-   "errors": [],
-   "warnings": [],
-   "flags": {
-    "display": false
-   }
-  },
-  {
-   "name": "output_pieces",
-   "type": "connectivity",
-   "pos": [
-    0.0,
     -19.55
    ],
    "color": [
@@ -1450,7 +1493,7 @@
     0.23000000417232513
    ],
    "inputs": [
-    "output_normals"
+    "output_uv"
    ],
    "errors": [],
    "warnings": [],
@@ -1471,7 +1514,7 @@
     0.15000000596046448
    ],
    "inputs": [
-    "output_pieces"
+    "output_normals"
    ],
    "errors": [],
    "warnings": [],
@@ -1522,8 +1565,8 @@
    }
   },
   {
-   "name": "high_normals",
-   "type": "normal",
+   "name": "high_finite",
+   "type": "attribwrangle",
    "pos": [
     6.24,
     -14.95
@@ -1543,11 +1586,32 @@
    }
   },
   {
+   "name": "high_normals",
+   "type": "normal",
+   "pos": [
+    6.24,
+    -16.1
+   ],
+   "color": [
+    0.8500000238418579,
+    0.5699999928474426,
+    0.23000000417232513
+   ],
+   "inputs": [
+    "high_finite"
+   ],
+   "errors": [],
+   "warnings": [],
+   "flags": {
+    "display": false
+   }
+  },
+  {
    "name": "OUT_HIGH",
    "type": "null",
    "pos": [
     6.24,
-    -16.1
+    -17.25
    ],
    "color": [
     0.15000000596046448,
@@ -1960,13 +2024,15 @@
    ],
    "nodes": [
     "output_merge",
+    "output_pieces",
+    "output_canopy_parts",
+    "output_canopy_clear",
     "output_roof_faces",
     "output_roof_clip",
     "output_floor_mat",
     "output_look",
     "output_uv",
     "output_normals",
-    "output_pieces",
     "OUT_OUTPUT"
    ]
   },
@@ -1981,6 +2047,7 @@
    "nodes": [
     "high_group",
     "high_bevel",
+    "high_finite",
     "high_normals",
     "OUT_HIGH"
    ]

@@ -353,3 +353,34 @@ int stair_flight(int geo; int f; int front; int side; float t; float gh; float f
     d0 = (side == 0) ? db - t - (lane + 1) * w : da + t + lane * w;
     return 1;
 }
+
+// Oriented box like add_obox, split into n segments along X (one closed solid, shared points: the long faces
+// are strips of quads). Used for long members that must follow a roof surface point by point (roof clip);
+// PolyBevel ignores the flat inner edges, so HIGH shows no grooves.
+void add_obox_seg(vector c; vector s; vector X; vector Z; string mat; string part; int nseg) {
+    if (min(s) <= 1e-5) return;
+    int n = max(1, nseg);                             // parameters are references: never assign to them
+    vector Y = cross(Z, X);
+    vector h = s * 0.5;
+    int R[];                                          // ring i: corners (-y-z, +y-z, +y+z, -y+z)
+    vector Q[];
+    for (int i = 0; i <= n; i++) {
+        float x = -h.x + s.x * i / n;
+        float cy[] = array(-1.0, 1.0, 1.0, -1.0);
+        float cz[] = array(-1.0, -1.0, 1.0, 1.0);
+        for (int k = 0; k < 4; k++) {
+            vector p = c + X * x + Y * (cy[k] * h.y) + Z * (cz[k] * h.z);
+            append(Q, p);
+            append(R, addpoint(0, p));
+        }
+    }
+    vector out4[] = array(-Z, Y, Z, -Y);              // side between corner k and k+1
+    for (int i = 0; i < n; i++)
+        for (int k = 0; k < 4; k++) {
+            int a = i * 4 + k, b = i * 4 + (k + 1) % 4, cc = (i + 1) * 4 + (k + 1) % 4, d = (i + 1) * 4 + k;
+            add_poly_ids(array(R[a], R[b], R[cc], R[d]), array(Q[a], Q[b], Q[cc], Q[d]), out4[k], mat, part);
+        }
+    add_poly_ids(array(R[0], R[1], R[2], R[3]), array(Q[0], Q[1], Q[2], Q[3]), -X, mat, part);
+    int e = n * 4;
+    add_poly_ids(array(R[e], R[e + 1], R[e + 2], R[e + 3]), array(Q[e], Q[e + 1], Q[e + 2], Q[e + 3]), X, mat, part);
+}

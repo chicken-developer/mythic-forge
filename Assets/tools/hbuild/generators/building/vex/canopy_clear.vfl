@@ -1,0 +1,26 @@
+// OUTPUT / canopy clear (run over detail; input 1 = canopy parts only). A porch roof or awning hung across
+// a window / door header cuts through it; the canopy acts as the hood there, so every connected part
+// (point i@piece) whose s@part matches canopy_clear_parts and that comes within canopy_clear_dist of a canopy
+// is removed as a whole.
+string pats[] = split(chs("../canopy_clear_parts"));
+float dist = ch("../canopy_clear_dist");
+if (len(pats) == 0 || npoints(1) == 0) return;
+int kill[];
+for (int pr = 0; pr < nprimitives(0); pr++) {
+    string part = prim(0, "part", pr);
+    int hit = 0;
+    foreach (string pt; pats) if (match(pt, part)) hit = 1;
+    if (!hit) continue;
+    foreach (int q; primpoints(0, pr)) {
+        vector P = point(0, "P", q);
+        int cp; vector cuv;
+        if (xyzdist(1, P, cp, cuv) < dist) { int pc = point(0, "piece", q); append(kill, pc); break; }
+    }
+}
+if (len(kill) == 0) return;
+for (int pr = 0; pr < nprimitives(0); pr++) {
+    int pts[] = primpoints(0, pr);
+    if (len(pts) == 0) continue;
+    int pc = point(0, "piece", pts[0]);
+    if (find(kill, pc) >= 0) removeprim(0, pr, 1);
+}

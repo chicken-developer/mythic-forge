@@ -1,15 +1,16 @@
 {
  "asset": "med_tavern",
  "hip": "E:/Repos/mythic-forge/Assets/hip/med_tavern.hip",
- "hip_sha256": "680a4731abd7db935a3f7930787d2058528643a16d8aa52b5c65b2972cf9f677",
+ "hip_sha256": "0b33fd03e6571d4d91436858cdf3be0f55d55a8e8acd31b5747c1e6bb3a74694",
  "houdini": "22.0.368",
  "hda": "E:/Repos/mythic-forge/Assets/hda/bldg_building_generator.hda",
  "type": "bldg::building_generator::1.0",
  "low": {
-  "points": 5395,
-  "triangles": 7879,
+  "points": 5211,
+  "triangles": 7821,
   "fixed_nonfinite_vertices": 0,
-  "pieces": 669,
+  "high_fixed_points": 0,
+  "pieces": 596,
   "piece0_points": 8,
   "bounds_m": [
    15.38,
@@ -22,13 +23,13 @@
    -4.6043
   ],
   "materials": {
-   "stone": 932,
-   "wall": 1145,
-   "frame": 2326,
-   "glass": 444,
-   "trim": 920,
-   "door": 36,
-   "timber": 1704,
+   "stone": 816,
+   "wall": 1021,
+   "frame": 1932,
+   "glass": 372,
+   "trim": 732,
+   "door": 24,
+   "timber": 2552,
    "roof": 72,
    "fabric": 150,
    "fabric2": 150
@@ -39,10 +40,11 @@
   ]
  },
  "high": {
-  "points": 25651,
-  "triangles": 48286,
-  "fixed_nonfinite_vertices": 1008,
-  "pieces": 669,
+  "points": 23891,
+  "triangles": 45181,
+  "fixed_nonfinite_vertices": 0,
+  "high_fixed_points": 0,
+  "pieces": 596,
   "piece0_points": 8,
   "bounds_m": [
    15.38,
@@ -55,13 +57,13 @@
    -4.596
   ],
   "materials": {
-   "stone": 1508,
-   "wall": 1145,
-   "frame": 20952,
-   "glass": 444,
-   "trim": 8316,
-   "door": 324,
-   "timber": 15225,
+   "stone": 1392,
+   "wall": 1021,
+   "frame": 17388,
+   "glass": 372,
+   "trim": 6588,
+   "door": 216,
+   "timber": 17832,
    "roof": 72,
    "fabric": 150,
    "fabric2": 150
@@ -151,10 +153,10 @@
   "hits": "E:/Repos/mythic-forge/Assets/_render/SourceAssets/HBuild/med_tavern/T_med_tavern_hits.png"
  },
  "sha256": {
-  "low": "5f7fe61179d047c9437b7564f99382c445942cf21e83904d831ab3beee18e715",
-  "high": "0538749b04705abbe6b9d0079038fbbe2dfa6892c8595c9fbc360391f295c27b",
-  "normal": "06656f2728b4369f1d520b081ca7c439f29dd812bec13167d66ffe3c7f84c237",
-  "hits": "1d321ff29cbdb0e10093ee2e5777b419379a3c04de2eeb816824e14d7fb7f5ef"
+  "low": "b1562915ef75c95baac999bdf6e6af1b5712ca5cdd0b721afcfe0bf841c92820",
+  "high": "31237e05fb1cf07824b626b9c59473e0865592c492ef19dfb842c959f943046c",
+  "normal": "ecc0ddd6154d10d76bed9c173ae0ab87e18d6a2db2f03794c591c62f312ffdbd",
+  "hits": "d60c0db851ce187637676392613cdfab3dfc74b2279acdddf097a47f41037c1b"
  },
- "seconds": 25.2
+ "seconds": 28.0
 }

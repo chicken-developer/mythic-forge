@@ -43,3 +43,10 @@ Each line: `H22.0.368: <call> — <result>`. The 21-era assumptions from the ski
 - H22.0.368: Copernicus `bakegeometrytextures::2.0` + `rop_image` (parms as in tools/bake_asset.py) bakes a 4096
   normal map of med_tavern in ~15 s; `filmboxfbx` export ROP writes the FBX (geometry export, not a render).
 - H22.0.368: `clip` SOP (capture cutaway only): parms `origin`, `dir`, `clipop` (menu label containing "above").
+- H22.0.368: VEX function parameters are passed by reference; assigning to one (`n = max(1, n);`) fails with
+  "Read-only expression given for read/write parameter" when the caller passes an expression. Use a local copy.
+- H22.0.368: `append(arr, point(0, "piece", q))` fails ("ambiguous call") because point() has no return type
+  there; assign to a typed local first (`int pc = point(...); append(arr, pc);`), same for find().
+- H22.0.368: `polybevel::3.0` writes NaN positions (and normals) where a polygon has an edge of zero length
+  (two points pulled onto each other); the FBX exporter writes them as `-nan(ind)` and Unreal draws long fans.
+  HIGH skips such parts (high_group.vfl) and repairs leftovers (high_finite.vfl).

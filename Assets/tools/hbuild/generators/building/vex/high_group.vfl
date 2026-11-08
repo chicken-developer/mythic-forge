@@ -1,10 +1,23 @@
 // HIGH (run over primitives): put hardsurface parts (patterns in bevel_parts, matched on s@part) in the
 // group hs_bevel for PolyBevel. Walls, roof planes, glass and fabric are not in it: they stay flat
 // (their detail comes from Substance Designer).
+// A part whose box got an edge collapsed to zero length (roof clip pulled two points onto each other) is
+// left out too: PolyBevel writes NaN positions there, which break the mesh in Unreal.
 string pats[] = split(chs("../bevel_parts"));
+int hit = 0;
 foreach (string p; pats) {
-    if (match(p, s@part)) {
-        setprimgroup(0, "hs_bevel", @primnum, 1);
-        break;
+    if (match(p, s@part)) { hit = 1; break; }
+}
+if (!hit) return;
+int pp[] = primpoints(0, @primnum);
+if (len(pp) == 0) return;
+int id = point(0, "piece", pp[0]);
+int same[] = findattribval(0, "point", "piece", id);
+foreach (int q; same) {
+    vector a = point(0, "P", q);
+    foreach (int r; neighbours(0, q)) {
+        vector c = point(0, "P", r);
+        if (distance(a, c) < 1e-4) return;
     }
 }
+setprimgroup(0, "hs_bevel", @primnum, 1);

@@ -73,3 +73,17 @@ gothic presets are style studies; their sheets label the reference "moodboard (s
 - Unreal (TDKProps 5.8.4, /Game/Levels/NewMap): LOW 7879 tris (= Houdini), HIGH 48133 of 48286 (Unreal drops
   degenerate bevel slivers), sizes match. 8 captures in _render/RenderTests/HBuild/med_tavern/.
   Still visible: one small timber stub at the valley where the tavern's cross gable meets the main roof.
+
+## Round 5 (user feedback: small defects, then Unreal export)
+- Lean-to (med_tavern wing b): sills / rail above its high edge were pulled down onto the roof (black slivers).
+  The lean-to rule counted the slab's own thickness face (it points partly up on a 15 deg slab) as a ridge
+  neighbour. Fix: a neighbour counts only when it reaches further than `roof_clip_shared` (0.3 m) from the high
+  edge, and thickness faces are never clip targets.
+- Valley sliver (cross gable / main roof): top plates are now built in segments (`timber_seg`), so the roof
+  clip can follow the slope; no sliver left in the viewport.
+- Canopy through a window header: headers touching a canopy / awning / beam are removed (`canopy_clear_*`).
+- Unreal fans through the interior: 72 NaN vertices in SM_med_tavern_HIGH.fbx (PolyBevel on parts whose edges
+  the roof clip collapsed). Fixed in HIGH (no bevel on collapsed parts + finite repair); the bake now refuses to
+  export non-finite positions and `tools/check_fbx.py` checks the FBX files.
+- Window cut by a wing (med_tavern front, next to the cross-gable block): main-body openings that reach into a
+  wing on a storey the wing has become plain wall bays (`wing_clear` 0.12 m).

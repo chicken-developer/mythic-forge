@@ -8,9 +8,10 @@ Network inside the HDA (each line = one network box; read top to bottom, left to
          MOD_<T>    one bay in module space, copied onto the LAYOUT points whose s@module == T
   row 1  TRIMS CORE ROOF WINGS DORMERS CANOPY BALCONY TOWER TIMBER BUTTRESS   (each -> OUT_<NAME>)
          CORE    closed volumes, or (interior = 1) slabs - stair holes (Boolean) + stair flights
-  row 2  OUTPUT     merge(all OUT_*) -> roof clip (wall parts pulled under pitched roofs near the eave/verge)
-                    -> ground-storey material -> Cd + unreal_material -> UV -> normals -> i@piece = LOW
-         HIGH       OUT_OUTPUT -> hardsurface group -> PolyBevel -> normals
+  row 2  OUTPUT     merge(all OUT_*) -> i@piece -> canopy clear (headers a canopy cuts are removed)
+                    -> roof clip (wall parts pulled under pitched roofs near the eave/verge)
+                    -> ground-storey material -> Cd + unreal_material -> UV -> normals = LOW
+         HIGH       OUT_OUTPUT -> hardsurface group -> PolyBevel -> finite fix -> normals
          PUBLISH    switch(LOW, HIGH by preview_quality) -> outputs 0 selected / 1 LOW / 2 HIGH
 
 Every value comes from the HDA interface (spec.PARMS) through ch("../name").
@@ -130,19 +131,23 @@ def build_network(parent):
     # OUTPUT (LOW) -------------------------------------------------------------
     m = b.module("OUTPUT", "output", 0, 11, "LOW: material by storey, Cd + unreal_material, UV, normals")
     mg = m.node("merge", "merge", 0, 0, inputs=merge_list, color_role="merge")
-    rf = m.wrangle("roof_faces", 0.9, 0.5, vex("roof_faces.vfl", False), run_over="primitives", inputs=[mg],
-                   color_role="filter")
-    rc = m.wrangle("roof_clip", 0, 1, vex("roof_clip.vfl", False), run_over="points", inputs=[mg, rf],
-                   color_role="filter")
-    fm = m.wrangle("floor_mat", 0, 2, vex("floor_mat.vfl", False), run_over="primitives", inputs=[rc],
-                   color_role="attrib")
-    look = m.wrangle("look", 0, 3, vex("look.vfl", False), run_over="primitives", inputs=[fm], color_role="attrib")
-    uv = m.wrangle("uv", 0, 4, vex("uv.vfl", False), run_over="vertices", inputs=[look], color_role="attrib")
-    nrm = m.node("normal", "normals", 0, 5, inputs=[uv], color_role="attrib")
-    # point i@piece = connected part (one per box / slab), kept by the HIGH bevel -> high->low bake isolation
-    pc = m.node("connectivity", "pieces", 0, 6, inputs=[nrm], color_role="attrib")
+    # point i@piece = connected part (one per box / slab): canopy clear works per part, and the HIGH bevel
+    # keeps it -> high->low bake isolation
+    pc = m.node("connectivity", "pieces", 0, 0.6, inputs=[mg], color_role="attrib")
     pc.parm("attribname").set("piece")
-    low = m.finish(pc, col=0, row=7)
+    cp = m.wrangle("canopy_parts", 0.9, 0.6, vex("canopy_parts.vfl", False), run_over="primitives", inputs=[pc],
+                   color_role="filter")
+    cc = m.wrangle("canopy_clear", 0, 1.2, vex("canopy_clear.vfl", False), inputs=[pc, cp], color_role="filter")
+    rf = m.wrangle("roof_faces", 0.9, 1.6, vex("roof_faces.vfl", False), run_over="primitives", inputs=[cc],
+                   color_role="filter")
+    rc = m.wrangle("roof_clip", 0, 2, vex("roof_clip.vfl", False), run_over="points", inputs=[cc, rf],
+                   color_role="filter")
+    fm = m.wrangle("floor_mat", 0, 3, vex("floor_mat.vfl", False), run_over="primitives", inputs=[rc],
+                   color_role="attrib")
+    look = m.wrangle("look", 0, 4, vex("look.vfl", False), run_over="primitives", inputs=[fm], color_role="attrib")
+    uv = m.wrangle("uv", 0, 5, vex("uv.vfl", False), run_over="vertices", inputs=[look], color_role="attrib")
+    nrm = m.node("normal", "normals", 0, 6, inputs=[uv], color_role="attrib")
+    low = m.finish(nrm, col=0, row=7)
 
     # HIGH ---------------------------------------------------------------------
     m = b.module("HIGH", "output", 2.4, 11, "LOW + PolyBevel on hardsurface parts")
@@ -153,8 +158,10 @@ def build_network(parent):
     bev.parm("offset").setExpression('ch("../bevel_w")')
     bev.parm("divisions").setExpression('ch("../bevel_div")')
     bev.parm("ignoreflatedges").setExpression('ch("../bevel_ignore_flat")')
-    hn = m.node("normal", "normals", 0, 2, inputs=[bev], color_role="attrib")
-    high = m.finish(hn, col=0, row=3)
+    fin = m.wrangle("finite", 0, 2, vex("high_finite.vfl", False), run_over="points", inputs=[bev],
+                    color_role="attrib")
+    hn = m.node("normal", "normals", 0, 3, inputs=[fin], color_role="attrib")
+    high = m.finish(hn, col=0, row=4)
 
     # PUBLISH ------------------------------------------------------------------
     m = b.module("PUBLISH", "output", 4.8, 11, "outputs: 0 selected (preview_quality), 1 LOW, 2 HIGH")

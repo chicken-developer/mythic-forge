@@ -33,8 +33,10 @@ for (int pt = 0; pt < npoints(1); pt++) {
     // posts on the left boundary of every bay, plus the right boundary of the last bay of the edge
     add_obox(L + up * (h * 0.5) + z, set(tw, h, dz), X, n, "timber", "timber_post");
     if (b == nb - 1) add_obox(Rb + up * (h * 0.5) + z, set(tw, h, dz), X, n, "timber", "timber_post");
-    // plates: top of the storey; bottom only for upper storeys (the ground floor stands on the plinth)
-    add_obox(P + up * (h - tw * 0.5) + z, set(w, tw, dz), X, n, "timber", "timber_plate");
+    // plates: top of the storey (in segments of <= timber_seg, so the roof clip can follow a roof valley /
+    // eave point by point); bottom only for upper storeys (the ground floor stands on the plinth)
+    add_obox_seg(P + up * (h - tw * 0.5) + z, set(w, tw, dz), X, n, "timber", "timber_plate",
+                 int(ceil(w / max(ch("../timber_seg"), 0.05))));
     if (f > 0) add_obox(P + up * (tw * 0.5) + z, set(w, tw, dz), X, n, "timber", "timber_plate");
     // rail at sill height on window bays (scaled like the module)
     float sy = sill * h / ((m == "D" || m == "S" || m == "DA") ? gh : fh);

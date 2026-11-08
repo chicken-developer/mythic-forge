@@ -21,6 +21,7 @@ foreach (string s; _s_list7) {
     int ids[] = array(addpoint(0, A), addpoint(0, B), addpoint(0, B + n * dd), addpoint(0, A + n * dd));
     int pr = addprim(0, "poly", ids);
     setprimattrib(0, "slot", pr, s);
+    setprimattrib(0, "main_edge", pr, e);
     int nf = max(1, chi(w + "_floors"));
     setprimattrib(0, "floors", pr, nf);
     string pg = chs(w + "_ground"), pu = chs(w + "_upper");

@@ -183,6 +183,8 @@ PARMS = [
     P("Timber", "timber_rail", "Sill Rail On Window Bays", "toggle", 1),
     P("Timber", "timber_gable", "Gable Trusses", "toggle", 1),
     P("Timber", "timber_collar", "Collar Height (of gable)", "float", 0.5, 0.2, 0.8),
+    P("Timber", "timber_seg", "Top Plate Segment Length", "float", 0.4, 0.05, 5.0,
+      help="top plates are split into segments of this length so the roof clip follows valleys and eaves"),
     # ---------------- Interior (shell only: slabs, ceilings, stairs; no furniture)
     P("Interior", "interior", "Interior Shell", "toggle", 0,
       help="hollow storeys: floor slabs, ceiling, stairs (replaces the closed core volumes)"),
@@ -228,6 +230,9 @@ PARMS = [
       help="keep it a few cm: closer than that the viewport depth buffer shows the part through the roof"),
     P("Roof", "roof_clip_edge", "Clip Within (of roof edge)", "float", 1.0, 0.0, 5.0,
       help="only points horizontally this close to an edge of the roof face are clipped"),
+    P("Roof", "roof_clip_shared", "Ridge Neighbour Reach", "float", 0.3, 0.05, 2.0,
+      help="a roof face whose high edge touches another upper roof face reaching further than this is a ridge "
+           "(clipped near it); otherwise it is a lean-to and the wall above its high edge stays"),
     P("Roof", "roof_clip_skip", "Never Clip Parts", "string",
       "slope hip soffit verge ridge_beam chimney chimney_cap dormer_* tower_* pinnacle* canopy awning* "
       "core_top parapet coping", help="parts that belong to the roof or stand on it on purpose"),
@@ -252,12 +257,17 @@ PARMS = [
     P("Dormers", "dormer_off", "Offset Along Ridge", "float", 0.0, -20.0, 20.0),
     P("Dormers", "dormer_ov", "Dormer Overhang", "float", 0.15, 0.0, 1.0),
 ] + _wing("a") + _wing("b") + [
+    P("Wings", "wing_clear", "Opening Clearance From Wing", "float", 0.12, 0.0, 1.0,
+      help="a main-body window/door closer than this to a wing (or behind it) becomes a plain wall bay"),
     # ---------------- Canopies (porch roofs, awnings, pergolas) / balcony
     P("Canopies", "canopy_t", "Slab Thickness", "float", 0.08, 0.0, 0.5),
     P("Canopies", "stripe_w", "Awning Stripe Width", "float", 0.5, 0.1, 6.0, help="a stripe wider than the awning = plain fabric"),
     P("Canopies", "valance_h", "Awning Valance", "float", 0.25, 0.0, 1.0),
     P("Canopies", "post_w", "Post / Beam Size", "float", 0.18, 0.05, 0.6),
     P("Canopies", "post_gap", "Max Post Spacing", "float", 2.5, 0.5, 10.0),
+    P("Canopies", "canopy_clear_parts", "Remove Parts Under Canopies", "string", "header",
+      help="facade parts (s@part patterns) a canopy cuts through are removed; empty = keep all"),
+    P("Canopies", "canopy_clear_dist", "Clear Distance", "float", 0.1, 0.0, 1.0),
 ] + _canopy("a") + _canopy("b") + _canopy("c") + [
     P("Balcony", "balcony", "Balcony", "toggle", 0),
     P("Balcony", "balcony_side", "Side", "menu", 0, menu=SIDES),

@@ -25,14 +25,35 @@ string pick_module(string pattern; int i; int n; int center_door) {
 // Ground-storey modules are built at ground_h, all others at floor_h (see the MOD_* boxes).
 int ground_module(string m) { return m == "D" || m == "S" || m == "DA"; }
 
+// Main-body bays next to a wing (same main edge, storey the wing has): an opening that reaches into the
+// wing (behind it, or cut by its side wall, closer than wing_clear) becomes a plain wall bay (W0). The bay
+// itself stays in place, so wall panels and timber posts keep the bay grid.
+string wing_clear(string m; float t; float w; vector b0; vector d; int edge; int floor) {
+    if (m == "W0") return m;
+    float half = (m == "D" || m == "DA") ? ch("../door_w") * 0.5 : w * ch("../win_w") * 0.5;
+    if (m == "S") half = w * 0.45;
+    half += ch("../frame_w") + ch("../wing_clear");
+    for (int k = 0; k < nprimitives(2); k++) {
+        if (prim(2, "main_edge", k) != edge) continue;
+        if (floor >= max(1, prim(2, "floors", k))) continue;
+        int wp[] = primpoints(2, k);
+        vector A = point(2, "P", wp[0]), B = point(2, "P", wp[1]);
+        float s0 = min(dot(A - b0, d), dot(B - b0, d)), s1 = max(dot(A - b0, d), dot(B - b0, d));
+        if (t + half > s0 && t - half < s1) return "W0";
+    }
+    return m;
+}
+
 void lay_row(vector p0; vector d; float pilw; float w; int nb; float y0; float h; string pat;
              int cdoor; int floor; int edge; int poly; int nfloors; float bayw; float gh; float fh) {
     vector nrm = normalize(cross(d, {0,1,0}));
     vector4 q = quaternion(atan2(nrm.x, nrm.z), {0,1,0});
     for (int b = 0; b < nb; b++) {
         string m = pick_module(pat, b, nb, cdoor);
+        float t = pilw + w * (b + 0.5);
+        if (poly == 0) m = wing_clear(m, t, w, p0, d, edge, floor);
         float nominal = ground_module(m) ? gh : fh;
-        vector pos = p0 + d * (pilw + w * (b + 0.5));
+        vector pos = p0 + d * t;
         pos.y = y0;
         int pt = addpoint(0, pos);
         setpointattrib(0, "orient", pt, q);

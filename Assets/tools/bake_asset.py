@@ -123,7 +123,7 @@ def materials(mat_ids):
 def export_fbx(sop, path):
     obj = hou.node("/obj").createNode("geo", "_FBX_EXPORT", run_init_scripts=False)
     om = node(obj, "object_merge", "mesh", objpath1=sop.path())
-    cl = node(obj, "attribdelete", "export_attribs", om, vtxdel="fixed_vtx", ptdel="piece")
+    cl = node(obj, "attribdelete", "export_attribs", om, vtxdel="fixed_vtx", ptdel="piece high_fixed")
     sc = node(obj, "xform", "metres_to_cm", cl, scale=100.0)
     sc.setDisplayFlag(True)
     sc.setRenderFlag(True)
@@ -166,9 +166,15 @@ def stats(g):
         mats[m] = mats.get(m, 0) + 1
     fa = g.findVertexAttrib("fixed_vtx")
     fixed = sum(g.vertexIntAttribValues("fixed_vtx")) if fa else 0
+    import math
+    bad_p = sum(1 for v in g.pointFloatAttribValues("P") if not math.isfinite(v))
+    if bad_p:
+        raise RuntimeError("%d non-finite position values in the export mesh (Unreal shows them as fans)" % bad_p)
+    ha = g.findPointAttrib("high_fixed")
+    high_fixed = sum(g.pointIntAttribValues("high_fixed")) if ha else 0
     pa = g.findPointAttrib("piece")
     pieces = g.pointIntAttribValues("piece") if pa else []
-    return {"points": len(g.points()), "triangles": len(g.prims()), "fixed_nonfinite_vertices": fixed,
+    return {"points": len(g.points()), "triangles": len(g.prims()), "fixed_nonfinite_vertices": fixed, "high_fixed_points": high_fixed,
             "pieces": len(set(pieces)), "piece0_points": sum(1 for x in pieces if x == 0), "bounds_m": [round(x, 4) for x in bb.sizevec()],
             "bbox_min_m": [round(x, 4) for x in bb.minvec()], "materials": mats,
             "uv_sets": [a.name() for a in g.vertexAttribs() if a.name().startswith("uv")]}
@@ -194,6 +200,7 @@ def main():
     lg, hg = cook(low), cook(high)
     materials(sorted(set(lg.primStringAttribValues("mat_id")) | set(hg.primStringAttribValues("mat_id"))))
     lg, hg = cook(low), cook(high)
+    st_low, st_high = stats(lg), stats(hg)            # raises before export on non-finite positions
     files = {"low": "%s/SM_%s_LOW.fbx" % (dest, a.asset), "high": "%s/SM_%s_HIGH.fbx" % (dest, a.asset),
              "normal": "%s/T_%s_N.png" % (dest, a.asset), "hits": "%s/T_%s_hits.png" % (dest, a.asset)}
     export_fbx(low, files["low"])
@@ -205,7 +212,7 @@ def main():
     cols = {m: preset.get("col_" + m) for m in lg.primStringAttribValues("mat_id")}
     rep = {"asset": a.asset, "hip": hip, "hip_sha256": sha(hip), "houdini": hou.applicationVersionString(),
            "hda": gen.type().definition().libraryFilePath(), "type": gen.type().name(),
-           "low": stats(lg), "high": stats(hg), "colors_linear": cols,
+           "low": st_low, "high": st_high, "colors_linear": cols,
            "bake": {"backend": "Copernicus " + backend, "resolution": a.resolution,
                     "normal_space": "tangent, DirectX (green down), MikkT, linear", "uv": "UV0 (unique packed)",
                     "ray_length_m": 0.075, "isolation": "connected pieces (generator i@piece, kept through the bevel) translated apart, same offsets low/high"},

@@ -1,0 +1,16 @@
+// HIGH (run over points), after PolyBevel: a position that is not finite (NaN / inf from a degenerate
+// corner) takes the average of its finite neighbours; with none left the point and its faces go.
+// Unreal turns such points into long fans through the building.
+vector p = v@P;
+if (!(isnan(p.x) || isnan(p.y) || isnan(p.z) || abs(p.x) > 1e6 || abs(p.y) > 1e6 || abs(p.z) > 1e6)) return;
+vector sum = 0;
+int k = 0;
+foreach (int r; neighbours(0, @ptnum)) {
+    vector c = point(0, "P", r);
+    if (isnan(c.x) || isnan(c.y) || isnan(c.z) || abs(c.x) > 1e6 || abs(c.y) > 1e6 || abs(c.z) > 1e6) continue;
+    sum += c;
+    k++;
+}
+if (k > 0) v@P = sum / k;
+else removepoint(0, @ptnum);
+i@high_fixed = 1;
