@@ -1180,7 +1180,7 @@ namespace KnightGearPlaythrough
 			TArray64<uint8> PNG;
 			FImageUtils::PNGCompressImageArray(Size.X, Size.Y,
 				TArrayView64<const FColor>(Pixels.GetData(), Pixels.Num()), PNG);
-			const FString Directory = FPaths::Combine(FPaths::ProjectDir(), TEXT("Evidence/M56/playthrough"));
+			const FString Directory = FPaths::Combine(FPaths::ProjectDir(), TEXT("Saved/Evidence/M56/playthrough"));
 			IFileManager::Get().MakeDirectory(*Directory, true);
 			const FString Path = FPaths::Combine(Directory, FString(Name) + TEXT(".png"));
 			Test.TestTrue(TEXT("Actual progression PNG saved"), !PNG.IsEmpty() && FFileHelper::SaveArrayToFile(PNG, *Path));

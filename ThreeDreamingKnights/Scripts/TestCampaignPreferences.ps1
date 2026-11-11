@@ -6,7 +6,7 @@ param(
 
 $ErrorActionPreference = 'Stop'
 $TaskRoot = Split-Path -Parent $PSScriptRoot
-$TaskDirectory = Join-Path $TaskRoot ('Evidence\M7\Settings\' + $EvidenceName)
+$TaskDirectory = Join-Path $TaskRoot ('Saved\Evidence\M7\Settings\' + $EvidenceName)
 New-Item -ItemType Directory -Path $TaskDirectory -Force | Out-Null
 $TaskFixture = Join-Path $TaskDirectory 'UserPreferences.ini'
 $TaskExecutable = Join-Path $EngineRoot 'Engine\Binaries\Win64\UnrealEditor-Cmd.exe'

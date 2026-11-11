@@ -287,7 +287,7 @@ namespace KnightCampaignPlaythrough
 				if (!bNetwork)
 				{
 					Test.TestTrue(TEXT("Persist real M7 route for cold process proof"), UKnightCheckpointSubsystem::WriteCheckpointFile(
-						FPaths::ProjectDir() / TEXT("Evidence/M7/Fixtures/Main_completed.knight"), Snapshot).IsSuccess());
+						FPaths::ProjectDir() / TEXT("Saved/Evidence/M7/Fixtures/Main_completed.knight"), Snapshot).IsSuccess());
 				}
 				Player->RequestCampaignAction(TEXT("Resume"));
 				Test.TestFalse(TEXT("Back releases owned pause"), World->IsPaused());
@@ -401,7 +401,7 @@ namespace KnightCampaignPlaythrough
 				Test.TestFalse(TEXT("Travel releases look input"), Player->IsLookInputIgnored());
 				if (!bNetwork)
 				{
-					UKnightCheckpointSubsystem::WriteCheckpointFile(FPaths::ProjectDir() / TEXT("Evidence/M7/Fixtures/Main_completed.knight"), After);
+					UKnightCheckpointSubsystem::WriteCheckpointFile(FPaths::ProjectDir() / TEXT("Saved/Evidence/M7/Fixtures/Main_completed.knight"), After);
 					Test.TestTrue(TEXT("Quest-only unsaved change uses the existing owner"),
 						Mode->GetStoryState()->Quest->ActivateQuest(TEXT("Demo_Append")).IsSuccess());
 					Player->OpenCampaignPage(EKnightRPGPanelTab::Campaign);

@@ -379,7 +379,7 @@ namespace KnightEncounterQualityTests
 			{
 				Run = TEXT("latest");
 			}
-			return FPaths::ProjectDir() / TEXT("Evidence/M75/encounters") / Run;
+			return FPaths::ProjectDir() / TEXT("Saved/Evidence/M75/encounters") / Run;
 		}
 		void SampleFrame()
 		{

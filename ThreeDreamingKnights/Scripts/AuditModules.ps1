@@ -19,7 +19,7 @@ $ProjectRoot = [IO.Path]::GetFullPath($ProjectRoot)
 $EngineRoot = [IO.Path]::GetFullPath($EngineRoot)
 if ([string]::IsNullOrWhiteSpace($OutputPath))
 {
-	$OutputPath = Join-Path $ProjectRoot 'Evidence\M0\module_dependency_audit.json'
+	$OutputPath = Join-Path $ProjectRoot 'Saved\Evidence\M0\module_dependency_audit.json'
 }
 $OutputPath = [IO.Path]::GetFullPath($OutputPath)
 $ProjectFile = Join-Path $ProjectRoot ($PrimaryModule + '.uproject')

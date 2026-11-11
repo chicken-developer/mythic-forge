@@ -137,7 +137,7 @@ namespace KnightSkillLabVisual
 				return;
 			}
 			OutputDirectory = FPaths::ConvertRelativePathToFull(
-				FPaths::Combine(FPaths::ProjectDir(), TEXT("Evidence/M55/rendered"), OutputSubdirectory));
+				FPaths::Combine(FPaths::ProjectDir(), TEXT("Saved/Evidence/M55/rendered"), OutputSubdirectory));
 			if (!IFileManager::Get().MakeDirectory(*OutputDirectory, true))
 			{
 				Fail(TEXT("Could not create the rendered SkillLab evidence directory."));

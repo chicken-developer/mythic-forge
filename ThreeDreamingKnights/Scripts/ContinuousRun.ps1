@@ -18,7 +18,7 @@ param(
 $ErrorActionPreference = 'Stop'
 $TaskProjectRoot = Split-Path -Parent $PSScriptRoot
 $TaskProject = Join-Path $TaskProjectRoot 'ThreeDreamingKnights.uproject'
-$TaskEvidence = Join-Path $TaskProjectRoot 'Evidence\ContinuousRun'
+$TaskEvidence = Join-Path $TaskProjectRoot 'Saved\Evidence\ContinuousRun'
 New-Item -ItemType Directory -Path $TaskEvidence -Force | Out-Null
 if ([string]::IsNullOrWhiteSpace($EvidenceName))
 {

@@ -8,9 +8,10 @@
 # Do not ignore current project's `.uproject`. & ref file
 !/*.uproject
 !/*.pur
-!/Docs/Architecture/RepositoryBaseline.md
-!/Docs/Architecture/EnginePluginPolicy.md
-!/Docs/Implementation/**
+
+# Project documents: top-level Markdown and everything under /Docs.
+!/*.md
+!/Docs/**
 !/Scripts/**
 !/Tests/**
 !/.github/**
@@ -60,6 +61,6 @@ Session.vim
 .vs
 
 # Generated outputs from project-owned plugins and tooling.
-/Plugins/Knight/**/Binaries/
-/Plugins/Knight/**/Intermediate/
+/Plugins/**/Binaries/
+/Plugins/**/Intermediate/
 /Scripts/**/__pycache__/

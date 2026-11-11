@@ -155,7 +155,7 @@ namespace KnightCampaignLayout
 				}
 				TArray64<uint8> PNG;
 				FImageUtils::PNGCompressImageArray(Size.X, Size.Y, TArrayView64<const FColor>(Pixels.GetData(), Pixels.Num()), PNG);
-				const FString Directory = FPaths::ProjectDir() / TEXT("Evidence/M7/rendered")
+				const FString Directory = FPaths::ProjectDir() / TEXT("Saved/Evidence/M7/rendered")
 					/ FString::Printf(TEXT("%dx%d"), Requested.X, Requested.Y);
 				IFileManager::Get().MakeDirectory(*Directory, true);
 				Test.TestTrue(TEXT("Save actual rendered largest-text page"), FFileHelper::SaveArrayToFile(PNG,

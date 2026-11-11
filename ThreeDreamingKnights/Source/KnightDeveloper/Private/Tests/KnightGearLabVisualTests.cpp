@@ -141,7 +141,7 @@ namespace KnightGearLabVisual
 				return;
 			}
 			OutputDirectory = FPaths::ConvertRelativePathToFull(
-				FPaths::Combine(FPaths::ProjectDir(), TEXT("Evidence/M56/rendered"), OutputSubdirectory));
+				FPaths::Combine(FPaths::ProjectDir(), TEXT("Saved/Evidence/M56/rendered"), OutputSubdirectory));
 			if (!IFileManager::Get().MakeDirectory(*OutputDirectory, true))
 			{
 				Fail(TEXT("Could not create the rendered GearLab evidence directory."));

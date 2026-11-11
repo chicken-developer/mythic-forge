@@ -51,7 +51,7 @@ namespace KnightStoryTravel
 			if (Phase == 0)
 			{
 				Test.TestTrue(TEXT("Immutable genuine V1 fixture opens"), UKnightCheckpointSubsystem::ReadCheckpointFile(
-					FPaths::ProjectDir() / TEXT("Evidence/M6/Fixtures/V1_completed.knight"), Original).IsSuccess());
+					FPaths::ProjectDir() / TEXT("Source/KnightDeveloper/Fixtures/M6/V1_completed.knight"), Original).IsSuccess());
 				Settings.Reset(DuplicateObject<ULevelEditorPlaySettings>(GetDefault<ULevelEditorPlaySettings>(), GetTransientPackage()));
 				Settings->SetPlayNetMode(PIE_ListenServer);
 				Settings->SetPlayNumberOfClients(1);

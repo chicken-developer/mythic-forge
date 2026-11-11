@@ -124,7 +124,7 @@ bool KnightGearAssetAuthoring::CreateGearAssets()
 	FString Json;
 	const TSharedRef<TJsonWriter<>> Writer = TJsonWriterFactory<>::Create(&Json);
 	FJsonSerializer::Serialize(Manifest, Writer);
-	const FString Directory = FPaths::ProjectDir() / TEXT("Evidence/M56");
+	const FString Directory = FPaths::ProjectDir() / TEXT("Saved/Evidence/M56");
 	IFileManager::Get().MakeDirectory(*Directory, true);
 	return FFileHelper::SaveStringToFile(Json, *(Directory / TEXT("catalog_manifest.json")),
 		FFileHelper::EEncodingOptions::ForceUTF8WithoutBOM);

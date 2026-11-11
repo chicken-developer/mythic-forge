@@ -388,7 +388,7 @@ namespace KnightCombatAssetAuthoring
 			}
 		}
 		const FString EvidenceDirectory = FPaths::ConvertRelativePathToFull(
-			FPaths::Combine(FPaths::ProjectDir(), TEXT("Evidence/M3/")));
+			FPaths::Combine(FPaths::ProjectDir(), TEXT("Saved/Evidence/M3/")));
 		if (!IFileManager::Get().MakeDirectory(*EvidenceDirectory, true)
 			|| !FFileHelper::SaveStringToFile(Provenance,
 				*FPaths::Combine(EvidenceDirectory, TEXT("UE58_template_provenance.tsv"))))

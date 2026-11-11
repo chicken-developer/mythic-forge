@@ -175,7 +175,7 @@ namespace KnightCompanionRouteTests
 						&& Roster[Index].Knight->GetKnightAbilitySystem()->GetOwnerActor() == Roster[Index].Knight
 						&& Roster[Index].Knight->GetKnightAbilitySystem()->GetAvatarActor() == Roster[Index].Knight);
 				}
-				const FString Directory = FPaths::ProjectDir() / TEXT("Evidence/M75/navigation");
+				const FString Directory = FPaths::ProjectDir() / TEXT("Saved/Evidence/M75/navigation");
 				IFileManager::Get().MakeDirectory(*Directory, true);
 				FFileHelper::SaveStringToFile(FString::Printf(TEXT("result,max_frame_displacement_cm,bridge_z_1,bridge_z_2,ai_revive\nPASS,%.3f,%.3f,%.3f,1\n"),
 					MaxStep, MaxZ[0], MaxZ[1]), *(Directory / TEXT("gate_bridge_revive.csv")));

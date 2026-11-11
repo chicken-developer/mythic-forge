@@ -154,7 +154,7 @@ namespace KnightStoryIntegration
 				if (FParse::Param(FCommandLine::Get(), TEXT("KnightStoryCapture")) && (Step == 1 || Step == 12))
 				{
 					FScreenshotRequest::RequestScreenshot(FPaths::ProjectDir()
-						/ FString::Printf(TEXT("Evidence/M6/Rendered/Step%d.png"), Step), true, false);
+						/ FString::Printf(TEXT("Saved/Evidence/M6/Rendered/Step%d.png"), Step), true, false);
 				}
 				BeforeWorld = State->WorldState->GetSnapshot().Revision;
 				if (bNetwork && Step == 1)
@@ -179,7 +179,7 @@ namespace KnightStoryIntegration
 				if (Step == 12)
 				{
 					// The original V1_pending file was captured too late. Retain its immutable bytes as evidence.
-					const FString PendingPath = FPaths::ProjectDir() / TEXT("Evidence/M6/Fixtures/V1_reward_pending.knight");
+					const FString PendingPath = FPaths::ProjectDir() / TEXT("Source/KnightDeveloper/Fixtures/M6/V1_reward_pending.knight");
 					FKnightCampaignCheckpoint Pending;
 					if (!IFileManager::Get().FileExists(*PendingPath))
 					{
@@ -216,7 +216,7 @@ namespace KnightStoryIntegration
 				Test.TestEqual(TEXT("One committed quest reward"), Mode->GetRPGState()->GetRPG()->GetView().ClaimedRewards.Num(), 1);
 				FKnightCampaignCheckpoint Snapshot;
 				Test.TestTrue(TEXT("Consistent real RPG/world/quest capture"), Mode->CaptureCheckpoint(Snapshot).IsSuccess());
-				const FString FixturePath = FPaths::ProjectDir() / TEXT("Evidence/M6/Fixtures/V1_completed.knight");
+				const FString FixturePath = FPaths::ProjectDir() / TEXT("Source/KnightDeveloper/Fixtures/M6/V1_completed.knight");
 				if (!IFileManager::Get().FileExists(*FixturePath))
 				{
 					Test.TestTrue(TEXT("Immutable V1 fixture first write"),
@@ -269,7 +269,7 @@ namespace KnightStoryIntegration
 				{
 					Player->ToggleRPGPanel();
 					FScreenshotRequest::RequestScreenshot(FPaths::ProjectDir()
-						/ TEXT("Evidence/M6/Rendered/CompletedPanel.png"), true, false);
+						/ TEXT("Saved/Evidence/M6/Rendered/CompletedPanel.png"), true, false);
 					CaptureUntil = FPlatformTime::Seconds() + 1.0;
 					Phase = 5;
 					return false;

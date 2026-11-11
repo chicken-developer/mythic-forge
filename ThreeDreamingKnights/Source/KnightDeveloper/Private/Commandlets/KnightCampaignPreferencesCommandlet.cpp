@@ -21,10 +21,10 @@ int32 UKnightCampaignPreferencesCommandlet::Main(const FString& Params)
 	FParse::Value(*Params, TEXT("SettingsFixture="), FixturePath);
 	FParse::Value(*Params, TEXT("Operation="), Operation);
 	FixturePath = FPaths::ConvertRelativePathToFull(FixturePath);
-	const FString AllowedRoot = FPaths::ConvertRelativePathToFull(FPaths::ProjectDir() / TEXT("Evidence/M7/Settings/"));
+	const FString AllowedRoot = FPaths::ConvertRelativePathToFull(FPaths::ProjectDir() / TEXT("Saved/Evidence/M7/Settings/"));
 	if (!FixturePath.StartsWith(AllowedRoot) || !FixturePath.EndsWith(TEXT(".ini")))
 	{
-		UE_LOG(LogTemp, Error, TEXT("Preferences probe requires a .ini inside Evidence/M7/Settings."));
+		UE_LOG(LogTemp, Error, TEXT("Preferences probe requires a .ini inside Saved/Evidence/M7/Settings."));
 		return 1;
 	}
 	UKnightGameUserSettings* Settings = UKnightGameUserSettings::Get();
