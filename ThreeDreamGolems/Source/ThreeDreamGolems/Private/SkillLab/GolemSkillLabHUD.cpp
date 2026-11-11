@@ -20,17 +20,17 @@
 
 FText AGolemSkillLabHUD::GetCombatHelp() const
 {
-	return NSLOCTEXT("KnightSkillLab", "CombatHelp", "WASD move | LMB light / RMB heavy | Q block / Alt parry / Shift dodge | MMB lock | G rune / H finisher | T traverse");
+	return NSLOCTEXT("GolemSkillLab", "CombatHelp", "WASD move | LMB light / RMB heavy | Q block / Alt parry / Shift dodge | MMB lock | G rune / H finisher | T traverse");
 }
 
 FText AGolemSkillLabHUD::GetPartyHelp() const
 {
-	return NSLOCTEXT("KnightSkillLab", "PartyHelp", "N follow / J hold / B focus / K regroup | E revive | Tab switch | Gamepad: LT+RT heavy, LT+D-pad skills");
+	return NSLOCTEXT("GolemSkillLab", "PartyHelp", "N follow / J hold / B focus / K regroup | E revive | Tab switch | Gamepad: LT+RT heavy, LT+D-pad skills");
 }
 
 FText AGolemSkillLabHUD::GetRecoveryHelp() const
 {
-	return NSLOCTEXT("KnightSkillLab", "RecoveryHelp", "Recovery: Stamina 25/s; class resource 10/s, paused 1s after spending. HP requires healing, revive or checkpoint.");
+	return NSLOCTEXT("GolemSkillLab", "RecoveryHelp", "Recovery: Stamina 25/s; class resource 10/s, paused 1s after spending. HP requires healing, revive or checkpoint.");
 }
 
 FText AGolemSkillLabHUD::GetGolemLabel(const AGolemCharacter* InGolem) const
@@ -38,13 +38,13 @@ FText AGolemSkillLabHUD::GetGolemLabel(const AGolemCharacter* InGolem) const
 	const FName Hero = InGolem->GetHeroDefinitionId().PrimaryAssetName;
 	if (Hero == TEXT("Training_Red"))
 	{
-		return NSLOCTEXT("KnightSkillLab", "SkyLabel", "Sky");
+		return NSLOCTEXT("GolemSkillLab", "SkyLabel", "Sky");
 	}
 	if (Hero == TEXT("Training_Blue"))
 	{
-		return NSLOCTEXT("KnightSkillLab", "SeaLabel", "Sea");
+		return NSLOCTEXT("GolemSkillLab", "SeaLabel", "Sea");
 	}
-	return NSLOCTEXT("KnightSkillLab", "EarthLabel", "Earth");
+	return NSLOCTEXT("GolemSkillLab", "EarthLabel", "Earth");
 }
 
 void AGolemSkillLabHUD::BeginPlay()
@@ -95,16 +95,16 @@ void AGolemSkillLabHUD::RefreshWorldOffers()
 		}
 		const AGolemRunestone* Stone = Binding.Stone.Get();
 		const FText Name = Stone->GetKind() == EGolemRunestoneKind::Healing
-			? NSLOCTEXT("KnightSkillLab", "OfferHealing", "Healing")
+			? NSLOCTEXT("GolemSkillLab", "OfferHealing", "Healing")
 			: (Stone->GetKind() == EGolemRunestoneKind::Crystal
-			? NSLOCTEXT("KnightSkillLab", "OfferCrystal", "Crystal")
-			: NSLOCTEXT("KnightSkillLab", "OfferFrost", "Frost"));
+			? NSLOCTEXT("GolemSkillLab", "OfferCrystal", "Crystal")
+			: NSLOCTEXT("GolemSkillLab", "OfferFrost", "Frost"));
 		const FText Status = Stone->GetState() == EGolemRunestoneState::Ready
-			? NSLOCTEXT("KnightSkillLab", "OfferReady", "Ready: F within 2m")
+			? NSLOCTEXT("GolemSkillLab", "OfferReady", "Ready: F within 2m")
 			: (Stone->GetState() == EGolemRunestoneState::Channeling
-			? NSLOCTEXT("KnightSkillLab", "OfferChannel", "Channeling")
-			: NSLOCTEXT("KnightSkillLab", "OfferCooldown", "Cooldown"));
-		Binding.Label = FText::Format(NSLOCTEXT("KnightSkillLab", "OfferLabel", "{0}: {1}"), Name, Status);
+			? NSLOCTEXT("GolemSkillLab", "OfferChannel", "Channeling")
+			: NSLOCTEXT("GolemSkillLab", "OfferCooldown", "Cooldown"));
+		Binding.Label = FText::Format(NSLOCTEXT("GolemSkillLab", "OfferLabel", "{0}: {1}"), Name, Status);
 		Binding.EndServerTime = Stone->GetStateEndServerTime();
 	}
 }
@@ -164,11 +164,11 @@ void AGolemSkillLabHUD::RefreshPartyVitals()
 		{
 			continue;
 		}
-		const FText LifeName = Binding.Life->IsAlive() ? NSLOCTEXT("KnightSkillLab", "PartyAlive", "Alive")
+		const FText LifeName = Binding.Life->IsAlive() ? NSLOCTEXT("GolemSkillLab", "PartyAlive", "Alive")
 			: (Binding.Life->GetLifeState() == EGolemLifeState::Downed
-			? NSLOCTEXT("KnightSkillLab", "PartyDowned", "DOWNED")
-			: NSLOCTEXT("KnightSkillLab", "PartyDead", "DEAD"));
-		Text += FText::Format(NSLOCTEXT("KnightSkillLab", "PartyVitals", "{0} HP {1}/{2} shield {3} {4}   "),
+			? NSLOCTEXT("GolemSkillLab", "PartyDowned", "DOWNED")
+			: NSLOCTEXT("GolemSkillLab", "PartyDead", "DEAD"));
+		Text += FText::Format(NSLOCTEXT("GolemSkillLab", "PartyVitals", "{0} HP {1}/{2} shield {3} {4}   "),
 			GetGolemLabel(Binding.Golem.Get()),
 			FText::AsNumber(FMath::RoundToInt(Binding.AbilitySystem->GetNumericAttribute(UGolemAttributeSet::GetHealthAttribute()))),
 			FText::AsNumber(FMath::RoundToInt(Binding.AbilitySystem->GetNumericAttribute(UGolemAttributeSet::GetMaxHealthAttribute()))),
@@ -315,7 +315,7 @@ void AGolemSkillLabHUD::RefreshBossVitals()
 {
 	if (BossAbilitySystem.IsValid())
 	{
-		BossVitals = FText::Format(NSLOCTEXT("KnightSkillLab", "BossVitals", "Boss HP {0}/{1} | Poise {2}/{3}"),
+		BossVitals = FText::Format(NSLOCTEXT("GolemSkillLab", "BossVitals", "Boss HP {0}/{1} | Poise {2}/{3}"),
 			FText::AsNumber(FMath::RoundToInt(BossAbilitySystem->GetNumericAttribute(UGolemAttributeSet::GetHealthAttribute()))),
 			FText::AsNumber(FMath::RoundToInt(BossAbilitySystem->GetNumericAttribute(UGolemAttributeSet::GetMaxHealthAttribute()))),
 			FText::AsNumber(FMath::RoundToInt(BossCombat.IsValid() ? BossCombat->GetSnapshot().Poise : 0.0f)),
@@ -351,16 +351,16 @@ void AGolemSkillLabHUD::RefreshArmor()
 	if (Armor.IsValid() && Armor->GetArmorZone() != nullptr)
 	{
 		const FText StateName = Armor->GetArmorState() == EGolemBossArmorState::Intact
-			? NSLOCTEXT("KnightSkillLab", "ArmorIntact", "Intact")
+			? NSLOCTEXT("GolemSkillLab", "ArmorIntact", "Intact")
 			: (Armor->GetArmorState() == EGolemBossArmorState::Brittle
-			? NSLOCTEXT("KnightSkillLab", "ArmorBrittle", "Brittle") : NSLOCTEXT("KnightSkillLab", "ArmorBroken", "Broken"));
-		ArmorText = FText::Format(NSLOCTEXT("KnightSkillLab", "ArmorHUD", "Boss leg armor: {0}, durability {1}/100"),
+			? NSLOCTEXT("GolemSkillLab", "ArmorBrittle", "Brittle") : NSLOCTEXT("GolemSkillLab", "ArmorBroken", "Broken"));
+		ArmorText = FText::Format(NSLOCTEXT("GolemSkillLab", "ArmorHUD", "Boss leg armor: {0}, durability {1}/100"),
 			StateName, FText::AsNumber(Armor->GetDurability()));
 		ArmorEndServerTime = Armor->GetStateEndServerTime();
 	}
 	else
 	{
-		ArmorText = NSLOCTEXT("KnightSkillLab", "ArmorHelp", "Boss: FROST Runestone makes leg zone brittle; aim heavy at lower armor.");
+		ArmorText = NSLOCTEXT("GolemSkillLab", "ArmorHelp", "Boss: FROST Runestone makes leg zone brittle; aim heavy at lower armor.");
 		ArmorEndServerTime = 0.0f;
 	}
 }

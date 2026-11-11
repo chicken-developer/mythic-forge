@@ -18,9 +18,9 @@
 
 namespace
 {
-	const FString CampaignRoot(TEXT("/Game/Knight/Definitions/Campaign/"));
-	const FString SchoolMap(TEXT("/Game/Knight/Maps/Playables/L_M07_Campaign"));
-	const FString CourtMap(TEXT("/Game/Knight/Maps/Playables/L_M07_Courtyard"));
+	const FString CampaignRoot(TEXT("/Game/Golem/Definitions/Campaign/"));
+	const FString SchoolMap(TEXT("/Game/Golem/Maps/Playables/L_M07_Campaign"));
+	const FString CourtMap(TEXT("/Game/Golem/Maps/Playables/L_M07_Courtyard"));
 
 	template <typename T>
 	T* Asset(const FString& Path)
@@ -61,9 +61,9 @@ namespace
 bool GolemCampaignAssetAuthoring::CreateAssets()
 {
 	UGolemStoryWorldDefinition* BaseWorld = LoadObject<UGolemStoryWorldDefinition>(nullptr,
-		TEXT("/Game/Knight/Definitions/Story/DA_Knight_World_ForgeSchool.DA_Knight_World_ForgeSchool"));
+		TEXT("/Game/Golem/Definitions/Story/DA_Golem_World_ForgeSchool.DA_Golem_World_ForgeSchool"));
 	UGolemStoryProfile* BaseProfile = LoadObject<UGolemStoryProfile>(nullptr,
-		TEXT("/Game/Knight/Definitions/Story/DA_Knight_Profile_DemoV2.DA_Knight_Profile_DemoV2"));
+		TEXT("/Game/Golem/Definitions/Story/DA_Golem_Profile_DemoV2.DA_Golem_Profile_DemoV2"));
 	if (BaseWorld == nullptr || BaseProfile == nullptr)
 	{
 		return false;
@@ -73,8 +73,8 @@ bool GolemCampaignAssetAuthoring::CreateAssets()
 	{
 		FGolemMapRegion& Region = Regions.AddDefaulted_GetRef();
 		Region.RegionId = bCourt ? TEXT("Courtyard") : TEXT("School");
-		Region.Label = bCourt ? NSLOCTEXT("KnightCampaign", "Courtyard", "Training courtyard")
-			: NSLOCTEXT("KnightCampaign", "School", "Boro's forge school");
+		Region.Label = bCourt ? NSLOCTEXT("GolemCampaign", "Courtyard", "Training courtyard")
+			: NSLOCTEXT("GolemCampaign", "School", "Boro's forge school");
 		Region.Map = TSoftObjectPtr<UWorld>(FSoftObjectPath(bCourt ? CourtMap : SchoolMap));
 		Region.HalfExtent = FVector2D(2300.0, 2000.0);
 		Region.NorthYaw = bCourt ? 90.0f : 0.0f;
@@ -104,10 +104,10 @@ bool GolemCampaignAssetAuthoring::CreateAssets()
 	{
 		const FString Suffix = bCourt ? TEXT("Courtyard") : TEXT("School");
 		const FName Id(*(TEXT("CampaignUX_") + Suffix));
-		UGolemStoryWorldDefinition* Definition = Asset<UGolemStoryWorldDefinition>(CampaignRoot + TEXT("DA_Knight_World_") + Suffix);
-		UGolemStoryProfile* Profile = Asset<UGolemStoryProfile>(CampaignRoot + TEXT("DA_Knight_Profile_") + Suffix);
-		if (Definition == nullptr || Profile == nullptr || !Definition->TrySetIdentity(Id, TEXT("KnightStoryWorld"))
-			|| !Profile->TrySetIdentity(Id, TEXT("KnightStoryProfile")))
+		UGolemStoryWorldDefinition* Definition = Asset<UGolemStoryWorldDefinition>(CampaignRoot + TEXT("DA_Golem_World_") + Suffix);
+		UGolemStoryProfile* Profile = Asset<UGolemStoryProfile>(CampaignRoot + TEXT("DA_Golem_Profile_") + Suffix);
+		if (Definition == nullptr || Profile == nullptr || !Definition->TrySetIdentity(Id, TEXT("GolemStoryWorld"))
+			|| !Profile->TrySetIdentity(Id, TEXT("GolemStoryProfile")))
 		{
 			return false;
 		}
@@ -121,8 +121,8 @@ bool GolemCampaignAssetAuthoring::CreateAssets()
 			if (Interaction.Action == EGolemStoryAction::Travel)
 			{
 				Interaction.Destination = TSoftObjectPtr<UWorld>(FSoftObjectPath(bCourt ? SchoolMap : CourtMap));
-				Interaction.Label = bCourt ? NSLOCTEXT("KnightCampaign", "ReturnSchool", "RETURN TO FORGE SCHOOL")
-					: NSLOCTEXT("KnightCampaign", "VisitCourt", "VISIT COURTYARD");
+				Interaction.Label = bCourt ? NSLOCTEXT("GolemCampaign", "ReturnSchool", "RETURN TO FORGE SCHOOL")
+					: NSLOCTEXT("GolemCampaign", "VisitCourt", "VISIT COURTYARD");
 			}
 		}
 		Profile->CampaignDefinitionId = BaseProfile->CampaignDefinitionId;
@@ -136,7 +136,7 @@ bool GolemCampaignAssetAuthoring::CreateAssets()
 			return false;
 		}
 	}
-	USoundClass* Master = Asset<USoundClass>(TEXT("/Game/Knight/Audio/SC_Knight_Master"));
+	USoundClass* Master = Asset<USoundClass>(TEXT("/Game/Golem/Audio/SC_Golem_Master"));
 	if (Master == nullptr)
 	{
 		return false;
@@ -144,7 +144,7 @@ bool GolemCampaignAssetAuthoring::CreateAssets()
 	Master->ChildClasses.Reset();
 	for (const TCHAR* Name : {TEXT("Music"), TEXT("Effects"), TEXT("Voice")})
 	{
-		USoundClass* Child = Asset<USoundClass>(FString(TEXT("/Game/Knight/Audio/SC_Knight_")) + Name);
+		USoundClass* Child = Asset<USoundClass>(FString(TEXT("/Game/Golem/Audio/SC_Golem_")) + Name);
 		if (Child == nullptr)
 		{
 			return false;
@@ -156,7 +156,7 @@ bool GolemCampaignAssetAuthoring::CreateAssets()
 			return false;
 		}
 	}
-	return Save(Master) && Save(Asset<USoundMix>(TEXT("/Game/Knight/Audio/SMix_Knight_User")));
+	return Save(Master) && Save(Asset<USoundMix>(TEXT("/Game/Golem/Audio/SMix_Golem_User")));
 }
 
 bool GolemCampaignAssetAuthoring::PopulateMap(UWorld* World, const bool bCourtyard)
@@ -181,12 +181,12 @@ bool GolemCampaignAssetAuthoring::PopulateMap(UWorld* World, const bool bCourtya
 	}
 	Entry->RegionId = bCourtyard ? TEXT("Courtyard") : TEXT("School");
 	Entry->bFrontEndEntry = !bCourtyard;
-	Entry->ProfileId = FPrimaryAssetId(TEXT("KnightStoryProfile"),
+	Entry->ProfileId = FPrimaryAssetId(TEXT("GolemStoryProfile"),
 		bCourtyard ? TEXT("CampaignUX_Courtyard") : TEXT("CampaignUX_School"));
 	const FString Suffix = bCourtyard ? TEXT("Courtyard") : TEXT("School");
-	const FString Path = CampaignRoot + TEXT("DA_Knight_World_") + Suffix;
+	const FString Path = CampaignRoot + TEXT("DA_Golem_World_") + Suffix;
 	UGolemStoryWorldDefinition* Definition = LoadObject<UGolemStoryWorldDefinition>(nullptr,
-		*(Path + TEXT(".DA_Knight_World_") + Suffix));
+		*(Path + TEXT(".DA_Golem_World_") + Suffix));
 	if (Definition == nullptr)
 	{
 		return false;

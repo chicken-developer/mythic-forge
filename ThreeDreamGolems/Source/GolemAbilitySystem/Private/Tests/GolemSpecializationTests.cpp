@@ -280,9 +280,9 @@ bool FGolemSkillCatalogTest::RunTest(const FString& Parameters)
 	FGolemSkillBuild Build;
 	Build.SpecId = TEXT("Terra");
 	TestTrue(TEXT("Canonical Earth identity owns Terra"), FGolemSkillCatalog::ValidateBuild(
-		FPrimaryAssetId(TEXT("KnightHero"), TEXT("Training_Green")), Build).IsSuccess());
+		FPrimaryAssetId(TEXT("GolemHero"), TEXT("Training_Green")), Build).IsSuccess());
 	TestFalse(TEXT("Sky cannot select Earth specialization"), FGolemSkillCatalog::ValidateBuild(
-		FPrimaryAssetId(TEXT("KnightHero"), TEXT("Training_Red")), Build).IsSuccess());
+		FPrimaryAssetId(TEXT("GolemHero"), TEXT("Training_Red")), Build).IsSuccess());
 	const FGolemSpecActionDefinition Base = FGolemSkillCatalog::GetSkill(Build, 2);
 	Build.SkillRune = TEXT("Skill.Mobile");
 	const FGolemSpecActionDefinition Mobile = FGolemSkillCatalog::GetSkill(Build, 2);
@@ -994,7 +994,7 @@ namespace GolemSpecializationTests
 	{
 		FGolemGASProjectionPlan Plan;
 		Plan.SourceKey = GolemProjection::RPGSourceKey;
-		Plan.DefinitionId = FPrimaryAssetId(TEXT("KnightHero"), TEXT("Training_Red"));
+		Plan.DefinitionId = FPrimaryAssetId(TEXT("GolemHero"), TEXT("Training_Red"));
 		Plan.SkillBuild = Fixture.Runtime->GetBuild();
 		Plan.EquipmentCombatBuild.bEnabled = true;
 		Plan.EquipmentCombatBuild.bHasHammer = true;

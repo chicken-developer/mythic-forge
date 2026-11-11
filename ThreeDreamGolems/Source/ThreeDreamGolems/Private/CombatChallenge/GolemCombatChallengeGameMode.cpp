@@ -36,11 +36,11 @@ void AGolemCombatChallengeGameMode::InitGameState()
 		if (Combat == nullptr)
 		{
 			CombatInitializationResult = FGolemResult::Failure(EGolemError::InvalidState, TEXT("ChallengeCombat"),
-				NSLOCTEXT("KnightCombatChallenge", "Composition", "Canonical Golems require their native combat component."));
+				NSLOCTEXT("GolemCombatChallenge", "Composition", "Canonical Golems require their native combat component."));
 			break;
 		}
 		CombatInitializationResult = Combat->Configure(
-			FPrimaryAssetId(TEXT("KnightCombatProfile"), TEXT("FoundationCombat")));
+			FPrimaryAssetId(TEXT("GolemCombatProfile"), TEXT("FoundationCombat")));
 		if (!CombatInitializationResult.IsSuccess())
 		{
 			break;
@@ -59,7 +59,7 @@ void AGolemCombatChallengeGameMode::InitGameState()
 	if (ChallengeState == nullptr)
 	{
 		CombatInitializationResult = FGolemResult::Failure(EGolemError::LoadFailed, TEXT("ChallengeState"),
-			NSLOCTEXT("KnightCombatChallenge", "StateSpawn", "Combat challenge feedback could not spawn."));
+			NSLOCTEXT("GolemCombatChallenge", "StateSpawn", "Combat challenge feedback could not spawn."));
 	}
 }
 
@@ -233,7 +233,7 @@ FGolemResult AGolemCombatChallengeGameMode::TryRestartDrill(APlayerController* P
 		|| Player->GetWorld() != GetWorld() || GetPartyState()->GetControlledSlot(Player) == INDEX_NONE)
 	{
 		return FGolemResult::Failure(EGolemError::NotOwned, TEXT("ChallengeRetry"),
-			NSLOCTEXT("KnightCombatChallenge", "RetryHost", "The host must control a canonical Golem to retry."));
+			NSLOCTEXT("GolemCombatChallenge", "RetryHost", "The host must control a canonical Golem to retry."));
 	}
 	bResettingChallenge = true;
 	ON_SCOPE_EXIT

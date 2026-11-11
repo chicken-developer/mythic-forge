@@ -8,7 +8,7 @@ FGolemResult FGolemEquipmentCombatBuild::Validate() const
 		|| (!bEnabled && (bHasHammer || !RelicEffectId.IsNone() || RelicInstanceId.IsValid())))
 	{
 		return FGolemResult::Failure(EGolemError::InvalidData, TEXT("EquipmentCombatBuild"),
-			NSLOCTEXT("KnightEquipment", "InvalidCombatBuild", "Equipment combat state requires a valid item source."));
+			NSLOCTEXT("GolemEquipment", "InvalidCombatBuild", "Equipment combat state requires a valid item source."));
 	}
 	return FGolemResult::Success();
 }

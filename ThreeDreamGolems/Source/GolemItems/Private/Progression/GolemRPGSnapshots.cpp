@@ -1100,7 +1100,7 @@ void UGolemRPGComponent::HandleReplicatedStateReady()
 	if (Control == nullptr || Control->Revision <= PublishedView.Revision || Control->Revision < 1
 		|| Control->InventoryId != InventoryView.InventoryId || Control->InventoryRevision != InventoryView.Revision
 		|| !GolemIdentity::IsValidDefinitionId(Control->SkillTreeId)
-		|| Control->SkillTreeId.PrimaryAssetType != FPrimaryAssetType(TEXT("KnightSkillTree")))
+		|| Control->SkillTreeId.PrimaryAssetType != FPrimaryAssetType(TEXT("GolemSkillTree")))
 	{
 		return;
 	}

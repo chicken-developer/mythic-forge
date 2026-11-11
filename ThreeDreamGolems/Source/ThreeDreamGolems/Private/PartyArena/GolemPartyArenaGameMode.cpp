@@ -34,7 +34,7 @@ AGolemPartyArenaGameMode::AGolemPartyArenaGameMode()
 	PlayerControllerClass = AGolemArenaPlayerController::StaticClass();
 	HUDClass = AGolemPartyArenaHUD::StaticClass();
 	ArenaInitializationResult = FGolemResult::Failure(EGolemError::InvalidState, TEXT("PartyArena"),
-		NSLOCTEXT("KnightArena", "ArenaPending", "The party arena is not initialized yet."));
+		NSLOCTEXT("GolemArena", "ArenaPending", "The party arena is not initialized yet."));
 }
 
 void AGolemPartyArenaGameMode::InitGameState()
@@ -128,12 +128,12 @@ FGolemResult AGolemPartyArenaGameMode::TryInteract(APlayerController* Player)
 		|| !Golem->GetLifeComponent()->IsAlive() || !ArenaInitializationResult.IsSuccess() || ArenaState == nullptr)
 	{
 		return FGolemResult::Failure(EGolemError::NotOwned, TEXT("StartArena"),
-			NSLOCTEXT("KnightArena", "StartOwner", "Control a living canonical Golem to start the arena."));
+			NSLOCTEXT("GolemArena", "StartOwner", "Control a living canonical Golem to start the arena."));
 	}
 	if (ArenaState->GetSnapshot().Stage != EGolemArenaStage::AwaitingStart)
 	{
 		return FGolemResult::Failure(EGolemError::InvalidState, TEXT("StartArena"),
-			NSLOCTEXT("KnightArena", "StartBusy", "The encounter has already started. The host can retry with R."));
+			NSLOCTEXT("GolemArena", "StartBusy", "The encounter has already started. The host can retry with R."));
 	}
 	AGolemPartyArenaStartMarker* Marker = nullptr;
 	for (TActorIterator<AGolemPartyArenaStartMarker> Iterator(GetWorld()); Iterator; ++Iterator)
@@ -148,7 +148,7 @@ FGolemResult AGolemPartyArenaGameMode::TryInteract(APlayerController* Player)
 		> FMath::Square(Marker->GetInteractionRange()))
 	{
 		return FGolemResult::Failure(EGolemError::OutOfRange, TEXT("StartArena"),
-			NSLOCTEXT("KnightArena", "StartRange", "Move to the yellow START marker and press F."));
+			NSLOCTEXT("GolemArena", "StartRange", "Move to the yellow START marker and press F."));
 	}
 	FHitResult Hit;
 	FCollisionQueryParams Query(SCENE_QUERY_STAT(GolemArenaStart), false, Golem);
@@ -157,7 +157,7 @@ FGolemResult AGolemPartyArenaGameMode::TryInteract(APlayerController* Player)
 		Marker->GetActorLocation() + FVector(0.0, 0.0, 75.0), ECC_Visibility, Query))
 	{
 		return FGolemResult::Failure(EGolemError::OutOfRange, TEXT("StartArena"),
-			NSLOCTEXT("KnightArena", "StartOccluded", "The START marker must be visible."));
+			NSLOCTEXT("GolemArena", "StartOccluded", "The START marker must be visible."));
 	}
 	return SpawnEncounter(EGolemArenaStage::Wave);
 }
@@ -165,8 +165,8 @@ FGolemResult AGolemPartyArenaGameMode::TryInteract(APlayerController* Player)
 TArray<FGolemArenaSpawn> AGolemPartyArenaGameMode::GetEncounterSpawns(const EGolemArenaStage Stage) const
 {
 	const bool bBoss = Stage == EGolemArenaStage::Boss;
-	const FPrimaryAssetId Archetype(TEXT("KnightAIArchetype"), bBoss ? TEXT("ArenaBoss") : TEXT("ArenaEnemy"));
-	const FPrimaryAssetId Boss = bBoss ? FPrimaryAssetId(TEXT("KnightBossPhase"), TEXT("ArenaBoss")) : FPrimaryAssetId();
+	const FPrimaryAssetId Archetype(TEXT("GolemAIArchetype"), bBoss ? TEXT("ArenaBoss") : TEXT("ArenaEnemy"));
+	const FPrimaryAssetId Boss = bBoss ? FPrimaryAssetId(TEXT("GolemBossPhase"), TEXT("ArenaBoss")) : FPrimaryAssetId();
 	if (bBoss || bFixtureElite)
 	{
 		return {{Archetype, Boss, FVector(0.0, bBoss ? 850.0 : 500.0, 100.0)}};
@@ -420,14 +420,14 @@ FGolemResult AGolemPartyArenaGameMode::TryRestartDrill(APlayerController* Player
 		|| Party->GetControlledSlot(Player) == INDEX_NONE || ArenaState == nullptr)
 	{
 		return FGolemResult::Failure(EGolemError::NotOwned, TEXT("ArenaRetry"),
-			NSLOCTEXT("KnightArena", "RetryHost", "Only the host controlling a canonical Golem may retry."));
+			NSLOCTEXT("GolemArena", "RetryHost", "Only the host controlling a canonical Golem may retry."));
 	}
 	for (const FGolemRosterEntry& Entry : Party->GetRoster())
 	{
 		if (Entry.Golem->GetGolemAbilitySystem()->IsMutationFenced())
 		{
 			return FGolemResult::Failure(EGolemError::Conflict, TEXT("ArenaRetry"),
-				NSLOCTEXT("KnightArena", "RetryTransactionActive", "Wait for the Golem's transaction to finish."));
+				NSLOCTEXT("GolemArena", "RetryTransactionActive", "Wait for the Golem's transaction to finish."));
 		}
 	}
 	bResetting = true;

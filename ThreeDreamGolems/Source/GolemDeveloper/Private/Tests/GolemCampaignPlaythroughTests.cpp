@@ -141,7 +141,7 @@ namespace GolemCampaignPlaythrough
 				Settings->GameGetsMouseControl = false;
 				FRequestPlaySessionParams Request;
 				Request.EditorPlaySettings = Settings.Get();
-				Request.GlobalMapOverride = TEXT("/Game/Knight/Maps/Playables/L_M07_Campaign");
+				Request.GlobalMapOverride = TEXT("/Game/Golem/Maps/Playables/L_M07_Campaign");
 				Request.bAllowOnlineSubsystem = false;
 				GEditor->RequestPlaySession(Request);
 				Phase = 1;
@@ -424,7 +424,7 @@ namespace GolemCampaignPlaythrough
 							Guest = Cast<AGolemCampaignPlayerController>(Context.World()->GetFirstPlayerController());
 							if (Guest.IsValid())
 							{
-								Guest->ClientTravel(TEXT("/Game/Knight/Maps/Playables/L_M00_Boot"), TRAVEL_Absolute);
+								Guest->ClientTravel(TEXT("/Game/Golem/Maps/Playables/L_M00_Boot"), TRAVEL_Absolute);
 								Phase = 13;
 								return false;
 							}

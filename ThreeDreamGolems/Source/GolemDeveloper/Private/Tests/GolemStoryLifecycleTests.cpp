@@ -56,7 +56,7 @@ namespace GolemStoryLifecycle
 				Settings->EnableGameSound = false;
 				FRequestPlaySessionParams Request;
 				Request.EditorPlaySettings = Settings.Get();
-				Request.GlobalMapOverride = TEXT("/Game/Knight/Maps/Playables/L_M06_LifecycleFixture");
+				Request.GlobalMapOverride = TEXT("/Game/Golem/Maps/Playables/L_M06_LifecycleFixture");
 				Request.bAllowOnlineSubsystem = false;
 				GEditor->RequestPlaySession(Request);
 				Phase = 1;

@@ -41,9 +41,9 @@
 
 namespace GolemGearLabIntegration
 {
-	const TCHAR* CatalogMap = TEXT("/Game/Knight/Maps/Playables/L_M05_6_CatalogLab");
-	const TCHAR* GearMap = TEXT("/Game/Knight/Maps/Playables/L_M05_6_GearLab");
-	const TCHAR* DetachedMap = TEXT("/Game/Knight/Maps/Playables/L_M00_Boot");
+	const TCHAR* CatalogMap = TEXT("/Game/Golem/Maps/Playables/L_M05_6_CatalogLab");
+	const TCHAR* GearMap = TEXT("/Game/Golem/Maps/Playables/L_M05_6_GearLab");
+	const TCHAR* DetachedMap = TEXT("/Game/Golem/Maps/Playables/L_M00_Boot");
 
 	AGolemPartyState* Party(UWorld* World)
 	{

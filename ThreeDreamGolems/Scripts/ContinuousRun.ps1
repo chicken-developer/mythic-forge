@@ -66,13 +66,13 @@ switch ($Action)
 	}
 	'BootSmoke'
 	{
-		$TaskArguments = @($TaskProject, '/Game/Knight/Maps/Playables/L_M00_Boot', '-game',
+		$TaskArguments = @($TaskProject, '/Game/Golem/Maps/Playables/L_M00_Boot', '-game',
 			'-GolemBootSmoke', '-unattended', '-nop4', '-NullRHI', '-nosplash', ('-abslog=' + $TaskLog))
 	}
 	'CookBoot'
 	{
 		$TaskArguments = @($TaskProject, '-run=Cook', '-TargetPlatform=Windows',
-			'-Map=/Game/Knight/Maps/Playables/L_M00_Boot', '-unattended', '-nop4', '-NullRHI',
+			'-Map=/Game/Golem/Maps/Playables/L_M00_Boot', '-unattended', '-nop4', '-NullRHI',
 			('-abslog=' + $TaskLog))
 	}
 }

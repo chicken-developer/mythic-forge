@@ -143,7 +143,7 @@ FGolemResult AGolemArenaPlayerController::ApplyCompanionCommand(const EGolemComp
 		|| !Golem->GetLifeComponent()->IsAlive())
 	{
 		return FGolemResult::Failure(EGolemError::NotOwned, TEXT("CompanionCommand"),
-			NSLOCTEXT("KnightArena", "CommandOwner", "A companion command requires your current living canonical Golem."));
+			NSLOCTEXT("GolemArena", "CommandOwner", "A companion command requires your current living canonical Golem."));
 	}
 	AActor* Focus = nullptr;
 	if (Command == EGolemCompanionCommand::Focus)
@@ -154,7 +154,7 @@ FGolemResult AGolemArenaPlayerController::ApplyCompanionCommand(const EGolemComp
 		if (!FocusId.IsValid() || FocusASC == nullptr || !(FocusASC->GetEntityId() == FocusId))
 		{
 			return FGolemResult::Failure(EGolemError::InvalidId, TEXT("CompanionFocus"),
-				NSLOCTEXT("KnightArena", "FocusLock", "Lock a living enemy with MMB before issuing Focus."));
+				NSLOCTEXT("GolemArena", "FocusLock", "Lock a living enemy with MMB before issuing Focus."));
 		}
 		const FGolemResult Target = Golem->GetCombatComponent()->ValidateCombatTarget(Focus, 2200.0f);
 		if (!Target.IsSuccess())
@@ -199,7 +199,7 @@ FGolemResult AGolemArenaPlayerController::ApplyCompanionCommand(const EGolemComp
 	if (Candidates.IsEmpty())
 	{
 		return FGolemResult::Failure(EGolemError::NotFound, TEXT("CompanionCommand"),
-			NSLOCTEXT("KnightArena", "NoCompanions", "No living AI companion currently follows your Golem."));
+			NSLOCTEXT("GolemArena", "NoCompanions", "No living AI companion currently follows your Golem."));
 	}
 	for (AGolemArenaCompanionController* Companion : Candidates)
 	{

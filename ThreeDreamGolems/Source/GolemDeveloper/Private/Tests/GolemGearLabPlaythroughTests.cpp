@@ -63,7 +63,7 @@
 
 namespace GolemGearPlaythrough
 {
-	const TCHAR* MapPath = TEXT("/Game/Knight/Maps/Playables/L_M05_6_GearLab");
+	const TCHAR* MapPath = TEXT("/Game/Golem/Maps/Playables/L_M05_6_GearLab");
 
 	enum class EPhase : uint8
 	{

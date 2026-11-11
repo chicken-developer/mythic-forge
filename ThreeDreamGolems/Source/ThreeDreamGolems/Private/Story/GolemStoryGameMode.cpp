@@ -491,7 +491,7 @@ FGolemResult AGolemStoryGameMode::ClaimQuestReward(APlayerController* Player, co
 	if (Progress == nullptr || Reward == nullptr || Progress->Phase != EGolemQuestPhase::RewardPending)
 	{
 		return FGolemResult::Failure(EGolemError::InvalidState, QuestId,
-			NSLOCTEXT("KnightStory", "RewardUnavailable", "This quest has no pending reward."));
+			NSLOCTEXT("GolemStory", "RewardUnavailable", "This quest has no pending reward."));
 	}
 	HandleQuestChanged();
 	FGolemRPGCallerContext Caller;
@@ -547,14 +547,14 @@ FGolemResult AGolemStoryGameMode::InteractAnchor(APlayerController* Player, cons
 		&& (BranchChoice == nullptr || *BranchChoice != Interaction->RequiredBranchChoice))
 	{
 		return FGolemResult::Failure(EGolemError::InvalidState, TEXT("BranchGate"),
-			NSLOCTEXT("KnightStory", "BranchGate", "This route is closed by the retained campaign choice."));
+			NSLOCTEXT("GolemStory", "BranchGate", "This route is closed by the retained campaign choice."));
 	}
 	const FGolemQuestProgress* Progress = Interaction->RequiredQuestId.IsNone()
 		? nullptr : Story->Quest->FindProgress(Interaction->RequiredQuestId);
 	if (!Interaction->RequiredQuestId.IsNone() && (Progress == nullptr || Progress->Phase != EGolemQuestPhase::Active))
 	{
 		return FGolemResult::Failure(EGolemError::InvalidState, Interaction->RequiredQuestId,
-			NSLOCTEXT("KnightStory", "QuestLocked", "Follow the current lesson before using this station."));
+			NSLOCTEXT("GolemStory", "QuestLocked", "Follow the current lesson before using this station."));
 	}
 	if (!Interaction->RequiredObjectiveId.IsNone())
 	{
@@ -571,7 +571,7 @@ FGolemResult AGolemStoryGameMode::InteractAnchor(APlayerController* Player, cons
 		if (NextObjective != Interaction->RequiredObjectiveId)
 		{
 			return FGolemResult::Failure(EGolemError::InvalidState, Interaction->RequiredObjectiveId,
-				NSLOCTEXT("KnightStory", "ForgeOrder", "Use the forge stations in the displayed order."));
+				NSLOCTEXT("GolemStory", "ForgeOrder", "Use the forge stations in the displayed order."));
 		}
 	}
 	FGuid Token;
@@ -672,7 +672,7 @@ FGolemResult AGolemStoryGameMode::InteractAnchor(APlayerController* Player, cons
 		if (!Player->IsLocalController())
 		{
 			return FGolemResult::Failure(EGolemError::NotOwned, TEXT("HostDelivery"),
-				NSLOCTEXT("KnightStory", "HostDelivery", "The host confirms shared quest deliveries."));
+				NSLOCTEXT("GolemStory", "HostDelivery", "The host confirms shared quest deliveries."));
 		}
 		FGolemRPGCallerContext Caller;
 		Result = BuildCaller(Player, Caller);
@@ -689,7 +689,7 @@ FGolemResult AGolemStoryGameMode::InteractAnchor(APlayerController* Player, cons
 		if (Stack == nullptr)
 		{
 			return FGolemResult::Failure(EGolemError::InsufficientResources, TEXT("QuestDelivery"),
-				NSLOCTEXT("KnightStory", "DeliveryMissing", "Bring the required item before delivering it."));
+				NSLOCTEXT("GolemStory", "DeliveryMissing", "Bring the required item before delivering it."));
 		}
 		FGolemRPGCommand Command;
 		Command.Operation = EGolemRPGOperation::DeliverQuestItem;
@@ -753,7 +753,7 @@ FGolemResult AGolemStoryGameMode::TryInteract(APlayerController* Player)
 	}
 	return Nearest != nullptr ? InteractAnchor(Player, Nearest->AnchorId, FGuid::NewGuid())
 		: FGolemResult::Failure(EGolemError::OutOfRange, TEXT("StoryStation"),
-			NSLOCTEXT("KnightStory", "FindStation", "Move close to a labelled station and use Interact."));
+			NSLOCTEXT("GolemStory", "FindStation", "Move close to a labelled station and use Interact."));
 }
 
 FGolemResult AGolemStoryGameMode::ExecuteStoryAction(APlayerController* Player, const FName Action,
@@ -886,7 +886,7 @@ FGolemResult AGolemStoryGameMode::CaptureCheckpoint(FGolemCampaignCheckpoint& Ou
 		|| Story->WorldState->HasReservations() || GetArenaState()->GetSnapshot().AliveEnemies != 0)
 	{
 		return FGolemResult::Failure(EGolemError::InvalidState, TEXT("UnsafeCheckpoint"),
-			NSLOCTEXT("KnightStory", "UnsafeCheckpoint", "Finish the conversation, scene and active encounter before saving."));
+			NSLOCTEXT("GolemStory", "UnsafeCheckpoint", "Finish the conversation, scene and active encounter before saving."));
 	}
 	FGolemCampaignCheckpoint Candidate;
 	FGolemResult Result = GetRPGState()->GetRPG()->CaptureSnapshot(Candidate.RPG);

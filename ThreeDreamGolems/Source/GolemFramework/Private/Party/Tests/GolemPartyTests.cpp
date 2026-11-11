@@ -30,7 +30,7 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(FGolemPartyDefinitionTest, "Golem.Framework.Par
 bool FGolemPartyDefinitionTest::RunTest(const FString& Parameters)
 {
 	UGolemHeroDefinition* Hero = NewObject<UGolemHeroDefinition>();
-	TestTrue(TEXT("Authored hero identity"), Hero->TrySetIdentity(TEXT("TestHero"), TEXT("KnightHero")));
+	TestTrue(TEXT("Authored hero identity"), Hero->TrySetIdentity(TEXT("TestHero"), TEXT("GolemHero")));
 	TestTrue(TEXT("Native hero defaults validate"), Hero->ValidateHero().IsSuccess());
 	const float OriginalSpeed = Hero->GetWalkSpeed();
 	TestEqual(TEXT("Invalid tuning is rejected atomically"),
@@ -38,23 +38,23 @@ bool FGolemPartyDefinitionTest::RunTest(const FString& Parameters)
 		EGolemError::InvalidData);
 	TestEqual(TEXT("Rejected tuning preserves authored movement"), Hero->GetWalkSpeed(), OriginalSpeed);
 	UGolemPartyDefinition* Party = NewObject<UGolemPartyDefinition>();
-	Party->TrySetIdentity(TEXT("TestParty"), TEXT("KnightParty"));
+	Party->TrySetIdentity(TEXT("TestParty"), TEXT("GolemParty"));
 	TArray<FPrimaryAssetId> Ids
 	{
-		FPrimaryAssetId(TEXT("KnightHero"), TEXT("Hero_One")),
-		FPrimaryAssetId(TEXT("KnightHero"), TEXT("Hero_Two")),
-		FPrimaryAssetId(TEXT("KnightHero"), TEXT("Hero_Three"))
+		FPrimaryAssetId(TEXT("GolemHero"), TEXT("Hero_One")),
+		FPrimaryAssetId(TEXT("GolemHero"), TEXT("Hero_Two")),
+		FPrimaryAssetId(TEXT("GolemHero"), TEXT("Hero_Three"))
 	};
 	TestTrue(TEXT("Three distinct canonical heroes are accepted"), Party->TrySetHeroDefinitions(Ids).IsSuccess());
 	TestTrue(TEXT("Complete party definition validates"), Party->ValidateParty().IsSuccess());
-	Ids.Add(FPrimaryAssetId(TEXT("KnightHero"), TEXT("Hero_Four")));
+	Ids.Add(FPrimaryAssetId(TEXT("GolemHero"), TEXT("Hero_Four")));
 	TestEqual(TEXT("A fourth hero is prohibited by architecture"), Party->TrySetHeroDefinitions(Ids).Error,
 		EGolemError::InvalidData);
 	TestEqual(TEXT("Invalid cardinality preserves canonical definition"), Party->GetHeroDefinitions().Num(), 3);
 	Ids.RemoveAt(3);
 	Ids[2] = Ids[0];
 	TestEqual(TEXT("Duplicate hero IDs are rejected"), Party->TrySetHeroDefinitions(Ids).Error, EGolemError::DuplicateId);
-	Ids[2] = FPrimaryAssetId(TEXT("KnightDefinition"), TEXT("Foundation"));
+	Ids[2] = FPrimaryAssetId(TEXT("GolemDefinition"), TEXT("Foundation"));
 	TestEqual(TEXT("Wrong-domain IDs cannot enter a party"), Party->TrySetHeroDefinitions(Ids).Error, EGolemError::InvalidId);
 	return true;
 }

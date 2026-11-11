@@ -31,7 +31,7 @@ AGolemRPGLoopGameMode::AGolemRPGLoopGameMode()
 	PlayerControllerClass = AGolemRPGUIPlayerController::StaticClass();
 	HUDClass = AGolemRPGHUD::StaticClass();
 	RPGInitializationResult = FGolemResult::Failure(EGolemError::InvalidState, TEXT("RPGComposition"),
-		NSLOCTEXT("KnightRPG", "CompositionPending", "The host's RPG domains are not ready."));
+		NSLOCTEXT("GolemRPG", "CompositionPending", "The host's RPG domains are not ready."));
 }
 
 void AGolemRPGLoopGameMode::InitGameState()
@@ -132,7 +132,7 @@ void AGolemRPGLoopGameMode::BeginPlay()
 		if (StationCount != 1)
 		{
 			RPGInitializationResult = FGolemResult::Failure(EGolemError::InvalidData, TEXT("RPGUpgradeStation"),
-				NSLOCTEXT("KnightRPG", "StationCount", "The RPG map must contain one valid upgrade station."));
+				NSLOCTEXT("GolemRPG", "StationCount", "The RPG map must contain one valid upgrade station."));
 		}
 	}
 	if (!RPGInitializationResult.IsSuccess())
@@ -159,7 +159,7 @@ FGolemResult AGolemRPGLoopGameMode::BuildCaller(APlayerController* Player,
 		|| !Party->IsCanonicalRosterReady())
 	{
 		return FGolemResult::Failure(EGolemError::InvalidState, TEXT("RPGCaller"),
-			NSLOCTEXT("KnightRPG", "DomainsPending", "The campaign's party or RPG domains are unavailable."));
+			NSLOCTEXT("GolemRPG", "DomainsPending", "The campaign's party or RPG domains are unavailable."));
 	}
 	const int32 Slot = Party->GetControlledSlot(Player);
 	const FGolemRosterEntry* Entry = Party->FindSlot(Slot);
@@ -172,7 +172,7 @@ FGolemResult AGolemRPGLoopGameMode::BuildCaller(APlayerController* Player,
 		|| Golem->GetController() != Player || Entry->GolemId != Golem->GetGolemEntityId())
 	{
 		return FGolemResult::Failure(EGolemError::NotOwned, TEXT("RPGCaller"),
-			NSLOCTEXT("KnightRPG", "CallerOwnership", "Only the human owning a canonical Golem may submit this command."));
+			NSLOCTEXT("GolemRPG", "CallerOwnership", "Only the human owning a canonical Golem may submit this command."));
 	}
 	OutCaller.HumanId = Human->GetHumanId();
 	OutCaller.GolemId = Entry->GolemId;
@@ -214,7 +214,7 @@ FGolemRPGCommandResult AGolemRPGLoopGameMode::ExecuteRPGCommand(AGolemRPGPlayerC
 	if (bIssuingReward)
 	{
 		Outcome.Result = FGolemResult::Failure(EGolemError::Conflict, TEXT("RPGRewardPublication"),
-			NSLOCTEXT("KnightRPG", "RewardPublishing", "The encounter reward is still being published."));
+			NSLOCTEXT("GolemRPG", "RewardPublishing", "The encounter reward is still being published."));
 		return Outcome;
 	}
 	FGolemRPGCallerContext Caller;
@@ -261,7 +261,7 @@ FGolemRPGCommandResult AGolemRPGLoopGameMode::ExecuteRPGCommand(AGolemRPGPlayerC
 			|| !Caller.EditableGolems.Contains(Selected->GolemId) || !IsValid(Selected->Golem))
 		{
 			Outcome.Result = FGolemResult::Failure(EGolemError::NotOwned, TEXT("GearSelectedGolem"),
-				NSLOCTEXT("KnightRPG", "SelectedGearPermission", "Only this human's permitted companion gear may be changed."));
+				NSLOCTEXT("GolemRPG", "SelectedGearPermission", "Only this human's permitted companion gear may be changed."));
 			return Outcome;
 		}
 		// Human authentication stays intact; only the selected canonical gameplay participant changes.
@@ -282,7 +282,7 @@ FGolemRPGCommandResult AGolemRPGLoopGameMode::ExecuteRPGCommand(AGolemRPGPlayerC
 		if (Target == nullptr || !Caller.EditableGolems.Contains(Target->GolemId) || !IsValid(Target->Golem))
 		{
 			Outcome.Result = FGolemResult::Failure(EGolemError::NotOwned, TEXT("GearTransferTarget"),
-				NSLOCTEXT("KnightRPG", "TransferTargetPermission", "Transfer requires permission for both canonical Golems."));
+				NSLOCTEXT("GolemRPG", "TransferTargetPermission", "Transfer requires permission for both canonical Golems."));
 			return Outcome;
 		}
 		Caller.bInSafeZone &= IsInUpgradeSafeZone(Target->Golem);
@@ -509,7 +509,7 @@ FGolemResult AGolemRPGLoopGameMode::TryContinueRPGLoop(APlayerController* Player
 		|| RPGState->GetRPG()->IsTransactionInProgress())
 	{
 		return FGolemResult::Failure(EGolemError::InvalidState, TEXT("RPGContinue"),
-			NSLOCTEXT("KnightRPG", "ContinuePolicy", "The host must upgrade the party, then Continue at the safe station."));
+			NSLOCTEXT("GolemRPG", "ContinuePolicy", "The host must upgrade the party, then Continue at the safe station."));
 	}
 	bool bHasUpgrade = false;
 	for (const FGolemRPGGolemView& Golem : RPGState->GetRPG()->GetView().Golems)
@@ -519,7 +519,7 @@ FGolemResult AGolemRPGLoopGameMode::TryContinueRPGLoop(APlayerController* Player
 	if (!bHasUpgrade)
 	{
 		return FGolemResult::Failure(EGolemError::InvalidState, TEXT("RPGContinue"),
-			NSLOCTEXT("KnightRPG", "UpgradeRequired", "Equip gear, equip a rune or purchase a skill before encounter B."));
+			NSLOCTEXT("GolemRPG", "UpgradeRequired", "Equip gear, equip a rune or purchase a skill before encounter B."));
 	}
 	Result = Super::TryRestartDrill(Player);
 	if (!Result.IsSuccess())

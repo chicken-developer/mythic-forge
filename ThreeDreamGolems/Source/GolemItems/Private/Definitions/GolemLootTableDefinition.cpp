@@ -5,7 +5,7 @@
 #include "Math/RandomStream.h"
 #include "Misc/DataValidation.h"
 
-#define LOCTEXT_NAMESPACE "KnightLootTableDefinition"
+#define LOCTEXT_NAMESPACE "GolemLootTableDefinition"
 
 namespace
 {
@@ -20,7 +20,7 @@ namespace
 		for (const FGolemLootEntry& Entry : Entries)
 		{
 			if (!GolemIdentity::IsValidDefinitionId(Entry.DefinitionId)
-				|| Entry.DefinitionId.PrimaryAssetType != FPrimaryAssetType(TEXT("KnightItem"))
+				|| Entry.DefinitionId.PrimaryAssetType != FPrimaryAssetType(TEXT("GolemItem"))
 				|| Entry.MinimumCount < 1 || Entry.MaximumCount < Entry.MinimumCount
 				|| Entry.MaximumCount > GolemItems::MaximumStackCount || !FMath::IsFinite(Entry.Probability)
 				|| Entry.Probability <= 0.0f || Entry.Probability > 1.0f || Ids.Contains(Entry.DefinitionId))
@@ -36,7 +36,7 @@ namespace
 
 UGolemLootTableDefinition::UGolemLootTableDefinition()
 {
-	DefinitionType = TEXT("KnightLootTable");
+	DefinitionType = TEXT("GolemLootTable");
 }
 
 const TArray<FGolemLootEntry>& UGolemLootTableDefinition::GetEntries() const
@@ -61,7 +61,7 @@ FGolemResult UGolemLootTableDefinition::ValidateLootTable() const
 	{
 		return Identity;
 	}
-	if (GetDefinitionType() != TEXT("KnightLootTable"))
+	if (GetDefinitionType() != TEXT("GolemLootTable"))
 	{
 		return FGolemResult::Failure(EGolemError::TypeMismatch, GetDefinitionId(),
 			LOCTEXT("Type", "Loot definitions require the GolemLootTable primary asset type."));

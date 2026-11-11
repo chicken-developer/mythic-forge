@@ -47,7 +47,7 @@
 
 namespace GolemSkillLabVisual
 {
-	const TCHAR* MapPath = TEXT("/Game/Knight/Maps/Playables/L_M05_5_SkillLab");
+	const TCHAR* MapPath = TEXT("/Game/Golem/Maps/Playables/L_M05_5_SkillLab");
 	constexpr int32 CaptureCount = 6;
 	constexpr double DrawWarmupSeconds = 0.5;
 

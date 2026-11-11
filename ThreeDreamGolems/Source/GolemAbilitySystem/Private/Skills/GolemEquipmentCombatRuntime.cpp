@@ -12,7 +12,7 @@ namespace
 	FGolemResult EquipmentFailure(EGolemError Error, FName Context)
 	{
 		return FGolemResult::Failure(Error, Context,
-			NSLOCTEXT("KnightEquipment", "Unavailable", "This item action is unavailable in the current state."));
+			NSLOCTEXT("GolemEquipment", "Unavailable", "This item action is unavailable in the current state."));
 	}
 }
 

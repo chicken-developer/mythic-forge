@@ -36,9 +36,9 @@ void AGolemBootGameMode::StartPlay()
 	{
 		const bool bIsLoaded = FModuleManager::Get().IsModuleLoaded(Module);
 		bIsFoundationReady &= bIsLoaded;
-		FoundationStatus.Add(FText::Format(NSLOCTEXT("KnightBoot", "ModuleStatus", "{0}: {1}"),
-			FText::FromName(Module), bIsLoaded ? NSLOCTEXT("KnightBoot", "Loaded", "loaded")
-				: NSLOCTEXT("KnightBoot", "MissingModule", "FAILED to load")));
+		FoundationStatus.Add(FText::Format(NSLOCTEXT("GolemBoot", "ModuleStatus", "{0}: {1}"),
+			FText::FromName(Module), bIsLoaded ? NSLOCTEXT("GolemBoot", "Loaded", "loaded")
+				: NSLOCTEXT("GolemBoot", "MissingModule", "FAILED to load")));
 	}
 
 	UGolemAssetManager* AssetManager = UGolemAssetManager::GetGolemAssetManager();
@@ -55,22 +55,22 @@ void AGolemBootGameMode::StartPlay()
 	const FGolemResult FixtureResult = AssetManager != nullptr
 		? AssetManager->ResolveDefinition(FixtureId, Fixture)
 		: FGolemResult::Failure(EGolemError::InvalidState, TEXT("AssetManager"),
-			NSLOCTEXT("KnightBoot", "ManagerMissing", "Golem Asset Manager is not configured"));
+			NSLOCTEXT("GolemBoot", "ManagerMissing", "Golem Asset Manager is not configured"));
 	const bool bIsFixtureLoaded = FixtureResult.IsSuccess() && Fixture != nullptr;
 	bIsFoundationReady &= bIsFixtureLoaded;
-	FoundationStatus.Add(FText::Format(NSLOCTEXT("KnightBoot", "FixtureResult", "{0}: {1}"),
+	FoundationStatus.Add(FText::Format(NSLOCTEXT("GolemBoot", "FixtureResult", "{0}: {1}"),
 		FText::FromString(FixtureId.ToString()), bIsFixtureLoaded
-			? NSLOCTEXT("KnightBoot", "FixtureLoaded", "resolved through Asset Manager") : FixtureResult.Message));
+			? NSLOCTEXT("GolemBoot", "FixtureLoaded", "resolved through Asset Manager") : FixtureResult.Message));
 
-	const FPrimaryAssetId MissingId(TEXT("KnightDefinition"), TEXT("Missing"));
+	const FPrimaryAssetId MissingId(TEXT("GolemDefinition"), TEXT("Missing"));
 	UGolemDefinition* MissingDefinition = nullptr;
 	const bool bIsMissingRejected = AssetManager != nullptr
 		&& AssetManager->ResolveDefinition(MissingId, MissingDefinition).Error == EGolemError::NotFound
 		&& MissingDefinition == nullptr;
 	bIsFoundationReady &= bIsMissingRejected;
 	FoundationStatus.Add(bIsMissingRejected
-		? NSLOCTEXT("KnightBoot", "MissingRejected", "GolemDefinition:Missing rejected: definition not registered")
-		: NSLOCTEXT("KnightBoot", "MissingFailed", "FAILED: unexpected definition registered for Missing"));
+		? NSLOCTEXT("GolemBoot", "MissingRejected", "GolemDefinition:Missing rejected: definition not registered")
+		: NSLOCTEXT("GolemBoot", "MissingFailed", "FAILED: unexpected definition registered for Missing"));
 
 	UGolemEventSubsystem* EventBus = GetWorld()->GetSubsystem<UGolemEventSubsystem>();
 	ReceivedFoundationEvents = 0;
@@ -100,13 +100,13 @@ void AGolemBootGameMode::StartPlay()
 			&& bIsReplayRejected && ReceivedFoundationEvents == 2;
 		bIsFoundationReady &= bIsLifecycleValid;
 		FoundationStatus.Add(bIsLifecycleValid
-			? NSLOCTEXT("KnightBoot", "EventsReady", "Typed lifecycle events delivered once; replay rejected")
-			: NSLOCTEXT("KnightBoot", "EventsFailed", "FAILED: typed lifecycle event delivery"));
+			? NSLOCTEXT("GolemBoot", "EventsReady", "Typed lifecycle events delivered once; replay rejected")
+			: NSLOCTEXT("GolemBoot", "EventsFailed", "FAILED: typed lifecycle event delivery"));
 	}
 	else
 	{
 		bIsFoundationReady = false;
-		FoundationStatus.Add(NSLOCTEXT("KnightBoot", "EventBusMissing", "FAILED: event subsystem initialization"));
+		FoundationStatus.Add(NSLOCTEXT("GolemBoot", "EventBusMissing", "FAILED: event subsystem initialization"));
 	}
 
 	UE_LOG(LogGolemBoot, Display, TEXT("FoundationReady=%s Fixture=%s Modules=%d"),

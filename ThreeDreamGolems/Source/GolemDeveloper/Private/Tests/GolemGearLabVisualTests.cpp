@@ -49,7 +49,7 @@
 
 namespace GolemGearLabVisual
 {
-	const TCHAR* MapPath = TEXT("/Game/Knight/Maps/Playables/L_M05_6_CatalogLab");
+	const TCHAR* MapPath = TEXT("/Game/Golem/Maps/Playables/L_M05_6_CatalogLab");
 	constexpr int32 CaptureCount = 4;
 	constexpr double DrawWarmupSeconds = 0.5;
 

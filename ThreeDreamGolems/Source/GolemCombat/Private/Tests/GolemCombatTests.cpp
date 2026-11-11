@@ -37,7 +37,7 @@ bool FGolemCombatDefinitionTest::RunTest(const FString& Parameters)
 	UGolemDefinition* Definition = nullptr;
 	if (!TestNotNull(TEXT("Project asset manager exists"), Manager) ||
 		!TestTrue(TEXT("Real combat fixture resolves by stable ID"), Manager->ResolveDefinition(
-			FPrimaryAssetId(TEXT("KnightCombatProfile"), TEXT("FoundationCombat")),
+			FPrimaryAssetId(TEXT("GolemCombatProfile"), TEXT("FoundationCombat")),
 			UGolemCombatProfileDefinition::StaticClass(), Definition).IsSuccess()))
 	{
 		return false;
@@ -55,7 +55,7 @@ bool FGolemCombatDefinitionTest::RunTest(const FString& Parameters)
 	TestEqual(TEXT("Rejected tuning preserves authored timing"), Edited->GetTuning().ParryWindow,
 		Profile->GetTuning().ParryWindow);
 	TestEqual(TEXT("Foreign definition type rejected for GAS source"),
-		Edited->TrySetCombatAbilitySetId(FPrimaryAssetId(TEXT("KnightHero"), TEXT("Training_Red"))).Error,
+		Edited->TrySetCombatAbilitySetId(FPrimaryAssetId(TEXT("GolemHero"), TEXT("Training_Red"))).Error,
 		EGolemError::InvalidData);
 	TArray<FGolemAttackDefinition> Attacks = Edited->GetAttacks();
 	const TStrongObjectPtr<UAnimMontage> MissingNotifies(
@@ -240,7 +240,7 @@ namespace GolemCombatTests
 			// A broad collision target keeps this test about actual notify-window deduplication, independent of art reach.
 			Target.Actor->GetCapsuleComponent()->SetCapsuleSize(140.0f, 150.0f);
 			Target.Actor->GetCharacterMovement()->DisableMovement();
-			const FPrimaryAssetId ProfileId(TEXT("KnightCombatProfile"), TEXT("FoundationCombat"));
+			const FPrimaryAssetId ProfileId(TEXT("GolemCombatProfile"), TEXT("FoundationCombat"));
 			bReady = Test->TestTrue(TEXT("Source real combat profile configures"), Source.Combat->Configure(ProfileId).IsSuccess()) &&
 				Test->TestTrue(TEXT("Enemy uses same native combat domain"), Target.Combat->Configure(ProfileId).IsSuccess());
 			if (bReady)
@@ -772,7 +772,7 @@ namespace GolemCombatTests
 			Target = SpawnGolem(Context.World.Get(), FVector(120, 0, 100), false);
 			Target.Actor->GetCapsuleComponent()->SetCapsuleSize(140.0f, 150.0f);
 			Target.Actor->GetCharacterMovement()->DisableMovement();
-			const FPrimaryAssetId Id(TEXT("KnightCombatProfile"), TEXT("FoundationCombat"));
+			const FPrimaryAssetId Id(TEXT("GolemCombatProfile"), TEXT("FoundationCombat"));
 			bReady = Test->TestTrue(TEXT("Projected source uses real combat fixture"), Source.Combat->Configure(Id).IsSuccess())
 				&& Test->TestTrue(TEXT("Projected target uses shared combat fixture"), Target.Combat->Configure(Id).IsSuccess());
 			if (bReady)
@@ -825,7 +825,7 @@ namespace GolemCombatTests
 				Reset();
 				FGolemGASProjectionPlan Plan;
 				Plan.SourceKey = TEXT("RPG");
-				Plan.DefinitionId = FPrimaryAssetId(TEXT("KnightHero"), TEXT("Training_Red"));
+				Plan.DefinitionId = FPrimaryAssetId(TEXT("GolemHero"), TEXT("Training_Red"));
 				Plan.AttackPowerBonus = 10.0f;
 				Plan.MaxHealthBonus = 50.0f;
 				FGolemActionModifier Modifier;
@@ -955,7 +955,7 @@ bool FGolemEquipmentBulwarkTest::RunTest(const FString& Parameters)
 	FGolemCombatWorld Context;
 	const FGolemCombatFixture Source = SpawnGolem(Context.World.Get(), FVector(0, 0, 88), true);
 	const FGolemCombatFixture Enemy = SpawnGolem(Context.World.Get(), FVector(180, 0, 88), false);
-	const FPrimaryAssetId ProfileId(TEXT("KnightCombatProfile"), TEXT("FoundationCombat"));
+	const FPrimaryAssetId ProfileId(TEXT("GolemCombatProfile"), TEXT("FoundationCombat"));
 	if (!TestTrue(TEXT("Actual combat profile and GAS actions configure"), Source.Combat->Configure(ProfileId).IsSuccess())
 		|| !TestTrue(TEXT("Enemy uses actual shared combat"), Enemy.Combat->Configure(ProfileId).IsSuccess()))
 	{
@@ -1031,7 +1031,7 @@ bool FGolemEquipmentHammerCombatTest::RunTest(const FString& Parameters)
 	FGolemCombatWorld Context;
 	const FGolemCombatFixture Source = SpawnGolem(Context.World.Get(), FVector(0, 0, 88), true);
 	if (!TestTrue(TEXT("Actual combat profile grants real light and heavy GAS actions"),
-		Source.Combat->Configure(FPrimaryAssetId(TEXT("KnightCombatProfile"), TEXT("FoundationCombat"))).IsSuccess()))
+		Source.Combat->Configure(FPrimaryAssetId(TEXT("GolemCombatProfile"), TEXT("FoundationCombat"))).IsSuccess()))
 	{
 		return false;
 	}
@@ -1075,7 +1075,7 @@ bool FGolemEquipmentPoiseSnapshotTest::RunTest(const FString& Parameters)
 	const FGolemCombatFixture Original = SpawnGolem(Context.World.Get(), FVector(0, 0, 88), true);
 	const FGolemCombatFixture Restored = SpawnGolem(Context.World.Get(), FVector(0, 300, 88), true);
 	const FGolemCombatFixture Enemy = SpawnGolem(Context.World.Get(), FVector(180, 0, 88), false);
-	const FPrimaryAssetId ProfileId(TEXT("KnightCombatProfile"), TEXT("FoundationCombat"));
+	const FPrimaryAssetId ProfileId(TEXT("GolemCombatProfile"), TEXT("FoundationCombat"));
 	if (!TestTrue(TEXT("Original combat pool uses the real authored profile"), Original.Combat->Configure(ProfileId).IsSuccess())
 		|| !TestTrue(TEXT("Fresh reconstructed pool uses the same authored profile"), Restored.Combat->Configure(ProfileId).IsSuccess()))
 	{
@@ -1133,7 +1133,7 @@ namespace GolemCombatTests
 		{
 			Source = SpawnGolem(Context.World.Get(), FVector(0, 0, 88), true);
 			bReady = Test->TestTrue(TEXT("Poise observer uses the actual authored combat profile"),
-				Source.Combat->Configure(FPrimaryAssetId(TEXT("KnightCombatProfile"), TEXT("FoundationCombat"))).IsSuccess());
+				Source.Combat->Configure(FPrimaryAssetId(TEXT("GolemCombatProfile"), TEXT("FoundationCombat"))).IsSuccess());
 			BaseMaximum = Source.Combat->GetMaxPoise();
 			if (bReady)
 			{
@@ -1230,7 +1230,7 @@ namespace GolemCombatTests
 		{
 			FGolemGASProjectionPlan Plan;
 			Plan.SourceKey = GolemProjection::RPGSourceKey;
-			Plan.DefinitionId = FPrimaryAssetId(TEXT("KnightHero"), TEXT("Training_Red"));
+			Plan.DefinitionId = FPrimaryAssetId(TEXT("GolemHero"), TEXT("Training_Red"));
 			Plan.MaxPoiseBonus = PoiseBonus;
 			return Test->TestTrue(TEXT("Poise transaction obtains an actual ASC mutation fence"), Source.ASC->BeginMutationFence(FGuid::NewGuid(), Fence).IsSuccess())
 				&& Test->TestTrue(TEXT("Poise transaction prepares its exact source revision"), Source.ASC->PrepareSourceProjection(Fence, Plan, ExpectedRevision, Capability).IsSuccess())

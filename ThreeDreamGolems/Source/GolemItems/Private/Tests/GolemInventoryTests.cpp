@@ -28,9 +28,9 @@ namespace GolemInventoryTests
 				ERHIFeatureLevel::Num, &Values));
 			GEngine->CreateNewWorldContext(EWorldType::Game).SetCurrentWorld(World.Get());
 			World->SetShouldTick(false);
-			Material->TrySetIdentity(TEXT("TestOre"), TEXT("KnightItem"));
+			Material->TrySetIdentity(TEXT("TestOre"), TEXT("GolemItem"));
 			Material->TrySetItemTuning(EGolemItemKind::Material, GolemItems::MaximumStackCount);
-			OtherMaterial->TrySetIdentity(TEXT("TestWood"), TEXT("KnightItem"));
+			OtherMaterial->TrySetIdentity(TEXT("TestWood"), TEXT("GolemItem"));
 			OtherMaterial->TrySetItemTuning(EGolemItemKind::Material, 10);
 		}
 
@@ -104,10 +104,10 @@ bool FGolemItemDefinitionTest::RunTest(const FString& Parameters)
 	const TStrongObjectPtr<UGolemItemDefinition> Item(NewObject<UGolemItemDefinition>());
 	TestEqual(TEXT("Unassigned item identity is invalid"), Item->ValidateItem().Error, EGolemError::InvalidId);
 	TestTrue(TEXT("Native item has an explicit stable identity"),
-		Item->TrySetIdentity(TEXT("ContractsOre"), TEXT("KnightItem")));
+		Item->TrySetIdentity(TEXT("ContractsOre"), TEXT("GolemItem")));
 	TestTrue(TEXT("Default bounded material data validates"), Item->ValidateItem().IsSuccess());
 	TestEqual(TEXT("Correct primary type"), Item->GetPrimaryAssetId(),
-		FPrimaryAssetId(TEXT("KnightItem"), TEXT("ContractsOre")));
+		FPrimaryAssetId(TEXT("GolemItem"), TEXT("ContractsOre")));
 	const int32 OriginalStack = Item->GetMaximumStack();
 	TestEqual(TEXT("Zero stack cannot be authored"),
 		Item->TrySetItemTuning(EGolemItemKind::Material, 0).Error, EGolemError::InvalidData);
@@ -121,7 +121,7 @@ bool FGolemItemDefinitionTest::RunTest(const FString& Parameters)
 		Item->TrySetItemTuning(EGolemItemKind::Equipment, 2).Error, EGolemError::InvalidData);
 	FGolemItemStatBonuses Bonuses;
 	Bonuses.AttackPower = 5.0f;
-	const FPrimaryAssetId AbilitySet(TEXT("KnightAbilitySet"), TEXT("FoundationCombat"));
+	const FPrimaryAssetId AbilitySet(TEXT("GolemAbilitySet"), TEXT("FoundationCombat"));
 	TestTrue(TEXT("Equipment stores stable grant identity and positive bonuses"),
 		Item->TrySetItemTuning(EGolemItemKind::Equipment, 1, AbilitySet, Bonuses).IsSuccess());
 	TestEqual(TEXT("Stored grant identity"), Item->GetAbilitySetId(), AbilitySet);
@@ -136,13 +136,13 @@ bool FGolemItemDefinitionTest::RunTest(const FString& Parameters)
 	TestEqual(TEXT("Oversized bonus is rejected"), Bonuses.Validate().Error, EGolemError::InvalidData);
 	TestEqual(TEXT("Wrong grant definition type is rejected"),
 		Item->TrySetItemTuning(EGolemItemKind::Rune, 1,
-			FPrimaryAssetId(TEXT("KnightHero"), TEXT("Training_Red"))).Error, EGolemError::InvalidId);
+			FPrimaryAssetId(TEXT("GolemHero"), TEXT("Training_Red"))).Error, EGolemError::InvalidId);
 	TestEqual(TEXT("Materials do not store loadout grants"),
 		Item->TrySetItemTuning(EGolemItemKind::Material, 10, AbilitySet).Error, EGolemError::InvalidData);
 	Item->Rename(TEXT("MovedContractsItem"));
 	TestEqual(TEXT("Object rename preserves persisted item identity"), Item->GetPrimaryAssetId(),
-		FPrimaryAssetId(TEXT("KnightItem"), TEXT("ContractsOre")));
-	Item->TrySetIdentity(TEXT("ContractsOre"), TEXT("KnightHero"));
+		FPrimaryAssetId(TEXT("GolemItem"), TEXT("ContractsOre")));
+	Item->TrySetIdentity(TEXT("ContractsOre"), TEXT("GolemHero"));
 	TestEqual(TEXT("Definition validator rejects wrong primary type"), Item->ValidateItem().Error,
 		EGolemError::TypeMismatch);
 	return true;
@@ -176,7 +176,7 @@ bool FGolemInventoryAtomicTest::RunTest(const FString& Parameters)
 		{
 			MakeMutation(EGolemInventoryOperation::Remove, Ore, OreInstance, 3),
 			MakeMutation(EGolemInventoryOperation::Add,
-				FPrimaryAssetId(TEXT("KnightItem"), TEXT("MissingDefinition")), FGuid::NewGuid(), 1)
+				FPrimaryAssetId(TEXT("GolemItem"), TEXT("MissingDefinition")), FGuid::NewGuid(), 1)
 		});
 	TestEqual(TEXT("Missing real typed definition rejects entire batch"),
 		Inventory->TryApplyTransaction(InvalidBatch).Result.Error, EGolemError::NotFound);
@@ -194,7 +194,7 @@ bool FGolemInventoryAtomicTest::RunTest(const FString& Parameters)
 	Inventory->CaptureSnapshot(After);
 	TestTrue(TEXT("Count failures preserve all authoritative state"), Before == After);
 	Fixture.Material->TrySetItemTuning(EGolemItemKind::Material, 1);
-	Fixture.Material->TrySetIdentity(TEXT("CallerChangedId"), TEXT("KnightItem"));
+	Fixture.Material->TrySetIdentity(TEXT("CallerChangedId"), TEXT("GolemItem"));
 	const FGolemInventoryRequest Increment = MakeRequest(Inventory,
 		{ MakeMutation(EGolemInventoryOperation::Add, Ore, OreInstance, 1) });
 	TestTrue(TEXT("Caller changes cannot mutate the privately duplicated catalog"),
@@ -423,7 +423,7 @@ bool FGolemInventoryRestoreTest::RunTest(const FString& Parameters)
 	TestEqual(TEXT("Duplicate final instance is rejected"),
 		InvalidTarget->TryRestoreSnapshot(Invalid).Error, EGolemError::DuplicateId);
 	Invalid = Snapshot;
-	Invalid.Items[0].DefinitionId = FPrimaryAssetId(TEXT("KnightItem"), TEXT("UnregisteredItem"));
+	Invalid.Items[0].DefinitionId = FPrimaryAssetId(TEXT("GolemItem"), TEXT("UnregisteredItem"));
 	TestEqual(TEXT("Invalid reconstruction definition is rejected"),
 		InvalidTarget->TryRestoreSnapshot(Invalid).Error, EGolemError::NotFound);
 	Invalid = Snapshot;

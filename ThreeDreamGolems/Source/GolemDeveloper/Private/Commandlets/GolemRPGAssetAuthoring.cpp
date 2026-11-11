@@ -21,7 +21,7 @@ namespace GolemRPGAssetAuthoring
 	{
 		FString PackageName(const TCHAR* Kind, const TCHAR* Name)
 		{
-			return FString::Printf(TEXT("/Game/Knight/Definitions/Items/DA_Knight_%s_%s"), Kind, Name);
+			return FString::Printf(TEXT("/Game/Golem/Definitions/Items/DA_Golem_%s_%s"), Kind, Name);
 		}
 		template <typename DefinitionType>
 		DefinitionType* FindOrCreate(const TCHAR* Kind, const TCHAR* Name, FName Type, bool& bOutCreated)
@@ -98,14 +98,14 @@ namespace GolemRPGAssetAuthoring
 		bool CreateItems()
 		{
 			bool bCreated = false;
-			UGolemItemDefinition* Shard = FindOrCreate<UGolemItemDefinition>(TEXT("Item"), TEXT("ForgeShard"), TEXT("KnightItem"), bCreated);
+			UGolemItemDefinition* Shard = FindOrCreate<UGolemItemDefinition>(TEXT("Item"), TEXT("ForgeShard"), TEXT("GolemItem"), bCreated);
 			if (Shard == nullptr)
 			{
 				return false;
 			}
 			if (bCreated)
 			{
-				Shard->SetDisplayName(NSLOCTEXT("KnightRPGAssets", "ForgeShard", "Forge shard"));
+				Shard->SetDisplayName(NSLOCTEXT("GolemRPGAssets", "ForgeShard", "Forge shard"));
 				if (!Shard->TrySetItemTuning(EGolemItemKind::Material, 9999).IsSuccess())
 				{
 					return false;
@@ -115,7 +115,7 @@ namespace GolemRPGAssetAuthoring
 			{
 				return false;
 			}
-			UGolemItemDefinition* Hammer = FindOrCreate<UGolemItemDefinition>(TEXT("Item"), TEXT("HammerUpgrade"), TEXT("KnightItem"), bCreated);
+			UGolemItemDefinition* Hammer = FindOrCreate<UGolemItemDefinition>(TEXT("Item"), TEXT("HammerUpgrade"), TEXT("GolemItem"), bCreated);
 			if (Hammer == nullptr)
 			{
 				return false;
@@ -125,7 +125,7 @@ namespace GolemRPGAssetAuthoring
 				FGolemItemStatBonuses Bonuses;
 				Bonuses.MaxHealth = 20.0f;
 				Bonuses.AttackPower = 10.0f;
-				Hammer->SetDisplayName(NSLOCTEXT("KnightRPGAssets", "HammerUpgrade", "Forged hammer"));
+				Hammer->SetDisplayName(NSLOCTEXT("GolemRPGAssets", "HammerUpgrade", "Forged hammer"));
 				if (!Hammer->TrySetItemTuning(EGolemItemKind::Equipment, 1, FPrimaryAssetId(), Bonuses).IsSuccess())
 				{
 					return false;
@@ -135,7 +135,7 @@ namespace GolemRPGAssetAuthoring
 			{
 				return false;
 			}
-			UGolemRuneDefinition* Rune = FindOrCreate<UGolemRuneDefinition>(TEXT("Item"), TEXT("RuneUpgrade"), TEXT("KnightItem"), bCreated);
+			UGolemRuneDefinition* Rune = FindOrCreate<UGolemRuneDefinition>(TEXT("Item"), TEXT("RuneUpgrade"), TEXT("GolemItem"), bCreated);
 			if (Rune == nullptr)
 			{
 				return false;
@@ -146,7 +146,7 @@ namespace GolemRPGAssetAuthoring
 				Tuning.DamageScale = 1.2f;
 				Tuning.CostScale = 0.5f;
 				Tuning.DurationScale = 1.5f;
-				Rune->SetDisplayName(NSLOCTEXT("KnightRPGAssets", "RuneUpgrade", "Focused rune"));
+				Rune->SetDisplayName(NSLOCTEXT("GolemRPGAssets", "RuneUpgrade", "Focused rune"));
 				if (!Rune->TrySetRuneTuning(Tuning).IsSuccess())
 				{
 					return false;
@@ -157,15 +157,15 @@ namespace GolemRPGAssetAuthoring
 		bool CreateSkills()
 		{
 			const TCHAR* Names[] { TEXT("HammerForce"), TEXT("RuneFocus"), TEXT("ImpossibleCost") };
-			const FText Labels[] { NSLOCTEXT("KnightRPGAssets", "HammerForce", "Hammer force"),
-				NSLOCTEXT("KnightRPGAssets", "RuneFocus", "Rune focus"),
-				NSLOCTEXT("KnightRPGAssets", "ImpossibleCost", "Mastery challenge") };
+			const FText Labels[] { NSLOCTEXT("GolemRPGAssets", "HammerForce", "Hammer force"),
+				NSLOCTEXT("GolemRPGAssets", "RuneFocus", "Rune focus"),
+				NSLOCTEXT("GolemRPGAssets", "ImpossibleCost", "Mastery challenge") };
 			TArray<FPrimaryAssetId> Ids;
 			TArray<const UGolemSkillDefinition*> Nodes;
 			for (int32 Index = 0; Index < UE_ARRAY_COUNT(Names); ++Index)
 			{
 				bool bCreated = false;
-				UGolemSkillDefinition* Skill = FindOrCreate<UGolemSkillDefinition>(TEXT("Skill"), Names[Index], TEXT("KnightSkill"), bCreated);
+				UGolemSkillDefinition* Skill = FindOrCreate<UGolemSkillDefinition>(TEXT("Skill"), Names[Index], TEXT("GolemSkill"), bCreated);
 				if (Skill == nullptr)
 				{
 					return false;
@@ -173,7 +173,7 @@ namespace GolemRPGAssetAuthoring
 				if (bCreated)
 				{
 					FGolemMaterialCost Cost;
-					Cost.DefinitionId = FPrimaryAssetId(TEXT("KnightItem"), TEXT("ForgeShard"));
+					Cost.DefinitionId = FPrimaryAssetId(TEXT("GolemItem"), TEXT("ForgeShard"));
 					Cost.Count = Index == 2 ? 100 : 2;
 					FGolemItemStatBonuses Bonuses;
 					FGolemRuneTuning Rune;
@@ -185,7 +185,7 @@ namespace GolemRPGAssetAuthoring
 					else if (Index == 1)
 					{
 						Rune.DurationScale = 1.5f;
-						Prerequisites.Add(FPrimaryAssetId(TEXT("KnightSkill"), TEXT("HammerForce")));
+						Prerequisites.Add(FPrimaryAssetId(TEXT("GolemSkill"), TEXT("HammerForce")));
 					}
 					Skill->SetDisplayName(Labels[Index]);
 					if (!Skill->TrySetSkillTuning(Index == 2 ? 50 : 1, { Cost }, Prerequisites, Bonuses, Rune).IsSuccess())
@@ -201,14 +201,14 @@ namespace GolemRPGAssetAuthoring
 				Nodes.Add(Skill);
 			}
 			bool bCreated = false;
-			UGolemSkillTreeDefinition* Tree = FindOrCreate<UGolemSkillTreeDefinition>(TEXT("SkillTree"), TEXT("Foundation"), TEXT("KnightSkillTree"), bCreated);
+			UGolemSkillTreeDefinition* Tree = FindOrCreate<UGolemSkillTreeDefinition>(TEXT("SkillTree"), TEXT("Foundation"), TEXT("GolemSkillTree"), bCreated);
 			if (Tree == nullptr)
 			{
 				return false;
 			}
 			if (bCreated)
 			{
-				Tree->SetDisplayName(NSLOCTEXT("KnightRPGAssets", "FoundationTree", "Knight training"));
+				Tree->SetDisplayName(NSLOCTEXT("GolemRPGAssets", "FoundationTree", "Golem training"));
 				if (!Tree->TrySetSkills(Ids).IsSuccess())
 				{
 					return false;
@@ -219,7 +219,7 @@ namespace GolemRPGAssetAuthoring
 		bool CreateLoot()
 		{
 			bool bCreated = false;
-			UGolemLootTableDefinition* Loot = FindOrCreate<UGolemLootTableDefinition>(TEXT("LootTable"), TEXT("EncounterA"), TEXT("KnightLootTable"), bCreated);
+			UGolemLootTableDefinition* Loot = FindOrCreate<UGolemLootTableDefinition>(TEXT("LootTable"), TEXT("EncounterA"), TEXT("GolemLootTable"), bCreated);
 			if (Loot == nullptr)
 			{
 				return false;
@@ -230,11 +230,11 @@ namespace GolemRPGAssetAuthoring
 				for (FName Name : { FName(TEXT("HammerUpgrade")), FName(TEXT("RuneUpgrade")), FName(TEXT("ForgeShard")) })
 				{
 					FGolemLootEntry Entry;
-					Entry.DefinitionId = FPrimaryAssetId(TEXT("KnightItem"), Name);
+					Entry.DefinitionId = FPrimaryAssetId(TEXT("GolemItem"), Name);
 					Entry.MinimumCount = Entry.MaximumCount = Name == TEXT("ForgeShard") ? 10 : 1;
 					Entries.Add(Entry);
 				}
-				Loot->SetDisplayName(NSLOCTEXT("KnightRPGAssets", "EncounterALoot", "Arena spoils"));
+				Loot->SetDisplayName(NSLOCTEXT("GolemRPGAssets", "EncounterALoot", "Arena spoils"));
 				if (!Loot->TrySetEntries(Entries).IsSuccess())
 				{
 					return false;

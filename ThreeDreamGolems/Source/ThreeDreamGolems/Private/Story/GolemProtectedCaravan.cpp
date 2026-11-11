@@ -39,7 +39,7 @@ void AGolemProtectedCaravan::BeginPlay()
 	}
 	if (UTextRenderComponent* Caption = FindComponentByClass<UTextRenderComponent>())
 	{
-		Caption->SetText(NSLOCTEXT("KnightStory", "Caravan", "PROTECT CARAVAN"));
+		Caption->SetText(NSLOCTEXT("GolemStory", "Caravan", "PROTECT CARAVAN"));
 	}
 }
 

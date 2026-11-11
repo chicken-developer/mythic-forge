@@ -44,7 +44,7 @@
 
 namespace GolemCombatChallengeTest
 {
-	const TCHAR* MapPath = TEXT("/Game/Knight/Maps/Playables/L_M03_CombatChallenge");
+	const TCHAR* MapPath = TEXT("/Game/Golem/Maps/Playables/L_M03_CombatChallenge");
 
 	enum class EGolemChallengePhase : uint8
 	{
@@ -741,7 +741,7 @@ namespace GolemCombatChallengeTest
 				ObservedTraversalLanding = Traversal->GetSnapshot().Landing.GetLocation();
 				bObservedTraversalLanding = true;
 				UMotionWarpingComponent* Warp = Golem->FindComponentByClass<UMotionWarpingComponent>();
-				bObservedTraversal |= Warp != nullptr && Warp->FindWarpTarget(TEXT("KnightTraversal")) != nullptr
+				bObservedTraversal |= Warp != nullptr && Warp->FindWarpTarget(TEXT("GolemTraversal")) != nullptr
 					&& Golem->GetCharacterMovement()->MovementMode == MOVE_Flying
 					&& Golem->GetGolemAbilitySystem()->GetCurrentMontage() != nullptr;
 			}

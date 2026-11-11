@@ -33,11 +33,11 @@ namespace GolemCampaignTests
 			State->RegisterComponent();
 			State->InitializeWorld(TEXT("MapTest"), FGuid::NewGuid());
 			Definition = NewObject<UGolemStoryWorldDefinition>();
-			Definition->TrySetIdentity(TEXT("MapTest"), TEXT("KnightStoryWorld"));
+			Definition->TrySetIdentity(TEXT("MapTest"), TEXT("GolemStoryWorld"));
 			FGolemMapRegion& Region = Definition->MapRegions.AddDefaulted_GetRef();
 			Region.RegionId = TEXT("School");
 			Region.Label = FText::FromString(TEXT("Test region"));
-			Region.Map = TSoftObjectPtr<UWorld>(FSoftObjectPath(TEXT("/Game/Knight/Maps/Playables/L_M07_Campaign")));
+			Region.Map = TSoftObjectPtr<UWorld>(FSoftObjectPath(TEXT("/Game/Golem/Maps/Playables/L_M07_Campaign")));
 			FGolemMapMarker& Marker = Definition->MapMarkers.AddDefaulted_GetRef();
 			Marker.MarkerId = TEXT("Landmark");
 			Marker.RegionId = Region.RegionId;
@@ -65,7 +65,7 @@ namespace GolemCampaignTests
 			{
 				AGolemCharacter* Golem = Fixture.World->SpawnActor<AGolemCharacter>();
 				UGolemHeroDefinition* Hero = NewObject<UGolemHeroDefinition>();
-				Hero->TrySetIdentity(FName(*FString::Printf(TEXT("PingHero%d"), Index)), TEXT("KnightHero"));
+				Hero->TrySetIdentity(FName(*FString::Printf(TEXT("PingHero%d"), Index)), TEXT("GolemHero"));
 				Golem->InitializeGolem(FGolemEntityId::Create(), Hero);
 				Fixture.World->SpawnActor<APlayerController>()->Possess(Golem);
 				Golems.Add(Golem);
@@ -184,7 +184,7 @@ bool FGolemCampaignDiscoveryTest::RunTest(const FString& Parameters)
 
 	AGolemCharacter* Golem = Fixture.World->SpawnActor<AGolemCharacter>();
 	UGolemHeroDefinition* Hero = NewObject<UGolemHeroDefinition>();
-	Hero->TrySetIdentity(TEXT("MapHero"), TEXT("KnightHero"));
+	Hero->TrySetIdentity(TEXT("MapHero"), TEXT("GolemHero"));
 	const FGolemEntityId GolemId = FGolemEntityId::Create();
 	TestTrue(TEXT("Real character identity initializes"), Golem->InitializeGolem(GolemId, Hero).IsSuccess());
 	APlayerController* Controller = Fixture.World->SpawnActor<APlayerController>();

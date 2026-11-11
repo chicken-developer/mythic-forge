@@ -75,7 +75,7 @@ void AGolemRPGHUD::RefreshRPGObjective()
 	InteractionFeedback = RPGPlayer.IsValid() ? RPGPlayer->GetRPGFeedback() : FText::GetEmpty();
 	if (!RPGState.IsValid())
 	{
-		RPGObjective = NSLOCTEXT("KnightRPG", "HUDWaiting", "Waiting for RPG campaign state.");
+		RPGObjective = NSLOCTEXT("GolemRPG", "HUDWaiting", "Waiting for RPG campaign state.");
 		return;
 	}
 	AGolemCharacter* CurrentGolem = RPGPlayer.IsValid() ? RPGPlayer->GetControlledGolem() : nullptr;
@@ -84,9 +84,9 @@ void AGolemRPGHUD::RefreshRPGObjective()
 	if (View.bGearEnabled)
 	{
 		const FGolemInventoryView Bag = RPGState->GetInventory()->GetView();
-		RPGObjective = NSLOCTEXT("KnightGearLab", "GearHUDHelp",
+		RPGObjective = NSLOCTEXT("GolemGearLab", "GearHUDHelp",
 			"I: Character / talents / spellbook / inventory. Return to the cyan sanctuary to change gear or claim rewards.");
-		ProgressionFeedback = FText::Format(NSLOCTEXT("KnightGearLab", "GearHUDProgression",
+		ProgressionFeedback = FText::Format(NSLOCTEXT("GolemGearLab", "GearHUDProgression",
 			"Shared bag {0}/{1} | level {2}, equipment {3}/12, Power bonus +{4}"),
 			FText::AsNumber(Bag.GetBagCount()), FText::AsNumber(Bag.Capacity), FText::AsNumber(View.Level),
 			FText::AsNumber(View.Assignments.Num()), FText::AsNumber(View.StatBonuses.AttackPower));
@@ -95,22 +95,22 @@ void AGolemRPGHUD::RefreshRPGObjective()
 	switch (RPGState->GetLoopSnapshot().Stage)
 	{
 	case EGolemRPGLoopStage::EncounterA:
-		RPGObjective = NSLOCTEXT("KnightRPG", "HUDA", "RPG A: defeat wave + boss to earn loot at the cyan station.");
+		RPGObjective = NSLOCTEXT("GolemRPG", "HUDA", "RPG A: defeat wave + boss to earn loot at the cyan station.");
 		break;
 	case EGolemRPGLoopStage::RewardAvailable:
-		RPGObjective = NSLOCTEXT("KnightRPG", "HUDLoot", "Reward ready: cyan station on the west side. P / F picks up nearby loot; I / Menu opens upgrades.");
+		RPGObjective = NSLOCTEXT("GolemRPG", "HUDLoot", "Reward ready: cyan station on the west side. P / F picks up nearby loot; I / Menu opens upgrades.");
 		break;
 	case EGolemRPGLoopStage::Upgrade:
-		RPGObjective = NSLOCTEXT("KnightRPG", "HUDUpgrade", "Equip or purchase at the cyan station; host Continue in the panel, then return to START for B.");
+		RPGObjective = NSLOCTEXT("GolemRPG", "HUDUpgrade", "Equip or purchase at the cyan station; host Continue in the panel, then return to START for B.");
 		break;
 	case EGolemRPGLoopStage::EncounterB:
-		RPGObjective = NSLOCTEXT("KnightRPG", "HUDB", "RPG B: use your upgraded hammer and rune. Retry preserves inventory, skills and equipment.");
+		RPGObjective = NSLOCTEXT("GolemRPG", "HUDB", "RPG B: use your upgraded hammer and rune. Retry preserves inventory, skills and equipment.");
 		break;
 	case EGolemRPGLoopStage::Complete:
-		RPGObjective = NSLOCTEXT("KnightRPG", "HUDComplete", "RPG complete! Host R / Y replays B. Loot is awarded once per run.");
+		RPGObjective = NSLOCTEXT("GolemRPG", "HUDComplete", "RPG complete! Host R / Y replays B. Loot is awarded once per run.");
 		break;
 	}
-	ProgressionFeedback = FText::Format(NSLOCTEXT("KnightRPG", "HUDProgression", "Shared loot stacks {0} | current Golem: {1} skill points, {2} equipment slots, attack +{3}"),
+	ProgressionFeedback = FText::Format(NSLOCTEXT("GolemRPG", "HUDProgression", "Shared loot stacks {0} | current Golem: {1} skill points, {2} equipment slots, attack +{3}"),
 		FText::AsNumber(RPGState->GetInventory()->GetView().Items.Num()), FText::AsNumber(View.SkillPoints),
 		FText::AsNumber(View.Assignments.Num()), FText::AsNumber(View.StatBonuses.AttackPower));
 }

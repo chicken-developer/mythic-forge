@@ -21,7 +21,7 @@ AGolemRPGUpgradeStation::AGolemRPGUpgradeStation()
 	Label->SetWorldSize(28.0f);
 	Label->SetTextRenderColor(FColor::Cyan);
 	Label->SetHorizontalAlignment(EHTA_Center);
-	Label->SetText(NSLOCTEXT("KnightRPG", "UpgradeStation", "UPGRADE: I / Menu\nEquip, Rune, Skills, Respec\nContinue to encounter B"));
+	Label->SetText(NSLOCTEXT("GolemRPG", "UpgradeStation", "UPGRADE: I / Menu\nEquip, Rune, Skills, Respec\nContinue to encounter B"));
 }
 
 float AGolemRPGUpgradeStation::GetInteractionRange() const

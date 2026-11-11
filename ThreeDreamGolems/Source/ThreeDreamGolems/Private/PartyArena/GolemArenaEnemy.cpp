@@ -54,9 +54,9 @@ AGolemArenaEnemy::AGolemArenaEnemy()
 	Label->SetWorldSize(24.0f);
 	Label->SetHorizontalAlignment(EHTA_Center);
 	Label->SetTextRenderColor(FColor::Red);
-	Label->SetText(NSLOCTEXT("KnightArena", "EnemyLabel", "ARENA ENEMY"));
+	Label->SetText(NSLOCTEXT("GolemArena", "EnemyLabel", "ARENA ENEMY"));
 	InitializationResult = FGolemResult::Failure(EGolemError::InvalidState, TEXT("ArenaEnemy"),
-		NSLOCTEXT("KnightArena", "EnemyPending", "Enemy definition has not initialized."));
+		NSLOCTEXT("GolemArena", "EnemyPending", "Enemy definition has not initialized."));
 }
 
 UAbilitySystemComponent* AGolemArenaEnemy::GetAbilitySystemComponent() const
@@ -78,7 +78,7 @@ FGolemResult AGolemArenaEnemy::InitializeArenaEnemy(const FPrimaryAssetId& InArc
 	if (!HasAuthority() || EnemyId.IsValid())
 	{
 		return FGolemResult::Failure(HasAuthority() ? EGolemError::Conflict : EGolemError::NotAuthority,
-			TEXT("ArenaEnemy"), NSLOCTEXT("KnightArena", "EnemyIdentity", "Only a fresh server enemy can initialize."));
+			TEXT("ArenaEnemy"), NSLOCTEXT("GolemArena", "EnemyIdentity", "Only a fresh server enemy can initialize."));
 	}
 	UGolemAssetManager* Manager = UGolemAssetManager::GetGolemAssetManager();
 	UGolemDefinition* Definition = nullptr;
@@ -145,8 +145,8 @@ FGolemResult AGolemArenaEnemy::InitializeArenaEnemy(const FPrimaryAssetId& InArc
 		return InitializationResult;
 	}
 	Label->SetText(!Archetype->GetDisplayName().IsEmpty() ? Archetype->GetDisplayName() : BossDefinitionId.IsValid()
-		? NSLOCTEXT("KnightArena", "BossLabel", "ARENA BOSS: two phases")
-		: NSLOCTEXT("KnightArena", "EnemyLabel", "ARENA ENEMY"));
+		? NSLOCTEXT("GolemArena", "BossLabel", "ARENA BOSS: two phases")
+		: NSLOCTEXT("GolemArena", "EnemyLabel", "ARENA ENEMY"));
 	ForceNetUpdate();
 	return InitializationResult;
 }
@@ -199,8 +199,8 @@ void AGolemArenaEnemy::HandleLifeChanged(EGolemLifeState Previous, EGolemLifeSta
 void AGolemArenaEnemy::OnRep_EnemyIdentity()
 {
 	Label->SetText(BossDefinitionId.IsValid()
-		? NSLOCTEXT("KnightArena", "BossLabel", "ARENA BOSS: two phases")
-		: NSLOCTEXT("KnightArena", "EnemyLabel", "ARENA ENEMY"));
+		? NSLOCTEXT("GolemArena", "BossLabel", "ARENA BOSS: two phases")
+		: NSLOCTEXT("GolemArena", "EnemyLabel", "ARENA ENEMY"));
 	if (!EnemyId.IsValid())
 	{
 		return;

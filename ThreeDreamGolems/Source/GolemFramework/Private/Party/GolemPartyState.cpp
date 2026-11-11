@@ -250,7 +250,7 @@ FGolemResult AGolemPartyState::ValidateRosterEntries(const TArray<FGolemRosterEn
 		if (Entry.Slot < 0 || Entry.Slot >= UGolemSettings::CanonicalPartySize
 			|| !Entry.GolemId.IsValid() || !IsValid(Entry.Golem)
 			|| !GolemIdentity::IsValidDefinitionId(Entry.HeroDefinitionId)
-			|| Entry.HeroDefinitionId.PrimaryAssetType != FPrimaryAssetType(TEXT("KnightHero")))
+			|| Entry.HeroDefinitionId.PrimaryAssetType != FPrimaryAssetType(TEXT("GolemHero")))
 		{
 			return FGolemResult::Failure(EGolemError::InvalidData, TEXT("PartyRoster"),
 				LOCTEXT("RosterInvalidEntry", "A roster entry has an invalid slot, identity, definition or character."));

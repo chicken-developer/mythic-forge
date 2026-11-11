@@ -52,16 +52,16 @@ bool FGolemAIActionSetValidationTest::RunTest(const FString& Parameters)
 {
 	using namespace GolemAIActionSetTests;
 	TStrongObjectPtr<UGolemAIActionSetDefinition> Definition(NewObject<UGolemAIActionSetDefinition>());
-	TestEqual(TEXT("Action sets retain their stable primary type"), Definition->GetDefinitionType(), FName(TEXT("KnightAIActionSet")));
+	TestEqual(TEXT("Action sets retain their stable primary type"), Definition->GetDefinitionType(), FName(TEXT("GolemAIActionSet")));
 	TestEqual(TEXT("Unassigned identity is rejected"), Definition->ValidateActionSet().Error, EGolemError::InvalidId);
 	TestTrue(TEXT("Native authoring assigns a stable identity"),
-		Definition->TrySetIdentity(TEXT("FoundationActions"), TEXT("KnightAIActionSet")));
+		Definition->TrySetIdentity(TEXT("FoundationActions"), TEXT("GolemAIActionSet")));
 	const FGolemAIActionEntry Pulse = MakeAction(TEXT("Pulse"), GolemGameplayTags::Ability_Test_Pulse, 10);
 	const FGolemAIActionEntry Revive = MakeAction(TEXT("Revive"), GolemGameplayTags::Ability_Party_Revive, 20);
 	TestTrue(TEXT("A valid bounded action set can be authored"), Definition->TrySetActions({Pulse, Revive}).IsSuccess());
 	TestTrue(TEXT("Authored action data and identity validate together"), Definition->ValidateActionSet().IsSuccess());
 	TestTrue(TEXT("Primary identity is independent of the UObject name"),
-		Definition->GetPrimaryAssetId() == FPrimaryAssetId(TEXT("KnightAIActionSet"), TEXT("FoundationActions")));
+		Definition->GetPrimaryAssetId() == FPrimaryAssetId(TEXT("GolemAIActionSet"), TEXT("FoundationActions")));
 	TArray<FGolemAIActionEntry> Invalid = {Pulse, Revive};
 	Invalid[1].ActionKey = Pulse.ActionKey;
 	TestEqual(TEXT("Duplicate stable action keys are rejected atomically"),
@@ -96,7 +96,7 @@ bool FGolemAIActionSetValidationTest::RunTest(const FString& Parameters)
 		Definition->TrySetActions(Invalid).Error, EGolemError::InvalidData);
 	TestTrue(TEXT("Original set remains usable after all authoring failures"), Definition->ValidateActionSet().IsSuccess());
 	TestTrue(TEXT("Stable identity setter still permits generic definition authoring"),
-		Definition->TrySetIdentity(TEXT("WrongType"), TEXT("KnightDefinition")));
+		Definition->TrySetIdentity(TEXT("WrongType"), TEXT("GolemDefinition")));
 	TestEqual(TEXT("Action-set validation rejects a foreign primary asset type"),
 		Definition->ValidateActionSet().Error, EGolemError::TypeMismatch);
 	return true;
@@ -109,7 +109,7 @@ bool FGolemAIActionEligibilityTest::RunTest(const FString& Parameters)
 {
 	using namespace GolemAIActionSetTests;
 	TStrongObjectPtr<UGolemAIActionSetDefinition> Definition(NewObject<UGolemAIActionSetDefinition>());
-	Definition->TrySetIdentity(TEXT("EligibilityActions"), TEXT("KnightAIActionSet"));
+	Definition->TrySetIdentity(TEXT("EligibilityActions"), TEXT("GolemAIActionSet"));
 	const FGolemAIActionEntry Action = MakeAction(TEXT("Pulse"), GolemGameplayTags::Ability_Test_Pulse, 10);
 	if (!TestTrue(TEXT("Eligibility fixture is actual validated definition data"), Definition->TrySetActions({Action}).IsSuccess()))
 	{
@@ -170,7 +170,7 @@ bool FGolemAIActionSelectionTest::RunTest(const FString& Parameters)
 {
 	using namespace GolemAIActionSetTests;
 	TStrongObjectPtr<UGolemAIActionSetDefinition> Definition(NewObject<UGolemAIActionSetDefinition>());
-	Definition->TrySetIdentity(TEXT("SelectionActions"), TEXT("KnightAIActionSet"));
+	Definition->TrySetIdentity(TEXT("SelectionActions"), TEXT("GolemAIActionSet"));
 	const FGolemAIActionEntry Zulu = MakeAction(TEXT("ZuluPulse"), GolemGameplayTags::Ability_Test_Pulse, 10);
 	const FGolemAIActionEntry Alpha = MakeAction(TEXT("AlphaPulse"), GolemGameplayTags::Ability_Test_Pulse, 10);
 	const FGolemAIActionEntry Revive = MakeAction(TEXT("Revive"), GolemGameplayTags::Ability_Party_Revive, 20);

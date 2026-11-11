@@ -39,7 +39,7 @@
 
 namespace GolemAbilityYardIntegration
 {
-	const TCHAR* MapPath = TEXT("/Game/Knight/Maps/Playables/L_M02_AbilityYard");
+	const TCHAR* MapPath = TEXT("/Game/Golem/Maps/Playables/L_M02_AbilityYard");
 	constexpr double RunTimeout = 180.0;
 	constexpr double StartupTimeout = 30.0;
 	constexpr double ActionTimeout = 8.0;

@@ -80,14 +80,14 @@ FGolemResult UGolemStoryWorldComponent::RequestMapPing(APawn* Pawn, const FGolem
 		|| Marker == nullptr || !IsMarkerDiscovered(MarkerId) || Marker->RegionId != ActiveRegionId)
 	{
 		return FGolemResult::Failure(EGolemError::NotOwned, TEXT("MapPing"),
-			NSLOCTEXT("KnightMap", "PingUnavailable", "Select a discovered marker in your current region."));
+			NSLOCTEXT("GolemMap", "PingUnavailable", "Select a discovered marker in your current region."));
 	}
 	const double Now = GetWorld()->GetTimeSeconds();
 	const double* Previous = LastPingTimes.Find(GolemId);
 	if (Previous != nullptr && Now - *Previous < 1.0)
 	{
 		return FGolemResult::Failure(EGolemError::Conflict, TEXT("PingRateLimit"),
-			NSLOCTEXT("KnightMap", "PingRate", "Wait one second before another ping."));
+			NSLOCTEXT("GolemMap", "PingRate", "Wait one second before another ping."));
 	}
 	int32 Owned = 0;
 	for (const FGolemMapPing& Existing : MapPings)
@@ -97,7 +97,7 @@ FGolemResult UGolemStoryWorldComponent::RequestMapPing(APawn* Pawn, const FGolem
 	if (Owned >= 3 || MapPings.Num() >= 8)
 	{
 		return FGolemResult::Failure(EGolemError::Conflict, TEXT("PingCapacity"),
-			NSLOCTEXT("KnightMap", "PingCapacity", "Ping limit reached. Pings expire after eight seconds."));
+			NSLOCTEXT("GolemMap", "PingCapacity", "Ping limit reached. Pings expire after eight seconds."));
 	}
 	FGolemMapPing& Ping = MapPings.AddDefaulted_GetRef();
 	Ping.PingId = FGuid::NewGuid();

@@ -62,7 +62,7 @@ private:
 	void HandleCaravanLifeChanged(EGolemLifeState Previous, EGolemLifeState Current);
 
 	UPROPERTY(EditDefaultsOnly, Category = "Golem|Story")
-	FPrimaryAssetId ProfileId = FPrimaryAssetId(TEXT("KnightStoryProfile"), TEXT("Demo_M6_V2"));
+	FPrimaryAssetId ProfileId = FPrimaryAssetId(TEXT("GolemStoryProfile"), TEXT("Demo_M6_V2"));
 	UPROPERTY(Transient)
 	TObjectPtr<UGolemStoryProfile> Profile;
 	UPROPERTY(Transient)

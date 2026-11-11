@@ -30,7 +30,7 @@ FGolemResult FGolemAIArchetypeTuning::Validate() const
 
 UGolemAIArchetypeDefinition::UGolemAIArchetypeDefinition()
 {
-	DefinitionType = TEXT("KnightAIArchetype");
+	DefinitionType = TEXT("GolemAIArchetype");
 }
 
 const FGolemAIArchetypeTuning& UGolemAIArchetypeDefinition::GetTuning() const
@@ -69,10 +69,10 @@ FGolemResult UGolemAIArchetypeDefinition::ValidateArchetype() const
 	{
 		return Identity;
 	}
-	if (GetDefinitionType() != FName(TEXT("KnightAIArchetype")) || !GolemIdentity::IsValidDefinitionId(CombatProfileId) ||
-		CombatProfileId.PrimaryAssetType != FPrimaryAssetType(TEXT("KnightCombatProfile")) ||
+	if (GetDefinitionType() != FName(TEXT("GolemAIArchetype")) || !GolemIdentity::IsValidDefinitionId(CombatProfileId) ||
+		CombatProfileId.PrimaryAssetType != FPrimaryAssetType(TEXT("GolemCombatProfile")) ||
 		!GolemIdentity::IsValidDefinitionId(ActionSetId) ||
-		ActionSetId.PrimaryAssetType != FPrimaryAssetType(TEXT("KnightAIActionSet")))
+		ActionSetId.PrimaryAssetType != FPrimaryAssetType(TEXT("GolemAIActionSet")))
 	{
 		return GolemAIFailure(EGolemError::InvalidId, TEXT("AIArchetypeDefinitions"));
 	}
@@ -106,9 +106,9 @@ FGolemResult UGolemAIArchetypeDefinition::TrySetIds(const FPrimaryAssetId& InCom
 	const FPrimaryAssetId& InActionSetId)
 {
 	if (!GolemIdentity::IsValidDefinitionId(InCombatProfileId) ||
-		InCombatProfileId.PrimaryAssetType != FPrimaryAssetType(TEXT("KnightCombatProfile")) ||
+		InCombatProfileId.PrimaryAssetType != FPrimaryAssetType(TEXT("GolemCombatProfile")) ||
 		!GolemIdentity::IsValidDefinitionId(InActionSetId) ||
-		InActionSetId.PrimaryAssetType != FPrimaryAssetType(TEXT("KnightAIActionSet")))
+		InActionSetId.PrimaryAssetType != FPrimaryAssetType(TEXT("GolemAIActionSet")))
 	{
 		return GolemAIFailure(EGolemError::InvalidId, TEXT("SetAIArchetypeDefinitions"));
 	}

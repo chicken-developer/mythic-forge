@@ -8,7 +8,7 @@ namespace
 	FGolemResult GolemConsumableEffectFailure(FName Context)
 	{
 		return FGolemResult::Failure(EGolemError::InvalidState, Context,
-			NSLOCTEXT("KnightEquipment", "ConsumableEffectRejected", "The recovery effect cannot be applied."));
+			NSLOCTEXT("GolemEquipment", "ConsumableEffectRejected", "The recovery effect cannot be applied."));
 	}
 }
 

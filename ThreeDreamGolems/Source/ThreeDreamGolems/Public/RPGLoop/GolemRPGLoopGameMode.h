@@ -47,10 +47,10 @@ private:
 	void HandleArenaSnapshot(const FGolemPartyArenaSnapshot& Snapshot);
 
 	UPROPERTY(EditDefaultsOnly, Category = "Golem|RPG|Composition")
-	FPrimaryAssetId SkillTreeId = FPrimaryAssetId(TEXT("KnightSkillTree"), TEXT("Foundation"));
+	FPrimaryAssetId SkillTreeId = FPrimaryAssetId(TEXT("GolemSkillTree"), TEXT("Foundation"));
 
 	UPROPERTY(EditDefaultsOnly, Category = "Golem|RPG|Composition")
-	FPrimaryAssetId RewardTableId = FPrimaryAssetId(TEXT("KnightLootTable"), TEXT("EncounterA"));
+	FPrimaryAssetId RewardTableId = FPrimaryAssetId(TEXT("GolemLootTable"), TEXT("EncounterA"));
 
 	UPROPERTY(EditDefaultsOnly, Category = "Golem|RPG|Composition")
 	int32 RewardSeed = 508;

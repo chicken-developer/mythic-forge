@@ -2,7 +2,7 @@
 
 UGolemEncounterQualityDefinition::UGolemEncounterQualityDefinition()
 {
-	DefinitionType = TEXT("KnightEncounterQuality");
+	DefinitionType = TEXT("GolemEncounterQuality");
 }
 
 FGolemResult UGolemEncounterQualityDefinition::ValidateEncounter() const

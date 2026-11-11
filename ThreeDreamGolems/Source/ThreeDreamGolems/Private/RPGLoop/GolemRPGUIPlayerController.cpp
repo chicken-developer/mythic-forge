@@ -53,7 +53,7 @@ namespace GolemRPGPresentation
 	{
 		const UGolemDefinition* Definition = Resolve(Id, UGolemDefinition::StaticClass());
 		return Definition != nullptr ? Definition->GetDisplayName()
-			: NSLOCTEXT("KnightRPG", "UnknownDefinition", "Unavailable definition");
+			: NSLOCTEXT("GolemRPG", "UnknownDefinition", "Unavailable definition");
 	}
 
 	FText Objective(const EGolemRPGLoopStage Stage)
@@ -61,15 +61,15 @@ namespace GolemRPGPresentation
 		switch (Stage)
 		{
 		case EGolemRPGLoopStage::EncounterA:
-			return NSLOCTEXT("KnightRPG", "ObjectiveA", "Encounter A: go to START and defeat the wave and boss.");
+			return NSLOCTEXT("GolemRPG", "ObjectiveA", "Encounter A: go to START and defeat the wave and boss.");
 		case EGolemRPGLoopStage::RewardAvailable:
-			return NSLOCTEXT("KnightRPG", "ObjectiveLoot", "Collect the loot at the cyan station with P / F. Equip or buy a skill, then Continue.");
+			return NSLOCTEXT("GolemRPG", "ObjectiveLoot", "Collect the loot at the cyan station with P / F. Equip or buy a skill, then Continue.");
 		case EGolemRPGLoopStage::Upgrade:
-			return NSLOCTEXT("KnightRPG", "ObjectiveUpgrade", "Upgrade your current Golem at the station. Host: Continue, then return to START for encounter B.");
+			return NSLOCTEXT("GolemRPG", "ObjectiveUpgrade", "Upgrade your current Golem at the station. Host: Continue, then return to START for encounter B.");
 		case EGolemRPGLoopStage::EncounterB:
-			return NSLOCTEXT("KnightRPG", "ObjectiveB", "Encounter B: defeat the wave and boss with your upgraded loadout. Retry preserves loot and upgrades.");
+			return NSLOCTEXT("GolemRPG", "ObjectiveB", "Encounter B: defeat the wave and boss with your upgraded loadout. Retry preserves loot and upgrades.");
 		case EGolemRPGLoopStage::Complete:
-			return NSLOCTEXT("KnightRPG", "ObjectiveComplete", "RPG loop complete! Host R / Y replays encounter B without duplicating the reward.");
+			return NSLOCTEXT("GolemRPG", "ObjectiveComplete", "RPG loop complete! Host R / Y replays encounter B without duplicating the reward.");
 		}
 		return FText::GetEmpty();
 	}
@@ -184,7 +184,7 @@ void AGolemRPGUIPlayerController::BindRPGSources()
 		}
 		else
 		{
-			Feedback = NSLOCTEXT("KnightRPG", "MissingState", "RPG state is unavailable.");
+			Feedback = NSLOCTEXT("GolemRPG", "MissingState", "RPG state is unavailable.");
 			RefreshRPGPresentation();
 		}
 		return;
@@ -407,7 +407,7 @@ void AGolemRPGUIPlayerController::RequestPickup()
 	}
 	if (Nearest == nullptr)
 	{
-		Feedback = NSLOCTEXT("KnightRPG", "NoPickup", "Move closer to an unclaimed loot pickup.");
+		Feedback = NSLOCTEXT("GolemRPG", "NoPickup", "Move closer to an unclaimed loot pickup.");
 		RefreshRPGPresentation();
 		return;
 	}
@@ -426,7 +426,7 @@ void AGolemRPGUIPlayerController::ToggleRPGPanel()
 	AGolemCharacter* Golem = GetControlledGolem();
 	if (bEndingUIPlay || !IsLocalController() || Golem == nullptr || !Golem->CanTransferControl())
 	{
-		Feedback = NSLOCTEXT("KnightRPG", "PanelBusy", "Finish your action before opening the upgrade panel.");
+		Feedback = NSLOCTEXT("GolemRPG", "PanelBusy", "Finish your action before opening the upgrade panel.");
 		RefreshRPGPresentation();
 		return;
 	}
@@ -436,7 +436,7 @@ void AGolemRPGUIPlayerController::ToggleRPGPanel()
 		RPGPanel = CreateWidget<UGolemRPGPanel>(this, UGolemRPGPanel::StaticClass());
 		if (RPGPanel == nullptr)
 		{
-			Feedback = NSLOCTEXT("KnightRPG", "PanelUnavailable", "The upgrade panel is unavailable.");
+			Feedback = NSLOCTEXT("GolemRPG", "PanelUnavailable", "The upgrade panel is unavailable.");
 			RefreshRPGPresentation();
 			return;
 		}
@@ -537,7 +537,7 @@ void AGolemRPGUIPlayerController::HandlePanelAction(const EGolemRPGPanelAction A
 		}
 		if (!Command.ItemInstanceId.IsValid())
 		{
-			Feedback = NSLOCTEXT("KnightRPG", "NoAvailableEquipment", "No unassigned item is available. Collect loot or unequip it from its current Golem.");
+			Feedback = NSLOCTEXT("GolemRPG", "NoAvailableEquipment", "No unassigned item is available. Collect loot or unequip it from its current Golem.");
 			RefreshRPGPresentation();
 			return;
 		}
@@ -554,7 +554,7 @@ void AGolemRPGUIPlayerController::HandlePanelAction(const EGolemRPGPanelAction A
 		const FGolemEquipmentAssignment* Assignment = View.FindAssignment(Command.SlotTag);
 		if (Assignment == nullptr)
 		{
-			Feedback = NSLOCTEXT("KnightRPG", "NoAssignedEquipment", "This Golem has no item assigned to that slot.");
+			Feedback = NSLOCTEXT("GolemRPG", "NoAssignedEquipment", "This Golem has no item assigned to that slot.");
 			RefreshRPGPresentation();
 			return;
 		}
@@ -564,7 +564,7 @@ void AGolemRPGUIPlayerController::HandlePanelAction(const EGolemRPGPanelAction A
 	case EGolemRPGPanelAction::PurchaseHammerSkill:
 	case EGolemRPGPanelAction::PurchaseRuneSkill:
 		Command = CreateCurrentCommand(EGolemRPGOperation::PurchaseSkill);
-		Command.SkillDefinitionId = FPrimaryAssetId(TEXT("KnightSkill"),
+		Command.SkillDefinitionId = FPrimaryAssetId(TEXT("GolemSkill"),
 			Action == EGolemRPGPanelAction::PurchaseHammerSkill ? FName(TEXT("HammerForce")) : FName(TEXT("RuneFocus")));
 		break;
 	case EGolemRPGPanelAction::Respec:
@@ -665,7 +665,7 @@ void AGolemRPGUIPlayerController::HandleRPGResult(const FGolemRPGCommandResult& 
 		PendingRequestId.Invalidate();
 	}
 	Feedback = Outcome.Result.IsSuccess()
-		? NSLOCTEXT("KnightRPG", "TransactionCommitted", "Upgrade transaction committed.") : Outcome.Result.Message;
+		? NSLOCTEXT("GolemRPG", "TransactionCommitted", "Upgrade transaction committed.") : Outcome.Result.Message;
 	ReconcileClosedPanelReceipt(Outcome.RequestId);
 	RefreshRPGPresentation();
 }
@@ -676,7 +676,7 @@ void AGolemRPGUIPlayerController::HandleLoopResult(const FGolemResult& Result)
 	{
 		return;
 	}
-	Feedback = Result.IsSuccess() ? NSLOCTEXT("KnightRPG", "ContinueCommitted", "Encounter B is ready. Return to START.")
+	Feedback = Result.IsSuccess() ? NSLOCTEXT("GolemRPG", "ContinueCommitted", "Encounter B is ready. Return to START.")
 		: Result.Message;
 	if (Result.IsSuccess())
 	{
@@ -716,11 +716,11 @@ FGolemRPGPanelSnapshot AGolemRPGUIPlayerController::BuildPanelSnapshot() const
 	AGolemCharacter* Golem = GetControlledGolem();
 	if (Golem == nullptr || !RPGState.IsValid())
 	{
-		Snapshot.Title = NSLOCTEXT("KnightRPG", "PanelWaiting", "Waiting for RPG state");
+		Snapshot.Title = NSLOCTEXT("GolemRPG", "PanelWaiting", "Waiting for RPG state");
 		return Snapshot;
 	}
 	Snapshot.GolemId = Golem->GetGolemEntityId();
-	Snapshot.Title = FText::Format(NSLOCTEXT("KnightRPG", "PanelTitle", "Upgrade {0}"), Golem->GetGolemDisplayName());
+	Snapshot.Title = FText::Format(NSLOCTEXT("GolemRPG", "PanelTitle", "Upgrade {0}"), Golem->GetGolemDisplayName());
 	const FGolemRPGLoopSnapshot& Loop = RPGState->GetLoopSnapshot();
 	Snapshot.Objective = GolemRPGPresentation::Objective(Loop.Stage);
 	Snapshot.bCanContinue = Loop.Stage == EGolemRPGLoopStage::RewardAvailable || Loop.Stage == EGolemRPGLoopStage::Upgrade;
@@ -760,22 +760,22 @@ FGolemRPGPanelSnapshot AGolemRPGUIPlayerController::BuildPanelSnapshot() const
 	FString InventoryText;
 	for (const FGolemItemInstance& Item : Inventory.Items)
 	{
-		InventoryText += FText::Format(NSLOCTEXT("KnightRPG", "InventoryLine", "{0} x{1}\n"),
+		InventoryText += FText::Format(NSLOCTEXT("GolemRPG", "InventoryLine", "{0} x{1}\n"),
 			GolemRPGPresentation::Name(Item.DefinitionId), FText::AsNumber(Item.Count)).ToString();
 	}
-	Snapshot.Inventory = FText::Format(NSLOCTEXT("KnightRPG", "InventoryHeading", "Shared inventory:\n{0}"),
-		InventoryText.IsEmpty() ? NSLOCTEXT("KnightRPG", "EmptyInventory", "No loot collected") : FText::FromString(InventoryText));
+	Snapshot.Inventory = FText::Format(NSLOCTEXT("GolemRPG", "InventoryHeading", "Shared inventory:\n{0}"),
+		InventoryText.IsEmpty() ? NSLOCTEXT("GolemRPG", "EmptyInventory", "No loot collected") : FText::FromString(InventoryText));
 	FString EquipmentText;
 	for (const FGolemEquipmentAssignment& Assignment : View.Assignments)
 	{
 		EquipmentText += GolemRPGPresentation::Name(Assignment.DefinitionId).ToString() + TEXT("\n");
 	}
-	Snapshot.Equipment = FText::Format(NSLOCTEXT("KnightRPG", "EquipmentHeading", "This Golem's equipment:\n{0}"),
-		EquipmentText.IsEmpty() ? NSLOCTEXT("KnightRPG", "EmptyEquipment", "Default hammer; no rune upgrade")
+	Snapshot.Equipment = FText::Format(NSLOCTEXT("GolemRPG", "EquipmentHeading", "This Golem's equipment:\n{0}"),
+		EquipmentText.IsEmpty() ? NSLOCTEXT("GolemRPG", "EmptyEquipment", "Default hammer; no rune upgrade")
 		: FText::FromString(EquipmentText));
 	FString SkillText;
-	const TArray<FPrimaryAssetId> SkillIds{FPrimaryAssetId(TEXT("KnightSkill"), TEXT("HammerForce")),
-		FPrimaryAssetId(TEXT("KnightSkill"), TEXT("RuneFocus"))};
+	const TArray<FPrimaryAssetId> SkillIds{FPrimaryAssetId(TEXT("GolemSkill"), TEXT("HammerForce")),
+		FPrimaryAssetId(TEXT("GolemSkill"), TEXT("RuneFocus"))};
 	for (const FPrimaryAssetId& Id : SkillIds)
 	{
 		const UGolemSkillDefinition* Definition = Cast<UGolemSkillDefinition>(
@@ -787,21 +787,21 @@ FGolemRPGPanelSnapshot AGolemRPGUIPlayerController::BuildPanelSnapshot() const
 		FString Costs;
 		for (const FGolemMaterialCost& Cost : Definition->GetMaterialCosts())
 		{
-			Costs += FText::Format(NSLOCTEXT("KnightRPG", "MaterialCost", "; {0} {1}"),
+			Costs += FText::Format(NSLOCTEXT("GolemRPG", "MaterialCost", "; {0} {1}"),
 				FText::AsNumber(Cost.Count), GolemRPGPresentation::Name(Cost.DefinitionId)).ToString();
 		}
 		for (const FPrimaryAssetId& Prerequisite : Definition->GetPrerequisites())
 		{
-			Costs += FText::Format(NSLOCTEXT("KnightRPG", "SkillPrerequisite", "; requires {0}"),
+			Costs += FText::Format(NSLOCTEXT("GolemRPG", "SkillPrerequisite", "; requires {0}"),
 				GolemRPGPresentation::Name(Prerequisite)).ToString();
 		}
-		SkillText += FText::Format(NSLOCTEXT("KnightRPG", "SkillLine", "{0}: {1} points{2} {3}\n"),
+		SkillText += FText::Format(NSLOCTEXT("GolemRPG", "SkillLine", "{0}: {1} points{2} {3}\n"),
 			Definition->GetDisplayName(), FText::AsNumber(Definition->GetPointCost()), FText::FromString(Costs),
-			View.HasSkill(Id) ? NSLOCTEXT("KnightRPG", "Purchased", "[purchased]") : FText::GetEmpty()).ToString();
+			View.HasSkill(Id) ? NSLOCTEXT("GolemRPG", "Purchased", "[purchased]") : FText::GetEmpty()).ToString();
 	}
-	Snapshot.Skills = FText::Format(NSLOCTEXT("KnightRPG", "SkillHeading", "Skill points: {0}\n{1}"),
+	Snapshot.Skills = FText::Format(NSLOCTEXT("GolemRPG", "SkillHeading", "Skill points: {0}\n{1}"),
 		FText::AsNumber(View.SkillPoints), FText::FromString(SkillText));
-	Snapshot.Stats = FText::Format(NSLOCTEXT("KnightRPG", "StatHeading", "Bonuses: health +{0}, attack +{1} | Rune damage x{2}, cost x{3}, duration x{4}"),
+	Snapshot.Stats = FText::Format(NSLOCTEXT("GolemRPG", "StatHeading", "Bonuses: health +{0}, attack +{1} | Rune damage x{2}, cost x{3}, duration x{4}"),
 		FText::AsNumber(View.StatBonuses.MaxHealth), FText::AsNumber(View.StatBonuses.AttackPower),
 		FText::AsNumber(View.RuneTuning.DamageScale), FText::AsNumber(View.RuneTuning.CostScale),
 		FText::AsNumber(View.RuneTuning.DurationScale));

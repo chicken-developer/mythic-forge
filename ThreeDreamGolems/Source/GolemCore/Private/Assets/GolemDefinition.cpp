@@ -3,7 +3,7 @@
 #include "Types/GolemStableIds.h"
 #include "Misc/DataValidation.h"
 
-#define LOCTEXT_NAMESPACE "KnightDefinition"
+#define LOCTEXT_NAMESPACE "GolemDefinition"
 
 FPrimaryAssetId UGolemDefinition::GetPrimaryAssetId() const
 {

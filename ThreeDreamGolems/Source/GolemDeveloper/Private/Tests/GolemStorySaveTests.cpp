@@ -22,7 +22,7 @@ bool FGolemStoryDiskTest::RunTest(const FString& Parameters)
 	Snapshot.World.RunId = Snapshot.Quest.RunId;
 	Snapshot.RPG.View.DemoRunId = Snapshot.Quest.RunId;
 	Snapshot.RPG.View.bGearDemo = true;
-	Snapshot.MapPackage = TEXT("/Game/Knight/Maps/Playables/L_M06_StoryFrameworkDemo");
+	Snapshot.MapPackage = TEXT("/Game/Golem/Maps/Playables/L_M06_StoryFrameworkDemo");
 	for (int32 Index = 0; Index < 3; ++Index)
 	{
 		FGolemRPGGolemView& Golem = Snapshot.RPG.View.Golems.AddDefaulted_GetRef();

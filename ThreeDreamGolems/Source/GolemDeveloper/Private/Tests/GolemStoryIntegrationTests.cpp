@@ -78,7 +78,7 @@ namespace GolemStoryIntegration
 				Settings->SetClientWindowSize(FIntPoint(1280, 720));
 				FRequestPlaySessionParams Request;
 				Request.EditorPlaySettings = Settings.Get();
-				Request.GlobalMapOverride = TEXT("/Game/Knight/Maps/Playables/L_M06_StoryV1");
+				Request.GlobalMapOverride = TEXT("/Game/Golem/Maps/Playables/L_M06_StoryV1");
 				Request.bAllowOnlineSubsystem = false;
 				GEditor->RequestPlaySession(Request);
 				Phase = 1;

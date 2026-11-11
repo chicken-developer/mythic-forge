@@ -47,10 +47,10 @@ AGolemCharacter::AGolemCharacter()
 	AbilitySystem->SetIsReplicated(true);
 	AbilitySystem->SetReplicationMode(EGameplayEffectReplicationMode::Mixed);
 	Attributes = CreateDefaultSubobject<UGolemAttributeSet>(TEXT("GolemAttributes"));
-	LifeComponent = CreateDefaultSubobject<UGolemLifeComponent>(TEXT("KnightLife"));
+	LifeComponent = CreateDefaultSubobject<UGolemLifeComponent>(TEXT("GolemLife"));
 	CombatComponent = CreateDefaultSubobject<UGolemCombatComponent>(TEXT("GolemCombat"));
-	TraversalComponent = CreateDefaultSubobject<UGolemTraversalComponent>(TEXT("KnightTraversal"));
-	FinisherComponent = CreateDefaultSubobject<UGolemFinisherComponent>(TEXT("KnightFinisher"));
+	TraversalComponent = CreateDefaultSubobject<UGolemTraversalComponent>(TEXT("GolemTraversal"));
+	FinisherComponent = CreateDefaultSubobject<UGolemFinisherComponent>(TEXT("GolemFinisher"));
 	CameraModeComponent = CreateDefaultSubobject<UGolemCameraModeComponent>(TEXT("GolemCameraModes"));
 	MotionWarping = CreateDefaultSubobject<UMotionWarpingComponent>(TEXT("GolemMotionWarping"));
 	AbilityInitializationResult = FGolemResult::Failure(EGolemError::InvalidState, TEXT("InitializeGolemAbilities"),
@@ -334,7 +334,7 @@ void AGolemCharacter::EndPlay(const EEndPlayReason::Type EndPlayReason)
 		const FGolemResult Revoke = AbilitySystem->RevokeAbilitySet(DefaultAbilitySetHandle);
 		if (!Revoke.IsSuccess())
 		{
-			UE_LOG(LogGolemCharacter, Error, TEXT("Knight %s default grant cleanup failed: %s"),
+			UE_LOG(LogGolemCharacter, Error, TEXT("Golem %s default grant cleanup failed: %s"),
 				*GolemEntityId.Value.ToString(), *Revoke.Message.ToString());
 		}
 	}
@@ -477,7 +477,7 @@ void AGolemCharacter::RefreshGolemAbilityContext()
 	AbilityInitializationResult = InitializeGolemAbilitySystem();
 	if (!AbilityInitializationResult.IsSuccess())
 	{
-		UE_LOG(LogGolemCharacter, Error, TEXT("Knight %s ability initialization failed: %s"),
+		UE_LOG(LogGolemCharacter, Error, TEXT("Golem %s ability initialization failed: %s"),
 			*GolemEntityId.Value.ToString(), *AbilityInitializationResult.Message.ToString());
 	}
 	else if (CombatComponent->GetProfileId().IsValid())
@@ -551,7 +551,7 @@ void AGolemCharacter::ApplyHeroPresentation()
 	const FGolemResult MovementPresentation = CombatComponent->RefreshBaseWalkSpeed(HeroDefinition->GetWalkSpeed());
 	if (!MovementPresentation.IsSuccess())
 	{
-		UE_LOG(LogGolemCharacter, Error, TEXT("Knight %s movement presentation failed [%s]: %s"),
+		UE_LOG(LogGolemCharacter, Error, TEXT("Golem %s movement presentation failed [%s]: %s"),
 			*GolemEntityId.Value.ToString(), *MovementPresentation.Context.ToString(),
 			*MovementPresentation.Message.ToString());
 	}

@@ -47,13 +47,13 @@ DEFINE_LOG_CATEGORY_STATIC(LogGolemCombatAuthoring, Log, All);
 
 namespace GolemCombatAssetAuthoring
 {
-	const FString VendorRoot = TEXT("/Game/Knight/Vendor/UE58/Mannequins/");
+	const FString VendorRoot = TEXT("/Game/Golem/Vendor/UE58/Mannequins/");
 	const FString OriginalRoot = TEXT("/Game/Characters/Mannequins/");
-	const FString AnimationRoot = TEXT("/Game/Knight/Combat/Animations/");
+	const FString AnimationRoot = TEXT("/Game/Golem/Combat/Animations/");
 
 	bool SaveAsset(UObject* Asset)
 	{
-		if (!IsValid(Asset) || !Asset->GetPackage()->GetName().StartsWith(TEXT("/Game/Knight/")))
+		if (!IsValid(Asset) || !Asset->GetPackage()->GetName().StartsWith(TEXT("/Game/Golem/")))
 		{
 			UE_LOG(LogGolemCombatAuthoring, Error, TEXT("Combat authoring may save only owned Golem packages."));
 			return false;
@@ -62,7 +62,7 @@ namespace GolemCombatAssetAuthoring
 		const FString Filename = FPaths::ConvertRelativePathToFull(
 			FPackageName::LongPackageNameToFilename(Package->GetName(), FPackageName::GetAssetPackageExtension()));
 		const FString OwnedContentRoot = FPaths::ConvertRelativePathToFull(
-			FPaths::Combine(FPaths::ProjectContentDir(), TEXT("Knight/")));
+			FPaths::Combine(FPaths::ProjectContentDir(), TEXT("Golem/")));
 		if (!FPaths::IsUnderDirectory(Filename, OwnedContentRoot))
 		{
 			UE_LOG(LogGolemCombatAuthoring, Error, TEXT("Combat save escaped project Golem content: %s."), *Filename);
@@ -148,7 +148,7 @@ namespace GolemCombatAssetAuthoring
 			{
 				VendorDependencies.Add(PackageName);
 			}
-			else if (PackageName.StartsWith(TEXT("/Game/")) && !PackageName.StartsWith(TEXT("/Game/Knight/")))
+			else if (PackageName.StartsWith(TEXT("/Game/")) && !PackageName.StartsWith(TEXT("/Game/Golem/")))
 			{
 				InvalidDependencies.Add(PackageName);
 			}
@@ -484,7 +484,7 @@ namespace GolemCombatAssetAuthoring
 		}
 		IAnimationDataController& Controller = Sequence->GetController();
 		IAnimationDataController::FScopedBracket Bracket(Controller,
-			NSLOCTEXT("KnightCombatAuthoring", "RootTrajectory", "Author Golem traversal root motion"), false);
+			NSLOCTEXT("GolemCombatAuthoring", "RootTrajectory", "Author Golem traversal root motion"), false);
 		if ((!Model->IsValidBoneTrackName(RootName) && !Controller.AddBoneCurve(RootName, false))
 			|| !Controller.SetBoneTrackKeys(RootName, Positions, Rotations, Scales, false))
 		{
@@ -498,11 +498,11 @@ namespace GolemCombatAssetAuthoring
 
 	UAnimSequence* CreateTraversalSequence()
 	{
-		const FString PackageName = AnimationRoot + TEXT("AS_Knight_Traversal");
+		const FString PackageName = AnimationRoot + TEXT("AS_Golem_Traversal");
 		UAnimSequence* Sequence = nullptr;
 		if (FPackageName::DoesPackageExist(PackageName))
 		{
-			Sequence = LoadObject<UAnimSequence>(nullptr, *(PackageName + TEXT(".AS_Knight_Traversal")));
+			Sequence = LoadObject<UAnimSequence>(nullptr, *(PackageName + TEXT(".AS_Golem_Traversal")));
 			if (Sequence != nullptr && !ValidateTraversalSequence(Sequence, false))
 			{
 				// Repair only the generated root track; retained pose tracks, curves and attributes remain intact.
@@ -529,7 +529,7 @@ namespace GolemCombatAssetAuthoring
 			{
 				return nullptr;
 			}
-			Sequence = NewObject<UAnimSequence>(CreatePackage(*PackageName), TEXT("AS_Knight_Traversal"),
+			Sequence = NewObject<UAnimSequence>(CreatePackage(*PackageName), TEXT("AS_Golem_Traversal"),
 				RF_Public | RF_Standalone);
 			if (Sequence == nullptr || Sequence->GetDataModel() == nullptr)
 			{
@@ -538,7 +538,7 @@ namespace GolemCombatAssetAuthoring
 			{
 				IAnimationDataController& Controller = Sequence->GetController();
 				IAnimationDataController::FScopedBracket Bracket(Controller,
-					NSLOCTEXT("KnightCombatAuthoring", "RootTrajectory", "Author Golem traversal root motion"), false);
+					NSLOCTEXT("GolemCombatAuthoring", "RootTrajectory", "Author Golem traversal root motion"), false);
 				Sequence->SetSkeleton(Source->GetSkeleton());
 				Sequence->BoneCompressionSettings = Source->BoneCompressionSettings;
 				Sequence->CurveCompressionSettings = Source->CurveCompressionSettings;
@@ -669,7 +669,7 @@ namespace GolemCombatAssetAuthoring
 					Cast<UAnimNotifyState_MotionWarping>(Notify.NotifyStateClass))
 				{
 					const URootMotionModifier_SkewWarp* Warp = Cast<URootMotionModifier_SkewWarp>(WarpNotify->RootMotionModifier);
-					bHasWarp |= Warp != nullptr && Warp->WarpTargetName == FName(TEXT("KnightTraversal"))
+					bHasWarp |= Warp != nullptr && Warp->WarpTargetName == FName(TEXT("GolemTraversal"))
 						&& Warp->bWarpTranslation && Warp->bWarpRotation && !Warp->bWarpToFeetLocation && !Warp->bIgnoreZAxis;
 				}
 			}
@@ -732,13 +732,13 @@ namespace GolemCombatAssetAuthoring
 				{
 					UGolemAnimNotifyState_TraceWindow* Trace = NewObject<UGolemAnimNotifyState_TraceWindow>(Montage);
 					Trace->WindowId = Sections[Index];
-					AddNotifyWindow(Montage, Trace, TEXT("KnightTrace"), StartTime + Duration * 0.22f,
+					AddNotifyWindow(Montage, Trace, TEXT("GolemTrace"), StartTime + Duration * 0.22f,
 						Duration * 0.42f, 0);
 				}
 				if (bCombo)
 				{
 					AddNotifyWindow(Montage, NewObject<UGolemAnimNotifyState_ComboWindow>(Montage),
-						TEXT("KnightCombo"), StartTime + Duration * 0.5f, Duration * 0.4f, 1);
+						TEXT("GolemCombo"), StartTime + Duration * 0.5f, Duration * 0.4f, 1);
 				}
 				StartTime += Duration;
 			}
@@ -750,13 +750,13 @@ namespace GolemCombatAssetAuthoring
 			{
 				UAnimNotifyState_MotionWarping* Notify = NewObject<UAnimNotifyState_MotionWarping>(Montage);
 				URootMotionModifier_SkewWarp* Warp = NewObject<URootMotionModifier_SkewWarp>(Notify);
-				Warp->WarpTargetName = TEXT("KnightTraversal");
+				Warp->WarpTargetName = TEXT("GolemTraversal");
 				Warp->bWarpTranslation = true;
 				Warp->bWarpToFeetLocation = false;
 				Warp->bIgnoreZAxis = false;
 				Warp->bWarpRotation = true;
 				Notify->RootMotionModifier = Warp;
-				AddNotifyWindow(Montage, Notify, TEXT("KnightTraversalWarp"), 0.0f, StartTime - 0.01f, 0);
+				AddNotifyWindow(Montage, Notify, TEXT("GolemTraversalWarp"), 0.0f, StartTime - 0.01f, 0);
 			}
 		}
 		if (bTraversal && Montage->BlendOutTriggerTime != 0.0f)
@@ -807,14 +807,14 @@ namespace GolemCombatAssetAuthoring
 	{
 		bool bCreated = false;
 		UGolemAbilitySetDefinition* Set = FindOrCreateAsset<UGolemAbilitySetDefinition>(
-			TEXT("/Game/Knight/Definitions/DA_Knight_AbilitySet_Combat"), bCreated);
+			TEXT("/Game/Golem/Definitions/DA_Golem_AbilitySet_Combat"), bCreated);
 		if (Set == nullptr)
 		{
 			return false;
 		}
 		if (bCreated)
 		{
-			if (!Set->TrySetIdentity(TEXT("FoundationCombat"), TEXT("KnightAbilitySet")))
+			if (!Set->TrySetIdentity(TEXT("FoundationCombat"), TEXT("GolemAbilitySet")))
 			{
 				return false;
 			}
@@ -868,9 +868,9 @@ namespace GolemCombatAssetAuthoring
 			{
 				return false;
 			}
-			Set->SetDisplayName(NSLOCTEXT("KnightCombatAuthoring", "CombatSet", "Foundation combat abilities"));
+			Set->SetDisplayName(NSLOCTEXT("GolemCombatAuthoring", "CombatSet", "Foundation combat abilities"));
 		}
-		return Set->GetPrimaryAssetId() == FPrimaryAssetId(TEXT("KnightAbilitySet"), TEXT("FoundationCombat"))
+		return Set->GetPrimaryAssetId() == FPrimaryAssetId(TEXT("GolemAbilitySet"), TEXT("FoundationCombat"))
 			&& Set->ValidateAbilitySet().IsSuccess() && SaveAsset(Set);
 	}
 
@@ -885,22 +885,22 @@ namespace GolemCombatAssetAuthoring
 		UAnimSequence* AttackC = LoadSequence(TEXT("Anims/Unarmed/Attack/MM_Attack_03"));
 		UAnimSequence* HeavySequence = LoadSequence(TEXT("Anims/Unarmed/Attack/MM_ChargedAttack"));
 		UAnimSequence* TraversalSequence = CreateTraversalSequence();
-		UAnimMontage* Light = CreateMontage(TEXT("AM_Knight_Light"), { AttackA, AttackB, AttackC },
+		UAnimMontage* Light = CreateMontage(TEXT("AM_Golem_Light"), { AttackA, AttackB, AttackC },
 			{ TEXT("LightA"), TEXT("LightB"), TEXT("LightC") }, true, true);
-		UAnimMontage* Heavy = CreateMontage(TEXT("AM_Knight_Heavy"), { HeavySequence }, { TEXT("Heavy") }, true);
-		UAnimMontage* Dodge = CreateMontage(TEXT("AM_Knight_Dodge"),
+		UAnimMontage* Heavy = CreateMontage(TEXT("AM_Golem_Heavy"), { HeavySequence }, { TEXT("Heavy") }, true);
+		UAnimMontage* Dodge = CreateMontage(TEXT("AM_Golem_Dodge"),
 			{ LoadSequence(TEXT("Anims/Unarmed/Jump/MM_Dash")) }, { TEXT("Dodge") });
-		UAnimMontage* Rune = CreateMontage(TEXT("AM_Knight_Rune"), { AttackC }, { TEXT("Rune") });
-		UAnimMontage* Stagger = CreateMontage(TEXT("AM_Knight_Stagger"),
+		UAnimMontage* Rune = CreateMontage(TEXT("AM_Golem_Rune"), { AttackC }, { TEXT("Rune") });
+		UAnimMontage* Stagger = CreateMontage(TEXT("AM_Golem_Stagger"),
 			{ LoadSequence(TEXT("Anims/Rifle/HitReact/MM_HitReact_Front_Hvy_01")) }, { TEXT("Stagger") });
-		UAnimMontage* Traversal = CreateMontage(TEXT("AM_Knight_Traversal"),
+		UAnimMontage* Traversal = CreateMontage(TEXT("AM_Golem_Traversal"),
 			{ TraversalSequence }, { TEXT("Traversal") }, false, false, true);
-		UAnimMontage* Finisher = CreateMontage(TEXT("AM_Knight_Finisher"), { HeavySequence },
+		UAnimMontage* Finisher = CreateMontage(TEXT("AM_Golem_Finisher"), { HeavySequence },
 			{ TEXT("Finisher") }, false, false, false, 3.0f);
-		UAnimMontage* Victim = CreateMontage(TEXT("AM_Knight_FinisherVictim"),
+		UAnimMontage* Victim = CreateMontage(TEXT("AM_Golem_FinisherVictim"),
 			{ LoadSequence(TEXT("Anims/Death/MM_Death_Front_01")) }, { TEXT("Victim") }, false, false, false, 3.0f);
 		USkeletalMesh* Mesh = LoadObject<USkeletalMesh>(nullptr,
-			TEXT("/Game/Knight/Vendor/UE58/Mannequins/Meshes/SKM_Manny_Simple.SKM_Manny_Simple"));
+			TEXT("/Game/Golem/Vendor/UE58/Mannequins/Meshes/SKM_Manny_Simple.SKM_Manny_Simple"));
 		if (Light == nullptr || Heavy == nullptr || Dodge == nullptr || Rune == nullptr || Stagger == nullptr
 			|| Traversal == nullptr || Finisher == nullptr || Victim == nullptr || Mesh == nullptr)
 		{
@@ -909,15 +909,15 @@ namespace GolemCombatAssetAuthoring
 		}
 		bool bCreated = false;
 		UGolemCombatProfileDefinition* Profile = FindOrCreateAsset<UGolemCombatProfileDefinition>(
-			TEXT("/Game/Knight/Definitions/DA_Knight_CombatProfile_Foundation"), bCreated);
+			TEXT("/Game/Golem/Definitions/DA_Golem_CombatProfile_Foundation"), bCreated);
 		if (Profile == nullptr)
 		{
 			return false;
 		}
 		if (bCreated)
 		{
-			if (!Profile->TrySetIdentity(TEXT("FoundationCombat"), TEXT("KnightCombatProfile"))
-				|| !Profile->TrySetCombatAbilitySetId(FPrimaryAssetId(TEXT("KnightAbilitySet"), TEXT("FoundationCombat"))).IsSuccess()
+			if (!Profile->TrySetIdentity(TEXT("FoundationCombat"), TEXT("GolemCombatProfile"))
+				|| !Profile->TrySetCombatAbilitySetId(FPrimaryAssetId(TEXT("GolemAbilitySet"), TEXT("FoundationCombat"))).IsSuccess()
 				|| !Profile->TrySetPresentation(Mesh, LoadSequence(TEXT("Anims/Unarmed/MM_Idle")),
 					LoadSequence(TEXT("Anims/Unarmed/Walk/MF_Unarmed_Walk_Fwd"))).IsSuccess())
 			{
@@ -946,7 +946,7 @@ namespace GolemCombatAssetAuthoring
 			{
 				return false;
 			}
-			Profile->SetDisplayName(NSLOCTEXT("KnightCombatAuthoring", "FoundationProfile", "Foundation hammer combat"));
+			Profile->SetDisplayName(NSLOCTEXT("GolemCombatAuthoring", "FoundationProfile", "Foundation hammer combat"));
 		}
 		const FGolemResult Validation = Profile->ValidateCombatProfile();
 		if (!Validation.IsSuccess())
@@ -955,7 +955,7 @@ namespace GolemCombatAssetAuthoring
 				*Validation.Message.ToString());
 			return false;
 		}
-		return Profile->GetPrimaryAssetId() == FPrimaryAssetId(TEXT("KnightCombatProfile"), TEXT("FoundationCombat"))
+		return Profile->GetPrimaryAssetId() == FPrimaryAssetId(TEXT("GolemCombatProfile"), TEXT("FoundationCombat"))
 			&& SaveAsset(Profile);
 	}
 }

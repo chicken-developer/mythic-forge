@@ -85,17 +85,17 @@ void AGolemCombatChallengeHUD::HandleChallengeSnapshot()
 		? ChallengeSource->GetSnapshot() : FGolemCombatChallengeSnapshot();
 	bChallengeCompleted = Snapshot.bCompleted;
 	bChallengeFailed = Snapshot.bFailed;
-	AttackProgress = FText::Format(NSLOCTEXT("KnightCombatChallenge", "Attacks",
+	AttackProgress = FText::Format(NSLOCTEXT("GolemCombatChallenge", "Attacks",
 		"Light hits: {0} | Heavy hits: {1} | Combos: {2}"), FText::AsNumber(Snapshot.LightHitCount),
 		FText::AsNumber(Snapshot.HeavyHitCount), FText::AsNumber(Snapshot.ComboCount));
-	DefenseProgress = FText::Format(NSLOCTEXT("KnightCombatChallenge", "Defense",
+	DefenseProgress = FText::Format(NSLOCTEXT("GolemCombatChallenge", "Defense",
 		"Blocked: {0} | Parried: {1} | Dodged: {2} | Staggered: {3}"), FText::AsNumber(Snapshot.BlockCount),
 		FText::AsNumber(Snapshot.ParryCount), FText::AsNumber(Snapshot.DodgeCount),
 		FText::AsNumber(Snapshot.StaggerCount));
-	ActionProgress = FText::Format(NSLOCTEXT("KnightCombatChallenge", "Actions",
+	ActionProgress = FText::Format(NSLOCTEXT("GolemCombatChallenge", "Actions",
 		"Target lock: {0} | Rune hits: {1} | Finishers: {2} | Traversals: {3}"),
-		Snapshot.bTargetLocked ? NSLOCTEXT("KnightCombatChallenge", "Done", "done")
-			: NSLOCTEXT("KnightCombatChallenge", "Pending", "pending"),
+		Snapshot.bTargetLocked ? NSLOCTEXT("GolemCombatChallenge", "Done", "done")
+			: NSLOCTEXT("GolemCombatChallenge", "Pending", "pending"),
 		FText::AsNumber(Snapshot.RuneHitCount), FText::AsNumber(Snapshot.FinisherCount),
 		FText::AsNumber(Snapshot.TraversalCount));
 }
@@ -127,31 +127,31 @@ void AGolemCombatChallengeHUD::HandleControlledCombatChanged(AGolemCharacter* Pr
 
 void AGolemCombatChallengeHUD::HandleCombatSnapshot(const FGolemCombatSnapshot& Snapshot)
 {
-	FText Action = NSLOCTEXT("KnightCombatChallenge", "Ready", "ready");
+	FText Action = NSLOCTEXT("GolemCombatChallenge", "Ready", "ready");
 	if (Snapshot.bStaggered)
 	{
-		Action = NSLOCTEXT("KnightCombatChallenge", "Staggered", "STAGGERED");
+		Action = NSLOCTEXT("GolemCombatChallenge", "Staggered", "STAGGERED");
 	}
 	else if (Snapshot.bDodging)
 	{
-		Action = NSLOCTEXT("KnightCombatChallenge", "Dodging", "dodging");
+		Action = NSLOCTEXT("GolemCombatChallenge", "Dodging", "dodging");
 	}
 	else if (Snapshot.bParrying)
 	{
-		Action = NSLOCTEXT("KnightCombatChallenge", "Parrying", "parrying");
+		Action = NSLOCTEXT("GolemCombatChallenge", "Parrying", "parrying");
 	}
 	else if (Snapshot.bBlocking)
 	{
-		Action = NSLOCTEXT("KnightCombatChallenge", "Blocking", "blocking");
+		Action = NSLOCTEXT("GolemCombatChallenge", "Blocking", "blocking");
 	}
 	else if (Snapshot.bAttacking)
 	{
-		Action = NSLOCTEXT("KnightCombatChallenge", "Attacking", "attacking");
+		Action = NSLOCTEXT("GolemCombatChallenge", "Attacking", "attacking");
 	}
-	CombatStatus = FText::Format(NSLOCTEXT("KnightCombatChallenge", "CombatStatus",
+	CombatStatus = FText::Format(NSLOCTEXT("GolemCombatChallenge", "CombatStatus",
 		"Poise: {0} | Combo stage: {1} | Lock: {2} | {3}"), FText::AsNumber(FMath::RoundToInt(Snapshot.Poise)),
 		FText::AsNumber(Snapshot.ComboIndex), IsValid(Snapshot.LockedTarget)
-			? NSLOCTEXT("KnightCombatChallenge", "LockOn", "on") : NSLOCTEXT("KnightCombatChallenge", "LockOff", "off"),
+			? NSLOCTEXT("GolemCombatChallenge", "LockOn", "on") : NSLOCTEXT("GolemCombatChallenge", "LockOff", "off"),
 		Action);
 }
 
@@ -168,7 +168,7 @@ void AGolemCombatChallengeHUD::HandleCombatCommandResult(const FGolemResult& Res
 void AGolemCombatChallengeHUD::RefreshResourceSnapshot()
 {
 	const UGolemAttributeSet* Attributes = ResourceSource.IsValid() ? ResourceSource->GetGolemAttributes() : nullptr;
-	ResourceStatus = FText::Format(NSLOCTEXT("KnightCombatChallenge", "Resources", "Stamina: {0}/{1} | Rune energy: {2}/{3}"),
+	ResourceStatus = FText::Format(NSLOCTEXT("GolemCombatChallenge", "Resources", "Stamina: {0}/{1} | Rune energy: {2}/{3}"),
 		FText::AsNumber(FMath::RoundToInt(Attributes != nullptr ? Attributes->GetStamina() : 0.0f)),
 		FText::AsNumber(FMath::RoundToInt(Attributes != nullptr ? Attributes->GetMaxStamina() : 0.0f)),
 		FText::AsNumber(FMath::RoundToInt(Attributes != nullptr ? Attributes->GetRuneEnergy() : 0.0f)),
@@ -203,21 +203,21 @@ void AGolemCombatChallengeHUD::DrawHUD()
 	}
 	const TArray<FText> Lines =
 	{
-		NSLOCTEXT("KnightCombatChallenge", "Title", "THREE DREAMING GOLEMS - Combat challenge"),
-		FText::Format(NSLOCTEXT("KnightCombatChallenge", "GolemHealth", "{0} | Health: {1}"),
+		NSLOCTEXT("GolemCombatChallenge", "Title", "THREE DREAMING GOLEMS - Combat challenge"),
+		FText::Format(NSLOCTEXT("GolemCombatChallenge", "GolemHealth", "{0} | Health: {1}"),
 			GetDisplayedGolemName(), FText::AsNumber(FMath::RoundToInt(GetDisplayedHealth()))),
 		ResourceStatus,
 		CombatStatus,
-		NSLOCTEXT("KnightCombatChallenge", "AttackControls", "LMB / RT light | RMB / LT heavy | repeat light during the combo window"),
-		NSLOCTEXT("KnightCombatChallenge", "DefenseControls", "Hold Q / LB block | C / left stick click parry | Shift / B dodge"),
-		NSLOCTEXT("KnightCombatChallenge", "ActionControls", "MMB / right stick click lock | G / D-pad up rune | H / D-pad right finisher | V / D-pad down traverse"),
-		NSLOCTEXT("KnightCombatChallenge", "MovementControls", "WASD / sticks move | Space / A jump | Tab / 1-3 / RB switch | R / Y retry | E / X revive | F / D-pad left telegraph"),
+		NSLOCTEXT("GolemCombatChallenge", "AttackControls", "LMB / RT light | RMB / LT heavy | repeat light during the combo window"),
+		NSLOCTEXT("GolemCombatChallenge", "DefenseControls", "Hold Q / LB block | C / left stick click parry | Shift / B dodge"),
+		NSLOCTEXT("GolemCombatChallenge", "ActionControls", "MMB / right stick click lock | G / D-pad up rune | H / D-pad right finisher | V / D-pad down traverse"),
+		NSLOCTEXT("GolemCombatChallenge", "MovementControls", "WASD / sticks move | Space / A jump | Tab / 1-3 / RB switch | R / Y retry | E / X revive | F / D-pad left telegraph"),
 		AttackProgress,
 		DefenseProgress,
 		ActionProgress,
-		bChallengeCompleted ? NSLOCTEXT("KnightCombatChallenge", "Completed", "CHALLENGE COMPLETE - R / Y resets all fixtures")
-			: bChallengeFailed ? NSLOCTEXT("KnightCombatChallenge", "Failed", "CHALLENGE FAILED - R / Y retry")
-			: ChallengeCommandStatus.IsEmpty() ? NSLOCTEXT("KnightCombatChallenge", "Goal",
+		bChallengeCompleted ? NSLOCTEXT("GolemCombatChallenge", "Completed", "CHALLENGE COMPLETE - R / Y resets all fixtures")
+			: bChallengeFailed ? NSLOCTEXT("GolemCombatChallenge", "Failed", "CHALLENGE FAILED - R / Y retry")
+			: ChallengeCommandStatus.IsEmpty() ? NSLOCTEXT("GolemCombatChallenge", "Goal",
 				"Use the marked stations to demonstrate attacks, defense, stagger, rune, finisher and traversal.")
 				: ChallengeCommandStatus
 	};

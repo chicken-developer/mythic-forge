@@ -341,7 +341,7 @@ FGolemResult UGolemSkillRuntimeComponent::ValidateSkill(int32 Slot, AActor* Targ
 	if (RequiresHammer())
 	{
 		return FGolemResult::Failure(EGolemError::InvalidState, TEXT("RequiresHammer"),
-			NSLOCTEXT("KnightEquipment", "RequiresHammer", "Equip a hammer to use this action."));
+			NSLOCTEXT("GolemEquipment", "RequiresHammer", "Equip a hammer to use this action."));
 	}
 	UGolemAbilitySystemComponent* ASC = ResolveASC();
 	const UGolemAttributeSet* A = ResolveAttributes();

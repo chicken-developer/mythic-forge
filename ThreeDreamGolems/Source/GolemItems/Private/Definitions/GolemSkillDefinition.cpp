@@ -2,7 +2,7 @@
 
 #include "Misc/DataValidation.h"
 
-#define LOCTEXT_NAMESPACE "KnightSkillDefinition"
+#define LOCTEXT_NAMESPACE "GolemSkillDefinition"
 
 namespace
 {
@@ -20,7 +20,7 @@ namespace
 		for (const FGolemMaterialCost& Cost : Costs)
 		{
 			if (!GolemIdentity::IsValidDefinitionId(Cost.DefinitionId)
-				|| Cost.DefinitionId.PrimaryAssetType != FPrimaryAssetType(TEXT("KnightItem"))
+				|| Cost.DefinitionId.PrimaryAssetType != FPrimaryAssetType(TEXT("GolemItem"))
 				|| Cost.Count < 1 || Cost.Count > GolemItems::MaximumStackCount || Ids.Contains(Cost.DefinitionId))
 			{
 				return FGolemResult::Failure(EGolemError::InvalidData, TEXT("SkillCosts"),
@@ -32,7 +32,7 @@ namespace
 		for (const FPrimaryAssetId& Prerequisite : Prerequisites)
 		{
 			if (!GolemIdentity::IsValidDefinitionId(Prerequisite)
-				|| Prerequisite.PrimaryAssetType != FPrimaryAssetType(TEXT("KnightSkill")) || Ids.Contains(Prerequisite))
+				|| Prerequisite.PrimaryAssetType != FPrimaryAssetType(TEXT("GolemSkill")) || Ids.Contains(Prerequisite))
 			{
 				return FGolemResult::Failure(EGolemError::InvalidId, TEXT("SkillPrerequisite"),
 					LOCTEXT("Prerequisites", "Skill prerequisites require distinct stable GolemSkill identities."));
@@ -40,7 +40,7 @@ namespace
 			Ids.Add(Prerequisite);
 		}
 		if (AbilitySetId != FPrimaryAssetId() && (!GolemIdentity::IsValidDefinitionId(AbilitySetId)
-			|| AbilitySetId.PrimaryAssetType != FPrimaryAssetType(TEXT("KnightAbilitySet"))))
+			|| AbilitySetId.PrimaryAssetType != FPrimaryAssetType(TEXT("GolemAbilitySet"))))
 		{
 			return FGolemResult::Failure(EGolemError::InvalidId, TEXT("SkillAbilitySet"),
 				LOCTEXT("AbilitySet", "An optional skill grant must identify an actual GolemAbilitySet."));
@@ -52,7 +52,7 @@ namespace
 
 UGolemSkillDefinition::UGolemSkillDefinition()
 {
-	DefinitionType = TEXT("KnightSkill");
+	DefinitionType = TEXT("GolemSkill");
 }
 
 int32 UGolemSkillDefinition::GetPointCost() const
@@ -110,7 +110,7 @@ FGolemResult UGolemSkillDefinition::ValidateSkill() const
 	{
 		return Identity;
 	}
-	if (GetDefinitionType() != TEXT("KnightSkill") || Prerequisites.Contains(GetPrimaryAssetId()))
+	if (GetDefinitionType() != TEXT("GolemSkill") || Prerequisites.Contains(GetPrimaryAssetId()))
 	{
 		return FGolemResult::Failure(EGolemError::InvalidData, GetDefinitionId(),
 			LOCTEXT("Identity", "A GolemSkill definition cannot require itself."));

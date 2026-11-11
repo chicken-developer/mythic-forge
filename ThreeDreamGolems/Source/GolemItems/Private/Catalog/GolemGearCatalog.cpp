@@ -4,7 +4,7 @@
 #include "Definitions/GolemRuneDefinition.h"
 #include "Tags/GolemGameplayTags.h"
 
-#define LOCTEXT_NAMESPACE "KnightGearCatalog"
+#define LOCTEXT_NAMESPACE "GolemGearCatalog"
 
 namespace GolemGearCatalog
 {
@@ -34,10 +34,10 @@ FPrimaryAssetId FGolemGearCatalog::DefinitionId(FName CatalogId)
 	{
 		if (CatalogId == FName(*FString::Printf(TEXT("R%02d"), Index + 1)))
 		{
-			return FPrimaryAssetId(TEXT("KnightItem"), RuneIds[Index]);
+			return FPrimaryAssetId(TEXT("GolemItem"), RuneIds[Index]);
 		}
 	}
-	return FPrimaryAssetId(TEXT("KnightItem"), FName(*(TEXT("M056_") + CatalogId.ToString())));
+	return FPrimaryAssetId(TEXT("GolemItem"), FName(*(TEXT("M056_") + CatalogId.ToString())));
 }
 
 const TArray<FGolemGearSeed>& FGolemGearCatalog::GetSeeds()
@@ -170,7 +170,7 @@ const TArray<FGolemGearSeed>& FGolemGearCatalog::GetSeeds()
 
 FGolemResult FGolemGearCatalog::ConfigureDefinition(UGolemItemDefinition* Definition, const FGolemGearSeed& Seed)
 {
-	if (!IsValid(Definition) || !Definition->TrySetIdentity(Seed.DefinitionId.PrimaryAssetName, TEXT("KnightItem")))
+	if (!IsValid(Definition) || !Definition->TrySetIdentity(Seed.DefinitionId.PrimaryAssetName, TEXT("GolemItem")))
 	{
 		return FGolemResult::Failure(EGolemError::InvalidId, TEXT("GearSeed"), LOCTEXT("SeedIdentity", "Gear authoring needs the exact stable definition identity."));
 	}

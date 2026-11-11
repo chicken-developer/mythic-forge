@@ -29,20 +29,20 @@ FGolemResult AGolemGameMode::TryRestartDrill(APlayerController* Player)
 	if (!HasAuthority() || !IsValid(Player) || Player->GetWorld() != GetWorld())
 	{
 		return FGolemResult::Failure(EGolemError::NotAuthority, TEXT("RestartDrill"),
-			NSLOCTEXT("KnightTraining", "RetryAuthority", "Only the host may reset the training yard."));
+			NSLOCTEXT("GolemTraining", "RetryAuthority", "Only the host may reset the training yard."));
 	}
 	if (!Player->IsLocalController() || Party == nullptr || State == nullptr
 		|| Party->GetControlledSlot(Player) == INDEX_NONE || !Party->IsCanonicalRosterReady())
 	{
 		return FGolemResult::Failure(EGolemError::NotOwned, TEXT("RestartDrill"),
-			NSLOCTEXT("KnightTraining", "RetryHost", "The host must control a ready canonical Golem to restart."));
+			NSLOCTEXT("GolemTraining", "RetryHost", "The host must control a ready canonical Golem to restart."));
 	}
 	for (const FGolemRosterEntry& Entry : Party->GetRoster())
 	{
 		if (!Entry.Golem->CanTransferControl())
 		{
 			return FGolemResult::Failure(EGolemError::InvalidState, TEXT("RestartDrill"),
-				NSLOCTEXT("KnightTraining", "RetryBusy", "A Golem's current gameplay state blocks restarting."));
+				NSLOCTEXT("GolemTraining", "RetryBusy", "A Golem's current gameplay state blocks restarting."));
 		}
 	}
 	for (const FGolemRosterEntry& Entry : Party->GetRoster())

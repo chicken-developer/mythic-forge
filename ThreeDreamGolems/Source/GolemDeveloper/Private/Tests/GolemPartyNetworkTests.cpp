@@ -28,8 +28,8 @@
 
 namespace GolemPartyNetworkTests
 {
-	const TCHAR* TrainingMap = TEXT("/Game/Knight/Maps/Playables/L_M01_TrainingYard");
-	const TCHAR* DisconnectMap = TEXT("/Game/Knight/Maps/Playables/L_M00_Boot");
+	const TCHAR* TrainingMap = TEXT("/Game/Golem/Maps/Playables/L_M01_TrainingYard");
+	const TCHAR* DisconnectMap = TEXT("/Game/Golem/Maps/Playables/L_M00_Boot");
 	constexpr double StartupTimeout = 45.0;
 	constexpr double PhaseTimeout = 20.0;
 	constexpr double MovementDuration = 1.5;

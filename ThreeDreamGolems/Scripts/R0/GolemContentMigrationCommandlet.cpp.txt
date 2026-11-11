@@ -1,0 +1,326 @@
+#include "Commandlets/GolemContentMigrationCommandlet.h"
+
+#include "AssetRegistry/AssetRegistryModule.h"
+#include "AssetRegistry/IAssetRegistry.h"
+#include "Engine/Level.h"
+#include "FileHelpers.h"
+#include "GameFramework/Actor.h"
+#include "Internationalization/Text.h"
+#include "Misc/Parse.h"
+#include "StateTree.h"
+#include "StateTreeCompilerLog.h"
+#include "StateTreeEditingSubsystem.h"
+#include "StructUtils/InstancedStruct.h"
+#include "UObject/Package.h"
+#include "UObject/SoftObjectPath.h"
+#include "UObject/SoftObjectPtr.h"
+#include "UObject/TextProperty.h"
+#include "UObject/UnrealType.h"
+#include "UObject/UObjectHash.h"
+
+DEFINE_LOG_CATEGORY_STATIC(LogGolemContentMigration, Log, All);
+
+namespace GolemContentMigration
+{
+	// Spelled in pieces so the project-wide rename never rewrites the search terms.
+	const FString OldWord = FString(TEXT("Kni")) + TEXT("ght");
+	const FString OldProject = FString(TEXT("ThreeDreaming")) + OldWord + TEXT("s");
+	const FString OldTitle = FString(TEXT("Three Dreaming ")) + OldWord + TEXT("s");
+	const FString OldShortTitle = FString(TEXT("Three Dream ")) + OldWord + TEXT("s");
+
+	struct FStats
+	{
+		int32 Names = 0;
+		int32 Strings = 0;
+		int32 Texts = 0;
+		int32 SubPaths = 0;
+		int32 Objects = 0;
+		int32 Skipped = 0;
+
+		int32 Total() const { return Names + Strings + Texts + SubPaths + Objects; }
+	};
+
+	bool HasOldWord(const FString& Value)
+	{
+		return Value.Contains(OldWord, ESearchCase::CaseSensitive);
+	}
+
+	FString Renamed(const FString& Value)
+	{
+		FString Result = Value.Replace(*OldProject, TEXT("ThreeDreamGolems"), ESearchCase::CaseSensitive);
+		Result.ReplaceInline(*OldTitle, TEXT("Three Dream Golems"), ESearchCase::CaseSensitive);
+		Result.ReplaceInline(*OldShortTitle, TEXT("Three Dream Golems"), ESearchCase::CaseSensitive);
+		Result.ReplaceInline(*OldWord, TEXT("Golem"), ESearchCase::CaseSensitive);
+		return Result;
+	}
+
+	void MigrateStruct(const UStruct* Struct, void* Data, const FString& Owner, FStats& Stats, bool bVerbose);
+
+	bool MigrateValue(FProperty* Property, void* Value, const FString& Owner, FStats& Stats, const bool bVerbose)
+	{
+		auto Report = [&](const TCHAR* Kind, const FString& Old, const FString& New)
+		{
+			UE_CLOG(bVerbose, LogGolemContentMigration, Display, TEXT("  %s %s.%s: '%s' -> '%s'"),
+				Kind, *Owner, *Property->GetName(), *Old, *New);
+		};
+		if (const FNameProperty* NameProperty = CastField<FNameProperty>(Property))
+		{
+			const FString Old = NameProperty->GetPropertyValue(Value).ToString();
+			if (HasOldWord(Old))
+			{
+				NameProperty->SetPropertyValue(Value, FName(*Renamed(Old)));
+				++Stats.Names;
+				Report(TEXT("name"), Old, Renamed(Old));
+				return true;
+			}
+			return false;
+		}
+		if (const FStrProperty* StringProperty = CastField<FStrProperty>(Property))
+		{
+			const FString Old = StringProperty->GetPropertyValue(Value);
+			if (HasOldWord(Old))
+			{
+				StringProperty->SetPropertyValue(Value, Renamed(Old));
+				++Stats.Strings;
+				Report(TEXT("string"), Old, Renamed(Old));
+				return true;
+			}
+			return false;
+		}
+		if (const FTextProperty* TextProperty = CastField<FTextProperty>(Property))
+		{
+			// The exported form carries namespace, key, source and the whole format history, so one
+			// replacement covers plain texts and FText::Format results alike.
+			const FText Old = TextProperty->GetPropertyValue(Value);
+			FString Exported;
+			FTextStringHelper::WriteToBuffer(Exported, Old);
+			if (!HasOldWord(Exported))
+			{
+				return false;
+			}
+			FText New;
+			const FString Rewritten = Renamed(Exported);
+			if (FTextStringHelper::ReadFromBuffer(*Rewritten, New) == nullptr)
+			{
+				UE_LOG(LogGolemContentMigration, Warning, TEXT("  kept text %s.%s: cannot re-import '%s'"),
+					*Owner, *Property->GetName(), *Rewritten);
+				++Stats.Skipped;
+				return false;
+			}
+			TextProperty->SetPropertyValue(Value, New);
+			++Stats.Texts;
+			Report(TEXT("text"), Exported, Rewritten);
+			return true;
+		}
+		if (const FSoftObjectProperty* SoftProperty = CastField<FSoftObjectProperty>(Property))
+		{
+			FSoftObjectPtr& Pointer = *static_cast<FSoftObjectPtr*>(Value);
+			const FString OldPath = Pointer.ToSoftObjectPath().ToString();
+			if (HasOldWord(OldPath))
+			{
+				Pointer = FSoftObjectPath(Renamed(OldPath));
+				++Stats.SubPaths;
+				Report(TEXT("softpath"), OldPath, Renamed(OldPath));
+				return true;
+			}
+			return false;
+		}
+		if (const FStructProperty* StructProperty = CastField<FStructProperty>(Property))
+		{
+			if (StructProperty->Struct == TBaseStructure<FInstancedStruct>::Get())
+			{
+				FInstancedStruct& Instance = *static_cast<FInstancedStruct*>(Value);
+				if (Instance.IsValid())
+				{
+					MigrateStruct(Instance.GetScriptStruct(), Instance.GetMutableMemory(), Owner, Stats, bVerbose);
+				}
+				return false;
+			}
+			if (StructProperty->Struct == TBaseStructure<FSoftObjectPath>::Get())
+			{
+				FSoftObjectPath& Path = *static_cast<FSoftObjectPath*>(Value);
+				const FString OldPath = Path.ToString();
+				if (HasOldWord(OldPath))
+				{
+					Path = FSoftObjectPath(Renamed(OldPath));
+					++Stats.SubPaths;
+					Report(TEXT("softpath"), OldPath, Renamed(OldPath));
+					return true;
+				}
+				return false;
+			}
+			const int32 Before = Stats.Total();
+			MigrateStruct(StructProperty->Struct, Value, Owner, Stats, bVerbose);
+			return Stats.Total() != Before;
+		}
+		if (const FArrayProperty* ArrayProperty = CastField<FArrayProperty>(Property))
+		{
+			FScriptArrayHelper Helper(ArrayProperty, Value);
+			bool bChanged = false;
+			for (int32 Index = 0; Index < Helper.Num(); ++Index)
+			{
+				bChanged |= MigrateValue(ArrayProperty->Inner, Helper.GetRawPtr(Index), Owner, Stats, bVerbose);
+			}
+			return bChanged;
+		}
+		if (const FMapProperty* MapProperty = CastField<FMapProperty>(Property))
+		{
+			FScriptMapHelper Helper(MapProperty, Value);
+			bool bKeyChanged = false;
+			bool bChanged = false;
+			for (FScriptMapHelper::FIterator It(Helper); It; ++It)
+			{
+				bKeyChanged |= MigrateValue(MapProperty->KeyProp, Helper.GetKeyPtr(It), Owner, Stats, bVerbose);
+				bChanged |= MigrateValue(MapProperty->ValueProp, Helper.GetValuePtr(It), Owner, Stats, bVerbose);
+			}
+			if (bKeyChanged)
+			{
+				Helper.Rehash();
+			}
+			return bChanged || bKeyChanged;
+		}
+		if (const FSetProperty* SetProperty = CastField<FSetProperty>(Property))
+		{
+			FScriptSetHelper Helper(SetProperty, Value);
+			bool bChanged = false;
+			for (FScriptSetHelper::FIterator It(Helper); It; ++It)
+			{
+				bChanged |= MigrateValue(SetProperty->ElementProp, Helper.GetElementPtr(It), Owner, Stats, bVerbose);
+			}
+			if (bChanged)
+			{
+				Helper.Rehash();
+			}
+			return bChanged;
+		}
+		return false;
+	}
+
+	void MigrateStruct(const UStruct* Struct, void* Data, const FString& Owner, FStats& Stats, const bool bVerbose)
+	{
+		for (TFieldIterator<FProperty> It(Struct); It; ++It)
+		{
+			for (int32 Index = 0; Index < It->ArrayDim; ++Index)
+			{
+				MigrateValue(*It, It->ContainerPtrToValuePtr<void>(Data, Index), Owner, Stats, bVerbose);
+			}
+		}
+	}
+
+	bool MigratePackage(UPackage* Package, FStats& Stats, const bool bVerbose, const bool bRecompileStateTrees)
+	{
+		TArray<UObject*> Objects;
+		GetObjectsWithPackage(Package, Objects);
+		const int32 Before = Stats.Total();
+		for (UObject* Object : Objects)
+		{
+			MigrateStruct(Object->GetClass(), Object, Object->GetName(), Stats, bVerbose);
+			// ULevel serializes its creation URL natively, outside the property system.
+			if (ULevel* Level = Cast<ULevel>(Object); Level != nullptr && HasOldWord(Level->URL.Map))
+			{
+				Level->URL.Map = Renamed(Level->URL.Map);
+				++Stats.Strings;
+			}
+		}
+		for (UObject* Object : Objects)
+		{
+			const FString OldName = Object->GetName();
+			if (Object->GetOuter() == Package || !HasOldWord(OldName))
+			{
+				continue;
+			}
+			const FString NewName = Renamed(OldName);
+			if (StaticFindObjectFast(nullptr, Object->GetOuter(), FName(*NewName)) != nullptr)
+			{
+				UE_LOG(LogGolemContentMigration, Warning, TEXT("  kept %s: %s already exists"), *Object->GetPathName(), *NewName);
+				++Stats.Skipped;
+				continue;
+			}
+			UE_CLOG(Object->IsDefaultSubobject(), LogGolemContentMigration, Warning,
+				TEXT("  default subobject renamed, check its class literal: %s"), *Object->GetPathName());
+			Object->Rename(*NewName, nullptr, REN_DontCreateRedirectors | REN_NonTransactional);
+			++Stats.Objects;
+			UE_CLOG(bVerbose, LogGolemContentMigration, Display, TEXT("  object %s -> %s"), *OldName, *NewName);
+		}
+		bool bCompiled = true;
+		const bool bHasStateTree = Objects.ContainsByPredicate([](const UObject* Object) { return Object->IsA<UStateTree>(); });
+		if (Stats.Total() != Before || (bRecompileStateTrees && bHasStateTree))
+		{
+			for (UObject* Object : Objects)
+			{
+				if (UStateTree* Tree = Cast<UStateTree>(Object))
+				{
+					FStateTreeCompilerLog CompilerLog;
+					const bool bTreeCompiled = UStateTreeEditingSubsystem::CompileStateTree(Tree, CompilerLog);
+					CompilerLog.DumpToLog(Tree, LogGolemContentMigration);
+					UE_CLOG(!bTreeCompiled, LogGolemContentMigration, Error, TEXT("  StateTree failed to compile: %s"), *Tree->GetPathName());
+					bCompiled &= bTreeCompiled;
+				}
+			}
+			Package->MarkPackageDirty();
+		}
+		return bCompiled;
+	}
+}
+
+int32 UGolemContentMigrationCommandlet::Main(const FString& Params)
+{
+	using namespace GolemContentMigration;
+	const bool bDryRun = FParse::Param(*Params, TEXT("DryRun"));
+	const bool bVerbose = bDryRun || FParse::Param(*Params, TEXT("Verbose"));
+	const bool bRecompileStateTrees = FParse::Param(*Params, TEXT("RecompileStateTrees"));
+	IAssetRegistry& Registry = FModuleManager::LoadModuleChecked<FAssetRegistryModule>(TEXT("AssetRegistry")).Get();
+	Registry.SearchAllAssets(true);
+	TArray<FAssetData> Assets;
+	Registry.GetAssetsByPath(FName(TEXT("/Game")), Assets, true);
+	TSet<FName> PackageNames;
+	for (const FAssetData& Asset : Assets)
+	{
+		PackageNames.Add(Asset.PackageName);
+	}
+	TArray<FName> Sorted = PackageNames.Array();
+	Sorted.Sort(FNameLexicalLess());
+	FStats Totals;
+	int32 Changed = 0;
+	int32 Failed = 0;
+	for (const FName PackageName : Sorted)
+	{
+		UPackage* Package = LoadPackage(nullptr, *PackageName.ToString(), LOAD_None);
+		if (Package == nullptr)
+		{
+			UE_LOG(LogGolemContentMigration, Error, TEXT("Cannot load %s"), *PackageName.ToString());
+			++Failed;
+			continue;
+		}
+		Package->FullyLoad();
+		FStats Stats;
+		const bool bCompiled = MigratePackage(Package, Stats, bVerbose, bRecompileStateTrees);
+		if (!bCompiled)
+		{
+			++Failed;
+		}
+		if (Stats.Total() > 0 || Package->IsDirty())
+		{
+			++Changed;
+			UE_LOG(LogGolemContentMigration, Display, TEXT("%s: names=%d strings=%d texts=%d subpaths=%d objects=%d skipped=%d"),
+				*PackageName.ToString(), Stats.Names, Stats.Strings, Stats.Texts, Stats.SubPaths, Stats.Objects, Stats.Skipped);
+			if (!bDryRun && !UEditorLoadingAndSavingUtils::SavePackages({ Package }, false))
+			{
+				UE_LOG(LogGolemContentMigration, Error, TEXT("Cannot save %s"), *PackageName.ToString());
+				++Failed;
+			}
+		}
+		Totals.Names += Stats.Names;
+		Totals.Strings += Stats.Strings;
+		Totals.Texts += Stats.Texts;
+		Totals.SubPaths += Stats.SubPaths;
+		Totals.Objects += Stats.Objects;
+		Totals.Skipped += Stats.Skipped;
+		CollectGarbage(GARBAGE_COLLECTION_KEEPFLAGS);
+	}
+	UE_LOG(LogGolemContentMigration, Display,
+		TEXT("GolemContentMigration %s: packages=%d changed=%d failed=%d names=%d strings=%d texts=%d subpaths=%d objects=%d skipped=%d"),
+		bDryRun ? TEXT("DRY RUN") : TEXT("APPLIED"), Sorted.Num(), Changed, Failed, Totals.Names, Totals.Strings,
+		Totals.Texts, Totals.SubPaths, Totals.Objects, Totals.Skipped);
+	return Failed == 0 ? 0 : 1;
+}

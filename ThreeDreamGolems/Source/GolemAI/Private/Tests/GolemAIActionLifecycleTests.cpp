@@ -40,7 +40,7 @@
 
 namespace GolemAIActionLifecycleTests
 {
-	const FPrimaryAssetId PulseSetId(TEXT("KnightAIActionSet"), TEXT("LifecyclePulse"));
+	const FPrimaryAssetId PulseSetId(TEXT("GolemAIActionSet"), TEXT("LifecyclePulse"));
 
 	class FGolemActionWorld final : public FNoncopyable
 	{
@@ -154,7 +154,7 @@ namespace GolemAIActionLifecycleTests
 	bool GrantFoundation(FGolemActionActor& Actor, FName SetName = TEXT("Foundation"))
 	{
 		const UGolemAbilitySetDefinition* Definition = ResolveDefinition<UGolemAbilitySetDefinition>(
-			FPrimaryAssetId(TEXT("KnightAbilitySet"), SetName));
+			FPrimaryAssetId(TEXT("GolemAbilitySet"), SetName));
 		return Definition != nullptr && Actor.ASC.IsValid() &&
 			Actor.ASC->GrantAbilitySet(Definition, TEXT("ActionLifecycleFixture"), Actor.FoundationGrant).IsSuccess();
 	}
@@ -356,13 +356,13 @@ bool FGolemAIArchetypeBossContractsTest::RunTest(const FString& Parameters)
 	using namespace GolemAIActionLifecycleTests;
 	TStrongObjectPtr<UGolemAIArchetypeDefinition> Archetype(NewObject<UGolemAIArchetypeDefinition>());
 	TestTrue(TEXT("Archetype authoring retains a stable native definition type"),
-		Archetype->TrySetIdentity(TEXT("ContractFixture"), TEXT("KnightAIArchetype")));
+		Archetype->TrySetIdentity(TEXT("ContractFixture"), TEXT("GolemAIArchetype")));
 	TestTrue(TEXT("Typed combat and action definitions are accepted"), Archetype->TrySetIds(
-		FPrimaryAssetId(TEXT("KnightCombatProfile"), TEXT("FoundationCombat")),
-		FPrimaryAssetId(TEXT("KnightAIActionSet"), TEXT("LifecyclePulse"))).IsSuccess());
+		FPrimaryAssetId(TEXT("GolemCombatProfile"), TEXT("FoundationCombat")),
+		FPrimaryAssetId(TEXT("GolemAIActionSet"), TEXT("LifecyclePulse"))).IsSuccess());
 	const FPrimaryAssetId PreviousProfile = Archetype->GetCombatProfileId();
 	TestEqual(TEXT("Package-like unstable profile IDs are rejected"), Archetype->TrySetIds(
-		FPrimaryAssetId(TEXT("KnightCombatProfile"), TEXT("Bad/Profile")),
+		FPrimaryAssetId(TEXT("GolemCombatProfile"), TEXT("Bad/Profile")),
 		PulseSetId).Error, EGolemError::InvalidId);
 	TestTrue(TEXT("Rejected IDs preserve previous authoring"), Archetype->GetCombatProfileId() == PreviousProfile);
 	FGolemAIArchetypeTuning Tuning = Archetype->GetTuning();
@@ -376,9 +376,9 @@ bool FGolemAIArchetypeBossContractsTest::RunTest(const FString& Parameters)
 	TestEqual(TEXT("Lose-sight cannot invalidate acquisition radius"),
 		Archetype->TrySetTuning(Tuning).Error, EGolemError::InvalidData);
 	TStrongObjectPtr<UStateTree> Tree(LoadObject<UStateTree>(nullptr,
-		TEXT("/Game/Knight/AI/Tests/ST_Knight_LifecyclePulse.ST_Knight_LifecyclePulse")));
+		TEXT("/Game/Golem/AI/Tests/ST_Golem_LifecyclePulse.ST_Golem_LifecyclePulse")));
 	TStrongObjectPtr<UEnvQuery> Query(LoadObject<UEnvQuery>(nullptr,
-		TEXT("/Game/Knight/AI/EQS_Knight_CombatPosition.EQS_Knight_CombatPosition")));
+		TEXT("/Game/Golem/AI/EQS_Golem_CombatPosition.EQS_Golem_CombatPosition")));
 	if (!TestTrue(TEXT("Actual compiled lifecycle tree and EQS fixture exist"), Tree.IsValid() && Query.IsValid()))
 	{
 		return false;
@@ -392,16 +392,16 @@ bool FGolemAIArchetypeBossContractsTest::RunTest(const FString& Parameters)
 
 	TStrongObjectPtr<UGolemBossPhaseDefinition> Boss(NewObject<UGolemBossPhaseDefinition>());
 	TestTrue(TEXT("Boss phase definition uses stable native identity"),
-		Boss->TrySetIdentity(TEXT("BossContractFixture"), TEXT("KnightBossPhase")));
+		Boss->TrySetIdentity(TEXT("BossContractFixture"), TEXT("GolemBossPhase")));
 	TArray<FGolemBossPhaseEntry> Phases;
 	FGolemBossPhaseEntry& First = Phases.AddDefaulted_GetRef();
 	First.PhaseKey = TEXT("PhaseOne");
 	First.HealthFraction = 1.0f;
-	First.ActionSetId = FPrimaryAssetId(TEXT("KnightAIActionSet"), TEXT("ArenaBossPhaseOne"));
+	First.ActionSetId = FPrimaryAssetId(TEXT("GolemAIActionSet"), TEXT("ArenaBossPhaseOne"));
 	FGolemBossPhaseEntry& Second = Phases.AddDefaulted_GetRef();
 	Second.PhaseKey = TEXT("PhaseTwo");
 	Second.HealthFraction = 0.5f;
-	Second.ActionSetId = FPrimaryAssetId(TEXT("KnightAIActionSet"), TEXT("ArenaBossPhaseTwo"));
+	Second.ActionSetId = FPrimaryAssetId(TEXT("GolemAIActionSet"), TEXT("ArenaBossPhaseTwo"));
 	Second.DecisionInterval = 0.1f;
 	TestTrue(TEXT("Ordered two-phase configuration is accepted"), Boss->TrySetPhases(Phases).IsSuccess());
 	TestTrue(TEXT("Complete boss phase definition validates"), Boss->ValidateBossPhases().IsSuccess());
@@ -481,7 +481,7 @@ bool FGolemAIExactSharedGASTest::RunTest(const FString& Parameters)
 	TestEqual(TEXT("Foreign cancellation cannot claim another action token"), AI.Context->CancelAction(FGuid::NewGuid()).Error, EGolemError::NotOwned);
 	FGolemAbilitySetHandle Duplicate;
 	const UGolemAbilitySetDefinition* Foundation = ResolveDefinition<UGolemAbilitySetDefinition>(
-		FPrimaryAssetId(TEXT("KnightAbilitySet"), TEXT("Foundation")));
+		FPrimaryAssetId(TEXT("GolemAbilitySet"), TEXT("Foundation")));
 	TestTrue(TEXT("A distinct source can own a separate real GAS grant"), Source.ASC->GrantAbilitySet(
 		Foundation, TEXT("DuplicateActionFixture"), Duplicate).IsSuccess());
 	TestEqual(TEXT("Ambiguous shared action/input binding is rejected before activation"),
@@ -491,7 +491,7 @@ bool FGolemAIExactSharedGASTest::RunTest(const FString& Parameters)
 	TestTrue(TEXT("Original spec handles survive rejected ambiguous action"), CaptureSpecs(Source.ASC.Get()) == OriginalSpecs);
 
 	TStrongObjectPtr<UStateTree> Tree(LoadObject<UStateTree>(nullptr,
-		TEXT("/Game/Knight/AI/Tests/ST_Knight_LifecyclePulse.ST_Knight_LifecyclePulse")));
+		TEXT("/Game/Golem/AI/Tests/ST_Golem_LifecyclePulse.ST_Golem_LifecyclePulse")));
 	if (!TestTrue(TEXT("The actual single-action fixture is compiled"), Tree.IsValid() && Tree->IsReadyToRun()))
 	{
 		return false;
@@ -569,7 +569,7 @@ bool FGolemAIHeldReviveOwnershipTest::RunTest(const FString& Parameters)
 		return false;
 	}
 	State->TreeAsset.Reset(LoadObject<UStateTree>(nullptr,
-		TEXT("/Game/Knight/AI/Tests/ST_Knight_LifecycleRevive.ST_Knight_LifecycleRevive")));
+		TEXT("/Game/Golem/AI/Tests/ST_Golem_LifecycleRevive.ST_Golem_LifecycleRevive")));
 	if (!TestTrue(TEXT("Compiled held-revive tree exists"), State->TreeAsset.IsValid() && State->TreeAsset->IsReadyToRun()))
 	{
 		return false;
@@ -706,9 +706,9 @@ bool FGolemAIEQSAbortGenerationTest::RunTest(const FString& Parameters)
 	const FGolemActionActor Source = SpawnActor(World.World.Get(), 1, true, FVector::ZeroVector);
 	const FGolemActionActor Enemy = SpawnActor(World.World.Get(), 101, false, FVector(500.0, 0.0, 0.0));
 	TStrongObjectPtr<UStateTree> Tree(LoadObject<UStateTree>(nullptr,
-		TEXT("/Game/Knight/AI/Tests/ST_Knight_LifecycleEQS.ST_Knight_LifecycleEQS")));
+		TEXT("/Game/Golem/AI/Tests/ST_Golem_LifecycleEQS.ST_Golem_LifecycleEQS")));
 	TStrongObjectPtr<UEnvQuery> Query(LoadObject<UEnvQuery>(nullptr,
-		TEXT("/Game/Knight/AI/EQS_Knight_CombatPosition.EQS_Knight_CombatPosition")));
+		TEXT("/Game/Golem/AI/EQS_Golem_CombatPosition.EQS_Golem_CombatPosition")));
 	if (!TestTrue(TEXT("EQS fixtures and compiled tree are real"), Source.IsReady() && Enemy.IsReady() &&
 		Tree.IsValid() && Tree->IsReadyToRun() && Query.IsValid()))
 	{
@@ -770,7 +770,7 @@ bool FGolemAIBossHealthPhaseTest::RunTest(const FString& Parameters)
 	FGolemActionActor BossActor = SpawnActor(World.World.Get(), 101, false, FVector::ZeroVector);
 	const FGolemActionActor Human = SpawnActor(World.World.Get(), 1, true, FVector(300.0, 0.0, 0.0));
 	const UGolemBossPhaseDefinition* Definition = ResolveDefinition<UGolemBossPhaseDefinition>(
-		FPrimaryAssetId(TEXT("KnightBossPhase"), TEXT("ArenaBoss")));
+		FPrimaryAssetId(TEXT("GolemBossPhase"), TEXT("ArenaBoss")));
 	if (!TestTrue(TEXT("Boss uses actual ASC/life and authored phases"), BossActor.IsReady() && Human.IsReady() &&
 		Definition != nullptr && Definition->GetPhases().Num() >= 2) ||
 		!TestTrue(TEXT("Boss owns the existing shared combat grant"), GrantFoundation(BossActor, TEXT("FoundationCombat"))))
@@ -872,7 +872,7 @@ namespace GolemAIActionLifecycleTests
 		using namespace GolemAIActionLifecycleTests;
 		const TSharedRef<FGolemActionWorld> OwnedWorld = MakeShared<FGolemActionWorld>();
 		TStrongObjectPtr<UStateTree> Tree(LoadObject<UStateTree>(nullptr,
-			TEXT("/Game/Knight/AI/Tests/ST_Knight_LifecyclePulse.ST_Knight_LifecyclePulse")));
+			TEXT("/Game/Golem/AI/Tests/ST_Golem_LifecyclePulse.ST_Golem_LifecyclePulse")));
 		if (!Test->TestTrue(TEXT("The existing native action fixture StateTree is compiled"), Tree.IsValid() && Tree->IsReadyToRun()))
 		{
 			return false;
@@ -928,7 +928,7 @@ namespace GolemAIActionLifecycleTests
 				const EGolemSkillRole Role = FGolemSkillCatalog::Role(Build.SpecId);
 				FGolemGASProjectionPlan Plan;
 				Plan.SourceKey = GolemProjection::RPGSourceKey;
-				Plan.DefinitionId = FPrimaryAssetId(TEXT("KnightHero"), TEXT("Training_Red"));
+				Plan.DefinitionId = FPrimaryAssetId(TEXT("GolemHero"), TEXT("Training_Red"));
 				Plan.SkillBuild = Build;
 				Plan.EquipmentCombatBuild.bEnabled = true;
 				Plan.EquipmentCombatBuild.bHasHammer = true;

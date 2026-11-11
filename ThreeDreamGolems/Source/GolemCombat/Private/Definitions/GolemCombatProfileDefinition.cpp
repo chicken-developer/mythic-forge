@@ -55,7 +55,7 @@ namespace
 				Cast<UAnimNotifyState_MotionWarping>(Notify.NotifyStateClass);
 			const URootMotionModifier_SkewWarp* Modifier = Warping != nullptr
 				? Cast<URootMotionModifier_SkewWarp>(Warping->RootMotionModifier) : nullptr;
-			if (Modifier != nullptr && Modifier->WarpTargetName == TEXT("KnightTraversal") &&
+			if (Modifier != nullptr && Modifier->WarpTargetName == TEXT("GolemTraversal") &&
 				Modifier->bWarpTranslation && Notify.GetDuration() > 0.0f && Notify.GetTriggerTime() >= 0.0f &&
 				Notify.GetTriggerTime() + Notify.GetDuration() <= Montage->GetPlayLength() + KINDA_SMALL_NUMBER &&
 				Notify.GetTriggerTime() + Notify.GetDuration() <= BlendOutStart + KINDA_SMALL_NUMBER)
@@ -87,7 +87,7 @@ FGolemResult FGolemCombatTuning::Validate() const
 
 UGolemCombatProfileDefinition::UGolemCombatProfileDefinition()
 {
-	DefinitionType = TEXT("KnightCombatProfile");
+	DefinitionType = TEXT("GolemCombatProfile");
 }
 
 USkeletalMesh* UGolemCombatProfileDefinition::GetSkeletalMesh() const
@@ -142,7 +142,7 @@ FPrimaryAssetId UGolemCombatProfileDefinition::GetCombatAbilitySetId() const
 
 FGolemResult UGolemCombatProfileDefinition::TrySetCombatAbilitySetId(const FPrimaryAssetId& InAbilitySetId)
 {
-	if (!InAbilitySetId.IsValid() || InAbilitySetId.PrimaryAssetType != FPrimaryAssetType(TEXT("KnightAbilitySet")))
+	if (!InAbilitySetId.IsValid() || InAbilitySetId.PrimaryAssetType != FPrimaryAssetType(TEXT("GolemAbilitySet")))
 	{
 		return GolemInvalidCombatData(TEXT("CombatAbilitySetId"));
 	}
@@ -226,12 +226,12 @@ FGolemResult UGolemCombatProfileDefinition::ValidateCombatProfile() const
 	{
 		return Identity;
 	}
-	if (GetDefinitionType() != TEXT("KnightCombatProfile"))
+	if (GetDefinitionType() != TEXT("GolemCombatProfile"))
 	{
 		return GolemInvalidCombatData(TEXT("CombatProfileType"));
 	}
 	if (!CombatAbilitySetId.IsValid() ||
-		CombatAbilitySetId.PrimaryAssetType != FPrimaryAssetType(TEXT("KnightAbilitySet")))
+		CombatAbilitySetId.PrimaryAssetType != FPrimaryAssetType(TEXT("GolemAbilitySet")))
 	{
 		return GolemInvalidCombatData(TEXT("CombatAbilitySetId"));
 	}

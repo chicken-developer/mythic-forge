@@ -76,15 +76,15 @@ void AGolemTrainingHUD::DrawHUD()
 	const FLinearColor Accent = bCompleted ? FLinearColor::Green : FLinearColor(0.4f, 0.75f, 1.0f);
 	const TArray<FText> Lines =
 	{
-		NSLOCTEXT("KnightTraining", "Title", "THREE DREAMING GOLEMS - Training yard"),
-		FText::Format(NSLOCTEXT("KnightTraining", "Controlled", "Controlled Golem: {0}"), GolemName),
+		NSLOCTEXT("GolemTraining", "Title", "THREE DREAMING GOLEMS - Training yard"),
+		FText::Format(NSLOCTEXT("GolemTraining", "Controlled", "Controlled Golem: {0}"), GolemName),
 		PartyStatus,
 		ProgressStatus,
-		NSLOCTEXT("KnightTraining", "Keyboard", "WASD move | Mouse look | Space jump | Tab / 1-3 switch"),
-		NSLOCTEXT("KnightTraining", "Gamepad", "Pad: left/right stick | A jump | RB switch | Y restart"),
-		NSLOCTEXT("KnightTraining", "Goal", "Walk through all 3 markers and control all 3 Golems."),
-		bCompleted ? NSLOCTEXT("KnightTraining", "Won", "DRILL COMPLETE - press R to try again")
-			: NSLOCTEXT("KnightTraining", "Retry", "Press R to restart the drill (host in co-op)."),
+		NSLOCTEXT("GolemTraining", "Keyboard", "WASD move | Mouse look | Space jump | Tab / 1-3 switch"),
+		NSLOCTEXT("GolemTraining", "Gamepad", "Pad: left/right stick | A jump | RB switch | Y restart"),
+		NSLOCTEXT("GolemTraining", "Goal", "Walk through all 3 markers and control all 3 Golems."),
+		bCompleted ? NSLOCTEXT("GolemTraining", "Won", "DRILL COMPLETE - press R to try again")
+			: NSLOCTEXT("GolemTraining", "Retry", "Press R to restart the drill (host in co-op)."),
 		CommandStatus
 	};
 	float TextY = 32.0f;
@@ -114,7 +114,7 @@ void AGolemTrainingHUD::HandleRosterChanged()
 {
 	const int32 HumanCount = PartySource.IsValid() ? PartySource->GetHumanCount() : 0;
 	const int32 GolemCount = PartySource.IsValid() ? PartySource->GetRoster().Num() : 0;
-	PartyStatus = FText::Format(NSLOCTEXT("KnightTraining", "PartyStatus", "Party: {0}/3 Golems | {1} human | {2} AI"),
+	PartyStatus = FText::Format(NSLOCTEXT("GolemTraining", "PartyStatus", "Party: {0}/3 Golems | {1} human | {2} AI"),
 		FText::AsNumber(GolemCount), FText::AsNumber(HumanCount), FText::AsNumber(GolemCount - HumanCount));
 }
 
@@ -137,7 +137,7 @@ void AGolemTrainingHUD::HandleControlledGolemChanged(AGolemCharacter* PreviousGo
 void AGolemTrainingHUD::HandleIdentityChanged()
 {
 	GolemName = GolemSource.IsValid() ? GolemSource->GetGolemDisplayName()
-		: NSLOCTEXT("KnightTraining", "WaitingGolem", "Waiting for possession");
+		: NSLOCTEXT("GolemTraining", "WaitingGolem", "Waiting for possession");
 }
 
 void AGolemTrainingHUD::HandleTrainingProgress(const FGolemTrainingProgress& Progress)
@@ -153,7 +153,7 @@ void AGolemTrainingHUD::HandleTrainingProgress(const FGolemTrainingProgress& Pro
 		MarkerCount += (Progress.MarkerMask & (1 << Marker)) != 0 ? 1 : 0;
 	}
 	bCompleted = Progress.bCompleted;
-	ProgressStatus = FText::Format(NSLOCTEXT("KnightTraining", "Progress", "Golems controlled: {0}/3 | Markers: {1}/3"),
+	ProgressStatus = FText::Format(NSLOCTEXT("GolemTraining", "Progress", "Golems controlled: {0}/3 | Markers: {1}/3"),
 		FText::AsNumber(ControlledCount), FText::AsNumber(MarkerCount));
 }
 

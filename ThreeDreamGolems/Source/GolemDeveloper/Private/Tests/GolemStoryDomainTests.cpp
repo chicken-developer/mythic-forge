@@ -43,7 +43,7 @@ namespace GolemStoryTests
 	UGolemCampaignDefinition* Definition()
 	{
 		UGolemCampaignDefinition* Result = NewObject<UGolemCampaignDefinition>();
-		Result->TrySetIdentity(TEXT("DomainCampaign"), TEXT("KnightCampaign"));
+		Result->TrySetIdentity(TEXT("DomainCampaign"), TEXT("GolemCampaign"));
 		Result->CampaignId = TEXT("DomainCampaign");
 		Result->ScenarioKind = TEXT("Test");
 		Result->ActIds = {TEXT("Act")};
@@ -80,7 +80,7 @@ bool FGolemStoryDefinitionTest::RunTest(const FString& Parameters)
 	Campaign->Quests[0].Objectives[1].ObjectiveId = TEXT("First");
 	TestFalse(TEXT("Duplicate objective IDs"), Campaign->ValidateCampaign().IsSuccess());
 	UGolemStoryWorldDefinition* World = NewObject<UGolemStoryWorldDefinition>();
-	World->TrySetIdentity(TEXT("ValidatorWorld"), TEXT("KnightStoryWorld"));
+	World->TrySetIdentity(TEXT("ValidatorWorld"), TEXT("GolemStoryWorld"));
 	FGolemStoryInteraction& Interaction = World->Interactions.AddDefaulted_GetRef();
 	Interaction.AnchorId = TEXT("Station");
 	Interaction.Label = FText::FromString(TEXT("Station"));
@@ -192,7 +192,7 @@ bool FGolemStoryDialogueTest::RunTest(const FString& Parameters)
 	Fixture.Owner->AddInstanceComponent(Dialogue);
 	Dialogue->RegisterComponent();
 	UGolemConversationDefinition* Definition = NewObject<UGolemConversationDefinition>();
-	Definition->TrySetIdentity(TEXT("ChoiceConversation"), TEXT("KnightConversation"));
+	Definition->TrySetIdentity(TEXT("ChoiceConversation"), TEXT("GolemConversation"));
 	Definition->NpcId = TEXT("SyntheticNpc");
 	Definition->FirstNodeId = TEXT("Choice");
 	FGolemDialogueNode Choice;

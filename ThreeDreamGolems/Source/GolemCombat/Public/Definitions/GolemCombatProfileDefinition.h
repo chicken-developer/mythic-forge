@@ -131,5 +131,5 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Golem|Combat|Tuning")
 	FGolemCombatTuning Tuning;
 	UPROPERTY(EditDefaultsOnly, Category = "Golem|Combat|Abilities")
-	FPrimaryAssetId CombatAbilitySetId = FPrimaryAssetId(TEXT("KnightAbilitySet"), TEXT("FoundationCombat"));
+	FPrimaryAssetId CombatAbilitySetId = FPrimaryAssetId(TEXT("GolemAbilitySet"), TEXT("FoundationCombat"));
 };

@@ -48,7 +48,7 @@ void AGolemPartyArenaHUD::BindSources()
 		}
 		else
 		{
-			CommandFeedback = NSLOCTEXT("KnightArena", "HUDSourcesMissing", "Arena state failed to initialize.");
+			CommandFeedback = NSLOCTEXT("GolemArena", "HUDSourcesMissing", "Arena state failed to initialize.");
 		}
 		return;
 	}
@@ -72,7 +72,7 @@ void AGolemPartyArenaHUD::BindControlledGolem(AGolemCharacter* Previous, AGolemC
 	Golem = Current;
 	if (!IsValid(Current))
 	{
-		DisplayedName = NSLOCTEXT("KnightArena", "WaitingForPawn", "Waiting for your Golem");
+		DisplayedName = NSLOCTEXT("GolemArena", "WaitingForPawn", "Waiting for your Golem");
 		return;
 	}
 	DisplayedName = GetGolemLabel(Current);
@@ -133,7 +133,7 @@ void AGolemPartyArenaHUD::RefreshParty()
 	{
 		return;
 	}
-	PartyFeedback = FText::Format(NSLOCTEXT("KnightArena", "PartyOwners", "Humans {0}/3; AI {1}/3"),
+	PartyFeedback = FText::Format(NSLOCTEXT("GolemArena", "PartyOwners", "Humans {0}/3; AI {1}/3"),
 		FText::AsNumber(Party->GetHumanCount()), FText::AsNumber(3 - Party->GetHumanCount()));
 	UnbindAIDebug();
 	for (const FGolemRosterEntry& Entry : Party->GetRoster())
@@ -221,7 +221,7 @@ void AGolemPartyArenaHUD::HandleCommandResult(const FGolemResult& Result)
 	if (Result.IsSuccess() && Player.IsValid())
 	{
 		const UEnum* Commands = StaticEnum<EGolemCompanionCommand>();
-		CommandFeedback = FText::Format(NSLOCTEXT("KnightArena", "CommandIssued", "Companions: {0}"),
+		CommandFeedback = FText::Format(NSLOCTEXT("GolemArena", "CommandIssued", "Companions: {0}"),
 			Commands->GetDisplayNameTextByValue(static_cast<int64>(Player->GetLastCompanionCommand())));
 	}
 	else
@@ -251,9 +251,9 @@ void AGolemPartyArenaHUD::HandleAttributeChanged(const FOnAttributeChangeData& C
 
 void AGolemPartyArenaHUD::HandleLifeChanged(EGolemLifeState Previous, EGolemLifeState Current)
 {
-	LifeFeedback = Current == EGolemLifeState::Alive ? NSLOCTEXT("KnightArena", "Alive", "Alive")
-		: Current == EGolemLifeState::Downed ? NSLOCTEXT("KnightArena", "Downed", "DOWNED: companion can revive you")
-		: NSLOCTEXT("KnightArena", "Dead", "DEAD: host R / Y to retry");
+	LifeFeedback = Current == EGolemLifeState::Alive ? NSLOCTEXT("GolemArena", "Alive", "Alive")
+		: Current == EGolemLifeState::Downed ? NSLOCTEXT("GolemArena", "Downed", "DOWNED: companion can revive you")
+		: NSLOCTEXT("GolemArena", "Dead", "DEAD: host R / Y to retry");
 }
 
 void AGolemPartyArenaHUD::HandleCombatChanged(const FGolemCombatSnapshot& Snapshot)
@@ -276,33 +276,33 @@ void AGolemPartyArenaHUD::DrawHUD()
 		Y += 25.0f;
 	};
 	DrawLine(GetArenaTitle(), FLinearColor::Yellow);
-	DrawLine(FText::Format(NSLOCTEXT("KnightArena", "Resources", "{0} | Health {1}/{2} | Stamina {3} | Rune {4}"),
+	DrawLine(FText::Format(NSLOCTEXT("GolemArena", "Resources", "{0} | Health {1}/{2} | Stamina {3} | Rune {4}"),
 		DisplayedName, FText::AsNumber(FMath::RoundToInt(Health)), FText::AsNumber(FMath::RoundToInt(MaxHealth)),
 		FText::AsNumber(FMath::RoundToInt(Stamina)), FText::AsNumber(FMath::RoundToInt(RuneEnergy))));
-	DrawLine(FText::Format(NSLOCTEXT("KnightArena", "PartyStatus", "{0} | alive {1}, downed {2} | {3}"),
+	DrawLine(FText::Format(NSLOCTEXT("GolemArena", "PartyStatus", "{0} | alive {1}, downed {2} | {3}"),
 		PartyFeedback, FText::AsNumber(DisplayedArena.AliveGolems), FText::AsNumber(DisplayedArena.DownedGolems),
 		LifeFeedback));
 	FText Objective;
 	switch (DisplayedArena.Stage)
 	{
 	case EGolemArenaStage::AwaitingStart:
-		Objective = NSLOCTEXT("KnightArena", "AwaitingStart", "Move to yellow START: F / D-pad Left to begin.");
+		Objective = NSLOCTEXT("GolemArena", "AwaitingStart", "Move to yellow START: F / D-pad Left to begin.");
 		break;
 	case EGolemArenaStage::Wave:
-		Objective = FText::Format(NSLOCTEXT("KnightArena", "Wave", "WAVE: defeat the enemies ({0} remaining)."),
+		Objective = FText::Format(NSLOCTEXT("GolemArena", "Wave", "WAVE: defeat the enemies ({0} remaining)."),
 			FText::AsNumber(DisplayedArena.AliveEnemies));
 		break;
 	case EGolemArenaStage::Boss:
-		Objective = FText::Format(NSLOCTEXT("KnightArena", "Boss", "BOSS: phase {0}/2; defeat the boss."),
+		Objective = FText::Format(NSLOCTEXT("GolemArena", "Boss", "BOSS: phase {0}/2; defeat the boss."),
 			FText::AsNumber(DisplayedArena.BossPhase + 1));
 		break;
 	case EGolemArenaStage::Victory:
-		Objective = NSLOCTEXT("KnightArena", "Victory", "VICTORY! R / Y: host retry. All three Golems retain their identities.");
+		Objective = NSLOCTEXT("GolemArena", "Victory", "VICTORY! R / Y: host retry. All three Golems retain their identities.");
 		break;
 	case EGolemArenaStage::Defeat:
 		Objective = DisplayedArena.Failure == EGolemArenaFailure::EncounterUnavailable
-			? NSLOCTEXT("KnightArena", "EncounterUnavailable", "Encounter interrupted: an enemy or required asset became unavailable. R / Y: host retry.")
-			: NSLOCTEXT("KnightArena", "Defeat", "PARTY DEFEATED: no living Golem can revive the party. R / Y: host retry.");
+			? NSLOCTEXT("GolemArena", "EncounterUnavailable", "Encounter interrupted: an enemy or required asset became unavailable. R / Y: host retry.")
+			: NSLOCTEXT("GolemArena", "Defeat", "PARTY DEFEATED: no living Golem can revive the party. R / Y: host retry.");
 		break;
 	}
 	DrawLine(Objective, IsDisplayingArenaDefeat() ? FLinearColor::Red : FLinearColor::Green);
@@ -320,22 +320,22 @@ const FGolemPartyArenaSnapshot& AGolemPartyArenaHUD::GetDisplayedArenaSnapshot()
 
 FText AGolemPartyArenaHUD::GetArenaTitle() const
 {
-	return NSLOCTEXT("KnightArena", "ArenaTitle", "PARTY ARENA: wave > two-phase boss");
+	return NSLOCTEXT("GolemArena", "ArenaTitle", "PARTY ARENA: wave > two-phase boss");
 }
 
 FText AGolemPartyArenaHUD::GetCombatHelp() const
 {
-	return NSLOCTEXT("KnightArena", "CombatKeys", "WASD move | LMB light / RMB heavy | Q block / C parry / Shift dodge | MMB lock | G rune / H finisher");
+	return NSLOCTEXT("GolemArena", "CombatKeys", "WASD move | LMB light / RMB heavy | Q block / C parry / Shift dodge | MMB lock | G rune / H finisher");
 }
 
 FText AGolemPartyArenaHUD::GetPartyHelp() const
 {
-	return NSLOCTEXT("KnightArena", "PartyKeys", "N follow / Z hold / B focus locked enemy / K regroup | gamepad View cycles | E / X hold revive | Tab / RB switch");
+	return NSLOCTEXT("GolemArena", "PartyKeys", "N follow / Z hold / B focus locked enemy / K regroup | gamepad View cycles | E / X hold revive | Tab / RB switch");
 }
 
 FText AGolemPartyArenaHUD::GetRecoveryHelp() const
 {
-	return NSLOCTEXT("KnightArena", "ResourceHint", "Arena recovery: +8 stamina / +6 rune each second; health requires revive/checkpoint.");
+	return NSLOCTEXT("GolemArena", "ResourceHint", "Arena recovery: +8 stamina / +6 rune each second; health requires revive/checkpoint.");
 }
 
 FText AGolemPartyArenaHUD::GetGolemLabel(const AGolemCharacter* InGolem) const

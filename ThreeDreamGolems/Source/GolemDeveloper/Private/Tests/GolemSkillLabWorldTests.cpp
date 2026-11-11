@@ -81,7 +81,7 @@ namespace GolemSkillLabWorldTests
 			UGolemDefinition* Definition = nullptr;
 			UGolemAssetManager* Manager = UGolemAssetManager::GetGolemAssetManager();
 			if (Manager == nullptr || !Manager->ResolveDefinition(
-				FPrimaryAssetId(TEXT("KnightHero"), HeroName), UGolemHeroDefinition::StaticClass(), Definition).IsSuccess()
+				FPrimaryAssetId(TEXT("GolemHero"), HeroName), UGolemHeroDefinition::StaticClass(), Definition).IsSuccess()
 				|| Cast<UGolemHeroDefinition>(Definition) == nullptr)
 			{
 				return nullptr;
@@ -274,7 +274,7 @@ bool FGolemSkillLabArmorTest::RunTest(const FString& Parameters)
 	if (!TestNotNull(TEXT("Actual packet source Golem"), Attacker)
 		|| !TestNotNull(TEXT("Actual packet target enemy"), Enemy)
 		|| !TestTrue(TEXT("Actual enemy initializes existing archetype and combat profile"),
-			Enemy->InitializeArenaEnemy(FPrimaryAssetId(TEXT("KnightAIArchetype"), TEXT("ArenaEnemy"))).IsSuccess()))
+			Enemy->InitializeArenaEnemy(FPrimaryAssetId(TEXT("GolemAIArchetype"), TEXT("ArenaEnemy"))).IsSuccess()))
 	{
 		return false;
 	}

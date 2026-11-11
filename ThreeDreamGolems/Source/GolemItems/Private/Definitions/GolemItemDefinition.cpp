@@ -4,11 +4,11 @@
 #include "Misc/DataValidation.h"
 #include "Tags/GolemGameplayTags.h"
 
-#define LOCTEXT_NAMESPACE "KnightItemDefinition"
+#define LOCTEXT_NAMESPACE "GolemItemDefinition"
 
 UGolemItemDefinition::UGolemItemDefinition()
 {
-	DefinitionType = TEXT("KnightItem");
+	DefinitionType = TEXT("GolemItem");
 }
 
 void UGolemItemDefinition::PostLoad()
@@ -118,7 +118,7 @@ FGolemResult UGolemItemDefinition::ValidateItem() const
 	{
 		return Identity;
 	}
-	if (GetDefinitionType() != FName(TEXT("KnightItem")))
+	if (GetDefinitionType() != FName(TEXT("GolemItem")))
 	{
 		return FGolemResult::Failure(EGolemError::TypeMismatch, GetDefinitionId(),
 			LOCTEXT("InvalidItemType", "An item definition must use the GolemItem primary asset type."));
@@ -207,7 +207,7 @@ FGolemResult UGolemItemDefinition::ValidateTuning(EGolemItemKind InKind, int32 I
 	}
 	const bool bHasAbilitySet = InAbilitySetId != FPrimaryAssetId();
 	if (bHasAbilitySet && (!GolemIdentity::IsValidDefinitionId(InAbilitySetId)
-		|| InAbilitySetId.PrimaryAssetType != FPrimaryAssetType(TEXT("KnightAbilitySet"))))
+		|| InAbilitySetId.PrimaryAssetType != FPrimaryAssetType(TEXT("GolemAbilitySet"))))
 	{
 		return FGolemResult::Failure(EGolemError::InvalidId, TEXT("ItemTuning"),
 			LOCTEXT("InvalidAbilitySet", "An optional item ability set requires a valid GolemAbilitySet identity."));

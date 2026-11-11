@@ -41,10 +41,10 @@ void AGolemStoryHUD::DrawHUD()
 
 FText AGolemStoryHUD::GetArenaTitle() const
 {
-	return NSLOCTEXT("KnightStory", "DemoTitle", "Boro's forge school — Story framework demo");
+	return NSLOCTEXT("GolemStory", "DemoTitle", "Boro's forge school — Story framework demo");
 }
 
 FText AGolemStoryHUD::GetCombatHelp() const
 {
-	return NSLOCTEXT("KnightStory", "DemoHelp", "WASD / mouse: move. F: nearby station / next dialogue. I: inventory / save / Continue.");
+	return NSLOCTEXT("GolemStory", "DemoHelp", "WASD / mouse: move. F: nearby station / next dialogue. I: inventory / save / Continue.");
 }

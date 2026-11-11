@@ -16,12 +16,12 @@ FGolemResult AGolemStoryGameMode::TryMapTravel(APlayerController* Player, const 
 		|| Story == nullptr)
 	{
 		return FGolemResult::Failure(EGolemError::NotOwned, TEXT("HostTravel"),
-			NSLOCTEXT("KnightMap", "HostTravel", "Only the host can move the party. Refresh the map and retry."));
+			NSLOCTEXT("GolemMap", "HostTravel", "Only the host can move the party. Refresh the map and retry."));
 	}
 	if (Story->WorldState->GetSnapshot().Revision != ExpectedRevision)
 	{
 		return FGolemResult::Failure(EGolemError::Conflict, TEXT("MapRevision"),
-			NSLOCTEXT("KnightMap", "MapRevision", "Map discovery changed. Review the map and retry."));
+			NSLOCTEXT("GolemMap", "MapRevision", "Map discovery changed. Review the map and retry."));
 	}
 	const FGolemMapMarker* Marker = WorldDefinition->FindMarker(MarkerId);
 	const FGolemMapRegion* Region = Marker != nullptr ? WorldDefinition->FindRegion(Marker->TravelRegionId) : nullptr;
@@ -31,7 +31,7 @@ FGolemResult AGolemStoryGameMode::TryMapTravel(APlayerController* Player, const 
 		|| !Story->WorldState->IsRegionDiscovered(Region->RegionId))
 	{
 		return FGolemResult::Failure(EGolemError::InvalidState, TEXT("UndiscoveredTravel"),
-			NSLOCTEXT("KnightMap", "UndiscoveredTravel", "Visit and discover the destination before using fast travel."));
+			NSLOCTEXT("GolemMap", "UndiscoveredTravel", "Visit and discover the destination before using fast travel."));
 	}
 	return TravelStory(Player, Region->Map.ToSoftObjectPath().GetLongPackageName());
 }

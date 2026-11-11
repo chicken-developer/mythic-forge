@@ -38,8 +38,8 @@ void AGolemAbilityStation::OnConstruction(const FTransform& Transform)
 {
 	Super::OnConstruction(Transform);
 	Label->SetText(StationKind == EGolemAbilityStationKind::DamagePlayer
-		? NSLOCTEXT("KnightAbilityYard", "DamageStation", "F: Receive test damage")
-		: NSLOCTEXT("KnightAbilityYard", "DownStation", "F: Down teammate / E: Revive"));
+		? NSLOCTEXT("GolemAbilityYard", "DamageStation", "F: Receive test damage")
+		: NSLOCTEXT("GolemAbilityYard", "DownStation", "F: Down teammate / E: Revive"));
 	Label->SetTextRenderColor(StationKind == EGolemAbilityStationKind::DamagePlayer
 		? FColor(255, 170, 40) : FColor(100, 210, 255));
 }
@@ -67,18 +67,18 @@ FGolemResult AGolemAbilityStation::TryActivate(AGolemCharacter* InstigatorGolem,
 	if (!HasAuthority())
 	{
 		return FGolemResult::Failure(EGolemError::NotAuthority, TEXT("Interact"),
-			NSLOCTEXT("KnightAbilityYard", "StationAuthority", "Only the server may activate an exercise station."));
+			NSLOCTEXT("GolemAbilityYard", "StationAuthority", "Only the server may activate an exercise station."));
 	}
 	if (!IsValid(InstigatorGolem) || Party == nullptr || Party->FindGolem(InstigatorGolem) == nullptr
 		|| !IsValid(DamageSource) || !InstigatorGolem->GetLifeComponent()->IsAlive())
 	{
 		return FGolemResult::Failure(EGolemError::InvalidState, TEXT("Interact"),
-			NSLOCTEXT("KnightAbilityYard", "StationNotReady", "The Golem and the exercise must be alive and ready."));
+			NSLOCTEXT("GolemAbilityYard", "StationNotReady", "The Golem and the exercise must be alive and ready."));
 	}
 	if (FVector::DistSquared(GetActorLocation(), InstigatorGolem->GetActorLocation()) > FMath::Square(InteractionRange))
 	{
 		return FGolemResult::Failure(EGolemError::OutOfRange, TEXT("Interact"),
-			NSLOCTEXT("KnightAbilityYard", "StationRange", "Move closer to the exercise station."));
+			NSLOCTEXT("GolemAbilityYard", "StationRange", "Move closer to the exercise station."));
 	}
 	if (StationKind == EGolemAbilityStationKind::DamagePlayer)
 	{
@@ -108,7 +108,7 @@ FGolemResult AGolemAbilityStation::TryActivate(AGolemCharacter* InstigatorGolem,
 	if (Target == nullptr)
 	{
 		return FGolemResult::Failure(EGolemError::OutOfRange, TEXT("Interact"),
-			NSLOCTEXT("KnightAbilityYard", "CompanionRange", "Wait for a living teammate to approach the station."));
+			NSLOCTEXT("GolemAbilityYard", "CompanionRange", "Wait for a living teammate to approach the station."));
 	}
 	const FGolemResult Damage = UGolemAbilitySystemComponent::ApplyDamage(DamageSource, Target,
 		Target->GetGolemAttributeSet()->GetMaxHealth() * 2.0f);

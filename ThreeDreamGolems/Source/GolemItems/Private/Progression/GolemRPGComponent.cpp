@@ -902,7 +902,7 @@ FGolemResult UGolemRPGComponent::ValidateRegistrations(TConstArrayView<FGolemRPG
 		AActor* Pawn = Registration.Pawn.Get();
 		UGolemAbilitySystemComponent* ASC = Registration.AbilitySystem.Get();
 		if (!Registration.GolemId.IsValid() || !GolemIdentity::IsValidDefinitionId(Registration.HeroDefinitionId)
-			|| Registration.HeroDefinitionId.PrimaryAssetType != FPrimaryAssetType(TEXT("KnightHero"))
+			|| Registration.HeroDefinitionId.PrimaryAssetType != FPrimaryAssetType(TEXT("GolemHero"))
 			|| !IsValid(Pawn) || !IsValid(ASC) || Pawn->IsActorBeingDestroyed()
 			|| !Pawn->HasAuthority() || Pawn->GetWorld() != GetWorld()
 			|| ASC->GetEntityId() != Registration.GolemId || ASC->GetOwnerActor() != Pawn || ASC->GetAvatarActor() != Pawn

@@ -128,7 +128,7 @@ FGolemResult UGolemCombatComponent::Configure(const FPrimaryAssetId& InProfileId
 	{
 		return GolemCombatFailure(EGolemError::NotAuthority, TEXT("ConfigureCombat"));
 	}
-	if (!InProfileId.IsValid() || InProfileId.PrimaryAssetType != FPrimaryAssetType(TEXT("KnightCombatProfile")))
+	if (!InProfileId.IsValid() || InProfileId.PrimaryAssetType != FPrimaryAssetType(TEXT("GolemCombatProfile")))
 	{
 		return GolemCombatFailure(EGolemError::InvalidId, TEXT("CombatProfileId"));
 	}
@@ -371,7 +371,7 @@ FGolemResult UGolemCombatComponent::BeginAttack(FGameplayTag ActionTag, UGolemGa
 		if (Skills->RequiresHammer())
 		{
 			return FGolemResult::Failure(EGolemError::InvalidState, TEXT("RequiresHammer"),
-				NSLOCTEXT("KnightEquipment", "RequiresHammer", "Equip a hammer to use this action."));
+				NSLOCTEXT("GolemEquipment", "RequiresHammer", "Equip a hammer to use this action."));
 		}
 	}
 	if (!IsAuthorityAlive() || Ability == nullptr || !CanTransferControl())

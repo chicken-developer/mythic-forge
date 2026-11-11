@@ -45,8 +45,8 @@
 
 namespace GolemRPGNetwork
 {
-	const TCHAR* RPGMap = TEXT("/Game/Knight/Maps/Playables/L_M05_RPGLoop");
-	const TCHAR* DetachedMap = TEXT("/Game/Knight/Maps/Playables/L_M00_Boot");
+	const TCHAR* RPGMap = TEXT("/Game/Golem/Maps/Playables/L_M05_RPGLoop");
+	const TCHAR* DetachedMap = TEXT("/Game/Golem/Maps/Playables/L_M00_Boot");
 	constexpr double StartupTimeout = 60.0;
 	constexpr double PhaseTimeout = 25.0;
 	constexpr uint16 ServerPort = 17905;
@@ -702,7 +702,7 @@ namespace GolemRPGNetwork
 			for (TActorIterator<AGolemItemPickup> Iterator(Server.Get()); Iterator; ++Iterator)
 			{
 				Pickups.Add(*Iterator);
-				if (Iterator->GetView().Item.DefinitionId == FPrimaryAssetId(TEXT("KnightItem"), TEXT("HammerUpgrade")))
+				if (Iterator->GetView().Item.DefinitionId == FPrimaryAssetId(TEXT("GolemItem"), TEXT("HammerUpgrade")))
 				{
 					RacedPickup = *Iterator;
 				}
@@ -905,7 +905,7 @@ namespace GolemRPGNetwork
 			const FGolemInventoryView Inventory = RPGState->GetInventory()->GetView();
 			for (const FGolemItemInstance& Item : Inventory.Items)
 			{
-				if (Item.DefinitionId == FPrimaryAssetId(TEXT("KnightItem"), TEXT("RuneUpgrade")))
+				if (Item.DefinitionId == FPrimaryAssetId(TEXT("GolemItem"), TEXT("RuneUpgrade")))
 				{
 					RuneId = Item.InstanceId;
 				}
@@ -1058,7 +1058,7 @@ namespace GolemRPGNetwork
 				return;
 			}
 			Pending = MakeCommand(Winner.Get(), EGolemRPGOperation::PurchaseSkill);
-			Pending.SkillDefinitionId = FPrimaryAssetId(TEXT("KnightSkill"), TEXT("MissingNetworkFixture"));
+			Pending.SkillDefinitionId = FPrimaryAssetId(TEXT("GolemSkill"), TEXT("MissingNetworkFixture"));
 			AtomicBefore = CaptureAtomic();
 			Send(Winner.Get(), Pending);
 			Enter(EGolemRPGNetworkPhase::InvalidSkill);
@@ -1071,7 +1071,7 @@ namespace GolemRPGNetwork
 				return;
 			}
 			Pending = MakeCommand(Winner.Get(), EGolemRPGOperation::PurchaseSkill);
-			Pending.SkillDefinitionId = FPrimaryAssetId(TEXT("KnightSkill"), TEXT("ImpossibleCost"));
+			Pending.SkillDefinitionId = FPrimaryAssetId(TEXT("GolemSkill"), TEXT("ImpossibleCost"));
 			AtomicBefore = CaptureAtomic();
 			Send(Winner.Get(), Pending);
 			Enter(EGolemRPGNetworkPhase::CostFailure);
@@ -1084,7 +1084,7 @@ namespace GolemRPGNetwork
 				return;
 			}
 			Pending = MakeCommand(Winner.Get(), EGolemRPGOperation::PurchaseSkill);
-			Pending.SkillDefinitionId = FPrimaryAssetId(TEXT("KnightSkill"), TEXT("HammerForce"));
+			Pending.SkillDefinitionId = FPrimaryAssetId(TEXT("GolemSkill"), TEXT("HammerForce"));
 			BeforePurchase = CaptureAtomic();
 			Send(Winner.Get(), Pending);
 			Enter(EGolemRPGNetworkPhase::Purchase);

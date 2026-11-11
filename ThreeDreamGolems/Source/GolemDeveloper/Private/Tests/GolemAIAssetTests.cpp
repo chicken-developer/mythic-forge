@@ -30,9 +30,9 @@ bool FGolemAIAuthoredAssetsTest::RunTest(const FString& Parameters)
 	TestTrue(TEXT("Registry catalog validates all actual definitions"), Manager->ValidateDefinitionCatalog().IsSuccess());
 	const TArray<FPrimaryAssetId> ArchetypeIds =
 	{
-		FPrimaryAssetId(TEXT("KnightAIArchetype"), TEXT("ArenaCompanion")),
-		FPrimaryAssetId(TEXT("KnightAIArchetype"), TEXT("ArenaEnemy")),
-		FPrimaryAssetId(TEXT("KnightAIArchetype"), TEXT("ArenaBoss"))
+		FPrimaryAssetId(TEXT("GolemAIArchetype"), TEXT("ArenaCompanion")),
+		FPrimaryAssetId(TEXT("GolemAIArchetype"), TEXT("ArenaEnemy")),
+		FPrimaryAssetId(TEXT("GolemAIArchetype"), TEXT("ArenaBoss"))
 	};
 	for (const FPrimaryAssetId& Id : ArchetypeIds)
 	{
@@ -54,7 +54,7 @@ bool FGolemAIAuthoredAssetsTest::RunTest(const FString& Parameters)
 	}
 	UGolemDefinition* PhaseAsset = nullptr;
 	if (TestTrue(TEXT("Two-phase boss definition resolves by stable ID"), Manager->ResolveDefinition(
-		FPrimaryAssetId(TEXT("KnightBossPhase"), TEXT("ArenaBoss")),
+		FPrimaryAssetId(TEXT("GolemBossPhase"), TEXT("ArenaBoss")),
 		UGolemBossPhaseDefinition::StaticClass(), PhaseAsset).IsSuccess()))
 	{
 		UGolemBossPhaseDefinition* Phases = CastChecked<UGolemBossPhaseDefinition>(PhaseAsset);
@@ -76,9 +76,9 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(FGolemAIDefinitionRejectionTest, "Golem.AI.Asse
 bool FGolemAIDefinitionRejectionTest::RunTest(const FString& Parameters)
 {
 	UGolemAIArchetypeDefinition* SavedArchetype = LoadObject<UGolemAIArchetypeDefinition>(nullptr,
-		TEXT("/Game/Knight/Definitions/AI/DA_Knight_Archetype_ArenaBoss.DA_Knight_Archetype_ArenaBoss"));
+		TEXT("/Game/Golem/Definitions/AI/DA_Golem_Archetype_ArenaBoss.DA_Golem_Archetype_ArenaBoss"));
 	UGolemBossPhaseDefinition* SavedPhases = LoadObject<UGolemBossPhaseDefinition>(nullptr,
-		TEXT("/Game/Knight/Definitions/AI/DA_Knight_BossPhase_ArenaBoss.DA_Knight_BossPhase_ArenaBoss"));
+		TEXT("/Game/Golem/Definitions/AI/DA_Golem_BossPhase_ArenaBoss.DA_Golem_BossPhase_ArenaBoss"));
 	if (!TestNotNull(TEXT("Actual authored boss archetype exists"), SavedArchetype)
 		|| !TestNotNull(TEXT("Actual authored boss phase definition exists"), SavedPhases))
 	{
@@ -99,7 +99,7 @@ bool FGolemAIDefinitionRejectionTest::RunTest(const FString& Parameters)
 	const FPrimaryAssetId OriginalProfile = Archetype->GetCombatProfileId();
 	const FPrimaryAssetId OriginalActionSet = Archetype->GetActionSetId();
 	TestFalse(TEXT("Wrong definition type cannot replace a combat profile"), Archetype->TrySetIds(
-		FPrimaryAssetId(TEXT("KnightHero"), TEXT("Training_Red")), OriginalActionSet).IsSuccess());
+		FPrimaryAssetId(TEXT("GolemHero"), TEXT("Training_Red")), OriginalActionSet).IsSuccess());
 	TestTrue(TEXT("Rejected definition update preserves profile identity"), Archetype->GetCombatProfileId() == OriginalProfile);
 	UStateTree* OriginalTree = Archetype->GetStateTree();
 	TestFalse(TEXT("Absent decision asset cannot replace a compiled tree"),
@@ -116,7 +116,7 @@ bool FGolemAIDefinitionRejectionTest::RunTest(const FString& Parameters)
 	TestEqual(TEXT("Rejected thresholds preserve original second threshold"),
 		Phases->GetPhases()[1].HealthFraction, OriginalPhases[1].HealthFraction);
 	InvalidPhases = OriginalPhases;
-	InvalidPhases[1].ActionSetId = FPrimaryAssetId(TEXT("KnightCombatProfile"), TEXT("FoundationCombat"));
+	InvalidPhases[1].ActionSetId = FPrimaryAssetId(TEXT("GolemCombatProfile"), TEXT("FoundationCombat"));
 	TestFalse(TEXT("Boss phase requires an AI action-set stable ID"), Phases->TrySetPhases(InvalidPhases).IsSuccess());
 	TestTrue(TEXT("Rejected phase definition preserves its original stable action-set ID"),
 		Phases->GetPhases()[1].ActionSetId == OriginalPhases[1].ActionSetId);

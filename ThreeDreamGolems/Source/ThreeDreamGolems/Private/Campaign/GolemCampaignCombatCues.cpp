@@ -161,7 +161,7 @@ void AGolemCampaignPlayerController::PlayConfirmedImpactTone()
 	FeedbackTone->NumChannels = 1;
 	FeedbackTone->Duration = 0.08f;
 	FeedbackTone->SoundClassObject = LoadObject<USoundClass>(nullptr,
-		TEXT("/Game/Knight/Audio/SC_Knight_Effects.SC_Knight_Effects"));
+		TEXT("/Game/Golem/Audio/SC_Golem_Effects.SC_Golem_Effects"));
 	TArray<int16> PCM;
 	PCM.SetNumUninitialized(1920);
 	for (int32 Index = 0; Index < PCM.Num(); ++Index)

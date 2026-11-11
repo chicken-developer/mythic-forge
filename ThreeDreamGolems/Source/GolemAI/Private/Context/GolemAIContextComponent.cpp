@@ -198,7 +198,7 @@ FGolemResult UGolemAIContextComponent::ValidateActionSet(const FPrimaryAssetId& 
 		return ContextResult;
 	}
 	if (!GolemIdentity::IsValidDefinitionId(InActionSetId) ||
-		InActionSetId.PrimaryAssetType != FPrimaryAssetType(TEXT("KnightAIActionSet")))
+		InActionSetId.PrimaryAssetType != FPrimaryAssetType(TEXT("GolemAIActionSet")))
 	{
 		return GolemAIFailure(EGolemError::InvalidId, TEXT("AIActionSetId"));
 	}

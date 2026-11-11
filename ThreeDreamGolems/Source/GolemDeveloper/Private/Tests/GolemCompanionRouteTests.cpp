@@ -68,7 +68,7 @@ namespace GolemCompanionRouteTests
 				Settings->GameGetsMouseControl = false;
 				FRequestPlaySessionParams Request;
 				Request.EditorPlaySettings = Settings.Get();
-				Request.GlobalMapOverride = TEXT("/Game/Knight/Maps/Playables/L_M07_5_ForgeTrial");
+				Request.GlobalMapOverride = TEXT("/Game/Golem/Maps/Playables/L_M07_5_ForgeTrial");
 				Request.bAllowOnlineSubsystem = false;
 				GEditor->RequestPlaySession(Request);
 				Phase = 1;

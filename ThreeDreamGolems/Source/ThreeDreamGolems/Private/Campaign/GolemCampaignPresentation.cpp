@@ -38,11 +38,11 @@ namespace
 	{
 		switch (Kind)
 		{
-		case EGolemMapMarkerKind::Quest: return NSLOCTEXT("KnightMap", "QuestSymbol", "Q");
-		case EGolemMapMarkerKind::Checkpoint: return NSLOCTEXT("KnightMap", "CheckpointSymbol", "C");
-		case EGolemMapMarkerKind::Travel: return NSLOCTEXT("KnightMap", "TravelSymbol", "T");
-		case EGolemMapMarkerKind::Hazard: return NSLOCTEXT("KnightMap", "HazardSymbol", "!");
-		default: return NSLOCTEXT("KnightMap", "LandmarkSymbol", "L");
+		case EGolemMapMarkerKind::Quest: return NSLOCTEXT("GolemMap", "QuestSymbol", "Q");
+		case EGolemMapMarkerKind::Checkpoint: return NSLOCTEXT("GolemMap", "CheckpointSymbol", "C");
+		case EGolemMapMarkerKind::Travel: return NSLOCTEXT("GolemMap", "TravelSymbol", "T");
+		case EGolemMapMarkerKind::Hazard: return NSLOCTEXT("GolemMap", "HazardSymbol", "!");
+		default: return NSLOCTEXT("GolemMap", "LandmarkSymbol", "L");
 		}
 	}
 }
@@ -232,8 +232,8 @@ void AGolemCampaignPlayerController::RefreshCampaignPresentation()
 		{
 			FGolemCampaignMarkerRow& Row = Presentation.Markers.AddDefaulted_GetRef();
 			Row.MarkerId = FName(*Ping.PingId.ToString(EGuidFormats::Digits));
-			Row.Label = NSLOCTEXT("KnightMap", "PartyPing", "Party ping (expires automatically)");
-			Row.Symbol = NSLOCTEXT("KnightMap", "PingSymbol", "!");
+			Row.Label = NSLOCTEXT("GolemMap", "PartyPing", "Party ping (expires automatically)");
+			Row.Symbol = NSLOCTEXT("GolemMap", "PingSymbol", "!");
 			Row.bDiscovered = true;
 			Selected->Project(Ping.WorldPosition, Row.UV);
 		}

@@ -330,7 +330,7 @@ void UGolemGameUserSettings::ConfirmTutorial(const FName TutorialId)
 
 void UGolemGameUserSettings::ApplyAudio(UObject* WorldContext) const
 {
-	USoundMix* Mix = LoadObject<USoundMix>(nullptr, TEXT("/Game/Knight/Audio/SMix_Knight_User.SMix_Knight_User"));
+	USoundMix* Mix = LoadObject<USoundMix>(nullptr, TEXT("/Game/Golem/Audio/SMix_Golem_User.SMix_Golem_User"));
 	if (WorldContext == nullptr || Mix == nullptr)
 	{
 		return;
@@ -340,8 +340,8 @@ void UGolemGameUserSettings::ApplyAudio(UObject* WorldContext) const
 	const float Values[]{MasterVolume, MusicVolume, EffectsVolume, VoiceVolume};
 	for (int32 Index = 0; Index < UE_ARRAY_COUNT(Names); ++Index)
 	{
-		const FString Name = FString(TEXT("SC_Knight_")) + Names[Index];
-		USoundClass* Bus = LoadObject<USoundClass>(nullptr, *(TEXT("/Game/Knight/Audio/") + Name + TEXT(".") + Name));
+		const FString Name = FString(TEXT("SC_Golem_")) + Names[Index];
+		USoundClass* Bus = LoadObject<USoundClass>(nullptr, *(TEXT("/Game/Golem/Audio/") + Name + TEXT(".") + Name));
 		if (Bus != nullptr)
 		{
 			UGameplayStatics::SetSoundMixClassOverride(WorldContext, Mix, Bus, Values[Index], 1.0f, 0.05f, true);

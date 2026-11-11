@@ -232,7 +232,7 @@ FGolemResult AGolemArenaCompanionController::ResolveArenaArchetype()
 	UGolemAssetManager* Manager = UGolemAssetManager::GetGolemAssetManager();
 	UGolemDefinition* Definition = nullptr;
 	const FGolemResult Result = Manager != nullptr
-		? Manager->ResolveDefinition(FPrimaryAssetId(TEXT("KnightAIArchetype"), TEXT("ArenaCompanion")),
+		? Manager->ResolveDefinition(FPrimaryAssetId(TEXT("GolemAIArchetype"), TEXT("ArenaCompanion")),
 			UGolemAIArchetypeDefinition::StaticClass(), Definition)
 		: FGolemResult::Failure(EGolemError::InvalidState, TEXT("CompanionArchetype"),
 			NSLOCTEXT("GolemAI", "CommandManager", "The definition catalog is unavailable."));

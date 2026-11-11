@@ -55,7 +55,7 @@ DEFINE_LOG_CATEGORY_STATIC(LogGolemArenaPlaythrough, Log, All);
 
 namespace GolemPartyArenaTest
 {
-	const TCHAR* MapPath = TEXT("/Game/Knight/Maps/Playables/L_M04_PartyArena");
+	const TCHAR* MapPath = TEXT("/Game/Golem/Maps/Playables/L_M04_PartyArena");
 	constexpr double BossHeavyObservationTimeout = 15.0;
 
 	enum class EGolemArenaTestPhase : uint8
@@ -918,7 +918,7 @@ namespace GolemPartyArenaTest
 					bObservedBossSecondPhase = true;
 					AGolemEnemyController* AI = Cast<AGolemEnemyController>(BossEnemy->GetController());
 					if (AI == nullptr || AI->GetAIContext()->GetActionSetId()
-						!= FPrimaryAssetId(TEXT("KnightAIActionSet"), TEXT("ArenaBossPhaseTwo")))
+						!= FPrimaryAssetId(TEXT("GolemAIActionSet"), TEXT("ArenaBossPhaseTwo")))
 					{
 						Fail(TEXT("Real boss health threshold did not swap the native context action-set identity."));
 						return;

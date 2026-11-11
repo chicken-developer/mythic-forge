@@ -6,7 +6,7 @@
 
 UGolemBossPhaseDefinition::UGolemBossPhaseDefinition()
 {
-	DefinitionType = TEXT("KnightBossPhase");
+	DefinitionType = TEXT("GolemBossPhase");
 }
 
 const TArray<FGolemBossPhaseEntry>& UGolemBossPhaseDefinition::GetPhases() const
@@ -29,7 +29,7 @@ FGolemResult UGolemBossPhaseDefinition::ValidatePhases(const TArray<FGolemBossPh
 			!FMath::IsFinite(Entry.HealthFraction) || Entry.HealthFraction <= 0.0f ||
 			Entry.HealthFraction > 1.0f || Entry.HealthFraction >= PreviousFraction ||
 			(Index == 0 && Entry.HealthFraction != 1.0f) || !GolemIdentity::IsValidDefinitionId(Entry.ActionSetId) ||
-			Entry.ActionSetId.PrimaryAssetType != FPrimaryAssetType(TEXT("KnightAIActionSet")) ||
+			Entry.ActionSetId.PrimaryAssetType != FPrimaryAssetType(TEXT("GolemAIActionSet")) ||
 			!FMath::IsFinite(Entry.DecisionInterval) || Entry.DecisionInterval < 0.05f || Entry.DecisionInterval > 2.0f)
 		{
 			return GolemAIFailure(EGolemError::InvalidData, TEXT("BossPhaseEntry"));
@@ -47,7 +47,7 @@ FGolemResult UGolemBossPhaseDefinition::ValidateBossPhases() const
 	{
 		return Identity;
 	}
-	if (GetDefinitionType() != FName(TEXT("KnightBossPhase")))
+	if (GetDefinitionType() != FName(TEXT("GolemBossPhase")))
 	{
 		return GolemAIFailure(EGolemError::TypeMismatch, TEXT("BossPhaseType"));
 	}

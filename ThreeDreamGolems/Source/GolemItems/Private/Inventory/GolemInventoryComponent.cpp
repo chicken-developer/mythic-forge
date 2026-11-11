@@ -628,7 +628,7 @@ FGolemResult UGolemInventoryComponent::ResolveItemDefinition(const FPrimaryAsset
 {
 	OutDefinition = nullptr;
 	if (!GolemIdentity::IsValidDefinitionId(DefinitionId)
-		|| DefinitionId.PrimaryAssetType != FPrimaryAssetType(TEXT("KnightItem")))
+		|| DefinitionId.PrimaryAssetType != FPrimaryAssetType(TEXT("GolemItem")))
 	{
 		return FGolemResult::Failure(EGolemError::InvalidId, TEXT("InventoryDefinition"),
 			LOCTEXT("InvalidInventoryDefinition", "Inventory requires a valid stable GolemItem definition ID."));

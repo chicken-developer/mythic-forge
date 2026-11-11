@@ -1,6 +1,6 @@
 #include "Definitions/GolemRuneDefinition.h"
 
-#define LOCTEXT_NAMESPACE "KnightRuneDefinition"
+#define LOCTEXT_NAMESPACE "GolemRuneDefinition"
 
 UGolemRuneDefinition::UGolemRuneDefinition()
 {

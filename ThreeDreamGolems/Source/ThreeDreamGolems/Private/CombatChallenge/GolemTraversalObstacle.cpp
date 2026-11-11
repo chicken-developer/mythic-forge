@@ -28,7 +28,7 @@ AGolemTraversalObstacle::AGolemTraversalObstacle()
 	Label->SetWorldSize(24.0f);
 	Label->SetHorizontalAlignment(EHTA_Center);
 	Label->SetTextRenderColor(FColor::Green);
-	Label->SetText(NSLOCTEXT("KnightCombatChallenge", "Traversal", "Face hurdle within 240 cm: V / D-pad Down"));
+	Label->SetText(NSLOCTEXT("GolemCombatChallenge", "Traversal", "Face hurdle within 240 cm: V / D-pad Down"));
 }
 
 UStaticMeshComponent* AGolemTraversalObstacle::GetObstacleMesh() const

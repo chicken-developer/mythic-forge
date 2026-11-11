@@ -69,24 +69,24 @@ DEFINE_LOG_CATEGORY_STATIC(LogGolemBootstrap, Log, All);
 
 namespace GolemBootstrap
 {
-	const TCHAR* MapPackageName = TEXT("/Game/Knight/Maps/Playables/L_M00_Boot");
-	const TCHAR* DefinitionPackageName = TEXT("/Game/Knight/Definitions/DA_Knight_Foundation");
+	const TCHAR* MapPackageName = TEXT("/Game/Golem/Maps/Playables/L_M00_Boot");
+	const TCHAR* DefinitionPackageName = TEXT("/Game/Golem/Definitions/DA_Golem_Foundation");
 	const TCHAR* BootGameModePath = TEXT("/Script/GolemFramework.GolemBootGameMode");
-	const TCHAR* TrainingMapPackageName = TEXT("/Game/Knight/Maps/Playables/L_M01_TrainingYard");
+	const TCHAR* TrainingMapPackageName = TEXT("/Game/Golem/Maps/Playables/L_M01_TrainingYard");
 	const TCHAR* TrainingGameModePath = TEXT("/Script/ThreeDreamGolems.GolemGameMode");
-	const TCHAR* AbilityMapPackageName = TEXT("/Game/Knight/Maps/Playables/L_M02_AbilityYard");
+	const TCHAR* AbilityMapPackageName = TEXT("/Game/Golem/Maps/Playables/L_M02_AbilityYard");
 	const TCHAR* AbilityGameModePath = TEXT("/Script/ThreeDreamGolems.GolemAbilityYardGameMode");
-	const TCHAR* CombatMapPackageName = TEXT("/Game/Knight/Maps/Playables/L_M03_CombatChallenge");
+	const TCHAR* CombatMapPackageName = TEXT("/Game/Golem/Maps/Playables/L_M03_CombatChallenge");
 	const TCHAR* CombatGameModePath = TEXT("/Script/ThreeDreamGolems.GolemCombatChallengeGameMode");
-	const TCHAR* ArenaMapPackageName = TEXT("/Game/Knight/Maps/Playables/L_M04_PartyArena");
+	const TCHAR* ArenaMapPackageName = TEXT("/Game/Golem/Maps/Playables/L_M04_PartyArena");
 	const TCHAR* ArenaGameModePath = TEXT("/Script/ThreeDreamGolems.GolemPartyArenaGameMode");
-	const TCHAR* RPGMapPackageName = TEXT("/Game/Knight/Maps/Playables/L_M05_RPGLoop");
+	const TCHAR* RPGMapPackageName = TEXT("/Game/Golem/Maps/Playables/L_M05_RPGLoop");
 	const TCHAR* RPGGameModePath = TEXT("/Script/ThreeDreamGolems.GolemRPGLoopGameMode");
-	const TCHAR* SkillLabMapPackageName = TEXT("/Game/Knight/Maps/Playables/L_M05_5_SkillLab");
+	const TCHAR* SkillLabMapPackageName = TEXT("/Game/Golem/Maps/Playables/L_M05_5_SkillLab");
 	const TCHAR* SkillLabGameModePath = TEXT("/Script/ThreeDreamGolems.GolemSkillLabGameMode");
-	const TCHAR* GearLabMapPackageName = TEXT("/Game/Knight/Maps/Playables/L_M05_6_GearLab");
-	const TCHAR* CatalogLabMapPackageName = TEXT("/Game/Knight/Maps/Playables/L_M05_6_CatalogLab");
-	const TCHAR* FollowTreePackageName = TEXT("/Game/Knight/AI/ST_Knight_Follow");
+	const TCHAR* GearLabMapPackageName = TEXT("/Game/Golem/Maps/Playables/L_M05_6_GearLab");
+	const TCHAR* CatalogLabMapPackageName = TEXT("/Game/Golem/Maps/Playables/L_M05_6_CatalogLab");
+	const TCHAR* FollowTreePackageName = TEXT("/Game/Golem/AI/ST_Golem_Follow");
 	const FName FoundationId(TEXT("Foundation"));
 	const FVector FloorScale(30.0, 30.0, 0.25);
 	const FVector FloorLocation(0.0, 0.0, -12.5);
@@ -162,11 +162,11 @@ namespace GolemBootstrap
 				UE_LOG(LogGolemBootstrap, Error, TEXT("Foundation identity authoring was rejected."));
 				return false;
 			}
-			Definition->SetDisplayName(NSLOCTEXT("KnightFoundation", "FoundationFixture", "Foundation fixture"));
+			Definition->SetDisplayName(NSLOCTEXT("GolemFoundation", "FoundationFixture", "Foundation fixture"));
 			FAssetRegistryModule::AssetCreated(Definition);
 		}
 
-		const FPrimaryAssetId ExpectedId(FName(TEXT("KnightDefinition")), FoundationId);
+		const FPrimaryAssetId ExpectedId(FName(TEXT("GolemDefinition")), FoundationId);
 		if (!Definition->ValidateIdentity().IsSuccess() || Definition->GetPrimaryAssetId() != ExpectedId)
 		{
 			UE_LOG(LogGolemBootstrap, Error,
@@ -241,7 +241,7 @@ namespace GolemBootstrap
 	{
 		bool bCreated = false;
 		UGolemAbilitySetDefinition* Set = FindOrCreateDefinition<UGolemAbilitySetDefinition>(
-			TEXT("/Game/Knight/Definitions/DA_Knight_AbilitySet_Foundation"), bCreated);
+			TEXT("/Game/Golem/Definitions/DA_Golem_AbilitySet_Foundation"), bCreated);
 		if (Set == nullptr)
 		{
 			return false;
@@ -268,16 +268,16 @@ namespace GolemBootstrap
 			ReviveRelationship.AbilityTagsToBlock.AddTag(GolemGameplayTags::Ability_Test_Pulse);
 			ReviveRelationship.AbilityTagsToBlock.AddTag(GolemGameplayTags::Ability_Party_Revive);
 			ReviveRelationship.AbilityTagsToCancel.AddTag(GolemGameplayTags::Ability_Test_Pulse);
-			if (!Set->TrySetIdentity(FoundationId, TEXT("KnightAbilitySet"))
+			if (!Set->TrySetIdentity(FoundationId, TEXT("GolemAbilitySet"))
 				|| !Set->TrySetAbilities({ Pulse, Revive }).IsSuccess()
 				|| !Set->TrySetRelationships({ PulseRelationship, ReviveRelationship }).IsSuccess())
 			{
 				UE_LOG(LogGolemBootstrap, Error, TEXT("Foundation ability set authoring failed."));
 				return false;
 			}
-			Set->SetDisplayName(NSLOCTEXT("KnightAbilityYard", "FoundationSet", "Foundation abilities"));
+			Set->SetDisplayName(NSLOCTEXT("GolemAbilityYard", "FoundationSet", "Foundation abilities"));
 		}
-		if (Set->GetPrimaryAssetId() != FPrimaryAssetId(TEXT("KnightAbilitySet"), FoundationId)
+		if (Set->GetPrimaryAssetId() != FPrimaryAssetId(TEXT("GolemAbilitySet"), FoundationId)
 			|| !Set->ValidateAbilitySet().IsSuccess())
 		{
 			UE_LOG(LogGolemBootstrap, Error, TEXT("Existing Foundation ability set is invalid; preserving authored data."));
@@ -320,9 +320,9 @@ namespace GolemBootstrap
 		};
 		const TArray<FText> HeroDisplayNames =
 		{
-			NSLOCTEXT("KnightTraining", "RedKnight", "Red Knight"),
-			NSLOCTEXT("KnightTraining", "BlueKnight", "Blue Knight"),
-			NSLOCTEXT("KnightTraining", "GreenKnight", "Green Knight")
+			NSLOCTEXT("GolemTraining", "RedGolem", "Red Golem"),
+			NSLOCTEXT("GolemTraining", "BlueGolem", "Blue Golem"),
+			NSLOCTEXT("GolemTraining", "GreenGolem", "Green Golem")
 		};
 		const TArray<FVector> FormationOffsets =
 		{
@@ -331,7 +331,7 @@ namespace GolemBootstrap
 		TArray<FPrimaryAssetId> HeroIds;
 		for (int32 Index = 0; Index < HeroNames.Num(); ++Index)
 		{
-			const FString HeroPackage = FString::Printf(TEXT("/Game/Knight/Definitions/DA_Knight_%s"),
+			const FString HeroPackage = FString::Printf(TEXT("/Game/Golem/Definitions/DA_Golem_%s"),
 				*HeroNames[Index].ToString());
 			bool bCreated = false;
 			UGolemHeroDefinition* Hero = FindOrCreateDefinition<UGolemHeroDefinition>(HeroPackage, bCreated);
@@ -341,7 +341,7 @@ namespace GolemBootstrap
 			}
 			if (bCreated)
 			{
-				if (!Hero->TrySetIdentity(HeroNames[Index], TEXT("KnightHero"))
+				if (!Hero->TrySetIdentity(HeroNames[Index], TEXT("GolemHero"))
 					|| !Hero->TrySetPresentation(HeroColors[Index], 450.0f, 700.0f,
 						FormationOffsets[Index], 120.0f).IsSuccess())
 				{
@@ -350,7 +350,7 @@ namespace GolemBootstrap
 				}
 				Hero->SetDisplayName(HeroDisplayNames[Index]);
 			}
-			const FPrimaryAssetId ExpectedId(TEXT("KnightHero"), HeroNames[Index]);
+			const FPrimaryAssetId ExpectedId(TEXT("GolemHero"), HeroNames[Index]);
 			if (Hero->GetPrimaryAssetId() != ExpectedId || !Hero->ValidateHero().IsSuccess()
 				|| !SaveAsset(Hero->GetPackage(), Hero, FPackageName::GetAssetPackageExtension()))
 			{
@@ -363,22 +363,22 @@ namespace GolemBootstrap
 
 		bool bCreated = false;
 		UGolemPartyDefinition* Party = FindOrCreateDefinition<UGolemPartyDefinition>(
-			TEXT("/Game/Knight/Definitions/DA_Knight_TrainingParty"), bCreated);
+			TEXT("/Game/Golem/Definitions/DA_Golem_TrainingParty"), bCreated);
 		if (Party == nullptr)
 		{
 			return false;
 		}
 		if (bCreated)
 		{
-			if (!Party->TrySetIdentity(TEXT("TrainingParty"), TEXT("KnightParty"))
+			if (!Party->TrySetIdentity(TEXT("TrainingParty"), TEXT("GolemParty"))
 				|| !Party->TrySetHeroDefinitions(HeroIds).IsSuccess())
 			{
 				UE_LOG(LogGolemBootstrap, Error, TEXT("Training party definition authoring failed."));
 				return false;
 			}
-			Party->SetDisplayName(NSLOCTEXT("KnightFoundation", "TrainingParty", "Training party"));
+			Party->SetDisplayName(NSLOCTEXT("GolemFoundation", "TrainingParty", "Training party"));
 		}
-		if (Party->GetPrimaryAssetId() != FPrimaryAssetId(TEXT("KnightParty"), TEXT("TrainingParty"))
+		if (Party->GetPrimaryAssetId() != FPrimaryAssetId(TEXT("GolemParty"), TEXT("TrainingParty"))
 			|| !Party->ValidateParty().IsSuccess() || Party->GetHeroDefinitions() != HeroIds)
 		{
 			UE_LOG(LogGolemBootstrap, Error, TEXT("Existing training party has an incompatible identity."));
@@ -410,7 +410,7 @@ namespace GolemBootstrap
 				EditorData, EditorSchemaClass, NAME_None, RF_Transactional);
 			UStateTreeState& Root = EditorData->AddRootState();
 			Root.Name = TEXT("FollowFormation");
-			Root.AddTask<FGolemFollowTask>().SetNodeName(FName(TEXT("FollowHumanKnight")));
+			Root.AddTask<FGolemFollowTask>().SetNodeName(FName(TEXT("FollowHumanGolem")));
 		}
 		const UStateTreeEditorData* EditorData = Cast<UStateTreeEditorData>(Tree->EditorData);
 		if (EditorData == nullptr || EditorData->Schema == nullptr
@@ -448,7 +448,7 @@ namespace GolemBootstrap
 	bool CreateTrainingNavigation(UWorld* World)
 	{
 		ANavMeshBoundsVolume* Bounds = FindOrCreateActor<ANavMeshBoundsVolume>(World,
-			FName(TEXT("KnightTraining_NavBounds")), FTransform(FVector(0.0, 0.0, 200.0)));
+			FName(TEXT("GolemTraining_NavBounds")), FTransform(FVector(0.0, 0.0, 200.0)));
 		if (Bounds == nullptr)
 		{
 			return false;
@@ -512,8 +512,8 @@ namespace GolemBootstrap
 	{
 		const TArray<FName> WallNames =
 		{
-			TEXT("KnightTraining_WallEast"), TEXT("KnightTraining_WallWest"),
-			TEXT("KnightTraining_WallNorth"), TEXT("KnightTraining_WallSouth")
+			TEXT("GolemTraining_WallEast"), TEXT("GolemTraining_WallWest"),
+			TEXT("GolemTraining_WallNorth"), TEXT("GolemTraining_WallSouth")
 		};
 		const TArray<FVector> WallLocations =
 		{
@@ -579,7 +579,7 @@ namespace GolemBootstrap
 		const TArray<FLinearColor> Colors = { FLinearColor::Red, FLinearColor::Blue, FLinearColor::Green };
 		for (int32 Index = 0; Index < Locations.Num(); ++Index)
 		{
-			const FName MarkerName(*FString::Printf(TEXT("KnightTraining_Marker%d"), Index));
+			const FName MarkerName(*FString::Printf(TEXT("GolemTraining_Marker%d"), Index));
 			AActor* Marker = FindOrCreateActor<AActor>(World, MarkerName, FTransform(Locations[Index]), MarkerClass);
 			if (Marker == nullptr)
 			{
@@ -595,8 +595,8 @@ namespace GolemBootstrap
 	bool CreateAbilityFixtures(UWorld* World)
 	{
 		AGolemAbilityDummy* Dummy = FindOrCreateActor<AGolemAbilityDummy>(World,
-			FName(TEXT("KnightAbility_Dummy")), FTransform(FVector(400.0, -1000.0, 100.0)));
-		const TArray<FName> StationNames = { TEXT("KnightAbility_DamageStation"), TEXT("KnightAbility_ReviveStation") };
+			FName(TEXT("GolemAbility_Dummy")), FTransform(FVector(400.0, -1000.0, 100.0)));
+		const TArray<FName> StationNames = { TEXT("GolemAbility_DamageStation"), TEXT("GolemAbility_ReviveStation") };
 		const TArray<FVector> Locations = { FVector(400.0, -450.0, 50.0), FVector(900.0, 350.0, 50.0) };
 		const TArray<EGolemAbilityStationKind> Kinds =
 		{
@@ -632,7 +632,7 @@ namespace GolemBootstrap
 	{
 		const TArray<FName> Names =
 		{
-			TEXT("KnightCombat_MeleeTarget"), TEXT("KnightCombat_ScriptedAttacker"), TEXT("KnightCombat_RuneTarget")
+			TEXT("GolemCombat_MeleeTarget"), TEXT("GolemCombat_ScriptedAttacker"), TEXT("GolemCombat_RuneTarget")
 		};
 		const TArray<FVector> Locations =
 		{
@@ -663,7 +663,7 @@ namespace GolemBootstrap
 			}
 		}
 		AGolemTraversalObstacle* Obstacle = FindOrCreateActor<AGolemTraversalObstacle>(World,
-			TEXT("KnightCombat_TraversalObstacle"), FTransform(FVector(-1050.0, 1200.0, 45.0)));
+			TEXT("GolemCombat_TraversalObstacle"), FTransform(FVector(-1050.0, 1200.0, 45.0)));
 		if (Obstacle == nullptr || Obstacle->GetObstacleMesh()->GetCollisionResponseToChannel(ECC_Pawn) != ECR_Block)
 		{
 			return false;
@@ -687,11 +687,11 @@ namespace GolemBootstrap
 			UE_LOG(LogGolemBootstrap, Error, TEXT("Native arena Start marker is unavailable."));
 			return false;
 		}
-		AActor* StartMarker = FindOrCreateActor<AActor>(World, TEXT("KnightArena_Start"),
+		AActor* StartMarker = FindOrCreateActor<AActor>(World, TEXT("GolemArena_Start"),
 			FTransform(FVector(0.0, -650.0, 20.0)), MarkerClass);
-		const bool bCreateObstacle = FindObject<AActor>(World->PersistentLevel, TEXT("KnightArena_LOSBlocker"))
+		const bool bCreateObstacle = FindObject<AActor>(World->PersistentLevel, TEXT("GolemArena_LOSBlocker"))
 			== nullptr;
-		AStaticMeshActor* Obstacle = FindOrCreateActor<AStaticMeshActor>(World, TEXT("KnightArena_LOSBlocker"),
+		AStaticMeshActor* Obstacle = FindOrCreateActor<AStaticMeshActor>(World, TEXT("GolemArena_LOSBlocker"),
 			FTransform(FQuat::Identity, FVector(0.0, 0.0, 150.0), FVector(3.0, 2.0, 3.0)));
 		if (StartMarker == nullptr || Obstacle == nullptr)
 		{
@@ -748,7 +748,7 @@ namespace GolemBootstrap
 		if (!World->LineTraceSingleByChannel(Obstruction, FVector(0.0, -500.0, 100.0),
 			FVector(0.0, 500.0, 100.0), ECC_Visibility)
 			|| Obstruction.GetActor() == nullptr
-			|| Obstruction.GetActor()->GetFName() != FName(TEXT("KnightArena_LOSBlocker")))
+			|| Obstruction.GetActor()->GetFName() != FName(TEXT("GolemArena_LOSBlocker")))
 		{
 			UE_LOG(LogGolemBootstrap, Error, TEXT("Arena blocker does not obstruct the real center LOS trace."));
 			return false;
@@ -765,7 +765,7 @@ namespace GolemBootstrap
 			UE_LOG(LogGolemBootstrap, Error, TEXT("Native RPG upgrade station is unavailable."));
 			return false;
 		}
-		AActor* Station = FindOrCreateActor<AActor>(World, TEXT("KnightRPG_UpgradeStation"),
+		AActor* Station = FindOrCreateActor<AActor>(World, TEXT("GolemRPG_UpgradeStation"),
 			FTransform(FVector(-1500.0, -1000.0, 20.0)), StationClass);
 		return Station != nullptr;
 	}
@@ -798,13 +798,13 @@ namespace GolemBootstrap
 			return false;
 		}
 
-		const FString PackageName(bQuality ? TEXT("/Game/Knight/Maps/Playables/L_M07_5_ForgeTrial") : bCampaign ? (Milestone == 70
-			? TEXT("/Game/Knight/Maps/Playables/L_M07_Courtyard") : TEXT("/Game/Knight/Maps/Playables/L_M07_Campaign")) : bStory ? (Milestone == 60
-			? TEXT("/Game/Knight/Maps/Playables/L_M06_StoryCourtyard") : Milestone == 63
-			? TEXT("/Game/Knight/Maps/Playables/L_M06_StoryV1") : Milestone == 61
-			? TEXT("/Game/Knight/Maps/Playables/L_M06_CaravanFixture") : Milestone == 62
-			? TEXT("/Game/Knight/Maps/Playables/L_M06_LifecycleFixture")
-			: TEXT("/Game/Knight/Maps/Playables/L_M06_StoryFrameworkDemo")) : bGearLab ? (Milestone == 57 ? CatalogLabMapPackageName : GearLabMapPackageName)
+		const FString PackageName(bQuality ? TEXT("/Game/Golem/Maps/Playables/L_M07_5_ForgeTrial") : bCampaign ? (Milestone == 70
+			? TEXT("/Game/Golem/Maps/Playables/L_M07_Courtyard") : TEXT("/Game/Golem/Maps/Playables/L_M07_Campaign")) : bStory ? (Milestone == 60
+			? TEXT("/Game/Golem/Maps/Playables/L_M06_StoryCourtyard") : Milestone == 63
+			? TEXT("/Game/Golem/Maps/Playables/L_M06_StoryV1") : Milestone == 61
+			? TEXT("/Game/Golem/Maps/Playables/L_M06_CaravanFixture") : Milestone == 62
+			? TEXT("/Game/Golem/Maps/Playables/L_M06_LifecycleFixture")
+			: TEXT("/Game/Golem/Maps/Playables/L_M06_StoryFrameworkDemo")) : bGearLab ? (Milestone == 57 ? CatalogLabMapPackageName : GearLabMapPackageName)
 			: (bSkillLab ? SkillLabMapPackageName : (bRPG ? RPGMapPackageName : (bArena ? ArenaMapPackageName
 			: (bCombatChallenge ? CombatMapPackageName : (bAbilityYard ? AbilityMapPackageName
 				: (bTraining ? TrainingMapPackageName : MapPackageName)))))));
@@ -885,7 +885,7 @@ namespace GolemBootstrap
 		// InitWorld prepares a loaded world's systems but does not register its saved actor components.
 		World->UpdateWorldComponents(false, false);
 
-		const FString ActorPrefix(bTraining ? TEXT("KnightTraining") : TEXT("KnightBoot"));
+		const FString ActorPrefix(bTraining ? TEXT("GolemTraining") : TEXT("GolemBoot"));
 		AStaticMeshActor* Floor = FindOrCreateActor<AStaticMeshActor>(World, FName(*(ActorPrefix + TEXT("_Floor"))),
 			FTransform(FQuat::Identity, FloorLocation, bTraining ? FVector(40.0, 40.0, 0.25) : FloorScale));
 		APlayerStart* PlayerStart = FindOrCreateActor<APlayerStart>(World,
@@ -952,7 +952,7 @@ namespace GolemBootstrap
 		}
 		if (bSkillLab)
 		{
-			if (FindOrCreateActor<AGolemAbilityDummy>(World, TEXT("KnightSkillLab_CombatDummy"),
+			if (FindOrCreateActor<AGolemAbilityDummy>(World, TEXT("GolemSkillLab_CombatDummy"),
 				FTransform(FVector(-1200.0, 0.0, 100.0))) == nullptr)
 			{
 				return false;
@@ -962,7 +962,7 @@ namespace GolemBootstrap
 			for (int32 Index = 0; Index < Kinds.Num(); ++Index)
 			{
 				AGolemRunestone* Stone = FindOrCreateActor<AGolemRunestone>(World,
-					FName(*FString::Printf(TEXT("KnightSkillLab_Runestone%d"), Index)),
+					FName(*FString::Printf(TEXT("GolemSkillLab_Runestone%d"), Index)),
 					FTransform(FVector(-900.0 + 900.0 * Index, 1100.0, 60.0)));
 				if (Stone == nullptr)
 				{
@@ -970,7 +970,7 @@ namespace GolemBootstrap
 				}
 				Stone->ConfigureFixture(Kinds[Index], FGuid());
 			}
-			if (FindOrCreateActor<AGolemFrozenSurface>(World, TEXT("KnightSkillLab_FrozenSurface"),
+			if (FindOrCreateActor<AGolemFrozenSurface>(World, TEXT("GolemSkillLab_FrozenSurface"),
 				FTransform(FVector(1200.0, 500.0, 55.0))) == nullptr)
 			{
 				return false;
@@ -1071,7 +1071,7 @@ int32 UGolemBootstrapCommandlet::Main(const FString& Params)
 		for (const FName RuneName : { FName(TEXT("Aftershock")), FName(TEXT("Convergence")),
 			FName(TEXT("Propagation")), FName(TEXT("Mobile")) })
 		{
-			const FString Path = TEXT("/Game/Knight/Definitions/Items/DA_Knight_Rune_") + RuneName.ToString();
+			const FString Path = TEXT("/Game/Golem/Definitions/Items/DA_Golem_Rune_") + RuneName.ToString();
 			const bool bExists = FPackageName::DoesPackageExist(Path);
 			UPackage* Package = bExists ? LoadPackage(nullptr, *Path, LOAD_None) : CreatePackage(*Path);
 			const FName AssetName(*FPackageName::GetLongPackageAssetName(Path));
@@ -1079,7 +1079,7 @@ int32 UGolemBootstrapCommandlet::Main(const FString& Params)
 			if (Rune == nullptr && !bExists)
 			{
 				Rune = NewObject<UGolemRuneDefinition>(Package, AssetName, RF_Public | RF_Standalone);
-				Rune->TrySetIdentity(RuneName, TEXT("KnightItem"));
+				Rune->TrySetIdentity(RuneName, TEXT("GolemItem"));
 				Rune->SetDisplayName(FText::FromName(RuneName));
 				const FName LogicId(*(FString(RuneName == TEXT("Aftershock") ? TEXT("Weapon.") : TEXT("Skill."))
 					+ RuneName.ToString()));

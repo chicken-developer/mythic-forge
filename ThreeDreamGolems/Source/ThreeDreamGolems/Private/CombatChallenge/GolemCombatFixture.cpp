@@ -148,7 +148,7 @@ void AGolemCombatFixture::InitializeFixture()
 			AbilitySystem->AddLooseGameplayTag(GolemGameplayTags::Role_Enemy, 1,
 				EGameplayTagReplicationState::TagAndCountToAll);
 		}
-		InitializationResult = Combat->Configure(FPrimaryAssetId(TEXT("KnightCombatProfile"), TEXT("FoundationCombat")));
+		InitializationResult = Combat->Configure(FPrimaryAssetId(TEXT("GolemCombatProfile"), TEXT("FoundationCombat")));
 	}
 	else if (InitializationResult.IsSuccess() && Combat->GetProfileId().IsValid())
 	{
@@ -166,12 +166,12 @@ FGolemResult AGolemCombatFixture::TryTelegraphAttack(AActor* Target)
 	if (!HasAuthority() || FixtureKind != EGolemCombatFixtureKind::ScriptedAttacker)
 	{
 		return FGolemResult::Failure(EGolemError::NotAuthority, TEXT("Telegraph"),
-			NSLOCTEXT("KnightCombatChallenge", "ScriptAuthority", "Only the scripted attacker may prepare this exercise."));
+			NSLOCTEXT("GolemCombatChallenge", "ScriptAuthority", "Only the scripted attacker may prepare this exercise."));
 	}
 	if (bTelegraphing || !Life->IsAlive() || Combat->GetSnapshot().bAttacking || !InitializationResult.IsSuccess())
 	{
 		return FGolemResult::Failure(EGolemError::InvalidState, TEXT("Telegraph"),
-			NSLOCTEXT("KnightCombatChallenge", "ScriptBusy", "Wait for the scripted attack to finish."));
+			NSLOCTEXT("GolemCombatChallenge", "ScriptBusy", "Wait for the scripted attack to finish."));
 	}
 	const FGolemResult TargetValidation = Combat->ValidateCombatTarget(Target, 220.0f);
 	if (!TargetValidation.IsSuccess())
@@ -254,15 +254,15 @@ void AGolemCombatFixture::RefreshLabel()
 	if (FixtureKind == EGolemCombatFixtureKind::ScriptedAttacker)
 	{
 		Label->SetText(bTelegraphing
-			? NSLOCTEXT("KnightCombatChallenge", "Incoming", "INCOMING: block Q / parry C / dodge Shift")
-			: NSLOCTEXT("KnightCombatChallenge", "Scripted", "F / D-pad Left: telegraph attack (0.8 seconds)"));
+			? NSLOCTEXT("GolemCombatChallenge", "Incoming", "INCOMING: block Q / parry C / dodge Shift")
+			: NSLOCTEXT("GolemCombatChallenge", "Scripted", "F / D-pad Left: telegraph attack (0.8 seconds)"));
 		Label->SetTextRenderColor(bTelegraphing ? FColor::Red : FColor::Yellow);
 	}
 	else
 	{
 		Label->SetText(FixtureKind == EGolemCombatFixtureKind::MeleeTarget
-			? NSLOCTEXT("KnightCombatChallenge", "Melee", "LMB combo / RMB heavy / H finisher when staggered")
-			: NSLOCTEXT("KnightCombatChallenge", "Rune", "MMB lock / G rune / H finisher when staggered"));
+			? NSLOCTEXT("GolemCombatChallenge", "Melee", "LMB combo / RMB heavy / H finisher when staggered")
+			: NSLOCTEXT("GolemCombatChallenge", "Rune", "MMB lock / G rune / H finisher when staggered"));
 		Label->SetTextRenderColor(FixtureKind == EGolemCombatFixtureKind::MeleeTarget ? FColor::Cyan : FColor::Purple);
 	}
 }

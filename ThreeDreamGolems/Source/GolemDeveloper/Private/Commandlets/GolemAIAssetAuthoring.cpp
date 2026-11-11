@@ -45,14 +45,14 @@ DEFINE_LOG_CATEGORY_STATIC(LogGolemAIAssetAuthoring, Log, All);
 
 namespace GolemAIAssetAuthoring
 {
-	const TCHAR* QueryPackageName = TEXT("/Game/Knight/AI/EQS_Knight_CombatPosition");
-	const TCHAR* CompanionTreePackageName = TEXT("/Game/Knight/AI/ST_Knight_Companion");
-	const TCHAR* EnemyTreePackageName = TEXT("/Game/Knight/AI/ST_Knight_Enemy");
-	const TCHAR* BossTreePackageName = TEXT("/Game/Knight/AI/ST_Knight_Boss");
+	const TCHAR* QueryPackageName = TEXT("/Game/Golem/AI/EQS_Golem_CombatPosition");
+	const TCHAR* CompanionTreePackageName = TEXT("/Game/Golem/AI/ST_Golem_Companion");
+	const TCHAR* EnemyTreePackageName = TEXT("/Game/Golem/AI/ST_Golem_Enemy");
+	const TCHAR* BossTreePackageName = TEXT("/Game/Golem/AI/ST_Golem_Boss");
 	const TCHAR* LifecycleActionSetPackageName =
-		TEXT("/Game/Knight/Definitions/AI/Tests/DA_Knight_AIActionSet_LifecyclePulse");
-	const FPrimaryAssetId LifecycleActionSetId(TEXT("KnightAIActionSet"), TEXT("LifecyclePulse"));
-	const FPrimaryAssetId CombatProfileId(TEXT("KnightCombatProfile"), TEXT("FoundationCombat"));
+		TEXT("/Game/Golem/Definitions/AI/Tests/DA_Golem_AIActionSet_LifecyclePulse");
+	const FPrimaryAssetId LifecycleActionSetId(TEXT("GolemAIActionSet"), TEXT("LifecyclePulse"));
+	const FPrimaryAssetId CombatProfileId(TEXT("GolemCombatProfile"), TEXT("FoundationCombat"));
 	constexpr float PositionGridHalfExtent = 650.0f;
 	constexpr float PositionGridSpacing = 100.0f;
 	constexpr float PositionMinimumRange = 120.0f;
@@ -394,12 +394,12 @@ namespace GolemAIAssetAuthoring
 			UStateTreeState* Regroup = nullptr;
 			if (bCompanion)
 			{
-				Revive = &Root.AddChildState(TEXT("RevivePartyKnight"));
+				Revive = &Root.AddChildState(TEXT("RevivePartyGolem"));
 				AddCondition(*Revive, EGolemAIContextConditionKind::CanRevive);
 				TStateTreeEditorNode<FGolemAIExecuteActionTask>& ReviveTask = Revive->AddTask<FGolemAIExecuteActionTask>();
 				ReviveTask.GetNode().bRevive = true;
 				ReviveTask.GetNode().bUseAttackLease = false;
-				ApproachRevive = &Root.AddChildState(TEXT("ApproachDownedPartyKnight"));
+				ApproachRevive = &Root.AddChildState(TEXT("ApproachDownedPartyGolem"));
 				AddCondition(*ApproachRevive, EGolemAIContextConditionKind::FriendlyDownedTarget);
 				TStateTreeEditorNode<FGolemAIRepositionTask>& ApproachTask =
 					ApproachRevive->AddTask<FGolemAIRepositionTask>();
@@ -484,7 +484,7 @@ namespace GolemAIAssetAuthoring
 
 	bool CreateActionSet(const TCHAR* DefinitionName, const bool bHeavy, const float AttackCooldown)
 	{
-		const FString PackageName = FString::Printf(TEXT("/Game/Knight/Definitions/AI/DA_Knight_ActionSet_%s"),
+		const FString PackageName = FString::Printf(TEXT("/Game/Golem/Definitions/AI/DA_Golem_ActionSet_%s"),
 			DefinitionName);
 		bool bCreated = false;
 		UGolemAIActionSetDefinition* Definition = FindOrCreateAsset<UGolemAIActionSetDefinition>(*PackageName, bCreated);
@@ -502,21 +502,21 @@ namespace GolemAIAssetAuthoring
 				Actions.Add(MakeAttack(TEXT("HammerHeavy"), GolemGameplayTags::Ability_Combat_Heavy,
 					20, 3.0f, 15.0f));
 			}
-			if (!Definition->TrySetIdentity(FName(DefinitionName), TEXT("KnightAIActionSet"))
+			if (!Definition->TrySetIdentity(FName(DefinitionName), TEXT("GolemAIActionSet"))
 				|| !Definition->TrySetActions(Actions).IsSuccess())
 			{
 				UE_LOG(LogGolemAIAssetAuthoring, Error, TEXT("Could not author validated action set %s."), DefinitionName);
 				return false;
 			}
 		}
-		return Definition->GetPrimaryAssetId() == FPrimaryAssetId(TEXT("KnightAIActionSet"), DefinitionName)
+		return Definition->GetPrimaryAssetId() == FPrimaryAssetId(TEXT("GolemAIActionSet"), DefinitionName)
 			&& Definition->ValidateActionSet().IsSuccess() && SaveAsset(Definition);
 	}
 
 	bool CreateArchetype(const TCHAR* Name, const TCHAR* ActionSetName, UStateTree* Tree, UEnvQuery* Query,
 		const float MaxHealth, const float AttackPower)
 	{
-		const FString PackageName = FString::Printf(TEXT("/Game/Knight/Definitions/AI/DA_Knight_Archetype_%s"), Name);
+		const FString PackageName = FString::Printf(TEXT("/Game/Golem/Definitions/AI/DA_Golem_Archetype_%s"), Name);
 		bool bCreated = false;
 		UGolemAIArchetypeDefinition* Definition = FindOrCreateAsset<UGolemAIArchetypeDefinition>(*PackageName, bCreated);
 		if (Definition == nullptr)
@@ -532,30 +532,30 @@ namespace GolemAIAssetAuthoring
 			Tuning.Attributes.AttackPower = AttackPower;
 			Tuning.WalkSpeed = 360.0f;
 			Tuning.SightAngle = 180.0f;
-			if (!Definition->TrySetIdentity(FName(Name), TEXT("KnightAIArchetype"))
+			if (!Definition->TrySetIdentity(FName(Name), TEXT("GolemAIArchetype"))
 				|| !Definition->TrySetTuning(Tuning).IsSuccess()
 				|| !Definition->TrySetIds(CombatProfileId,
-					FPrimaryAssetId(TEXT("KnightAIActionSet"), ActionSetName)).IsSuccess()
+					FPrimaryAssetId(TEXT("GolemAIActionSet"), ActionSetName)).IsSuccess()
 				|| !Definition->TrySetDecisionAssets(Tree, Query).IsSuccess())
 			{
 				UE_LOG(LogGolemAIAssetAuthoring, Error, TEXT("Could not author validated AI archetype %s."), Name);
 				return false;
 			}
 		}
-		return Definition->GetPrimaryAssetId() == FPrimaryAssetId(TEXT("KnightAIArchetype"), Name)
+		return Definition->GetPrimaryAssetId() == FPrimaryAssetId(TEXT("GolemAIArchetype"), Name)
 			&& Definition->ValidateArchetype().IsSuccess() && SaveAsset(Definition);
 	}
 
 	bool MigrateLifecycleTestActionSet()
 	{
-		const TCHAR* PreviousPackageName = TEXT("/Game/Knight/AI/Tests/DA_Knight_AIActionSet_LifecyclePulse");
+		const TCHAR* PreviousPackageName = TEXT("/Game/Golem/AI/Tests/DA_Golem_AIActionSet_LifecyclePulse");
 		if (!FPackageName::DoesPackageExist(PreviousPackageName))
 		{
 			return true;
 		}
 		UPackage* PreviousPackage = LoadPackage(nullptr, PreviousPackageName, LOAD_None);
 		UObject* PreviousAsset = PreviousPackage != nullptr ? FindObject<UObject>(PreviousPackage,
-			TEXT("DA_Knight_AIActionSet_LifecyclePulse")) : nullptr;
+			TEXT("DA_Golem_AIActionSet_LifecyclePulse")) : nullptr;
 		if (const UObjectRedirector* Redirector = Cast<UObjectRedirector>(PreviousAsset))
 		{
 			const UGolemAIActionSetDefinition* Destination = Cast<UGolemAIActionSetDefinition>(Redirector->DestinationObject);
@@ -620,7 +620,7 @@ namespace GolemAIAssetAuthoring
 			Pulse.RequiredStateTags.AddTag(GolemGameplayTags::State_Life_Alive);
 			Pulse.BlockedStateTags.AddTag(GolemGameplayTags::State_Life_Downed);
 			Pulse.BlockedStateTags.AddTag(GolemGameplayTags::State_Life_Dead);
-			if (!Definition->TrySetIdentity(TEXT("LifecyclePulse"), TEXT("KnightAIActionSet"))
+			if (!Definition->TrySetIdentity(TEXT("LifecyclePulse"), TEXT("GolemAIActionSet"))
 				|| !Definition->TrySetActions({ Pulse }).IsSuccess())
 			{
 				UE_LOG(LogGolemAIAssetAuthoring, Error, TEXT("Could not author the genuine instant-GAS lifecycle fixture."));
@@ -700,7 +700,7 @@ namespace GolemAIAssetAuthoring
 	{
 		bool bCreated = false;
 		UGolemBossPhaseDefinition* Definition = FindOrCreateAsset<UGolemBossPhaseDefinition>(
-			TEXT("/Game/Knight/Definitions/AI/DA_Knight_BossPhase_ArenaBoss"), bCreated);
+			TEXT("/Game/Golem/Definitions/AI/DA_Golem_BossPhase_ArenaBoss"), bCreated);
 		if (Definition == nullptr)
 		{
 			return false;
@@ -710,21 +710,21 @@ namespace GolemAIAssetAuthoring
 			FGolemBossPhaseEntry First;
 			First.PhaseKey = TEXT("MeasuredHammer");
 			First.HealthFraction = 1.0f;
-			First.ActionSetId = FPrimaryAssetId(TEXT("KnightAIActionSet"), TEXT("ArenaBossPhaseOne"));
+			First.ActionSetId = FPrimaryAssetId(TEXT("GolemAIActionSet"), TEXT("ArenaBossPhaseOne"));
 			First.DecisionInterval = 0.15f;
 			FGolemBossPhaseEntry Second;
 			Second.PhaseKey = TEXT("HeavyPressure");
 			Second.HealthFraction = 0.5f;
-			Second.ActionSetId = FPrimaryAssetId(TEXT("KnightAIActionSet"), TEXT("ArenaBossPhaseTwo"));
+			Second.ActionSetId = FPrimaryAssetId(TEXT("GolemAIActionSet"), TEXT("ArenaBossPhaseTwo"));
 			Second.DecisionInterval = 0.1f;
-			if (!Definition->TrySetIdentity(TEXT("ArenaBoss"), TEXT("KnightBossPhase"))
+			if (!Definition->TrySetIdentity(TEXT("ArenaBoss"), TEXT("GolemBossPhase"))
 				|| !Definition->TrySetPhases({ First, Second }).IsSuccess())
 			{
 				UE_LOG(LogGolemAIAssetAuthoring, Error, TEXT("Could not author validated two-phase boss definition."));
 				return false;
 			}
 		}
-		return Definition->GetPrimaryAssetId() == FPrimaryAssetId(TEXT("KnightBossPhase"), TEXT("ArenaBoss"))
+		return Definition->GetPrimaryAssetId() == FPrimaryAssetId(TEXT("GolemBossPhase"), TEXT("ArenaBoss"))
 			&& Definition->ValidateBossPhases().IsSuccess() && SaveAsset(Definition);
 	}
 
@@ -747,20 +747,20 @@ namespace GolemAIAssetAuthoring
 			&& CreateArchetype(TEXT("ArenaBoss"), TEXT("ArenaBossPhaseOne"), Boss, Query, 220.0f, 10.0f)
 			&& CreateBossPhases()
 			&& CreateLifecycleTestActionSet()
-			&& CreateLifecycleTree(TEXT("/Game/Knight/AI/Tests/ST_Knight_LifecyclePulse"), false, false)
-			&& CreateLifecycleTree(TEXT("/Game/Knight/AI/Tests/ST_Knight_LifecycleRevive"), true, false)
-			&& CreateLifecycleTree(TEXT("/Game/Knight/AI/Tests/ST_Knight_LifecycleEQS"), false, true)
+			&& CreateLifecycleTree(TEXT("/Game/Golem/AI/Tests/ST_Golem_LifecyclePulse"), false, false)
+			&& CreateLifecycleTree(TEXT("/Game/Golem/AI/Tests/ST_Golem_LifecycleRevive"), true, false)
+			&& CreateLifecycleTree(TEXT("/Game/Golem/AI/Tests/ST_Golem_LifecycleEQS"), false, true)
 			&& ValidateAIAssets();
 	}
 
 	bool ValidateAIAssets()
 	{
 		UEnvQuery* Query = LoadObject<UEnvQuery>(nullptr,
-			TEXT("/Game/Knight/AI/EQS_Knight_CombatPosition.EQS_Knight_CombatPosition"));
+			TEXT("/Game/Golem/AI/EQS_Golem_CombatPosition.EQS_Golem_CombatPosition"));
 		UStateTree* Companion = LoadObject<UStateTree>(nullptr,
-			TEXT("/Game/Knight/AI/ST_Knight_Companion.ST_Knight_Companion"));
-		UStateTree* Enemy = LoadObject<UStateTree>(nullptr, TEXT("/Game/Knight/AI/ST_Knight_Enemy.ST_Knight_Enemy"));
-		UStateTree* Boss = LoadObject<UStateTree>(nullptr, TEXT("/Game/Knight/AI/ST_Knight_Boss.ST_Knight_Boss"));
+			TEXT("/Game/Golem/AI/ST_Golem_Companion.ST_Golem_Companion"));
+		UStateTree* Enemy = LoadObject<UStateTree>(nullptr, TEXT("/Game/Golem/AI/ST_Golem_Enemy.ST_Golem_Enemy"));
+		UStateTree* Boss = LoadObject<UStateTree>(nullptr, TEXT("/Game/Golem/AI/ST_Golem_Boss.ST_Golem_Boss"));
 		if (!ValidateCombatPositionQuery(Query) || !ValidateDecisionTree(Companion, true)
 			|| !ValidateDecisionTree(Enemy, false) || !ValidateDecisionTree(Boss, false))
 		{
@@ -770,7 +770,7 @@ namespace GolemAIAssetAuthoring
 		for (const FString& Name : ArchetypeNames)
 		{
 			const FString Path = FString::Printf(
-				TEXT("/Game/Knight/Definitions/AI/DA_Knight_Archetype_%s.DA_Knight_Archetype_%s"), *Name, *Name);
+				TEXT("/Game/Golem/Definitions/AI/DA_Golem_Archetype_%s.DA_Golem_Archetype_%s"), *Name, *Name);
 			UGolemAIArchetypeDefinition* Definition = LoadObject<UGolemAIArchetypeDefinition>(nullptr, *Path);
 			if (Definition == nullptr || !Definition->ValidateArchetype().IsSuccess()
 				|| Definition->GetCombatProfileId() != CombatProfileId || Definition->GetRepositionQuery() != Query)
@@ -786,7 +786,7 @@ namespace GolemAIAssetAuthoring
 		for (const FString& Name : ActionNames)
 		{
 			const FString Path = FString::Printf(
-				TEXT("/Game/Knight/Definitions/AI/DA_Knight_ActionSet_%s.DA_Knight_ActionSet_%s"), *Name, *Name);
+				TEXT("/Game/Golem/Definitions/AI/DA_Golem_ActionSet_%s.DA_Golem_ActionSet_%s"), *Name, *Name);
 			UGolemAIActionSetDefinition* Definition = LoadObject<UGolemAIActionSetDefinition>(nullptr, *Path);
 			if (Definition == nullptr || !Definition->ValidateActionSet().IsSuccess())
 			{
@@ -795,7 +795,7 @@ namespace GolemAIAssetAuthoring
 			}
 		}
 		UGolemBossPhaseDefinition* Phases = LoadObject<UGolemBossPhaseDefinition>(nullptr,
-			TEXT("/Game/Knight/Definitions/AI/DA_Knight_BossPhase_ArenaBoss.DA_Knight_BossPhase_ArenaBoss"));
+			TEXT("/Game/Golem/Definitions/AI/DA_Golem_BossPhase_ArenaBoss.DA_Golem_BossPhase_ArenaBoss"));
 		if (Phases == nullptr || !Phases->ValidateBossPhases().IsSuccess() || Phases->GetPhases().Num() < 2)
 		{
 			UE_LOG(LogGolemAIAssetAuthoring, Error, TEXT("Arena boss requires two valid stable action-set phases."));

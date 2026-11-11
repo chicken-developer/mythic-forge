@@ -95,7 +95,7 @@ namespace GolemProjectionTests
 	{
 		FGolemGASProjectionPlan Result;
 		Result.SourceKey = TEXT("RPG");
-		Result.DefinitionId = FPrimaryAssetId(TEXT("KnightHero"), TEXT("Training_Red"));
+		Result.DefinitionId = FPrimaryAssetId(TEXT("GolemHero"), TEXT("Training_Red"));
 		Result.MaxHealthBonus = 50.0f;
 		Result.MaxStaminaBonus = 40.0f;
 		Result.MaxRuneEnergyBonus = 25.0f;
@@ -146,7 +146,7 @@ bool FGolemProjectionValidationTest::RunTest(const FString& Parameters)
 	Plan.ActionModifiers = { Modifier, Modifier };
 	TestEqual(TEXT("Duplicate exact action rejected"), Plan.Validate().Error, EGolemError::DuplicateId);
 	Plan.ActionModifiers = { Modifier };
-	Plan.OptionalAbilitySetId = FPrimaryAssetId(TEXT("KnightAbilitySet"), TEXT("Foundation"));
+	Plan.OptionalAbilitySetId = FPrimaryAssetId(TEXT("GolemAbilitySet"), TEXT("Foundation"));
 	Plan.OptionalAbilitySetIds = { Plan.OptionalAbilitySetId };
 	TestEqual(TEXT("Legacy and array duplicate set rejected"), Plan.Validate().Error, EGolemError::DuplicateId);
 	Plan = GolemProjectionTests::Plan();
@@ -166,7 +166,7 @@ bool FGolemProjectionTransactionTest::RunTest(const FString& Parameters)
 	UGolemDefinition* Definition = nullptr;
 	UGolemAssetManager* Manager = UGolemAssetManager::GetGolemAssetManager();
 	if (!TestNotNull(TEXT("Actual catalog manager exists"), Manager) || !TestTrue(TEXT("Real foundation set resolves"),
-		Manager->ResolveDefinition(FPrimaryAssetId(TEXT("KnightAbilitySet"), TEXT("Foundation")),
+		Manager->ResolveDefinition(FPrimaryAssetId(TEXT("GolemAbilitySet"), TEXT("Foundation")),
 			UGolemAbilitySetDefinition::StaticClass(), Definition).IsSuccess()))
 	{
 		return false;
@@ -322,7 +322,7 @@ bool FGolemProjectionTransactionTest::RunTest(const FString& Parameters)
 	TestEqual(TEXT("Reconstruction does not heal on equip"), Reconstructed.Attributes->GetHealth(), 100.0f);
 	Plan = FGolemGASProjectionPlan();
 	Plan.SourceKey = TEXT("RPG");
-	Plan.DefinitionId = FPrimaryAssetId(TEXT("KnightHero"), TEXT("Training_Red"));
+	Plan.DefinitionId = FPrimaryAssetId(TEXT("GolemHero"), TEXT("Training_Red"));
 	TestTrue(TEXT("Empty projection performs real unequip"), GolemProjectionTests::Commit(Source.ASC.Get(), Plan));
 	TestEqual(TEXT("Max shrink clamps health"), Source.Attributes->GetHealth(), 100.0f);
 	TestEqual(TEXT("Max shrink clamps stamina"), Source.Attributes->GetStamina(), 100.0f);
@@ -343,8 +343,8 @@ bool FGolemProjectionGrantLifecycleTest::RunTest(const FString& Parameters)
 	const GolemProjectionTests::FGolemFixture Source = GolemProjectionTests::Spawn(World.World.Get(), FVector::ZeroVector);
 	const GolemProjectionTests::FGolemFixture Foreign = GolemProjectionTests::Spawn(World.World.Get(), FVector(300, 0, 0));
 	FGolemGASProjectionPlan Plan = GolemProjectionTests::Plan();
-	Plan.OptionalAbilitySetIds = { FPrimaryAssetId(TEXT("KnightAbilitySet"), TEXT("Foundation")),
-		FPrimaryAssetId(TEXT("KnightAbilitySet"), TEXT("FoundationCombat")) };
+	Plan.OptionalAbilitySetIds = { FPrimaryAssetId(TEXT("GolemAbilitySet"), TEXT("Foundation")),
+		FPrimaryAssetId(TEXT("GolemAbilitySet"), TEXT("FoundationCombat")) };
 	FGolemActionModifier Modifier;
 	Modifier.AbilityTag = GolemGameplayTags::Ability_Combat_Rune;
 	Modifier.CostScale = 0.5f;
@@ -471,7 +471,7 @@ bool FGolemProjectionPublicationLifetimeTest::RunTest(const FString& Parameters)
 	TStrongObjectPtr<AActor> OwnedActor(Source.Actor.Get());
 	TStrongObjectPtr<UGolemAbilitySystemComponent> OwnedASC(Source.ASC.Get());
 	FGolemGASProjectionPlan Plan = GolemProjectionTests::Plan();
-	Plan.OptionalAbilitySetIds = { FPrimaryAssetId(TEXT("KnightAbilitySet"), TEXT("Foundation")) };
+	Plan.OptionalAbilitySetIds = { FPrimaryAssetId(TEXT("GolemAbilitySet"), TEXT("Foundation")) };
 	if (!TestTrue(TEXT("Lifecycle fixture owns actual initial projection and optional grant"),
 		GolemProjectionTests::Commit(OwnedASC.Get(), Plan)))
 	{

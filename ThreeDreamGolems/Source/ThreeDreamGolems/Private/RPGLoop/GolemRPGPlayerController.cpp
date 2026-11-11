@@ -7,9 +7,9 @@
 AGolemRPGPlayerController::AGolemRPGPlayerController()
 {
 	LastRPGResult.Result = FGolemResult::Failure(EGolemError::InvalidState, TEXT("RPGCommand"),
-		NSLOCTEXT("KnightRPG", "CommandNotRequested", "No RPG command has completed."));
+		NSLOCTEXT("GolemRPG", "CommandNotRequested", "No RPG command has completed."));
 	LastRPGLoopResult = FGolemResult::Failure(EGolemError::InvalidState, TEXT("RPGContinue"),
-		NSLOCTEXT("KnightRPG", "ContinueNotRequested", "No continue request has completed."));
+		NSLOCTEXT("GolemRPG", "ContinueNotRequested", "No continue request has completed."));
 }
 
 void AGolemRPGPlayerController::RequestRPGCommand(const FGolemRPGCommand& Request)
@@ -60,12 +60,12 @@ void AGolemRPGPlayerController::ServerRequestRPGCommand_Implementation(FGolemRPG
 	if (bEndingRPGPlay || World == nullptr || World->bIsTearingDown)
 	{
 		Outcome.Result = FGolemResult::Failure(EGolemError::ShuttingDown, TEXT("RPGCommand"),
-			NSLOCTEXT("KnightRPG", "CommandWorldEnding", "The RPG world is shutting down."));
+			NSLOCTEXT("GolemRPG", "CommandWorldEnding", "The RPG world is shutting down."));
 	}
 	else if (Mode == nullptr)
 	{
 		Outcome.Result = FGolemResult::Failure(EGolemError::InvalidState, TEXT("RPGCommand"),
-			NSLOCTEXT("KnightRPG", "CommandModeUnavailable", "The current world does not support RPG commands."));
+			NSLOCTEXT("GolemRPG", "CommandModeUnavailable", "The current world does not support RPG commands."));
 	}
 	else
 	{
@@ -93,12 +93,12 @@ void AGolemRPGPlayerController::ServerRequestContinueRPGLoop_Implementation()
 	if (bEndingRPGPlay || World == nullptr || World->bIsTearingDown)
 	{
 		Result = FGolemResult::Failure(EGolemError::ShuttingDown, TEXT("RPGContinue"),
-			NSLOCTEXT("KnightRPG", "ContinueWorldEnding", "The RPG world is shutting down."));
+			NSLOCTEXT("GolemRPG", "ContinueWorldEnding", "The RPG world is shutting down."));
 	}
 	else if (Mode == nullptr)
 	{
 		Result = FGolemResult::Failure(EGolemError::InvalidState, TEXT("RPGContinue"),
-			NSLOCTEXT("KnightRPG", "ContinueModeUnavailable", "The current world does not support this RPG loop."));
+			NSLOCTEXT("GolemRPG", "ContinueModeUnavailable", "The current world does not support this RPG loop."));
 	}
 	else
 	{

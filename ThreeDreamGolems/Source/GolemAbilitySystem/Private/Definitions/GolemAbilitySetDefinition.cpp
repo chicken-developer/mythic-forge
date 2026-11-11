@@ -11,7 +11,7 @@ bool FGolemAbilitySetHandle::IsValid() const
 
 UGolemAbilitySetDefinition::UGolemAbilitySetDefinition()
 {
-	DefinitionType = TEXT("KnightAbilitySet");
+	DefinitionType = TEXT("GolemAbilitySet");
 }
 
 const TArray<FGolemAbilitySetEntry>& UGolemAbilitySetDefinition::GetAbilities() const
@@ -36,7 +36,7 @@ FGolemResult UGolemAbilitySetDefinition::ValidateAbilitySet() const
 	{
 		return Identity;
 	}
-	if (GetDefinitionType() != FName(TEXT("KnightAbilitySet")))
+	if (GetDefinitionType() != FName(TEXT("GolemAbilitySet")))
 	{
 		return FGolemResult::Failure(EGolemError::TypeMismatch, GetDefinitionId(),
 			NSLOCTEXT("GolemGAS", "AbilitySetType", "An ability set must use the GolemAbilitySet primary asset type."));

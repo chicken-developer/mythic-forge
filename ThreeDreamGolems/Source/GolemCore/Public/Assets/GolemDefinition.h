@@ -19,7 +19,7 @@ public:
 	FGolemResult ValidateIdentity() const;
 
 	/** Authoring API; rejected values leave the original identity intact. */
-	bool TrySetIdentity(FName InDefinitionId, FName InDefinitionType = FName(TEXT("KnightDefinition")),
+	bool TrySetIdentity(FName InDefinitionId, FName InDefinitionType = FName(TEXT("GolemDefinition")),
 		FGolemResult* OutFailure = nullptr);
 	void SetDisplayName(const FText& InDisplayName);
 
@@ -32,7 +32,7 @@ protected:
 	FName DefinitionId;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, AssetRegistrySearchable, Category = "Golem|Core|Identity")
-	FName DefinitionType = TEXT("KnightDefinition");
+	FName DefinitionType = TEXT("GolemDefinition");
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Core|Presentation")
 	FText DisplayName;

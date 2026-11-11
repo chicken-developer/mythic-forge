@@ -44,7 +44,7 @@ namespace
 
 UGolemAIActionSetDefinition::UGolemAIActionSetDefinition()
 {
-	DefinitionType = TEXT("KnightAIActionSet");
+	DefinitionType = TEXT("GolemAIActionSet");
 }
 
 const TArray<FGolemAIActionEntry>& UGolemAIActionSetDefinition::GetActions() const
@@ -59,7 +59,7 @@ FGolemResult UGolemAIActionSetDefinition::ValidateActionSet() const
 	{
 		return Identity;
 	}
-	if (GetDefinitionType() != FName(TEXT("KnightAIActionSet")))
+	if (GetDefinitionType() != FName(TEXT("GolemAIActionSet")))
 	{
 		return FGolemResult::Failure(EGolemError::TypeMismatch, GetDefinitionId(),
 			NSLOCTEXT("GolemAI", "ActionSetType", "An AI action set must use the GolemAIActionSet primary asset type."));

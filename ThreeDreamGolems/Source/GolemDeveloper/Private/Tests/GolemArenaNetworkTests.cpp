@@ -45,8 +45,8 @@
 
 namespace GolemArenaNetwork
 {
-	const TCHAR* ArenaMap = TEXT("/Game/Knight/Maps/Playables/L_M04_PartyArena");
-	const TCHAR* DetachedMap = TEXT("/Game/Knight/Maps/Playables/L_M00_Boot");
+	const TCHAR* ArenaMap = TEXT("/Game/Golem/Maps/Playables/L_M04_PartyArena");
+	const TCHAR* DetachedMap = TEXT("/Game/Golem/Maps/Playables/L_M00_Boot");
 	constexpr double StartupTimeout = 60.0;
 	constexpr double PhaseTimeout = 25.0;
 	constexpr uint16 ServerPort = 17904;
@@ -855,7 +855,7 @@ namespace GolemArenaNetwork
 						return;
 					}
 					const UTextRenderComponent* Caption = Replica->FindComponentByClass<UTextRenderComponent>();
-					if (Caption == nullptr || !Caption->Text.EqualTo(NSLOCTEXT("KnightArena", "EnemyLabel", "ARENA ENEMY")))
+					if (Caption == nullptr || !Caption->Text.EqualTo(NSLOCTEXT("GolemArena", "EnemyLabel", "ARENA ENEMY")))
 					{
 						Fail(FString::Printf(TEXT("Ready client enemy %s in %s has incorrect native caption '%s'."),
 							*Enemy->GetArenaEnemyId().Value.ToString(), *Handle.ToString(),

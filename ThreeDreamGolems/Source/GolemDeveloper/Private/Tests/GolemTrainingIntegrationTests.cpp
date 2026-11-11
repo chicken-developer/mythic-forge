@@ -33,7 +33,7 @@
 
 namespace GolemTrainingIntegration
 {
-	const FString MapPath = TEXT("/Game/Knight/Maps/Playables/L_M01_TrainingYard");
+	const FString MapPath = TEXT("/Game/Golem/Maps/Playables/L_M01_TrainingYard");
 	constexpr double TotalTimeoutSeconds = 180.0;
 	constexpr double StartupTimeoutSeconds = 30.0;
 	constexpr double WalkingTimeoutSeconds = 30.0;

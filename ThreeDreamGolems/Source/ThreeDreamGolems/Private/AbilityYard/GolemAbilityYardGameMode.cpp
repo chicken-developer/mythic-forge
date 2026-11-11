@@ -156,14 +156,14 @@ FGolemResult AGolemAbilityYardGameMode::TryInteract(APlayerController* Player)
 	if (!HasAuthority() || !IsValid(Player) || Player->GetWorld() != GetWorld())
 	{
 		return FGolemResult::Failure(EGolemError::NotAuthority, TEXT("Interact"),
-			NSLOCTEXT("KnightAbilityYard", "InteractAuthority", "Only the server may activate an exercise station."));
+			NSLOCTEXT("GolemAbilityYard", "InteractAuthority", "Only the server may activate an exercise station."));
 	}
 	AGolemCharacter* Golem = Cast<AGolemCharacter>(Player->GetPawn());
 	if (Party == nullptr || Party->GetControlledSlot(Player) == INDEX_NONE || Golem == nullptr
 		|| YardState == nullptr || Dummy == nullptr)
 	{
 		return FGolemResult::Failure(EGolemError::NotOwned, TEXT("Interact"),
-			NSLOCTEXT("KnightAbilityYard", "InteractOwner", "Control a canonical Golem to use the exercise stations."));
+			NSLOCTEXT("GolemAbilityYard", "InteractOwner", "Control a canonical Golem to use the exercise stations."));
 	}
 	AGolemAbilityStation* ClosestStation = nullptr;
 	double ClosestDistance = TNumericLimits<double>::Max();
@@ -179,7 +179,7 @@ FGolemResult AGolemAbilityYardGameMode::TryInteract(APlayerController* Player)
 	if (ClosestStation == nullptr)
 	{
 		return FGolemResult::Failure(EGolemError::OutOfRange, TEXT("Interact"),
-			NSLOCTEXT("KnightAbilityYard", "InteractRange", "Move closer to a labeled exercise station and press F."));
+			NSLOCTEXT("GolemAbilityYard", "InteractRange", "Move closer to a labeled exercise station and press F."));
 	}
 	AGolemCharacter* AffectedGolem = nullptr;
 	const FGolemResult Activation = ClosestStation->TryActivate(Golem, Party, Dummy, AffectedGolem);
@@ -204,13 +204,13 @@ FGolemResult AGolemAbilityYardGameMode::TryRestartDrill(APlayerController* Playe
 	if (!HasAuthority() || !IsValid(Player) || Player->GetWorld() != GetWorld())
 	{
 		return FGolemResult::Failure(EGolemError::NotAuthority, TEXT("RestartDrill"),
-			NSLOCTEXT("KnightAbilityYard", "RetryAuthority", "Only the host may reset the exercise."));
+			NSLOCTEXT("GolemAbilityYard", "RetryAuthority", "Only the host may reset the exercise."));
 	}
 	if (!Player->IsLocalController() || Party == nullptr || !Party->IsCanonicalRosterReady()
 		|| Party->GetControlledSlot(Player) == INDEX_NONE || YardState == nullptr || Dummy == nullptr)
 	{
 		return FGolemResult::Failure(EGolemError::NotOwned, TEXT("RestartDrill"),
-			NSLOCTEXT("KnightAbilityYard", "RetryOwner", "The host must control a canonical Golem to reset the exercise."));
+			NSLOCTEXT("GolemAbilityYard", "RetryOwner", "The host must control a canonical Golem to reset the exercise."));
 	}
 	bIsResetting = true;
 	ON_SCOPE_EXIT

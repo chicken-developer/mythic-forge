@@ -99,7 +99,7 @@ namespace GolemEncounterQualityTests
 				Settings->GameGetsMouseControl = false;
 				FRequestPlaySessionParams Request;
 				Request.EditorPlaySettings = Settings.Get();
-				Request.GlobalMapOverride = TEXT("/Game/Knight/Maps/Playables/L_M07_5_ForgeTrial");
+				Request.GlobalMapOverride = TEXT("/Game/Golem/Maps/Playables/L_M07_5_ForgeTrial");
 				Request.bAllowOnlineSubsystem = false;
 				GEditor->RequestPlaySession(Request);
 				Phase = 1;
@@ -279,7 +279,7 @@ namespace GolemEncounterQualityTests
 						Player->InputKey(FInputKeyEventArgs::CreateSimulated(EKeys::W, IE_Released, 0.0f));
 						if (Player != Host)
 						{
-							Player->ClientTravel(TEXT("/Game/Knight/Maps/Playables/L_M00_Boot"), TRAVEL_Absolute);
+							Player->ClientTravel(TEXT("/Game/Golem/Maps/Playables/L_M00_Boot"), TRAVEL_Absolute);
 						}
 					}
 					Phase = 8;

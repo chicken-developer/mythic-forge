@@ -4,7 +4,7 @@
 #include "Misc/DataValidation.h"
 #include "Types/GolemStableIds.h"
 
-#define LOCTEXT_NAMESPACE "KnightSkillTreeDefinition"
+#define LOCTEXT_NAMESPACE "GolemSkillTreeDefinition"
 
 namespace
 {
@@ -18,7 +18,7 @@ namespace
 		TSet<FPrimaryAssetId> Unique;
 		for (const FPrimaryAssetId& Id : Ids)
 		{
-			if (!GolemIdentity::IsValidDefinitionId(Id) || Id.PrimaryAssetType != FPrimaryAssetType(TEXT("KnightSkill"))
+			if (!GolemIdentity::IsValidDefinitionId(Id) || Id.PrimaryAssetType != FPrimaryAssetType(TEXT("GolemSkill"))
 				|| Unique.Contains(Id))
 			{
 				return FGolemResult::Failure(EGolemError::InvalidId, TEXT("SkillTree"),
@@ -32,7 +32,7 @@ namespace
 
 UGolemSkillTreeDefinition::UGolemSkillTreeDefinition()
 {
-	DefinitionType = TEXT("KnightSkillTree");
+	DefinitionType = TEXT("GolemSkillTree");
 }
 
 const TArray<FPrimaryAssetId>& UGolemSkillTreeDefinition::GetSkills() const
@@ -57,7 +57,7 @@ FGolemResult UGolemSkillTreeDefinition::ValidateSkillTree() const
 	{
 		return Identity;
 	}
-	if (GetDefinitionType() != TEXT("KnightSkillTree"))
+	if (GetDefinitionType() != TEXT("GolemSkillTree"))
 	{
 		return FGolemResult::Failure(EGolemError::TypeMismatch, GetDefinitionId(),
 			LOCTEXT("Type", "A skill tree requires the GolemSkillTree definition type."));

@@ -2,11 +2,11 @@
 
 #include "Misc/DataValidation.h"
 
-#define LOCTEXT_NAMESPACE "KnightHeroDefinition"
+#define LOCTEXT_NAMESPACE "GolemHeroDefinition"
 
 UGolemHeroDefinition::UGolemHeroDefinition()
 {
-	DefinitionType = TEXT("KnightHero");
+	DefinitionType = TEXT("GolemHero");
 }
 
 FLinearColor UGolemHeroDefinition::GetBodyColor() const
@@ -46,13 +46,13 @@ FGolemResult UGolemHeroDefinition::ValidateHero() const
 	{
 		return IdentityResult;
 	}
-	if (GetDefinitionType() != FName(TEXT("KnightHero")))
+	if (GetDefinitionType() != FName(TEXT("GolemHero")))
 	{
 		return FGolemResult::Failure(EGolemError::TypeMismatch, GetDefinitionId(),
 			LOCTEXT("WrongHeroType", "A hero definition must use the GolemHero primary asset type."));
 	}
 	if (!DefaultAbilitySetId.IsValid()
-		|| DefaultAbilitySetId.PrimaryAssetType != FPrimaryAssetType(TEXT("KnightAbilitySet")))
+		|| DefaultAbilitySetId.PrimaryAssetType != FPrimaryAssetType(TEXT("GolemAbilitySet")))
 	{
 		return FGolemResult::Failure(EGolemError::InvalidId, GetDefinitionId(),
 			LOCTEXT("InvalidAbilitySet", "A hero requires a valid GolemAbilitySet definition identity."));
@@ -71,7 +71,7 @@ FGolemResult UGolemHeroDefinition::ValidateHero() const
 
 FGolemResult UGolemHeroDefinition::TrySetDefaultAbilitySetId(const FPrimaryAssetId& InAbilitySetId)
 {
-	if (!InAbilitySetId.IsValid() || InAbilitySetId.PrimaryAssetType != FPrimaryAssetType(TEXT("KnightAbilitySet")))
+	if (!InAbilitySetId.IsValid() || InAbilitySetId.PrimaryAssetType != FPrimaryAssetType(TEXT("GolemAbilitySet")))
 	{
 		return FGolemResult::Failure(EGolemError::InvalidId, GetDefinitionId(),
 			LOCTEXT("InvalidAbilitySetAssignment",

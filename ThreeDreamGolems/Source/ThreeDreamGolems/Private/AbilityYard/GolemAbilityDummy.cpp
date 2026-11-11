@@ -36,7 +36,7 @@ AGolemAbilityDummy::AGolemAbilityDummy()
 	Label->SetRelativeRotation(FRotator(0.0, 180.0, 0.0));
 	Label->SetWorldSize(24.0f);
 	Label->SetHorizontalAlignment(EHTA_Center);
-	Label->SetText(NSLOCTEXT("KnightAbilityYard", "PulseDummy", "T: Test pulse target"));
+	Label->SetText(NSLOCTEXT("GolemAbilityYard", "PulseDummy", "T: Test pulse target"));
 	Label->SetTextRenderColor(FColor(255, 200, 80));
 	AbilitySystem = CreateDefaultSubobject<UGolemAbilitySystemComponent>(TEXT("AbilitySystem"));
 	Attributes = CreateDefaultSubobject<UGolemAttributeSet>(TEXT("Attributes"));

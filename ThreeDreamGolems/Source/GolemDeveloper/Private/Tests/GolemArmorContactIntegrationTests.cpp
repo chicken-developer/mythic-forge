@@ -311,7 +311,7 @@ namespace GolemArmorContactTests
 			Fixture.Actor->AddInstanceComponent(Fixture.Combat.Get());
 			Fixture.Combat->RegisterComponent();
 			Test.TestTrue(TEXT("Actual combat profile configures"), Fixture.Combat->Configure(
-				FPrimaryAssetId(TEXT("KnightCombatProfile"), TEXT("FoundationCombat"))).IsSuccess());
+				FPrimaryAssetId(TEXT("GolemCombatProfile"), TEXT("FoundationCombat"))).IsSuccess());
 			return Fixture;
 		}
 

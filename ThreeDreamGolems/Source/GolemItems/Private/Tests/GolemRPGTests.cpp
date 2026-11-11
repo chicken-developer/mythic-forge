@@ -63,21 +63,21 @@ namespace GolemRPGTests
 			World->SetGameMode(URL);
 			World->InitializeActorsForPlay(URL);
 			World->BeginPlay();
-			Ore->TrySetIdentity(TEXT("DomainForgeShard"), TEXT("KnightItem"));
+			Ore->TrySetIdentity(TEXT("DomainForgeShard"), TEXT("GolemItem"));
 			Ore->TrySetItemTuning(EGolemItemKind::Material, 10);
-			Hammer->TrySetIdentity(TEXT("DomainHammer"), TEXT("KnightItem"));
+			Hammer->TrySetIdentity(TEXT("DomainHammer"), TEXT("GolemItem"));
 			FGolemItemStatBonuses HammerStats;
 			HammerStats.AttackPower = 10.0f;
 			HammerStats.MaxHealth = 20.0f;
 			Hammer->TrySetItemTuning(EGolemItemKind::Equipment, 1, FPrimaryAssetId(), HammerStats);
-			Rune->TrySetIdentity(TEXT("DomainRune"), TEXT("KnightItem"));
+			Rune->TrySetIdentity(TEXT("DomainRune"), TEXT("GolemItem"));
 			FGolemRuneTuning RuneTuning;
 			RuneTuning.DamageScale = 1.2f;
 			RuneTuning.CostScale = 0.5f;
 			RuneTuning.DurationScale = 1.5f;
 			Rune->TrySetRuneTuning(RuneTuning);
-			Skill->TrySetIdentity(TEXT("DomainHammerForce"), TEXT("KnightSkill"));
-			BrokenSkill->TrySetIdentity(TEXT("DomainMissingGrant"), TEXT("KnightSkill"));
+			Skill->TrySetIdentity(TEXT("DomainHammerForce"), TEXT("GolemSkill"));
+			BrokenSkill->TrySetIdentity(TEXT("DomainMissingGrant"), TEXT("GolemSkill"));
 			FGolemMaterialCost Cost;
 			Cost.DefinitionId = Ore->GetPrimaryAssetId();
 			Cost.Count = 2;
@@ -85,8 +85,8 @@ namespace GolemRPGTests
 			SkillStats.AttackPower = 5.0f;
 			Skill->TrySetSkillTuning(1, { Cost }, {}, SkillStats);
 			BrokenSkill->TrySetSkillTuning(1, { Cost }, {}, SkillStats, FGolemRuneTuning(),
-				FPrimaryAssetId(TEXT("KnightAbilitySet"), TEXT("MissingDomainGrant")));
-			Tree->TrySetIdentity(TEXT("DomainTree"), TEXT("KnightSkillTree"));
+				FPrimaryAssetId(TEXT("GolemAbilitySet"), TEXT("MissingDomainGrant")));
+			Tree->TrySetIdentity(TEXT("DomainTree"), TEXT("GolemSkillTree"));
 			Tree->TrySetSkills({ Skill->GetPrimaryAssetId(), BrokenSkill->GetPrimaryAssetId() });
 		}
 
@@ -157,7 +157,7 @@ namespace GolemRPGTests
 			UGolemDefinition* AbilityDefinition = nullptr;
 			Result.InitializationResult = Manager == nullptr
 				? FGolemResult::Failure(EGolemError::LoadFailed, TEXT("RPGTestCombatCatalog"), FText::GetEmpty())
-				: Manager->ResolveDefinition(FPrimaryAssetId(TEXT("KnightAbilitySet"), TEXT("FoundationCombat")),
+				: Manager->ResolveDefinition(FPrimaryAssetId(TEXT("GolemAbilitySet"), TEXT("FoundationCombat")),
 					UGolemAbilitySetDefinition::StaticClass(), AbilityDefinition);
 			if (!Result.InitializationResult.IsSuccess())
 			{
@@ -187,7 +187,7 @@ namespace GolemRPGTests
 				FGolemRPGGolemRegistration Registration;
 				Registration.GolemId = ExistingIds == nullptr ? FGolemEntityId::Create() : (*ExistingIds)[Index].GolemId;
 				const FName HeroNames[] { TEXT("Training_Red"), TEXT("Training_Blue"), TEXT("Training_Green") };
-				Registration.HeroDefinitionId = FPrimaryAssetId(TEXT("KnightHero"), HeroNames[Index]);
+				Registration.HeroDefinitionId = FPrimaryAssetId(TEXT("GolemHero"), HeroNames[Index]);
 				Registration.Pawn = Pawn;
 				Registration.AbilitySystem = ASC;
 				Result.InitializationResult = ASC->InitializeGolemActor(Pawn, Attributes, Life, Registration.GolemId);
@@ -669,7 +669,7 @@ bool FGolemRPGSnapshotTest::RunTest(const FString& Parameters)
 		}
 		else
 		{
-			Corrupt.Inventory.Items[0].DefinitionId = FPrimaryAssetId(TEXT("KnightItem"), TEXT("MissingItem"));
+			Corrupt.Inventory.Items[0].DefinitionId = FPrimaryAssetId(TEXT("GolemItem"), TEXT("MissingItem"));
 		}
 		FGolemDomains Rejected = Fixture.MakeDomains(&Domains.Registrations);
 		if (!TestTrue(TEXT("Corruption fixture retains actual combat prerequisites"),
@@ -705,7 +705,7 @@ bool FGolemRPGDefinitionTest::RunTest(const FString& Parameters)
 	Fixture.BrokenSkill->TrySetSkillTuning(1, {}, { Fixture.Skill->GetPrimaryAssetId() }, FGolemItemStatBonuses());
 	TestEqual(TEXT("Actual two-node dependency cycle rejected"), Fixture.Tree->ValidateGraph(Nodes).Error,
 		EGolemError::InvalidData);
-	Fixture.Skill->TrySetSkillTuning(1, {}, { FPrimaryAssetId(TEXT("KnightSkill"), TEXT("MissingPrerequisite")) },
+	Fixture.Skill->TrySetSkillTuning(1, {}, { FPrimaryAssetId(TEXT("GolemSkill"), TEXT("MissingPrerequisite")) },
 		FGolemItemStatBonuses());
 	TestEqual(TEXT("Unknown prerequisite cannot masquerade as a valid graph node"), Fixture.Tree->ValidateGraph(Nodes).Error,
 		EGolemError::InvalidData);
@@ -998,7 +998,7 @@ bool FGolemRPGPickupRegistryTest::RunTest(const FString& Parameters)
 	UGolemAssetManager* Manager = UGolemAssetManager::GetGolemAssetManager();
 	UGolemDefinition* Resolved = nullptr;
 	if (!TestTrue(TEXT("Actual authored ForgeShard resolves through the production catalog"),
-		Manager != nullptr && Manager->ResolveDefinition(FPrimaryAssetId(TEXT("KnightItem"), TEXT("ForgeShard")),
+		Manager != nullptr && Manager->ResolveDefinition(FPrimaryAssetId(TEXT("GolemItem"), TEXT("ForgeShard")),
 			UGolemItemDefinition::StaticClass(), Resolved).IsSuccess()))
 	{
 		return false;
@@ -1268,7 +1268,7 @@ bool FGolemSkillPassiveSnapshotTest::RunTest(const FString& Parameters)
 	using namespace GolemRPGTests;
 	UGolemAssetManager* Manager = UGolemAssetManager::GetGolemAssetManager();
 	UGolemDefinition* Resolved = nullptr;
-	const FPrimaryAssetId SetId(TEXT("KnightAbilitySet"), TEXT("Foundation"));
+	const FPrimaryAssetId SetId(TEXT("GolemAbilitySet"), TEXT("Foundation"));
 	if (!TestTrue(TEXT("Actual authored typed ability set resolves for the passive fixture"), Manager != nullptr
 		&& Manager->ResolveDefinition(SetId, UGolemAbilitySetDefinition::StaticClass(), Resolved).IsSuccess()))
 	{
@@ -1397,7 +1397,7 @@ bool FGolemSkillRuneAttachmentTest::RunTest(const FString& Parameters)
 	using namespace GolemRPGTests;
 	FGolemWorld Fixture;
 	TStrongObjectPtr<UGolemRuneDefinition> Convergence(NewObject<UGolemRuneDefinition>());
-	Convergence->TrySetIdentity(TEXT("DomainConvergence"), TEXT("KnightItem"));
+	Convergence->TrySetIdentity(TEXT("DomainConvergence"), TEXT("GolemItem"));
 	TestTrue(TEXT("Actual attachment rune definition validates"), Convergence->TrySetAttachmentRune(TEXT("Skill.Convergence")).IsSuccess());
 	FGolemDomains Domains = Fixture.MakeDomains(nullptr, Convergence.Get(), true);
 	Domains.Inventory->InitializeInventory(8);
@@ -1451,7 +1451,7 @@ bool FGolemSkillRuneAttachmentTest::RunTest(const FString& Parameters)
 				return Entry == Hammer;
 			}));
 	TStrongObjectPtr<UGolemRuneDefinition> Aftershock(NewObject<UGolemRuneDefinition>());
-	Aftershock->TrySetIdentity(TEXT("DomainAftershock"), TEXT("KnightItem"));
+	Aftershock->TrySetIdentity(TEXT("DomainAftershock"), TEXT("GolemItem"));
 	Aftershock->TrySetAttachmentRune(TEXT("Weapon.Aftershock"));
 	FGolemDomains WeaponDomains = Fixture.MakeDomains(nullptr, Aftershock.Get(), true);
 	WeaponDomains.Inventory->InitializeInventory(8);
@@ -1551,7 +1551,7 @@ bool FGolemGearCatalogTest::RunTest(const FString& Parameters)
 	TestEqual(TEXT("Eleven equipment subtypes"), Subtypes.Num(), 11);
 	TestEqual(TEXT("Twelve equipment slots"), GolemGear::EquipmentSlots().Num(), 12);
 	TestEqual(TEXT("Rune manifest reuses canonical existing identity"),
-		FGolemGearCatalog::DefinitionId(TEXT("R01")), FPrimaryAssetId(TEXT("KnightItem"), TEXT("Aftershock")));
+		FGolemGearCatalog::DefinitionId(TEXT("R01")), FPrimaryAssetId(TEXT("GolemItem"), TEXT("Aftershock")));
 	return true;
 }
 

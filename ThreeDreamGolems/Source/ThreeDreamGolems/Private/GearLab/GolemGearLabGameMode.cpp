@@ -205,12 +205,12 @@ void AGolemGearLabGameMode::RefreshFixture()
 	State.CompletedEncounters = CompletedEncounters;
 	State.ClaimableRewardId = PendingRewardId;
 	State.StageLabel = IsCatalogLab()
-		? NSLOCTEXT("KnightGearLab", "CatalogLabel", "DEV Catalog Lab: level8, all41 definitions, isolated inventory")
+		? NSLOCTEXT("GolemGearLab", "CatalogLabel", "DEV Catalog Lab: level8, all41 definitions, isolated inventory")
 		: (PendingRewardId.IsValid()
-			? NSLOCTEXT("KnightGearLab", "ClaimLabel", "Demo progression: return to sanctuary, I / Inventory / Claim reward")
+			? NSLOCTEXT("GolemGearLab", "ClaimLabel", "Demo progression: return to sanctuary, I / Inventory / Claim reward")
 			: (CompletedEncounters >= 3
-				? NSLOCTEXT("KnightGearLab", "CompleteLabel", "Demo progression complete: level8 / Epic gear. R retries without rewards")
-				: FText::Format(NSLOCTEXT("KnightGearLab", "StageLabel", "Demo progression: Encounter {0}/3; F at yellow START"),
+				? NSLOCTEXT("GolemGearLab", "CompleteLabel", "Demo progression complete: level8 / Epic gear. R retries without rewards")
+				: FText::Format(NSLOCTEXT("GolemGearLab", "StageLabel", "Demo progression: Encounter {0}/3; F at yellow START"),
 					FText::AsNumber(CompletedEncounters + 1))));
 	GearState->PublishFixture(State);
 }
@@ -241,7 +241,7 @@ FGolemRPGCommandResult AGolemGearLabGameMode::ExecuteRPGCommand(AGolemRPGPlayerC
 			return Committed;
 		}
 		Outcome.Result = FGolemResult::Failure(EGolemError::InvalidState, TEXT("GearFixtureTravelPending"),
-			NSLOCTEXT("KnightGearLab", "TravelPending", "The confirmed fixture travel is in progress."));
+			NSLOCTEXT("GolemGearLab", "TravelPending", "The confirmed fixture travel is in progress."));
 		return Outcome;
 	}
 	FGolemRPGCommandResult Result = Super::ExecuteRPGCommand(Player, Command);
@@ -266,7 +266,7 @@ FGolemResult AGolemGearLabGameMode::StartGearEncounter(APlayerController* Player
 	if (PendingRewardId.IsValid())
 	{
 		return FGolemResult::Failure(EGolemError::InvalidState, TEXT("GearRewardPending"),
-			NSLOCTEXT("KnightGearLab", "ClaimFirst", "Claim the complete reward bundle at sanctuary before the next encounter."));
+			NSLOCTEXT("GolemGearLab", "ClaimFirst", "Claim the complete reward bundle at sanctuary before the next encounter."));
 	}
 	AGolemPartyArenaStartMarker* Marker = nullptr;
 	for (TActorIterator<AGolemPartyArenaStartMarker> It(GetWorld()); It; ++It)
@@ -281,7 +281,7 @@ FGolemResult AGolemGearLabGameMode::StartGearEncounter(APlayerController* Player
 		> FMath::Square(Marker->GetInteractionRange()))
 	{
 		return FGolemResult::Failure(EGolemError::OutOfRange, TEXT("GearStart"),
-			NSLOCTEXT("KnightGearLab", "StartMarker", "Move to the yellow START marker and press F."));
+			NSLOCTEXT("GolemGearLab", "StartMarker", "Move to the yellow START marker and press F."));
 	}
 	FHitResult Hit;
 	FCollisionQueryParams Query(SCENE_QUERY_STAT(GolemGearStart), false, Caller.Pawn.Get());
@@ -290,7 +290,7 @@ FGolemResult AGolemGearLabGameMode::StartGearEncounter(APlayerController* Player
 		Marker->GetActorLocation() + FVector(0.0, 0.0, 75.0), ECC_Visibility, Query))
 	{
 		return FGolemResult::Failure(EGolemError::OutOfRange, TEXT("GearStartOccluded"),
-			NSLOCTEXT("KnightGearLab", "StartVisible", "The START marker must be visible."));
+			NSLOCTEXT("GolemGearLab", "StartVisible", "The START marker must be visible."));
 	}
 	const EGolemArenaStage Stage = GetArenaState()->GetSnapshot().Stage;
 	if (Stage == EGolemArenaStage::Victory)
@@ -367,7 +367,7 @@ FGolemResult AGolemGearLabGameMode::ExecuteFixtureAction(APlayerController* Play
 	if (!RequestId.IsValid() || !Caller.bInSafeZone || Caller.bInCombat)
 	{
 		return FGolemResult::Failure(EGolemError::InvalidState, TEXT("GearFixtureSanctuary"),
-			NSLOCTEXT("KnightGearLab", "FixtureSanctuary", "Fixture actions require a living Golem at the sanctuary, outside combat."));
+			NSLOCTEXT("GolemGearLab", "FixtureSanctuary", "Fixture actions require a living Golem at the sanctuary, outside combat."));
 	}
 	if (const FName* Previous = FixtureRequests.Find(RequestId))
 	{
@@ -377,7 +377,7 @@ FGolemResult AGolemGearLabGameMode::ExecuteFixtureAction(APlayerController* Play
 	if (bFixtureTravelPending)
 	{
 		return FGolemResult::Failure(EGolemError::InvalidState, TEXT("GearFixtureTravelPending"),
-			NSLOCTEXT("KnightGearLab", "TravelPending", "The confirmed fixture travel is in progress."));
+			NSLOCTEXT("GolemGearLab", "TravelPending", "The confirmed fixture travel is in progress."));
 	}
 	if (Action == TEXT("SanctuaryRecovery"))
 	{
@@ -396,8 +396,8 @@ FGolemResult AGolemGearLabGameMode::ExecuteFixtureAction(APlayerController* Play
 		}
 		if (Result.IsSuccess())
 		{
-			const FString Map = IsCatalogLab() ? TEXT("/Game/Knight/Maps/Playables/L_M05_6_CatalogLab")
-				: TEXT("/Game/Knight/Maps/Playables/L_M05_6_GearLab");
+			const FString Map = IsCatalogLab() ? TEXT("/Game/Golem/Maps/Playables/L_M05_6_CatalogLab")
+				: TEXT("/Game/Golem/Maps/Playables/L_M05_6_GearLab");
 			// A fresh ability after capture would otherwise reconstruct an earlier cooldown.
 			// Own a loose-tag count until travel; synchronous transaction fences keep their original scope.
 			bFixtureTravelPending = true;
@@ -414,8 +414,8 @@ FGolemResult AGolemGearLabGameMode::ExecuteFixtureAction(APlayerController* Play
 	else if ((Action == TEXT("NewDemoRun") || Action == TEXT("CatalogLab") || Action == TEXT("ResetCatalogLab"))
 		&& Player->IsLocalController())
 	{
-		const FString Map = Action == TEXT("NewDemoRun") ? TEXT("/Game/Knight/Maps/Playables/L_M05_6_GearLab")
-			: TEXT("/Game/Knight/Maps/Playables/L_M05_6_CatalogLab");
+		const FString Map = Action == TEXT("NewDemoRun") ? TEXT("/Game/Golem/Maps/Playables/L_M05_6_GearLab")
+			: TEXT("/Game/Golem/Maps/Playables/L_M05_6_CatalogLab");
 		bFixtureTravelPending = true;
 		Result = GetWorld()->ServerTravel(Map + (GetNetMode() == NM_ListenServer ? TEXT("?listen") : TEXT("")))
 			? FGolemResult::Success() : FGolemResult::Failure(EGolemError::InvalidState,

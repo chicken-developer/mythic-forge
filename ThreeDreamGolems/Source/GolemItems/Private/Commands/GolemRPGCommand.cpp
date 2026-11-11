@@ -120,7 +120,7 @@ FGolemResult FGolemRPGCommand::ValidateShape() const
 	case EGolemRPGOperation::PurchaseSkill:
 		bValidPayload = !PickupId.IsValid() && !ItemInstanceId.IsValid() && !SlotTag.IsValid()
 			&& GolemIdentity::IsValidDefinitionId(SkillDefinitionId)
-			&& SkillDefinitionId.PrimaryAssetType == FPrimaryAssetType(TEXT("KnightSkill"));
+			&& SkillDefinitionId.PrimaryAssetType == FPrimaryAssetType(TEXT("GolemSkill"));
 		break;
 	case EGolemRPGOperation::Respec:
 		bValidPayload = !PickupId.IsValid() && !ItemInstanceId.IsValid() && !SlotTag.IsValid()

@@ -72,7 +72,7 @@ FGolemResult AGolemRunestonePickup::TryCollect(AGolemCharacter* Golem, const FGu
 	if (bCollecting || Charges <= 0 || ConsumedRequests.Contains(RequestId))
 	{
 		return FGolemResult::Failure(EGolemError::Conflict, TEXT("RunestonePickup"),
-			NSLOCTEXT("KnightSkillLab", "PickupConsumed", "This pickup is already consumed or reserved."));
+			NSLOCTEXT("GolemSkillLab", "PickupConsumed", "This pickup is already consumed or reserved."));
 	}
 	if (!Golem->GetLifeComponent()->IsAlive()
 		|| FVector::DistSquared(Golem->GetActorLocation(), GetActorLocation()) > FMath::Square(200.0))
@@ -107,7 +107,7 @@ FGolemResult AGolemRunestonePickup::TryCollect(AGolemCharacter* Golem, const FGu
 		if (Attributes->GetHealth() >= Attributes->GetMaxHealth())
 		{
 			return FGolemResult::Failure(EGolemError::InvalidState, TEXT("RunestoneHealingFull"),
-				NSLOCTEXT("KnightSkillLab", "FullHP", "HP is full; the healing charge remains available."));
+				NSLOCTEXT("GolemSkillLab", "FullHP", "HP is full; the healing charge remains available."));
 		}
 		Result = Runtime->ApplyExternalHeal(0.15f * Attributes->GetMaxHealth());
 	}
@@ -142,11 +142,11 @@ void AGolemRunestonePickup::OnRep_Pickup()
 	Visual->SetVisibility(bAvailable);
 	Label->SetVisibility(bAvailable);
 	const FText Name = Kind == EGolemRunestonePickupKind::PowerCrystal
-		? NSLOCTEXT("KnightSkillLab", "CrystalPickup", "POWER CRYSTAL: F collect, +15% Power 10s")
+		? NSLOCTEXT("GolemSkillLab", "CrystalPickup", "POWER CRYSTAL: F collect, +15% Power 10s")
 		: (Kind == EGolemRunestonePickupKind::Fire
-		? FText::Format(NSLOCTEXT("KnightSkillLab", "FirePickupCharges", "HEALING FIRE: F use, {0} charges, 15% max HP"),
+		? FText::Format(NSLOCTEXT("GolemSkillLab", "FirePickupCharges", "HEALING FIRE: F use, {0} charges, 15% max HP"),
 			FText::AsNumber(Charges))
-		: NSLOCTEXT("KnightSkillLab", "HealingPickup", "HEALING PICKUP: F collect, 15% max HP"));
+		: NSLOCTEXT("GolemSkillLab", "HealingPickup", "HEALING PICKUP: F collect, 15% max HP"));
 	Label->SetText(Name);
 	Label->SetTextRenderColor(Kind == EGolemRunestonePickupKind::PowerCrystal ? FColor::Yellow : FColor::Green);
 }

@@ -22,14 +22,14 @@ bool FGolemIdentityTest::RunTest(const FString& Parameters)
 	TestEqual(TEXT("Missing identity reports a typed failure"), Definition->ValidateIdentity().Error,
 		EGolemError::InvalidId);
 	TestTrue(TEXT("Stable identity authoring succeeds"), Definition->TrySetIdentity(TEXT("StableFixture")));
-	const FPrimaryAssetId Expected(TEXT("KnightDefinition"), TEXT("StableFixture"));
+	const FPrimaryAssetId Expected(TEXT("GolemDefinition"), TEXT("StableFixture"));
 	TestEqual(TEXT("Authored primary ID"), Definition->GetPrimaryAssetId(), Expected);
 	Definition->Rename(TEXT("RenamedFixtureObject"));
 	TestEqual(TEXT("Asset rename preserves persisted identity"), Definition->GetPrimaryAssetId(), Expected);
 
 	FGolemResult Rejection;
 	TestFalse(TEXT("Invalid characters are rejected"),
-		Definition->TrySetIdentity(TEXT("Invalid Fixture"), TEXT("KnightDefinition"), &Rejection));
+		Definition->TrySetIdentity(TEXT("Invalid Fixture"), TEXT("GolemDefinition"), &Rejection));
 	TestEqual(TEXT("Invalid identity exposes a typed reason"), Rejection.Error, EGolemError::InvalidId);
 	TestEqual(TEXT("Rejected change leaves identity intact"), Definition->GetPrimaryAssetId(), Expected);
 	TestFalse(TEXT("Empty stable ID"), GolemIdentity::IsValidIdentifier(NAME_None));
@@ -205,7 +205,7 @@ bool FGolemAssetIntegrationTest::RunTest(const FString& Parameters)
 		TestEqual(TEXT("Loaded definition matches saved identity"), Fixture->GetPrimaryAssetId(), FixtureId);
 	}
 	const FGolemResult Missing = Manager->ResolveDefinition(
-		FPrimaryAssetId(TEXT("KnightDefinition"), TEXT("Missing")), Fixture);
+		FPrimaryAssetId(TEXT("GolemDefinition"), TEXT("Missing")), Fixture);
 	TestEqual(TEXT("Nonexistent ID reports NotFound"), Missing.Error, EGolemError::NotFound);
 	TestNull(TEXT("Failure never leaks a prior loaded pointer"), Fixture);
 	TestEqual(TEXT("Invalid ID reports InvalidId"), Manager->ResolveDefinition(FPrimaryAssetId(), Fixture).Error,

@@ -89,12 +89,12 @@ void AGolemAbilityYardHUD::HandleYardSnapshot()
 	const FGolemAbilityYardSnapshot Snapshot = YardSource.IsValid()
 		? YardSource->GetSnapshot() : FGolemAbilityYardSnapshot();
 	bCompleted = Snapshot.bCompleted;
-	DummyStatus = FText::Format(NSLOCTEXT("KnightAbilityYard", "DummyHealth", "Dummy health: {0} / {1}"),
+	DummyStatus = FText::Format(NSLOCTEXT("GolemAbilityYard", "DummyHealth", "Dummy health: {0} / {1}"),
 		FText::AsNumber(FMath::RoundToInt(Snapshot.DummyHealth)),
 		FText::AsNumber(FMath::RoundToInt(Snapshot.DummyMaxHealth)));
 	const int32 Done = static_cast<int32>(Snapshot.bDummyDamaged) + static_cast<int32>(Snapshot.bPlayerDamaged)
 		+ static_cast<int32>(Snapshot.bCompanionDowned) + static_cast<int32>(Snapshot.bCompanionRevived);
-	ObjectiveStatus = FText::Format(NSLOCTEXT("KnightAbilityYard", "Progress", "Ability objectives: {0} / 4"),
+	ObjectiveStatus = FText::Format(NSLOCTEXT("GolemAbilityYard", "Progress", "Ability objectives: {0} / 4"),
 		FText::AsNumber(Done));
 }
 
@@ -150,19 +150,19 @@ void AGolemAbilityYardHUD::RefreshGolemSnapshot()
 	const UGolemAttributeSet* Attributes = AbilitySource.IsValid() ? AbilitySource->GetGolemAttributes() : nullptr;
 	DisplayedHealth = Attributes != nullptr ? Attributes->GetHealth() : 0.0f;
 	const float MaxHealth = Attributes != nullptr ? Attributes->GetMaxHealth() : 0.0f;
-	HealthStatus = FText::Format(NSLOCTEXT("KnightAbilityYard", "Health", "Health: {0} / {1}"),
+	HealthStatus = FText::Format(NSLOCTEXT("GolemAbilityYard", "Health", "Health: {0} / {1}"),
 		FText::AsNumber(FMath::RoundToInt(DisplayedHealth)), FText::AsNumber(FMath::RoundToInt(MaxHealth)));
 	DisplayedLifeState = LifeSource.IsValid() ? LifeSource->GetLifeState() : EGolemLifeState::Alive;
 	switch (DisplayedLifeState)
 	{
 	case EGolemLifeState::Downed:
-		LifeStatus = NSLOCTEXT("KnightAbilityYard", "Downed", "DOWNED - a teammate can hold E nearby to revive");
+		LifeStatus = NSLOCTEXT("GolemAbilityYard", "Downed", "DOWNED - a teammate can hold E nearby to revive");
 		break;
 	case EGolemLifeState::Dead:
-		LifeStatus = NSLOCTEXT("KnightAbilityYard", "Dead", "DEAD - host can press R to reset the exercise");
+		LifeStatus = NSLOCTEXT("GolemAbilityYard", "Dead", "DEAD - host can press R to reset the exercise");
 		break;
 	default:
-		LifeStatus = NSLOCTEXT("KnightAbilityYard", "Alive", "ALIVE");
+		LifeStatus = NSLOCTEXT("GolemAbilityYard", "Alive", "ALIVE");
 		break;
 	}
 	const FGolemCueDiagnostics Damage = AbilitySource.IsValid()
@@ -170,7 +170,7 @@ void AGolemAbilityYardHUD::RefreshGolemSnapshot()
 	const FGolemCueDiagnostics Downed = AbilitySource.IsValid()
 		? AbilitySource->GetCueDiagnostics(GolemGameplayTags::GameplayCue_Downed) : FGolemCueDiagnostics();
 	const int32 Grants = AbilitySource.IsValid() ? AbilitySource->GetOwnedGrantCount() : 0;
-	CueStatus = FText::Format(NSLOCTEXT("KnightAbilityYard", "Diagnostics",
+	CueStatus = FText::Format(NSLOCTEXT("GolemAbilityYard", "Diagnostics",
 		"GAS grant sources: {0} | Damage cues: {1} | Downed cues: {2}"), FText::AsNumber(Grants),
 		FText::AsNumber(Damage.ExecutedCount), FText::AsNumber(Downed.ActiveCount));
 }
@@ -219,26 +219,26 @@ void AGolemAbilityYardHUD::DrawHUD()
 	const float Top = bCompact ? 20.0f : FMath::Max(310.0f, static_cast<float>(Canvas->SizeY) - 270.0f);
 	TArray<FText> Lines =
 	{
-		NSLOCTEXT("KnightAbilityYard", "Title", "THREE DREAMING GOLEMS - Ability yard"),
-		FText::Format(NSLOCTEXT("KnightAbilityYard", "LifeHealth", "{0} | {1}"), HealthStatus, LifeStatus),
+		NSLOCTEXT("GolemAbilityYard", "Title", "THREE DREAMING GOLEMS - Ability yard"),
+		FText::Format(NSLOCTEXT("GolemAbilityYard", "LifeHealth", "{0} | {1}"), HealthStatus, LifeStatus),
 		DummyStatus,
-		NSLOCTEXT("KnightAbilityYard", "Pulse", "1. Approach the white dummy; press T / pad RT to damage it."),
-		NSLOCTEXT("KnightAbilityYard", "Stations", "2. Press F / pad LB near DAMAGE, then DOWN COMPANION station."),
-		NSLOCTEXT("KnightAbilityYard", "Revive", "3. Approach the downed Golem; HOLD E / pad X until revive completes."),
+		NSLOCTEXT("GolemAbilityYard", "Pulse", "1. Approach the white dummy; press T / pad RT to damage it."),
+		NSLOCTEXT("GolemAbilityYard", "Stations", "2. Press F / pad LB near DAMAGE, then DOWN COMPANION station."),
+		NSLOCTEXT("GolemAbilityYard", "Revive", "3. Approach the downed Golem; HOLD E / pad X until revive completes."),
 		ObjectiveStatus,
-		bCompleted ? NSLOCTEXT("KnightAbilityYard", "Won", "ABILITY DRILL COMPLETE - R / pad Y restarts")
+		bCompleted ? NSLOCTEXT("GolemAbilityYard", "Won", "ABILITY DRILL COMPLETE - R / pad Y restarts")
 			: AbilityCommandStatus.IsEmpty() ? CueStatus : AbilityCommandStatus
 	};
 	if (bCompact)
 	{
-		Lines.Insert(FText::Format(NSLOCTEXT("KnightAbilityYard", "Controlled", "Controlled: {0}"),
+		Lines.Insert(FText::Format(NSLOCTEXT("GolemAbilityYard", "Controlled", "Controlled: {0}"),
 			GetDisplayedGolemName()), 1);
-		Lines.Insert(NSLOCTEXT("KnightAbilityYard", "CompactControls",
+		Lines.Insert(NSLOCTEXT("GolemAbilityYard", "CompactControls",
 			"WASD / left stick move | Mouse / right stick look | Space / A jump"), 2);
-		Lines.Insert(NSLOCTEXT("KnightAbilityYard", "CompactSwitch",
+		Lines.Insert(NSLOCTEXT("GolemAbilityYard", "CompactSwitch",
 			"Tab / 1-3 / RB switch | R / Y retry | T / RT pulse | F / LB station | hold E / X revive"), 3);
-		Lines.Add(IsDisplayingCompletion() ? NSLOCTEXT("KnightAbilityYard", "TrainingWon", "Training drill complete")
-			: NSLOCTEXT("KnightAbilityYard", "TrainingGoal", "Training: walk all 3 markers and control all 3 Golems."));
+		Lines.Add(IsDisplayingCompletion() ? NSLOCTEXT("GolemAbilityYard", "TrainingWon", "Training drill complete")
+			: NSLOCTEXT("GolemAbilityYard", "TrainingGoal", "Training: walk all 3 markers and control all 3 Golems."));
 	}
 	const float Scale = bCompact ? FMath::Clamp(Width / 760.0f, 0.5f, 0.9f) : 1.0f;
 	const float LineHeight = bCompact ? 22.0f : 28.0f;

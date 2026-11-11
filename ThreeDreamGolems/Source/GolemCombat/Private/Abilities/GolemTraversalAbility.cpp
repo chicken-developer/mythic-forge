@@ -25,7 +25,7 @@ void UGolemTraversalAbility::ActivateAbility(const FGameplayAbilitySpecHandle Ha
 	}
 	EndedHandle = Traversal->OnTraversalEnded.AddUObject(this, &ThisClass::HandleTraversalEnded);
 	const FGolemResult Result = Traversal->TryBeginTraversal(Combat->GetProfile()->GetTraversalMontage(),
-		TEXT("KnightTraversal"), TraversalHandle, this);
+		TEXT("GolemTraversal"), TraversalHandle, this);
 	ReportResult(Result);
 	if (!Result.IsSuccess())
 	{

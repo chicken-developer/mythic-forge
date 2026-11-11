@@ -24,8 +24,8 @@
 
 namespace
 {
-	const FString QualityRoot(TEXT("/Game/Knight/Definitions/Encounter/"));
-	const FString TrialMapPackageName(TEXT("/Game/Knight/Maps/Playables/L_M07_5_ForgeTrial"));
+	const FString QualityRoot(TEXT("/Game/Golem/Definitions/Encounter/"));
+	const FString TrialMapPackageName(TEXT("/Game/Golem/Maps/Playables/L_M07_5_ForgeTrial"));
 	template <typename T>
 	T* Placed(UWorld* World, const FString& Name, const FVector& Position)
 	{
@@ -84,7 +84,7 @@ namespace
 bool GolemEncounterQualityAuthoring::CreateAssets()
 {
 	UGolemAIArchetypeDefinition* Base = LoadObject<UGolemAIArchetypeDefinition>(nullptr,
-		TEXT("/Game/Knight/Definitions/AI/DA_Knight_Archetype_ArenaEnemy.DA_Knight_Archetype_ArenaEnemy"));
+		TEXT("/Game/Golem/Definitions/AI/DA_Golem_Archetype_ArenaEnemy.DA_Golem_Archetype_ArenaEnemy"));
 	if (Base == nullptr)
 	{
 		return false;
@@ -93,7 +93,7 @@ bool GolemEncounterQualityAuthoring::CreateAssets()
 	for (int32 Index = 0; Index < UE_ARRAY_COUNT(Names); ++Index)
 	{
 		UGolemAIArchetypeDefinition* Archetype = Asset<UGolemAIArchetypeDefinition>(
-			FString(TEXT("DA_Knight_Archetype_")) + Names[Index], TEXT("KnightAIArchetype"), Names[Index]);
+			FString(TEXT("DA_Golem_Archetype_")) + Names[Index], TEXT("GolemAIArchetype"), Names[Index]);
 		if (Archetype == nullptr)
 		{
 			return false;
@@ -103,8 +103,8 @@ bool GolemEncounterQualityAuthoring::CreateAssets()
 		Tuning.Attributes.AttackPower = 8.0f;
 		Archetype->Specialization = FGolemSkillBuild();
 		Archetype->Specialization.SpecId = Index == 1 ? FName(TEXT("Pluto")) : Index == 2 ? FName(TEXT("Terra")) : NAME_None;
-		Archetype->SetDisplayName(Index == 0 ? NSLOCTEXT("KnightTrial", "Melee", "Hammer guard")
-			: Index == 1 ? NSLOCTEXT("KnightTrial", "Ranged", "Frost caster") : NSLOCTEXT("KnightTrial", "Support", "Earth mender"));
+		Archetype->SetDisplayName(Index == 0 ? NSLOCTEXT("GolemTrial", "Melee", "Hammer guard")
+			: Index == 1 ? NSLOCTEXT("GolemTrial", "Ranged", "Frost caster") : NSLOCTEXT("GolemTrial", "Support", "Earth mender"));
 		if (!Archetype->TrySetIds(Base->GetCombatProfileId(), Base->GetActionSetId()).IsSuccess()
 			|| !Archetype->TrySetTuning(Tuning).IsSuccess()
 			|| !Archetype->TrySetDecisionAssets(Base->GetStateTree(), Base->GetRepositionQuery()).IsSuccess()
@@ -113,14 +113,14 @@ bool GolemEncounterQualityAuthoring::CreateAssets()
 			return false;
 		}
 	}
-	UGolemEncounterQualityDefinition* Encounter = Asset<UGolemEncounterQualityDefinition>(TEXT("DA_Knight_Encounter_ForgeTrial"),
-		TEXT("KnightEncounterQuality"), TEXT("ForgeTrial"));
-	UGolemCampaignDefinition* Campaign = Asset<UGolemCampaignDefinition>(TEXT("DA_Knight_Campaign_ForgeTrial"),
-		TEXT("KnightCampaign"), TEXT("ForgeTrial"));
-	UGolemStoryWorldDefinition* Definition = Asset<UGolemStoryWorldDefinition>(TEXT("DA_Knight_World_ForgeTrial"),
-		TEXT("KnightStoryWorld"), TEXT("ForgeTrial"));
-	UGolemStoryProfile* Profile = Asset<UGolemStoryProfile>(TEXT("DA_Knight_Profile_ForgeTrial"),
-		TEXT("KnightStoryProfile"), TEXT("ForgeTrial"));
+	UGolemEncounterQualityDefinition* Encounter = Asset<UGolemEncounterQualityDefinition>(TEXT("DA_Golem_Encounter_ForgeTrial"),
+		TEXT("GolemEncounterQuality"), TEXT("ForgeTrial"));
+	UGolemCampaignDefinition* Campaign = Asset<UGolemCampaignDefinition>(TEXT("DA_Golem_Campaign_ForgeTrial"),
+		TEXT("GolemCampaign"), TEXT("ForgeTrial"));
+	UGolemStoryWorldDefinition* Definition = Asset<UGolemStoryWorldDefinition>(TEXT("DA_Golem_World_ForgeTrial"),
+		TEXT("GolemStoryWorld"), TEXT("ForgeTrial"));
+	UGolemStoryProfile* Profile = Asset<UGolemStoryProfile>(TEXT("DA_Golem_Profile_ForgeTrial"),
+		TEXT("GolemStoryProfile"), TEXT("ForgeTrial"));
 	if (Encounter == nullptr || Campaign == nullptr || Definition == nullptr || Profile == nullptr)
 	{
 		return false;
@@ -129,14 +129,14 @@ bool GolemEncounterQualityAuthoring::CreateAssets()
 	for (int32 Index = 0; Index < UE_ARRAY_COUNT(Names); ++Index)
 	{
 		FGolemEncounterPressure& Pressure = Encounter->Wave.AddDefaulted_GetRef();
-		Pressure.ArchetypeId = FPrimaryAssetId(TEXT("KnightAIArchetype"), Names[Index]);
+		Pressure.ArchetypeId = FPrimaryAssetId(TEXT("GolemAIArchetype"), Names[Index]);
 		Pressure.Position = FVector(-650.0 + 650.0 * Index, Index == 0 ? 250.0 : 650.0, 100.0);
 	}
-	Encounter->BossArchetypeId = FPrimaryAssetId(TEXT("KnightAIArchetype"), TEXT("ArenaBoss"));
-	Encounter->BossPhaseId = FPrimaryAssetId(TEXT("KnightBossPhase"), TEXT("ArenaBoss"));
+	Encounter->BossArchetypeId = FPrimaryAssetId(TEXT("GolemAIArchetype"), TEXT("ArenaBoss"));
+	Encounter->BossPhaseId = FPrimaryAssetId(TEXT("GolemBossPhase"), TEXT("ArenaBoss"));
 	Encounter->StoryAttackBudget = 1;
 	Encounter->StandardAttackBudget = 2;
-	Encounter->SetDisplayName(NSLOCTEXT("KnightTrial", "Title", "Forge trial — pressure and Runestone counterplay"));
+	Encounter->SetDisplayName(NSLOCTEXT("GolemTrial", "Title", "Forge trial — pressure and Runestone counterplay"));
 	Campaign->CampaignId = TEXT("Fixture_M75_ForgeTrial");
 	Campaign->ScenarioKind = TEXT("DeveloperFixture");
 	Campaign->ContentRevision = 1;
@@ -148,26 +148,26 @@ bool GolemEncounterQualityAuthoring::CreateAssets()
 	Quest.Title = Encounter->GetDisplayName();
 	FGolemObjectiveDefinition& Goal = Quest.Objectives.AddDefaulted_GetRef();
 	Goal.ObjectiveId = TEXT("ClearTrial");
-	Goal.Label = NSLOCTEXT("KnightTrial", "Goal", "Defeat the guard, caster and mender, then break the boss armor with any Runestone or heavy strike.");
+	Goal.Label = NSLOCTEXT("GolemTrial", "Goal", "Defeat the guard, caster and mender, then break the boss armor with any Runestone or heavy strike.");
 	Goal.EventName = TEXT("EncounterCompleted");
 	Goal.SubjectId = TEXT("ForgeTrial");
 	Goal.bEncounterScoped = true;
 	Definition->Interactions.Reset();
 	FGolemStoryInteraction& Start = Definition->Interactions.AddDefaulted_GetRef();
 	Start.AnchorId = TEXT("Trial_Start");
-	Start.Label = NSLOCTEXT("KnightTrial", "Start", "START FORGE TRIAL");
+	Start.Label = NSLOCTEXT("GolemTrial", "Start", "START FORGE TRIAL");
 	Start.Action = EGolemStoryAction::Encounter;
 	Start.SubjectId = TEXT("ForgeTrial");
 	FGolemStoryInteraction& Checkpoint = Definition->Interactions.AddDefaulted_GetRef();
 	Checkpoint.AnchorId = TEXT("Trial_Checkpoint");
-	Checkpoint.Label = NSLOCTEXT("KnightTrial", "Checkpoint", "SANCTUARY — build, save, Story / Standard difficulty in menu");
+	Checkpoint.Label = NSLOCTEXT("GolemTrial", "Checkpoint", "SANCTUARY — build, save, Story / Standard difficulty in menu");
 	Checkpoint.Action = EGolemStoryAction::Checkpoint;
 	Checkpoint.SubjectId = TEXT("Trial_Checkpoint");
 	for (const bool bNorth : {false, true})
 	{
 		FGolemStoryInteraction& Lever = Definition->Interactions.AddDefaulted_GetRef();
 		Lever.AnchorId = bNorth ? TEXT("Trial_LeverNorth") : TEXT("Trial_LeverSouth");
-		Lever.Label = NSLOCTEXT("KnightTrial", "Lever", "OPEN PRACTICE GATE — companions must wait for the lever");
+		Lever.Label = NSLOCTEXT("GolemTrial", "Lever", "OPEN PRACTICE GATE — companions must wait for the lever");
 		Lever.Action = EGolemStoryAction::Branch;
 		Lever.SubjectId = TEXT("TrialGate");
 		Lever.ValueId = TEXT("Open");
@@ -203,7 +203,7 @@ bool GolemEncounterQualityAuthoring::CreateAssets()
 	{
 		FGolemSkillBuild Build;
 		Build.SpecId = FName(Specs[Index]);
-		Profile->DeveloperBuilds.Add(FPrimaryAssetId(TEXT("KnightHero"), Heroes[Index]), Build);
+		Profile->DeveloperBuilds.Add(FPrimaryAssetId(TEXT("GolemHero"), Heroes[Index]), Build);
 	}
 	Profile->DeveloperSeedItems.Reset();
 	for (int32 Index = 0; Index < 8; ++Index)
@@ -216,7 +216,7 @@ bool GolemEncounterQualityAuthoring::CreateAssets()
 	for (const TCHAR* Name : {TEXT("Aftershock"), TEXT("Convergence"), TEXT("Propagation"), TEXT("Mobile")})
 	{
 		FGolemGearRewardItem& Item = Profile->DeveloperSeedItems.AddDefaulted_GetRef();
-		Item.DefinitionId = FPrimaryAssetId(TEXT("KnightItem"), Name);
+		Item.DefinitionId = FPrimaryAssetId(TEXT("GolemItem"), Name);
 		Item.Count = 1;
 	}
 	return Encounter->ValidateEncounter().IsSuccess() && Campaign->ValidateCampaign().IsSuccess()
@@ -245,50 +245,50 @@ bool GolemEncounterQualityAuthoring::PopulateMap(UWorld* World)
 		return true;
 	};
 	// The west route has a physical gate, a single-file raised bridge and step-accessible verticality.
-	if (!Geometry(TEXT("KnightTraining_Floor"), FVector(400.0, 0.0, 0.0), FVector(32.0, 40.0, 0.25))
-		|| !Geometry(TEXT("KnightTrial_SouthFloor"), FVector(-1525.0, -700.0, 0.0), FVector(6.5, 26.0, 0.25))
-		|| !Geometry(TEXT("KnightTrial_NorthFloor"), FVector(-1525.0, 1750.0, 0.0), FVector(6.5, 5.0, 0.25))
-		|| !Geometry(TEXT("KnightTrial_WestWall"), FVector(-1850.0, 0.0, 200.0), FVector(1.0, 40.0, 4.0))
-		|| !Geometry(TEXT("KnightTrial_EastWallSouth"), FVector(-1250.0, -1675.0, 200.0), FVector(1.0, 6.5, 4.0))
-		|| !Geometry(TEXT("KnightTrial_EastWallNorth"), FVector(-1250.0, 475.0, 200.0), FVector(1.0, 30.5, 4.0))
-		|| !Geometry(TEXT("KnightTrial_Bridge"), FVector(-1550.0, 1050.0, 90.0), FVector(2.0, 3.0, 0.25))
-		|| !Geometry(TEXT("KnightTrial_RailWest"), FVector(-1690.0, 1050.0, 140.0), FVector(0.5, 3.0, 1.0))
-		|| !Geometry(TEXT("KnightTrial_RailEast"), FVector(-1410.0, 1050.0, 140.0), FVector(0.5, 3.0, 1.0)))
+	if (!Geometry(TEXT("GolemTraining_Floor"), FVector(400.0, 0.0, 0.0), FVector(32.0, 40.0, 0.25))
+		|| !Geometry(TEXT("GolemTrial_SouthFloor"), FVector(-1525.0, -700.0, 0.0), FVector(6.5, 26.0, 0.25))
+		|| !Geometry(TEXT("GolemTrial_NorthFloor"), FVector(-1525.0, 1750.0, 0.0), FVector(6.5, 5.0, 0.25))
+		|| !Geometry(TEXT("GolemTrial_WestWall"), FVector(-1850.0, 0.0, 200.0), FVector(1.0, 40.0, 4.0))
+		|| !Geometry(TEXT("GolemTrial_EastWallSouth"), FVector(-1250.0, -1675.0, 200.0), FVector(1.0, 6.5, 4.0))
+		|| !Geometry(TEXT("GolemTrial_EastWallNorth"), FVector(-1250.0, 475.0, 200.0), FVector(1.0, 30.5, 4.0))
+		|| !Geometry(TEXT("GolemTrial_Bridge"), FVector(-1550.0, 1050.0, 90.0), FVector(2.0, 3.0, 0.25))
+		|| !Geometry(TEXT("GolemTrial_RailWest"), FVector(-1690.0, 1050.0, 140.0), FVector(0.5, 3.0, 1.0))
+		|| !Geometry(TEXT("GolemTrial_RailEast"), FVector(-1410.0, 1050.0, 140.0), FVector(0.5, 3.0, 1.0)))
 	{
 		return false;
 	}
 	for (int32 Step = 0; Step < 3; ++Step)
 	{
-		if (!Geometry(FString::Printf(TEXT("KnightTrial_StepUp%d"), Step), FVector(-1550.0, 650.0 + 100.0 * Step, 27.5 + 30.0 * Step), FVector(2.0, 1.0, 0.3))
-			|| !Geometry(FString::Printf(TEXT("KnightTrial_StepDown%d"), Step), FVector(-1550.0, 1250.0 + 100.0 * Step, 87.5 - 30.0 * Step), FVector(2.0, 1.0, 0.3)))
+		if (!Geometry(FString::Printf(TEXT("GolemTrial_StepUp%d"), Step), FVector(-1550.0, 650.0 + 100.0 * Step, 27.5 + 30.0 * Step), FVector(2.0, 1.0, 0.3))
+			|| !Geometry(FString::Printf(TEXT("GolemTrial_StepDown%d"), Step), FVector(-1550.0, 1250.0 + 100.0 * Step, 87.5 - 30.0 * Step), FVector(2.0, 1.0, 0.3)))
 		{
 			return false;
 		}
 	}
-	AGolemStoryGate* Gate = Placed<AGolemStoryGate>(World, TEXT("KnightTrial_ConfirmedGate"), FVector(-1550.0, 0.0, 200.0));
+	AGolemStoryGate* Gate = Placed<AGolemStoryGate>(World, TEXT("GolemTrial_ConfirmedGate"), FVector(-1550.0, 0.0, 200.0));
 	if (Gate == nullptr)
 	{
 		return false;
 	}
 	Gate->SetActorScale3D(FVector(6.0, 0.4, 4.0));
 	Gate->RequiredBranchId = TEXT("TrialGate");
-	const FString WorldPath = QualityRoot + TEXT("DA_Knight_World_ForgeTrial.DA_Knight_World_ForgeTrial");
+	const FString WorldPath = QualityRoot + TEXT("DA_Golem_World_ForgeTrial.DA_Golem_World_ForgeTrial");
 	UGolemStoryWorldDefinition* Definition = LoadObject<UGolemStoryWorldDefinition>(nullptr, *WorldPath);
 	if (Definition == nullptr)
 	{
 		return false;
 	}
-	AGolemCampaignEntry* Entry = Placed<AGolemCampaignEntry>(World, TEXT("KnightTrial_Entry"), FVector::ZeroVector);
+	AGolemCampaignEntry* Entry = Placed<AGolemCampaignEntry>(World, TEXT("GolemTrial_Entry"), FVector::ZeroVector);
 	if (Entry == nullptr)
 	{
 		return false;
 	}
 	Entry->RegionId = TEXT("ForgeTrial");
 	Entry->bFrontEndEntry = false;
-	Entry->ProfileId = FPrimaryAssetId(TEXT("KnightStoryProfile"), TEXT("ForgeTrial"));
+	Entry->ProfileId = FPrimaryAssetId(TEXT("GolemStoryProfile"), TEXT("ForgeTrial"));
 	for (const FGolemMapMarker& Marker : Definition->MapMarkers)
 	{
-		AGolemStoryAnchor* Anchor = Placed<AGolemStoryAnchor>(World, TEXT("KnightTrial_") + Marker.AnchorId.ToString(), Marker.WorldPosition);
+		AGolemStoryAnchor* Anchor = Placed<AGolemStoryAnchor>(World, TEXT("GolemTrial_") + Marker.AnchorId.ToString(), Marker.WorldPosition);
 		if (Anchor == nullptr)
 		{
 			return false;
@@ -301,7 +301,7 @@ bool GolemEncounterQualityAuthoring::PopulateMap(UWorld* World)
 	const EGolemRunestoneKind Kinds[]{EGolemRunestoneKind::Healing, EGolemRunestoneKind::Crystal, EGolemRunestoneKind::Frost};
 	for (int32 Index = 0; Index < UE_ARRAY_COUNT(Kinds); ++Index)
 	{
-		AGolemRunestone* Stone = Placed<AGolemRunestone>(World, FString::Printf(TEXT("KnightTrial_Runestone%d"), Index),
+		AGolemRunestone* Stone = Placed<AGolemRunestone>(World, FString::Printf(TEXT("GolemTrial_Runestone%d"), Index),
 			FVector(-900.0 + 900.0 * Index, 1100.0, 60.0));
 		if (Stone == nullptr)
 		{
@@ -309,5 +309,5 @@ bool GolemEncounterQualityAuthoring::PopulateMap(UWorld* World)
 		}
 		Stone->ConfigureFixture(Kinds[Index], FGuid());
 	}
-	return Placed<AGolemFrozenSurface>(World, TEXT("KnightTrial_FrozenSurface"), FVector(1200.0, 500.0, 55.0)) != nullptr;
+	return Placed<AGolemFrozenSurface>(World, TEXT("GolemTrial_FrozenSurface"), FVector(1200.0, 500.0, 55.0)) != nullptr;
 }

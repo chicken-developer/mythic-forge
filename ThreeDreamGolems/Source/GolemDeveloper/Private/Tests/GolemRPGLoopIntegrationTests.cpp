@@ -55,7 +55,7 @@
 
 namespace GolemRPGPlaythrough
 {
-	const TCHAR* MapPath = TEXT("/Game/Knight/Maps/Playables/L_M05_RPGLoop");
+	const TCHAR* MapPath = TEXT("/Game/Golem/Maps/Playables/L_M05_RPGLoop");
 	constexpr double TotalTimeout = 450.0;
 	constexpr double EncounterTimeout = 120.0;
 	constexpr double TravelTimeout = 45.0;
@@ -888,7 +888,7 @@ namespace GolemRPGPlaythrough
 				return;
 			}
 			const FGolemRPGGolemView View = RPGState->GetRPG()->GetGolemView(ControlledId);
-			if (!View.HasSkill(FPrimaryAssetId(TEXT("KnightSkill"), TEXT("HammerForce")))
+			if (!View.HasSkill(FPrimaryAssetId(TEXT("GolemSkill"), TEXT("HammerForce")))
 				|| View.SkillPoints >= BeforeSkillsPoints
 				|| Controller->GetControlledGolem()->GetGolemAttributeSet()->GetAttackPower() <= EquippedAttackPower)
 			{
@@ -908,7 +908,7 @@ namespace GolemRPGPlaythrough
 				return;
 			}
 			const FGolemRPGGolemView View = RPGState->GetRPG()->GetGolemView(ControlledId);
-			if (!View.HasSkill(FPrimaryAssetId(TEXT("KnightSkill"), TEXT("RuneFocus"))) || View.SkillPoints != 0
+			if (!View.HasSkill(FPrimaryAssetId(TEXT("GolemSkill"), TEXT("RuneFocus"))) || View.SkillPoints != 0
 				|| View.RuneTuning.DurationScale <= RuneBeforeSkills.DurationScale)
 			{
 				Fail(TEXT("Focused Rune Focus button did not buy the real prerequisite-gated RuneFocus/rune duration modifier."));
@@ -950,7 +950,7 @@ namespace GolemRPGPlaythrough
 			const FGolemActionModifier Modifier = Controller->GetControlledGolem()->GetGolemAbilitySystem()->GetActionModifier(
 				GolemGameplayTags::Ability_Combat_Rune);
 			ExpectedRuneCost = BaseRuneCost * Modifier.CostScale;
-			if (!RPGState->GetRPG()->GetGolemView(ControlledId).HasSkill(FPrimaryAssetId(TEXT("KnightSkill"), TEXT("HammerForce")))
+			if (!RPGState->GetRPG()->GetGolemView(ControlledId).HasSkill(FPrimaryAssetId(TEXT("GolemSkill"), TEXT("HammerForce")))
 				|| !HasExpectedVisuals(true, true) || !Controller->GetRPGPanel()->GetSnapshot().bCanContinue)
 			{
 				Fail(TEXT("Real rebuilt upgraded loadout did not enable the CommonUI host Continue action."));

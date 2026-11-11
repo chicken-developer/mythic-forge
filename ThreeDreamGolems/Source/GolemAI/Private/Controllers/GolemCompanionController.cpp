@@ -20,7 +20,7 @@ AGolemCompanionController::AGolemCompanionController()
 	BrainComponent = FollowComponent;
 	bStartAILogicOnPossess = false;
 	FollowTree = TSoftObjectPtr<UStateTree>(
-		FSoftObjectPath(TEXT("/Game/Knight/AI/ST_Knight_Follow.ST_Knight_Follow")));
+		FSoftObjectPath(TEXT("/Game/Golem/AI/ST_Golem_Follow.ST_Golem_Follow")));
 }
 
 UStateTreeAIComponent* AGolemCompanionController::GetFollowComponent() const

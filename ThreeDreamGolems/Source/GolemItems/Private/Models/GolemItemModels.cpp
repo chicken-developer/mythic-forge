@@ -57,7 +57,7 @@ FGolemResult FGolemItemInstance::ValidateIdentityAndCount() const
 		return FGolemResult::Failure(EGolemError::InvalidId, TEXT("ItemInstance"),
 			LOCTEXT("InvalidItemIdentity", "An item instance requires a persistent GUID and a valid stable definition ID."));
 	}
-	if (DefinitionId.PrimaryAssetType != FPrimaryAssetType(TEXT("KnightItem")))
+	if (DefinitionId.PrimaryAssetType != FPrimaryAssetType(TEXT("GolemItem")))
 	{
 		return FGolemResult::Failure(EGolemError::TypeMismatch, FName(*DefinitionId.ToString()),
 			LOCTEXT("WrongItemType", "An item instance must reference a GolemItem definition."));

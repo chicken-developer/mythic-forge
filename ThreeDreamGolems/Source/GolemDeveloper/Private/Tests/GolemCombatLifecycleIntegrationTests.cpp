@@ -42,8 +42,8 @@
 
 namespace GolemCombatLifecycle
 {
-	const TCHAR* ChallengeMap = TEXT("/Game/Knight/Maps/Playables/L_M03_CombatChallenge");
-	const TCHAR* DetachedMap = TEXT("/Game/Knight/Maps/Playables/L_M00_Boot");
+	const TCHAR* ChallengeMap = TEXT("/Game/Golem/Maps/Playables/L_M03_CombatChallenge");
+	const TCHAR* DetachedMap = TEXT("/Game/Golem/Maps/Playables/L_M00_Boot");
 	constexpr double PhaseTimeoutSeconds = 25.0;
 	constexpr double StartupTimeoutSeconds = 60.0;
 	constexpr double OwnerConvergenceTimeoutSeconds = 5.0;

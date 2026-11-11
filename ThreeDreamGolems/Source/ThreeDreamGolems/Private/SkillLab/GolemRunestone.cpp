@@ -90,7 +90,7 @@ FGolemResult AGolemRunestone::TryActivate(AGolemCharacter* Golem, const FGuid Re
 	if (State != EGolemRunestoneState::Ready || CommittedRequests.Contains(RequestId))
 	{
 		return FGolemResult::Failure(EGolemError::Conflict, TEXT("RunestoneReservation"),
-			NSLOCTEXT("KnightSkillLab", "StoneReserved", "Runestone is channeling or on cooldown."));
+			NSLOCTEXT("GolemSkillLab", "StoneReserved", "Runestone is channeling or on cooldown."));
 	}
 	ChannelGolem = Golem;
 	ChannelController = Golem->GetController();
@@ -100,7 +100,7 @@ FGolemResult AGolemRunestone::TryActivate(AGolemCharacter* Golem, const FGuid Re
 		ChannelGolem.Reset();
 		ChannelController.Reset();
 		return FGolemResult::Failure(EGolemError::OutOfRange, TEXT("RunestoneChannel"),
-			NSLOCTEXT("KnightSkillLab", "StoneRange", "A living Golem must stay within 2m with line of sight."));
+			NSLOCTEXT("GolemSkillLab", "StoneRange", "A living Golem must stay within 2m with line of sight."));
 	}
 	ChannelRequest = RequestId;
 	State = EGolemRunestoneState::Channeling;
@@ -245,13 +245,13 @@ void AGolemRunestone::ResetFixture(const FGuid InEncounterId)
 
 void AGolemRunestone::OnRep_State()
 {
-	const FText Name = Kind == EGolemRunestoneKind::Healing ? NSLOCTEXT("KnightSkillLab", "RSHealing", "HEALING RUNESTONE")
-		: (Kind == EGolemRunestoneKind::Crystal ? NSLOCTEXT("KnightSkillLab", "RSCrystal", "POWER CRYSTAL RUNESTONE")
-		: NSLOCTEXT("KnightSkillLab", "RSFrost", "FROST RUNESTONE"));
-	const FText Status = State == EGolemRunestoneState::Ready ? NSLOCTEXT("KnightSkillLab", "RSReady", "F: channel 2s within 2m")
-		: (State == EGolemRunestoneState::Channeling ? NSLOCTEXT("KnightSkillLab", "RSChannel", "CHANNELING — stay nearby")
-		: NSLOCTEXT("KnightSkillLab", "RSCooldown", "COOLDOWN — 30s"));
-	Label->SetText(FText::Format(NSLOCTEXT("KnightSkillLab", "RSLabel", "{0}\n{1}"), Name, Status));
+	const FText Name = Kind == EGolemRunestoneKind::Healing ? NSLOCTEXT("GolemSkillLab", "RSHealing", "HEALING RUNESTONE")
+		: (Kind == EGolemRunestoneKind::Crystal ? NSLOCTEXT("GolemSkillLab", "RSCrystal", "POWER CRYSTAL RUNESTONE")
+		: NSLOCTEXT("GolemSkillLab", "RSFrost", "FROST RUNESTONE"));
+	const FText Status = State == EGolemRunestoneState::Ready ? NSLOCTEXT("GolemSkillLab", "RSReady", "F: channel 2s within 2m")
+		: (State == EGolemRunestoneState::Channeling ? NSLOCTEXT("GolemSkillLab", "RSChannel", "CHANNELING — stay nearby")
+		: NSLOCTEXT("GolemSkillLab", "RSCooldown", "COOLDOWN — 30s"));
+	Label->SetText(FText::Format(NSLOCTEXT("GolemSkillLab", "RSLabel", "{0}\n{1}"), Name, Status));
 	Label->SetTextRenderColor(State == EGolemRunestoneState::Channeling ? FColor::Yellow
 		: (State == EGolemRunestoneState::Cooldown ? FColor::Silver : FColor::Cyan));
 	OnStateChanged.Broadcast();

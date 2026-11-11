@@ -44,7 +44,7 @@ bool FGolemTalentLoadout::operator==(const FGolemTalentLoadout& Other) const
 bool FGolemRPGGolemView::IsInitialized() const
 {
 	return GolemId.IsValid() && GolemIdentity::IsValidDefinitionId(HeroDefinitionId)
-		&& HeroDefinitionId.PrimaryAssetType == FPrimaryAssetType(TEXT("KnightHero")) && Revision >= 1
+		&& HeroDefinitionId.PrimaryAssetType == FPrimaryAssetType(TEXT("GolemHero")) && Revision >= 1
 		&& SkillPoints >= 0 && SkillPoints <= GolemRPG::MaximumSkillPoints
 		&& Level >= 1 && Level <= GolemGear::MaximumLevel
 		&& (bGearEnabled ? ConsumableBindings.Num() == 2 : Level == 1 && ConsumableBindings.IsEmpty());

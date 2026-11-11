@@ -32,7 +32,7 @@ private:
 	/** Stable definition identity; controller transfers never replace the granted source. */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Framework|Abilities",
 		meta = (AllowPrivateAccess = "true"))
-	FPrimaryAssetId DefaultAbilitySetId = FPrimaryAssetId(TEXT("KnightAbilitySet"), TEXT("Foundation"));
+	FPrimaryAssetId DefaultAbilitySetId = FPrimaryAssetId(TEXT("GolemAbilitySet"), TEXT("Foundation"));
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Framework|Presentation",
 		meta = (AllowPrivateAccess = "true"))

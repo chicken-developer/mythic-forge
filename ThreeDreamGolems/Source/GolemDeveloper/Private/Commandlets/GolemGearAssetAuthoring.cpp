@@ -24,8 +24,8 @@ bool GolemGearAssetAuthoring::CreateGearAssets()
 	{
 		const bool bRune = Seed.Metadata.Category == EGolemItemCategory::AttachRune;
 		const FString Path = bRune
-			? TEXT("/Game/Knight/Definitions/Items/DA_Knight_Rune_") + Seed.DefinitionId.PrimaryAssetName.ToString()
-			: TEXT("/Game/Knight/Definitions/Items/DA_Knight_Item_M056_") + Seed.CatalogId.ToString();
+			? TEXT("/Game/Golem/Definitions/Items/DA_Golem_Rune_") + Seed.DefinitionId.PrimaryAssetName.ToString()
+			: TEXT("/Game/Golem/Definitions/Items/DA_Golem_Item_M056_") + Seed.CatalogId.ToString();
 		const bool bExists = FPackageName::DoesPackageExist(Path);
 		if (bRune && !bExists)
 		{

@@ -28,7 +28,7 @@ AGolemFrozenSurface::AGolemFrozenSurface()
 	Label->SetupAttachment(Surface);
 	Label->SetRelativeLocation(FVector(0.0, 0.0, 120.0));
 	Label->SetWorldSize(24.0f);
-	Label->SetText(NSLOCTEXT("KnightSkillLab", "WaterSurface", "WATER: frost Runestone forms a bridge for 12s"));
+	Label->SetText(NSLOCTEXT("GolemSkillLab", "WaterSurface", "WATER: frost Runestone forms a bridge for 12s"));
 }
 
 void AGolemFrozenSurface::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
@@ -96,9 +96,9 @@ void AGolemFrozenSurface::OnRep_Surface()
 	Surface->SetCollisionResponseToAllChannels(ECR_Block);
 	Surface->SetRenderCustomDepth(bFrozen);
 	Surface->SetCustomDepthStencilValue(bWarning ? 3 : 2);
-	Label->SetText(bWarning ? NSLOCTEXT("KnightSkillLab", "ThawWarning", "WARNING: ice thaws in 2s — move to shore")
-		: (bFrozen ? NSLOCTEXT("KnightSkillLab", "Frozen", "FROZEN BRIDGE — 12s")
-		: NSLOCTEXT("KnightSkillLab", "Thawed", "WATER — activate frost Runestone")));
+	Label->SetText(bWarning ? NSLOCTEXT("GolemSkillLab", "ThawWarning", "WARNING: ice thaws in 2s — move to shore")
+		: (bFrozen ? NSLOCTEXT("GolemSkillLab", "Frozen", "FROZEN BRIDGE — 12s")
+		: NSLOCTEXT("GolemSkillLab", "Thawed", "WATER — activate frost Runestone")));
 	Label->SetTextRenderColor(bWarning ? FColor::Orange : (bFrozen ? FColor::Cyan : FColor::Blue));
 }
 

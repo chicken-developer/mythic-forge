@@ -31,7 +31,7 @@
 
 namespace GolemPartyBoundary
 {
-	const FString MapPath = TEXT("/Game/Knight/Maps/Playables/L_M01_TrainingYard");
+	const FString MapPath = TEXT("/Game/Golem/Maps/Playables/L_M01_TrainingYard");
 	const FVector FallFaultLocation(2400.0, -900.0, -100.0);
 	constexpr double StartupTimeoutSeconds = 30.0;
 	constexpr double WallTimeoutSeconds = 20.0;

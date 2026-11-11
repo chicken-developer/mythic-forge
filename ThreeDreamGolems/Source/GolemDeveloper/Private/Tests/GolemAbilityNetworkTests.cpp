@@ -30,8 +30,8 @@
 
 namespace GolemAbilityNetwork
 {
-	const TCHAR* AbilityMap = TEXT("/Game/Knight/Maps/Playables/L_M02_AbilityYard");
-	const TCHAR* DisconnectMap = TEXT("/Game/Knight/Maps/Playables/L_M00_Boot");
+	const TCHAR* AbilityMap = TEXT("/Game/Golem/Maps/Playables/L_M02_AbilityYard");
+	const TCHAR* DisconnectMap = TEXT("/Game/Golem/Maps/Playables/L_M00_Boot");
 	constexpr uint16 ServerPort = 17807;
 	constexpr double StartupTimeoutSeconds = 45.0;
 	constexpr double PhaseTimeoutSeconds = 20.0;

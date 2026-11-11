@@ -72,7 +72,7 @@ namespace GolemCampaignLayout
 				UGolemGameUserSettings::Get()->SubtitleScale = 2.0f;
 				FRequestPlaySessionParams Request;
 				Request.EditorPlaySettings = Settings.Get();
-				Request.GlobalMapOverride = TEXT("/Game/Knight/Maps/Playables/L_M07_Campaign");
+				Request.GlobalMapOverride = TEXT("/Game/Golem/Maps/Playables/L_M07_Campaign");
 				Request.bAllowOnlineSubsystem = false;
 				GEditor->RequestPlaySession(Request);
 				Phase = 1;

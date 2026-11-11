@@ -101,7 +101,7 @@ namespace GolemGASTests
 	TStrongObjectPtr<UGolemAbilitySetDefinition> MakeSet()
 	{
 		TStrongObjectPtr<UGolemAbilitySetDefinition> Set(NewObject<UGolemAbilitySetDefinition>());
-		Set->TrySetIdentity(TEXT("TestFoundation"), TEXT("KnightAbilitySet"));
+		Set->TrySetIdentity(TEXT("TestFoundation"), TEXT("GolemAbilitySet"));
 		FGolemAbilitySetEntry Pulse;
 		Pulse.Ability = UGolemTestDamageAbility::StaticClass();
 		Pulse.InputTag = GolemGameplayTags::Input_Ability_Test;

@@ -25,7 +25,7 @@ AGolemPartyArenaStartMarker::AGolemPartyArenaStartMarker()
 	Label->SetWorldSize(26.0f);
 	Label->SetHorizontalAlignment(EHTA_Center);
 	Label->SetTextRenderColor(FColor::Yellow);
-	Label->SetText(NSLOCTEXT("KnightArena", "StartLabel", "F / D-pad Left: START ARENA\nR / Y: host retry"));
+	Label->SetText(NSLOCTEXT("GolemArena", "StartLabel", "F / D-pad Left: START ARENA\nR / Y: host retry"));
 }
 
 float AGolemPartyArenaStartMarker::GetInteractionRange() const

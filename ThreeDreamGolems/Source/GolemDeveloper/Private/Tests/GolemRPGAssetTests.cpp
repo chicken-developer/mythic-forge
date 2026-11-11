@@ -48,14 +48,14 @@ bool FGolemRPGSavedCatalogTest::RunTest(const FString& Parameters)
 		AddError(TEXT("Run actual GolemBootstrap -Milestone=5 before the cold-load RPG asset gate."));
 		return false;
 	}
-	UGolemItemDefinition* Shard = GolemRPGAssetTests::Resolve<UGolemItemDefinition>(this, TEXT("KnightItem"), TEXT("ForgeShard"));
-	UGolemItemDefinition* Hammer = GolemRPGAssetTests::Resolve<UGolemItemDefinition>(this, TEXT("KnightItem"), TEXT("HammerUpgrade"));
-	UGolemRuneDefinition* Rune = GolemRPGAssetTests::Resolve<UGolemRuneDefinition>(this, TEXT("KnightItem"), TEXT("RuneUpgrade"));
-	UGolemSkillDefinition* Force = GolemRPGAssetTests::Resolve<UGolemSkillDefinition>(this, TEXT("KnightSkill"), TEXT("HammerForce"));
-	UGolemSkillDefinition* Focus = GolemRPGAssetTests::Resolve<UGolemSkillDefinition>(this, TEXT("KnightSkill"), TEXT("RuneFocus"));
-	UGolemSkillDefinition* Impossible = GolemRPGAssetTests::Resolve<UGolemSkillDefinition>(this, TEXT("KnightSkill"), TEXT("ImpossibleCost"));
-	UGolemSkillTreeDefinition* Tree = GolemRPGAssetTests::Resolve<UGolemSkillTreeDefinition>(this, TEXT("KnightSkillTree"), TEXT("Foundation"));
-	UGolemLootTableDefinition* Loot = GolemRPGAssetTests::Resolve<UGolemLootTableDefinition>(this, TEXT("KnightLootTable"), TEXT("EncounterA"));
+	UGolemItemDefinition* Shard = GolemRPGAssetTests::Resolve<UGolemItemDefinition>(this, TEXT("GolemItem"), TEXT("ForgeShard"));
+	UGolemItemDefinition* Hammer = GolemRPGAssetTests::Resolve<UGolemItemDefinition>(this, TEXT("GolemItem"), TEXT("HammerUpgrade"));
+	UGolemRuneDefinition* Rune = GolemRPGAssetTests::Resolve<UGolemRuneDefinition>(this, TEXT("GolemItem"), TEXT("RuneUpgrade"));
+	UGolemSkillDefinition* Force = GolemRPGAssetTests::Resolve<UGolemSkillDefinition>(this, TEXT("GolemSkill"), TEXT("HammerForce"));
+	UGolemSkillDefinition* Focus = GolemRPGAssetTests::Resolve<UGolemSkillDefinition>(this, TEXT("GolemSkill"), TEXT("RuneFocus"));
+	UGolemSkillDefinition* Impossible = GolemRPGAssetTests::Resolve<UGolemSkillDefinition>(this, TEXT("GolemSkill"), TEXT("ImpossibleCost"));
+	UGolemSkillTreeDefinition* Tree = GolemRPGAssetTests::Resolve<UGolemSkillTreeDefinition>(this, TEXT("GolemSkillTree"), TEXT("Foundation"));
+	UGolemLootTableDefinition* Loot = GolemRPGAssetTests::Resolve<UGolemLootTableDefinition>(this, TEXT("GolemLootTable"), TEXT("EncounterA"));
 	if (Shard == nullptr || Hammer == nullptr || Rune == nullptr || Force == nullptr || Focus == nullptr
 		|| Impossible == nullptr || Tree == nullptr || Loot == nullptr)
 	{
@@ -68,7 +68,7 @@ bool FGolemRPGSavedCatalogTest::RunTest(const FString& Parameters)
 	TestEqual(TEXT("Hammer authored AP bonus"), Hammer->GetStatBonuses().AttackPower, 10.0f);
 	TestEqual(TEXT("Hammer authored max-health bonus"), Hammer->GetStatBonuses().MaxHealth, 20.0f);
 	TestTrue(TEXT("Rune remains a stable GolemItem"),
-		Rune->GetPrimaryAssetId().PrimaryAssetType == FPrimaryAssetType(TEXT("KnightItem")));
+		Rune->GetPrimaryAssetId().PrimaryAssetType == FPrimaryAssetType(TEXT("GolemItem")));
 	TestEqual(TEXT("Rune tunes existing action damage"), Rune->GetRuneTuning().DamageScale, 1.2f);
 	TestEqual(TEXT("Rune tunes existing action cost"), Rune->GetRuneTuning().CostScale, 0.5f);
 	TestEqual(TEXT("Rune tunes existing actual status duration"), Rune->GetRuneTuning().DurationScale, 1.5f);
@@ -125,7 +125,7 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(FGolemRPGSavedMapTest, "Golem.RPG.Assets.Playab
 
 bool FGolemRPGSavedMapTest::RunTest(const FString& Parameters)
 {
-	UWorld* World = LoadObject<UWorld>(nullptr, TEXT("/Game/Knight/Maps/Playables/L_M05_RPGLoop.L_M05_RPGLoop"));
+	UWorld* World = LoadObject<UWorld>(nullptr, TEXT("/Game/Golem/Maps/Playables/L_M05_RPGLoop.L_M05_RPGLoop"));
 	if (!TestNotNull(TEXT("Genuine saved RPG playable map cold-loads"), World)
 		|| !TestNotNull(TEXT("Saved map contains persistent level"), World->PersistentLevel.Get()))
 	{
@@ -136,19 +136,19 @@ bool FGolemRPGSavedMapTest::RunTest(const FString& Parameters)
 	TestTrue(TEXT("Map wires actual native RPGLoop GameMode"), ExpectedGameMode != nullptr && Settings != nullptr
 		&& Settings->DefaultGameMode.Get() == ExpectedGameMode);
 	UClass* StationClass = LoadClass<AActor>(nullptr, TEXT("/Script/ThreeDreamGolems.GolemRPGUpgradeStation"));
-	AActor* Station = FindObject<AActor>(World->PersistentLevel, TEXT("KnightRPG_UpgradeStation"));
+	AActor* Station = FindObject<AActor>(World->PersistentLevel, TEXT("GolemRPG_UpgradeStation"));
 	TestTrue(TEXT("Map contains actual native upgrade station"), Station != nullptr && StationClass != nullptr && Station->IsA(StationClass));
 	if (Station != nullptr)
 	{
 		TestTrue(TEXT("Upgrade station retains reachable safe-zone placement"),
 			Station->GetActorLocation().Equals(FVector(-1500, -1000, 20), 1.0));
 	}
-	TestNotNull(TEXT("Map keeps actual arena start marker"), FindObject<AActor>(World->PersistentLevel, TEXT("KnightArena_Start")));
-	AStaticMeshActor* Floor = FindObject<AStaticMeshActor>(World->PersistentLevel, TEXT("KnightTraining_Floor"));
+	TestNotNull(TEXT("Map keeps actual arena start marker"), FindObject<AActor>(World->PersistentLevel, TEXT("GolemArena_Start")));
+	AStaticMeshActor* Floor = FindObject<AStaticMeshActor>(World->PersistentLevel, TEXT("GolemTraining_Floor"));
 	TestTrue(TEXT("Map has a genuine physical floor"), Floor != nullptr && Floor->GetStaticMeshComponent()->GetStaticMesh() != nullptr
 		&& Floor->GetStaticMeshComponent()->GetCollisionEnabled() == ECollisionEnabled::QueryAndPhysics);
-	TestNotNull(TEXT("Map keeps actual center LOS obstacle"), FindObject<AActor>(World->PersistentLevel, TEXT("KnightArena_LOSBlocker")));
-	ANavMeshBoundsVolume* Bounds = FindObject<ANavMeshBoundsVolume>(World->PersistentLevel, TEXT("KnightTraining_NavBounds"));
+	TestNotNull(TEXT("Map keeps actual center LOS obstacle"), FindObject<AActor>(World->PersistentLevel, TEXT("GolemArena_LOSBlocker")));
+	ANavMeshBoundsVolume* Bounds = FindObject<ANavMeshBoundsVolume>(World->PersistentLevel, TEXT("GolemTraining_NavBounds"));
 	TestTrue(TEXT("Map saves genuine volume brush navigation bounds"), Bounds != nullptr && Bounds->Brush != nullptr);
 	bool bPopulatedNavigation = false;
 	for (AActor* Actor : World->PersistentLevel->Actors)
@@ -168,11 +168,11 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(FGolemRPGAssetInvalidMutationTest, "Golem.RPG.A
 
 bool FGolemRPGAssetInvalidMutationTest::RunTest(const FString& Parameters)
 {
-	UGolemSkillDefinition* Force = GolemRPGAssetTests::Resolve<UGolemSkillDefinition>(this, TEXT("KnightSkill"), TEXT("HammerForce"));
-	UGolemSkillDefinition* Focus = GolemRPGAssetTests::Resolve<UGolemSkillDefinition>(this, TEXT("KnightSkill"), TEXT("RuneFocus"));
-	UGolemSkillDefinition* Impossible = GolemRPGAssetTests::Resolve<UGolemSkillDefinition>(this, TEXT("KnightSkill"), TEXT("ImpossibleCost"));
-	UGolemSkillTreeDefinition* Tree = GolemRPGAssetTests::Resolve<UGolemSkillTreeDefinition>(this, TEXT("KnightSkillTree"), TEXT("Foundation"));
-	UGolemLootTableDefinition* Loot = GolemRPGAssetTests::Resolve<UGolemLootTableDefinition>(this, TEXT("KnightLootTable"), TEXT("EncounterA"));
+	UGolemSkillDefinition* Force = GolemRPGAssetTests::Resolve<UGolemSkillDefinition>(this, TEXT("GolemSkill"), TEXT("HammerForce"));
+	UGolemSkillDefinition* Focus = GolemRPGAssetTests::Resolve<UGolemSkillDefinition>(this, TEXT("GolemSkill"), TEXT("RuneFocus"));
+	UGolemSkillDefinition* Impossible = GolemRPGAssetTests::Resolve<UGolemSkillDefinition>(this, TEXT("GolemSkill"), TEXT("ImpossibleCost"));
+	UGolemSkillTreeDefinition* Tree = GolemRPGAssetTests::Resolve<UGolemSkillTreeDefinition>(this, TEXT("GolemSkillTree"), TEXT("Foundation"));
+	UGolemLootTableDefinition* Loot = GolemRPGAssetTests::Resolve<UGolemLootTableDefinition>(this, TEXT("GolemLootTable"), TEXT("EncounterA"));
 	if (Force == nullptr || Focus == nullptr || Impossible == nullptr || Tree == nullptr || Loot == nullptr)
 	{
 		return false;
@@ -193,7 +193,7 @@ bool FGolemRPGAssetInvalidMutationTest::RunTest(const FString& Parameters)
 	TArray<FGolemLootEntry> Entries = Edited->GetEntries();
 	for (FGolemLootEntry& Entry : Entries)
 	{
-		if (Entry.DefinitionId == FPrimaryAssetId(TEXT("KnightItem"), TEXT("ForgeShard")))
+		if (Entry.DefinitionId == FPrimaryAssetId(TEXT("GolemItem"), TEXT("ForgeShard")))
 		{
 			Entry.MinimumCount = Entry.MaximumCount = 10000;
 		}

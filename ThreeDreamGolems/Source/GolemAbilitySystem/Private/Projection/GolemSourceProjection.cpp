@@ -92,7 +92,7 @@ FGolemResult FGolemGASProjectionPlan::Validate() const
 	for (const FPrimaryAssetId& Id : Sets)
 	{
 		if (!GolemIdentity::IsValidDefinitionId(Id)
-			|| Id.PrimaryAssetType != FPrimaryAssetType(TEXT("KnightAbilitySet")))
+			|| Id.PrimaryAssetType != FPrimaryAssetType(TEXT("GolemAbilitySet")))
 		{
 			return FGolemResult::Failure(EGolemError::TypeMismatch, TEXT("ProjectionPlan"),
 				LOCTEXT("WrongSet", "An optional projection grant must reference a GolemAbilitySet definition."));

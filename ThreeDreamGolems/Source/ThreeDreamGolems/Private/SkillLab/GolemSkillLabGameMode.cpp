@@ -55,7 +55,7 @@ FGolemResult AGolemSkillLabGameMode::ConfigureRPGDomains(UGolemInventoryComponen
 	{
 		FGolemInventoryMutation Mutation;
 		Mutation.Item.InstanceId = FGuid::NewGuid();
-		Mutation.Item.DefinitionId = FPrimaryAssetId(TEXT("KnightItem"), Name);
+		Mutation.Item.DefinitionId = FPrimaryAssetId(TEXT("GolemItem"), Name);
 		Mutation.Item.Count = 1;
 		Request.Mutations.Add(Mutation);
 	}
@@ -102,7 +102,7 @@ void AGolemSkillLabGameMode::ResetTrainingDummy()
 		It->GetGolemAbilitySystem()->SetNumericAttributeBase(UGolemAttributeSet::GetDefenseAttribute(), 100.0f);
 		if (UTextRenderComponent* Label = It->FindComponentByClass<UTextRenderComponent>())
 		{
-			Label->SetText(NSLOCTEXT("KnightSkillLab", "DummyLabel", "SKILL DUMMY: Z/X/C/V, 100 Armor; R retries after victory/defeat"));
+			Label->SetText(NSLOCTEXT("GolemSkillLab", "DummyLabel", "SKILL DUMMY: Z/X/C/V, 100 Armor; R retries after victory/defeat"));
 		}
 	}
 }

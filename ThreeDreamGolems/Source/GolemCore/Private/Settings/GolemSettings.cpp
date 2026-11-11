@@ -2,8 +2,8 @@
 
 UGolemSettings::UGolemSettings()
 {
-	DefinitionRoots.Add(TEXT("/Game/Knight/Definitions"));
-	FoundationDefinition = FPrimaryAssetId(TEXT("KnightDefinition"), TEXT("Foundation"));
+	DefinitionRoots.Add(TEXT("/Game/Golem/Definitions"));
+	FoundationDefinition = FPrimaryAssetId(TEXT("GolemDefinition"), TEXT("Foundation"));
 }
 
 FName UGolemSettings::GetCategoryName() const

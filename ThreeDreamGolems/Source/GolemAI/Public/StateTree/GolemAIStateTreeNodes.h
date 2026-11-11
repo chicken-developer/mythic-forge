@@ -51,7 +51,7 @@ struct GOLEMAI_API FGolemAIContextConditionInstanceData
 	GENERATED_BODY()
 };
 
-USTRUCT(meta = (DisplayName = "Knight AI Context Condition", Category = "Golem|AI"))
+USTRUCT(meta = (DisplayName = "Golem AI Context Condition", Category = "Golem|AI"))
 struct GOLEMAI_API FGolemAIContextCondition : public FStateTreeAIConditionBase
 {
 	GENERATED_BODY()
@@ -72,7 +72,7 @@ struct GOLEMAI_API FGolemAISelectTargetInstanceData
 	FGolemEntityId SelectedTargetId;
 };
 
-USTRUCT(meta = (DisplayName = "Knight AI Acquire Target", Category = "Golem|AI"))
+USTRUCT(meta = (DisplayName = "Golem AI Acquire Target", Category = "Golem|AI"))
 struct GOLEMAI_API FGolemAISelectTargetTask : public FStateTreeAITaskBase
 {
 	GENERATED_BODY()
@@ -95,7 +95,7 @@ struct GOLEMAI_API FGolemAIExecuteActionInstanceData
 	TSharedPtr<FGolemAIActionCompletionState> CompletionState;
 };
 
-USTRUCT(meta = (DisplayName = "Knight AI Execute Shared GAS Action", Category = "Golem|AI"))
+USTRUCT(meta = (DisplayName = "Golem AI Execute Shared GAS Action", Category = "Golem|AI"))
 struct GOLEMAI_API FGolemAIExecuteActionTask : public FStateTreeAIActionTaskBase
 {
 	GENERATED_BODY()
@@ -131,7 +131,7 @@ struct GOLEMAI_API FGolemAIRepositionInstanceData
 	double StartedAt = 0.0;
 };
 
-USTRUCT(meta = (DisplayName = "Knight AI EQS Reposition", Category = "Golem|AI"))
+USTRUCT(meta = (DisplayName = "Golem AI EQS Reposition", Category = "Golem|AI"))
 struct GOLEMAI_API FGolemAIRepositionTask : public FStateTreeAIActionTaskBase
 {
 	GENERATED_BODY()
@@ -159,7 +159,7 @@ struct GOLEMAI_API FGolemAIFormationInstanceData
 	FAIRequestID MoveRequest;
 };
 
-USTRUCT(meta = (DisplayName = "Knight AI Follow Or Regroup", Category = "Golem|AI"))
+USTRUCT(meta = (DisplayName = "Golem AI Follow Or Regroup", Category = "Golem|AI"))
 struct GOLEMAI_API FGolemAIFormationTask : public FStateTreeAIActionTaskBase
 {
 	GENERATED_BODY()
@@ -183,7 +183,7 @@ struct GOLEMAI_API FGolemAIWaitInstanceData
 	float Elapsed = 0.0f;
 };
 
-USTRUCT(meta = (DisplayName = "Knight AI Bounded Wait", Category = "Golem|AI"))
+USTRUCT(meta = (DisplayName = "Golem AI Bounded Wait", Category = "Golem|AI"))
 struct GOLEMAI_API FGolemAIWaitTask : public FStateTreeAITaskBase
 {
 	GENERATED_BODY()

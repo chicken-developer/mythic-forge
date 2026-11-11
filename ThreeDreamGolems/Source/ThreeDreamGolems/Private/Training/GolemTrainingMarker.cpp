@@ -124,7 +124,7 @@ void AGolemTrainingMarker::HandleTrainingProgress(const FGolemTrainingProgress& 
 		MarkerMaterial->SetVectorParameterValue(TEXT("Color"), DisplayColor);
 	}
 	MarkerLabel->SetText(FText::Format(bIsReached
-		? NSLOCTEXT("KnightTraining", "MarkerReached", "Marker {0} - reached")
-		: NSLOCTEXT("KnightTraining", "MarkerPending", "Walk to marker {0}"), FText::AsNumber(MarkerIndex + 1)));
+		? NSLOCTEXT("GolemTraining", "MarkerReached", "Marker {0} - reached")
+		: NSLOCTEXT("GolemTraining", "MarkerPending", "Walk to marker {0}"), FText::AsNumber(MarkerIndex + 1)));
 	MarkerLabel->SetTextRenderColor(DisplayColor.ToFColor(true));
 }

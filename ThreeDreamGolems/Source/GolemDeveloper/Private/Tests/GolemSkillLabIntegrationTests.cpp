@@ -61,8 +61,8 @@
 
 namespace GolemSkillLabIntegration
 {
-	const TCHAR* MapPath = TEXT("/Game/Knight/Maps/Playables/L_M05_5_SkillLab");
-	const TCHAR* DetachedMap = TEXT("/Game/Knight/Maps/Playables/L_M00_Boot");
+	const TCHAR* MapPath = TEXT("/Game/Golem/Maps/Playables/L_M05_5_SkillLab");
+	const TCHAR* DetachedMap = TEXT("/Game/Golem/Maps/Playables/L_M00_Boot");
 	constexpr uint16 ServerPort = 17955;
 
 	enum class EPhase : uint8

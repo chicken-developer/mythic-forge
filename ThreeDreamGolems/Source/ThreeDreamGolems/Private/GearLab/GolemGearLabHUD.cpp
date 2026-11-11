@@ -44,8 +44,8 @@ void AGolemGearLabHUD::RefreshGearHUD()
 	QuickUses = GearController.IsValid() ? GearController->GetQuickUseReadModel() : TArray<FGolemGearQuickUseRow>();
 	Objective = GearState.IsValid() ? GearState->GetSnapshot().StageLabel : FText::GetEmpty();
 	GearTitle = GearState.IsValid() && GearState->GetSnapshot().bCatalogLab
-		? NSLOCTEXT("KnightGearLab", "CatalogHUDTitle", "M5.6 EQUIPMENT: DEV Catalog Lab")
-		: NSLOCTEXT("KnightGearLab", "ProgressionHUDTitle", "M5.6 EQUIPMENT: Progression Demo A / B / C");
+		? NSLOCTEXT("GolemGearLab", "CatalogHUDTitle", "M5.6 EQUIPMENT: DEV Catalog Lab")
+		: NSLOCTEXT("GolemGearLab", "ProgressionHUDTitle", "M5.6 EQUIPMENT: Progression Demo A / B / C");
 }
 
 FText AGolemGearLabHUD::GetArenaTitle() const

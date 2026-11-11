@@ -15,10 +15,10 @@ FGolemResult AGolemArenaCharacter::InitializeArenaCombat()
 	if (!HasAuthority() || !GetAbilityInitializationResult().IsSuccess())
 	{
 		return FGolemResult::Failure(EGolemError::InvalidState, TEXT("ArenaCombat"),
-			NSLOCTEXT("KnightArena", "PawnNotReady", "Arena combat requires an initialized authoritative Golem."));
+			NSLOCTEXT("GolemArena", "PawnNotReady", "Arena combat requires an initialized authoritative Golem."));
 	}
 	const FGolemResult Configure = GetCombatComponent()->Configure(
-		FPrimaryAssetId(TEXT("KnightCombatProfile"), TEXT("FoundationCombat")));
+		FPrimaryAssetId(TEXT("GolemCombatProfile"), TEXT("FoundationCombat")));
 	if (!Configure.IsSuccess())
 	{
 		return Configure;
@@ -38,7 +38,7 @@ FGolemResult AGolemArenaCharacter::InitializeArenaCombat()
 		if (!RecoveryEffect.IsValid())
 		{
 			return FGolemResult::Failure(EGolemError::InvalidState, TEXT("ArenaRecovery"),
-				NSLOCTEXT("KnightArena", "RecoveryRejected", "The arena resource recovery effect was rejected."));
+				NSLOCTEXT("GolemArena", "RecoveryRejected", "The arena resource recovery effect was rejected."));
 		}
 	}
 	return FGolemResult::Success();
