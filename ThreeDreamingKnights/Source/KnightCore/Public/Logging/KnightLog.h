@@ -1,7 +1,0 @@
-#pragma once
-
-#include "CoreMinimal.h"
-
-KNIGHTCORE_API DECLARE_LOG_CATEGORY_EXTERN(LogKnightCore, Log, All);
-KNIGHTCORE_API DECLARE_LOG_CATEGORY_EXTERN(LogKnightAssets, Log, All);
-KNIGHTCORE_API DECLARE_LOG_CATEGORY_EXTERN(LogKnightEvents, Log, All);
