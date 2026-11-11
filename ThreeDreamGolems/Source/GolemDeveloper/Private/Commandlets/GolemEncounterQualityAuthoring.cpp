@@ -24,7 +24,7 @@
 
 namespace
 {
-	const FString Root(TEXT("/Game/Knight/Definitions/Encounter/"));
+	const FString QualityRoot(TEXT("/Game/Knight/Definitions/Encounter/"));
 	const FString TrialMapPackageName(TEXT("/Game/Knight/Maps/Playables/L_M07_5_ForgeTrial"));
 	template <typename T>
 	T* Placed(UWorld* World, const FString& Name, const FVector& Position)
@@ -54,7 +54,7 @@ namespace
 	template <typename T>
 	T* Asset(const FString& Name, const TCHAR* Type, const TCHAR* Id)
 	{
-		const FString Path = Root + Name;
+		const FString Path = QualityRoot + Name;
 		UPackage* Package = FPackageName::DoesPackageExist(Path) ? LoadPackage(nullptr, *Path, LOAD_None) : CreatePackage(*Path);
 		T* Result = Package != nullptr ? FindObject<T>(Package, *Name) : nullptr;
 		if (Result == nullptr && Package != nullptr)
@@ -272,7 +272,7 @@ bool GolemEncounterQualityAuthoring::PopulateMap(UWorld* World)
 	}
 	Gate->SetActorScale3D(FVector(6.0, 0.4, 4.0));
 	Gate->RequiredBranchId = TEXT("TrialGate");
-	const FString WorldPath = Root + TEXT("DA_Knight_World_ForgeTrial.DA_Knight_World_ForgeTrial");
+	const FString WorldPath = QualityRoot + TEXT("DA_Knight_World_ForgeTrial.DA_Knight_World_ForgeTrial");
 	UGolemStoryWorldDefinition* Definition = LoadObject<UGolemStoryWorldDefinition>(nullptr, *WorldPath);
 	if (Definition == nullptr)
 	{
