@@ -65,7 +65,7 @@ namespace
 		return Result != nullptr && Result->TrySetIdentity(FName(Id), FName(Type)) ? Result : nullptr;
 	}
 
-	bool Save(UObject* Object)
+	bool SaveQualityAsset(UObject* Object)
 	{
 		if (Object == nullptr)
 		{
@@ -108,7 +108,7 @@ bool KnightEncounterQualityAuthoring::CreateAssets()
 		if (!Archetype->TrySetIds(Base->GetCombatProfileId(), Base->GetActionSetId()).IsSuccess()
 			|| !Archetype->TrySetTuning(Tuning).IsSuccess()
 			|| !Archetype->TrySetDecisionAssets(Base->GetStateTree(), Base->GetRepositionQuery()).IsSuccess()
-			|| !Archetype->ValidateArchetype().IsSuccess() || !Save(Archetype))
+			|| !Archetype->ValidateArchetype().IsSuccess() || !SaveQualityAsset(Archetype))
 		{
 			return false;
 		}
@@ -220,7 +220,7 @@ bool KnightEncounterQualityAuthoring::CreateAssets()
 		Item.Count = 1;
 	}
 	return Encounter->ValidateEncounter().IsSuccess() && Campaign->ValidateCampaign().IsSuccess()
-		&& Definition->ValidateWorld().IsSuccess() && Save(Encounter) && Save(Campaign) && Save(Definition) && Save(Profile);
+		&& Definition->ValidateWorld().IsSuccess() && SaveQualityAsset(Encounter) && SaveQualityAsset(Campaign) && SaveQualityAsset(Definition) && SaveQualityAsset(Profile);
 }
 
 bool KnightEncounterQualityAuthoring::PopulateMap(UWorld* World)

@@ -2,12 +2,12 @@
 
 namespace
 {
-	constexpr float Duration = 0.13f;
+	constexpr float ShakeDuration = 0.13f;
 }
 
 void UKnightImpactShakePattern::GetShakePatternInfoImpl(FCameraShakeInfo& OutInfo) const
 {
-	OutInfo.Duration = FCameraShakeDuration(Duration);
+	OutInfo.Duration = FCameraShakeDuration(ShakeDuration);
 }
 
 void UKnightImpactShakePattern::StartShakePatternImpl(const FCameraShakePatternStartParams& Params)
@@ -19,16 +19,16 @@ void UKnightImpactShakePattern::UpdateShakePatternImpl(const FCameraShakePattern
 	FCameraShakePatternUpdateResult& OutResult)
 {
 	Elapsed += Params.DeltaTime;
-	const float Envelope = FMath::Square(FMath::Clamp(1.0f - Elapsed / Duration, 0.0f, 1.0f));
+	const float Envelope = FMath::Square(FMath::Clamp(1.0f - Elapsed / ShakeDuration, 0.0f, 1.0f));
 	OutResult.Rotation.Pitch = 0.25f * Envelope * FMath::Sin(Elapsed * 100.0f);
 }
 
 bool UKnightImpactShakePattern::IsFinishedImpl() const
 {
-	return Elapsed >= Duration;
+	return Elapsed >= ShakeDuration;
 }
 
 void UKnightImpactShakePattern::StopShakePatternImpl(const FCameraShakePatternStopParams& Params)
 {
-	Elapsed = Duration;
+	Elapsed = ShakeDuration;
 }

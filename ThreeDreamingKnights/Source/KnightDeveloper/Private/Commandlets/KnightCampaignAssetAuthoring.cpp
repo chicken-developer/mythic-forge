@@ -18,7 +18,7 @@
 
 namespace
 {
-	const FString Root(TEXT("/Game/Knight/Definitions/Campaign/"));
+	const FString CampaignRoot(TEXT("/Game/Knight/Definitions/Campaign/"));
 	const FString SchoolMap(TEXT("/Game/Knight/Maps/Playables/L_M07_Campaign"));
 	const FString CourtMap(TEXT("/Game/Knight/Maps/Playables/L_M07_Courtyard"));
 
@@ -104,8 +104,8 @@ bool KnightCampaignAssetAuthoring::CreateAssets()
 	{
 		const FString Suffix = bCourt ? TEXT("Courtyard") : TEXT("School");
 		const FName Id(*(TEXT("CampaignUX_") + Suffix));
-		UKnightStoryWorldDefinition* Definition = Asset<UKnightStoryWorldDefinition>(Root + TEXT("DA_Knight_World_") + Suffix);
-		UKnightStoryProfile* Profile = Asset<UKnightStoryProfile>(Root + TEXT("DA_Knight_Profile_") + Suffix);
+		UKnightStoryWorldDefinition* Definition = Asset<UKnightStoryWorldDefinition>(CampaignRoot + TEXT("DA_Knight_World_") + Suffix);
+		UKnightStoryProfile* Profile = Asset<UKnightStoryProfile>(CampaignRoot + TEXT("DA_Knight_Profile_") + Suffix);
 		if (Definition == nullptr || Profile == nullptr || !Definition->TrySetIdentity(Id, TEXT("KnightStoryWorld"))
 			|| !Profile->TrySetIdentity(Id, TEXT("KnightStoryProfile")))
 		{
@@ -184,7 +184,7 @@ bool KnightCampaignAssetAuthoring::PopulateMap(UWorld* World, const bool bCourty
 	Entry->ProfileId = FPrimaryAssetId(TEXT("KnightStoryProfile"),
 		bCourtyard ? TEXT("CampaignUX_Courtyard") : TEXT("CampaignUX_School"));
 	const FString Suffix = bCourtyard ? TEXT("Courtyard") : TEXT("School");
-	const FString Path = Root + TEXT("DA_Knight_World_") + Suffix;
+	const FString Path = CampaignRoot + TEXT("DA_Knight_World_") + Suffix;
 	UKnightStoryWorldDefinition* Definition = LoadObject<UKnightStoryWorldDefinition>(nullptr,
 		*(Path + TEXT(".DA_Knight_World_") + Suffix));
 	if (Definition == nullptr)
