@@ -60,6 +60,7 @@ namespace GolemGameplayTags
 	UE_DEFINE_GAMEPLAY_TAG(Role_Party_Golem, "Role.Party.Golem");
 	UE_DEFINE_GAMEPLAY_TAG(Role_Party_Companion, "Role.Party.Companion");
 	UE_DEFINE_GAMEPLAY_TAG(Role_Enemy, "Role.Enemy");
+	UE_DEFINE_GAMEPLAY_TAG(State_Xenon_Restored, "State.Xenon.Restored");
 	UE_DEFINE_GAMEPLAY_TAG(Element_Earth, "Element.Earth");
 	UE_DEFINE_GAMEPLAY_TAG(Element_Sky, "Element.Sky");
 	UE_DEFINE_GAMEPLAY_TAG(Element_Sea, "Element.Sea");
