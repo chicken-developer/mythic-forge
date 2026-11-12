@@ -445,6 +445,14 @@ FGolemResult AGolemCharacter::InitializeGolemAbilitySystem()
 		return FGolemResult::Failure(EGolemError::InvalidState, TEXT("InitializeGolemAbilities"),
 			NSLOCTEXT("GolemCharacter", "AbilityHeroPending", "Hero data is required before granting Golem defaults."));
 	}
+	// The element decides which colour this Golem places on a void; both tags replicate with the ASC.
+	for (const FGameplayTag ArchetypeTag : { HeroDefinition->GetElementTag(), HeroDefinition->GetClassTag() })
+	{
+		if (ArchetypeTag.IsValid())
+		{
+			AbilitySystem->SetLooseGameplayTagCount(ArchetypeTag, 1, EGameplayTagReplicationState::TagAndCountToAll);
+		}
+	}
 	UGolemAssetManager* Manager = UGolemAssetManager::GetGolemAssetManager();
 	UGolemDefinition* Definition = nullptr;
 	const FGolemResult Resolve = Manager != nullptr

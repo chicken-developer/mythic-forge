@@ -26,6 +26,10 @@ struct GOLEMCOMBAT_API FGolemAttackDefinition
 	float PoiseDamage = 20.0f;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Combat|Attack")
 	float TraceRadius = 35.0f;
+
+	/** True for hits that place the attacker's element on a void (heavy attacks and some skill books). */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Combat|Attack")
+	bool bAppliesColor = false;
 };
 
 USTRUCT(BlueprintType)

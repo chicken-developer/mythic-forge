@@ -1,5 +1,8 @@
 #include "Components/GolemCombatComponent.h"
 
+#include "Types/GolemElement.h"
+#include "Voids/GolemColorVoidComponent.h"
+
 #include "AbilitySystemGlobals.h"
 #include "Abilities/GolemGameplayAbility.h"
 #include "Animation/AnimInstance.h"
@@ -578,6 +581,19 @@ void UGolemCombatComponent::CommitWeaponHit(const FHitResult& Hit, const FGolemA
 	// Retire the pending contact and reserve dedup before any synchronous damage/proc/event callback.
 	DeferredWindowHits.Remove(Target);
 	WindowHitActors.Add(Target);
+	if (UGolemColorVoidComponent* Void = Attack.bAppliesColor ? Cast<UGolemColorVoidComponent>(Hit.GetComponent()) : nullptr)
+	{
+		// A colour-carrying hit on a void only places colour; the fill, not the swing, hurts the Xenon.
+		FGameplayTagContainer OwnedTags;
+		AbilitySystem->GetOwnedGameplayTags(OwnedTags);
+		EGolemElement Element = EGolemElement::Earth;
+		if (GolemElements::FromOwnedTags(OwnedTags, Element))
+		{
+			const UGolemAttributeSet* SourceAttributes = AbilitySystem->GetGolemAttributes();
+			Void->ApplyElement(Element, SourceAttributes != nullptr ? SourceAttributes->GetColorHold() : 0.0f, GetOwner());
+			return;
+		}
+	}
 	const float Before = TargetASC->GetGolemAttributes()->GetHealth();
 	const FGolemResult Result = UGolemAbilitySystemComponent::ApplyCombatDamage(GetOwner(), Target,
 		GetProjectedDamage(ActionTag, Attack.Damage), Attack.PoiseDamage, true, &Hit);

@@ -16,6 +16,8 @@
 #include "UObject/StrongObjectPtr.h"
 #include "Voids/GolemColorVoidComponent.h"
 #include "Voids/GolemVoidHostComponent.h"
+#include "Xenon/GolemXenon.h"
+#include "Xenon/GolemXenonDefinition.h"
 
 namespace GolemColorVoidTests
 {
@@ -396,6 +398,79 @@ bool FGolemVoidHostGrayBodyTest::RunTest(const FString& Parameters)
 	FGolemResult ShortPlan;
 	SpawnXenon(Context.World.Get(), Tuning, { Red }, 1, 100.0f, ShortPlan);
 	TestFalse(TEXT("The colour plan must cover every void to fill"), ShortPlan.IsSuccess());
+	return true;
+}
+
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FGolemXenonDefinitionTest, "Golem.Color.Xenon.SeededPlanAndInitialization",
+	GolemColorVoidTests::Flags)
+
+bool FGolemXenonDefinitionTest::RunTest(const FString& Parameters)
+{
+	using namespace GolemColorVoidTests;
+	UGolemXenonDefinition* Grunt = NewObject<UGolemXenonDefinition>();
+	TestTrue(TEXT("Identity accepted"), Grunt->TrySetIdentity(TEXT("TestGrunt"), TEXT("GolemXenon")));
+	FGolemVoidHostTuning Voids;
+	Voids.VoidsToFill = 3;
+	Voids.MaxOpenVoids = 1;
+	TArray<FGolemXenonVoidSlot> Slots;
+	Slots.SetNum(2);
+	Slots[1].Offset = FVector(-45.0, 0.0, 30.0);
+	TestTrue(TEXT("Grunt numbers accepted"), Grunt->TrySetXenon(300.0f, 20.0f, 2.5f, Voids, Slots, 0.3f, true).IsSuccess());
+	TestFalse(TEXT("A Xenon needs positive health"), Grunt->TrySetXenon(0.0f, 20.0f, 2.5f, Voids, Slots, 0.3f, true).IsSuccess());
+	TestEqual(TEXT("Rejected numbers leave the definition unchanged"), Grunt->GetMaxHealth(), 300.0f);
+	TArray<FGolemXenonVoidSlot> TooFew;
+	Voids.MaxOpenVoids = 2;
+	TooFew.SetNum(1);
+	TestFalse(TEXT("Slots must cover simultaneously open voids"), Grunt->TrySetXenon(300.0f, 20.0f, 2.5f, Voids, TooFew, 0.3f, true).IsSuccess());
+
+	const TArray<uint8> Plan = Grunt->BuildColorPlan(1234);
+	TestEqual(TEXT("One colour per void to fill"), Plan.Num(), 3);
+	TestTrue(TEXT("The same seed gives the same plan"), Plan == Grunt->BuildColorPlan(1234));
+	bool bAllValid = true;
+	bool bFirstAlwaysBasic = true;
+	bool bAllMixedWhenForced = true;
+	bool bAllBasicWhenForced = true;
+	for (int32 Seed = 0; Seed < 64; ++Seed)
+	{
+		const TArray<uint8> Default = Grunt->BuildColorPlan(Seed);
+		const TArray<uint8> ForcedMixed = Grunt->BuildColorPlan(Seed, 1.0f);
+		const TArray<uint8> ForcedBasic = Grunt->BuildColorPlan(Seed, 0.0f);
+		bFirstAlwaysBasic &= GolemElements::Count(Default[0]) == 1 && GolemElements::Count(ForcedMixed[0]) == 1;
+		for (int32 Index = 0; Index < 3; ++Index)
+		{
+			bAllValid &= GolemElements::IsValidMask(Default[Index]) && GolemElements::Count(Default[Index]) <= 2;
+			bAllMixedWhenForced &= Index == 0 || GolemElements::Count(ForcedMixed[Index]) == 2;
+			bAllBasicWhenForced &= GolemElements::Count(ForcedBasic[Index]) == 1;
+		}
+	}
+	TestTrue(TEXT("Ordinary voids need one or two elements"), bAllValid);
+	TestTrue(TEXT("The first void of an easy Grunt is always a single colour"), bFirstAlwaysBasic);
+	TestTrue(TEXT("Difficulty 3 makes every other void mixed"), bAllMixedWhenForced);
+	TestTrue(TEXT("Zero chance makes every void basic"), bAllBasicWhenForced);
+
+	FTestWorld Context;
+	AGolemXenon* Xenon = Context.World->SpawnActor<AGolemXenon>();
+	TestNotNull(TEXT("Xenon spawns"), Xenon);
+	if (Xenon == nullptr)
+	{
+		return false;
+	}
+	TestTrue(TEXT("Xenon initializes from its definition"), Xenon->InitializeXenon(Grunt, 1234).IsSuccess());
+	TestFalse(TEXT("It initializes only once"), Xenon->InitializeXenon(Grunt, 1234).IsSuccess());
+	TestEqual(TEXT("Health comes from data"), Xenon->GetGolemAttributeSet()->GetHealth(), 300.0f);
+	TestTrue(TEXT("It is an enemy"), Xenon->GetGolemAbilitySystem()->HasMatchingGameplayTag(GolemGameplayTags::Role_Enemy));
+	TestEqual(TEXT("Identity names the definition"), Xenon->GetDefinitionId(), FPrimaryAssetId(TEXT("GolemXenon"), TEXT("TestGrunt")));
+	const TArray<UGolemColorVoidComponent*> Open = Xenon->GetVoidHost()->GetOpenVoids();
+	TestEqual(TEXT("A Grunt shows one void"), Open.Num(), 1);
+	if (Open.Num() == 1)
+	{
+		TestEqual(TEXT("The open void follows the seeded plan"), Open[0]->GetRequiredMask(), Plan[0]);
+		TestTrue(TEXT("An open void can be traced"), Open[0]->IsQueryCollisionEnabled()
+			&& Open[0]->ComponentHasTag(TEXT("GolemArmorZone")));
+	}
+	TestFalse(TEXT("A hidden void cannot be traced"), Xenon->GetVoidHost()->GetCoreSlot() != nullptr
+		&& Xenon->GetVoidHost()->GetCoreSlot()->IsQueryCollisionEnabled());
+	TestFalse(TEXT("Not restored at spawn"), Xenon->IsRestored());
 	return true;
 }
 

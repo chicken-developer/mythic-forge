@@ -10,6 +10,8 @@ UGolemColorVoidComponent::UGolemColorVoidComponent()
 	PrimaryComponentTick.bStartWithTickEnabled = true;
 	SetIsReplicatedByDefault(true);
 	InitSphereRadius(35.0f);
+	// Weapon sweeps prefer a tagged zone over the capsule of the same actor.
+	ComponentTags.Add(TEXT("GolemArmorZone"));
 	SetGenerateOverlapEvents(false);
 	SetCanEverAffectNavigation(false);
 	// A void is a target for traces and projectiles only; it never pushes characters around.

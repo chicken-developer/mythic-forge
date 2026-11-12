@@ -934,6 +934,7 @@ namespace GolemCombatAssetAuthoring
 			HeavyAttack.SectionName = TEXT("Heavy");
 			HeavyAttack.Damage = 30.0f;
 			HeavyAttack.PoiseDamage = 50.0f;
+			HeavyAttack.bAppliesColor = true;
 			FGolemCombatTuning Tuning;
 			Tuning.StaggerDuration = 5.0f;
 			if (!Profile->TrySetAttacks(Attacks).IsSuccess()
