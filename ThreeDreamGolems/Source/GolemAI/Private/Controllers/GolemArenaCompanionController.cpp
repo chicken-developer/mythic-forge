@@ -3,6 +3,7 @@
 #include "AbilitySystemGlobals.h"
 #include "Assets/GolemAssetManager.h"
 #include "Character/GolemCharacter.h"
+#include "ColorAssist/GolemColorAssistComponent.h"
 #include "Components/GolemAbilitySystemComponent.h"
 #include "Components/GolemAIDecisionSchedulerComponent.h"
 #include "Components/GolemLifeComponent.h"
@@ -16,6 +17,8 @@
 #include "StateTree.h"
 #include "Tags/GolemGameplayTags.h"
 #include "Threat/GolemThreatComponent.h"
+#include "Components/GolemCombatComponent.h"
+#include "Xenon/GolemXenonBrainComponent.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogGolemArenaCompanion, Log, All);
 
@@ -24,6 +27,7 @@ AGolemArenaCompanionController::AGolemArenaCompanionController()
 	AIContext = CreateDefaultSubobject<UGolemAIContextComponent>(TEXT("ArenaAIContext"));
 	RolePerception = CreateDefaultSubobject<UGolemAIRolePerceptionComponent>(TEXT("ArenaRolePerception"));
 	DecisionScheduler = CreateDefaultSubobject<UGolemAIDecisionSchedulerComponent>(TEXT("ArenaDecisionScheduler"));
+	ColorAssist = CreateDefaultSubobject<UGolemColorAssistComponent>(TEXT("ArenaColorAssist"));
 	SetPerceptionComponent(*RolePerception);
 	GetFollowComponent()->PrimaryComponentTick.bCanEverTick = false;
 }
@@ -155,6 +159,11 @@ UGolemAIDecisionSchedulerComponent* AGolemArenaCompanionController::GetDecisionS
 	return DecisionScheduler;
 }
 
+UGolemColorAssistComponent* AGolemArenaCompanionController::GetColorAssist() const
+{
+	return ColorAssist;
+}
+
 const FGolemCompanionCommandSnapshot& AGolemArenaCompanionController::GetCommandSnapshot() const
 {
 	return CommandSnapshot;
@@ -169,6 +178,7 @@ void AGolemArenaCompanionController::BeginPlay()
 {
 	PerceptionHandle = RolePerception->OnRolePerceptionChanged.AddUObject(this, &ThisClass::HandleRolePerception);
 	ScheduleHandle = DecisionScheduler->OnDecisionScheduled.AddUObject(this, &ThisClass::HandleDecisionScheduled);
+	ColorAssistHandle = ColorAssist->OnJobChanged.AddUObject(this, &ThisClass::HandleColorAssistJob);
 	ArenaInitializationResult = GetPawn() != nullptr ? InitializeArenaPawn(GetPawn()) : ResolveArenaArchetype();
 	if (ArenaInitializationResult.IsSuccess())
 	{
@@ -217,6 +227,8 @@ void AGolemArenaCompanionController::EndPlay(EEndPlayReason::Type EndPlayReason)
 	StopArenaDecisions();
 	RolePerception->OnRolePerceptionChanged.Remove(PerceptionHandle);
 	DecisionScheduler->OnDecisionScheduled.Remove(ScheduleHandle);
+	ColorAssist->OnJobChanged.Remove(ColorAssistHandle);
+	ColorAssistHandle.Reset();
 	PerceptionHandle.Reset();
 	ScheduleHandle.Reset();
 	OnCommandChanged.Clear();
@@ -268,6 +280,7 @@ FGolemResult AGolemArenaCompanionController::InitializeArenaPawn(APawn* InPawn)
 	if (Result.IsSuccess())
 	{
 		Result = AIContext->SetAttackLeaseDuration(Archetype->GetTuning().AttackLeaseDuration);
+		ColorAssist->Configure(Archetype->GetTuning().ColorAssist);
 	}
 	if (Result.IsSuccess())
 	{
@@ -325,6 +338,7 @@ void AGolemArenaCompanionController::RefreshFormationLeader()
 
 void AGolemArenaCompanionController::StopArenaDecisions()
 {
+	ColorAssist->ResetAssist();
 	DecisionScheduler->StopScheduling();
 	StopFollowing(TEXT("Arena controller ownership ended"));
 	AIContext->ClearControlledPawn();
@@ -361,8 +375,54 @@ void AGolemArenaCompanionController::HandleRolePerception(AActor* Actor, bool bS
 	DecisionScheduler->RequestDecisionWake();
 }
 
+void AGolemArenaCompanionController::HandleColorAssistJob(const bool bActive)
+{
+	if (bEndingPlay || GetPawn() == nullptr)
+	{
+		return;
+	}
+	if (bActive)
+	{
+		// The colour job owns movement and the heavy attack until it ends; ordinary decisions wait.
+		AIContext->CancelOwnedAction();
+		StopMovement();
+		GetFollowComponent()->PauseLogic(TEXT("Colour assist"));
+	}
+	else
+	{
+		GetFollowComponent()->ResumeLogic(TEXT("Colour assist"));
+		DecisionScheduler->RequestDecisionWake();
+	}
+}
+
+void AGolemArenaCompanionController::DodgeTelegraphedAttack()
+{
+	// Ordinary fighting (priority 4): step out of an attack a Xenon is showing. A colour job is not interrupted.
+	AGolemCharacter* Golem = Cast<AGolemCharacter>(GetPawn());
+	if (Golem == nullptr || ColorAssist->HasJob() || !Golem->GetLifeComponent()->IsAlive())
+	{
+		return;
+	}
+	const AActor* Threat = UGolemXenonBrainComponent::FindThreat(GetWorld(), Golem->GetActorLocation());
+	UGolemCombatComponent* Combat = Golem->GetCombatComponent();
+	if (Threat == nullptr || Combat == nullptr || Combat->GetProfile() == nullptr
+		|| Combat->GetDodgeCooldownRemaining(GetWorld()->GetTimeSeconds()) > 0.0f)
+	{
+		return;
+	}
+	AIContext->CancelOwnedAction();
+	Combat->SetNextDodgeDirection(Golem->GetActorLocation() - Threat->GetActorLocation());
+	if (Golem->GetGolemAbilitySystem()->RequestAbilityInput(GolemGameplayTags::Input_Combat_Dodge, true).IsSuccess())
+	{
+		Golem->GetGolemAbilitySystem()->RequestAbilityInput(GolemGameplayTags::Input_Combat_Dodge, false);
+	}
+}
+
 void AGolemArenaCompanionController::HandleDecisionScheduled(EGolemAILODTier Tier, float Interval, int64 TickCount)
 {
+	// Reviving a downed teammate outranks colour help (DEV_SPEC section 12, priority 1).
+	ColorAssist->SetBlocked(AIContext->GetDecisionSnapshot().bTargetFriendlyDowned);
+	DodgeTelegraphedAttack();
 	RefreshFormationLeader();
 	CommandSnapshot.DecisionLOD = Tier;
 	CommandSnapshot.DecisionInterval = Interval;

@@ -8,6 +8,8 @@
 #include "Animation/AnimInstance.h"
 #include "Animation/AnimMontage.h"
 #include "Animation/GolemAnimInstance.h"
+#include "Animation/GolemAnimNotifyState_TraceWindow.h"
+#include "Attributes/GolemAttributeSet.h"
 #include "Assets/GolemAssetManager.h"
 #include "Camera/GolemCameraModeComponent.h"
 #include "Components/GolemAbilitySystemComponent.h"
@@ -22,6 +24,8 @@
 #include "GameFramework/Character.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/GameStateBase.h"
+#include "GameFramework/PlayerController.h"
+#include "Projectiles/GolemColorProjectile.h"
 #include "GameplayEffect.h"
 #include "Net/UnrealNetwork.h"
 #include "Tags/GolemGameplayTags.h"
@@ -58,6 +62,28 @@ namespace
 		return IsValid(Component) && IsValid(Target) && Component->GetOwner() == Target &&
 			Component->IsRegistered() && Component->IsQueryCollisionEnabled() &&
 			Component->ComponentHasTag(TEXT("GolemArmorZone"));
+	}
+	/** Seconds from the start of Section to the moment its trace window opens; 0 when it has none. */
+	float GolemTraceWindowDelay(const UAnimMontage* Montage, const FName Section)
+	{
+		const int32 SectionIndex = IsValid(Montage) ? Montage->GetSectionIndex(Section) : INDEX_NONE;
+		if (SectionIndex == INDEX_NONE)
+		{
+			return 0.0f;
+		}
+		float SectionStart = 0.0f;
+		float SectionEnd = 0.0f;
+		Montage->GetSectionStartAndEndTime(SectionIndex, SectionStart, SectionEnd);
+		for (const FAnimNotifyEvent& Notify : Montage->Notifies)
+		{
+			const float Time = Notify.GetTriggerTime();
+			if (Notify.NotifyStateClass != nullptr && Notify.NotifyStateClass->IsA<UGolemAnimNotifyState_TraceWindow>()
+				&& Time >= SectionStart - UE_KINDA_SMALL_NUMBER && Time < SectionEnd)
+			{
+				return FMath::Max(0.0f, Time - SectionStart);
+			}
+		}
+		return 0.0f;
 	}
 	bool HasOwnedArmorZone(const AActor* Target)
 	{
@@ -228,10 +254,137 @@ FGolemResult UGolemCombatComponent::RefreshBaseWalkSpeed(float BaseSpeed)
 	{
 		return GolemCombatFailure(EGolemError::InvalidState, TEXT("CombatMovementPresentation"));
 	}
-	// Hero identity and ASC/profile state replicate independently; the tag is the current source of truth.
+	// Hero identity and the ability system replicate independently; without attributes Agility counts as 100.
 	const UGolemAbilitySystemComponent* ASC = AbilitySystem.IsValid() ? AbilitySystem.Get() : GolemActorASC(Character);
-	Character->GetCharacterMovement()->MaxWalkSpeed = BaseSpeed;
+	const float Agility = ASC != nullptr && ASC->GetGolemAttributes() != nullptr
+		? ASC->GetGolemAttributes()->GetAgility() : 100.0f;
+	BaseWalkSpeed = BaseSpeed;
+	Character->GetCharacterMovement()->MaxWalkSpeed = BaseSpeed * FMath::Clamp(Agility, 10.0f, 400.0f) / 100.0f;
 	return FGolemResult::Success();
+}
+
+FGolemResult UGolemCombatComponent::SetHeroMoves(const FGolemHeroMoveTuning& InMoves)
+{
+	const FGolemResult Result = InMoves.Validate();
+	if (Result.IsSuccess())
+	{
+		HeroMoves = InMoves;
+	}
+	return Result;
+}
+
+void UGolemCombatComponent::SetColorIntent(UGolemColorVoidComponent* Void, const bool bOnlyIfPrimed)
+{
+	ColorIntent = Void;
+	bColorIntentOnlyIfPrimed = Void != nullptr && bOnlyIfPrimed;
+}
+
+UGolemColorVoidComponent* UGolemCombatComponent::GetColorIntent() const
+{
+	return ColorIntent.Get();
+}
+
+bool UGolemCombatComponent::AreHostile(const AActor* First, const AActor* Second)
+{
+	const UGolemAbilitySystemComponent* FirstASC = GolemActorASC(const_cast<AActor*>(First));
+	const UGolemAbilitySystemComponent* SecondASC = GolemActorASC(const_cast<AActor*>(Second));
+	if (FirstASC == nullptr || SecondASC == nullptr || First == Second
+		|| FirstASC->GetLifeComponent() == nullptr || !FirstASC->GetLifeComponent()->IsAlive()
+		|| SecondASC->GetLifeComponent() == nullptr || !SecondASC->GetLifeComponent()->IsAlive())
+	{
+		return false;
+	}
+	return (FirstASC->HasMatchingGameplayTag(GolemGameplayTags::Role_Party_Golem)
+			&& SecondASC->HasMatchingGameplayTag(GolemGameplayTags::Role_Enemy))
+		|| (FirstASC->HasMatchingGameplayTag(GolemGameplayTags::Role_Enemy)
+			&& SecondASC->HasMatchingGameplayTag(GolemGameplayTags::Role_Party_Golem));
+}
+
+float UGolemCombatComponent::GetDodgeCooldownRemaining(const double Now) const
+{
+	return static_cast<float>(FMath::Max(0.0, Snapshot.DodgeReadyServerTime - Now));
+}
+
+bool UGolemCombatComponent::IsColorHitAllowed(const UGolemColorVoidComponent* Void) const
+{
+	// A player decides where colour goes. An AI companion only colours the void it was sent to.
+	const APawn* Pawn = Cast<APawn>(GetOwner());
+	const bool bPlayer = Pawn != nullptr && Cast<APlayerController>(Pawn->GetController()) != nullptr;
+	return Void != nullptr && (bPlayer || (ColorIntent.Get() == Void
+		&& (!bColorIntentOnlyIfPrimed || Void->GetVoidState() == EGolemVoidState::Primed)));
+}
+
+bool UGolemCombatComponent::PlaceColor(UGolemColorVoidComponent* Void)
+{
+	FGameplayTagContainer OwnedTags;
+	AbilitySystem->GetOwnedGameplayTags(OwnedTags);
+	EGolemElement Element = EGolemElement::Earth;
+	if (Void == nullptr || !Void->AcceptsHits() || !IsColorHitAllowed(Void) || !GolemElements::FromOwnedTags(OwnedTags, Element))
+	{
+		return false;
+	}
+	const UGolemAttributeSet* SourceAttributes = AbilitySystem->GetGolemAttributes();
+	Void->ApplyElement(Element, SourceAttributes != nullptr ? SourceAttributes->GetColorHold() : 0.0f, GetOwner());
+	return true;
+}
+
+void UGolemCombatComponent::FireHeavyProjectile(const FGolemAttackDefinition& Attack, const FGameplayTag ActionTag)
+{
+	ACharacter* Character = Cast<ACharacter>(GetOwner());
+	UWorld* World = GetWorld();
+	if (Character == nullptr || World == nullptr || !AbilitySystem.IsValid())
+	{
+		return;
+	}
+	// Chest height, a step in front of the capsule so the shot never starts inside its owner.
+	const FVector Muzzle = Character->GetActorLocation() + FVector(0.0, 0.0, 35.0) + Character->GetActorForwardVector() * 45.0;
+	FVector AimPoint = Muzzle + Character->GetActorForwardVector() * HeroMoves.ProjectileRange;
+	const APlayerController* Player = Cast<APlayerController>(Character->GetController());
+	if (Player != nullptr)
+	{
+		// Aim where the camera looks: at whatever the centre of the screen touches, else far along the view.
+		FVector ViewLocation;
+		FRotator ViewRotation;
+		Player->GetPlayerViewPoint(ViewLocation, ViewRotation);
+		const FVector ViewEnd = ViewLocation + ViewRotation.Vector() * (HeroMoves.ProjectileRange + 1500.0f);
+		FCollisionQueryParams Query(SCENE_QUERY_STAT(GolemHeavyAim), false, Character);
+		FHitResult ViewHit;
+		AimPoint = World->LineTraceSingleByChannel(ViewHit, ViewLocation, ViewEnd, ECC_Visibility, Query)
+			&& FVector::DotProduct(ViewHit.ImpactPoint - Muzzle, ViewRotation.Vector()) > 0.0
+			? ViewHit.ImpactPoint : ViewEnd;
+	}
+	else if (ColorIntent.IsValid())
+	{
+		AimPoint = ColorIntent->GetComponentLocation();
+	}
+	else if (IsValid(Snapshot.LockedTarget))
+	{
+		AimPoint = Snapshot.LockedTarget->GetActorLocation();
+	}
+	FGolemProjectileShot Shot;
+	Shot.Speed = HeroMoves.ProjectileSpeed;
+	Shot.Range = HeroMoves.ProjectileRange;
+	Shot.Radius = HeroMoves.ProjectileRadius;
+	Shot.Damage = GetAttackDamage(Attack.PowerScale);
+	Shot.PoiseDamage = Attack.PoiseDamage;
+	Shot.ActionTag = ActionTag;
+	FGameplayTagContainer OwnedTags;
+	AbilitySystem->GetOwnedGameplayTags(OwnedTags);
+	Shot.bAppliesColor = Attack.bAppliesColor && GolemElements::FromOwnedTags(OwnedTags, Shot.Element);
+	Shot.ColorHoldSeconds = AbilitySystem->GetGolemAttributes() != nullptr ? AbilitySystem->GetGolemAttributes()->GetColorHold() : 0.0f;
+	Shot.bRestrictColor = Player == nullptr;
+	Shot.OnlyVoid = ColorIntent;
+	Shot.bOnlyIfPrimed = bColorIntentOnlyIfPrimed;
+	FActorSpawnParameters Parameters;
+	Parameters.Owner = Character;
+	Parameters.Instigator = Character;
+	Parameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	AGolemColorProjectile* Projectile = World->SpawnActor<AGolemColorProjectile>(AGolemColorProjectile::StaticClass(),
+		FTransform((AimPoint - Muzzle).Rotation(), Muzzle), Parameters);
+	if (Projectile != nullptr && !Projectile->Launch(Character, AimPoint - Muzzle, Shot))
+	{
+		Projectile->Destroy();
+	}
 }
 
 void UGolemCombatComponent::OnRep_ProfileId()
@@ -294,22 +447,19 @@ void UGolemCombatComponent::RefreshSnapshot()
 	}
 }
 
-float UGolemCombatComponent::GetProjectedDamage(FGameplayTag ActionTag, float AuthoredDamage) const
+float UGolemCombatComponent::GetAttackDamage(const float PowerScale) const
 {
-	if (!AbilitySystem.IsValid() || AbilitySystem->GetGolemAttributes() == nullptr)
-	{
-		return AuthoredDamage;
-	}
-	// Authored damage assumes the definition's starting Power; later Power changes shift it one for one.
-	const float Delta = AbilitySystem->GetGolemAttributes()->GetPower() - AbilitySystem->GetInitialPower();
-	return FMath::Clamp(AuthoredDamage + Delta, 0.0f, 1000000.0f);
+	const float Power = AbilitySystem.IsValid() && AbilitySystem->GetGolemAttributes() != nullptr
+		? AbilitySystem->GetGolemAttributes()->GetPower() : FGolemAttributeDefaults().Power;
+	return FMath::Clamp(Power * PowerScale, 0.0f, 1000000.0f);
 }
 
 FGolemResult UGolemCombatComponent::BeginAttack(FGameplayTag ActionTag, UGolemGameplayAbility* Ability,
-	UAnimMontage*& OutMontage, FName& OutSection)
+	UAnimMontage*& OutMontage, FName& OutSection, float& OutPlayRate)
 {
 	OutMontage = nullptr;
 	OutSection = NAME_None;
+	OutPlayRate = 1.0f;
 	if (!IsAuthorityAlive() || Ability == nullptr || !CanTransferControl())
 	{
 		return GolemCombatFailure(EGolemError::InvalidState, TEXT("BeginAttack"));
@@ -337,7 +487,21 @@ FGolemResult UGolemCombatComponent::BeginAttack(FGameplayTag ActionTag, UGolemGa
 		ClearDeferredWeaponHits();
 		OutMontage = Attacks[Index].Montage.LoadSynchronous();
 		OutSection = Attacks[Index].SectionName;
-		if (IsValid(Snapshot.LockedTarget) && ValidateCombatTarget(Snapshot.LockedTarget, Profile->GetTuning().LockRange).IsSuccess())
+		bProjectileFired = false;
+		bChargeRateActive = false;
+		const float AuthoredWindup = GolemTraceWindowDelay(OutMontage, OutSection);
+		if (ActionTag == GolemGameplayTags::Ability_Combat_Heavy && HeroMoves.HeavyChargeSeconds > 0.0f && AuthoredWindup > 0.0f)
+		{
+			// Stretch only the wind-up: the swing itself returns to normal speed when the trace window opens.
+			OutPlayRate = FMath::Clamp(AuthoredWindup / HeroMoves.HeavyChargeSeconds, 0.05f, 10.0f);
+			bChargeRateActive = !FMath::IsNearlyEqual(OutPlayRate, 1.0f);
+		}
+		if (ColorIntent.IsValid() && Attacks[Index].bAppliesColor)
+		{
+			const FVector Direction = ColorIntent->GetComponentLocation() - GetOwner()->GetActorLocation();
+			GetOwner()->SetActorRotation(FRotator(0.0f, Direction.Rotation().Yaw, 0.0f));
+		}
+		else if (IsValid(Snapshot.LockedTarget) && ValidateCombatTarget(Snapshot.LockedTarget, Profile->GetTuning().LockRange).IsSuccess())
 		{
 			const FVector Direction = Snapshot.LockedTarget->GetActorLocation() - GetOwner()->GetActorLocation();
 			GetOwner()->SetActorRotation(FRotator(0.0f, Direction.Rotation().Yaw, 0.0f));
@@ -401,6 +565,22 @@ void UGolemCombatComponent::BeginTraceWindow(FName WindowId, UAnimSequenceBase* 
 	++WindowHitIndex;
 	WindowHitActors.Reset();
 	ClearDeferredWeaponHits();
+	if (bChargeRateActive)
+	{
+		bChargeRateActive = false;
+		AbilitySystem->CurrentMontageSetPlayRate(1.0f);
+	}
+	if (HeroMoves.bHeavyIsProjectile && AttackAction == GolemGameplayTags::Ability_Combat_Heavy)
+	{
+		// A bow or a staff looses one shot where a hammer would start its sweep.
+		if (!bProjectileFired)
+		{
+			bProjectileFired = true;
+			FireHeavyProjectile(*Attack, AttackAction);
+		}
+		RefreshSnapshot();
+		return;
+	}
 	PreviousHammerHead = Hammer != nullptr ? Hammer->GetComponentLocation() + Hammer->GetUpVector() * 50.0f
 		: GetOwner()->GetActorLocation();
 	BeginTraceGeometryDiagnostics();
@@ -411,7 +591,8 @@ void UGolemCombatComponent::TickTraceWindow(FName WindowId, UAnimSequenceBase* A
 {
 	const FGolemAttackDefinition* Attack = GetCurrentAttack();
 	if (IsAuthorityAlive() && Snapshot.bAttacking && ActiveWindow == WindowId && Attack != nullptr &&
-		Animation == Attack->Montage.Get())
+		Animation == Attack->Montage.Get() &&
+		!(HeroMoves.bHeavyIsProjectile && AttackAction == GolemGameplayTags::Ability_Combat_Heavy))
 	{
 		PerformWeaponSweep();
 	}
@@ -581,22 +762,14 @@ void UGolemCombatComponent::CommitWeaponHit(const FHitResult& Hit, const FGolemA
 	// Retire the pending contact and reserve dedup before any synchronous damage/proc/event callback.
 	DeferredWindowHits.Remove(Target);
 	WindowHitActors.Add(Target);
-	if (UGolemColorVoidComponent* Void = Attack.bAppliesColor ? Cast<UGolemColorVoidComponent>(Hit.GetComponent()) : nullptr)
+	// A colour-carrying hit on a void only places colour; the fill, not the swing, hurts the Xenon.
+	if (Attack.bAppliesColor && PlaceColor(Cast<UGolemColorVoidComponent>(Hit.GetComponent())))
 	{
-		// A colour-carrying hit on a void only places colour; the fill, not the swing, hurts the Xenon.
-		FGameplayTagContainer OwnedTags;
-		AbilitySystem->GetOwnedGameplayTags(OwnedTags);
-		EGolemElement Element = EGolemElement::Earth;
-		if (GolemElements::FromOwnedTags(OwnedTags, Element))
-		{
-			const UGolemAttributeSet* SourceAttributes = AbilitySystem->GetGolemAttributes();
-			Void->ApplyElement(Element, SourceAttributes != nullptr ? SourceAttributes->GetColorHold() : 0.0f, GetOwner());
-			return;
-		}
+		return;
 	}
 	const float Before = TargetASC->GetGolemAttributes()->GetHealth();
 	const FGolemResult Result = UGolemAbilitySystemComponent::ApplyCombatDamage(GetOwner(), Target,
-		GetProjectedDamage(ActionTag, Attack.Damage), Attack.PoiseDamage, true, &Hit);
+		GetAttackDamage(Attack.PowerScale), Attack.PoiseDamage, true, &Hit);
 	if (!TargetASC.IsValid() || TargetASC->GetGolemAttributes() == nullptr || !IsValid(Target))
 	{
 		return;
@@ -689,11 +862,22 @@ void UGolemCombatComponent::EndDefense(FGameplayTag ActionTag)
 	RefreshSnapshot();
 }
 
+void UGolemCombatComponent::SetNextDodgeDirection(const FVector& Direction)
+{
+	NextDodgeDirection = Direction.GetSafeNormal2D();
+}
+
 FGolemResult UGolemCombatComponent::BeginDodge()
 {
 	if (!IsAuthorityAlive() || Snapshot.bDodging || Snapshot.bStaggered)
 	{
 		return GolemCombatFailure(EGolemError::InvalidState, TEXT("BeginDodge"));
+	}
+	const double Now = GetWorld()->GetTimeSeconds();
+	if (Now < Snapshot.DodgeReadyServerTime)
+	{
+		return FGolemResult::Failure(EGolemError::InvalidState, TEXT("DodgeCooldown"),
+			NSLOCTEXT("GolemCombat", "DodgeCooldown", "Dodge is still recovering."));
 	}
 	ACharacter* Character = Cast<ACharacter>(GetOwner());
 	if (Character == nullptr || Character->GetCharacterMovement()->MovementMode != MOVE_Walking)
@@ -702,7 +886,12 @@ FGolemResult UGolemCombatComponent::BeginDodge()
 	}
 	Snapshot.bDodging = true;
 	DodgeStartedAt = GetWorld()->GetTimeSeconds();
-	FVector Direction = Character->GetLastMovementInputVector().GetSafeNormal2D();
+	// Recovery is authored for Agility 100 and shortens in proportion as Agility rises.
+	const float Agility = AbilitySystem->GetGolemAttributes() != nullptr ? AbilitySystem->GetGolemAttributes()->GetAgility() : 100.0f;
+	Snapshot.DodgeReadyServerTime = Now + Profile->GetTuning().DodgeCooldownSeconds * 100.0 / FMath::Clamp(Agility, 10.0f, 400.0f);
+	FVector Direction = NextDodgeDirection.IsNearlyZero()
+		? Character->GetLastMovementInputVector().GetSafeNormal2D() : NextDodgeDirection;
+	NextDodgeDirection = FVector::ZeroVector;
 	if (Direction.IsNearlyZero())
 	{
 		Direction = -Character->GetActorForwardVector();
@@ -1072,6 +1261,8 @@ FGolemResult UGolemCombatComponent::ResetForCheckpoint()
 	GetWorld()->GetTimerManager().ClearTimer(StaggerTimer);
 	EndStagger();
 	Snapshot.ComboIndex = 0;
+	Snapshot.DodgeReadyServerTime = 0.0;
+	SetColorIntent(nullptr);
 	Snapshot.OutcomeCounts.Init(0, static_cast<int32>(EGolemCombatOutcome::Traversal) + 1);
 	RefreshSnapshot();
 	return FGolemResult::Success();

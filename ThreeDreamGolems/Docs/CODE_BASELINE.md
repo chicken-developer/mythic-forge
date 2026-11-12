@@ -1,6 +1,6 @@
 # Mã nguồn hiện có
 
-Cập nhật 2026-11-13, sau mốc R1. Mọi con số dưới đây đo trực tiếp trên repo ở nhánh `feature/r1-disable-legacy`, không lấy từ báo cáo cũ. Lịch sử: [REFACTOR_REPORT.md](REFACTOR_REPORT.md) (R0), [R1_REPORT.md](R1_REPORT.md) (R1).
+Cập nhật 2026-11-13, giữa mốc M0. Mọi con số dưới đây đo trực tiếp trên repo ở nhánh `feature/r1-disable-legacy`, không lấy từ báo cáo cũ. Lịch sử: [REFACTOR_REPORT.md](REFACTOR_REPORT.md) (R0), [R1_REPORT.md](R1_REPORT.md) (R1).
 
 ## Nền tảng
 
@@ -9,21 +9,21 @@ Cập nhật 2026-11-13, sau mốc R1. Mọi con số dưới đây đo trực t
 | Engine | Unreal Engine 5.8.4 (CL 58902052), bản cài tại `C:\Program Files\Epic Games\UE_5.8` |
 | Công nghệ | C++, Gameplay Ability System, StateTree, Enhanced Input, CommonUI, MotionWarping |
 | Online | Plugin OnlineSubsystemNull, OnlineSubsystemSteam và SteamSockets đã bật; chưa có code phiên chơi |
-| Quy mô | Khoảng 36.200 dòng C++ trong 230 file, 14 module (trước R1: 91.500 dòng, 636 file) |
-| Test | 48 test tự động, 48 PASS (lượt `M0-test-3`, 2026-11-13); 10 trong số đó là nhóm `Golem.Color` |
-| Nội dung | 74 asset: 4 map, 3 hero, 1 party, định nghĩa AI và combat, 4 StateTree chính và 3 StateTree test, 1 EQS, animation, Mannequin, 5 asset âm thanh |
+| Quy mô | Khoảng 42.400 dòng C++ trong 274 file, 14 module (sau R1: 36.200 dòng; trước R1: 91.500 dòng) |
+| Test | 55 test tự động, 55 PASS (lượt `M0b-test-2`, 2026-11-13); 17 trong số đó là nhóm `Golem.Color`, gồm một phiên chơi thật trên map M0 |
+| Nội dung | 77 asset: 5 map, 3 hero, 1 party, 2 Xenon, định nghĩa AI và combat, 4 StateTree chính và 3 StateTree test, 1 EQS, animation, Mannequin, 5 asset âm thanh |
 
 ## Module
 
 | Module | Trách nhiệm hiện tại | File / dòng |
 |---|---|---|
-| `GolemCore` | Stable ID, kết quả và lỗi, log, settings, tag (gồm `Element.*`, `Class.*`), sự kiện có kiểu, AssetManager | 25 / 1.600 |
-| `GolemAbilitySystem` | ASC, bộ 4 chỉ số, ability set, sát thương, gục và hồi sinh, cue | 28 / 3.000 |
-| `GolemCombat` | Đòn nhẹ và nặng theo pha, đỡ, parry, né, khoá mục tiêu, stagger, finisher, traversal | 38 / 4.000 |
-| `GolemFramework` | Đội ba Golem, hero và party definition, quyền điều khiển và slot, input | 24 / 4.200 |
-| `GolemAI` | StateTree task, action set, AI đồng đội, quái và boss hai pha, threat, Combat Director | 36 / 7.600 |
-| `ThreeDreamGolems` | Game mode gốc và ba sân thử: Training, AbilityYard, PartyArena | 32 / 3.600 |
-| `GolemDeveloper` (Editor) | Commandlet Bootstrap và authoring cho AI, combat; test tích hợp | 19 / 9.600 |
+| `GolemCore` | Stable ID, kết quả và lỗi, log, settings, tag (gồm `Element.*`, `Class.*`), nguyên tố và màu hiển thị, sự kiện có kiểu, AssetManager | 28 / 1.700 |
+| `GolemAbilitySystem` | ASC, bộ 4 chỉ số, ability set, sát thương, gục và hồi sinh, cue | 29 / 3.000 |
+| `GolemCombat` | Đòn nhẹ và nặng theo pha, đỡ, parry, né, khoá mục tiêu, stagger, finisher, traversal; khoảng trống màu, đạn đặt màu, Xenon và bộ não của nó | 54 / 7.600 |
+| `GolemFramework` | Đội ba Golem, hero definition (chỉ số, lấy đà, kiểu đòn nặng) và party definition, quyền điều khiển và slot, input | 25 / 4.300 |
+| `GolemAI` | StateTree task, action set, AI đồng đội và phần bồi màu của nó, quái và boss hai pha, threat, Combat Director | 42 / 8.400 |
+| `ThreeDreamGolems` | Game mode gốc, ba sân thử cũ (Training, AbilityYard, PartyArena) và sân M0 `ColorArena` với HUD chỉ báo khoảng trống | 37 / 4.200 |
+| `GolemDeveloper` (Editor) | Commandlet Bootstrap và authoring cho AI, combat; test tích hợp | 22 / 10.500 |
 | `GolemWorld` | Khung tương tác, trạng thái thế giới, bản đồ vùng và ping của campaign cũ | 12 / 1.200 |
 | `GolemQuest` | Khung quest của campaign cũ | 5 / 600 |
 | `GolemDialogue` | Khung hội thoại | 5 / 250 |
@@ -35,12 +35,12 @@ Module runtime không phụ thuộc vòng; `Scripts/AuditModules.ps1` kiểm tra
 ## Đang chạy được
 
 - **Đội ba Golem:** Mars (Earth, Warrior, đỏ), Jupiter (Sky, Hunter, vàng), Neptune (Sea, Mage, xanh dương) trong party `GolemParty:ThreeGolems`. Mỗi Golem có ASC riêng; người chơi nhận quyền điều khiển, AI nhận lại khi người chơi rời.
-- **Chỉ số:** `MaxHealth`/`Health`, `Power`, `Agility`, `ColorHold`. `Agility` và `ColorHold` đã có trong bộ thuộc tính nhưng chưa hệ thống nào dùng.
-- **Combat:** đòn có pha lấy đà, hiệu lực, hồi; đỡ, parry, né; khoá mục tiêu; stagger theo poise; finisher; traversal. Sát thương là số ghi trong combat profile, cộng chênh lệch `Power` so với lúc khởi tạo.
+- **Chỉ số:** `MaxHealth`/`Health`, `Power`, `Agility`, `ColorHold`, lấy từ hero definition của từng Golem. `Power` nhân vào hệ số của đòn đánh, `Agility` nhân vào tốc độ đi và thời gian hồi né, `ColorHold` cộng vào cửa sổ trộn màu.
+- **Combat:** đòn có pha lấy đà, hiệu lực, hồi; đỡ, parry, né có thời gian hồi; khoá mục tiêu; stagger theo poise; finisher; traversal. Sát thương bằng `Power` nhân hệ số của đòn (nhẹ 1,0, nặng 2,5). Đòn nặng của Mars là cú vung búa, của Jupiter và Neptune là đạn bay thẳng 25 m.
 - **AI:** StateTree quyết định, GAS thực thi; đồng đội theo đội hình và cứu người gục; ngân sách tấn công cho hai phe; boss hai pha.
 - **Gục và hồi sinh:** `GolemLifeComponent`, ability Revive giữ nút.
 - **Settings:** hiển thị, 4 bus âm thanh, đổi phím, cỡ chữ, giảm rung.
-- **Luật trộn màu (M0, đang làm):** khoảng trống 5 trạng thái trong `GolemCombat/Voids`, Xenon trong `GolemCombat/Xenon`, đòn nặng đặt màu. Tiến độ chi tiết ở [MILESTONES.md](MILESTONES.md).
+- **Luật trộn màu (M0, đang làm):** khoảng trống 5 trạng thái và dấu ra hiệu trong `GolemCombat/Voids`; đạn đặt màu trong `GolemCombat/Projectiles`; Xenon, hai loại Lính và Khiên cùng bộ não đuổi, báo trước, ra đòn trong `GolemCombat/Xenon`; AI đồng đội bồi màu trong `GolemAI/ColorAssist`; HUD chỉ báo trong `ThreeDreamGolems/ColorArena`. Tiến độ chi tiết ở [MILESTONES.md](MILESTONES.md).
 
 ## Điểm vào
 
@@ -51,15 +51,18 @@ Module runtime không phụ thuộc vòng; `Scripts/AuditModules.ps1` kiểm tra
 | Dựng lại nội dung | `Scripts\ContinuousRun.ps1 -Action Bootstrap -Milestone 0`, rồi `1`, `2`, `4`, `10` (sân M0 và Xenon) |
 | Build, test | `Scripts\ContinuousRun.ps1 -Action BuildEditor`, `-Action Test -TestFilter 'Golem.'` |
 
-Tên map `L_M0x_...` theo số mốc của kế hoạch cũ. Sân đấu của M0 sẽ là map mới.
+Tên map `L_M0x_...` theo số mốc của kế hoạch cũ; sân đấu của M0 là `L_M0_ColorArena`. Bootstrap ghi lại số thiết kế (chỉ số Golem, hệ số đòn đánh, Xenon) vào asset mỗi lần chạy, nên đổi bản nháp là sửa số trong commandlet rồi chạy lại mốc 10.
 
 ## Chưa có
 
-AI và đòn đánh của Xenon, nút ra hiệu, AI bồi màu, kẻ canh giữ, `EGamePhase`, khu và trạng thái khu, sách kỹ năng, tarot, DreamCoin, vũ khí và dream stone, Little Princess, nút ra hiệu, lưu game, giao diện trong trận, phiên chơi Steam. Đòn tầm xa cũng chưa có: mọi đòn hiện là cận chiến.
+Động tác class của ba Golem, Xenon loại Ném và Húc, tinh anh, kẻ canh giữ, `EGamePhase`, khu và trạng thái khu, sách kỹ năng, tarot, DreamCoin, vũ khí và dream stone, Little Princess, lưu game, giao diện CommonUI trong trận, phiên chơi Steam. Chơi nhiều người chưa được kiểm trên listen server.
 
 ## Cần biết khi làm tiếp
 
-- **Động tác thừa so với thiết kế:** parry, finisher, traversal và khoá mục tiêu vẫn nằm trong ability set `Combat`. Thiết kế mới chỉ có đòn nhẹ, đòn nặng, né và một động tác class; M0 quyết định giữ hay bỏ từng cái.
+- **Động tác thừa so với thiết kế:** parry, finisher, traversal và khoá mục tiêu vẫn nằm trong ability set `Combat`. Thiết kế mới chỉ có đòn nhẹ, đòn nặng, né và một động tác class; phần này chưa dọn vì các test `Golem.AI.*`, `Golem.GAS.*` và `Golem.Framework.*` cũ còn bám vào.
+- **Sân PartyArena cũ** (đợt quái và boss hai pha) vẫn còn và là lớp cha của sân M0. Khi M0 ổn, nên tách sân M0 ra khỏi nó rồi xoá sân cũ cùng `GolemArenaEnemy`.
+- **AI đồng đội chỉ đặt màu vào đúng khoảng trống được giao.** `UGolemCombatComponent::SetColorIntent` giữ khoảng trống đó; đòn nặng của AI trúng khoảng trống khác thì tính như trúng thân xám. Người chơi không bị giới hạn này.
+- **Xenon không có AIController.** `UGolemXenonBrainComponent` tự xoay, tự đi thẳng và tự ra đòn; nó chưa dùng navmesh nên có thể kẹt sau vật cản.
 - **Poise và stagger** vẫn chạy bằng số trong combat profile. Thiết kế mới cho Xenon choáng khi bị lấp khoảng trống.
 - **`GolemWorld`, `GolemQuest`, `GolemDialogue`** còn nguyên khung của campaign cũ (bản đồ vùng, ping, quest) và 8 test `Golem.M6.*`, `Golem.M7.*`. Chúng không còn ai gọi; M1 sẽ thu gọn hoặc viết lại theo DEV_SPEC mục 11 và 14.
 - **`AS_Golem_Traversal`** là asset duy nhất không dựng lại được bằng Bootstrap trên engine 5.8.4 (ensure ở `AnimSequencerController`); file hiện có lấy từ lần dựng trước.

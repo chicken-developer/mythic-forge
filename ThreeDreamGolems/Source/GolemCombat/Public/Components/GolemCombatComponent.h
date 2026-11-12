@@ -9,6 +9,7 @@
 #include "GolemCombatComponent.generated.h"
 
 class UGolemAbilitySystemComponent;
+class UGolemColorVoidComponent;
 class UGolemGameplayAbility;
 class UStaticMeshComponent;
 class UPrimitiveComponent;
@@ -71,6 +72,9 @@ struct GOLEMCOMBAT_API FGolemCombatSnapshot
 	TArray<int32> OutcomeCounts;
 	UPROPERTY(BlueprintReadOnly, Category = "Golem|Combat")
 	double LastOutcomeServerTime = 0.0;
+	/** Host time from which the next dodge is allowed. */
+	UPROPERTY(BlueprintReadOnly, Category = "Golem|Combat")
+	double DodgeReadyServerTime = 0.0;
 	UPROPERTY(BlueprintReadOnly, Category = "Golem|Combat")
 	int32 Revision = 0;
 	int32 GetOutcomeCount(EGolemCombatOutcome Outcome) const;
@@ -91,8 +95,30 @@ public:
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 	FGolemResult Configure(const FPrimaryAssetId& InProfileId);
 	FGolemResult TryInitializePresentation();
-	/** Reapplies a native movement baseline without removing an active replicated rune status. */
+	/** BaseSpeed is the speed at Agility 100; the owner's Agility scales it. */
 	FGolemResult RefreshBaseWalkSpeed(float BaseSpeed);
+
+	/** Per-Golem differences inside the shared move set. Call on the host and on clients alike. */
+	FGolemResult SetHeroMoves(const FGolemHeroMoveTuning& InMoves);
+	const FGolemHeroMoveTuning& GetHeroMoves() const { return HeroMoves; }
+
+	/**
+	 * The void an AI-controlled Golem is about to colour. It is the aim point of its heavy attack
+	 * and the only void that attack may colour: an AI never places colour anywhere it was not sent.
+	 * Players are not restricted. Pass nullptr to clear. bOnlyIfPrimed is for follow-ups, which add
+	 * to a window somebody else opened and must never open one themselves.
+	 */
+	void SetColorIntent(UGolemColorVoidComponent* Void, bool bOnlyIfPrimed = false);
+	UGolemColorVoidComponent* GetColorIntent() const;
+
+	/** Power multiplied by the attack's coefficient (DEV_SPEC section 4). */
+	float GetAttackDamage(float PowerScale) const;
+
+	/** Seconds the next dodge is still locked at host time Now. */
+	float GetDodgeCooldownRemaining(double Now) const;
+
+	/** True when one is a party Golem and the other an enemy, and both are alive. */
+	static bool AreHostile(const AActor* First, const AActor* Second);
 	UGolemCombatProfileDefinition* GetProfile() const;
 	FPrimaryAssetId GetProfileId() const;
 	const FGolemCombatSnapshot& GetSnapshot() const;
@@ -100,8 +126,9 @@ public:
 	bool HasOpenComboWindow() const;
 	FGolemResult ResetForCheckpoint();
 	void ClearTransientActions();
+	/** OutPlayRate slows or speeds the wind-up so a charged heavy attack lands after HeavyChargeSeconds. */
 	FGolemResult BeginAttack(FGameplayTag ActionTag, UGolemGameplayAbility* Ability,
-		UAnimMontage*& OutMontage, FName& OutSection);
+		UAnimMontage*& OutMontage, FName& OutSection, float& OutPlayRate);
 	void BufferAttackInput();
 	void EndAttack(UGolemGameplayAbility* Ability);
 	void BeginTraceWindow(FName WindowId, UAnimSequenceBase* Animation);
@@ -111,6 +138,9 @@ public:
 	FGolemResult BeginDefense(FGameplayTag ActionTag);
 	void EndDefense(FGameplayTag ActionTag);
 	FGolemResult BeginDodge();
+
+	/** The next dodge goes this way instead of along the movement input. AI uses it to dodge away from a threat. */
+	void SetNextDodgeDirection(const FVector& Direction);
 	void EndDodge();
 	AActor* FindCombatTarget(float Range = 1200.0f, bool bRequireStagger = false) const;
 	FGolemResult ValidateCombatTarget(AActor* Target, float Range) const;
@@ -158,7 +188,9 @@ private:
 	void HandleLifeTagChanged(const FGameplayTag Tag, int32 Count);
 	void UpdateLockCamera();
 	bool IsAuthorityAlive() const;
-	float GetProjectedDamage(FGameplayTag ActionTag, float AuthoredDamage) const;
+	bool IsColorHitAllowed(const UGolemColorVoidComponent* Void) const;
+	bool PlaceColor(UGolemColorVoidComponent* Void);
+	void FireHeavyProjectile(const FGolemAttackDefinition& Attack, FGameplayTag ActionTag);
 	const FGolemAttackDefinition* GetCurrentAttack() const;
 	UPROPERTY(ReplicatedUsing = OnRep_ProfileId)
 	FPrimaryAssetId ProfileId;
@@ -186,6 +218,13 @@ private:
 	bool bComboWindow = false;
 	bool bBufferedAttack = false;
 	bool bEndingPlay = false;
+	FGolemHeroMoveTuning HeroMoves;
+	TWeakObjectPtr<UGolemColorVoidComponent> ColorIntent;
+	bool bColorIntentOnlyIfPrimed = false;
+	float BaseWalkSpeed = 0.0f;
+	FVector NextDodgeDirection = FVector::ZeroVector;
+	bool bChargeRateActive = false;
+	bool bProjectileFired = false;
 	float DodgeStartedAt = 0.0f;
 	float ParryStartedAt = 0.0f;
 	float LockValidationElapsed = 0.0f;

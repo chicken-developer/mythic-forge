@@ -30,6 +30,24 @@ FGolemResult UGolemHeroDefinition::TrySetArchetype(const FGameplayTag InElementT
 	return FGolemResult::Success();
 }
 
+FGolemResult UGolemHeroDefinition::TrySetCombatData(const FGolemAttributeDefaults& InStats,
+	const FGolemHeroMoveTuning& InMoves)
+{
+	const FGolemResult StatsResult = InStats.Validate();
+	if (!StatsResult.IsSuccess())
+	{
+		return StatsResult;
+	}
+	const FGolemResult MovesResult = InMoves.Validate();
+	if (!MovesResult.IsSuccess())
+	{
+		return MovesResult;
+	}
+	BaseStats = InStats;
+	Moves = InMoves;
+	return FGolemResult::Success();
+}
+
 FLinearColor UGolemHeroDefinition::GetBodyColor() const
 {
 	return BodyColor;
@@ -87,7 +105,8 @@ FGolemResult UGolemHeroDefinition::ValidateHero() const
 		return FGolemResult::Failure(EGolemError::InvalidData, GetDefinitionId(),
 			LOCTEXT("InvalidHeroTuning", "Hero movement, formation and presentation tuning contains invalid values."));
 	}
-	return FGolemResult::Success();
+	const FGolemResult StatsResult = BaseStats.Validate();
+	return StatsResult.IsSuccess() ? Moves.Validate() : StatsResult;
 }
 
 FGolemResult UGolemHeroDefinition::TrySetDefaultAbilitySetId(const FPrimaryAssetId& InAbilitySetId)

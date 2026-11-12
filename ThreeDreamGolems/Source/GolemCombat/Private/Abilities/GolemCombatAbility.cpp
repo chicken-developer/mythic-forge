@@ -24,11 +24,11 @@ UGolemCombatComponent* UGolemCombatAbility::GetCombat() const
 	AActor* Actor = GetAvatarActorFromActorInfo();
 	return IsValid(Actor) ? Actor->FindComponentByClass<UGolemCombatComponent>() : nullptr;
 }
-bool UGolemCombatAbility::StartActionMontage(UAnimMontage* Montage, FName Section)
+bool UGolemCombatAbility::StartActionMontage(UAnimMontage* Montage, FName Section, float PlayRate)
 {
 	UGolemAbilitySystemComponent* ASC = GetGolemAbilitySystem();
-	return ASC != nullptr && IsValid(Montage) &&
-		ASC->PlayMontage(this, CurrentActivationInfo, Montage, 1.0f, Section) > 0.0f;
+	return ASC != nullptr && IsValid(Montage) && FMath::IsFinite(PlayRate) && PlayRate > 0.0f &&
+		ASC->PlayMontage(this, CurrentActivationInfo, Montage, PlayRate, Section) > 0.0f;
 }
 void UGolemCombatAbility::SetActionDuration(float Seconds)
 {

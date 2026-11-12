@@ -5,18 +5,22 @@
 #include "Attributes/GolemAttributeSet.h"
 #include "Components/GolemAbilitySystemComponent.h"
 #include "Components/GolemLifeComponent.h"
+#include "Components/GolemCombatComponent.h"
 #include "Components/SceneComponent.h"
+#include "Components/SphereComponent.h"
 #include "Engine/Engine.h"
 #include "Engine/GameInstance.h"
 #include "Engine/World.h"
 #include "GameFramework/GameModeBase.h"
 #include "GameFramework/WorldSettings.h"
 #include "Misc/AutomationTest.h"
+#include "Projectiles/GolemColorProjectile.h"
 #include "Tags/GolemGameplayTags.h"
 #include "UObject/StrongObjectPtr.h"
 #include "Voids/GolemColorVoidComponent.h"
 #include "Voids/GolemVoidHostComponent.h"
 #include "Xenon/GolemXenon.h"
+#include "Xenon/GolemXenonBrainComponent.h"
 #include "Xenon/GolemXenonDefinition.h"
 
 namespace GolemColorVoidTests
@@ -132,6 +136,34 @@ namespace GolemColorVoidTests
 		Xenon.Host->RegisterComponent();
 		OutResult = Xenon.Host->InitializeHost(Xenon.ASC.Get(), Tuning, Xenon.Slots, Plan, Xenon.Core);
 		return Xenon;
+	}
+
+	/** Stands in for the capsule of a real Xenon: a solid body the size of the grey torso. */
+	USphereComponent* AddBody(AActor* Owner, const float Radius)
+	{
+		USphereComponent* Body = NewObject<USphereComponent>(Owner);
+		Owner->AddInstanceComponent(Body);
+		Body->SetupAttachment(Owner->GetRootComponent());
+		Body->InitSphereRadius(Radius);
+		Body->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+		Body->SetCollisionObjectType(ECC_Pawn);
+		Body->RegisterComponent();
+		return Body;
+	}
+
+	/** Fires one shot along +X from the origin side and flies it until it stops. */
+	AGolemColorProjectile* FireShot(UWorld* World, AActor* Source, const FVector& From, const FGolemProjectileShot& Shot)
+	{
+		AGolemColorProjectile* Projectile = World->SpawnActor<AGolemColorProjectile>(From, FRotator::ZeroRotator);
+		if (Projectile == nullptr || !Projectile->Launch(Source, FVector::ForwardVector, Shot))
+		{
+			return nullptr;
+		}
+		for (int32 Step = 0; Step < 400 && !Projectile->HasFinished(); ++Step)
+		{
+			Projectile->AdvanceBy(0.01f);
+		}
+		return Projectile;
 	}
 
 	UGolemColorVoidComponent* OnlyOpenVoid(const FCombatant& Xenon)
@@ -471,6 +503,255 @@ bool FGolemXenonDefinitionTest::RunTest(const FString& Parameters)
 	TestFalse(TEXT("A hidden void cannot be traced"), Xenon->GetVoidHost()->GetCoreSlot() != nullptr
 		&& Xenon->GetVoidHost()->GetCoreSlot()->IsQueryCollisionEnabled());
 	TestFalse(TEXT("Not restored at spawn"), Xenon->IsRestored());
+	return true;
+}
+
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FGolemVoidSignalTest, "Golem.Color.Rules.SignalLastsSixSecondsOnAnOpenVoid",
+	GolemColorVoidTests::Flags)
+
+bool FGolemVoidSignalTest::RunTest(const FString& Parameters)
+{
+	using namespace GolemColorVoidTests;
+	FTestWorld Context;
+	const FCombatant Golem = SpawnCombatant(Context.World.Get(), true, 100.0f);
+	const FCombatant Owner = SpawnCombatant(Context.World.Get(), false, 100.0f);
+	UGolemColorVoidComponent* Void = AddVoid(Owner.Actor.Get());
+	const FGolemVoidTuning Tuning;
+	TestEqual(TEXT("The marker lasts six seconds by default"), Tuning.SignalSeconds, 6.0f);
+	TestTrue(TEXT("Void configures hidden"), Void->ConfigureVoid(Orange, Tuning, true).IsSuccess());
+	TestFalse(TEXT("A hidden void cannot be signalled"), Void->SignalAt(Golem.Actor.Get(), 10.0));
+	Void->SetRevealed(true);
+	int32 Signals = 0;
+	AActor* SignalledBy = nullptr;
+	Void->OnVoidSignaled.AddLambda([&Signals, &SignalledBy](UGolemColorVoidComponent*, AActor* By)
+	{
+		++Signals;
+		SignalledBy = By;
+	});
+	TestTrue(TEXT("An open void takes a signal"), Void->SignalAt(Golem.Actor.Get(), 10.0));
+	TestEqual(TEXT("The host announces it once"), Signals, 1);
+	TestTrue(TEXT("The signalling Golem is known"), SignalledBy == Golem.Actor.Get());
+	TestTrue(TEXT("Marked just before six seconds"), Void->IsSignaledAt(15.99));
+	TestFalse(TEXT("Gone after six seconds"), Void->IsSignaledAt(16.01));
+	TestEqual(TEXT("Start time replicates for companions"), Void->GetSignalStartServerTime(), 10.0);
+
+	TestEqual(TEXT("Earth primes the orange void"), Void->ApplyElementAt(EGolemElement::Earth, 0.0f, nullptr, 11.0), EGolemVoidHit::Primed);
+	TestTrue(TEXT("Priming keeps the marker"), Void->IsSignaledAt(12.0));
+	TestEqual(TEXT("The marker shows what is still missing"), Void->GetMissingMask(), Yellow);
+	TestEqual(TEXT("Sky fills it"), Void->ApplyElementAt(EGolemElement::Sky, 0.0f, nullptr, 12.0), EGolemVoidHit::Filled);
+	TestFalse(TEXT("A filled void drops its marker"), Void->IsSignaledAt(12.5));
+	TestFalse(TEXT("A filled void cannot be signalled"), Void->SignalAt(Golem.Actor.Get(), 13.0));
+
+	// Aim: the void the view ray touches wins; otherwise the one nearest to the ray, within the cone.
+	const FCombatant Other = SpawnCombatant(Context.World.Get(), false, 100.0f);
+	UGolemColorVoidComponent* Left = AddVoid(Other.Actor.Get());
+	UGolemColorVoidComponent* Right = AddVoid(Other.Actor.Get());
+	Left->ConfigureVoid(Red, Tuning, false);
+	Right->ConfigureVoid(Yellow, Tuning, false);
+	Left->SetWorldLocation(FVector(1000.0, -200.0, 0.0));
+	Right->SetWorldLocation(FVector(1000.0, 200.0, 0.0));
+	UWorld* World = Context.World.Get();
+	TestTrue(TEXT("Looking straight at a void picks it"), UGolemColorVoidComponent::FindAimedVoid(World,
+		FVector::ZeroVector, FVector(1000.0, -200.0, 0.0), 3000.0f, 14.0f) == Left);
+	TestTrue(TEXT("Looking slightly right of centre picks the right one"), UGolemColorVoidComponent::FindAimedVoid(World,
+		FVector::ZeroVector, FVector(1000.0, 60.0, 0.0), 3000.0f, 14.0f) == Right);
+	TestNull(TEXT("Looking away picks nothing"), UGolemColorVoidComponent::FindAimedVoid(World,
+		FVector::ZeroVector, FVector(-1.0, 0.0, 0.0), 3000.0f, 14.0f));
+	TestNull(TEXT("A void beyond the range is not picked"), UGolemColorVoidComponent::FindAimedVoid(World,
+		FVector::ZeroVector, FVector(1000.0, -200.0, 0.0), 500.0f, 14.0f));
+	return true;
+}
+
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FGolemColorProjectileTest, "Golem.Color.Projectile.MustTouchTheVoidItself",
+	GolemColorVoidTests::Flags)
+
+bool FGolemColorProjectileTest::RunTest(const FString& Parameters)
+{
+	using namespace GolemColorVoidTests;
+	FTestWorld Context;
+	UWorld* World = Context.World.Get();
+	FGolemVoidHostTuning Tuning;
+	FGolemResult Init;
+	const FCombatant Shooter = SpawnCombatant(World, true, 100.0f);
+	Shooter.Actor->SetActorLocation(FVector(-1200.0, 0.0, 0.0));
+	// Two slots: the first void faces the shooter, the second sits behind the body.
+	const FCombatant Xenon = SpawnXenon(World, Tuning, { Yellow, Yellow, Yellow }, 2, 300.0f, Init);
+	TestTrue(TEXT("Host initializes"), Init.IsSuccess());
+	AddBody(Xenon.Actor.Get(), 80.0f);
+	Xenon.Slots[0]->SetRelativeLocation(FVector(-100.0, 0.0, 0.0));
+	Xenon.Slots[1]->SetRelativeLocation(FVector(100.0, 0.0, 0.0));
+	UGolemColorVoidComponent* Front = OnlyOpenVoid(Xenon);
+	TestTrue(TEXT("The first void is the front one"), Front == Xenon.Slots[0]);
+
+	FGolemProjectileShot Shot;
+	Shot.Speed = 3000.0f;
+	Shot.Range = 2500.0f;
+	Shot.Radius = 18.0f;
+	Shot.Damage = 25.0f;
+	Shot.bAppliesColor = true;
+	Shot.Element = EGolemElement::Sky;
+	const FVector Muzzle(-1150.0, 0.0, 0.0);
+
+	// 1. An AI shot that was not sent to this void treats it as grey body: no colour, 10% damage.
+	FGolemProjectileShot Undirected = Shot;
+	Undirected.bRestrictColor = true;
+	AGolemColorProjectile* First = FireShot(World, Shooter.Actor.Get(), Muzzle, Undirected);
+	TestNotNull(TEXT("Shot launches"), First);
+	TestEqual(TEXT("An undirected AI shot places no colour"), Front->GetVoidState(), EGolemVoidState::Open);
+	TestEqual(TEXT("It still counts as a body hit at 10%"), Xenon.Attributes->GetHealth(), 297.5f);
+
+	// 2. A follow-up shot may not open a void.
+	FGolemProjectileShot FollowUp = Shot;
+	FollowUp.bRestrictColor = true;
+	FollowUp.OnlyVoid = Front;
+	FollowUp.bOnlyIfPrimed = true;
+	FireShot(World, Shooter.Actor.Get(), Muzzle, FollowUp);
+	TestEqual(TEXT("A follow-up shot never opens a void"), Front->GetVoidState(), EGolemVoidState::Open);
+
+	// 3. A player shot that touches the void places its colour and deals no direct damage.
+	const float HealthBefore = Xenon.Attributes->GetHealth();
+	AGolemColorProjectile* Hit = FireShot(World, Shooter.Actor.Get(), Muzzle, Shot);
+	TestTrue(TEXT("The shot stops at the void"), Hit != nullptr && Hit->HasFinished() && Hit->GetDistanceFlown() < 1200.0f);
+	TestEqual(TEXT("A single-colour void is filled by the first correct shot"), Xenon.Host->GetFilledCount(), 1);
+	TestEqual(TEXT("The fill, not the shot, removes health: one third"), Xenon.Attributes->GetHealth(), HealthBefore - 100.0f);
+
+	// 4. After the stagger the next void is at the back; a shot from the front reaches the body first.
+	Xenon.Host->AdvanceTo(World->GetTimeSeconds() + Tuning.StaggerSeconds + 0.1);
+	UGolemColorVoidComponent* Back = OnlyOpenVoid(Xenon);
+	TestTrue(TEXT("The next void opens on the other slot"), Back == Xenon.Slots[1]);
+	const float BeforeBody = Xenon.Attributes->GetHealth();
+	FireShot(World, Shooter.Actor.Get(), Muzzle, Shot);
+	TestEqual(TEXT("The void behind the body takes no colour from the front"), Back != nullptr ? Back->GetVoidState() : EGolemVoidState::Hidden,
+		EGolemVoidState::Open);
+	TestEqual(TEXT("The body takes 10% of the shot"), Xenon.Attributes->GetHealth(), BeforeBody - 2.5f);
+	TestTrue(TEXT("The line of fire reports the body, not the void"), AGolemColorProjectile::FindFirstStop(World,
+		Shooter.Actor.Get(), Muzzle, Back->GetComponentLocation(), Shot.Radius) != Back);
+	TestTrue(TEXT("From behind the same void is the first thing in the way"), AGolemColorProjectile::FindFirstStop(World,
+		Shooter.Actor.Get(), FVector(1200.0, 0.0, 0.0), Back->GetComponentLocation(), Shot.Radius) == Back);
+
+	// 5. A shot that touches nothing fades after its range: 25 m.
+	AGolemColorProjectile* Miss = FireShot(World, Shooter.Actor.Get(), FVector(-1150.0, 2000.0, 0.0), Shot);
+	TestTrue(TEXT("A miss ends"), Miss != nullptr && Miss->HasFinished());
+	TestEqual(TEXT("It flew exactly its range"), Miss != nullptr ? Miss->GetDistanceFlown() : 0.0f, 2500.0f);
+
+	// 6. Shots pass through teammates.
+	const FCombatant Friend = SpawnCombatant(World, true, 100.0f);
+	Friend.Actor->SetActorLocation(FVector(-600.0, 3000.0, 0.0));
+	AddBody(Friend.Actor.Get(), 40.0f);
+	AGolemColorProjectile* Through = FireShot(World, Shooter.Actor.Get(), FVector(-1150.0, 3000.0, 0.0), Shot);
+	TestEqual(TEXT("A teammate does not stop the shot"), Through != nullptr ? Through->GetDistanceFlown() : 0.0f, 2500.0f);
+	TestEqual(TEXT("A teammate takes no damage"), Friend.Attributes->GetHealth(), 100.0f);
+	TestTrue(TEXT("Party and enemy are hostile"), UGolemCombatComponent::AreHostile(Shooter.Actor.Get(), Xenon.Actor.Get()));
+	TestFalse(TEXT("Two party Golems are not"), UGolemCombatComponent::AreHostile(Shooter.Actor.Get(), Friend.Actor.Get()));
+	return true;
+}
+
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FGolemXenonBrainTest, "Golem.Color.Xenon.ShowsEveryAttackBeforeItLands",
+	GolemColorVoidTests::Flags)
+
+bool FGolemXenonBrainTest::RunTest(const FString& Parameters)
+{
+	using namespace GolemColorVoidTests;
+	FGolemXenonMove Fast;
+	Fast.TelegraphSeconds = 0.5f;
+	TestFalse(TEXT("An attack shown for less than 0.6 s is rejected"), Fast.Validate().IsSuccess());
+	FGolemXenonMove Short;
+	Short.Range = Short.StartRange - 10.0f;
+	TestFalse(TEXT("An attack must reach at least as far as where it starts"), Short.Validate().IsSuccess());
+
+	UGolemXenonDefinition* Grunt = NewObject<UGolemXenonDefinition>(GetTransientPackage());
+	Grunt->TrySetIdentity(TEXT("BrainGrunt"), TEXT("GolemXenon"));
+	FGolemVoidHostTuning Voids;
+	TArray<FGolemXenonVoidSlot> Slots;
+	Slots.SetNum(2);
+	TestTrue(TEXT("Grunt numbers accepted"), Grunt->TrySetXenon(300.0f, 20.0f, 2.5f, Voids, Slots, 0.0f, true).IsSuccess());
+	FGolemXenonBehavior Behavior;
+	FGolemXenonMove& Sweep = Behavior.Moves.AddDefaulted_GetRef();
+	Sweep.StartRange = 290.0f;
+	Sweep.TelegraphSeconds = 1.0f;
+	Sweep.RecoverSeconds = 1.4f;
+	Sweep.Range = 340.0f;
+	Sweep.HalfAngleDegrees = 80.0f;
+	TestTrue(TEXT("Behaviour accepted"), Grunt->TrySetBehavior(Behavior).IsSuccess());
+
+	FTestWorld Context;
+	UWorld* World = Context.World.Get();
+	AGolemXenon* Xenon = World->SpawnActor<AGolemXenon>(FVector::ZeroVector, FRotator::ZeroRotator);
+	if (Xenon == nullptr || !Xenon->InitializeXenon(Grunt, 5).IsSuccess())
+	{
+		AddError(TEXT("Xenon did not initialize."));
+		return false;
+	}
+	UGolemXenonBrainComponent* Brain = Xenon->GetBrain();
+	Brain->Step(0.1f, 1.0);
+	TestEqual(TEXT("With nobody around the Xenon idles"), Brain->GetAction(), EGolemXenonAction::Idle);
+
+	// Front, side and behind; all inside the reach of the sweep. The Xenon faces +X.
+	const FCombatant Front = SpawnCombatant(World, true, 140.0f);
+	const FCombatant Side = SpawnCombatant(World, true, 90.0f);
+	const FCombatant Behind = SpawnCombatant(World, true, 80.0f);
+	Front.Actor->SetActorLocation(FVector(250.0, 0.0, 0.0));
+	Side.Actor->SetActorLocation(FVector(100.0, 300.0, 0.0));
+	Behind.Actor->SetActorLocation(FVector(-300.0, 0.0, 0.0));
+
+	Brain->Step(0.1f, 2.0);
+	TestEqual(TEXT("A Golem in front and in range starts the attack warning"), Brain->GetAction(), EGolemXenonAction::Telegraph);
+	TestTrue(TEXT("The nearest Golem is the target"), Brain->GetTarget() == Front.Actor.Get());
+	TestEqual(TEXT("The warning lasts the move's telegraph time"), Brain->GetActionEndServerTime(), 3.0);
+	TestTrue(TEXT("The Golem in front stands in the shown zone"), Brain->IsThreatening(Front.Actor->GetActorLocation()));
+	TestTrue(TEXT("Companions can ask which Xenon threatens a spot"),
+		UGolemXenonBrainComponent::FindThreat(World, Front.Actor->GetActorLocation()) == Xenon);
+	TestFalse(TEXT("The Golem behind is outside the zone"), Brain->IsThreatening(Behind.Actor->GetActorLocation()));
+	Brain->Step(0.1f, 2.95);
+	TestEqual(TEXT("No damage before the warning ends"), Front.Attributes->GetHealth(), 140.0f);
+	TestEqual(TEXT("Still warning"), Brain->GetAction(), EGolemXenonAction::Telegraph);
+
+	// The side Golem steps out during the warning; the front one stays.
+	Side.Actor->SetActorLocation(FVector(100.0, 600.0, 0.0));
+	Brain->Step(0.1f, 3.0);
+	TestEqual(TEXT("The hit lands when the warning ends: 20 damage"), Front.Attributes->GetHealth(), 120.0f);
+	TestEqual(TEXT("A Golem that stepped out is not hit"), Side.Attributes->GetHealth(), 90.0f);
+	TestEqual(TEXT("A Golem behind the Xenon is not hit"), Behind.Attributes->GetHealth(), 80.0f);
+	TestEqual(TEXT("One strike so far"), Brain->GetStrikeCount(), 1);
+	TestEqual(TEXT("Then it recovers"), Brain->GetAction(), EGolemXenonAction::Recover);
+	Brain->Step(0.1f, 4.3);
+	TestEqual(TEXT("It stands still for the recovery time"), Brain->GetAction(), EGolemXenonAction::Recover);
+	Brain->Step(0.1f, 4.4);
+	TestEqual(TEXT("And then shows the next attack"), Brain->GetAction(), EGolemXenonAction::Telegraph);
+
+	// A fill during the warning stuns the Xenon and cancels the attack.
+	UGolemColorVoidComponent* Open = Xenon->GetVoidHost()->GetOpenVoids().Num() == 1 ? Xenon->GetVoidHost()->GetOpenVoids()[0] : nullptr;
+	if (Open == nullptr)
+	{
+		AddError(TEXT("Grunt has no open void."));
+		return false;
+	}
+	for (const EGolemElement Element : { EGolemElement::Earth, EGolemElement::Sky, EGolemElement::Sea })
+	{
+		if ((Open->GetMissingMask() & GolemElements::Mask(Element)) != 0)
+		{
+			Open->ApplyElementAt(Element, 0.0f, Front.Actor.Get(), 4.5);
+		}
+	}
+	TestEqual(TEXT("The void is filled"), Xenon->GetVoidHost()->GetFilledCount(), 1);
+	Brain->Step(0.1f, 5.5);
+	TestEqual(TEXT("A fill stuns the Xenon"), Brain->GetAction(), EGolemXenonAction::Staggered);
+	TestEqual(TEXT("The cancelled attack never lands"), Front.Attributes->GetHealth(), 120.0f);
+	TestEqual(TEXT("Still one strike"), Brain->GetStrikeCount(), 1);
+	TestFalse(TEXT("A stunned Xenon threatens nothing"), Brain->IsThreatening(Front.Actor->GetActorLocation()));
+
+	// A switched-off brain idles; a restored Xenon stops for good.
+	Xenon->GetVoidHost()->AdvanceTo(World->GetTimeSeconds() + Voids.StaggerSeconds + 0.1);
+	Brain->SetBrainEnabled(false);
+	Brain->Step(0.1f, 20.0);
+	TestEqual(TEXT("A disabled brain idles"), Brain->GetAction(), EGolemXenonAction::Idle);
+	Brain->SetBrainEnabled(true);
+	UGolemAbilitySystemComponent::ApplyCombatDamage(Front.Actor.Get(), Xenon, 100000.0f, 0.0f, true);
+	TestTrue(TEXT("Enough body damage restores the Xenon"), Xenon->IsRestored());
+	Brain->Step(0.1f, 30.0);
+	TestEqual(TEXT("A restored Xenon no longer fights"), Brain->GetAction(), EGolemXenonAction::Restored);
+	Brain->Step(0.1f, 40.0);
+	TestEqual(TEXT("And it never hits again"), Brain->GetStrikeCount(), 1);
 	return true;
 }
 

@@ -276,6 +276,22 @@ void AGolemPartyArenaHUD::DrawHUD()
 	DrawLine(FText::Format(NSLOCTEXT("GolemArena", "PartyStatus", "{0} | alive {1}, downed {2} | {3}"),
 		PartyFeedback, FText::AsNumber(DisplayedArena.AliveGolems), FText::AsNumber(DisplayedArena.DownedGolems),
 		LifeFeedback));
+	const FText Objective = GetObjectiveText();
+	DrawLine(Objective, IsDisplayingArenaDefeat() ? FLinearColor::Red : FLinearColor::Green);
+	DrawLine(GetCombatHelp());
+	DrawLine(GetPartyHelp());
+	DrawLine(GetRecoveryHelp());
+	DrawLine(CommandFeedback, FLinearColor(0.0f, 1.0f, 1.0f));
+	DrawLine(FText::FromString(AIDebugFeedback), FLinearColor(0.6f, 0.8f, 1.0f));
+}
+
+const FGolemPartyArenaSnapshot& AGolemPartyArenaHUD::GetDisplayedArenaSnapshot() const
+{
+	return DisplayedArena;
+}
+
+FText AGolemPartyArenaHUD::GetObjectiveText() const
+{
 	FText Objective;
 	switch (DisplayedArena.Stage)
 	{
@@ -299,17 +315,7 @@ void AGolemPartyArenaHUD::DrawHUD()
 			: NSLOCTEXT("GolemArena", "Defeat", "PARTY DEFEATED: no living Golem can revive the party. R / Y: host retry.");
 		break;
 	}
-	DrawLine(Objective, IsDisplayingArenaDefeat() ? FLinearColor::Red : FLinearColor::Green);
-	DrawLine(GetCombatHelp());
-	DrawLine(GetPartyHelp());
-	DrawLine(GetRecoveryHelp());
-	DrawLine(CommandFeedback, FLinearColor(0.0f, 1.0f, 1.0f));
-	DrawLine(FText::FromString(AIDebugFeedback), FLinearColor(0.6f, 0.8f, 1.0f));
-}
-
-const FGolemPartyArenaSnapshot& AGolemPartyArenaHUD::GetDisplayedArenaSnapshot() const
-{
-	return DisplayedArena;
+	return Objective;
 }
 
 FText AGolemPartyArenaHUD::GetArenaTitle() const

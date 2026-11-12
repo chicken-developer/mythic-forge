@@ -20,8 +20,9 @@ struct GOLEMCOMBAT_API FGolemAttackDefinition
 	TSoftObjectPtr<UAnimMontage> Montage;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Combat|Attack")
 	FName SectionName;
+	/** Damage as a multiple of the attacker's Power: 1.0 for a light hit, 2.5 for a heavy one. */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Combat|Attack")
-	float Damage = 20.0f;
+	float PowerScale = 1.0f;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Combat|Attack")
 	float PoiseDamage = 20.0f;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Combat|Attack")
@@ -50,13 +51,45 @@ struct GOLEMCOMBAT_API FGolemCombatTuning
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Combat|Defense")
 	float DodgeDuration = 0.65f;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Combat|Defense")
-	float DodgeInvulnerabilityStart = 0.08f;
+	float DodgeInvulnerabilityStart = 0.05f;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Combat|Defense")
-	float DodgeInvulnerabilityEnd = 0.42f;
+	float DodgeInvulnerabilityEnd = 0.4f;
+	/** Seconds before the next dodge at Agility 100; higher Agility shortens it in proportion. */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Combat|Defense")
+	float DodgeCooldownSeconds = 1.5f;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Combat|Defense")
 	float DodgeSpeed = 600.0f;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Combat|Targeting")
 	float LockRange = 1200.0f;
+
+	FGolemResult Validate() const;
+};
+
+/**
+ * What differs between the three Golems inside the shared move set (DEV_SPEC section 4): how long
+ * the heavy attack winds up, and whether it is a swing or a straight projectile.
+ */
+USTRUCT(BlueprintType)
+struct GOLEMCOMBAT_API FGolemHeroMoveTuning
+{
+	GENERATED_BODY()
+
+	/** Seconds from the button press to the moment the heavy attack lands or fires; 0 keeps the animation's own timing. */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Combat|Heavy", meta = (ClampMin = "0.0", Units = "s"))
+	float HeavyChargeSeconds = 0.0f;
+
+	/** Bow and staff: the heavy attack is a projectile that must touch the void itself. */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Combat|Heavy")
+	bool bHeavyIsProjectile = false;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Combat|Heavy", meta = (ClampMin = "100.0", Units = "cm"))
+	float ProjectileRange = 2500.0f;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Combat|Heavy", meta = (ClampMin = "100.0", Units = "cm/s"))
+	float ProjectileSpeed = 3000.0f;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Combat|Heavy", meta = (ClampMin = "1.0", Units = "cm"))
+	float ProjectileRadius = 18.0f;
 
 	FGolemResult Validate() const;
 };

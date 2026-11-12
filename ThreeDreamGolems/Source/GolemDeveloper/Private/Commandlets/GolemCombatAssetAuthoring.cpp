@@ -920,6 +920,11 @@ namespace GolemCombatAssetAuthoring
 			{
 				return false;
 			}
+			Profile->SetDisplayName(NSLOCTEXT("GolemCombatAuthoring", "FoundationProfile", "Foundation hammer combat"));
+		}
+		{
+			// Design numbers (DEV_SPEC section 4) are reapplied on every run: a changed draft is a rerun.
+			// Light hits deal 1.0 x Power and never place colour; the heavy hit deals 2.5 x Power and does.
 			TArray<FGolemAttackDefinition> Attacks;
 			for (const FName Section : { FName(TEXT("LightA")), FName(TEXT("LightB")), FName(TEXT("LightC")) })
 			{
@@ -927,23 +932,27 @@ namespace GolemCombatAssetAuthoring
 				Attack.ActionTag = GolemGameplayTags::Ability_Combat_Primary;
 				Attack.Montage = Light;
 				Attack.SectionName = Section;
+				Attack.PowerScale = 1.0f;
 			}
 			FGolemAttackDefinition& HeavyAttack = Attacks.AddDefaulted_GetRef();
 			HeavyAttack.ActionTag = GolemGameplayTags::Ability_Combat_Heavy;
 			HeavyAttack.Montage = Heavy;
 			HeavyAttack.SectionName = TEXT("Heavy");
-			HeavyAttack.Damage = 30.0f;
+			HeavyAttack.PowerScale = 2.5f;
 			HeavyAttack.PoiseDamage = 50.0f;
 			HeavyAttack.bAppliesColor = true;
 			FGolemCombatTuning Tuning;
 			Tuning.StaggerDuration = 5.0f;
+			// Dodge: 0.35 s without damage, 1.5 s recovery at Agility 100.
+			Tuning.DodgeInvulnerabilityStart = 0.05f;
+			Tuning.DodgeInvulnerabilityEnd = 0.4f;
+			Tuning.DodgeCooldownSeconds = 1.5f;
 			if (!Profile->TrySetAttacks(Attacks).IsSuccess()
 				|| !Profile->TrySetActionMontages(Dodge, Stagger, Traversal, Finisher, Victim).IsSuccess()
 				|| !Profile->TrySetTuning(Tuning).IsSuccess())
 			{
 				return false;
 			}
-			Profile->SetDisplayName(NSLOCTEXT("GolemCombatAuthoring", "FoundationProfile", "Foundation hammer combat"));
 		}
 		const FGolemResult Validation = Profile->ValidateCombatProfile();
 		if (!Validation.IsSuccess())

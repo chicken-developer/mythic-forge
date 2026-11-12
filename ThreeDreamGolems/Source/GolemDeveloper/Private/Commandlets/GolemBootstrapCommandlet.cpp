@@ -303,6 +303,20 @@ namespace GolemBootstrap
 			GolemGameplayTags::Element_Sea };
 		const TArray<FGameplayTag> HeroClasses = { GolemGameplayTags::Class_Warrior, GolemGameplayTags::Class_Hunter,
 			GolemGameplayTags::Class_Mage };
+		// Mars 140/12/90/0, Jupiter 90/10/110/0, Neptune 80/9/100/0.5; heavy charge 0.8 s, Mars 1.0 s.
+		TArray<FGolemAttributeDefaults> HeroStats;
+		HeroStats.SetNum(3);
+		HeroStats[0].MaxHealth = 140.0f; HeroStats[0].Power = 12.0f; HeroStats[0].Agility = 90.0f; HeroStats[0].ColorHold = 0.0f;
+		HeroStats[1].MaxHealth = 90.0f; HeroStats[1].Power = 10.0f; HeroStats[1].Agility = 110.0f; HeroStats[1].ColorHold = 0.0f;
+		HeroStats[2].MaxHealth = 80.0f; HeroStats[2].Power = 9.0f; HeroStats[2].Agility = 100.0f; HeroStats[2].ColorHold = 0.5f;
+		TArray<FGolemHeroMoveTuning> HeroMoves;
+		HeroMoves.SetNum(3);
+		HeroMoves[0].HeavyChargeSeconds = 1.0f;
+		HeroMoves[1].HeavyChargeSeconds = 0.8f;
+		HeroMoves[2].HeavyChargeSeconds = 0.8f;
+		// Bow and staff shoot straight for 25 m; the hammer swings.
+		HeroMoves[1].bHeavyIsProjectile = true;
+		HeroMoves[2].bHeavyIsProjectile = true;
 		const TArray<FLinearColor> HeroColors =
 		{
 			FLinearColor(0.9f, 0.1f, 0.08f), FLinearColor(0.95f, 0.8f, 0.1f), FLinearColor(0.08f, 0.25f, 0.95f)
@@ -339,6 +353,12 @@ namespace GolemBootstrap
 					return false;
 				}
 				Hero->SetDisplayName(HeroDisplayNames[Index]);
+			}
+			// Design numbers (DEV_SPEC section 4) are reapplied on every run: a changed draft is a rerun.
+			if (!Hero->TrySetCombatData(HeroStats[Index], HeroMoves[Index]).IsSuccess())
+			{
+				UE_LOG(LogGolemBootstrap, Error, TEXT("Hero combat data rejected: %s."), *HeroNames[Index].ToString());
+				return false;
 			}
 			const FPrimaryAssetId ExpectedId(TEXT("GolemHero"), HeroNames[Index]);
 			if (Hero->GetPrimaryAssetId() != ExpectedId || !Hero->ValidateHero().IsSuccess()
@@ -708,11 +728,12 @@ namespace GolemBootstrap
 			float ContactDamage;
 			int32 VoidsToFill;
 			bool bFirstVoidBasic;
+			bool bShield;
 		};
 		const FXenonSeed Seeds[] =
 		{
-			{ TEXT("Grunt"), NSLOCTEXT("GolemXenon", "Grunt", "Grunt"), 300.0f, 20.0f, 3, true },
-			{ TEXT("Shield"), NSLOCTEXT("GolemXenon", "Shield", "Shield"), 400.0f, 25.0f, 4, false }
+			{ TEXT("Grunt"), NSLOCTEXT("GolemXenon", "Grunt", "Grunt"), 300.0f, 20.0f, 3, true, false },
+			{ TEXT("Shield"), NSLOCTEXT("GolemXenon", "Shield", "Shield"), 400.0f, 25.0f, 4, false, true }
 		};
 		for (const FXenonSeed& Seed : Seeds)
 		{
@@ -725,22 +746,60 @@ namespace GolemBootstrap
 			}
 			if (bCreated)
 			{
-				FGolemVoidHostTuning Voids;
-				Voids.VoidsToFill = Seed.VoidsToFill;
-				Voids.MaxOpenVoids = 1;
-				// Front and back, so consecutive voids alternate sides: the Shield's shield, then its back.
-				TArray<FGolemXenonVoidSlot> Slots;
-				Slots.SetNum(2);
-				Slots[0].Offset = FVector(40.0, 0.0, 25.0);
-				Slots[1].Offset = FVector(-40.0, 0.0, 25.0);
-				if (!Xenon->TrySetIdentity(FName(Seed.Name), TEXT("GolemXenon"))
-					|| !Xenon->TrySetXenon(Seed.MaxHealth, Seed.ContactDamage, 2.5f, Voids, Slots, 0.3f,
-						Seed.bFirstVoidBasic).IsSuccess())
+				if (!Xenon->TrySetIdentity(FName(Seed.Name), TEXT("GolemXenon")))
 				{
 					UE_LOG(LogGolemBootstrap, Error, TEXT("Xenon definition authoring failed: %s."), *PackageName);
 					return false;
 				}
 				Xenon->SetDisplayName(Seed.DisplayName);
+			}
+			{
+				// Design numbers (DEV_SPEC sections 5 and 6) are reapplied on every run: a changed draft is a rerun.
+				FGolemVoidHostTuning Voids;
+				Voids.VoidsToFill = Seed.VoidsToFill;
+				Voids.MaxOpenVoids = 1;
+				// Front and back, so consecutive voids alternate sides: the Shield's shield, then its back.
+				// Local centimetres before the 2.5 body scale: 105 cm out from the centre and about
+				// 135 cm above the floor, where a hammer swing and a level shot both reach.
+				TArray<FGolemXenonVoidSlot> Slots;
+				Slots.SetNum(2);
+				Slots[0].Offset = FVector(42.0, 0.0, -36.0);
+				Slots[0].Radius = 22.0f;
+				Slots[1].Offset = FVector(-42.0, 0.0, -36.0);
+				Slots[1].Radius = 22.0f;
+				// Grunt: a slow, wide sweep. Shield: a narrow shove that throws Golems back, and a slow turn
+				// so its back can be reached. Every attack is shown first; 0.6 s is the minimum the design allows.
+				FGolemXenonBehavior Behavior;
+				FGolemXenonMove& Move = Behavior.Moves.AddDefaulted_GetRef();
+				if (Seed.bShield)
+				{
+					Behavior.MoveSpeed = 170.0f;
+					Behavior.TurnRateDegrees = 70.0f;
+					Move.MoveId = TEXT("ShieldShove");
+					Move.StartRange = 260.0f;
+					Move.TelegraphSeconds = 0.8f;
+					Move.RecoverSeconds = 1.2f;
+					Move.Range = 300.0f;
+					Move.HalfAngleDegrees = 40.0f;
+					Move.Knockback = 900.0f;
+				}
+				else
+				{
+					Behavior.MoveSpeed = 200.0f;
+					Behavior.TurnRateDegrees = 110.0f;
+					Move.MoveId = TEXT("GruntSweep");
+					Move.StartRange = 290.0f;
+					Move.TelegraphSeconds = 1.0f;
+					Move.RecoverSeconds = 1.4f;
+					Move.Range = 340.0f;
+					Move.HalfAngleDegrees = 80.0f;
+				}
+				if (!Xenon->TrySetXenon(Seed.MaxHealth, Seed.ContactDamage, 2.5f, Voids, Slots, 0.3f,
+						Seed.bFirstVoidBasic).IsSuccess() || !Xenon->TrySetBehavior(Behavior).IsSuccess())
+				{
+					UE_LOG(LogGolemBootstrap, Error, TEXT("Xenon definition authoring failed: %s."), *PackageName);
+					return false;
+				}
 			}
 			if (Xenon->GetPrimaryAssetId() != FPrimaryAssetId(TEXT("GolemXenon"), FName(Seed.Name))
 				|| !Xenon->ValidateXenon().IsSuccess()

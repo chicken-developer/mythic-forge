@@ -72,7 +72,7 @@ Giữ nguyên: lõi combat, AI đồng đội, gục và hồi sinh, khung boss 
 
 **Đạt khi:** 5 nhóm ba người chơi 15 phút. Ít nhất 4 nhóm tự hiểu luật trong 5 phút đầu mà không cần giải thích, và ít nhất 4 nhóm muốn chơi tiếp.
 
-**Tiến độ ngày 2026-11-13** (nhánh `feature/r1-disable-legacy`, 48 test PASS):
+**Tiến độ ngày 2026-11-13** (nhánh `feature/r1-disable-legacy`, 55 test PASS, lượt `M0b-test-2`):
 
 | Việc | Trạng thái |
 |---|---|
@@ -80,19 +80,28 @@ Giữ nguyên: lõi combat, AI đồng đội, gục và hồi sinh, khung boss 
 | `UGolemColorVoidComponent`: 5 trạng thái, luật chuyển, replicate | Xong, 5 test luật |
 | Thân xám 10%, lấp lần lượt theo `VoidsToFill`/`MaxOpenVoids`, trừ máu theo phần, choáng, `Restored`, lõi trắng | Xong, 3 test |
 | `AGolemXenon` và `UGolemXenonDefinition`; màu khoảng trống sinh từ seed | Xong, có test |
-| Đòn nặng có cờ `bAppliesColor` đặt màu của Golem lên khoảng trống | Xong ở đường đánh cận chiến; chưa có test vung đòn thật trong PIE |
-| Hai Xenon Lính và Khiên bằng khối xám, đứng yên | Có dữ liệu và actor; **chưa có AI và đòn đánh** |
-| Sân `L_M0_ColorArena` với ba Golem và hai Xenon | Xong, là map mặc định; mới kiểm bằng khởi động không giao diện |
-| Đòn nặng tầm xa của Jupiter và Neptune | Chưa làm |
-| Bộ động tác theo thiết kế (hệ số theo `Power`, lấy đà, hồi né theo `Agility`, động tác class) | Chưa làm; đang dùng combat profile cũ |
-| Chỉ số riêng của từng Golem (140/90/80 máu...) | Chưa làm; ba Golem đang dùng chỉ số mặc định |
-| Nút ra hiệu và dấu hiệu trên khoảng trống | Chưa làm |
-| AI đồng đội đáp dấu ra hiệu và tự bồi màu | Chưa làm |
-| Chỉ báo khoảng trống trong 3D (ký hiệu nguyên tố, vòng đếm giờ) | Mới có quả cầu đổi màu theo trạng thái |
-| Chơi 3 người qua listen server | Chưa kiểm |
+| Chỉ số riêng của từng Golem (140/12/90/0, 90/10/110/0, 80/9/100/0,5) | Xong, nằm trong hero definition; `Agility` nhân vào tốc độ đi và thời gian hồi né |
+| Đòn nhẹ 1,0 × `Power`, đòn nặng 2,5 × `Power` | Xong (`PowerScale` trong combat profile) |
+| Lấy đà đòn nặng 0,8 giây, Mars 1,0 giây | Xong: phần lấy đà của animation được kéo cho đúng số giây, phần vung giữ tốc độ gốc. Đo trong phiên chơi thật: Mars bắt đầu vung sau khoảng 1,0 giây, búa chạm khoảng trống sau khoảng 1,65 giây |
+| Né: miễn sát thương 0,35 giây, hồi 1,5 giây ở `Agility` 100 | Xong, số nằm trong combat profile |
+| Đòn nặng cận chiến của Mars đặt màu | Xong, đã kiểm bằng cú vung thật trong PIE |
+| Đòn nặng tầm xa của Jupiter và Neptune: đạn bay thẳng 25 m, phải chạm đúng khoảng trống | Xong (`AGolemColorProjectile`), có test: thân che khoảng trống phía sau, đạn xuyên qua đồng đội, hết tầm thì tắt |
+| Nút ra hiệu (X hoặc D-pad Up) và dấu hiệu 6 giây trên khoảng trống | Xong, có test; nhắm rộng tay: lấy khoảng trống gần tâm màn hình nhất |
+| AI đồng đội: đáp dấu ra hiệu sau 0,5–1,0 giây, bồi vào khoảng trống `Primed` sau 1,5 giây, không sai màu, không tự mở đầu | Xong, 3 test luật và một phiên chơi thật |
+| AI đồng đội né đòn có vệt báo trước | Có, chưa có test riêng |
+| Chỉ báo khoảng trống: ký hiệu nguyên tố còn thiếu, vòng đếm giờ, dấu ra hiệu, mũi tên ở mép màn hình | Xong ở dạng vẽ trên HUD đúng vị trí khoảng trống (`AGolemColorArenaHUD`), chưa phải widget gắn trong thế giới 3D. Ký hiệu tạm: `^` Earth, `O` Sky, `~` Sea |
+| Hai Xenon Lính và Khiên: đuổi theo Golem gần nhất, báo trước vùng đánh rồi mới ra đòn | Xong (`UGolemXenonBrainComponent`), có test. Lính quét rộng 20 sát thương, báo trước 1,0 giây; Khiên đẩy lùi 25 sát thương, báo trước 0,8 giây, quay chậm để vòng ra lưng được. Xenon đi thẳng tới mục tiêu, chưa tìm đường vòng qua vật cản |
+| Sân `L_M0_ColorArena` với ba Golem và hai Xenon | Xong, là map mặc định |
+| Động tác class (đỡ 80% của Warrior, lộn lùi bắn của Hunter, lá chắn của Mage) | **Chưa làm.** Cả ba Golem vẫn dùng đỡ và parry của combat profile cũ |
+| Bỏ parry, finisher, traversal, khoá mục tiêu, poise khỏi bộ động tác | **Chưa làm.** Chúng không thuộc thiết kế mới nhưng còn nhiều test cũ bám vào |
+| Chơi 3 người qua listen server | **Chưa kiểm.** Mọi trạng thái mới đều replicate, nhưng mới chạy trên host |
 | Playtest 5 nhóm | Chưa làm, cần người chơi thật |
 
+Phiên chơi thật trong test `Golem.Color.Arena.Playthrough` chạy trên map M0 và kiểm theo thứ tự: Mars vung đòn nặng thật vào khoảng trống cam; Jupiter (AI) tự bắn bồi màu trong cửa sổ 4 giây; khoảng trống xanh dương kế tiếp để yên 3 giây thì không AI nào đụng vào; người chơi ra hiệu thì Neptune (AI) vòng ra bắn; cuối cùng Khiên báo trước rồi đẩy lùi Mars. Test tự chọn màu của khoảng trống và chỗ đứng ban đầu; phần còn lại là game tự chạy.
+
 Ba điểm thiết kế còn mở được xử lý tạm như sau, đều là dữ liệu hoặc một nhánh code dễ đổi: đòn đặt màu không gây sát thương riêng (chỉ lần lấp mới trừ máu); Golem đang nghỉ chưa được tính vì luật gục của đêm thuộc M1; tinh anh chưa làm.
+
+Số thiết kế nằm trong asset và được Bootstrap ghi lại mỗi lần chạy: đổi bản nháp thì sửa số trong `GolemBootstrapCommandlet.cpp` hoặc `GolemCombatAssetAuthoring.cpp` rồi chạy `-Action Bootstrap -Milestone 10`.
 
 
 ## M1. Core loop

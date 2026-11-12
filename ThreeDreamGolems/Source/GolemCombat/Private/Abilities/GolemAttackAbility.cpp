@@ -19,11 +19,12 @@ void UGolemAttackAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handl
 	UGolemCombatComponent* Combat = GetCombat();
 	UAnimMontage* Montage = nullptr;
 	FName Section;
-	const FGolemResult Result = Combat != nullptr ? Combat->BeginAttack(ActionTag, this, Montage, Section)
+	float PlayRate = 1.0f;
+	const FGolemResult Result = Combat != nullptr ? Combat->BeginAttack(ActionTag, this, Montage, Section, PlayRate)
 		: FGolemResult::Failure(EGolemError::InvalidState, TEXT("CombatNotConfigured"),
 			NSLOCTEXT("GolemCombat", "CombatNotConfigured", "Combat is not available in this area."));
 	if (!Result.IsSuccess() || !CommitAbility(Handle, ActorInfo, ActivationInfo) ||
-		!StartActionMontage(Montage, Section))
+		!StartActionMontage(Montage, Section, PlayRate))
 	{
 		ReportResult(Result.IsSuccess() ? FGolemResult::Failure(EGolemError::InvalidState, TEXT("AttackMontage"),
 			NSLOCTEXT("GolemCombat", "AttackAnimationUnavailable", "The attack animation could not start.")) : Result);

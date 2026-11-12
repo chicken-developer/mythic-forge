@@ -13,6 +13,7 @@
 #include "UObject/ConstructorHelpers.h"
 #include "Voids/GolemColorVoidComponent.h"
 #include "Voids/GolemVoidHostComponent.h"
+#include "Xenon/GolemXenonBrainComponent.h"
 #include "Xenon/GolemXenonDefinition.h"
 
 namespace
@@ -34,6 +35,7 @@ AGolemXenon::AGolemXenon()
 	Attributes = CreateDefaultSubobject<UGolemAttributeSet>(TEXT("Attributes"));
 	Life = CreateDefaultSubobject<UGolemLifeComponent>(TEXT("Life"));
 	VoidHost = CreateDefaultSubobject<UGolemVoidHostComponent>(TEXT("VoidHost"));
+	Brain = CreateDefaultSubobject<UGolemXenonBrainComponent>(TEXT("Brain"));
 
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> CylinderMesh(TEXT("/Engine/BasicShapes/Cylinder.Cylinder"));
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> SphereMesh(TEXT("/Engine/BasicShapes/Sphere.Sphere"));
@@ -46,6 +48,15 @@ AGolemXenon::AGolemXenon()
 	Body->SetMaterial(0, ShapeMaterial.Object);
 	Body->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	Body->SetRelativeScale3D(FVector(0.75f, 0.75f, 1.8f));
+
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> CubeMesh(TEXT("/Engine/BasicShapes/Cube.Cube"));
+	TelegraphZone = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("TelegraphZone"));
+	TelegraphZone->SetupAttachment(GetCapsuleComponent());
+	TelegraphZone->SetStaticMesh(CubeMesh.Object);
+	TelegraphZone->SetMaterial(0, ShapeMaterial.Object);
+	TelegraphZone->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	TelegraphZone->SetCanEverAffectNavigation(false);
+	TelegraphZone->SetVisibility(false);
 
 	for (int32 Index = 0; Index <= UGolemXenonDefinition::MaxVoidSlots; ++Index)
 	{
@@ -102,6 +113,13 @@ void AGolemXenon::BeginPlay()
 	CoreVoid->OnVoidChanged.AddUObject(this, &AGolemXenon::HandleVoidChanged);
 	HandleVoidChanged(CoreVoid);
 	VoidHost->OnHostChanged.AddUObject(this, &AGolemXenon::HandleHostChanged);
+	TelegraphMaterial = TelegraphZone->CreateDynamicMaterialInstance(0);
+	if (TelegraphMaterial != nullptr)
+	{
+		TelegraphMaterial->SetVectorParameterValue(TEXT("Color"), FLinearColor(1.0f, 0.25f, 0.05f));
+	}
+	Brain->OnActionChanged.AddUObject(this, &AGolemXenon::HandleBrainChanged);
+	HandleBrainChanged();
 	RefreshBody();
 }
 
@@ -157,6 +175,11 @@ FGolemResult AGolemXenon::InitializeXenon(const UGolemXenonDefinition* InDefinit
 	{
 		return HostResult;
 	}
+	const FGolemResult BrainResult = Brain->InitializeBrain(AbilitySystem, VoidHost, InDefinition->GetBehavior());
+	if (!BrainResult.IsSuccess())
+	{
+		return BrainResult;
+	}
 	DefinitionId = InDefinition->GetPrimaryAssetId();
 	XenonId = NewId;
 	ReplicatedBodyScale = InDefinition->GetBodyScale();
@@ -169,25 +192,7 @@ FGolemResult AGolemXenon::InitializeXenon(const UGolemXenonDefinition* InDefinit
 
 FLinearColor AGolemXenon::ColorForMask(const uint8 ElementMask)
 {
-	switch (ElementMask & GolemElements::AllMask)
-	{
-	case 0x1:
-		return FLinearColor(0.9f, 0.1f, 0.08f);
-	case 0x2:
-		return FLinearColor(0.95f, 0.8f, 0.1f);
-	case 0x4:
-		return FLinearColor(0.08f, 0.25f, 0.95f);
-	case 0x3:
-		return FLinearColor(0.95f, 0.45f, 0.05f);
-	case 0x6:
-		return FLinearColor(0.1f, 0.8f, 0.25f);
-	case 0x5:
-		return FLinearColor(0.6f, 0.15f, 0.85f);
-	case 0x7:
-		return FLinearColor::White;
-	default:
-		return GolemXenonGray;
-	}
+	return GolemElements::DisplayColor(ElementMask);
 }
 
 void AGolemXenon::HandleVoidChanged(UGolemColorVoidComponent* Void)
@@ -213,6 +218,27 @@ void AGolemXenon::HandleVoidChanged(UGolemColorVoidComponent* Void)
 void AGolemXenon::HandleHostChanged()
 {
 	RefreshBody();
+}
+
+void AGolemXenon::HandleBrainChanged()
+{
+	const bool bShow = Brain->GetAction() == EGolemXenonAction::Telegraph && Brain->GetZoneRange() > 0.0f;
+	TelegraphZone->SetVisibility(bShow);
+	if (!bShow)
+	{
+		return;
+	}
+	// A flat slab on the floor covering the wedge: as long as the reach, as wide as the arc at its end.
+	// The actor is scaled, so sizes are divided by that scale; the engine cube is 100 cm.
+	const float Scale = FMath::Max(static_cast<float>(GetActorScale3D().X), 0.01f);
+	const float Range = Brain->GetZoneRange();
+	const float Width = 2.0f * Range * FMath::Sin(FMath::DegreesToRadians(FMath::Min(Brain->GetZoneHalfAngleDegrees(), 90.0f)));
+	const float LocalYaw = FMath::FindDeltaAngleDegrees(static_cast<float>(GetActorRotation().Yaw), Brain->GetZoneYaw());
+	const float HalfHeight = GetCapsuleComponent()->GetUnscaledCapsuleHalfHeight();
+	TelegraphZone->SetRelativeRotation(FRotator(0.0, LocalYaw, 0.0));
+	TelegraphZone->SetRelativeLocation(FRotator(0.0, LocalYaw, 0.0).RotateVector(FVector(Range * 0.5f / Scale, 0.0, 0.0))
+		+ FVector(0.0, 0.0, -HalfHeight + 1.5f));
+	TelegraphZone->SetRelativeScale3D(FVector(Range / 100.0f / Scale, Width / 100.0f / Scale, 0.02f / Scale));
 }
 
 void AGolemXenon::RefreshBody()

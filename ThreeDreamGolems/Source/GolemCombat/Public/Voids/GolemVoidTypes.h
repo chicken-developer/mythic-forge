@@ -55,6 +55,10 @@ struct GOLEMCOMBAT_API FGolemVoidTuning
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Combat|Voids", meta = (ClampMin = "0.0", Units = "s"))
 	float DulledSeconds = 3.0f;
 
+	/** Seconds a player's signal marker stays on a void (DEV_SPEC section 12). */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Combat|Voids", meta = (ClampMin = "0.1", Units = "s"))
+	float SignalSeconds = 6.0f;
+
 	FGolemResult Validate() const;
 };
 

@@ -20,7 +20,7 @@ public:
 
 protected:
 	UGolemCombatComponent* GetCombat() const;
-	bool StartActionMontage(UAnimMontage* Montage, FName Section = NAME_None);
+	bool StartActionMontage(UAnimMontage* Montage, FName Section = NAME_None, float PlayRate = 1.0f);
 	void FinishAction();
 	void SetActionDuration(float Seconds);
 	FTimerHandle ActionTimer;

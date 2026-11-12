@@ -2,6 +2,8 @@
 
 #include "CoreMinimal.h"
 #include "Assets/GolemDefinition.h"
+#include "Attributes/GolemAttributeSet.h"
+#include "Definitions/GolemCombatProfileDefinition.h"
 #include "GameplayTagContainer.h"
 #include "UObject/PrimaryAssetId.h"
 #include "GolemHeroDefinition.generated.h"
@@ -27,6 +29,13 @@ public:
 	/** Class.* tag: Warrior, Hunter or Mage. */
 	FGameplayTag GetClassTag() const;
 	FGolemResult TrySetArchetype(FGameplayTag InElementTag, FGameplayTag InClassTag);
+
+	/** The four designed stats at weapon tier 1 (DEV_SPEC section 4). */
+	const FGolemAttributeDefaults& GetBaseStats() const { return BaseStats; }
+
+	/** What this Golem does differently inside the shared move set. */
+	const FGolemHeroMoveTuning& GetMoves() const { return Moves; }
+	FGolemResult TrySetCombatData(const FGolemAttributeDefaults& InStats, const FGolemHeroMoveTuning& InMoves);
 	FGolemResult ValidateHero() const;
 	FGolemResult TrySetDefaultAbilitySetId(const FPrimaryAssetId& InAbilitySetId);
 	FGolemResult TrySetPresentation(const FLinearColor& InBodyColor, float InWalkSpeed, float InSprintSpeed,
@@ -54,7 +63,15 @@ private:
 		meta = (AllowPrivateAccess = "true", Categories = "Class"))
 	FGameplayTag ClassTag;
 
-	/** Unreal units per second. */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Framework|Archetype",
+		meta = (AllowPrivateAccess = "true"))
+	FGolemAttributeDefaults BaseStats;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Framework|Archetype",
+		meta = (AllowPrivateAccess = "true"))
+	FGolemHeroMoveTuning Moves;
+
+	/** Unreal units per second at Agility 100. */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Framework|Movement",
 		meta = (AllowPrivateAccess = "true", ClampMin = "1.0", Units = "cm/s"))
 	float WalkSpeed = 420.0f;

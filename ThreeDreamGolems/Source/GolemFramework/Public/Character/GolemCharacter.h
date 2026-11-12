@@ -9,6 +9,8 @@
 #include "UObject/PrimaryAssetId.h"
 #include "GolemCharacter.generated.h"
 
+struct FOnAttributeChangeData;
+
 class UCameraComponent;
 struct FGolemAttributeDefaults;
 class UDamageType;
@@ -77,6 +79,8 @@ private:
 
 	void ResolveHeroDefinition();
 	void ApplyHeroPresentation();
+	void ApplyHeroMovement();
+	void HandleAgilityChanged(const FOnAttributeChangeData& Data);
 	FGolemResult InitializeGolemAbilitySystem();
 	bool CanRefreshGolemAbilityContext() const;
 	void RefreshGolemAbilityContext();
@@ -108,6 +112,7 @@ private:
 	FGolemAbilitySetHandle DefaultAbilitySetHandle;
 	FGolemResult AbilityInitializationResult;
 	FDelegateHandle LifeStateHandle;
+	FDelegateHandle AgilityHandle;
 	FDelegateHandle CombatProfileHandle;
 	bool bEndingPlay = false;
 

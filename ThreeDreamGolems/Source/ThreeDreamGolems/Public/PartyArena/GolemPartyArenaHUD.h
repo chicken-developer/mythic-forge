@@ -43,6 +43,7 @@ protected:
 	virtual void BeginPlay() override;
 	virtual void EndPlay(EEndPlayReason::Type EndPlayReason) override;
 	virtual FText GetArenaTitle() const;
+	virtual FText GetObjectiveText() const;
 	virtual FText GetCombatHelp() const;
 	virtual FText GetPartyHelp() const;
 	virtual FText GetRecoveryHelp() const;

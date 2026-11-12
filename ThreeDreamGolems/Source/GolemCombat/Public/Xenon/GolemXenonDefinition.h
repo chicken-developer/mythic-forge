@@ -19,6 +19,73 @@ struct GOLEMCOMBAT_API FGolemXenonVoidSlot
 };
 
 /**
+ * One attack of a Xenon. Every attack shows where it will land for TelegraphSeconds first, never
+ * less than 0.6 s, so players can read it and step out (DEV_SPEC section 6).
+ */
+USTRUCT(BlueprintType)
+struct GOLEMCOMBAT_API FGolemXenonMove
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Xenon|Move")
+	FName MoveId;
+
+	/** The Xenon starts this attack when a Golem in front of it is at most this far away. */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Xenon|Move", meta = (ClampMin = "50.0", Units = "cm"))
+	float StartRange = 290.0f;
+
+	/** Seconds the landing zone is shown before the hit. */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Xenon|Move", meta = (ClampMin = "0.6", Units = "s"))
+	float TelegraphSeconds = 1.0f;
+
+	/** Seconds the Xenon stands still after the hit. */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Xenon|Move", meta = (ClampMin = "0.0", Units = "s"))
+	float RecoverSeconds = 1.4f;
+
+	/** Reach of the hit, measured from the centre of the Xenon. */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Xenon|Move", meta = (ClampMin = "50.0", Units = "cm"))
+	float Range = 340.0f;
+
+	/** Half of the arc the hit covers in front of the Xenon: wide for a sweep, narrow for a shove. */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Xenon|Move", meta = (ClampMin = "5.0", ClampMax = "180.0", Units = "deg"))
+	float HalfAngleDegrees = 80.0f;
+
+	/** Multiplies the Xenon's damage per hit. */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Xenon|Move", meta = (ClampMin = "0.0"))
+	float DamageScale = 1.0f;
+
+	/** Speed a Golem is thrown back with; 0 for no push. */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Xenon|Move", meta = (ClampMin = "0.0", Units = "cm/s"))
+	float Knockback = 0.0f;
+
+	FGolemResult Validate() const;
+};
+
+/** How a Xenon moves and what it attacks with. */
+USTRUCT(BlueprintType)
+struct GOLEMCOMBAT_API FGolemXenonBehavior
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Xenon|Behavior", meta = (ClampMin = "0.0", Units = "cm/s"))
+	float MoveSpeed = 200.0f;
+
+	/** How fast it turns to face its target: slow enough that a Golem can get behind it. */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Xenon|Behavior", meta = (ClampMin = "1.0", Units = "deg"))
+	float TurnRateDegrees = 110.0f;
+
+	/** Golems farther away than this are ignored. */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Xenon|Behavior", meta = (ClampMin = "100.0", Units = "cm"))
+	float AggroRange = 3000.0f;
+
+	/** Tried in order; the first whose start range is met is used. A Xenon with no moves only walks. */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Xenon|Behavior")
+	TArray<FGolemXenonMove> Moves;
+
+	FGolemResult Validate() const;
+};
+
+/**
  * One kind of dark Xenon (DEV_SPEC section 6, FXenonArchetypeRow). Every number here is a starting
  * value that designers tune in the asset; the difficulty multipliers are applied by the encounter.
  */
@@ -41,6 +108,8 @@ public:
 	const FGolemVoidHostTuning& GetVoidTuning() const { return Voids; }
 	const TArray<FGolemXenonVoidSlot>& GetVoidSlots() const { return VoidSlots; }
 	const FGolemXenonVoidSlot& GetCoreSlot() const { return CoreSlot; }
+	const FGolemXenonBehavior& GetBehavior() const { return Behavior; }
+	FGolemResult TrySetBehavior(const FGolemXenonBehavior& InBehavior);
 
 	FGolemResult ValidateXenon() const;
 
@@ -79,6 +148,9 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Xenon", meta = (AllowPrivateAccess = "true"))
 	FGolemXenonVoidSlot CoreSlot;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Xenon", meta = (AllowPrivateAccess = "true"))
+	FGolemXenonBehavior Behavior;
 
 	/** Share of voids that need two elements; 0.3 at difficulty 1. */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Xenon", meta = (AllowPrivateAccess = "true", ClampMin = "0.0", ClampMax = "1.0"))

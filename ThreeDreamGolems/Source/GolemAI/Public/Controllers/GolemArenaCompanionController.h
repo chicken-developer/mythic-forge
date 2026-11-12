@@ -10,6 +10,7 @@ class UGolemAIArchetypeDefinition;
 class UGolemAIContextComponent;
 class UGolemAIDecisionSchedulerComponent;
 class UGolemAIRolePerceptionComponent;
+class UGolemColorAssistComponent;
 
 /** M4 composition adds real combat decisions while the original companion controller remains the M1–M3 baseline. */
 UCLASS()
@@ -26,6 +27,7 @@ public:
 	UGolemAIContextComponent* GetAIContext() const;
 	UGolemAIRolePerceptionComponent* GetRolePerception() const;
 	UGolemAIDecisionSchedulerComponent* GetDecisionScheduler() const;
+	UGolemColorAssistComponent* GetColorAssist() const;
 	const FGolemCompanionCommandSnapshot& GetCommandSnapshot() const;
 	const FGolemResult& GetArenaInitializationResult() const;
 	FOnGolemCompanionCommandChanged OnCommandChanged;
@@ -43,17 +45,23 @@ private:
 	void StopArenaDecisions();
 	void HandleRolePerception(AActor* Actor, bool bSensed);
 	void HandleDecisionScheduled(EGolemAILODTier Tier, float Interval, int64 TickCount);
+	void HandleColorAssistJob(bool bActive);
+	void DodgeTelegraphedAttack();
 	UPROPERTY(VisibleAnywhere, Category = "Golem|AI|Context")
 	TObjectPtr<UGolemAIContextComponent> AIContext;
 	UPROPERTY(VisibleAnywhere, Category = "Golem|AI|Perception")
 	TObjectPtr<UGolemAIRolePerceptionComponent> RolePerception;
 	UPROPERTY(VisibleAnywhere, Category = "Golem|AI|LOD")
 	TObjectPtr<UGolemAIDecisionSchedulerComponent> DecisionScheduler;
+	/** Signal response and colour follow-up; pauses the ordinary decisions while it acts. */
+	UPROPERTY(VisibleAnywhere, Category = "Golem|AI|Colour")
+	TObjectPtr<UGolemColorAssistComponent> ColorAssist;
 	UPROPERTY(Transient)
 	TObjectPtr<UGolemAIArchetypeDefinition> Archetype;
 	FGolemCompanionCommandSnapshot CommandSnapshot;
 	FGolemResult ArenaInitializationResult;
 	FDelegateHandle PerceptionHandle;
 	FDelegateHandle ScheduleHandle;
+	FDelegateHandle ColorAssistHandle;
 	bool bEndingPlay = false;
 };

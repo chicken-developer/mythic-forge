@@ -323,6 +323,8 @@ void AGolemCharacter::EndPlay(const EEndPlayReason::Type EndPlayReason)
 	CombatProfileHandle.Reset();
 	LifeComponent->OnLifeStateChanged.Remove(LifeStateHandle);
 	LifeStateHandle.Reset();
+	AbilitySystem->GetGameplayAttributeValueChangeDelegate(UGolemAttributeSet::GetAgilityAttribute()).Remove(AgilityHandle);
+	AgilityHandle.Reset();
 	AbilitySystem->CancelAllAbilities();
 	for (FGameplayAbilitySpec& Spec : AbilitySystem->GetActivatableAbilities())
 	{
@@ -410,7 +412,8 @@ void AGolemCharacter::ResolveHeroDefinition()
 
 FGolemAttributeDefaults AGolemCharacter::GetInitialAttributeDefaults() const
 {
-	return FGolemAttributeDefaults();
+	// Each Golem starts from its own designed stats; a pawn without hero data keeps the fallbacks.
+	return HeroDefinition != nullptr ? HeroDefinition->GetBaseStats() : FGolemAttributeDefaults();
 }
 
 FGolemResult AGolemCharacter::InitializeGolemAbilitySystem()
@@ -436,6 +439,13 @@ FGolemResult AGolemCharacter::InitializeGolemAbilitySystem()
 		return Initialize;
 	}
 	HandleLifeStateChanged(LifeComponent->GetLifeState(), LifeComponent->GetLifeState());
+	if (!AgilityHandle.IsValid())
+	{
+		// Agility scales move speed on the host and on every client, including when it replicates late.
+		AgilityHandle = AbilitySystem->GetGameplayAttributeValueChangeDelegate(UGolemAttributeSet::GetAgilityAttribute())
+			.AddUObject(this, &AGolemCharacter::HandleAgilityChanged);
+		ApplyHeroMovement();
+	}
 	if (!HasAuthority() || DefaultAbilitySetHandle.IsValid())
 	{
 		return FGolemResult::Success();
@@ -548,19 +558,38 @@ void AGolemCharacter::HandleCombatProfileChanged(UGolemCombatProfileDefinition* 
 	FacingMarker->SetHiddenInGame(bHasCombatPresentation);
 }
 
-void AGolemCharacter::ApplyHeroPresentation()
+void AGolemCharacter::HandleAgilityChanged(const FOnAttributeChangeData& Data)
 {
-	if (HeroDefinition == nullptr)
+	ApplyHeroMovement();
+}
+
+void AGolemCharacter::ApplyHeroMovement()
+{
+	if (HeroDefinition == nullptr || bEndingPlay)
 	{
 		return;
 	}
-	GetCharacterMovement()->MaxWalkSpeed = HeroDefinition->GetWalkSpeed();
 	const FGolemResult MovementPresentation = CombatComponent->RefreshBaseWalkSpeed(HeroDefinition->GetWalkSpeed());
 	if (!MovementPresentation.IsSuccess())
 	{
 		UE_LOG(LogGolemCharacter, Error, TEXT("Golem %s movement presentation failed [%s]: %s"),
 			*GolemEntityId.Value.ToString(), *MovementPresentation.Context.ToString(),
 			*MovementPresentation.Message.ToString());
+	}
+}
+
+void AGolemCharacter::ApplyHeroPresentation()
+{
+	if (HeroDefinition == nullptr)
+	{
+		return;
+	}
+	ApplyHeroMovement();
+	const FGolemResult MovesResult = CombatComponent->SetHeroMoves(HeroDefinition->GetMoves());
+	if (!MovesResult.IsSuccess())
+	{
+		UE_LOG(LogGolemCharacter, Error, TEXT("Golem %s move tuning rejected [%s]."),
+			*GolemEntityId.Value.ToString(), *MovesResult.Context.ToString());
 	}
 	if (BodyMaterial == nullptr)
 	{

@@ -4,7 +4,8 @@ FGolemResult FGolemVoidTuning::Validate() const
 {
 	if (!FMath::IsFinite(MixWindowSeconds) || MixWindowSeconds < 0.1f || MixWindowSeconds > 600.0f ||
 		!FMath::IsFinite(WhiteCoreWindowSeconds) || WhiteCoreWindowSeconds < 0.1f || WhiteCoreWindowSeconds > 600.0f ||
-		!FMath::IsFinite(DulledSeconds) || DulledSeconds < 0.0f || DulledSeconds > 600.0f)
+		!FMath::IsFinite(DulledSeconds) || DulledSeconds < 0.0f || DulledSeconds > 600.0f ||
+		!FMath::IsFinite(SignalSeconds) || SignalSeconds < 0.1f || SignalSeconds > 600.0f)
 	{
 		return FGolemResult::Failure(EGolemError::InvalidData, TEXT("VoidTuning"), FText::GetEmpty());
 	}

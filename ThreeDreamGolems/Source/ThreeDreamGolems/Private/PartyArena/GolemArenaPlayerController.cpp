@@ -9,6 +9,7 @@
 #include "Framework/GolemGameState.h"
 #include "Party/GolemPartyState.h"
 #include "Player/GolemPlayerState.h"
+#include "Voids/GolemColorVoidComponent.h"
 
 #include "Engine/LocalPlayer.h"
 #include "Engine/World.h"
@@ -36,7 +37,7 @@ void AGolemArenaPlayerController::InstallCommandMappings()
 	if (CommandMappings == nullptr)
 	{
 		CommandMappings = NewObject<UInputMappingContext>(this, TEXT("ArenaCommands"));
-		const TArray<FKey> Keys{EKeys::N, EKeys::Z, EKeys::B, EKeys::K, EKeys::Gamepad_Special_Left};
+		const TArray<FKey> Keys{EKeys::N, EKeys::Z, EKeys::B, EKeys::K, EKeys::Gamepad_Special_Left, EKeys::X};
 		for (int32 Index = 0; Index < Keys.Num(); ++Index)
 		{
 			UInputAction* Action = NewObject<UInputAction>(this);
@@ -44,6 +45,8 @@ void AGolemArenaPlayerController::InstallCommandMappings()
 			CommandActions.Add(Action);
 			CommandMappings->MapKey(Action, Keys[Index]);
 		}
+		// Signal: X on the keyboard, D-pad Up on a gamepad.
+		CommandMappings->MapKey(CommandActions[5], EKeys::Gamepad_DPad_Up);
 	}
 	if (IsLocalController() && GetLocalPlayer() != nullptr)
 	{
@@ -93,6 +96,66 @@ void AGolemArenaPlayerController::SetupInputComponent()
 	}
 	BindingHandles.Add(Enhanced->BindAction(CommandActions[4], ETriggerEvent::Started,
 		this, &ThisClass::HandleCycleCommand).GetHandle());
+	BindingHandles.Add(Enhanced->BindAction(CommandActions[5], ETriggerEvent::Started,
+		this, &ThisClass::RequestSignal).GetHandle());
+}
+
+void AGolemArenaPlayerController::RequestSignal()
+{
+	FVector ViewLocation;
+	FRotator ViewRotation;
+	GetPlayerViewPoint(ViewLocation, ViewRotation);
+	UGolemColorVoidComponent* Void = UGolemColorVoidComponent::FindAimedVoid(GetWorld(), ViewLocation,
+		ViewRotation.Vector(), SignalRange + 1500.0f, SignalAimDegrees);
+	if (Void == nullptr)
+	{
+		LastSignalResult = FGolemResult::Failure(EGolemError::NotFound, TEXT("SignalAim"),
+			NSLOCTEXT("GolemArena", "SignalNoVoid", "Point the camera at a glowing void, then signal."));
+		OnCompanionCommandResult.Broadcast(LastSignalResult);
+		return;
+	}
+	ServerSignalVoid(Void);
+}
+
+FGolemResult AGolemArenaPlayerController::ApplySignal(UGolemColorVoidComponent* Void)
+{
+	if (!HasAuthority())
+	{
+		return FGolemResult::Failure(EGolemError::NotAuthority, TEXT("Signal"), FText::GetEmpty());
+	}
+	const AGolemCharacter* Golem = GetControlledGolem();
+	if (Golem == nullptr || !Golem->GetLifeComponent()->IsAlive())
+	{
+		return FGolemResult::Failure(EGolemError::InvalidState, TEXT("SignalGolem"),
+			NSLOCTEXT("GolemArena", "SignalDowned", "Only a standing Golem can signal."));
+	}
+	if (!IsValid(Void) || !IsValid(Void->GetOwner()) || Void->GetWorld() != GetWorld() || !Void->AcceptsHits())
+	{
+		return FGolemResult::Failure(EGolemError::NotFound, TEXT("SignalVoid"),
+			NSLOCTEXT("GolemArena", "SignalClosed", "That void cannot take colour right now."));
+	}
+	if (FVector::DistSquared(Golem->GetActorLocation(), Void->GetComponentLocation()) > FMath::Square(SignalRange))
+	{
+		return FGolemResult::Failure(EGolemError::OutOfRange, TEXT("SignalRange"),
+			NSLOCTEXT("GolemArena", "SignalFar", "Too far away to signal that void."));
+	}
+	return Void->Signal(const_cast<AGolemCharacter*>(Golem)) ? FGolemResult::Success()
+		: FGolemResult::Failure(EGolemError::InvalidState, TEXT("SignalVoid"), FText::GetEmpty());
+}
+
+void AGolemArenaPlayerController::ServerSignalVoid_Implementation(UGolemColorVoidComponent* Void)
+{
+	ClientReceiveSignalResult(ApplySignal(Void));
+}
+
+void AGolemArenaPlayerController::ClientReceiveSignalResult_Implementation(const FGolemResult Result)
+{
+	LastSignalResult = Result;
+	if (!Result.IsSuccess())
+	{
+		// Failures reuse the command feedback line; a successful signal shows on the void itself.
+		OnCompanionCommandResult.Broadcast(Result);
+	}
 }
 
 void AGolemArenaPlayerController::HandleCommand(const EGolemCompanionCommand Command)

@@ -40,6 +40,33 @@ public:
 	/** Authority only. Runs the window and lock timers up to Now. */
 	void AdvanceTo(double Now);
 
+	/**
+	 * Authority only. A player points this void out to the team: the marker lasts
+	 * Tuning.SignalSeconds and everyone sees which elements are still missing. Only a void that
+	 * can take a hit can be signalled.
+	 */
+	bool Signal(AActor* InstigatorActor);
+	bool SignalAt(AActor* InstigatorActor, double Now);
+
+	/** True while a signal marker is on this void at host time Now. */
+	bool IsSignaledAt(double Now) const { return SignalEnd > Now; }
+	bool IsSignaled() const { return IsSignaledAt(GetHostTimeSeconds()); }
+	double GetSignalStartServerTime() const { return SignalStart; }
+	double GetSignalEndServerTime() const { return SignalEnd; }
+
+	/** Host time on the host, and the replicated host clock on clients. */
+	double GetHostTimeSeconds() const;
+
+	/** Every void in World that can take a hit right now. */
+	static TArray<UGolemColorVoidComponent*> GetHittableVoids(const UWorld* World);
+
+	/**
+	 * The hittable void a view ray points at: the one the ray touches, otherwise the one closest
+	 * to the ray within MaxAngleDegrees. Used by the signal button, where aim is forgiving.
+	 */
+	static UGolemColorVoidComponent* FindAimedVoid(const UWorld* World, const FVector& ViewLocation,
+		const FVector& ViewDirection, float MaxDistance, float MaxAngleDegrees);
+
 	EGolemVoidState GetVoidState() const { return Runtime.State; }
 	uint8 GetRequiredMask() const { return Runtime.RequiredMask; }
 	uint8 GetAppliedMask() const { return Runtime.AppliedMask; }
@@ -50,6 +77,9 @@ public:
 
 	FOnGolemVoidChanged OnVoidChanged;
 	FOnGolemVoidFilled OnVoidFilled;
+
+	/** Authority only: the void and the Golem whose player signalled it. */
+	FOnGolemVoidFilled OnVoidSignaled;
 
 private:
 	void PublishState();
@@ -69,6 +99,12 @@ private:
 
 	UPROPERTY(ReplicatedUsing = OnRep_VoidState)
 	double ReplicatedTimerEnd = 0.0;
+
+	UPROPERTY(ReplicatedUsing = OnRep_VoidState)
+	double SignalStart = 0.0;
+
+	UPROPERTY(ReplicatedUsing = OnRep_VoidState)
+	double SignalEnd = 0.0;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Golem|Combat|Voids")
 	FGolemVoidTuning Tuning;

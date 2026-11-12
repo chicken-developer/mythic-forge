@@ -64,15 +64,69 @@ bool FGolemColorArenaContentTest::RunTest(const FString& Parameters)
 		TestEqual(TEXT("Mixed share at difficulty 1"), Xenon->GetMixedVoidChance(), 0.3f);
 	}
 
+	for (const UGolemXenonDefinition* Xenon : { Grunt, Shield })
+	{
+		TestTrue(TEXT("Every Xenon has at least one attack"), Xenon->GetBehavior().Moves.Num() >= 1);
+		for (const FGolemXenonMove& Move : Xenon->GetBehavior().Moves)
+		{
+			TestTrue(TEXT("Every attack is shown for at least 0.6 s"), Move.TelegraphSeconds >= 0.6f);
+		}
+	}
+	TestTrue(TEXT("The Grunt sweeps wide"), Grunt->GetBehavior().Moves.Num() > 0
+		&& Grunt->GetBehavior().Moves[0].HalfAngleDegrees >= 60.0f && Grunt->GetBehavior().Moves[0].Knockback == 0.0f);
+	TestTrue(TEXT("The Shield shoves Golems back"), Shield->GetBehavior().Moves.Num() > 0
+		&& Shield->GetBehavior().Moves[0].Knockback > 0.0f);
+	TestTrue(TEXT("The Shield turns slowly enough to get behind it"),
+		Shield->GetBehavior().TurnRateDegrees < Grunt->GetBehavior().TurnRateDegrees);
+	for (const UGolemXenonDefinition* Xenon : { Grunt, Shield })
+	{
+		// A void a hammer cannot reach would lock Mars out of the rule: keep them at Golem height.
+		const float FloorToCentre = 90.0f * Xenon->GetBodyScale();
+		for (const FGolemXenonVoidSlot& Slot : Xenon->GetVoidSlots())
+		{
+			const float Height = FloorToCentre + static_cast<float>(Slot.Offset.Z) * Xenon->GetBodyScale();
+			TestTrue(TEXT("Void centre sits between knee and head height of a Golem"), Height > 80.0f && Height < 190.0f);
+		}
+	}
+
 	const TPair<const TCHAR*, FGameplayTag> Heroes[] =
 	{
 		{ TEXT("Mars"), GolemGameplayTags::Element_Earth }, { TEXT("Jupiter"), GolemGameplayTags::Element_Sky },
 		{ TEXT("Neptune"), GolemGameplayTags::Element_Sea }
 	};
+	// DEV_SPEC section 4: health, power, agility, colour hold, heavy charge seconds, heavy is a projectile.
+	struct FExpectedHero
+	{
+		float MaxHealth;
+		float Power;
+		float Agility;
+		float ColorHold;
+		float HeavyCharge;
+		bool bProjectile;
+	};
+	const FExpectedHero Expected[] =
+	{
+		{ 140.0f, 12.0f, 90.0f, 0.0f, 1.0f, false },
+		{ 90.0f, 10.0f, 110.0f, 0.0f, 0.8f, true },
+		{ 80.0f, 9.0f, 100.0f, 0.5f, 0.8f, true }
+	};
+	int32 HeroIndex = 0;
 	uint8 PartyMask = 0;
 	for (const TPair<const TCHAR*, FGameplayTag>& Hero : Heroes)
 	{
 		const UGolemHeroDefinition* Definition = Resolve<UGolemHeroDefinition>(*this, TEXT("GolemHero"), Hero.Key);
+		if (Definition != nullptr)
+		{
+			const FExpectedHero& Want = Expected[HeroIndex];
+			TestEqual(TEXT("Hero health"), Definition->GetBaseStats().MaxHealth, Want.MaxHealth);
+			TestEqual(TEXT("Hero power"), Definition->GetBaseStats().Power, Want.Power);
+			TestEqual(TEXT("Hero agility"), Definition->GetBaseStats().Agility, Want.Agility);
+			TestEqual(TEXT("Hero colour hold"), Definition->GetBaseStats().ColorHold, Want.ColorHold);
+			TestEqual(TEXT("Heavy charge seconds"), Definition->GetMoves().HeavyChargeSeconds, Want.HeavyCharge);
+			TestEqual(TEXT("Heavy attack is a projectile"), Definition->GetMoves().bHeavyIsProjectile, Want.bProjectile);
+			TestEqual(TEXT("Projectile range is 25 m"), Definition->GetMoves().ProjectileRange, 2500.0f);
+		}
+		++HeroIndex;
 		EGolemElement Element = EGolemElement::Earth;
 		if (Definition == nullptr || !GolemElements::FromTag(Definition->GetElementTag(), Element))
 		{
@@ -96,9 +150,14 @@ bool FGolemColorArenaContentTest::RunTest(const FString& Parameters)
 	{
 		const bool bHeavy = Attack.ActionTag == GolemGameplayTags::Ability_Combat_Heavy;
 		TestEqual(TEXT("Only the heavy attack places colour"), Attack.bAppliesColor, bHeavy);
+		TestEqual(TEXT("Light hits deal 1.0 x Power, the heavy hit 2.5 x Power"), Attack.PowerScale, bHeavy ? 2.5f : 1.0f);
 		ColorAttacks += Attack.bAppliesColor ? 1 : 0;
 	}
 	TestEqual(TEXT("There is exactly one colour-placing attack"), ColorAttacks, 1);
+	const FGolemCombatTuning& Combat = Profile->GetTuning();
+	TestTrue(TEXT("A dodge ignores damage for 0.35 s"),
+		FMath::IsNearlyEqual(Combat.DodgeInvulnerabilityEnd - Combat.DodgeInvulnerabilityStart, 0.35f, 0.001f));
+	TestEqual(TEXT("Dodge recovers in 1.5 s at Agility 100"), Combat.DodgeCooldownSeconds, 1.5f);
 
 	const TCHAR* MapName = TEXT("/Game/Golem/Maps/Playables/L_M0_ColorArena");
 	TestTrue(TEXT("The colour arena map exists"), FPackageName::DoesPackageExist(MapName));

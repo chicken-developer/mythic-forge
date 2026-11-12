@@ -1,6 +1,7 @@
 #include "ColorArena/GolemColorArenaGameMode.h"
 
 #include "Assets/GolemAssetManager.h"
+#include "ColorArena/GolemColorArenaHUD.h"
 #include "Engine/World.h"
 #include "Xenon/GolemXenon.h"
 #include "Xenon/GolemXenonDefinition.h"
@@ -9,6 +10,7 @@ DEFINE_LOG_CATEGORY_STATIC(LogGolemColorArena, Log, All);
 
 AGolemColorArenaGameMode::AGolemColorArenaGameMode()
 {
+	HUDClass = AGolemColorArenaHUD::StaticClass();
 	FGolemColorArenaSpawn& Grunt = XenonSpawns.AddDefaulted_GetRef();
 	Grunt.XenonId = FPrimaryAssetId(TEXT("GolemXenon"), TEXT("Grunt"));
 	Grunt.Location = FVector(-650.0, 500.0, 0.0);

@@ -43,6 +43,15 @@ namespace GolemElements
 	/** False when the tag is not one of Element.Earth, Element.Sky, Element.Sea. */
 	GOLEMCORE_API bool FromTag(const FGameplayTag& Tag, EGolemElement& OutElement);
 
+	/**
+	 * Display colour of an element set: red, yellow, blue, orange, green, purple, white; grey for none.
+	 * Colour is never the only cue: SymbolText gives the shapes for colour-blind players.
+	 */
+	GOLEMCORE_API FLinearColor DisplayColor(uint8 InMask);
+
+	/** Placeholder shapes until art decides: triangle for Earth, circle for Sky, wave for Sea. */
+	GOLEMCORE_API FString SymbolText(uint8 InMask);
+
 	/** Finds the single element tag an actor owns. False when it owns none or more than one. */
 	GOLEMCORE_API bool FromOwnedTags(const FGameplayTagContainer& Tags, EGolemElement& OutElement);
 }

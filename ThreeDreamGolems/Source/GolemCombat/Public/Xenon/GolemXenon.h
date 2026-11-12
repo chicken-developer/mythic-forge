@@ -12,6 +12,7 @@ class UGolemAttributeSet;
 class UGolemColorVoidComponent;
 class UGolemLifeComponent;
 class UGolemVoidHostComponent;
+class UGolemXenonBrainComponent;
 class UGolemXenonDefinition;
 class UMaterialInstanceDynamic;
 class UStaticMeshComponent;
@@ -38,6 +39,7 @@ public:
 	UGolemAttributeSet* GetGolemAttributeSet() const { return Attributes; }
 	UGolemLifeComponent* GetLifeComponent() const { return Life; }
 	UGolemVoidHostComponent* GetVoidHost() const { return VoidHost; }
+	UGolemXenonBrainComponent* GetBrain() const { return Brain; }
 	FPrimaryAssetId GetDefinitionId() const { return DefinitionId; }
 	FGolemEntityId GetXenonId() const { return XenonId; }
 	bool IsRestored() const;
@@ -51,6 +53,7 @@ protected:
 private:
 	void HandleVoidChanged(UGolemColorVoidComponent* Void);
 	void HandleHostChanged();
+	void HandleBrainChanged();
 	void RefreshBody();
 
 	UFUNCTION()
@@ -69,7 +72,17 @@ private:
 	TObjectPtr<UGolemVoidHostComponent> VoidHost;
 
 	UPROPERTY(VisibleAnywhere, Category = "Golem|Xenon")
+	TObjectPtr<UGolemXenonBrainComponent> Brain;
+
+	UPROPERTY(VisibleAnywhere, Category = "Golem|Xenon")
 	TObjectPtr<UStaticMeshComponent> Body;
+
+	/** Flat marker on the floor showing where a telegraphed attack will land. */
+	UPROPERTY(VisibleAnywhere, Category = "Golem|Xenon")
+	TObjectPtr<UStaticMeshComponent> TelegraphZone;
+
+	UPROPERTY(Transient)
+	TObjectPtr<UMaterialInstanceDynamic> TelegraphMaterial;
 
 	/** Fixed pool so every void is a default subobject with a stable network name. */
 	UPROPERTY(VisibleAnywhere, Category = "Golem|Xenon")

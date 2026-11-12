@@ -67,6 +67,16 @@ namespace
 	}
 }
 
+FGolemResult FGolemHeroMoveTuning::Validate() const
+{
+	if (!GolemFiniteRange(HeavyChargeSeconds, 0.0f, 10.0f) || !GolemFiniteRange(ProjectileRange, 100.0f, 20000.0f) ||
+		!GolemFiniteRange(ProjectileSpeed, 100.0f, 20000.0f) || !GolemFiniteRange(ProjectileRadius, 1.0f, 200.0f))
+	{
+		return GolemInvalidCombatData(TEXT("HeroMoveTuning"));
+	}
+	return FGolemResult::Success();
+}
+
 FGolemResult FGolemCombatTuning::Validate() const
 {
 	if (!GolemFiniteRange(MaxPoise, 1.0f, 10000.0f) || !GolemFiniteRange(StaggerDuration, 0.1f, 30.0f) ||
@@ -75,6 +85,7 @@ FGolemResult FGolemCombatTuning::Validate() const
 		!GolemFiniteRange(DodgeDuration, 0.1f, 3.0f) ||
 		!GolemFiniteRange(DodgeInvulnerabilityStart, 0.0f, DodgeDuration) ||
 		!GolemFiniteRange(DodgeInvulnerabilityEnd, DodgeInvulnerabilityStart, DodgeDuration) ||
+		!GolemFiniteRange(DodgeCooldownSeconds, 0.0f, 60.0f) ||
 		!GolemFiniteRange(DodgeSpeed, 0.0f, 1500.0f) ||
 		!GolemFiniteRange(LockRange, 100.0f, 5000.0f))
 	{
@@ -157,7 +168,7 @@ FGolemResult UGolemCombatProfileDefinition::ValidateAttacks(const TArray<FGolemA
 		const bool bLight = Attack.ActionTag == GolemGameplayTags::Ability_Combat_Primary;
 		if ((!bLight && Attack.ActionTag != GolemGameplayTags::Ability_Combat_Heavy) ||
 			!GolemValidMontage(Montage, GetSkeletalMesh()) || Attack.SectionName.IsNone() ||
-			!GolemFiniteRange(Attack.Damage, 0.01f, 10000.0f) ||
+			!GolemFiniteRange(Attack.PowerScale, 0.01f, 100.0f) ||
 			!GolemFiniteRange(Attack.PoiseDamage, 0.0f, 10000.0f) ||
 			
 			!GolemFiniteRange(Attack.TraceRadius, 1.0f, 100.0f))

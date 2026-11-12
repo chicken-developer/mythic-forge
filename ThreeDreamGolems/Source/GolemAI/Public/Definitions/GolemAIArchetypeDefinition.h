@@ -8,6 +8,42 @@
 class UEnvQuery;
 class UStateTree;
 
+/** How a companion helps with colour (DEV_SPEC section 12). Starting values; tune them in the archetype asset. */
+USTRUCT(BlueprintType)
+struct GOLEMAI_API FGolemColorAssistTuning
+{
+	GENERATED_BODY()
+
+	/** A signalled void that needs this Golem's colour gets a heavy attack after a delay picked in this range. */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|AI|Colour", meta = (ClampMin = "0.0", Units = "s"))
+	float SignalDelayMin = 0.5f;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|AI|Colour", meta = (ClampMin = "0.0", Units = "s"))
+	float SignalDelayMax = 1.0f;
+
+	/** A Primed void still missing this Golem's colour gets one after this long, without being asked. */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|AI|Colour", meta = (ClampMin = "0.0", Units = "s"))
+	float FollowUpDelay = 1.5f;
+
+	/** Voids farther than this from the companion are left to the players. */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|AI|Colour", meta = (ClampMin = "100.0", Units = "cm"))
+	float MaxRange = 3000.0f;
+
+	/** Gap between the surface of the void and a melee companion when it swings. */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|AI|Colour", meta = (ClampMin = "10.0", Units = "cm"))
+	float MeleeStandDistance = 60.0f;
+
+	/** Where a ranged companion stands, measured out from the void, when it has no clear shot. */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|AI|Colour", meta = (ClampMin = "100.0", Units = "cm"))
+	float RangedStandDistance = 650.0f;
+
+	/** A companion gives up on one void after this long and returns to ordinary fighting. */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|AI|Colour", meta = (ClampMin = "1.0", Units = "s"))
+	float GiveUpSeconds = 6.0f;
+
+	FGolemResult Validate() const;
+};
+
 USTRUCT(BlueprintType)
 struct GOLEMAI_API FGolemAIArchetypeTuning
 {
@@ -31,6 +67,8 @@ struct GOLEMAI_API FGolemAIArchetypeTuning
 	float AttackLeaseDuration = 4.0f;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|AI|Movement", meta = (Units = "s"))
 	float RepathInterval = 0.35f;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|AI|Colour")
+	FGolemColorAssistTuning ColorAssist;
 
 	FGolemResult Validate() const;
 };

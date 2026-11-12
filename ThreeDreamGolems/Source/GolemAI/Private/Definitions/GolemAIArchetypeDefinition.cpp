@@ -7,6 +7,21 @@
 #include "Misc/DataValidation.h"
 #include "Types/GolemStableIds.h"
 
+FGolemResult FGolemColorAssistTuning::Validate() const
+{
+	if (!FMath::IsFinite(SignalDelayMin) || SignalDelayMin < 0.0f || !FMath::IsFinite(SignalDelayMax)
+		|| SignalDelayMax < SignalDelayMin || SignalDelayMax > 60.0f
+		|| !FMath::IsFinite(FollowUpDelay) || FollowUpDelay < 0.0f || FollowUpDelay > 60.0f
+		|| !FMath::IsFinite(MaxRange) || MaxRange < 100.0f || MaxRange > 100000.0f
+		|| !FMath::IsFinite(MeleeStandDistance) || MeleeStandDistance < 10.0f || MeleeStandDistance > 1000.0f
+		|| !FMath::IsFinite(RangedStandDistance) || RangedStandDistance < 100.0f || RangedStandDistance > 10000.0f
+		|| !FMath::IsFinite(GiveUpSeconds) || GiveUpSeconds < 1.0f || GiveUpSeconds > 120.0f)
+	{
+		return GolemAIFailure(EGolemError::InvalidData, TEXT("AIColorAssistTuning"));
+	}
+	return FGolemResult::Success();
+}
+
 FGolemResult FGolemAIArchetypeTuning::Validate() const
 {
 	const FGolemResult AttributeResult = Attributes.Validate();
@@ -25,7 +40,7 @@ FGolemResult FGolemAIArchetypeTuning::Validate() const
 	{
 		return GolemAIFailure(EGolemError::InvalidData, TEXT("AIArchetypeTuning"));
 	}
-	return FGolemResult::Success();
+	return ColorAssist.Validate();
 }
 
 UGolemAIArchetypeDefinition::UGolemAIArchetypeDefinition()

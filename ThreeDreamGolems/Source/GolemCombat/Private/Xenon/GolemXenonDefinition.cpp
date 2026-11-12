@@ -12,6 +12,41 @@ namespace
 	}
 }
 
+FGolemResult FGolemXenonMove::Validate() const
+{
+	// 0.6 s is the shortest warning the design allows for any Xenon attack.
+	if (!FMath::IsFinite(StartRange) || StartRange < 50.0f || StartRange > 5000.0f
+		|| !FMath::IsFinite(TelegraphSeconds) || TelegraphSeconds < 0.6f || TelegraphSeconds > 30.0f
+		|| !FMath::IsFinite(RecoverSeconds) || RecoverSeconds < 0.0f || RecoverSeconds > 60.0f
+		|| !FMath::IsFinite(Range) || Range < StartRange || Range > 5000.0f
+		|| !FMath::IsFinite(HalfAngleDegrees) || HalfAngleDegrees < 5.0f || HalfAngleDegrees > 180.0f
+		|| !FMath::IsFinite(DamageScale) || DamageScale < 0.0f || DamageScale > 100.0f
+		|| !FMath::IsFinite(Knockback) || Knockback < 0.0f || Knockback > 5000.0f)
+	{
+		return FGolemResult::Failure(EGolemError::InvalidData, TEXT("XenonMove"), FText::GetEmpty());
+	}
+	return FGolemResult::Success();
+}
+
+FGolemResult FGolemXenonBehavior::Validate() const
+{
+	if (!FMath::IsFinite(MoveSpeed) || MoveSpeed < 0.0f || MoveSpeed > 3000.0f
+		|| !FMath::IsFinite(TurnRateDegrees) || TurnRateDegrees < 1.0f || TurnRateDegrees > 3600.0f
+		|| !FMath::IsFinite(AggroRange) || AggroRange < 100.0f || AggroRange > 100000.0f || Moves.Num() > 8)
+	{
+		return FGolemResult::Failure(EGolemError::InvalidData, TEXT("XenonBehavior"), FText::GetEmpty());
+	}
+	for (const FGolemXenonMove& Move : Moves)
+	{
+		const FGolemResult Result = Move.Validate();
+		if (!Result.IsSuccess())
+		{
+			return Result;
+		}
+	}
+	return FGolemResult::Success();
+}
+
 UGolemXenonDefinition::UGolemXenonDefinition()
 {
 	DefinitionType = TEXT("GolemXenon");
@@ -44,7 +79,18 @@ FGolemResult UGolemXenonDefinition::ValidateXenon() const
 			return FGolemResult::Failure(EGolemError::InvalidData, TEXT("XenonVoidSlot"), FText::GetEmpty());
 		}
 	}
-	return Voids.Validate();
+	const FGolemResult BehaviorResult = Behavior.Validate();
+	return BehaviorResult.IsSuccess() ? Voids.Validate() : BehaviorResult;
+}
+
+FGolemResult UGolemXenonDefinition::TrySetBehavior(const FGolemXenonBehavior& InBehavior)
+{
+	const FGolemResult Result = InBehavior.Validate();
+	if (Result.IsSuccess())
+	{
+		Behavior = InBehavior;
+	}
+	return Result;
 }
 
 TArray<uint8> UGolemXenonDefinition::BuildColorPlan(const int32 Seed, const float MixedChanceOverride) const
