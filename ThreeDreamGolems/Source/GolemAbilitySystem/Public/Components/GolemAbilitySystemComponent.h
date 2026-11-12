@@ -5,7 +5,6 @@
 #include "Attributes/GolemAttributeSet.h"
 #include "Definitions/GolemAbilitySetDefinition.h"
 #include "Events/GolemConfirmedEvent.h"
-#include "Projection/GolemSourceProjection.h"
 #include "Types/GolemStableIds.h"
 #include "GolemAbilitySystemComponent.generated.h"
 
@@ -13,7 +12,6 @@ class UGolemLifeComponent;
 class AGolemCueVisualActor;
 class UGolemDefinition;
 class AController;
-class UGolemSkillRuntimeComponent;
 struct FHitResult;
 
 USTRUCT()
@@ -29,21 +27,6 @@ struct GOLEMABILITYSYSTEM_API FGolemOwnedAbilityGrant
 	TArray<FGameplayAbilitySpecHandle> AbilityHandles;
 	UPROPERTY()
 	TArray<FActiveGameplayEffectHandle> EffectHandles;
-};
-
-USTRUCT()
-struct FGolemProjectionRuntime
-{
-	GENERATED_BODY()
-
-	UPROPERTY()
-	FGolemSourceProjection Snapshot;
-	UPROPERTY()
-	TObjectPtr<UGolemDefinition> OwnerDefinition;
-	UPROPERTY()
-	TArray<FGolemOwnedAbilityGrant> OptionalGrants;
-	UPROPERTY()
-	FActiveGameplayEffectHandle StatEffect;
 };
 
 USTRUCT()
@@ -91,35 +74,13 @@ public:
 	void RefreshReplicatedMontagePresentation();
 	virtual void ClearActorInfo() override;
 	FGolemResult RequestAbilityInput(const FGameplayTag& InputTag, bool bPressed, AActor* Target = nullptr);
-	FGolemResult ActivateSpecializationHandle(FGameplayAbilitySpecHandle Handle, AActor* Target);
 	AActor* FindAbilityTarget(const FGameplayTag& InputTag) const;
 	static FGolemResult ApplyDamage(AActor* Source, AActor* Target, float Amount);
 	static FGolemResult ApplyCombatDamage(AActor* Source, AActor* Target, float Amount, float PoiseDamage,
-		bool bCanDefend = true, const FHitResult* Hit = nullptr, bool bHeavy = false,
-		FGuid ActivationId = FGuid(), int32 HitIndex = 0);
+		bool bCanDefend = true, const FHitResult* Hit = nullptr);
 	FGolemResult ResetAttributesForCheckpoint();
-	FGolemResult BeginMutationFence(FGuid RequestId, FGolemMutationFence& OutFence);
-	FGolemResult ValidateItemMutationFence(const FGolemMutationFence& Fence) const;
-	bool IsMutationFenced() const;
-	FGolemResult PrepareSourceProjection(const FGolemMutationFence& Fence, const FGolemGASProjectionPlan& Plan,
-		int64 ExpectedRevision, FGolemProjectionCapability& OutCapability);
-	FGolemResult StageSourceProjection(const FGolemMutationFence& Fence,
-		const FGolemProjectionCapability& Capability);
-	FGolemResult ValidateStagedSourceProjection(const FGolemMutationFence& Fence,
-		const FGolemProjectionCapability& Capability) const;
-	FGolemResult CommitSourceProjection(const FGolemMutationFence& Fence,
-		const FGolemProjectionCapability& Capability);
-	FGolemResult AbortSourceProjection(const FGolemMutationFence& Fence,
-		const FGolemProjectionCapability& Capability);
-	/** Always finalizes committed cleanup; an optional live publication owner gates subscriber notifications. */
-	FGolemResult PublishSourceProjection(const FGolemMutationFence& Fence,
-		const FGolemProjectionCapability& Capability, bool bNotifySubscribers = true,
-		AActor* InPublicationOwner = nullptr);
-	FGolemResult EndMutationFence(const FGolemMutationFence& Fence);
-	FGolemSourceProjection GetSourceProjection(FName SourceKey) const;
-	FGolemActionModifier GetActionModifier(FGameplayTag AbilityTag) const;
-	float GetInitialAttackPower() const;
-	FOnGolemSourceProjectionChanged OnSourceProjectionChanged;
+	float GetInitialPower() const;
+
 	void GetAdditionalActivationTagRequirements(const FGameplayTagContainer& AbilityTags,
 		FGameplayTagContainer& OutRequiredTags, FGameplayTagContainer& OutBlockedTags) const;
 	virtual void ApplyAbilityBlockAndCancelTags(const FGameplayTagContainer& AbilityTags,
@@ -139,19 +100,6 @@ protected:
 	virtual void OnRep_ReplicatedAnimMontage() override;
 
 private:
-	friend class UGolemSkillRuntimeComponent;
-	FGolemResult PrepareConsumableEffect(const FGolemMutationFence& Fence, FGameplayEffectSpec& Spec);
-	void ExecutePreparedConsumableEffect(const FGolemMutationFence& Fence, FGameplayEffectSpec& Spec);
-	FGolemResult ValidateProjectionOwner() const;
-	FGolemResult ValidateMutationFence(const FGolemMutationFence& Fence) const;
-	FGolemResult ValidateProjectionCapability(const FGolemMutationFence& Fence,
-		const FGolemProjectionCapability& Capability) const;
-	FGolemResult ValidateProjectionAbilities(const FGolemGASProjectionPlan& Plan,
-		const TArray<FGolemOwnedAbilityGrant>& OptionalGrants) const;
-	void RemoveProjectionRuntime(FGolemProjectionRuntime Runtime);
-	void CancelPendingProjection();
-	UFUNCTION()
-	void OnRep_SourceProjections();
 	FGolemResult ApplyAttributeDefaults();
 	static void RegisterNativeGameplayCues();
 	UFUNCTION()
@@ -170,14 +118,6 @@ private:
 	UPROPERTY(Transient)
 	TMap<FName, FGolemOwnedAbilityGrant> OwnedGrants;
 	UPROPERTY(Transient)
-	TMap<FName, FGolemProjectionRuntime> ProjectionSources;
-	UPROPERTY(Transient)
-	FGolemProjectionRuntime PendingProjection;
-	UPROPERTY(Transient)
-	FGolemProjectionRuntime RetiredProjection;
-	UPROPERTY(ReplicatedUsing = OnRep_SourceProjections)
-	TArray<FGolemSourceProjection> PublishedProjections;
-	UPROPERTY(Transient)
 	TArray<TObjectPtr<AGolemCueVisualActor>> CueVisuals;
 
 	TMap<FGameplayTag, FGolemCueDiagnostics> CueDiagnostics;
@@ -185,17 +125,4 @@ private:
 	FGolemResult LastAbilityResult;
 	bool bAttributesInitialized = false;
 	int32 DamageRevision = 0;
-	FGolemMutationFence MutationFence;
-	FGolemMutationFence LastEndedFence;
-	FGolemProjectionCapability ProjectionCapability;
-	FGolemProjectionCapability LastAbortedProjection;
-	TWeakObjectPtr<AActor> FenceOwner;
-	TWeakObjectPtr<AActor> FenceAvatar;
-	TWeakObjectPtr<AController> FenceController;
-	uint64 ProjectionGeneration = 0;
-	uint64 FenceGeneration = 0;
-	uint8 ProjectionStage = 0;
-	bool bProjectionOperationInProgress = false;
-	bool bProjectionEndingPlay = false;
-	bool bProjectionGrantsChanged = false;
 };

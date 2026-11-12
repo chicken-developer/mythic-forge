@@ -25,8 +25,6 @@ struct GOLEMCOMBAT_API FGolemAttackDefinition
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Combat|Attack")
 	float PoiseDamage = 20.0f;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Combat|Attack")
-	float StaminaCost = 8.0f;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Combat|Attack")
 	float TraceRadius = 35.0f;
 };
 
@@ -44,11 +42,7 @@ struct GOLEMCOMBAT_API FGolemCombatTuning
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Combat|Defense")
 	float BlockDamageFraction = 0.1f;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Combat|Defense")
-	float BlockStaminaCost = 8.0f;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Combat|Defense")
 	float ParryWindow = 0.28f;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Combat|Defense")
-	float ParryStaminaCost = 12.0f;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Combat|Defense")
 	float DodgeDuration = 0.65f;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Combat|Defense")
@@ -56,21 +50,9 @@ struct GOLEMCOMBAT_API FGolemCombatTuning
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Combat|Defense")
 	float DodgeInvulnerabilityEnd = 0.42f;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Combat|Defense")
-	float DodgeStaminaCost = 15.0f;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Combat|Defense")
 	float DodgeSpeed = 600.0f;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Combat|Targeting")
 	float LockRange = 1200.0f;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Combat|Rune")
-	float RuneRange = 900.0f;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Combat|Rune")
-	float RuneDamage = 30.0f;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Combat|Rune")
-	float RunePoiseDamage = 30.0f;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Combat|Rune")
-	float RuneEnergyCost = 20.0f;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Combat|Rune")
-	float RuneSlowDuration = 3.0f;
 
 	FGolemResult Validate() const;
 };
@@ -87,7 +69,6 @@ public:
 	UAnimSequence* GetIdleAnimation() const;
 	UAnimSequence* GetWalkAnimation() const;
 	UAnimMontage* GetDodgeMontage() const;
-	UAnimMontage* GetRuneMontage() const;
 	UAnimMontage* GetStaggerMontage() const;
 	UAnimMontage* GetTraversalMontage() const;
 	UAnimMontage* GetFinisherSourceMontage() const;
@@ -98,7 +79,7 @@ public:
 	FGolemResult ValidateCombatProfile() const;
 	FGolemResult TrySetPresentation(USkeletalMesh* Mesh, UAnimSequence* Idle, UAnimSequence* Walk);
 	FGolemResult TrySetAttacks(const TArray<FGolemAttackDefinition>& InAttacks);
-	FGolemResult TrySetActionMontages(UAnimMontage* Dodge, UAnimMontage* Rune, UAnimMontage* Stagger,
+	FGolemResult TrySetActionMontages(UAnimMontage* Dodge, UAnimMontage* Stagger,
 		UAnimMontage* Traversal, UAnimMontage* FinisherSource, UAnimMontage* FinisherTarget);
 	FGolemResult TrySetTuning(const FGolemCombatTuning& InTuning);
 	FGolemResult TrySetCombatAbilitySetId(const FPrimaryAssetId& InAbilitySetId);
@@ -118,8 +99,6 @@ private:
 	TArray<FGolemAttackDefinition> Attacks;
 	UPROPERTY(EditDefaultsOnly, Category = "Golem|Combat|Animation")
 	TSoftObjectPtr<UAnimMontage> DodgeMontage;
-	UPROPERTY(EditDefaultsOnly, Category = "Golem|Combat|Animation")
-	TSoftObjectPtr<UAnimMontage> RuneMontage;
 	UPROPERTY(EditDefaultsOnly, Category = "Golem|Combat|Animation")
 	TSoftObjectPtr<UAnimMontage> StaggerMontage;
 	UPROPERTY(EditDefaultsOnly, Category = "Golem|Combat|Animation")

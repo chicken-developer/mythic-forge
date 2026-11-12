@@ -693,8 +693,6 @@ namespace GolemAbilityYardIntegration
 				const UGolemAttributeSet* Attributes = Golem->GetGolemAttributeSet();
 				if (!Golem->GetLifeComponent()->IsAlive() || Golem->GetLifeComponent()->IsReviveInProgress()
 					|| !FMath::IsNearlyEqual(Attributes->GetHealth(), Attributes->GetMaxHealth())
-					|| !FMath::IsNearlyEqual(Attributes->GetStamina(), Attributes->GetMaxStamina())
-					|| !FMath::IsNearlyEqual(Attributes->GetRuneEnergy(), Attributes->GetMaxRuneEnergy())
 					|| Golem->GetGolemAbilitySystem()->HasMatchingGameplayTag(GolemGameplayTags::State_Life_Reviving)
 					|| Golem->GetGolemAbilitySystem()->HasMatchingGameplayTag(GolemGameplayTags::State_Life_Downed)
 					|| Golem->GetGolemAbilitySystem()->HasMatchingGameplayTag(GolemGameplayTags::State_Life_Dead)

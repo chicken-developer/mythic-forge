@@ -89,7 +89,6 @@ void UGolemInputConfig::InitializeDefaultMapping()
 		{GolemGameplayTags::Input_Combat_Parry, TEXT("IA_Golem_Parry"), EKeys::C, EKeys::Gamepad_LeftThumbstick},
 		{GolemGameplayTags::Input_Combat_Dodge, TEXT("IA_Golem_Dodge"), EKeys::LeftShift, EKeys::Gamepad_FaceButton_Right},
 		{GolemGameplayTags::Input_Combat_LockOn, TEXT("IA_Golem_Lock"), EKeys::MiddleMouseButton, EKeys::Gamepad_RightThumbstick},
-		{GolemGameplayTags::Input_Combat_Rune, TEXT("IA_Golem_Rune"), EKeys::G, EKeys::Gamepad_DPad_Up},
 		{GolemGameplayTags::Input_Combat_Finisher, TEXT("IA_Golem_Finisher"), EKeys::H, EKeys::Gamepad_DPad_Right},
 		{GolemGameplayTags::Input_World_Traverse, TEXT("IA_Golem_Traverse"), EKeys::V, EKeys::Gamepad_DPad_Down}
 	};

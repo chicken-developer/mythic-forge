@@ -100,7 +100,7 @@ Bỏ qua yêu cầu riêng của hệ thống project không sử dụng; không
 - Nếu dùng Gameplay Tags, khai báo qua registry được project chọn; không tạo nhiều cơ chế đăng ký song song cho cùng taxonomy.
 - Tag path PascalCase phân cấp: `Ability.Primary.Activate`, `State.Combat.Downed`, `Input.Ability.Primary`; symbol có thể `Ability_Primary_Activate`. Đây là ví dụ taxonomy; reuse tags hiện hành trước khi thêm.
 - Input tags diễn tả hành động, không hardcode `LMB`/phím số làm semantic ability identity; bindings nằm ở input configuration của project.
-- Attributes replication đúng GAS API, RepNotify và accessor conventions; grant/revoke giữ source handles và idempotency. Không dùng GAS làm database inventory/quest/save.
+- Attributes replication đúng GAS API, RepNotify và accessor conventions; grant/revoke giữ source handles và idempotency. Không dùng GAS làm database cho ví tiền, sách, tarot, cờ cốt truyện hay save.
 - Ability end/cancel cleanup tasks, delegates, reservations, input/camera state theo owner. AI framework gọi action qua contract của project; tái sử dụng action logic khi hành vi tương đương.
 - RPC names thể hiện hướng; server validate ownership, target, range/state, cost/revision thích hợp. `Reliable` có lý do, không dùng cho stream cosmetic tần suất cao. Không thêm RPC chỉ vì dữ liệu có thể replicate bằng state.
 - RepNotify phục vụ state convergence/presentation; không đặt reward transaction vào callback có thể chạy lại. Late join nhận persistent state; multicast event không thay snapshot/state replication.
@@ -115,7 +115,7 @@ Bỏ qua yêu cầu riêng của hệ thống project không sử dụng; không
 - Queries không có side effects ngầm. `Try...` trả bool + failure details hoặc typed result khi có nhiều lý do; không bool success giả.
 - `check/checkf` cho invariant lập trình, `ensure` cho invariant recoverable phù hợp; dữ liệu user/network/save lỗi phải trả failure an toàn, không assert thay validation.
 - Logs theo category domain, có stable ID/context hữu ích, tránh spam Tick và secrets. Không nuốt failure; report error ở boundary chịu trách nhiệm.
-- Inventory/reward/loadout/respec phải giữ transaction/atomicity/revision semantics của architecture; không cập nhật UI trước rồi coi đó là authoritative result.
+- Giao dịch DreamCoin (mua sách, nâng vũ khí, mua dream stone) và phần thưởng đêm phải giữ transaction/atomicity/revision semantics của architecture; không cập nhật UI trước rồi coi đó là authoritative result.
 
 ## 9. Assets, Blueprint và VFX naming
 

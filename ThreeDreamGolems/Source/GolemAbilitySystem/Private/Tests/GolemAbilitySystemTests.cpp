@@ -69,7 +69,7 @@ namespace GolemGASTests
 		TStrongObjectPtr<UGameInstance> GameInstance;
 	};
 
-	FGolemFixture SpawnFixture(UWorld* World, const FVector& Location, bool bParty = true, float Defense = 0.0f)
+	FGolemFixture SpawnFixture(UWorld* World, const FVector& Location, bool bParty = true)
 	{
 		FGolemFixture Fixture;
 		Fixture.Actor = World->SpawnActor<AActor>();
@@ -87,7 +87,6 @@ namespace GolemGASTests
 		Fixture.Actor->AddInstanceComponent(Fixture.Life.Get());
 		Fixture.Life->RegisterComponent();
 		FGolemAttributeDefaults Defaults;
-		Defaults.Defense = Defense;
 		Fixture.ASC->InitializeGolemActor(Fixture.Actor.Get(), Fixture.Attributes.Get(), Fixture.Life.Get(),
 			FGolemEntityId::Create(), Defaults, bParty);
 		if (!bParty)
@@ -191,7 +190,7 @@ bool FGolemDamagePipelineTest::RunTest(const FString& Parameters)
 {
 	GolemGASTests::FGolemTestWorld Context;
 	const GolemGASTests::FGolemFixture Enemy = GolemGASTests::SpawnFixture(Context.World.Get(), FVector::ZeroVector, false);
-	const GolemGASTests::FGolemFixture Target = GolemGASTests::SpawnFixture(Context.World.Get(), FVector(100, 0, 0), true, 10.0f);
+	const GolemGASTests::FGolemFixture Target = GolemGASTests::SpawnFixture(Context.World.Get(), FVector(100, 0, 0), true);
 	TestTrue(TEXT("Golem is actual ASC owner and avatar"), Target.ASC->GetOwnerActor() == Target.Actor.Get() &&
 		Target.ASC->GetAvatarActor() == Target.Actor.Get());
 	int32 ConfirmedDamage = 0;
@@ -202,17 +201,13 @@ bool FGolemDamagePipelineTest::RunTest(const FString& Parameters)
 			++ConfirmedDamage;
 		});
 	TestTrue(TEXT("Server damage uses native GE execution"), UGolemAbilitySystemComponent::ApplyDamage(Enemy.Actor.Get(), Target.Actor.Get(), 25.0f).IsSuccess());
-	TestEqual(TEXT("Defense capture reduces damage before health"), Target.Attributes->GetHealth(), 85.0f);
+	TestEqual(TEXT("Damage reaches health unreduced"), Target.Attributes->GetHealth(), 75.0f);
 	TestEqual(TEXT("IncomingDamage consumed exactly once"), Target.Attributes->GetIncomingDamage(), 0.0f);
 	TestEqual(TEXT("Confirmed damage fact delivered"), ConfirmedDamage, 1);
 	TestTrue(TEXT("Damage GameplayCue routed actual native handler"),
 		Target.ASC->GetCueDiagnostics(GolemGameplayTags::GameplayCue_Damage).ExecutedCount > 0);
 	Target.ASC->SetNumericAttributeBase(UGolemAttributeSet::GetMaxHealthAttribute(), 60.0f);
-	Target.ASC->SetNumericAttributeBase(UGolemAttributeSet::GetMaxStaminaAttribute(), 30.0f);
-	Target.ASC->SetNumericAttributeBase(UGolemAttributeSet::GetMaxRuneEnergyAttribute(), 20.0f);
 	TestEqual(TEXT("Base MaxHealth decrease clamps current health"), Target.Attributes->GetHealth(), 60.0f);
-	TestEqual(TEXT("Base MaxStamina decrease clamps current stamina"), Target.Attributes->GetStamina(), 30.0f);
-	TestEqual(TEXT("Base MaxRuneEnergy decrease clamps current energy"), Target.Attributes->GetRuneEnergy(), 20.0f);
 	UGameplayEffect* MaxEffect = NewObject<UGameplayEffect>();
 	MaxEffect->DurationPolicy = EGameplayEffectDurationType::Infinite;
 	FGameplayModifierInfo& Modifier = MaxEffect->Modifiers.AddDefaulted_GetRef();

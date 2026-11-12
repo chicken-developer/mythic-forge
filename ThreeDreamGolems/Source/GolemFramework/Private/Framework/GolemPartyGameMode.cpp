@@ -67,7 +67,7 @@ AGolemPartyGameMode::AGolemPartyGameMode()
 	DefaultPawnClass = nullptr;
 	GolemCharacterClass = AGolemCharacter::StaticClass();
 	AIControllerClass = AAIController::StaticClass();
-	PartyDefinitionId = FPrimaryAssetId(TEXT("GolemParty"), TEXT("TrainingParty"));
+	PartyDefinitionId = FPrimaryAssetId(TEXT("GolemParty"), TEXT("ThreeGolems"));
 }
 
 void AGolemPartyGameMode::InitGameState()

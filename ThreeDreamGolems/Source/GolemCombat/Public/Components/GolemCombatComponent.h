@@ -26,7 +26,6 @@ enum class EGolemCombatOutcome : uint8
 	Dodged,
 	TargetLocked,
 	Staggered,
-	RuneHit,
 	Finisher,
 	Traversal
 };
@@ -113,19 +112,15 @@ public:
 	void EndDefense(FGameplayTag ActionTag);
 	FGolemResult BeginDodge();
 	void EndDodge();
-	FGolemResult CastRune(AActor* Target);
 	AActor* FindCombatTarget(float Range = 1200.0f, bool bRequireStagger = false) const;
 	FGolemResult ValidateCombatTarget(AActor* Target, float Range) const;
 	FGolemResult SetValidatedTarget(AActor* Target);
 	FGolemResult TryToggleTargetLock(AActor* Target = nullptr);
 	AActor* GetLockedTarget() const;
-	FGolemResult SpendStamina(float Amount, FGameplayTag ActionTag = FGameplayTag());
 	void PublishOutcome(EGolemCombatOutcome Outcome, FGameplayTag ActionTag,
 		AActor* Target = nullptr, float Amount = 0.0f);
 	virtual void ResolveIncomingDamage(AActor* Source, float InDamage, float PoiseDamage,
 		bool bCanDefend, float& OutHealthDamage) override;
-	virtual void ResolveIncomingDamageWithContext(AActor* Source, float InDamage, float PoiseDamage,
-		bool bCanDefend, const FGolemIncomingHitContext& Context, float& OutHealthDamage) override;
 	float GetMaxPoise() const;
 	/** Restores a validated in-memory pool after the owning build projection has committed. */
 	FGolemResult RestoreSnapshotPoise(float InPoise);
@@ -139,7 +134,6 @@ protected:
 		FActorComponentTickFunction* ThisTickFunction) override;
 
 private:
-	void HandlePoiseBonusChanged(const FOnAttributeChangeData& Change);
 	UFUNCTION()
 	void OnRep_ProfileId();
 	UFUNCTION()
@@ -161,7 +155,6 @@ private:
 		const TWeakObjectPtr<UGolemGameplayAbility>& Ability, int32 Index) const;
 	void EnterStagger(AActor* Source);
 	void EndStagger();
-	void HandleRuneTagChanged(const FGameplayTag Tag, int32 Count);
 	void HandleLifeTagChanged(const FGameplayTag Tag, int32 Count);
 	void UpdateLockCamera();
 	bool IsAuthorityAlive() const;
@@ -193,15 +186,11 @@ private:
 	bool bComboWindow = false;
 	bool bBufferedAttack = false;
 	bool bEndingPlay = false;
-	bool bSnapshotPublicationPending = false;
 	float DodgeStartedAt = 0.0f;
 	float ParryStartedAt = 0.0f;
 	float LockValidationElapsed = 0.0f;
-	float SavedWalkSpeed = 0.0f;
-	FDelegateHandle RuneTagHandle;
 	FDelegateHandle DownedTagHandle;
 	FDelegateHandle DeadTagHandle;
-	FDelegateHandle PoiseBonusHandle;
 	FTimerHandle StaggerTimer;
 	FGuid LockCameraHandle;
 	FGuid AttackActivationId;

@@ -16,7 +16,6 @@
 #include "Math/NumericLimits.h"
 #include "Net/UnrealNetwork.h"
 #include "Tags/GolemGameplayTags.h"
-#include "Skills/GolemSkillRuntimeComponent.h"
 
 namespace
 {
@@ -57,7 +56,6 @@ void UGolemAbilitySystemComponent::GetLifetimeReplicatedProps(TArray<FLifetimePr
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 	DOREPLIFETIME(UGolemAbilitySystemComponent, OwnedGrantCount);
-	DOREPLIFETIME(UGolemAbilitySystemComponent, PublishedProjections);
 }
 
 FGolemResult UGolemAbilitySystemComponent::InitializeGolemActor(AActor* Golem, UGolemAttributeSet* InAttributes,
@@ -113,6 +111,11 @@ UGolemLifeComponent* UGolemAbilitySystemComponent::GetLifeComponent() const
 {
 	return LifeComponent.Get();
 }
+float UGolemAbilitySystemComponent::GetInitialPower() const
+{
+	return InitialDefaults.Power;
+}
+
 FGolemEntityId UGolemAbilitySystemComponent::GetEntityId() const
 {
 	return EntityId;
@@ -247,13 +250,10 @@ FGolemResult UGolemAbilitySystemComponent::ApplyAttributeDefaults()
 		Modifier.ModifierMagnitude = FScalableFloat(Value);
 	};
 	AddOverride(UGolemAttributeSet::GetMaxHealthAttribute(), InitialDefaults.MaxHealth);
-	AddOverride(UGolemAttributeSet::GetMaxStaminaAttribute(), InitialDefaults.MaxStamina);
-	AddOverride(UGolemAttributeSet::GetMaxRuneEnergyAttribute(), InitialDefaults.MaxRuneEnergy);
 	AddOverride(UGolemAttributeSet::GetHealthAttribute(), InitialDefaults.MaxHealth);
-	AddOverride(UGolemAttributeSet::GetStaminaAttribute(), InitialDefaults.MaxStamina);
-	AddOverride(UGolemAttributeSet::GetRuneEnergyAttribute(), InitialDefaults.MaxRuneEnergy);
-	AddOverride(UGolemAttributeSet::GetAttackPowerAttribute(), InitialDefaults.AttackPower);
-	AddOverride(UGolemAttributeSet::GetDefenseAttribute(), InitialDefaults.Defense);
+	AddOverride(UGolemAttributeSet::GetPowerAttribute(), InitialDefaults.Power);
+	AddOverride(UGolemAttributeSet::GetAgilityAttribute(), InitialDefaults.Agility);
+	AddOverride(UGolemAttributeSet::GetColorHoldAttribute(), InitialDefaults.ColorHold);
 	const FGameplayEffectSpec Spec(Effect, MakeEffectContext(), 1.0f);
 	return ApplyGameplayEffectSpecToSelf(Spec).WasSuccessfullyApplied()
 		? FGolemResult::Success() : GolemGASFailure(EGolemError::InvalidState, TEXT("InitializeAttributesGE"));
@@ -261,45 +261,14 @@ FGolemResult UGolemAbilitySystemComponent::ApplyAttributeDefaults()
 
 FGolemResult UGolemAbilitySystemComponent::ResetAttributesForCheckpoint()
 {
-	if (IsMutationFenced())
-	{
-		return GolemGASFailure(EGolemError::Conflict, TEXT("CheckpointProjectionFence"));
-	}
-	if (UGolemSkillRuntimeComponent* Skills = GetOwner()->FindComponentByClass<UGolemSkillRuntimeComponent>())
-	{
-		Skills->ResetForCheckpoint();
-	}
-	const FGolemResult DefaultsResult = ApplyAttributeDefaults();
-	if (!DefaultsResult.IsSuccess())
-	{
-		return DefaultsResult;
-	}
-	// Passive max bonuses remain on the same exact active handles. Retry fills their projected maxima.
-	UGameplayEffect* Fill = NewObject<UGameplayEffect>(GetTransientPackage());
-	Fill->DurationPolicy = EGameplayEffectDurationType::Instant;
-	const FGameplayAttribute Resources[] { UGolemAttributeSet::GetHealthAttribute(),
-		UGolemAttributeSet::GetStaminaAttribute(), UGolemAttributeSet::GetRuneEnergyAttribute() };
-	const float Maxima[] { Attributes->GetMaxHealth(), Attributes->GetMaxStamina(), Attributes->GetMaxRuneEnergy() };
-	for (int32 Index = 0; Index < UE_ARRAY_COUNT(Resources); ++Index)
-	{
-		FGameplayModifierInfo& Modifier = Fill->Modifiers.AddDefaulted_GetRef();
-		Modifier.Attribute = Resources[Index];
-		Modifier.ModifierOp = EGameplayModOp::Override;
-		Modifier.ModifierMagnitude = FScalableFloat(Maxima[Index]);
-	}
-	const FGameplayEffectSpec Spec(Fill, MakeEffectContext(), 1.0f);
-	return ApplyGameplayEffectSpecToSelf(Spec).WasSuccessfullyApplied() ? FGolemResult::Success()
-		: GolemGASFailure(EGolemError::InvalidState, TEXT("CheckpointProjectedResources"));
+	// The defaults effect overrides both MaxHealth and Health, so a retry starts at full health.
+	return ApplyAttributeDefaults();
 }
 
 FGolemResult UGolemAbilitySystemComponent::GrantAbilitySet(const UGolemAbilitySetDefinition* Definition,
 	FName SourceKey, FGolemAbilitySetHandle& OutHandle)
 {
 	OutHandle = FGolemAbilitySetHandle();
-	if (IsMutationFenced())
-	{
-		return GolemGASFailure(EGolemError::Conflict, TEXT("GrantProjectionFence"));
-	}
 	if (!IsValid(GetOwner()) || !GetOwner()->HasAuthority())
 	{
 		return GolemGASFailure(EGolemError::NotAuthority, TEXT("GrantAbilitySet"));
@@ -371,10 +340,6 @@ FGolemResult UGolemAbilitySystemComponent::GrantAbilitySet(const UGolemAbilitySe
 
 FGolemResult UGolemAbilitySystemComponent::RevokeAbilitySet(const FGolemAbilitySetHandle& Handle)
 {
-	if (IsMutationFenced() && !bProjectionEndingPlay)
-	{
-		return GolemGASFailure(EGolemError::Conflict, TEXT("RevokeProjectionFence"));
-	}
 	if (!IsValid(GetOwner()) || !GetOwner()->HasAuthority())
 	{
 		return GolemGASFailure(EGolemError::NotAuthority, TEXT("RevokeAbilitySet"));
@@ -422,7 +387,6 @@ void UGolemAbilitySystemComponent::OnRep_OwnedGrantCount()
 
 void UGolemAbilitySystemComponent::HandleControllerChanged()
 {
-	CancelPendingProjection();
 	const bool bHasCancellationContext = AbilityActorInfo.IsValid() && AbilityActorInfo->OwnerActor.IsValid(true) &&
 		AbilityActorInfo->AbilitySystemComponent.IsValid(true);
 	if (bHasCancellationContext)
@@ -445,7 +409,6 @@ void UGolemAbilitySystemComponent::HandleControllerChanged()
 
 void UGolemAbilitySystemComponent::ClearActorInfo()
 {
-	CancelPendingProjection();
 	if (AbilityActorInfo.IsValid() && AbilityActorInfo->OwnerActor.IsValid(true) &&
 		AbilityActorInfo->AbilitySystemComponent.IsValid(true))
 	{
@@ -472,10 +435,6 @@ FGolemResult UGolemAbilitySystemComponent::RequestAbilityInput(const FGameplayTa
 	if (!InputTag.IsValid())
 	{
 		return GolemGASFailure(EGolemError::InvalidData, TEXT("AbilityInputTag"));
-	}
-	if (bPressed && IsMutationFenced())
-	{
-		return GolemGASFailure(EGolemError::Conflict, TEXT("AbilityProjectionFence"));
 	}
 	ABILITYLIST_SCOPE_LOCK();
 	for (FGameplayAbilitySpec& Spec : GetActivatableAbilities())
@@ -524,20 +483,6 @@ FGolemResult UGolemAbilitySystemComponent::RequestAbilityInput(const FGameplayTa
 	return GolemGASFailure(EGolemError::NotFound, TEXT("InputAbilityNotGranted"));
 }
 
-FGolemResult UGolemAbilitySystemComponent::ActivateSpecializationHandle(FGameplayAbilitySpecHandle Handle, AActor* Target)
-{
-	if (GetOwner() == nullptr || !GetOwner()->HasAuthority() || IsMutationFenced())
-	{
-		return GolemGASFailure(EGolemError::InvalidState, TEXT("SkillActivationAuthority"));
-	}
-	FGameplayEventData Payload;
-	Payload.Instigator = GetOwner();
-	Payload.Target = Target;
-	const bool bActivated = InternalTryActivateAbility(Handle, FPredictionKey(), nullptr, nullptr, &Payload);
-	return bActivated ? FGolemResult::Success()
-		: GolemGASFailure(EGolemError::InvalidState, TEXT("SkillActivationRejected"));
-}
-
 AActor* UGolemAbilitySystemComponent::FindAbilityTarget(const FGameplayTag& InputTag) const
 {
 	if (!IsValid(GetOwner()) || GetWorld() == nullptr)
@@ -582,8 +527,7 @@ FGolemResult UGolemAbilitySystemComponent::ApplyDamage(AActor* Source, AActor* T
 }
 
 FGolemResult UGolemAbilitySystemComponent::ApplyCombatDamage(AActor* Source, AActor* Target,
-	float Amount, float PoiseDamage, bool bCanDefend, const FHitResult* Hit, bool bHeavy,
-	FGuid ActivationId, int32 HitIndex)
+	float Amount, float PoiseDamage, bool bCanDefend, const FHitResult* Hit)
 {
 	if (!IsValid(Source) || !IsValid(Target) || Source->GetWorld() != Target->GetWorld() ||
 		!FMath::IsFinite(Amount) || Amount <= 0.0f || Amount > 1000000.0f ||
@@ -605,10 +549,6 @@ FGolemResult UGolemAbilitySystemComponent::ApplyCombatDamage(AActor* Source, AAc
 	{
 		return GolemGASFailure(EGolemError::InvalidState, TEXT("DamageTargetUnavailable"));
 	}
-	if (SourceASC->IsMutationFenced() || TargetASC->IsMutationFenced())
-	{
-		return GolemGASFailure(EGolemError::Conflict, TEXT("DamageProjectionFence"));
-	}
 	FGameplayEffectContextHandle Context = SourceASC->MakeEffectContext();
 	if (Hit != nullptr)
 	{
@@ -622,28 +562,6 @@ FGolemResult UGolemAbilitySystemComponent::ApplyCombatDamage(AActor* Source, AAc
 	Spec.Data->SetSetByCallerMagnitude(GolemGameplayTags::Data_Damage, Amount);
 	Spec.Data->SetSetByCallerMagnitude(GolemGameplayTags::Data_DamagePoise, PoiseDamage);
 	Spec.Data->SetSetByCallerMagnitude(GolemGameplayTags::Data_DamageCanDefend, bCanDefend ? 1.0f : 0.0f);
-	const UGolemSkillRuntimeComponent* SourceSkills = Source->FindComponentByClass<UGolemSkillRuntimeComponent>();
-	const UGolemSkillRuntimeComponent* TargetSkills = Target->FindComponentByClass<UGolemSkillRuntimeComponent>();
-	if ((SourceSkills != nullptr && !SourceSkills->GetBuild().SpecId.IsNone())
-		|| (TargetSkills != nullptr && !TargetSkills->GetBuild().SpecId.IsNone()))
-	{
-		Spec.Data->SetSetByCallerMagnitude(FName(TEXT("SkillSeed")), 1.0f);
-		Spec.Data->SetSetByCallerMagnitude(FName(TEXT("SkillSchool")), 0.0f);
-	}
-	Spec.Data->SetSetByCallerMagnitude(FName(TEXT("SkillHeavy")), bHeavy ? 1.0f : 0.0f);
-	Spec.Data->SetSetByCallerMagnitude(FName(TEXT("SkillDirect")), bCanDefend ? 1.0f : 0.0f);
-	Spec.Data->SetSetByCallerMagnitude(FName(TEXT("ItemEligibleActivation")), bCanDefend ? 1.0f : 0.0f);
-	Spec.Data->SetSetByCallerMagnitude(FName(TEXT("SkillHitIndex")), HitIndex);
-	if (!ActivationId.IsValid())
-	{
-		ActivationId = FGuid::NewGuid();
-	}
-	const uint32 Parts[] { ActivationId.A, ActivationId.B, ActivationId.C, ActivationId.D };
-	for (int32 Index = 0; Index < 4; ++Index)
-	{
-		Spec.Data->SetSetByCallerMagnitude(FName(*FString::Printf(TEXT("SkillActivation%dLow"), Index)), Parts[Index] & 0xffff);
-		Spec.Data->SetSetByCallerMagnitude(FName(*FString::Printf(TEXT("SkillActivation%dHigh"), Index)), Parts[Index] >> 16);
-	}
 	return SourceASC->ApplyGameplayEffectSpecToTarget(*Spec.Data.Get(), TargetASC).WasSuccessfullyApplied()
 		? FGolemResult::Success() : GolemGASFailure(EGolemError::InvalidState, TEXT("DamageEffectRejected"));
 }
@@ -701,8 +619,7 @@ void UGolemAbilitySystemComponent::RegisterNativeGameplayCues()
 	TArray<FGameplayCueReferencePair> Cues;
 	for (const FGameplayTag Tag : {FGameplayTag(GolemGameplayTags::GameplayCue_Damage),
 		FGameplayTag(GolemGameplayTags::GameplayCue_Downed), FGameplayTag(GolemGameplayTags::GameplayCue_Revive),
-		FGameplayTag(GolemGameplayTags::GameplayCue_Parry), FGameplayTag(GolemGameplayTags::GameplayCue_Stagger),
-		FGameplayTag(GolemGameplayTags::GameplayCue_Rune)})
+		FGameplayTag(GolemGameplayTags::GameplayCue_Parry), FGameplayTag(GolemGameplayTags::GameplayCue_Stagger)})
 	{
 		if (!Set->GameplayCueDataMap.Contains(Tag))
 		{
@@ -802,24 +719,9 @@ void UGolemAbilitySystemComponent::PublishDamageConfirmation(AActor* Source, flo
 
 void UGolemAbilitySystemComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
-	bProjectionEndingPlay = true;
-	OnSourceProjectionChanged.Clear();
 	OnAbilityResult.Clear();
 	OnAbilityGrantsChanged.Clear();
 	OnGameplayCueProcessed.Clear();
-	CancelPendingProjection();
-	TArray<FGolemProjectionRuntime> Sources;
-	ProjectionSources.GenerateValueArray(Sources);
-	ProjectionSources.Reset();
-	for (const FGolemProjectionRuntime& Source : Sources)
-	{
-		for (const FGolemOwnedAbilityGrant& Grant : Source.OptionalGrants)
-		{
-			OwnedGrants.Remove(Grant.Handle.SourceKey);
-		}
-		RemoveProjectionRuntime(Source);
-	}
-	PublishedProjections.Reset();
 	CancelAllAbilities();
 	TArray<FGolemAbilitySetHandle> Handles;
 	for (const TPair<FName, FGolemOwnedAbilityGrant>& Entry : OwnedGrants)

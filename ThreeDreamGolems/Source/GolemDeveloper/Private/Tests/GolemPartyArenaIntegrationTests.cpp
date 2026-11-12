@@ -446,7 +446,7 @@ namespace GolemPartyArenaTest
 				if (Entry == nullptr || Entry->Golem != Golems[Slot].Get() || Entry->GolemId != GolemIds[Slot]
 					|| Entry->HeroDefinitionId != HeroIds[Slot]
 					|| Entry->Golem->GetGolemAbilitySystem()->GetOwnedGrantCount() != 2
-					|| Entry->Golem->GetGolemAbilitySystem()->GetActivatableAbilities().Num() != 11)
+					|| Entry->Golem->GetGolemAbilitySystem()->GetActivatableAbilities().Num() != 10)
 				{
 					Fail(TEXT("Arena replaced identity or duplicated/lost shared foundation/combat grants."));
 					return false;
@@ -1041,11 +1041,11 @@ namespace GolemPartyArenaTest
 				: FGolemResult::Failure(EGolemError::InvalidState, TEXT("NoBossController"), FText::GetEmpty());
 			const FGolemCombatSnapshot HumanCombat = HumanCombatComponent->GetSnapshot();
 			const FString Message = FString::Printf(
-				TEXT("%s: bossHP%.1f phase%d life%d stamina%.1f target%s range%.1f action%s "
+				TEXT("%s: bossHP%.1f phase%d life%d target%s range%.1f action%s "
 					"running%d selectable%d stagger%d tree%d ticks%lld selectContext%s selected%s; "
 					"humanHP%.1f life%d block%d attack%d Q%d feedback%s."),
 				Reason, BossEnemy->GetGolemAttributeSet()->GetHealth(), BossEnemy->GetBossPhaseComponent()->GetPhaseIndex(),
-				static_cast<int32>(BossEnemy->GetLifeComponent()->GetLifeState()), Decision.Stamina,
+				static_cast<int32>(BossEnemy->GetLifeComponent()->GetLifeState()),
 				*GetNameSafe(Decision.Target.Get()), Decision.TargetDistance, *Decision.ActiveActionTag.ToString(),
 				Decision.bActionRunning, Decision.bCanSelectAction, Decision.bStaggered,
 				AI != nullptr && AI->GetDecisionTree() != nullptr && AI->GetDecisionTree()->IsRunning(),

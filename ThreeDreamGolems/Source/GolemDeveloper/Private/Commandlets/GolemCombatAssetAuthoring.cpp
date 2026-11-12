@@ -7,7 +7,6 @@
 #include "Abilities/GolemLightAttackAbility.h"
 #include "Abilities/GolemLockTargetAbility.h"
 #include "Abilities/GolemParryAbility.h"
-#include "Abilities/GolemRuneAbility.h"
 #include "Abilities/GolemTraversalAbility.h"
 #include "Animation/GolemAnimNotifyState_ComboWindow.h"
 #include "Animation/GolemAnimNotifyState_TraceWindow.h"
@@ -826,7 +825,6 @@ namespace GolemCombatAssetAuthoring
 				{ UGolemParryAbility::StaticClass(), GolemGameplayTags::Input_Combat_Parry, 1 },
 				{ UGolemDodgeAbility::StaticClass(), GolemGameplayTags::Input_Combat_Dodge, 1 },
 				{ UGolemLockTargetAbility::StaticClass(), GolemGameplayTags::Input_Combat_LockOn, 1 },
-				{ UGolemRuneAbility::StaticClass(), GolemGameplayTags::Input_Combat_Rune, 1 },
 				{ UGolemFinisherAbility::StaticClass(), GolemGameplayTags::Input_Combat_Finisher, 1 },
 				{ UGolemTraversalAbility::StaticClass(), GolemGameplayTags::Input_World_Traverse, 1 }
 			};
@@ -835,7 +833,7 @@ namespace GolemCombatAssetAuthoring
 			{
 				GolemGameplayTags::Ability_Combat_Primary, GolemGameplayTags::Ability_Combat_Heavy,
 				GolemGameplayTags::Ability_Combat_Block, GolemGameplayTags::Ability_Combat_Parry,
-				GolemGameplayTags::Ability_Combat_Dodge, GolemGameplayTags::Ability_Combat_Rune,
+				GolemGameplayTags::Ability_Combat_Dodge,
 				GolemGameplayTags::Ability_Combat_Finisher, GolemGameplayTags::Ability_World_Traverse
 			};
 			for (const FGameplayTag Action : ActionTags)
@@ -890,7 +888,6 @@ namespace GolemCombatAssetAuthoring
 		UAnimMontage* Heavy = CreateMontage(TEXT("AM_Golem_Heavy"), { HeavySequence }, { TEXT("Heavy") }, true);
 		UAnimMontage* Dodge = CreateMontage(TEXT("AM_Golem_Dodge"),
 			{ LoadSequence(TEXT("Anims/Unarmed/Jump/MM_Dash")) }, { TEXT("Dodge") });
-		UAnimMontage* Rune = CreateMontage(TEXT("AM_Golem_Rune"), { AttackC }, { TEXT("Rune") });
 		UAnimMontage* Stagger = CreateMontage(TEXT("AM_Golem_Stagger"),
 			{ LoadSequence(TEXT("Anims/Rifle/HitReact/MM_HitReact_Front_Hvy_01")) }, { TEXT("Stagger") });
 		UAnimMontage* Traversal = CreateMontage(TEXT("AM_Golem_Traversal"),
@@ -901,7 +898,7 @@ namespace GolemCombatAssetAuthoring
 			{ LoadSequence(TEXT("Anims/Death/MM_Death_Front_01")) }, { TEXT("Victim") }, false, false, false, 3.0f);
 		USkeletalMesh* Mesh = LoadObject<USkeletalMesh>(nullptr,
 			TEXT("/Game/Golem/Vendor/UE58/Mannequins/Meshes/SKM_Manny_Simple.SKM_Manny_Simple"));
-		if (Light == nullptr || Heavy == nullptr || Dodge == nullptr || Rune == nullptr || Stagger == nullptr
+		if (Light == nullptr || Heavy == nullptr || Dodge == nullptr || Stagger == nullptr
 			|| Traversal == nullptr || Finisher == nullptr || Victim == nullptr || Mesh == nullptr)
 		{
 			UE_LOG(LogGolemCombatAuthoring, Error, TEXT("Combat montage authoring failed; no profile will be saved."));
@@ -937,11 +934,10 @@ namespace GolemCombatAssetAuthoring
 			HeavyAttack.SectionName = TEXT("Heavy");
 			HeavyAttack.Damage = 30.0f;
 			HeavyAttack.PoiseDamage = 50.0f;
-			HeavyAttack.StaminaCost = 15.0f;
 			FGolemCombatTuning Tuning;
 			Tuning.StaggerDuration = 5.0f;
 			if (!Profile->TrySetAttacks(Attacks).IsSuccess()
-				|| !Profile->TrySetActionMontages(Dodge, Rune, Stagger, Traversal, Finisher, Victim).IsSuccess()
+				|| !Profile->TrySetActionMontages(Dodge, Stagger, Traversal, Finisher, Victim).IsSuccess()
 				|| !Profile->TrySetTuning(Tuning).IsSuccess())
 			{
 				return false;

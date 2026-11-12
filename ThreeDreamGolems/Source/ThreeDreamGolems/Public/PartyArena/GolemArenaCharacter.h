@@ -16,7 +16,6 @@ public:
 	AGolemArenaCharacter();
 	FGolemResult InitializeArenaCombat();
 	UGolemThreatComponent* GetThreatComponent() const;
-	FActiveGameplayEffectHandle GetRecoveryEffectHandle() const;
 
 protected:
 	virtual void EndPlay(EEndPlayReason::Type EndPlayReason) override;
@@ -24,5 +23,4 @@ protected:
 private:
 	UPROPERTY(VisibleAnywhere, Category = "Golem|AI|Threat")
 	TObjectPtr<UGolemThreatComponent> Threat;
-	FActiveGameplayEffectHandle RecoveryEffect;
 };

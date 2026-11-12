@@ -424,11 +424,6 @@ FGolemResult AGolemPartyArenaGameMode::TryRestartDrill(APlayerController* Player
 	}
 	for (const FGolemRosterEntry& Entry : Party->GetRoster())
 	{
-		if (Entry.Golem->GetGolemAbilitySystem()->IsMutationFenced())
-		{
-			return FGolemResult::Failure(EGolemError::Conflict, TEXT("ArenaRetry"),
-				NSLOCTEXT("GolemArena", "RetryTransactionActive", "Wait for the Golem's transaction to finish."));
-		}
 	}
 	bResetting = true;
 	ON_SCOPE_EXIT

@@ -63,10 +63,8 @@ struct GOLEMAI_API FGolemAIDecisionSnapshot
 	bool bStaggered = false;
 	UPROPERTY(BlueprintReadOnly, Category = "Golem|AI|Decision")
 	float TargetDistance = 0.0f;
-	UPROPERTY(BlueprintReadOnly, Category = "Golem|AI|Decision")
-	float Stamina = 0.0f;
-	UPROPERTY(BlueprintReadOnly, Category = "Golem|AI|Decision")
-	float RuneEnergy = 0.0f;
+
+
 	UPROPERTY(BlueprintReadOnly, Category = "Golem|AI|Decision")
 	FVector FormationGoal = FVector::ZeroVector;
 	UPROPERTY(BlueprintReadOnly, Category = "Golem|AI|Decision")
@@ -113,8 +111,6 @@ public:
 	FGolemResult TrySelectAction(FGolemAIActionEntry& OutAction) const;
 	FGolemResult TryBeginAction(const FGolemAIActionEntry& Action, bool bUseAttackLease, FGuid& OutActionToken);
 	FGolemResult TryBeginRevive(FGuid& OutActionToken);
-	bool HasSpecialization() const;
-	FGolemResult TryBeginSpecializationAction(bool bUseAttackLease, FGuid& OutActionToken);
 	FGolemResult CancelAction(const FGuid& ActionToken);
 	void CancelOwnedAction();
 	EGolemAIActionStatus GetActionStatus(const FGuid& ActionToken) const;
@@ -135,7 +131,6 @@ private:
 	FGolemResult ValidateContext() const;
 	FGolemResult ValidateTarget(AActor* InTarget, bool bFriendlyDowned) const;
 	FGolemAIActionSelectionContext MakeSelectionContext() const;
-	FGolemResult SelectSpecializationAction(int32& OutSlot, AActor*& OutTarget) const;
 	FGolemResult ResolveActionSpec(FGameplayTag ActionTag, FGameplayAbilitySpecHandle& OutSpec,
 		FGameplayTag& OutInput) const;
 	FGolemResult BeginActionSpec(FGameplayTag ActionTag, FName ActionKey, float Cooldown,

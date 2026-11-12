@@ -216,7 +216,7 @@ FGolemResult UGolemFinisherComponent::EndFinisher(const FGuid& Reservation, bool
 		const UGolemAttributeSet* TargetAttributes = TargetASC->GetGolemAttributes();
 		Result = TargetAttributes != nullptr
 			? UGolemAbilitySystemComponent::ApplyCombatDamage(Source, Target,
-				TargetAttributes->GetMaxHealth() + TargetAttributes->GetDefense() + 1.0f, 0.0f, false)
+				TargetAttributes->GetMaxHealth() + 1.0f, 0.0f, false)
 			: FGolemResult::Failure(EGolemError::InvalidState, TEXT("EndFinisher"),
 				NSLOCTEXT("GolemCombat", "FinisherAttributes", "Finisher target has no GAS attributes."));
 		if (Result.IsSuccess())

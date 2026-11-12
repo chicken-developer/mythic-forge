@@ -53,7 +53,7 @@ void UGolemTestDamageAbility::ActivateAbility(const FGameplayAbilitySpecHandle H
 			}
 			else
 			{
-				Result = UGolemAbilitySystemComponent::ApplyDamage(Source, Target, ASC->GetGolemAttributes()->GetAttackPower());
+				Result = UGolemAbilitySystemComponent::ApplyDamage(Source, Target, ASC->GetGolemAttributes()->GetPower());
 			}
 		}
 	}

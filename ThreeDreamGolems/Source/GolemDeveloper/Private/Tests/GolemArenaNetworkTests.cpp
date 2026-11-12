@@ -717,13 +717,12 @@ namespace GolemArenaNetwork
 			if (Result.IsSuccess())
 			{
 				Result = UGolemAbilitySystemComponent::ApplyDamage(Target.Get(), Golems[DisconnectSlot].Get(),
-					Golems[DisconnectSlot]->GetGolemAttributeSet()->GetDefense() + 10.0f);
+					10.0f);
 			}
 			if (Result.IsSuccess())
 			{
 				Result = UGolemAbilitySystemComponent::ApplyDamage(Target.Get(), Golems[RequesterSlot].Get(),
-					Golems[RequesterSlot]->GetGolemAttributeSet()->GetMaxHealth()
-						+ Golems[RequesterSlot]->GetGolemAttributeSet()->GetDefense() + 1.0f);
+					Golems[RequesterSlot]->GetGolemAttributeSet()->GetMaxHealth() + 1.0f);
 			}
 			if (!Result.IsSuccess() || !Golems[RequesterSlot]->GetLifeComponent()->IsDowned())
 			{

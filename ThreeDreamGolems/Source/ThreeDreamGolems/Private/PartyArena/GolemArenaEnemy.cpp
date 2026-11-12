@@ -1,5 +1,4 @@
 #include "PartyArena/GolemArenaEnemy.h"
-#include "Skills/GolemSkillRuntimeComponent.h"
 
 #include "Assets/GolemAssetManager.h"
 #include "Attributes/GolemAttributeSet.h"
@@ -9,7 +8,6 @@
 #include "Components/GolemLifeComponent.h"
 #include "Controllers/GolemEnemyController.h"
 #include "Definitions/GolemAIArchetypeDefinition.h"
-#include "Effects/GolemArenaResourceRecoveryEffect.h"
 #include "Finisher/GolemFinisherComponent.h"
 #include "Tags/GolemGameplayTags.h"
 #include "Threat/GolemThreatComponent.h"
@@ -117,31 +115,7 @@ FGolemResult AGolemArenaEnemy::InitializeArenaEnemy(const FPrimaryAssetId& InArc
 			return InitializationResult;
 		}
 	}
-	if (!Archetype->Specialization.SpecId.IsNone())
-	{
-		SpecializationRuntime = NewObject<UGolemSkillRuntimeComponent>(this, TEXT("EnemySkills"));
-		SpecializationRuntime->RegisterComponent();
-		InitializationResult = SpecializationRuntime->ConfigureBuild(Archetype->Specialization);
-		if (!InitializationResult.IsSuccess())
-		{
-			return InitializationResult;
-		}
-	}
 	GetCharacterMovement()->MaxWalkSpeed = Archetype->GetTuning().WalkSpeed;
-	FGameplayEffectContextHandle Context = AbilitySystem->MakeEffectContext();
-	Context.AddSourceObject(this);
-	const FGameplayEffectSpecHandle Spec = AbilitySystem->MakeOutgoingSpec(
-		UGolemArenaResourceRecoveryEffect::StaticClass(), 1.0f, Context);
-	if (Spec.IsValid())
-	{
-		RecoveryEffect = AbilitySystem->ApplyGameplayEffectSpecToSelf(*Spec.Data.Get());
-	}
-	if (!RecoveryEffect.IsValid())
-	{
-		InitializationResult = FGolemResult::Failure(EGolemError::InvalidState,
-			TEXT("ArenaEnemyRecovery"), FText::GetEmpty());
-		return InitializationResult;
-	}
 	Label->SetText(!Archetype->GetDisplayName().IsEmpty() ? Archetype->GetDisplayName() : BossDefinitionId.IsValid()
 		? NSLOCTEXT("GolemArena", "BossLabel", "ARENA BOSS: two phases")
 		: NSLOCTEXT("GolemArena", "EnemyLabel", "ARENA ENEMY"));
@@ -217,11 +191,6 @@ void AGolemArenaEnemy::EndPlay(const EEndPlayReason::Type EndPlayReason)
 	LifeHandle.Reset();
 	Finisher->PrepareForEndPlay(EndPlayReason == EEndPlayReason::EndPlayInEditor
 		|| EndPlayReason == EEndPlayReason::Quit || EndPlayReason == EEndPlayReason::LevelTransition);
-	if (HasAuthority() && RecoveryEffect.IsValid())
-	{
-		AbilitySystem->RemoveActiveGameplayEffect(RecoveryEffect);
-		RecoveryEffect.Invalidate();
-	}
 	const bool bWorldEnding = EndPlayReason == EEndPlayReason::EndPlayInEditor
 		|| EndPlayReason == EEndPlayReason::Quit || EndPlayReason == EEndPlayReason::LevelTransition;
 	if (AController* OwnedController = GetController(); HasAuthority() && !bWorldEnding && IsValid(OwnedController))
@@ -277,7 +246,3 @@ const FGolemResult& AGolemArenaEnemy::GetInitializationResult() const
 	return InitializationResult;
 }
 
-FActiveGameplayEffectHandle AGolemArenaEnemy::GetRecoveryEffectHandle() const
-{
-	return RecoveryEffect;
-}

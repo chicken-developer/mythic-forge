@@ -273,18 +273,11 @@ EStateTreeRunStatus FGolemAIExecuteActionTask::EnterState(FStateTreeExecutionCon
 	}
 	else
 	{
-		if (Data.DecisionContext->HasSpecialization())
+		FGolemAIActionEntry Action;
+		Result = Data.DecisionContext->TrySelectAction(Action);
+		if (Result.IsSuccess())
 		{
-			Result = Data.DecisionContext->TryBeginSpecializationAction(bUseAttackLease, Data.ActionToken);
-		}
-		else
-		{
-			FGolemAIActionEntry Action;
-			Result = Data.DecisionContext->TrySelectAction(Action);
-			if (Result.IsSuccess())
-			{
-				Result = Data.DecisionContext->TryBeginAction(Action, bUseAttackLease, Data.ActionToken);
-			}
+			Result = Data.DecisionContext->TryBeginAction(Action, bUseAttackLease, Data.ActionToken);
 		}
 	}
 	if (!Result.IsSuccess())

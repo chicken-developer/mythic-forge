@@ -99,7 +99,7 @@ bool FGolemAIDefinitionRejectionTest::RunTest(const FString& Parameters)
 	const FPrimaryAssetId OriginalProfile = Archetype->GetCombatProfileId();
 	const FPrimaryAssetId OriginalActionSet = Archetype->GetActionSetId();
 	TestFalse(TEXT("Wrong definition type cannot replace a combat profile"), Archetype->TrySetIds(
-		FPrimaryAssetId(TEXT("GolemHero"), TEXT("Training_Red")), OriginalActionSet).IsSuccess());
+		FPrimaryAssetId(TEXT("GolemHero"), TEXT("Mars")), OriginalActionSet).IsSuccess());
 	TestTrue(TEXT("Rejected definition update preserves profile identity"), Archetype->GetCombatProfileId() == OriginalProfile);
 	UStateTree* OriginalTree = Archetype->GetStateTree();
 	TestFalse(TEXT("Absent decision asset cannot replace a compiled tree"),

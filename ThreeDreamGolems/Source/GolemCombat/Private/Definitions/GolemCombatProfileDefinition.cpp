@@ -71,14 +71,12 @@ FGolemResult FGolemCombatTuning::Validate() const
 {
 	if (!GolemFiniteRange(MaxPoise, 1.0f, 10000.0f) || !GolemFiniteRange(StaggerDuration, 0.1f, 30.0f) ||
 		!GolemFiniteRange(BlockFacingCosine, -1.0f, 1.0f) || !GolemFiniteRange(BlockDamageFraction, 0.0f, 1.0f) ||
-		!GolemFiniteRange(BlockStaminaCost, 0.0f, 1000.0f) || !GolemFiniteRange(ParryWindow, 0.05f, 2.0f) ||
-		!GolemFiniteRange(ParryStaminaCost, 0.0f, 1000.0f) || !GolemFiniteRange(DodgeDuration, 0.1f, 3.0f) ||
+		!GolemFiniteRange(ParryWindow, 0.05f, 2.0f) ||
+		!GolemFiniteRange(DodgeDuration, 0.1f, 3.0f) ||
 		!GolemFiniteRange(DodgeInvulnerabilityStart, 0.0f, DodgeDuration) ||
 		!GolemFiniteRange(DodgeInvulnerabilityEnd, DodgeInvulnerabilityStart, DodgeDuration) ||
-		!GolemFiniteRange(DodgeStaminaCost, 0.0f, 1000.0f) || !GolemFiniteRange(DodgeSpeed, 0.0f, 1500.0f) ||
-		!GolemFiniteRange(LockRange, 100.0f, 5000.0f) || !GolemFiniteRange(RuneRange, 100.0f, 5000.0f) ||
-		!GolemFiniteRange(RuneDamage, 1.0f, 10000.0f) || !GolemFiniteRange(RunePoiseDamage, 0.0f, 10000.0f) ||
-		!GolemFiniteRange(RuneEnergyCost, 0.0f, 1000.0f) || !GolemFiniteRange(RuneSlowDuration, 0.1f, 30.0f))
+		!GolemFiniteRange(DodgeSpeed, 0.0f, 1500.0f) ||
+		!GolemFiniteRange(LockRange, 100.0f, 5000.0f))
 	{
 		return GolemInvalidCombatData(TEXT("CombatTuning"));
 	}
@@ -105,10 +103,6 @@ UAnimSequence* UGolemCombatProfileDefinition::GetWalkAnimation() const
 UAnimMontage* UGolemCombatProfileDefinition::GetDodgeMontage() const
 {
 	return DodgeMontage.LoadSynchronous();
-}
-UAnimMontage* UGolemCombatProfileDefinition::GetRuneMontage() const
-{
-	return RuneMontage.LoadSynchronous();
 }
 UAnimMontage* UGolemCombatProfileDefinition::GetStaggerMontage() const
 {
@@ -165,7 +159,7 @@ FGolemResult UGolemCombatProfileDefinition::ValidateAttacks(const TArray<FGolemA
 			!GolemValidMontage(Montage, GetSkeletalMesh()) || Attack.SectionName.IsNone() ||
 			!GolemFiniteRange(Attack.Damage, 0.01f, 10000.0f) ||
 			!GolemFiniteRange(Attack.PoiseDamage, 0.0f, 10000.0f) ||
-			!GolemFiniteRange(Attack.StaminaCost, 0.0f, 1000.0f) ||
+			
 			!GolemFiniteRange(Attack.TraceRadius, 1.0f, 100.0f))
 		{
 			return GolemInvalidCombatData(TEXT("AttackDefinition"));
@@ -254,7 +248,7 @@ FGolemResult UGolemCombatProfileDefinition::ValidateCombatProfile() const
 	{
 		return AttackResult;
 	}
-	for (const UAnimMontage* Montage : {GetDodgeMontage(), GetRuneMontage(), GetStaggerMontage(),
+	for (const UAnimMontage* Montage : {GetDodgeMontage(), GetStaggerMontage(),
 		GetTraversalMontage(), GetFinisherSourceMontage(), GetFinisherTargetMontage()})
 	{
 		if (!GolemValidMontage(Montage, Mesh))
@@ -293,10 +287,10 @@ FGolemResult UGolemCombatProfileDefinition::TrySetAttacks(const TArray<FGolemAtt
 	return Result;
 }
 
-FGolemResult UGolemCombatProfileDefinition::TrySetActionMontages(UAnimMontage* Dodge, UAnimMontage* Rune,
+FGolemResult UGolemCombatProfileDefinition::TrySetActionMontages(UAnimMontage* Dodge,
 	UAnimMontage* Stagger, UAnimMontage* Traversal, UAnimMontage* FinisherSource, UAnimMontage* FinisherTarget)
 {
-	for (const UAnimMontage* Montage : {Dodge, Rune, Stagger, Traversal, FinisherSource, FinisherTarget})
+	for (const UAnimMontage* Montage : {Dodge, Stagger, Traversal, FinisherSource, FinisherTarget})
 	{
 		if (!GolemValidMontage(Montage, GetSkeletalMesh()))
 		{
@@ -308,7 +302,6 @@ FGolemResult UGolemCombatProfileDefinition::TrySetActionMontages(UAnimMontage* D
 		return GolemInvalidCombatData(TEXT("TraversalMotionWarpingContract"));
 	}
 	DodgeMontage = Dodge;
-	RuneMontage = Rune;
 	StaggerMontage = Stagger;
 	TraversalMontage = Traversal;
 	FinisherSourceMontage = FinisherSource;

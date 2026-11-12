@@ -199,7 +199,7 @@ bool AGolemCharacter::CanTransferControl() const
 	return GolemEntityId.IsValid() && !IsActorBeingDestroyed() && World != nullptr
 		&& !World->bIsTearingDown && !World->IsInSeamlessTravel()
 		&& LifeComponent != nullptr && LifeComponent->IsAlive()
-		&& AbilitySystem != nullptr && !AbilitySystem->IsMutationFenced()
+		&& AbilitySystem != nullptr
 		&& CombatComponent != nullptr && CombatComponent->CanTransferControl()
 		&& !TraversalComponent->HasActiveTraversal() && !FinisherComponent->IsReserved()
 		&& Movement != nullptr && Movement->MovementMode != MOVE_None;
@@ -219,7 +219,6 @@ void AGolemCharacter::ResetControlInput()
 		AbilitySystem->RequestAbilityInput(GolemGameplayTags::Input_Combat_Parry, false);
 		AbilitySystem->RequestAbilityInput(GolemGameplayTags::Input_Combat_Dodge, false);
 		AbilitySystem->RequestAbilityInput(GolemGameplayTags::Input_Combat_LockOn, false);
-		AbilitySystem->RequestAbilityInput(GolemGameplayTags::Input_Combat_Rune, false);
 		AbilitySystem->RequestAbilityInput(GolemGameplayTags::Input_Combat_Finisher, false);
 		AbilitySystem->RequestAbilityInput(GolemGameplayTags::Input_World_Traverse, false);
 	}

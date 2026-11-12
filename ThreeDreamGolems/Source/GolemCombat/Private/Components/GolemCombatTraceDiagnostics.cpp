@@ -12,7 +12,6 @@
 #include "Misc/App.h"
 #include "Misc/CommandLine.h"
 #include "Misc/Parse.h"
-#include "Skills/GolemSkillRuntimeComponent.h"
 #include "Tags/GolemGameplayTags.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogGolemTraceGeometry, Log, All);
@@ -28,12 +27,9 @@ void UGolemCombatComponent::BeginTraceGeometryDiagnostics()
 	EndTraceGeometryDiagnostics(TEXT("WindowReplaced"));
 	TraceGeometryDiagnostics = FTraceGeometryDiagnostics();
 	const ACharacter* Character = Cast<ACharacter>(GetOwner());
-	const UGolemSkillRuntimeComponent* Skills = IsValid(Character)
-		? Character->FindComponentByClass<UGolemSkillRuntimeComponent>() : nullptr;
 	if (TraceGeometryLogCount >= TraceGeometryLogLimit ||
 		!FParse::Param(FCommandLine::Get(), TEXT("M56TraceGeometry")) ||
 		!IsValid(Character) || !Character->HasAuthority() || !Character->IsPlayerControlled() ||
-		Skills == nullptr || !Skills->GetSkillState().EquipmentCombatBuild.bEnabled ||
 		AttackAction != GolemGameplayTags::Ability_Combat_Heavy || GetWorld() == nullptr)
 	{
 		return;

@@ -77,11 +77,6 @@ void AGolemCueVisualActor::Configure(AActor* Target, FGameplayTag InCueTag, bool
 		Color = FLinearColor(1.0f, 0.45f, 0.02f);
 		Text = NSLOCTEXT("GolemCue", "Stagger", "STAGGERED");
 	}
-	else if (CueTag == GolemGameplayTags::GameplayCue_Rune)
-	{
-		Color = FLinearColor(0.55f, 0.2f, 1.0f);
-		Text = NSLOCTEXT("GolemCue", "Rune", "RUNE");
-	}
 	Material = Disc->CreateDynamicMaterialInstance(0);
 	if (Material != nullptr)
 	{

@@ -2,7 +2,6 @@
 
 #include "AbilitySystemGlobals.h"
 #include "Abilities/GolemGameplayAbility.h"
-#include "Abilities/GolemRuneSlowEffect.h"
 #include "Animation/AnimInstance.h"
 #include "Animation/AnimMontage.h"
 #include "Animation/GolemAnimInstance.h"
@@ -23,7 +22,6 @@
 #include "GameplayEffect.h"
 #include "Net/UnrealNetwork.h"
 #include "Tags/GolemGameplayTags.h"
-#include "Skills/GolemSkillRuntimeComponent.h"
 #include "TimerManager.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogGolemCombat, Log, All);
@@ -69,36 +67,6 @@ namespace
 			}
 		}
 		return false;
-	}
-	FGolemResult GolemSpendResource(UGolemAbilitySystemComponent* ASC,
-		const FGameplayAttribute& Attribute, float Amount)
-	{
-		if (ASC == nullptr || !IsValid(ASC->GetOwner()) || !ASC->GetOwner()->HasAuthority() ||
-			!FMath::IsFinite(Amount) || Amount < 0.0f)
-		{
-			return GolemCombatFailure(EGolemError::InvalidData, TEXT("CombatResourceCost"));
-		}
-		if (ASC->IsMutationFenced())
-		{
-			return GolemCombatFailure(EGolemError::Conflict, TEXT("CombatProjectionFence"));
-		}
-		if (ASC->GetNumericAttribute(Attribute) + KINDA_SMALL_NUMBER < Amount)
-		{
-			return GolemCombatFailure(EGolemError::InsufficientResources, TEXT("CombatResourceCost"));
-		}
-		if (Amount == 0.0f)
-		{
-			return FGolemResult::Success();
-		}
-		UGameplayEffect* Cost = NewObject<UGameplayEffect>(GetTransientPackage());
-		Cost->DurationPolicy = EGameplayEffectDurationType::Instant;
-		FGameplayModifierInfo& Modifier = Cost->Modifiers.AddDefaulted_GetRef();
-		Modifier.Attribute = Attribute;
-		Modifier.ModifierOp = EGameplayModOp::Additive;
-		Modifier.ModifierMagnitude = FScalableFloat(-Amount);
-		const FGameplayEffectSpec Spec(Cost, ASC->MakeEffectContext(), 1.0f);
-		return ASC->ApplyGameplayEffectSpecToSelf(Spec).WasSuccessfullyApplied() ? FGolemResult::Success()
-			: GolemCombatFailure(EGolemError::InvalidState, TEXT("CombatResourceGE"));
 	}
 }
 
@@ -192,11 +160,6 @@ FGolemResult UGolemCombatComponent::ApplyProfile()
 		return Result;
 	}
 	AbilitySystem = ASC;
-	if (!PoiseBonusHandle.IsValid())
-	{
-		PoiseBonusHandle = ASC->GetGameplayAttributeValueChangeDelegate(UGolemAttributeSet::GetPoiseBonusAttribute())
-			.AddUObject(this, &ThisClass::HandlePoiseBonusChanged);
-	}
 	if (Character->HasAuthority())
 	{
 		Result = ASC->GrantAbilitySet(Set, TEXT("CombatProfile"), GrantHandle);
@@ -229,17 +192,13 @@ FGolemResult UGolemCombatComponent::ApplyProfile()
 		Head->SetRelativeScale3D(FVector(0.55f, 0.3f, 0.25f));
 		Head->RegisterComponent();
 	}
-	if (!RuneTagHandle.IsValid())
+	if (!DownedTagHandle.IsValid())
 	{
-		RuneTagHandle = ASC->RegisterGameplayTagEvent(GolemGameplayTags::State_Combat_RuneSlowed)
-			.AddUObject(this, &ThisClass::HandleRuneTagChanged);
 		DownedTagHandle = ASC->RegisterGameplayTagEvent(GolemGameplayTags::State_Life_Downed)
 			.AddUObject(this, &ThisClass::HandleLifeTagChanged);
 		DeadTagHandle = ASC->RegisterGameplayTagEvent(GolemGameplayTags::State_Life_Dead)
 			.AddUObject(this, &ThisClass::HandleLifeTagChanged);
 	}
-	HandleRuneTagChanged(GolemGameplayTags::State_Combat_RuneSlowed,
-		ASC->GetTagCount(GolemGameplayTags::State_Combat_RuneSlowed));
 	SetComponentTickEnabled(Character->HasAuthority());
 	OnProfileChanged.Broadcast(Profile);
 	return FGolemResult::Success();
@@ -268,9 +227,7 @@ FGolemResult UGolemCombatComponent::RefreshBaseWalkSpeed(float BaseSpeed)
 	}
 	// Hero identity and ASC/profile state replicate independently; the tag is the current source of truth.
 	const UGolemAbilitySystemComponent* ASC = AbilitySystem.IsValid() ? AbilitySystem.Get() : GolemActorASC(Character);
-	const bool bSlowed = ASC != nullptr && ASC->HasMatchingGameplayTag(GolemGameplayTags::State_Combat_RuneSlowed);
-	SavedWalkSpeed = bSlowed ? BaseSpeed : 0.0f;
-	Character->GetCharacterMovement()->MaxWalkSpeed = bSlowed ? BaseSpeed * 0.5f : BaseSpeed;
+	Character->GetCharacterMovement()->MaxWalkSpeed = BaseSpeed;
 	return FGolemResult::Success();
 }
 
@@ -307,10 +264,7 @@ const FGolemCombatSnapshot& UGolemCombatComponent::GetSnapshot() const
 }
 bool UGolemCombatComponent::CanTransferControl() const
 {
-	const UGolemSkillRuntimeComponent* Skills = GetOwner() != nullptr
-		? GetOwner()->FindComponentByClass<UGolemSkillRuntimeComponent>() : nullptr;
 	return !Snapshot.bAttacking && !Snapshot.bBlocking && !Snapshot.bParrying && !Snapshot.bDodging &&
-		(Skills == nullptr || !Skills->HasActiveSkill()) &&
 		!Snapshot.bStaggered && (!AbilitySystem.IsValid() ||
 			(!AbilitySystem->HasMatchingGameplayTag(GolemGameplayTags::State_Combat_Finishing) &&
 			!AbilitySystem->HasMatchingGameplayTag(GolemGameplayTags::State_Combat_Traversing)));
@@ -323,7 +277,7 @@ bool UGolemCombatComponent::IsAuthorityAlive() const
 {
 	return !bEndingPlay && Profile != nullptr && IsValid(GetOwner()) && GetOwner()->HasAuthority() &&
 		GetWorld() != nullptr && !GetWorld()->bIsTearingDown && AbilitySystem.IsValid() &&
-		!AbilitySystem->IsMutationFenced() && AbilitySystem->GetLifeComponent() != nullptr
+		AbilitySystem->GetLifeComponent() != nullptr
 		&& AbilitySystem->GetLifeComponent()->IsAlive();
 }
 
@@ -331,23 +285,10 @@ void UGolemCombatComponent::RefreshSnapshot()
 {
 	if (!bEndingPlay && IsValid(GetOwner()) && GetOwner()->HasAuthority())
 	{
-		if (AbilitySystem.IsValid() && AbilitySystem->IsMutationFenced())
-		{
-			// Raw GAS staging may temporarily contain both stat sources; publish only their final aggregate.
-			bSnapshotPublicationPending = true;
-			return;
-		}
-		bSnapshotPublicationPending = false;
 		++Snapshot.Revision;
 		OnCombatSnapshotChanged.Broadcast(Snapshot);
 		GetOwner()->ForceNetUpdate();
 	}
-}
-
-FGolemResult UGolemCombatComponent::SpendStamina(float Amount, FGameplayTag ActionTag)
-{
-	const float Scale = AbilitySystem.IsValid() ? AbilitySystem->GetActionModifier(ActionTag).CostScale : 1.0f;
-	return GolemSpendResource(AbilitySystem.Get(), UGolemAttributeSet::GetStaminaAttribute(), Amount * Scale);
 }
 
 float UGolemCombatComponent::GetProjectedDamage(FGameplayTag ActionTag, float AuthoredDamage) const
@@ -356,9 +297,9 @@ float UGolemCombatComponent::GetProjectedDamage(FGameplayTag ActionTag, float Au
 	{
 		return AuthoredDamage;
 	}
-	const float Delta = AbilitySystem->GetGolemAttributes()->GetAttackPower() - AbilitySystem->GetInitialAttackPower();
-	return FMath::Clamp(FMath::Max(0.0f, AuthoredDamage + Delta)
-		* AbilitySystem->GetActionModifier(ActionTag).DamageScale, 0.0f, 1000000.0f);
+	// Authored damage assumes the definition's starting Power; later Power changes shift it one for one.
+	const float Delta = AbilitySystem->GetGolemAttributes()->GetPower() - AbilitySystem->GetInitialPower();
+	return FMath::Clamp(AuthoredDamage + Delta, 0.0f, 1000000.0f);
 }
 
 FGolemResult UGolemCombatComponent::BeginAttack(FGameplayTag ActionTag, UGolemGameplayAbility* Ability,
@@ -366,14 +307,6 @@ FGolemResult UGolemCombatComponent::BeginAttack(FGameplayTag ActionTag, UGolemGa
 {
 	OutMontage = nullptr;
 	OutSection = NAME_None;
-	if (const UGolemSkillRuntimeComponent* Skills = GetOwner()->FindComponentByClass<UGolemSkillRuntimeComponent>())
-	{
-		if (Skills->RequiresHammer())
-		{
-			return FGolemResult::Failure(EGolemError::InvalidState, TEXT("RequiresHammer"),
-				NSLOCTEXT("GolemEquipment", "RequiresHammer", "Equip a hammer to use this action."));
-		}
-	}
 	if (!IsAuthorityAlive() || Ability == nullptr || !CanTransferControl())
 	{
 		return GolemCombatFailure(EGolemError::InvalidState, TEXT("BeginAttack"));
@@ -384,11 +317,6 @@ FGolemResult UGolemCombatComponent::BeginAttack(FGameplayTag ActionTag, UGolemGa
 		if (Attacks[Index].ActionTag != ActionTag)
 		{
 			continue;
-		}
-		const FGolemResult Cost = SpendStamina(Attacks[Index].StaminaCost, ActionTag);
-		if (!Cost.IsSuccess())
-		{
-			return Cost;
 		}
 		++TraceGeneration;
 		AttackIndex = Index;
@@ -527,7 +455,7 @@ void UGolemCombatComponent::SetComboWindow(bool bOpen, UAnimSequenceBase* Animat
 		{
 			continue;
 		}
-		if (Attacks[Next].Montage.Get() != Animation || !SpendStamina(Attacks[Next].StaminaCost, AttackAction).IsSuccess())
+		if (Attacks[Next].Montage.Get() != Animation)
 		{
 			return;
 		}
@@ -652,19 +580,10 @@ void UGolemCombatComponent::CommitWeaponHit(const FHitResult& Hit, const FGolemA
 	WindowHitActors.Add(Target);
 	const float Before = TargetASC->GetGolemAttributes()->GetHealth();
 	const FGolemResult Result = UGolemAbilitySystemComponent::ApplyCombatDamage(GetOwner(), Target,
-		GetProjectedDamage(ActionTag, Attack.Damage), Attack.PoiseDamage, true, &Hit,
-		ActionTag == GolemGameplayTags::Ability_Combat_Heavy, AttackActivationId, WindowHitIndex);
+		GetProjectedDamage(ActionTag, Attack.Damage), Attack.PoiseDamage, true, &Hit);
 	if (!TargetASC.IsValid() || TargetASC->GetGolemAttributes() == nullptr || !IsValid(Target))
 	{
 		return;
-	}
-	if (Result.IsSuccess() && ActionTag == GolemGameplayTags::Ability_Combat_Heavy &&
-		IsTraceCapabilityCurrent(Generation, WindowId, Ability, Index))
-	{
-		if (UGolemSkillRuntimeComponent* Skills = GetOwner()->FindComponentByClass<UGolemSkillRuntimeComponent>())
-		{
-			Skills->NotifyHeavyHit(Target);
-		}
 	}
 	if (!TargetASC.IsValid() || TargetASC->GetGolemAttributes() == nullptr || !IsValid(Target))
 	{
@@ -720,20 +639,13 @@ bool UGolemCombatComponent::IsTraceCapabilityCurrent(uint64 Generation, FName Wi
 
 FGolemResult UGolemCombatComponent::BeginDefense(FGameplayTag ActionTag)
 {
-	const UGolemSkillRuntimeComponent* Skills = GetOwner() != nullptr
-		? GetOwner()->FindComponentByClass<UGolemSkillRuntimeComponent>() : nullptr;
 	if (!IsAuthorityAlive() || Snapshot.bAttacking || Snapshot.bDodging || Snapshot.bStaggered ||
-		Snapshot.bBlocking || Snapshot.bParrying || (Skills != nullptr && Skills->HasActiveSkill()))
+		Snapshot.bBlocking || Snapshot.bParrying)
 	{
 		return GolemCombatFailure(EGolemError::InvalidState, TEXT("BeginDefense"));
 	}
 	if (ActionTag == GolemGameplayTags::Ability_Combat_Parry)
 	{
-		const FGolemResult Cost = SpendStamina(Profile->GetTuning().ParryStaminaCost, ActionTag);
-		if (!Cost.IsSuccess())
-		{
-			return Cost;
-		}
 		Snapshot.bParrying = true;
 		ParryStartedAt = GetWorld()->GetTimeSeconds();
 	}
@@ -772,22 +684,6 @@ FGolemResult UGolemCombatComponent::BeginDodge()
 	{
 		return GolemCombatFailure(EGolemError::InvalidState, TEXT("DodgeMovement"));
 	}
-	const FGolemResult Cost = SpendStamina(Profile->GetTuning().DodgeStaminaCost, GolemGameplayTags::Ability_Combat_Dodge);
-	if (!Cost.IsSuccess())
-	{
-		return Cost;
-	}
-	if (UGolemSkillRuntimeComponent* Skills = GetOwner()->FindComponentByClass<UGolemSkillRuntimeComponent>())
-	{
-		for (int32 Slot = 1; Slot <= 4; ++Slot)
-		{
-			const FGameplayAbilitySpecHandle Handle = Skills->GetSkillHandle(Slot);
-			if (Handle.IsValid())
-			{
-				AbilitySystem->CancelAbilityHandle(Handle);
-			}
-		}
-	}
 	Snapshot.bDodging = true;
 	DodgeStartedAt = GetWorld()->GetTimeSeconds();
 	FVector Direction = Character->GetLastMovementInputVector().GetSafeNormal2D();
@@ -825,10 +721,6 @@ FGolemResult UGolemCombatComponent::ValidateCombatTarget(AActor* Target, float R
 		!TargetASC->GetLifeComponent()->IsAlive())
 	{
 		return GolemCombatFailure(EGolemError::InvalidState, TEXT("CombatTargetLife"));
-	}
-	if (SourceASC->IsMutationFenced() || TargetASC->IsMutationFenced())
-	{
-		return GolemCombatFailure(EGolemError::Conflict, TEXT("CombatTargetProjectionFence"));
 	}
 	const bool bHostile = (SourceASC->HasMatchingGameplayTag(GolemGameplayTags::Role_Party_Golem) &&
 		TargetASC->HasMatchingGameplayTag(GolemGameplayTags::Role_Enemy)) ||
@@ -950,18 +842,9 @@ void UGolemCombatComponent::UpdateLockCamera()
 	}
 }
 
-void UGolemCombatComponent::ResolveIncomingDamage(AActor* Source, float InDamage, float PoiseDamage,
-	bool bCanDefend, float& OutHealthDamage)
-{
-	ResolveIncomingDamageWithContext(Source, InDamage, PoiseDamage, bCanDefend,
-		FGolemIncomingHitContext(), OutHealthDamage);
-}
-
 float UGolemCombatComponent::GetMaxPoise() const
 {
-	const float Bonus = AbilitySystem.IsValid() && AbilitySystem->GetGolemAttributes() != nullptr
-		? AbilitySystem->GetGolemAttributes()->GetPoiseBonus() : 0.0f;
-	return Profile != nullptr ? Profile->GetTuning().MaxPoise + Bonus : Bonus;
+	return Profile != nullptr ? Profile->GetTuning().MaxPoise : 0.0f;
 }
 
 FGolemResult UGolemCombatComponent::RestoreSnapshotPoise(float InPoise)
@@ -983,17 +866,8 @@ FGolemResult UGolemCombatComponent::RestoreSnapshotPoise(float InPoise)
 	return FGolemResult::Success();
 }
 
-void UGolemCombatComponent::HandlePoiseBonusChanged(const FOnAttributeChangeData& Change)
-{
-	if (!bEndingPlay && GetOwner() != nullptr && GetOwner()->HasAuthority())
-	{
-		Snapshot.Poise = FMath::Min(Snapshot.Poise, GetMaxPoise());
-		RefreshSnapshot();
-	}
-}
-
-void UGolemCombatComponent::ResolveIncomingDamageWithContext(AActor* Source, float InDamage, float PoiseDamage,
-	bool bCanDefend, const FGolemIncomingHitContext& Context, float& OutHealthDamage)
+void UGolemCombatComponent::ResolveIncomingDamage(AActor* Source, float InDamage, float PoiseDamage,
+	bool bCanDefend, float& OutHealthDamage)
 {
 	OutHealthDamage = InDamage;
 	if (!IsAuthorityAlive() || !FMath::IsFinite(InDamage) || !FMath::IsFinite(PoiseDamage))
@@ -1020,11 +894,6 @@ void UGolemCombatComponent::ResolveIncomingDamageWithContext(AActor* Source, flo
 	{
 		OutHealthDamage = 0.0f;
 		AbilitySystem->ExecuteGameplayCue(GolemGameplayTags::GameplayCue_Parry);
-		if (UGolemSkillRuntimeComponent* Skills = GetOwner()->FindComponentByClass<UGolemSkillRuntimeComponent>())
-		{
-			Skills->NotifyDefenseSuccess();
-			Skills->NotifyItemDefenseSuccess(Source, Context.ActivationId, Context.bDirect, Context.TargetItemGeneration);
-		}
 		PublishOutcome(EGolemCombatOutcome::Parried, GolemGameplayTags::Ability_Combat_Parry, Source);
 		if (IsValid(Source))
 		{
@@ -1037,19 +906,9 @@ void UGolemCombatComponent::ResolveIncomingDamageWithContext(AActor* Source, flo
 	}
 	if (bCanDefend && bFront && Snapshot.bBlocking)
 	{
-		if (SpendStamina(Tuning.BlockStaminaCost, GolemGameplayTags::Ability_Combat_Block).IsSuccess())
-		{
-			OutHealthDamage *= Tuning.BlockDamageFraction;
-			if (UGolemSkillRuntimeComponent* Skills = GetOwner()->FindComponentByClass<UGolemSkillRuntimeComponent>())
-			{
-				Skills->NotifyDefenseSuccess();
-				Skills->NotifyItemDefenseSuccess(Source, Context.ActivationId, Context.bDirect, Context.TargetItemGeneration);
-			}
-			PublishOutcome(EGolemCombatOutcome::Blocked, GolemGameplayTags::Ability_Combat_Block, Source, OutHealthDamage);
-			return;
-		}
-		FGameplayTagContainer BlockTags(GolemGameplayTags::Ability_Combat_Block);
-		AbilitySystem->CancelAbilities(&BlockTags);
+		OutHealthDamage *= Tuning.BlockDamageFraction;
+		PublishOutcome(EGolemCombatOutcome::Blocked, GolemGameplayTags::Ability_Combat_Block, Source, OutHealthDamage);
+		return;
 	}
 	if (PoiseDamage > 0.0f && !Snapshot.bStaggered)
 	{
@@ -1104,63 +963,6 @@ void UGolemCombatComponent::EndStagger()
 	}
 }
 
-FGolemResult UGolemCombatComponent::CastRune(AActor* Target)
-{
-	if (!IsAuthorityAlive() || Snapshot.bStaggered)
-	{
-		return GolemCombatFailure(EGolemError::InvalidState, TEXT("CastRune"));
-	}
-	Target = IsValid(Target) ? Target : GetLockedTarget();
-	if (Target == nullptr)
-	{
-		Target = FindCombatTarget(Profile->GetTuning().RuneRange);
-	}
-	FGolemResult Result = ValidateCombatTarget(Target, Profile->GetTuning().RuneRange);
-	if (!Result.IsSuccess())
-	{
-		return Result;
-	}
-	FGameplayEffectSpecHandle Status = AbilitySystem->MakeOutgoingSpec(UGolemRuneSlowEffect::StaticClass(),
-		1.0f, AbilitySystem->MakeEffectContext());
-	if (!Status.IsValid())
-	{
-		return GolemCombatFailure(EGolemError::InvalidState, TEXT("RuneStatusSpec"));
-	}
-	const FGolemActionModifier RuneModifier = AbilitySystem->GetActionModifier(GolemGameplayTags::Ability_Combat_Rune);
-	Status.Data->SetDuration(Profile->GetTuning().RuneSlowDuration * RuneModifier.DurationScale, true);
-	Result = GolemSpendResource(AbilitySystem.Get(), UGolemAttributeSet::GetRuneEnergyAttribute(),
-		Profile->GetTuning().RuneEnergyCost * RuneModifier.CostScale);
-	if (!Result.IsSuccess())
-	{
-		return Result;
-	}
-	UGolemAbilitySystemComponent* TargetASC = GolemActorASC(Target);
-	const float Before = TargetASC->GetGolemAttributes()->GetHealth();
-	Result = UGolemAbilitySystemComponent::ApplyCombatDamage(GetOwner(), Target,
-		GetProjectedDamage(GolemGameplayTags::Ability_Combat_Rune, Profile->GetTuning().RuneDamage),
-		Profile->GetTuning().RunePoiseDamage, false);
-	if (!Result.IsSuccess())
-	{
-		return Result;
-	}
-	if (TargetASC->GetLifeComponent()->IsAlive())
-	{
-		const FActiveGameplayEffectHandle StatusHandle =
-			AbilitySystem->ApplyGameplayEffectSpecToTarget(*Status.Data.Get(), TargetASC);
-		if (!StatusHandle.WasSuccessfullyApplied() || !StatusHandle.IsValid() ||
-			TargetASC->GetActiveGameplayEffect(StatusHandle) == nullptr)
-		{
-			// Damage and its energy cost already occurred; do not invent a rollback or confirm the missing status.
-			return FGolemResult::Failure(EGolemError::InvalidState, TEXT("RuneStatusRejected"),
-				NSLOCTEXT("GolemCombat", "RuneStatusRejected", "Rune damage landed, but its slow effect was rejected."));
-		}
-	}
-	TargetASC->ExecuteGameplayCue(GolemGameplayTags::GameplayCue_Rune);
-	PublishOutcome(EGolemCombatOutcome::RuneHit, GolemGameplayTags::Ability_Combat_Rune, Target,
-		Before - TargetASC->GetGolemAttributes()->GetHealth());
-	return FGolemResult::Success();
-}
-
 void UGolemCombatComponent::PublishOutcome(EGolemCombatOutcome Outcome, FGameplayTag ActionTag,
 	AActor* Target, float Amount)
 {
@@ -1197,27 +999,6 @@ void UGolemCombatComponent::PublishOutcome(EGolemCombatOutcome Outcome, FGamepla
 	OnCombatOutcome.Broadcast(Event);
 }
 
-void UGolemCombatComponent::HandleRuneTagChanged(const FGameplayTag Tag, int32 Count)
-{
-	if (bEndingPlay)
-	{
-		return;
-	}
-	if (ACharacter* Character = Cast<ACharacter>(GetOwner()))
-	{
-		UCharacterMovementComponent* Movement = Character->GetCharacterMovement();
-		if (Count > 0 && SavedWalkSpeed <= 0.0f)
-		{
-			SavedWalkSpeed = Movement->MaxWalkSpeed;
-			Movement->MaxWalkSpeed = SavedWalkSpeed * 0.5f;
-		}
-		else if (Count == 0 && SavedWalkSpeed > 0.0f)
-		{
-			Movement->MaxWalkSpeed = SavedWalkSpeed;
-			SavedWalkSpeed = 0.0f;
-		}
-	}
-}
 void UGolemCombatComponent::HandleLifeTagChanged(const FGameplayTag Tag, int32 Count)
 {
 	if (Count > 0 && !bEndingPlay && GetOwner() != nullptr && GetOwner()->HasAuthority())
@@ -1242,7 +1023,7 @@ void UGolemCombatComponent::ClearTransientActions()
 		for (const FGameplayTag Tag : {FGameplayTag(GolemGameplayTags::Ability_Combat_Primary),
 			FGameplayTag(GolemGameplayTags::Ability_Combat_Heavy), FGameplayTag(GolemGameplayTags::Ability_Combat_Block),
 			FGameplayTag(GolemGameplayTags::Ability_Combat_Parry), FGameplayTag(GolemGameplayTags::Ability_Combat_Dodge),
-			FGameplayTag(GolemGameplayTags::Ability_Combat_Rune), FGameplayTag(GolemGameplayTags::Ability_Combat_Finisher),
+			FGameplayTag(GolemGameplayTags::Ability_Combat_Finisher),
 			FGameplayTag(GolemGameplayTags::Ability_World_Traverse)})
 		{
 			CombatTags.AddTag(Tag);
@@ -1274,8 +1055,6 @@ FGolemResult UGolemCombatComponent::ResetForCheckpoint()
 	ClearTransientActions();
 	GetWorld()->GetTimerManager().ClearTimer(StaggerTimer);
 	EndStagger();
-	FGameplayTagContainer RuneTags(GolemGameplayTags::State_Combat_RuneSlowed);
-	AbilitySystem->RemoveActiveEffectsWithGrantedTags(RuneTags);
 	Snapshot.ComboIndex = 0;
 	Snapshot.OutcomeCounts.Init(0, static_cast<int32>(EGolemCombatOutcome::Traversal) + 1);
 	RefreshSnapshot();
@@ -1289,15 +1068,6 @@ void UGolemCombatComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 	if (bEndingPlay || Profile == nullptr || GetOwner() == nullptr || !GetOwner()->HasAuthority())
 	{
 		return;
-	}
-	if (bSnapshotPublicationPending && AbilitySystem.IsValid() && !AbilitySystem->IsMutationFenced())
-	{
-		Snapshot.Poise = FMath::Min(Snapshot.Poise, GetMaxPoise());
-		RefreshSnapshot();
-		if (bEndingPlay || !IsValid(GetOwner()) || GetOwner()->IsActorBeingDestroyed())
-		{
-			return;
-		}
 	}
 	LockValidationElapsed += DeltaTime;
 	if (LockValidationElapsed >= 0.1f)
@@ -1323,9 +1093,6 @@ void UGolemCombatComponent::EndPlay(EEndPlayReason::Type EndPlayReason)
 	}
 	if (AbilitySystem.IsValid())
 	{
-		AbilitySystem->GetGameplayAttributeValueChangeDelegate(UGolemAttributeSet::GetPoiseBonusAttribute())
-			.Remove(PoiseBonusHandle);
-		AbilitySystem->RegisterGameplayTagEvent(GolemGameplayTags::State_Combat_RuneSlowed).Remove(RuneTagHandle);
 		AbilitySystem->RegisterGameplayTagEvent(GolemGameplayTags::State_Life_Downed).Remove(DownedTagHandle);
 		AbilitySystem->RegisterGameplayTagEvent(GolemGameplayTags::State_Life_Dead).Remove(DeadTagHandle);
 		if (GrantHandle.IsValid() && GetOwner() != nullptr && GetOwner()->HasAuthority())

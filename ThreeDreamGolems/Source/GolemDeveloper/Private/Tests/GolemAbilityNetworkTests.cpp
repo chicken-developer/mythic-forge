@@ -88,9 +88,8 @@ namespace GolemAbilityNetwork
 		TArray<float> Values;
 
 		explicit FGolemNetworkAttributeSnapshot(const UGolemAttributeSet* Attributes)
-			: Values { Attributes->GetHealth(), Attributes->GetMaxHealth(), Attributes->GetStamina(),
-				Attributes->GetMaxStamina(), Attributes->GetRuneEnergy(), Attributes->GetMaxRuneEnergy(),
-				Attributes->GetAttackPower(), Attributes->GetDefense() }
+			: Values { Attributes->GetHealth(), Attributes->GetMaxHealth(), Attributes->GetPower(),
+				Attributes->GetAgility(), Attributes->GetColorHold() }
 		{
 		}
 

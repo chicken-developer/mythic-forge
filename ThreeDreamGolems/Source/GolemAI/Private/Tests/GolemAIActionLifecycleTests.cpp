@@ -13,7 +13,6 @@
 #include "CoreGlobals.h"
 #include "Definitions/GolemAIArchetypeDefinition.h"
 #include "Definitions/GolemBossPhaseDefinition.h"
-#include "Effects/GolemArenaResourceRecoveryEffect.h"
 #include "Engine/Engine.h"
 #include "Engine/GameInstance.h"
 #include "Engine/World.h"
@@ -28,7 +27,6 @@
 #include "HAL/PlatformTime.h"
 #include "Misc/AutomationTest.h"
 #include "Misc/ScopeExit.h"
-#include "Skills/GolemSkillRuntimeComponent.h"
 #include "StateTree.h"
 #include "StateTree/GolemAIStateTreeNodes.h"
 #include "StateTreeInstanceData.h"
@@ -332,20 +330,6 @@ namespace GolemAIActionLifecycleTests
 		FGuid CompletedAction;
 	};
 
-	struct FGolemRecoveryState
-	{
-		FGolemRecoveryState()
-			: Context(MakeShared<FGolemActionWorld>()),
-			Source(SpawnActor(Context->World.Get(), 1, true, FVector::ZeroVector)),
-			Enemy(SpawnActor(Context->World.Get(), 101, false, FVector(500.0, 0.0, 0.0)))
-		{
-		}
-		TSharedRef<FGolemActionWorld> Context;
-		FGolemActionActor Source;
-		FGolemActionActor Enemy;
-		FActiveGameplayEffectHandle RecoveryHandle;
-		TArray<FGameplayAbilitySpecHandle> OriginalSpecs;
-	};
 }
 
 IMPLEMENT_SIMPLE_AUTOMATION_TEST(FGolemAIArchetypeBossContractsTest, "Golem.AI.Definitions.ArchetypeAndBossContracts",
@@ -468,7 +452,7 @@ bool FGolemAIExactSharedGASTest::RunTest(const FString& Parameters)
 	FGuid Token;
 	TestTrue(TEXT("Exact shared GAS action really activates"), AI.Context->TryBeginAction(Action, true, Token).IsSuccess());
 	TestTrue(TEXT("Activated action returns an owned generation token"), Token.IsValid());
-	TestEqual(TEXT("Actual pulse GE reduces target health once"), Enemy.Attributes->GetHealth(), 75.0f);
+	TestEqual(TEXT("Actual pulse GE reduces target health once"), Enemy.Attributes->GetHealth(), 100.0f - FGolemAttributeDefaults().Power);
 	TestEqual(TEXT("Synchronous ability end is captured once"), Ended, 1);
 	TestEqual(TEXT("Actual successful ability end is retained"), EndStatus, EGolemAIActionStatus::Succeeded);
 	TestEqual(TEXT("Instant action status remains queryable"), AI.Context->GetActionStatus(Token), EGolemAIActionStatus::Succeeded);
@@ -477,7 +461,7 @@ bool FGolemAIExactSharedGASTest::RunTest(const FString& Parameters)
 	TestEqual(TEXT("Instant completion returns the actual director budget"),
 		World.World->GetSubsystem<UGolemCombatDirectorSubsystem>()->GetActiveLeaseCount(), 0);
 	TestEqual(TEXT("Confirmed activation starts the selection cooldown"), AI.Context->TrySelectAction(Action).Error, EGolemError::NotFound);
-	TestEqual(TEXT("Cooldown queries never repeat damage"), Enemy.Attributes->GetHealth(), 75.0f);
+	TestEqual(TEXT("Cooldown queries never repeat damage"), Enemy.Attributes->GetHealth(), 100.0f - FGolemAttributeDefaults().Power);
 	TestEqual(TEXT("Foreign cancellation cannot claim another action token"), AI.Context->CancelAction(FGuid::NewGuid()).Error, EGolemError::NotOwned);
 	FGolemAbilitySetHandle Duplicate;
 	const UGolemAbilitySetDefinition* Foundation = ResolveDefinition<UGolemAbilitySetDefinition>(
@@ -486,7 +470,7 @@ bool FGolemAIExactSharedGASTest::RunTest(const FString& Parameters)
 		Foundation, TEXT("DuplicateActionFixture"), Duplicate).IsSuccess());
 	TestEqual(TEXT("Ambiguous shared action/input binding is rejected before activation"),
 		AI.Context->ValidateActionSet(PulseSetId).Error, EGolemError::Conflict);
-	TestEqual(TEXT("Ambiguous binding never changes target health"), Enemy.Attributes->GetHealth(), 75.0f);
+	TestEqual(TEXT("Ambiguous binding never changes target health"), Enemy.Attributes->GetHealth(), 100.0f - FGolemAttributeDefaults().Power);
 	TestTrue(TEXT("Only duplicate fixture grant is revoked"), Source.ASC->RevokeAbilitySet(Duplicate).IsSuccess());
 	TestTrue(TEXT("Original spec handles survive rejected ambiguous action"), CaptureSpecs(Source.ASC.Get()) == OriginalSpecs);
 
@@ -516,7 +500,7 @@ bool FGolemAIExactSharedGASTest::RunTest(const FString& Parameters)
 			++(*TreeEnded);
 		});
 	TreeAI.Tree->StartLogic();
-	TestEqual(TEXT("The StateTree task applied one actual pulse GE"), TreeEnemy.Attributes->GetHealth(), 75.0f);
+	TestEqual(TEXT("The StateTree task applied one actual pulse GE"), TreeEnemy.Attributes->GetHealth(), 100.0f - FGolemAttributeDefaults().Power);
 	const TWeakPtr<FGolemAIActionCompletionState> TreeCompletion = CaptureActionCompletion(TreeAI.Tree.Get());
 	FAutomationTestBase* Test = this;
 	// Completed EnterState schedules its terminal transition for the next real StateTree tick.
@@ -540,7 +524,7 @@ bool FGolemAIExactSharedGASTest::RunTest(const FString& Parameters)
 			Test->TestFalse(TEXT("Terminal StateTree schedules no further execution ticks"),
 				TreeAI.Tree->IsComponentTickEnabled());
 			Test->TestEqual(TEXT("Terminal transition never repeats the shared GAS action"), *TreeEnded, 1);
-			Test->TestEqual(TEXT("Terminal transition never applies another pulse GE"), TreeEnemy.Attributes->GetHealth(), 75.0f);
+			Test->TestEqual(TEXT("Terminal transition never applies another pulse GE"), TreeEnemy.Attributes->GetHealth(), 100.0f - FGolemAttributeDefaults().Power);
 			Test->TestFalse(TEXT("Terminal task releases completion timer and delegate ownership"), TreeCompletion.IsValid());
 			Test->TestFalse(TEXT("Terminal task clears its active action capability"), TreeAI.Context->GetDecisionSnapshot().bActionRunning);
 			Test->TestEqual(TEXT("Terminal task releases its director lease"),
@@ -815,240 +799,4 @@ bool FGolemAIBossHealthPhaseTest::RunTest(const FString& Parameters)
 	return true;
 }
 
-IMPLEMENT_SIMPLE_AUTOMATION_TEST(FGolemAIResourceRecoveryTest, "Golem.AI.Actions.PeriodicResourceRecovery",
-	EAutomationTestFlags::EditorContext | EAutomationTestFlags::EngineFilter)
-
-bool FGolemAIResourceRecoveryTest::RunTest(const FString& Parameters)
-{
-	using namespace GolemAIActionLifecycleTests;
-	const TSharedRef<FGolemRecoveryState> State = MakeShared<FGolemRecoveryState>();
-	if (!TestTrue(TEXT("Periodic recovery actors have real foundation state"), State->Source.IsReady() && State->Enemy.IsReady()) ||
-		!TestTrue(TEXT("Recovery never replaces the existing grant"), GrantFoundation(State->Source)))
-	{
-		return false;
-	}
-	State->OriginalSpecs = CaptureSpecs(State->Source.ASC.Get());
-	TestTrue(TEXT("Distinct source health is produced by actual damage GE"), UGolemAbilitySystemComponent::ApplyDamage(
-		State->Enemy.Actor.Get(), State->Source.Actor.Get(), 14.0f).IsSuccess());
-	State->Source.ASC->SetNumericAttributeBase(UGolemAttributeSet::GetStaminaAttribute(), 99.0f);
-	State->Source.ASC->SetNumericAttributeBase(UGolemAttributeSet::GetRuneEnergyAttribute(), 99.0f);
-	const FGameplayEffectSpecHandle Spec = State->Source.ASC->MakeOutgoingSpec(
-		UGolemArenaResourceRecoveryEffect::StaticClass(), 1.0f, State->Source.ASC->MakeEffectContext());
-	if (!TestTrue(TEXT("Native periodic recovery builds a real outgoing GE spec"), Spec.IsValid()))
-	{
-		return false;
-	}
-	State->RecoveryHandle = State->Source.ASC->ApplyGameplayEffectSpecToSelf(*Spec.Data.Get());
-	TestTrue(TEXT("Recovery owns an actual active effect handle"), State->RecoveryHandle.IsValid());
-	TestEqual(TEXT("Recovery waits for its actual period"), State->Source.Attributes->GetStamina(), 99.0f);
-	FAutomationTestBase* Test = this;
-	WaitForWorldTime(Test, State->Context, 1.1f, [State, Test]()
-		{
-			Test->TestEqual(TEXT("Actual periodic stamina addition clamps to its maximum"), State->Source.Attributes->GetStamina(), 100.0f);
-			Test->TestEqual(TEXT("Actual periodic rune addition clamps to its maximum"), State->Source.Attributes->GetRuneEnergy(), 100.0f);
-			Test->TestEqual(TEXT("Periodic recovery never heals damage"), State->Source.Attributes->GetHealth(), 86.0f);
-			Test->TestTrue(TEXT("Periodic recovery preserves every spec handle"), CaptureSpecs(State->Source.ASC.Get()) == State->OriginalSpecs);
-			State->Source.ASC->SetNumericAttributeBase(UGolemAttributeSet::GetStaminaAttribute(), 10.0f);
-			State->Source.ASC->SetNumericAttributeBase(UGolemAttributeSet::GetRuneEnergyAttribute(), 10.0f);
-			Test->TestTrue(TEXT("Owner removes only its exact recovery handle"), State->Source.ASC->RemoveActiveGameplayEffect(State->RecoveryHandle));
-			WaitForWorldTime(Test, State->Context, 1.1f, [State, Test]()
-				{
-					Test->TestEqual(TEXT("Removed recovery cannot increment stamina later"), State->Source.Attributes->GetStamina(), 10.0f);
-					Test->TestEqual(TEXT("Removed recovery cannot increment rune later"), State->Source.Attributes->GetRuneEnergy(), 10.0f);
-					Test->TestEqual(TEXT("Removed recovery preserves damaged health"), State->Source.Attributes->GetHealth(), 86.0f);
-					Test->TestEqual(TEXT("Recovery lifecycle preserves one persistent grant"), State->Source.ASC->GetOwnedGrantCount(), 1);
-				});
-		});
-	return true;
-}
-
-IMPLEMENT_SIMPLE_AUTOMATION_TEST(FGolemAINineSpecializationTest, "Golem.AI.Actions.NineSpecializationSharedGAS",
-	EAutomationTestFlags::EditorContext | EAutomationTestFlags::EngineFilter)
-
-namespace GolemAIActionLifecycleTests
-{
-	bool RunNineSpecializations(FAutomationTestBase* Test, bool bEquipment)
-	{
-		using namespace GolemAIActionLifecycleTests;
-		const TSharedRef<FGolemActionWorld> OwnedWorld = MakeShared<FGolemActionWorld>();
-		TStrongObjectPtr<UStateTree> Tree(LoadObject<UStateTree>(nullptr,
-			TEXT("/Game/Golem/AI/Tests/ST_Golem_LifecyclePulse.ST_Golem_LifecyclePulse")));
-		if (!Test->TestTrue(TEXT("The existing native action fixture StateTree is compiled"), Tree.IsValid() && Tree->IsReadyToRun()))
-		{
-			return false;
-		}
-		UGolemCombatDirectorSubsystem* Director = OwnedWorld->World->GetSubsystem<UGolemCombatDirectorSubsystem>();
-		if (!Test->TestTrue(TEXT("Fixture reserves three separate DPS targets through real director budgets"),
-			Director != nullptr && Director->TrySetBudgets(3, 1).IsSuccess()))
-		{
-			return false;
-		}
-		const TArray<FName> Specs = FGolemSkillCatalog::AllSpecs();
-		TArray<FGolemActionActor> Sources;
-		TArray<FGolemActionActor> Allies;
-		TArray<FGolemActionActor> Enemies;
-		TArray<FGolemActionController> Controllers;
-		TArray<TWeakObjectPtr<UGolemSkillRuntimeComponent>> Runtimes;
-		TArray<FDelegateHandle> EndHandles;
-		const TSharedRef<TArray<int32>> Ended = MakeShared<TArray<int32>>();
-		Ended->Init(0, Specs.Num());
-		for (int32 Index = 0; Index < Specs.Num(); ++Index)
-		{
-			const FVector Origin(Index * 3000.0f, 0.0f, 0.0f);
-			FGolemActionActor Source = SpawnActor(OwnedWorld->World.Get(), 1000 + Index * 3, true, Origin);
-			const FGolemActionActor Ally = SpawnActor(OwnedWorld->World.Get(), 1001 + Index * 3, true,
-				Origin + FVector(0.0f, 100.0f, 0.0f));
-			const FGolemActionActor Enemy = SpawnActor(OwnedWorld->World.Get(), 1002 + Index * 3, false,
-				Origin + FVector(250.0f, 0.0f, 0.0f));
-			if (!Test->TestTrue(TEXT("Every source, injured ally and enemy uses initialized character-owned ASC"),
-				Source.IsReady() && Ally.IsReady() && Enemy.IsReady() && GrantFoundation(Source)))
-			{
-				return false;
-			}
-			for (const FGolemActionActor& Actor : { Source, Ally, Enemy })
-			{
-				Actor.ASC->SetNumericAttributeBase(UGolemAttributeSet::GetMaxHealthAttribute(), 1000.0f);
-				Actor.ASC->SetNumericAttributeBase(UGolemAttributeSet::GetHealthAttribute(), 1000.0f);
-				Actor.ASC->SetNumericAttributeBase(UGolemAttributeSet::GetDefenseAttribute(), 0.0f);
-			}
-			Ally.ASC->SetNumericAttributeBase(UGolemAttributeSet::GetHealthAttribute(), 100.0f);
-			Source.ASC->SetNumericAttributeBase(UGolemAttributeSet::GetAttackPowerAttribute(), 100.0f);
-			Source.ASC->SetNumericAttributeBase(UGolemAttributeSet::GetCritChanceAttribute(), 0.0f);
-			UGolemSkillRuntimeComponent* Runtime = NewObject<UGolemSkillRuntimeComponent>(Source.Actor.Get());
-			Source.Actor->AddInstanceComponent(Runtime);
-			Runtime->RegisterComponent();
-			FGolemSkillBuild Build;
-			Build.SpecId = Specs[Index];
-			if (!Test->TestTrue(TEXT("Selected specialization projects four real GAS actions"), Runtime->ConfigureBuild(Build).IsSuccess()))
-			{
-				return false;
-			}
-			if (bEquipment)
-			{
-				const EGolemSkillRole Role = FGolemSkillCatalog::Role(Build.SpecId);
-				FGolemGASProjectionPlan Plan;
-				Plan.SourceKey = GolemProjection::RPGSourceKey;
-				Plan.DefinitionId = FPrimaryAssetId(TEXT("GolemHero"), TEXT("Training_Red"));
-				Plan.SkillBuild = Build;
-				Plan.EquipmentCombatBuild.bEnabled = true;
-				Plan.EquipmentCombatBuild.bHasHammer = true;
-				Plan.MaxHealthBonus = Role == EGolemSkillRole::Tank ? 380.0f : 310.0f;
-				Plan.AttackPowerBonus = Role == EGolemSkillRole::Tank ? 28.0f : Role == EGolemSkillRole::Healer ? 32.0f : 36.0f;
-				Plan.DefenseBonus = Role == EGolemSkillRole::Tank ? 97.0f : 72.0f;
-				Plan.CritChanceBonus = Role == EGolemSkillRole::Damage ? 0.09f : 0.02f;
-				Plan.MasteryBonus = Role == EGolemSkillRole::Healer ? 0.09f : 0.04f;
-				Plan.CooldownRecoveryBonus = Role == EGolemSkillRole::Tank ? 0.02f : 0.05f;
-				Plan.VersatilityBonus = Role == EGolemSkillRole::Tank ? 0.12f : 0.07f;
-				Plan.MaxPoiseBonus = 10.0f;
-				FGolemMutationFence Fence;
-				FGolemProjectionCapability Capability;
-				if (!Test->TestTrue(TEXT("AI gear owns the same actual source projection fence as human gear"),
-					Source.ASC->BeginMutationFence(FGuid::NewGuid(), Fence).IsSuccess()))
-				{
-					return false;
-				}
-				const bool bApplied = Source.ASC->PrepareSourceProjection(Fence, Plan, 0, Capability).IsSuccess()
-					&& Source.ASC->StageSourceProjection(Fence, Capability).IsSuccess()
-					&& Source.ASC->CommitSourceProjection(Fence, Capability).IsSuccess()
-					&& Source.ASC->PublishSourceProjection(Fence, Capability).IsSuccess();
-				if (!bApplied && Capability.IsValid())
-				{
-					Source.ASC->AbortSourceProjection(Fence, Capability);
-				}
-				Source.ASC->EndMutationFence(Fence);
-				if (!Test->TestTrue(TEXT("Actual gear GAS stats and hammer descriptor commit before AI decisions"), bApplied))
-				{
-					return false;
-				}
-				Test->TestEqual(TEXT("AI consumes projected gear Power exactly once"), Source.Attributes->GetAttackPower(),
-					100.0f + Plan.AttackPowerBonus);
-				Test->TestFalse(TEXT("Equipped AI resolves the same hammer requirement as human"), Runtime->RequiresHammer());
-			}
-			FGolemSkillRuntimeSnapshot Snapshot = Runtime->CaptureSnapshot();
-			// A retained major cooldown forces role selection to execute a combat action, rather than its opening buff.
-			Snapshot.CooldownRemaining[3] = 60.0f;
-			Runtime->RestoreSnapshot(Snapshot);
-			const FGolemActionController AI = CreateController(Source, Tree.Get());
-			if (!Test->TestTrue(TEXT("Every actual controller initializes its existing StateTree/GAS context"),
-				AI.IsReady() && AI.Tree.IsValid() && AI.Context->SetActionSet(PulseSetId).IsSuccess()
-				&& AI.Context->SetValidatedTarget(Enemy.Actor.Get()).IsSuccess()))
-			{
-				return false;
-			}
-			Sources.Add(Source);
-			Allies.Add(Ally);
-			Enemies.Add(Enemy);
-			Controllers.Add(AI);
-			Runtimes.Add(Runtime);
-			EndHandles.Add(AI.Context->OnActionFinished.AddLambda([Ended, Index](FGuid Token, EGolemAIActionStatus Status)
-			{
-				++(*Ended)[Index];
-			}));
-		}
-		for (const FGolemActionController& AI : Controllers)
-		{
-			AI.Tree->StartLogic();
-		}
-		WaitForWorldTime(Test, OwnedWorld, 1.8f,
-			[Test, OwnedWorld, Specs, Sources, Allies, Enemies, Controllers, Runtimes, Ended, EndHandles]()
-		{
-			for (int32 Index = 0; Index < Specs.Num(); ++Index)
-			{
-				const FName Spec = Specs[Index];
-				const FGolemActionController& AI = Controllers[Index];
-				AI.Context->OnActionFinished.Remove(EndHandles[Index]);
-				Test->TestEqual(*FString::Printf(TEXT("%s StateTree action completes once"), *Spec.ToString()), (*Ended)[Index], 1);
-				Test->TestEqual(*FString::Printf(TEXT("%s reaches a real terminal StateTree state"), *Spec.ToString()),
-					AI.Tree->GetStateTreeRunStatus(), EStateTreeRunStatus::Succeeded);
-				Test->TestFalse(TEXT("Successful role action clears owned action token"), AI.Context->GetDecisionSnapshot().bActionRunning);
-				Test->TestFalse(TEXT("Shared GAS specialization action has ended"), Runtimes[Index]->HasActiveSkill());
-				const EGolemSkillRole Role = FGolemSkillCatalog::Role(Spec);
-				if (Role == EGolemSkillRole::Tank)
-				{
-					const UGolemSkillRuntimeComponent* ShieldOwner = Spec == TEXT("Uranus")
-						? Allies[Index].Actor->FindComponentByClass<UGolemSkillRuntimeComponent>() : Runtimes[Index].Get();
-					Test->TestTrue(*FString::Printf(TEXT("%s AI applied a real protective shield"), *Spec.ToString()),
-						ShieldOwner != nullptr && ShieldOwner->GetSkillState().Shield >= 200.0f);
-				}
-				else if (Role == EGolemSkillRole::Healer)
-				{
-					Test->TestTrue(*FString::Printf(TEXT("%s AI selects and really heals the missing-HP ally"), *Spec.ToString()),
-						Allies[Index].Attributes->GetHealth() > 100.0f);
-					Test->TestEqual(TEXT("Healer target selection keeps full-health self unchanged"), Sources[Index].Attributes->GetHealth(), 1000.0f);
-				}
-				else
-				{
-					Test->TestTrue(*FString::Printf(TEXT("%s AI applied real enemy damage"), *Spec.ToString()),
-						Enemies[Index].Attributes->GetHealth() < 1000.0f);
-					if (Spec == TEXT("Jupiter") || Spec == TEXT("Mars"))
-					{
-						Test->TestEqual(TEXT("DPS builder creates its one real specialization stack"), Runtimes[Index]->GetSkillState().Stacks, 1);
-					}
-					else
-					{
-						const UGolemSkillRuntimeComponent* Status = Enemies[Index].Actor->FindComponentByClass<UGolemSkillRuntimeComponent>();
-						Test->TestTrue(TEXT("Pluto AI executes real Ice AoE and shared chilled state"),
-							Status != nullptr && Status->GetSkillState().Chilled == 2);
-					}
-				}
-			}
-			Test->TestEqual(TEXT("All completed specialization actions release actual director leases"),
-				OwnedWorld->World->GetSubsystem<UGolemCombatDirectorSubsystem>()->GetActiveLeaseCount(), 0);
-		});
-		return true;
-	}
-}
-
-bool FGolemAINineSpecializationTest::RunTest(const FString& Parameters)
-{
-	return GolemAIActionLifecycleTests::RunNineSpecializations(this, false);
-}
-
-IMPLEMENT_SIMPLE_AUTOMATION_TEST(FGolemAINineEquipmentTest, "Golem.Equipment.AI.NineSpecializationsSharedGAS",
-	EAutomationTestFlags::EditorContext | EAutomationTestFlags::EngineFilter)
-
-bool FGolemAINineEquipmentTest::RunTest(const FString& Parameters)
-{
-	return GolemAIActionLifecycleTests::RunNineSpecializations(this, true);
-}
 #endif

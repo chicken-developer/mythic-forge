@@ -81,8 +81,7 @@ void AGolemPartyArenaHUD::BindControlledGolem(AGolemCharacter* Previous, AGolemC
 	Life = Current->GetLifeComponent();
 	Combat = Current->GetCombatComponent();
 	const TArray<FGameplayAttribute> Observed{UGolemAttributeSet::GetHealthAttribute(),
-		UGolemAttributeSet::GetMaxHealthAttribute(), UGolemAttributeSet::GetStaminaAttribute(),
-		UGolemAttributeSet::GetRuneEnergyAttribute()};
+		UGolemAttributeSet::GetMaxHealthAttribute()};
 	for (const FGameplayAttribute& Attribute : Observed)
 	{
 		const FDelegateHandle Handle = ASC->GetGameplayAttributeValueChangeDelegate(Attribute).AddUObject(
@@ -123,8 +122,6 @@ void AGolemPartyArenaHUD::UnbindControlledGolem()
 	Combat.Reset();
 	Health = 0.0f;
 	MaxHealth = 0.0f;
-	Stamina = 0.0f;
-	RuneEnergy = 0.0f;
 }
 
 void AGolemPartyArenaHUD::RefreshParty()
@@ -244,8 +241,6 @@ void AGolemPartyArenaHUD::HandleAttributeChanged(const FOnAttributeChangeData& C
 	{
 		Health = AbilitySystem->GetNumericAttribute(UGolemAttributeSet::GetHealthAttribute());
 		MaxHealth = AbilitySystem->GetNumericAttribute(UGolemAttributeSet::GetMaxHealthAttribute());
-		Stamina = AbilitySystem->GetNumericAttribute(UGolemAttributeSet::GetStaminaAttribute());
-		RuneEnergy = AbilitySystem->GetNumericAttribute(UGolemAttributeSet::GetRuneEnergyAttribute());
 	}
 }
 
@@ -276,9 +271,8 @@ void AGolemPartyArenaHUD::DrawHUD()
 		Y += 25.0f;
 	};
 	DrawLine(GetArenaTitle(), FLinearColor::Yellow);
-	DrawLine(FText::Format(NSLOCTEXT("GolemArena", "Resources", "{0} | Health {1}/{2} | Stamina {3} | Rune {4}"),
-		DisplayedName, FText::AsNumber(FMath::RoundToInt(Health)), FText::AsNumber(FMath::RoundToInt(MaxHealth)),
-		FText::AsNumber(FMath::RoundToInt(Stamina)), FText::AsNumber(FMath::RoundToInt(RuneEnergy))));
+	DrawLine(FText::Format(NSLOCTEXT("GolemArena", "Resources", "{0} | Health {1}/{2}"),
+		DisplayedName, FText::AsNumber(FMath::RoundToInt(Health)), FText::AsNumber(FMath::RoundToInt(MaxHealth))));
 	DrawLine(FText::Format(NSLOCTEXT("GolemArena", "PartyStatus", "{0} | alive {1}, downed {2} | {3}"),
 		PartyFeedback, FText::AsNumber(DisplayedArena.AliveGolems), FText::AsNumber(DisplayedArena.DownedGolems),
 		LifeFeedback));

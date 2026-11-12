@@ -25,7 +25,7 @@ bool UGolemGameplayAbility::CanActivateAbility(const FGameplayAbilitySpecHandle 
 {
 	const UGolemAbilitySystemComponent* ASC = ActorInfo != nullptr
 		? Cast<UGolemAbilitySystemComponent>(ActorInfo->AbilitySystemComponent.Get()) : nullptr;
-	return ASC != nullptr && !ASC->IsMutationFenced()
+	return ASC != nullptr
 		&& Super::CanActivateAbility(Handle, ActorInfo, SourceTags, TargetTags, OptionalRelevantTags);
 }
 
@@ -33,11 +33,6 @@ bool UGolemGameplayAbility::DoesAbilitySatisfyTagRequirements(const UAbilitySyst
 	const FGameplayTagContainer* SourceTags, const FGameplayTagContainer* TargetTags,
 	FGameplayTagContainer* OptionalRelevantTags) const
 {
-	if (const UGolemAbilitySystemComponent* GolemASC = Cast<UGolemAbilitySystemComponent>(&InAbilitySystem);
-		GolemASC != nullptr && GolemASC->IsMutationFenced())
-	{
-		return false;
-	}
 	if (!Super::DoesAbilitySatisfyTagRequirements(InAbilitySystem, SourceTags, TargetTags, OptionalRelevantTags))
 	{
 		return false;

@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "Assets/GolemDefinition.h"
+#include "GameplayTagContainer.h"
 #include "UObject/PrimaryAssetId.h"
 #include "GolemHeroDefinition.generated.h"
 
@@ -19,6 +20,13 @@ public:
 	FVector GetFormationOffset() const;
 	float GetFollowDistance() const;
 	FPrimaryAssetId GetDefaultAbilitySetId() const;
+
+	/** Element.* tag: the one colour this Golem can place on a void. */
+	FGameplayTag GetElementTag() const;
+
+	/** Class.* tag: Warrior, Hunter or Mage. */
+	FGameplayTag GetClassTag() const;
+	FGolemResult TrySetArchetype(FGameplayTag InElementTag, FGameplayTag InClassTag);
 	FGolemResult ValidateHero() const;
 	FGolemResult TrySetDefaultAbilitySetId(const FPrimaryAssetId& InAbilitySetId);
 	FGolemResult TrySetPresentation(const FLinearColor& InBodyColor, float InWalkSpeed, float InSprintSpeed,
@@ -37,6 +45,14 @@ private:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Framework|Presentation",
 		meta = (AllowPrivateAccess = "true"))
 	FLinearColor BodyColor = FLinearColor::White;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Framework|Archetype",
+		meta = (AllowPrivateAccess = "true", Categories = "Element"))
+	FGameplayTag ElementTag;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Framework|Archetype",
+		meta = (AllowPrivateAccess = "true", Categories = "Class"))
+	FGameplayTag ClassTag;
 
 	/** Unreal units per second. */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Framework|Movement",

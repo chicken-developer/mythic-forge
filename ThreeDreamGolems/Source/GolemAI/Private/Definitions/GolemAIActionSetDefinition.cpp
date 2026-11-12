@@ -97,7 +97,7 @@ FGolemResult UGolemAIActionSetDefinition::TrySelectAction(const FGolemAIActionSe
 		const float* RemainingCooldown = Context.RemainingCooldowns.Find(Action.ActionKey);
 		if (!Context.OwnedAbilityActionTags.HasTagExact(Action.ActionTag) ||
 			Context.Distance < Action.MinRange || Context.Distance > Action.MaxRange ||
-			Context.Stamina < Action.RequiredStamina || Context.RuneEnergy < Action.RequiredRuneEnergy ||
+			
 			!Context.StateTags.HasAll(Action.RequiredStateTags) || Context.StateTags.HasAny(Action.BlockedStateTags) ||
 			(RemainingCooldown != nullptr && *RemainingCooldown > 0.0f))
 		{
@@ -130,8 +130,6 @@ FGolemResult UGolemAIActionSetDefinition::ValidateActions(const TArray<FGolemAIA
 		if (!GolemIdentity::IsValidIdentifier(Action.ActionKey) || !GolemValidActionTag(Action.ActionTag) ||
 			!GolemActionValueInRange(Action.MinRange, GolemMaxActionRange) ||
 			!GolemActionValueInRange(Action.MaxRange, GolemMaxActionRange) || Action.MinRange > Action.MaxRange ||
-			!GolemActionValueInRange(Action.RequiredStamina, GolemMaxContextValue) ||
-			!GolemActionValueInRange(Action.RequiredRuneEnergy, GolemMaxContextValue) ||
 			!GolemActionValueInRange(Action.CooldownSeconds, GolemMaxSelectionCooldown) ||
 			Action.Priority < -10000 || Action.Priority > 10000 ||
 			!GolemValidActionTags(Action.RequiredStateTags, false) || !GolemValidActionTags(Action.BlockedStateTags, false) ||
@@ -152,8 +150,6 @@ FGolemResult UGolemAIActionSetDefinition::ValidateActions(const TArray<FGolemAIA
 FGolemResult UGolemAIActionSetDefinition::ValidateSelectionContext(const FGolemAIActionSelectionContext& Context)
 {
 	if (!GolemActionValueInRange(Context.Distance, GolemMaxContextValue) ||
-		!GolemActionValueInRange(Context.Stamina, GolemMaxContextValue) ||
-		!GolemActionValueInRange(Context.RuneEnergy, GolemMaxContextValue) ||
 		!GolemValidActionTags(Context.OwnedAbilityActionTags, true) || !GolemValidActionTags(Context.StateTags, false) ||
 		Context.RemainingCooldowns.Num() > GolemMaxContextEntries)
 	{

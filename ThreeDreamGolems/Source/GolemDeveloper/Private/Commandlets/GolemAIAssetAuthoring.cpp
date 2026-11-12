@@ -467,7 +467,6 @@ namespace GolemAIAssetAuthoring
 		Entry.ActionTag = ActionTag;
 		Entry.MinRange = 0.0f;
 		Entry.MaxRange = 210.0f;
-		Entry.RequiredStamina = StaminaCost;
 		Entry.CooldownSeconds = Cooldown;
 		Entry.Priority = Priority;
 		Entry.RequiredStateTags.AddTag(GolemGameplayTags::State_Life_Alive);
@@ -527,9 +526,7 @@ namespace GolemAIAssetAuthoring
 		{
 			FGolemAIArchetypeTuning Tuning;
 			Tuning.Attributes.MaxHealth = MaxHealth;
-			Tuning.Attributes.MaxStamina = 200.0f;
-			Tuning.Attributes.MaxRuneEnergy = 100.0f;
-			Tuning.Attributes.AttackPower = AttackPower;
+			Tuning.Attributes.Power = AttackPower;
 			Tuning.WalkSpeed = 360.0f;
 			Tuning.SightAngle = 180.0f;
 			if (!Definition->TrySetIdentity(FName(Name), TEXT("GolemAIArchetype"))

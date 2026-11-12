@@ -60,10 +60,6 @@ UEnvQuery* UGolemAIArchetypeDefinition::GetRepositionQuery() const
 
 FGolemResult UGolemAIArchetypeDefinition::ValidateArchetype() const
 {
-	if (!Specialization.SpecId.IsNone() && !FGolemSkillCatalog::ValidateDescriptor(Specialization).IsSuccess())
-	{
-		return GolemAIFailure(EGolemError::InvalidData, TEXT("AIArchetypeSkills"));
-	}
 	const FGolemResult Identity = ValidateIdentity();
 	if (!Identity.IsSuccess())
 	{

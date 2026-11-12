@@ -85,8 +85,6 @@ private:
 	TArray<FGolemArenaDebugBinding> DebugBindings;
 	float Health = 0.0f;
 	float MaxHealth = 0.0f;
-	float Stamina = 0.0f;
-	float RuneEnergy = 0.0f;
 	bool bAttacking = false;
 	bool bBlocking = false;
 	FTimerHandle InitialBindingTimer;

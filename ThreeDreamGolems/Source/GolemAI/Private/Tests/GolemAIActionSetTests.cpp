@@ -16,8 +16,6 @@ namespace GolemAIActionSetTests
 		Action.ActionTag = Tag;
 		Action.MinRange = 100.0f;
 		Action.MaxRange = 300.0f;
-		Action.RequiredStamina = 20.0f;
-		Action.RequiredRuneEnergy = 10.0f;
 		Action.CooldownSeconds = 2.0f;
 		Action.Priority = Priority;
 		Action.RequiredStateTags.AddTag(GolemGameplayTags::State_Life_Alive);
@@ -30,8 +28,6 @@ namespace GolemAIActionSetTests
 	{
 		FGolemAIActionSelectionContext Context;
 		Context.Distance = 200.0f;
-		Context.Stamina = 50.0f;
-		Context.RuneEnergy = 25.0f;
 		Context.OwnedAbilityActionTags.AddTag(GolemGameplayTags::Ability_Test_Pulse);
 		Context.OwnedAbilityActionTags.AddTag(GolemGameplayTags::Ability_Party_Revive);
 		Context.StateTags.AddTag(GolemGameplayTags::State_Life_Alive);
@@ -39,7 +35,7 @@ namespace GolemAIActionSetTests
 	}
 	bool ContextsEqual(const FGolemAIActionSelectionContext& Left, const FGolemAIActionSelectionContext& Right)
 	{
-		return Left.Distance == Right.Distance && Left.Stamina == Right.Stamina && Left.RuneEnergy == Right.RuneEnergy &&
+		return Left.Distance == Right.Distance &&
 			Left.OwnedAbilityActionTags == Right.OwnedAbilityActionTags && Left.StateTags == Right.StateTags &&
 			Left.RemainingCooldowns.OrderIndependentCompareEqual(Right.RemainingCooldowns);
 	}
@@ -69,10 +65,10 @@ bool FGolemAIActionSetValidationTest::RunTest(const FString& Parameters)
 	TestEqual(TEXT("Rejected duplicate keeps both previous actions"), Definition->GetActions().Num(), 2);
 	TestEqual(TEXT("Rejected duplicate preserves the original second key"), Definition->GetActions()[1].ActionKey, Revive.ActionKey);
 	Invalid = {Pulse, Revive};
-	Invalid[0].RequiredStamina = std::numeric_limits<float>::quiet_NaN();
-	TestEqual(TEXT("Nonfinite resource tuning is rejected"), Definition->TrySetActions(Invalid).Error, EGolemError::InvalidData);
+	Invalid[0].CooldownSeconds = std::numeric_limits<float>::quiet_NaN();
+	TestEqual(TEXT("Nonfinite cooldown tuning is rejected"), Definition->TrySetActions(Invalid).Error, EGolemError::InvalidData);
 	TestEqual(TEXT("Nonfinite tuning did not partially overwrite the first action"),
-		Definition->GetActions()[0].RequiredStamina, Pulse.RequiredStamina);
+		Definition->GetActions()[0].CooldownSeconds, Pulse.CooldownSeconds);
 	Invalid = {Pulse, Revive};
 	Invalid[0].ActionKey = TEXT("Bad-Key");
 	TestEqual(TEXT("Unstable action keys are rejected"), Definition->TrySetActions(Invalid).Error, EGolemError::InvalidData);
@@ -127,12 +123,6 @@ bool FGolemAIActionEligibilityTest::RunTest(const FString& Parameters)
 	TestEqual(TEXT("Out-of-range snapshot has no eligible action"), Definition->TrySelectAction(Context, Selected).Error, EGolemError::NotFound);
 	TestTrue(TEXT("No-eligible result clears the previous selection"), Selected.ActionKey.IsNone() && !Selected.ActionTag.IsValid());
 	Context = MakeContext();
-	Context.Stamina = Action.RequiredStamina - 1.0f;
-	TestEqual(TEXT("Insufficient stamina prevents selection"), Definition->TrySelectAction(Context, Selected).Error, EGolemError::NotFound);
-	Context = MakeContext();
-	Context.RuneEnergy = Action.RequiredRuneEnergy - 1.0f;
-	TestEqual(TEXT("Insufficient rune energy prevents selection"), Definition->TrySelectAction(Context, Selected).Error, EGolemError::NotFound);
-	Context = MakeContext();
 	Context.RemainingCooldowns.Add(Action.ActionKey, 0.01f);
 	const FGolemAIActionSelectionContext CoolingSnapshot = Context;
 	TestEqual(TEXT("Remaining cooldown prevents selection"), Definition->TrySelectAction(Context, Selected).Error, EGolemError::NotFound);
@@ -155,8 +145,8 @@ bool FGolemAIActionEligibilityTest::RunTest(const FString& Parameters)
 	TestEqual(TEXT("Nonfinite distance is invalid data rather than eligibility"),
 		Definition->TrySelectAction(Context, Selected).Error, EGolemError::InvalidData);
 	Context = MakeContext();
-	Context.Stamina = -1.0f;
-	TestEqual(TEXT("Negative resource snapshots are invalid"), Definition->TrySelectAction(Context, Selected).Error, EGolemError::InvalidData);
+	Context.Distance = -1.0f;
+	TestEqual(TEXT("Negative distance snapshots are invalid"), Definition->TrySelectAction(Context, Selected).Error, EGolemError::InvalidData);
 	Context = MakeContext();
 	Context.RemainingCooldowns.Add(Action.ActionKey, std::numeric_limits<float>::infinity());
 	TestEqual(TEXT("Nonfinite cooldown snapshots are rejected"), Definition->TrySelectAction(Context, Selected).Error, EGolemError::InvalidData);
@@ -193,7 +183,7 @@ bool FGolemAIActionSelectionTest::RunTest(const FString& Parameters)
 	}
 	TestTrue(TEXT("Selection preserves every input scalar, tag container and cooldown"), ContextsEqual(Context, BeforeSelection));
 	TestEqual(TEXT("Selection preserves the authored order"), Definition->GetActions()[0].ActionKey, Zulu.ActionKey);
-	TestEqual(TEXT("Selection returns tuning without spending resources"), Selected.RequiredStamina, Alpha.RequiredStamina);
+	TestEqual(TEXT("Selection returns the authored tuning"), Selected.CooldownSeconds, Alpha.CooldownSeconds);
 	TestTrue(TEXT("Authoring order can be reversed without changing identity"), Definition->TrySetActions({Revive, Alpha, Zulu}).IsSuccess());
 	TestTrue(TEXT("Reordered set still selects an eligible action"), Definition->TrySelectAction(Context, Selected).IsSuccess());
 	TestEqual(TEXT("Deterministic tie is independent of authoring order"), Selected.ActionKey, Alpha.ActionKey);

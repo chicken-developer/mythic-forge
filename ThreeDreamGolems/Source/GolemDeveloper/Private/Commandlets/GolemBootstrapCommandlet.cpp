@@ -7,8 +7,6 @@
 #include "Abilities/GolemTestDamageAbility.h"
 #include "AbilityYard/GolemAbilityDummy.h"
 #include "AbilityYard/GolemAbilityStation.h"
-#include "CombatChallenge/GolemCombatFixture.h"
-#include "CombatChallenge/GolemTraversalObstacle.h"
 #include "Definitions/GolemAbilitySetDefinition.h"
 #include "Definitions/GolemHeroDefinition.h"
 #include "Definitions/GolemPartyDefinition.h"
@@ -68,8 +66,6 @@ namespace GolemBootstrap
 	const TCHAR* TrainingGameModePath = TEXT("/Script/ThreeDreamGolems.GolemGameMode");
 	const TCHAR* AbilityMapPackageName = TEXT("/Game/Golem/Maps/Playables/L_M02_AbilityYard");
 	const TCHAR* AbilityGameModePath = TEXT("/Script/ThreeDreamGolems.GolemAbilityYardGameMode");
-	const TCHAR* CombatMapPackageName = TEXT("/Game/Golem/Maps/Playables/L_M03_CombatChallenge");
-	const TCHAR* CombatGameModePath = TEXT("/Script/ThreeDreamGolems.GolemCombatChallengeGameMode");
 	const TCHAR* ArenaMapPackageName = TEXT("/Game/Golem/Maps/Playables/L_M04_PartyArena");
 	const TCHAR* ArenaGameModePath = TEXT("/Script/ThreeDreamGolems.GolemPartyArenaGameMode");
 	const TCHAR* FollowTreePackageName = TEXT("/Game/Golem/AI/ST_Golem_Follow");
@@ -299,16 +295,20 @@ namespace GolemBootstrap
 		}
 		UE_LOG(LogGolemBootstrap, Display, TEXT("Graybox body material Color parameter validated: %s."),
 			*DefaultBodyColor.ToString());
-		const TArray<FName> HeroNames = { TEXT("Training_Red"), TEXT("Training_Blue"), TEXT("Training_Green") };
+		const TArray<FName> HeroNames = { TEXT("Mars"), TEXT("Jupiter"), TEXT("Neptune") };
+		const TArray<FGameplayTag> HeroElements = { GolemGameplayTags::Element_Earth, GolemGameplayTags::Element_Sky,
+			GolemGameplayTags::Element_Sea };
+		const TArray<FGameplayTag> HeroClasses = { GolemGameplayTags::Class_Warrior, GolemGameplayTags::Class_Hunter,
+			GolemGameplayTags::Class_Mage };
 		const TArray<FLinearColor> HeroColors =
 		{
-			FLinearColor(0.9f, 0.1f, 0.08f), FLinearColor(0.08f, 0.25f, 0.95f), FLinearColor(0.1f, 0.85f, 0.2f)
+			FLinearColor(0.9f, 0.1f, 0.08f), FLinearColor(0.95f, 0.8f, 0.1f), FLinearColor(0.08f, 0.25f, 0.95f)
 		};
 		const TArray<FText> HeroDisplayNames =
 		{
-			NSLOCTEXT("GolemTraining", "RedGolem", "Red Golem"),
-			NSLOCTEXT("GolemTraining", "BlueGolem", "Blue Golem"),
-			NSLOCTEXT("GolemTraining", "GreenGolem", "Green Golem")
+			NSLOCTEXT("GolemHeroes", "Mars", "Mars"),
+			NSLOCTEXT("GolemHeroes", "Jupiter", "Jupiter"),
+			NSLOCTEXT("GolemHeroes", "Neptune", "Neptune")
 		};
 		const TArray<FVector> FormationOffsets =
 		{
@@ -317,7 +317,7 @@ namespace GolemBootstrap
 		TArray<FPrimaryAssetId> HeroIds;
 		for (int32 Index = 0; Index < HeroNames.Num(); ++Index)
 		{
-			const FString HeroPackage = FString::Printf(TEXT("/Game/Golem/Definitions/DA_Golem_%s"),
+			const FString HeroPackage = FString::Printf(TEXT("/Game/Golem/Definitions/DA_Golem_Hero_%s"),
 				*HeroNames[Index].ToString());
 			bool bCreated = false;
 			UGolemHeroDefinition* Hero = FindOrCreateDefinition<UGolemHeroDefinition>(HeroPackage, bCreated);
@@ -329,7 +329,8 @@ namespace GolemBootstrap
 			{
 				if (!Hero->TrySetIdentity(HeroNames[Index], TEXT("GolemHero"))
 					|| !Hero->TrySetPresentation(HeroColors[Index], 450.0f, 700.0f,
-						FormationOffsets[Index], 120.0f).IsSuccess())
+						FormationOffsets[Index], 120.0f).IsSuccess()
+					|| !Hero->TrySetArchetype(HeroElements[Index], HeroClasses[Index]).IsSuccess())
 				{
 					UE_LOG(LogGolemBootstrap, Error, TEXT("Training hero definition authoring failed."));
 					return false;
@@ -349,22 +350,22 @@ namespace GolemBootstrap
 
 		bool bCreated = false;
 		UGolemPartyDefinition* Party = FindOrCreateDefinition<UGolemPartyDefinition>(
-			TEXT("/Game/Golem/Definitions/DA_Golem_TrainingParty"), bCreated);
+			TEXT("/Game/Golem/Definitions/DA_Golem_Party_ThreeGolems"), bCreated);
 		if (Party == nullptr)
 		{
 			return false;
 		}
 		if (bCreated)
 		{
-			if (!Party->TrySetIdentity(TEXT("TrainingParty"), TEXT("GolemParty"))
+			if (!Party->TrySetIdentity(TEXT("ThreeGolems"), TEXT("GolemParty"))
 				|| !Party->TrySetHeroDefinitions(HeroIds).IsSuccess())
 			{
 				UE_LOG(LogGolemBootstrap, Error, TEXT("Training party definition authoring failed."));
 				return false;
 			}
-			Party->SetDisplayName(NSLOCTEXT("GolemFoundation", "TrainingParty", "Training party"));
+			Party->SetDisplayName(NSLOCTEXT("GolemFoundation", "ThreeGolems", "Three Golems"));
 		}
-		if (Party->GetPrimaryAssetId() != FPrimaryAssetId(TEXT("GolemParty"), TEXT("TrainingParty"))
+		if (Party->GetPrimaryAssetId() != FPrimaryAssetId(TEXT("GolemParty"), TEXT("ThreeGolems"))
 			|| !Party->ValidateParty().IsSuccess() || Party->GetHeroDefinitions() != HeroIds)
 		{
 			UE_LOG(LogGolemBootstrap, Error, TEXT("Existing training party has an incompatible identity."));
@@ -614,56 +615,6 @@ namespace GolemBootstrap
 		return true;
 	}
 
-	bool CreateCombatFixtures(UWorld* World)
-	{
-		const TArray<FName> Names =
-		{
-			TEXT("GolemCombat_MeleeTarget"), TEXT("GolemCombat_ScriptedAttacker"), TEXT("GolemCombat_RuneTarget")
-		};
-		const TArray<FVector> Locations =
-		{
-			FVector(-1050.0, -300.0, 100.0), FVector(-900.0, 650.0, 100.0), FVector(900.0, 1000.0, 100.0)
-		};
-		const TArray<EGolemCombatFixtureKind> Kinds =
-		{
-			EGolemCombatFixtureKind::MeleeTarget, EGolemCombatFixtureKind::ScriptedAttacker,
-			EGolemCombatFixtureKind::RuneTarget
-		};
-		for (int32 Index = 0; Index < Names.Num(); ++Index)
-		{
-			const bool bCreated = FindObject<AActor>(World->PersistentLevel, *Names[Index].ToString()) == nullptr;
-			AGolemCombatFixture* Fixture = FindOrCreateActor<AGolemCombatFixture>(World, Names[Index],
-				FTransform(FRotator(0.0, 180.0, 0.0), Locations[Index]));
-			if (Fixture == nullptr)
-			{
-				return false;
-			}
-			if (bCreated)
-			{
-				Fixture->SetFixtureKind(Kinds[Index]);
-			}
-			if (Fixture->GetFixtureKind() != Kinds[Index])
-			{
-				UE_LOG(LogGolemBootstrap, Error, TEXT("Existing combat fixture has another role; preserving authored data."));
-				return false;
-			}
-		}
-		AGolemTraversalObstacle* Obstacle = FindOrCreateActor<AGolemTraversalObstacle>(World,
-			TEXT("GolemCombat_TraversalObstacle"), FTransform(FVector(-1050.0, 1200.0, 45.0)));
-		if (Obstacle == nullptr || Obstacle->GetObstacleMesh()->GetCollisionResponseToChannel(ECC_Pawn) != ECR_Block)
-		{
-			return false;
-		}
-		const FBox Bounds = Obstacle->GetObstacleMesh()->Bounds.GetBox();
-		if (!Bounds.IsValid || Bounds.GetSize().Z < 80.0 || Bounds.GetSize().Z > 130.0
-			|| Bounds.GetSize().X > 220.0)
-		{
-			UE_LOG(LogGolemBootstrap, Error, TEXT("Traversal fixture must retain a valid low physical hurdle."));
-			return false;
-		}
-		return true;
-	}
-
 	bool CreateArenaFixtures(UWorld* World, UStaticMesh* ObstacleMesh)
 	{
 		UClass* MarkerClass = LoadClass<AActor>(nullptr,
@@ -746,12 +697,10 @@ namespace GolemBootstrap
 	bool CreateMap(const int32 Milestone)
 	{
 		const bool bTraining = Milestone > 0;
-		const bool bAbilityYard = Milestone == 2 || Milestone == 3;
-		const bool bCombatChallenge = Milestone == 3;
+		const bool bAbilityYard = Milestone == 2;
 		const bool bArena = Milestone >= 4;
 		const TCHAR* GameModePath = bArena ? ArenaGameModePath
-			: (bCombatChallenge ? CombatGameModePath : (bAbilityYard ? AbilityGameModePath
-				: (bTraining ? TrainingGameModePath : BootGameModePath)));
+			: (bAbilityYard ? AbilityGameModePath : (bTraining ? TrainingGameModePath : BootGameModePath));
 		UClass* BootGameMode = LoadClass<AGameModeBase>(nullptr, GameModePath);
 		UStaticMesh* FloorMesh = LoadObject<UStaticMesh>(nullptr, TEXT("/Engine/BasicShapes/Cube.Cube"));
 		if (BootGameMode == nullptr || FloorMesh == nullptr)
@@ -761,8 +710,7 @@ namespace GolemBootstrap
 		}
 
 		const FString PackageName(bArena ? ArenaMapPackageName
-			: (bCombatChallenge ? CombatMapPackageName : (bAbilityYard ? AbilityMapPackageName
-				: (bTraining ? TrainingMapPackageName : MapPackageName))));
+			: (bAbilityYard ? AbilityMapPackageName : (bTraining ? TrainingMapPackageName : MapPackageName)));
 		const bool bPackageExists = FPackageName::DoesPackageExist(PackageName);
 		UPackage* Package = bPackageExists
 			? LoadPackage(nullptr, *PackageName, LOAD_None)
@@ -881,10 +829,6 @@ namespace GolemBootstrap
 		{
 			return false;
 		}
-		if (bCombatChallenge && !CreateCombatFixtures(World))
-		{
-			return false;
-		}
 		if (bArena && !CreateArenaFixtures(World, FloorMesh))
 		{
 			return false;
@@ -915,9 +859,9 @@ int32 UGolemBootstrapCommandlet::Main(const FString& Params)
 {
 	int32 Milestone = 0;
 	FParse::Value(*Params, TEXT("Milestone="), Milestone);
-	if (Milestone < 0 || Milestone > 4)
+	if (Milestone < 0 || Milestone > 4 || Milestone == 3)
 	{
-		UE_LOG(LogGolemBootstrap, Error, TEXT("Supported bootstrap milestones are 0 through 4."));
+		UE_LOG(LogGolemBootstrap, Error, TEXT("Supported bootstrap milestones are 0, 1, 2 and 4."));
 		return 3;
 	}
 	if (Milestone > 0)
@@ -931,9 +875,8 @@ int32 UGolemBootstrapCommandlet::Main(const FString& Params)
 			return 4;
 		}
 		UE_LOG(LogGolemBootstrap, Display, TEXT("Milestone %d bootstrap complete: %s, real ability set and follow StateTree."),
-			Milestone, Milestone == 4 ? GolemBootstrap::ArenaMapPackageName : (Milestone == 3
-				? GolemBootstrap::CombatMapPackageName : (Milestone == 2 ? GolemBootstrap::AbilityMapPackageName
-					: GolemBootstrap::TrainingMapPackageName)));
+			Milestone, Milestone == 4 ? GolemBootstrap::ArenaMapPackageName
+				: (Milestone == 2 ? GolemBootstrap::AbilityMapPackageName : GolemBootstrap::TrainingMapPackageName));
 		return 0;
 	}
 	if (!GolemBootstrap::CreateDefinition())

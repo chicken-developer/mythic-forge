@@ -1,5 +1,4 @@
 #include "Context/GolemAIContextComponent.h"
-#include "Skills/GolemSkillRuntimeComponent.h"
 
 #include "Abilities/GameplayAbility.h"
 #include "AbilitySystemGlobals.h"
@@ -517,8 +516,6 @@ FGolemAIDecisionSnapshot UGolemAIContextComponent::GetDecisionSnapshot() const
 	}
 	Snapshot.bAlive = Life->IsAlive();
 	Snapshot.bStaggered = AbilitySystem->HasMatchingGameplayTag(GolemGameplayTags::State_Combat_Staggered);
-	Snapshot.Stamina = AbilitySystem->GetGolemAttributes()->GetStamina();
-	Snapshot.RuneEnergy = AbilitySystem->GetGolemAttributes()->GetRuneEnergy();
 	Snapshot.bActionRunning = ActiveActionToken.IsValid();
 	Snapshot.ActiveActionToken = ActiveActionToken;
 	Snapshot.ActiveActionTag = ActiveActionTag;
@@ -586,12 +583,6 @@ FGolemAIDecisionSnapshot UGolemAIContextComponent::GetDecisionSnapshot() const
 	{
 		FGolemAIActionEntry Selection;
 		Snapshot.bCanSelectAction = ActionSet->TrySelectAction(MakeSelectionContext(), Selection).IsSuccess();
-		if (HasSpecialization())
-		{
-			int32 Slot = 0;
-			AActor* SkillTarget = nullptr;
-			Snapshot.bCanSelectAction = SelectSpecializationAction(Slot, SkillTarget).IsSuccess();
-		}
 	}
 	return Snapshot;
 }
@@ -707,8 +698,6 @@ FGolemAIActionSelectionContext UGolemAIContextComponent::MakeSelectionContext() 
 		return Selection;
 	}
 	Selection.Distance = FVector::Distance(ControlledPawn->GetActorLocation(), Target->GetActorLocation());
-	Selection.Stamina = AbilitySystem->GetGolemAttributes()->GetStamina();
-	Selection.RuneEnergy = AbilitySystem->GetGolemAttributes()->GetRuneEnergy();
 	AbilitySystem->GetOwnedGameplayTags(Selection.StateTags);
 	for (const FGameplayAbilitySpec& Spec : AbilitySystem->GetActivatableAbilities())
 	{
@@ -804,149 +793,6 @@ FGolemResult UGolemAIContextComponent::TryBeginAction(const FGolemAIActionEntry&
 	}
 	return BeginActionSpec(Selected.ActionTag, Selected.ActionKey, Selected.CooldownSeconds,
 		bUseAttackLease, OutActionToken);
-}
-
-bool UGolemAIContextComponent::HasSpecialization() const
-{
-	const UGolemSkillRuntimeComponent* Runtime = ControlledPawn.IsValid()
-		? ControlledPawn->FindComponentByClass<UGolemSkillRuntimeComponent>() : nullptr;
-	return Runtime != nullptr && !Runtime->GetBuild().SpecId.IsNone();
-}
-
-FGolemResult UGolemAIContextComponent::SelectSpecializationAction(int32& OutSlot, AActor*& OutTarget) const
-{
-	OutSlot = 0;
-	OutTarget = nullptr;
-	const UGolemSkillRuntimeComponent* Runtime = ControlledPawn.IsValid()
-		? ControlledPawn->FindComponentByClass<UGolemSkillRuntimeComponent>() : nullptr;
-	if (Runtime == nullptr || Runtime->GetBuild().SpecId.IsNone())
-	{
-		return GolemAIFailure(EGolemError::NotFound, TEXT("AISpecialization"));
-	}
-	const FGolemSkillRuntimeState State = Runtime->GetSkillState();
-	const EGolemSkillRole Role = FGolemSkillCatalog::Role(State.Build.SpecId);
-	TArray<int32> Priority;
-	AActor* Ally = Runtime->SelectLowestHealthAlly(1200.0f);
-	if (Role == EGolemSkillRole::Healer && Ally != nullptr)
-	{
-		Priority = { 4, 2, 3, 1 };
-	}
-	else if (Role == EGolemSkillRole::Tank)
-	{
-		Priority = State.Shield < 20.0f ? TArray<int32> { 4, 3, 2, 1 } : TArray<int32> { 4, 2, 1, 3 };
-	}
-	else if (State.Build.SpecId == TEXT("Pluto"))
-	{
-		const UGolemSkillRuntimeComponent* EnemyRuntime = Target.IsValid()
-			? Target->FindComponentByClass<UGolemSkillRuntimeComponent>() : nullptr;
-		const bool bCanShatter = EnemyRuntime != nullptr && EnemyRuntime->GetSkillState().Chilled >= 3;
-		Priority = bCanShatter ? TArray<int32> { 4, 2, 3, 1 } : TArray<int32> { 4, 3, 1, 2 };
-	}
-	else
-	{
-		Priority = State.Stacks >= 2 ? TArray<int32> { 4, 2, 1, 3 } : TArray<int32> { 4, 1, 3, 2 };
-	}
-	for (int32 Slot : Priority)
-	{
-		const FGolemSpecActionDefinition D = FGolemSkillCatalog::GetSkill(State.Build, Slot);
-		AActor* Candidate = D.bFriendly ? Ally != nullptr ? Ally : ControlledPawn.Get() : Target.Get();
-		if (Role == EGolemSkillRole::Healer && Ally == nullptr && Slot != 1)
-		{
-			continue;
-		}
-		if (Runtime->ValidateSkill(Slot, Candidate).IsSuccess())
-		{
-			OutSlot = Slot;
-			OutTarget = Candidate;
-			return FGolemResult::Success();
-		}
-	}
-	return GolemAIFailure(EGolemError::Conflict, TEXT("AISkillCooldownOrRange"));
-}
-
-FGolemResult UGolemAIContextComponent::TryBeginSpecializationAction(bool bUseAttackLease, FGuid& OutActionToken)
-{
-	OutActionToken.Invalidate();
-	const FGolemResult ContextResult = ValidateContext();
-	if (!ContextResult.IsSuccess() || !Life->IsAlive() || ActiveActionToken.IsValid() || bStartingAction)
-	{
-		return ContextResult.IsSuccess() ? GolemAIFailure(EGolemError::Conflict, TEXT("AISkillRunning")) : ContextResult;
-	}
-	int32 Slot = 0;
-	AActor* SkillTarget = nullptr;
-	const FGolemResult Selection = SelectSpecializationAction(Slot, SkillTarget);
-	if (!Selection.IsSuccess())
-	{
-		return Selection;
-	}
-	UGolemSkillRuntimeComponent* Runtime = ControlledPawn->FindComponentByClass<UGolemSkillRuntimeComponent>();
-	const FGolemSpecActionDefinition D = FGolemSkillCatalog::GetSkill(Runtime->GetBuild(), Slot);
-	const uint64 StartingGeneration = OwnershipGeneration;
-	const TWeakObjectPtr<UGolemAbilitySystemComponent> StartingASC = AbilitySystem;
-	const TWeakObjectPtr<APawn> StartingPawn = ControlledPawn;
-	const TWeakObjectPtr<UGolemCombatDirectorSubsystem> StartingDirector = Director;
-	const FGolemEntityId StartingPawnId = PawnId;
-	const TWeakObjectPtr<UGolemSkillRuntimeComponent> StartingRuntime = Runtime;
-	TGuardValue<bool> StartingGuard(bStartingAction, true);
-	FGolemAttackLease Lease;
-	bool bLeaseTransferred = false;
-	ON_SCOPE_EXIT
-	{
-		if (!bLeaseTransferred && Lease.IsValid() && StartingDirector.IsValid() && StartingPawn.IsValid())
-		{
-			StartingDirector->ReleaseAttackToken(StartingPawn.Get(), Lease);
-		}
-	};
-	if (bUseAttackLease && !D.bFriendly && Slot != 4)
-	{
-		if (!Director.IsValid())
-		{
-			return GolemAIFailure(EGolemError::InvalidState, TEXT("AISkillDirector"));
-		}
-		const FGolemResult LeaseResult = StartingDirector->TryAcquireAttackToken(
-			StartingPawn.Get(), SkillTarget, AttackLeaseDuration, Lease);
-		if (!LeaseResult.IsSuccess())
-		{
-			return LeaseResult;
-		}
-	}
-	if (OwnershipGeneration != StartingGeneration || ControlledPawn != StartingPawn || AbilitySystem != StartingASC
-		|| PawnId != StartingPawnId || !StartingRuntime.IsValid() || !ValidateContext().IsSuccess())
-	{
-		return GolemAIFailure(EGolemError::Cancelled, TEXT("AISkillOwnershipChangedBeforeActivation"));
-	}
-	ActiveActionToken = FGuid::NewGuid();
-	OutActionToken = ActiveActionToken;
-	const FGuid StartedToken = ActiveActionToken;
-	ActiveSpec = StartingRuntime->GetSkillHandle(Slot);
-	ActiveLease = Lease;
-	bLeaseTransferred = true;
-	LastActionToken.Invalidate();
-	LastActionStatus = EGolemAIActionStatus::Unknown;
-	const FGolemResult Result = StartingRuntime->RequestSkill(Slot, SkillTarget);
-	if (OwnershipGeneration != StartingGeneration || ControlledPawn != StartingPawn || AbilitySystem != StartingASC
-		|| PawnId != StartingPawnId || !ValidateContext().IsSuccess())
-	{
-		if (ActiveActionToken == StartedToken)
-		{
-			FinishOwnedAction(EGolemAIActionStatus::Cancelled, true);
-		}
-		return GolemAIFailure(EGolemError::Cancelled, TEXT("AISkillOwnershipChangedDuringActivation"));
-	}
-	if (!Result.IsSuccess())
-	{
-		if (ActiveActionToken == StartedToken)
-		{
-			FinishOwnedAction(EGolemAIActionStatus::Failed, true);
-		}
-		return Result;
-	}
-	if (LastActionToken == StartedToken && LastActionStatus == EGolemAIActionStatus::Cancelled)
-	{
-		return GolemAIFailure(EGolemError::Cancelled, TEXT("AISkillCancelledDuringActivation"));
-	}
-	OnDecisionChanged.Broadcast();
-	return FGolemResult::Success();
 }
 
 FGolemResult UGolemAIContextComponent::TryBeginRevive(FGuid& OutActionToken)

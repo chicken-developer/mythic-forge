@@ -9,6 +9,27 @@ UGolemHeroDefinition::UGolemHeroDefinition()
 	DefinitionType = TEXT("GolemHero");
 }
 
+FGameplayTag UGolemHeroDefinition::GetElementTag() const
+{
+	return ElementTag;
+}
+
+FGameplayTag UGolemHeroDefinition::GetClassTag() const
+{
+	return ClassTag;
+}
+
+FGolemResult UGolemHeroDefinition::TrySetArchetype(const FGameplayTag InElementTag, const FGameplayTag InClassTag)
+{
+	if (!InElementTag.IsValid() || !InClassTag.IsValid())
+	{
+		return FGolemResult::Failure(EGolemError::InvalidData, TEXT("HeroArchetype"), FText::GetEmpty());
+	}
+	ElementTag = InElementTag;
+	ClassTag = InClassTag;
+	return FGolemResult::Success();
+}
+
 FLinearColor UGolemHeroDefinition::GetBodyColor() const
 {
 	return BodyColor;

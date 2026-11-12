@@ -6,7 +6,6 @@
 #include "Engine/World.h"
 #include "EngineUtils.h"
 #include "Tags/GolemGameplayTags.h"
-#include "Skills/GolemSkillRuntimeComponent.h"
 #include "TimerManager.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogGolemThreat, Log, All);
@@ -393,12 +392,8 @@ void UGolemThreatComponent::HandleDamageConfirmed(const FGolemDamageConfirmedEve
 			Source = *It;
 		}
 	}
-	const UGolemSkillRuntimeComponent* Skills = IsValid(Source)
-		? Source->FindComponentByClass<UGolemSkillRuntimeComponent>() : nullptr;
-	const float RoleScale = Skills != nullptr && !Skills->GetBuild().SpecId.IsNone()
-		&& FGolemSkillCatalog::Role(Skills->GetBuild().SpecId) == EGolemSkillRole::Tank ? 1.5f : 1.0f;
 	const float Amount = static_cast<float>(FMath::Min(static_cast<double>(MaxThreat),
-		static_cast<double>(Event.AppliedDamage) * DamageScale * RoleScale));
+		static_cast<double>(Event.AppliedDamage) * DamageScale));
 	const FGolemResult Result = AddThreat(Source, Amount);
 	if (!Result.IsSuccess())
 	{

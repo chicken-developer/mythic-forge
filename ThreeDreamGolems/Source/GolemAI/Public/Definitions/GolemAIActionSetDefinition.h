@@ -19,10 +19,8 @@ struct GOLEMAI_API FGolemAIActionEntry
 	float MinRange = 0.0f;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|AI|Actions", meta = (Units = "cm", ClampMin = "0"))
 	float MaxRange = 300.0f;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|AI|Actions", meta = (ClampMin = "0"))
-	float RequiredStamina = 0.0f;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|AI|Actions", meta = (ClampMin = "0"))
-	float RequiredRuneEnergy = 0.0f;
+
+
 	/** StateTree may record this delay after confirmed activation; selection never starts a cooldown. */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|AI|Actions", meta = (Units = "s", ClampMin = "0"))
 	float CooldownSeconds = 0.0f;
@@ -42,10 +40,8 @@ struct GOLEMAI_API FGolemAIActionSelectionContext
 
 	UPROPERTY(BlueprintReadOnly, Category = "Golem|AI|Actions", meta = (Units = "cm"))
 	float Distance = 0.0f;
-	UPROPERTY(BlueprintReadOnly, Category = "Golem|AI|Actions")
-	float Stamina = 0.0f;
-	UPROPERTY(BlueprintReadOnly, Category = "Golem|AI|Actions")
-	float RuneEnergy = 0.0f;
+
+
 	/** Exact tags of granted actions, rather than parent tags that merely describe an ability family. */
 	UPROPERTY(BlueprintReadOnly, Category = "Golem|AI|Actions")
 	FGameplayTagContainer OwnedAbilityActionTags;

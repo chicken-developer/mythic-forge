@@ -3,7 +3,6 @@
 #include "CoreMinimal.h"
 #include "Assets/GolemDefinition.h"
 #include "Attributes/GolemAttributeSet.h"
-#include "Skills/GolemSkillTypes.h"
 #include "GolemAIArchetypeDefinition.generated.h"
 
 class UEnvQuery;
@@ -43,9 +42,6 @@ class GOLEMAI_API UGolemAIArchetypeDefinition : public UGolemDefinition
 	GENERATED_BODY()
 
 public:
-	/** Optional kit executed by the same StateTree/GAS action used by companions. */
-	UPROPERTY(EditDefaultsOnly, Category = "Golem|AI|Skills")
-	FGolemSkillBuild Specialization;
 	UGolemAIArchetypeDefinition();
 	const FGolemAIArchetypeTuning& GetTuning() const;
 	FPrimaryAssetId GetCombatProfileId() const;

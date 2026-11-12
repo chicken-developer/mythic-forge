@@ -17,7 +17,6 @@ class UGolemThreatComponent;
 class UGolemBossPhaseComponent;
 class UGolemAIArchetypeDefinition;
 class UTextRenderComponent;
-class UGolemSkillRuntimeComponent;
 enum class EGolemLifeState : uint8;
 
 /** Noncanonical combat pawn. Its persistent identity and ASC survive boss phase changes. */
@@ -41,15 +40,12 @@ public:
 	FGolemEntityId GetArenaEnemyId() const;
 	FPrimaryAssetId GetArchetypeId() const;
 	const FGolemResult& GetInitializationResult() const;
-	FActiveGameplayEffectHandle GetRecoveryEffectHandle() const;
 
 protected:
 	virtual void BeginPlay() override;
 	virtual void EndPlay(EEndPlayReason::Type EndPlayReason) override;
 
 private:
-	UPROPERTY(Transient)
-	TObjectPtr<UGolemSkillRuntimeComponent> SpecializationRuntime;
 	void HandleLifeChanged(EGolemLifeState Previous, EGolemLifeState Current);
 	UFUNCTION()
 	void OnRep_EnemyIdentity();
@@ -78,6 +74,5 @@ private:
 	UPROPERTY(Transient)
 	TObjectPtr<UGolemAIArchetypeDefinition> Archetype;
 	FGolemResult InitializationResult;
-	FActiveGameplayEffectHandle RecoveryEffect;
 	FDelegateHandle LifeHandle;
 };

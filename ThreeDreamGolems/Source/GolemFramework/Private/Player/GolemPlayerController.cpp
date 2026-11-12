@@ -174,7 +174,6 @@ void AGolemPlayerController::SetupInputComponent()
 	BindAbilityInput(GolemGameplayTags::Input_Combat_Parry);
 	BindAbilityInput(GolemGameplayTags::Input_Combat_Dodge);
 	BindAbilityInput(GolemGameplayTags::Input_Combat_LockOn);
-	BindAbilityInput(GolemGameplayTags::Input_Combat_Rune);
 	BindAbilityInput(GolemGameplayTags::Input_Combat_Finisher);
 	BindAbilityInput(GolemGameplayTags::Input_World_Traverse);
 	InputBindingHandles.Add(EnhancedInput->BindAction(InputConfig->FindAction(GolemGameplayTags::Input_World_Interact),
@@ -272,8 +271,7 @@ void AGolemPlayerController::ServerRequestAbilityInput_Implementation(
 			}
 			else
 			{
-				const float Range = InputTag == GolemGameplayTags::Input_Combat_Rune
-					? Combat->GetProfile()->GetTuning().RuneRange : Combat->GetProfile()->GetTuning().LockRange;
+				const float Range = Combat->GetProfile()->GetTuning().LockRange;
 				Target = Combat->GetLockedTarget();
 				if (Target == nullptr || !Combat->ValidateCombatTarget(Target, Range).IsSuccess())
 				{
