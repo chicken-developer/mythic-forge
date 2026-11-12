@@ -1,110 +1,66 @@
 # Mã nguồn hiện có
 
-Cập nhật 2026-11-12. Tài liệu này tóm tắt trạng thái mã nguồn tại thời điểm chuyển sang thiết kế Three Dream Golems. Nó được rút từ `FINAL_REPORT.md` (2026-10-18) và README cũ trước khi hai file đó bị xoá.
-
-**Giới hạn:** nội dung dưới đây lấy từ báo cáo, chưa được đối chiếu lại với từng file nguồn. Trước khi dựa vào một API hay một hành vi, hãy đọc header thật.
-
-Tên trong tài liệu này dùng tiền tố `Golem`, tức tên sau khi xong mốc R0. Trước R0, các tên đó mang tiền tố `Knight` và project tên `ThreeDreamingKnights`.
-
-## Đối chiếu với code ngày 2026-11-13
-
-Phần này đo trực tiếp trên repo sau mốc R0, không lấy từ báo cáo cũ.
-
-- **Engine trên máy build:** 5.8.4 (CL 58902052). Build Editor Win64 Development qua; 134/134 test PASS ngày 2026-11-12, xem [REFACTOR_REPORT.md](REFACTOR_REPORT.md).
-- **Quy mô:** khoảng 91.500 dòng trong 14 module. `GolemDeveloper` (test và authoring) chiếm 26.400 dòng, `ThreeDreamGolems` 16.400, `GolemItems` 12.500, `GolemAbilitySystem` 9.800, `GolemAI` 8.100, `GolemCombat` 5.700, `GolemUI` 4.500, `GolemFramework` 4.200, `GolemCore` 1.700, `GolemWorld` 1.200, `GolemQuest` 600, `GolemSave` 300, `GolemDialogue` 250, `GolemOnline` 3.
-- **Hệ thống mới:** chưa có dòng code nào cho nguyên tố, khoảng trống, `EGamePhase`, khu, kẻ canh giữ, sách kỹ năng, tarot, DreamCoin, dream stone, Little Princess hay phiên chơi Steam.
-- **Cửa hàng:** chỉ là phần hàng bán (vendor stock) nằm trong hệ trang bị cũ (`GolemRPGGear`, bảng Gear của `GolemRPGPanel`) và actor `GolemRPGUpgradeStation`. Không có khung cửa hàng độc lập.
-- **Đòn tầm xa:** không có actor đạn bay; mọi đòn hiện là cận chiến. Ability đang có: light, heavy, block, parry, dodge, finisher, lock target, rune, traversal, revive.
-- **Thuộc tính GAS:** 21, gồm Health, Stamina, RuneEnergy, AttackPower, Defense, bốn loại kháng, CritChance, CritMultiplier, Haste, CooldownRecovery, MasteryBonus, Versatility, DamageReduction, PoiseBonus. Thiết kế mới còn 4.
-- **Lưu game:** một cấu trúc `FGolemCampaignCheckpoint` trong `UGolemCheckpointSave`; chưa tách theo người chơi và theo thế giới.
-- **Test theo nhóm:** 77 test thuộc hệ RPG cũ (Items 32, Skills 13, Equipment 12, M56 10, M55 7, RPG 3), 16 test thuộc campaign cũ (M6 10, M7 6), 41 test thuộc phần giữ lại (AI 17, GAS 9, Core 5, Combat 5, Framework 4, Party 1). Vài test AI và GAS trong nhóm cuối vẫn dựa vào 9 spec.
-- **`ThreeDreamGolems`:** gần hết là game mode và giao diện của các sân thử cũ: RPGLoop 3.600 dòng, Campaign 2.000, SkillLab 1.600, PartyArena 1.600, Story 1.500, GearLab 1.100, CombatChallenge 900, AbilityYard 800.
+Cập nhật 2026-11-13, sau mốc R1. Mọi con số dưới đây đo trực tiếp trên repo ở nhánh `feature/r1-disable-legacy`, không lấy từ báo cáo cũ. Lịch sử: [REFACTOR_REPORT.md](REFACTOR_REPORT.md) (R0), [R1_REPORT.md](R1_REPORT.md) (R1).
 
 ## Nền tảng
 
 | Hạng mục | Giá trị |
 |---|---|
-| Engine | Unreal Engine 5.8.3 (CL 58210709) |
-| Toolchain | MSVC 14.44.35227, Windows SDK 10.0.22621.0 |
+| Engine | Unreal Engine 5.8.4 (CL 58902052), bản cài tại `C:\Program Files\Epic Games\UE_5.8` |
 | Công nghệ | C++, Gameplay Ability System, StateTree, Enhanced Input, CommonUI, MotionWarping |
-| Online | Plugin OnlineSubsystemNull, OnlineSubsystemSteam và SteamSockets đã bật; chưa có code phiên chơi Steam |
-| Quy mô | Khoảng 91 nghìn dòng C++, 636 file nguồn, 14 module |
-| Test | 134/134 test tự động PASS ở hai lượt chạy (build 20 và 21, 2026-10-17) |
-| Đóng gói | Win64 Development PASS: 652 package, 0 lỗi, 0 cảnh báo |
-| Git | Baseline `master@d875829`; công việc từ mốc M6 cũ trở đi chưa được commit tại thời điểm báo cáo |
+| Online | Plugin OnlineSubsystemNull, OnlineSubsystemSteam và SteamSockets đã bật; chưa có code phiên chơi |
+| Quy mô | Khoảng 36.200 dòng C++ trong 230 file, 14 module (trước R1: 91.500 dòng, 636 file) |
+| Test | 38 test tự động, 38 PASS (lượt `R1b-test-3`, 2026-11-13) |
+| Nội dung | 74 asset: 4 map, 3 hero, 1 party, định nghĩa AI và combat, 4 StateTree chính và 3 StateTree test, 1 EQS, animation, Mannequin, 5 asset âm thanh |
 
 ## Module
 
-| Module | Trách nhiệm | Số file (theo báo cáo cũ) |
+| Module | Trách nhiệm hiện tại | File / dòng |
 |---|---|---|
-| `ThreeDreamGolems` | Target, boot, GameInstance, GameMode, PlayerController, HUD, ghép các module | 126 |
-| `GolemAbilitySystem` | ASC, ability, effect, attribute, ability set, cue | 53 |
-| `GolemDeveloper` (Editor) | Validator, chẩn đoán, harness test tự động, audit | 51 |
-| `GolemCombat` | Trạng thái combat, trace, combo, phòng thủ, khoá mục tiêu, stagger, finisher | 44 |
-| `GolemAI` | StateTree task, quyết định của đồng đội, quái và boss, threat, Combat Director | 37 |
-| `GolemItems` | Định nghĩa vật phẩm, túi đồ, loot, trang bị, rune, tiến trình kỹ năng | 36 |
-| `GolemCore` | Stable ID, kết quả và lỗi, log, settings, tag, sự kiện có kiểu, AssetManager | 28 |
-| `GolemFramework` | Trạng thái đội, ba nhân vật, quyền điều khiển và slot, vòng đời | 25 |
-| `GolemUI` | CommonUI, lớp input, ViewModel, HUD, các màn hình, GameUserSettings | 14 |
-| `GolemWorld` | Tương tác, trạng thái thế giới, encounter, checkpoint, bản đồ, cổng, di chuyển | 13 |
-| `GolemQuest` | Định nghĩa nhiệm vụ, trạng thái, mục tiêu, phần thưởng | 6 |
-| `GolemDialogue` | NPC, hội thoại, vòng đời hội thoại khi co-op | 6 |
-| `GolemSave` | Mô hình lưu có phiên bản, snapshot, ghi bất đồng bộ, phục hồi, migration | 6 |
-| `GolemOnline` | Gần như trống (2 file) | 2 |
+| `GolemCore` | Stable ID, kết quả và lỗi, log, settings, tag (gồm `Element.*`, `Class.*`), sự kiện có kiểu, AssetManager | 25 / 1.600 |
+| `GolemAbilitySystem` | ASC, bộ 4 chỉ số, ability set, sát thương, gục và hồi sinh, cue | 28 / 3.000 |
+| `GolemCombat` | Đòn nhẹ và nặng theo pha, đỡ, parry, né, khoá mục tiêu, stagger, finisher, traversal | 38 / 4.000 |
+| `GolemFramework` | Đội ba Golem, hero và party definition, quyền điều khiển và slot, input | 24 / 4.200 |
+| `GolemAI` | StateTree task, action set, AI đồng đội, quái và boss hai pha, threat, Combat Director | 36 / 7.600 |
+| `ThreeDreamGolems` | Game mode gốc và ba sân thử: Training, AbilityYard, PartyArena | 32 / 3.600 |
+| `GolemDeveloper` (Editor) | Commandlet Bootstrap và authoring cho AI, combat; test tích hợp | 19 / 9.600 |
+| `GolemWorld` | Khung tương tác, trạng thái thế giới, bản đồ vùng và ping của campaign cũ | 12 / 1.200 |
+| `GolemQuest` | Khung quest của campaign cũ | 5 / 600 |
+| `GolemDialogue` | Khung hội thoại | 5 / 250 |
+| `GolemUI` | Chỉ còn `GolemGameUserSettings` | 3 / 430 |
+| `GolemItems`, `GolemSave`, `GolemOnline` | Trống, chờ hệ thống mới | 1 / 3 mỗi module |
 
-Module runtime không được phụ thuộc vòng. Audit đồ thị module nằm ở `Scripts/AuditModules.ps1`.
+Module runtime không phụ thuộc vòng; `Scripts/AuditModules.ps1` kiểm tra điều đó.
 
-## Những gì đã chạy được
+## Đang chạy được
 
-- **Đội ba nhân vật:** luôn có đúng ba nhân vật chuẩn; mỗi nhân vật có ASC riêng; người chơi nhận quyền điều khiển, AI nhận lại khi người chơi rời; có stable ID.
-- **Combat:** đòn đánh có pha lấy đà, hiệu lực, hồi; đỡ, parry, né, finisher; khoá mục tiêu; phản hồi khi trúng đòn.
-- **AI:** StateTree quyết định, GAS thực thi; đồng đội theo đội hình, qua cổng và cầu hẹp, quay lại cứu người gục; ngân sách tấn công riêng cho hai phe.
-- **Boss:** hai pha, có giáp; thử lại dọn sạch trạng thái; người chơi vào giữa trận được dựng lại đúng trạng thái.
-- **Kỹ năng và trang bị kiểu cũ:** 9 spec (Jupiter, Mars, Mercury, Neptune, Pluto, Saturn, Terra, Uranus, Venus), tài nguyên kiểu mana, Runestone, 12 ô trang bị, loot.
-- **Nhiệm vụ và hội thoại:** khung quest, dialogue, world state; demo hai nhiệm vụ đầu.
-- **Giao diện:** menu campaign, journal, bản đồ, minimap, ping, di chuyển nhanh, settings (hiển thị, 4 bus âm thanh, đổi phím, cỡ chữ, giảm rung), HUD dùng snapshot và subscription.
-- **Lưu game:** có phiên bản schema, tiếp tục từ tiến trình lạnh đã được kiểm tra.
+- **Đội ba Golem:** Mars (Earth, Warrior, đỏ), Jupiter (Sky, Hunter, vàng), Neptune (Sea, Mage, xanh dương) trong party `GolemParty:ThreeGolems`. Mỗi Golem có ASC riêng; người chơi nhận quyền điều khiển, AI nhận lại khi người chơi rời.
+- **Chỉ số:** `MaxHealth`/`Health`, `Power`, `Agility`, `ColorHold`. `Agility` và `ColorHold` đã có trong bộ thuộc tính nhưng chưa hệ thống nào dùng.
+- **Combat:** đòn có pha lấy đà, hiệu lực, hồi; đỡ, parry, né; khoá mục tiêu; stagger theo poise; finisher; traversal. Sát thương là số ghi trong combat profile, cộng chênh lệch `Power` so với lúc khởi tạo.
+- **AI:** StateTree quyết định, GAS thực thi; đồng đội theo đội hình và cứu người gục; ngân sách tấn công cho hai phe; boss hai pha.
+- **Gục và hồi sinh:** `GolemLifeComponent`, ability Revive giữ nút.
+- **Settings:** hiển thị, 4 bus âm thanh, đổi phím, cỡ chữ, giảm rung.
 
-## Điểm vào hiện tại
+## Điểm vào
 
 | Mục | Giá trị |
 |---|---|
-| Bản đồ mặc định | `/Game/Golem/Maps/Playables/L_M07_Campaign` |
-| Vùng thứ hai | `L_M07_Courtyard` |
-| Sân thử encounter | `/Game/Golem/Maps/Playables/L_M07_5_ForgeTrial` (boss hai pha, 3 Runestone, cần gạt, cổng, cầu) |
-| Phím | WASD và chuột, F tương tác, I màn hình nhân vật, Esc menu, M bản đồ, J journal, F1–F4 kỹ năng |
-| Art trong game | Mannequin của UE, khối hộp thay trang bị, âm thanh tạo bằng thủ tục |
+| Bản đồ mặc định | `/Game/Golem/Maps/Playables/L_M04_PartyArena` |
+| Các map khác | `L_M00_Boot`, `L_M01_TrainingYard`, `L_M02_AbilityYard` |
+| Dựng lại nội dung | `Scripts\ContinuousRun.ps1 -Action Bootstrap -Milestone 0`, rồi `1`, `2`, `4` |
+| Build, test | `Scripts\ContinuousRun.ps1 -Action BuildEditor`, `-Action Test -TestFilter 'Golem.'` |
 
-Tên bản đồ `L_M0x_...` theo số mốc của kế hoạch cũ, không liên quan tới các mốc mới trong [MILESTONES.md](MILESTONES.md).
+Tên map `L_M0x_...` theo số mốc của kế hoạch cũ. Sân đấu của M0 sẽ là map mới.
 
-## Trùng tên cần để ý
+## Chưa có
 
-- **Mars, Jupiter, Neptune** hiện là tên của ba trong chín spec cũ. Trong thiết kế mới, đó là tên của ba Golem. Khi làm mốc R1, bỏ nghĩa cũ trước khi dùng nghĩa mới.
-- **Ba nhân vật chuẩn** trong code cũ được gọi theo màu Red, Blue, Green và theo nguyên tố Sky, Sea, Earth (bí danh Storm, Tide, Forge). Cần đọc definition thật để gán đúng: Earth là Mars (đỏ), Sky là Jupiter (vàng), Sea là Neptune (xanh dương).
+Luật trộn màu và khoảng trống, Xenon, kẻ canh giữ, `EGamePhase`, khu và trạng thái khu, sách kỹ năng, tarot, DreamCoin, vũ khí và dream stone, Little Princess, nút ra hiệu, lưu game, giao diện trong trận, phiên chơi Steam. Đòn tầm xa cũng chưa có: mọi đòn hiện là cận chiến.
 
-## Việc còn dang dở từ kế hoạch cũ
+## Cần biết khi làm tiếp
 
-| Mã cũ | Nội dung | Xử lý trong thiết kế mới |
-|---|---|---|
-| P-01 | Chưa có XP, mở khoá, talent, kinh tế campaign | Bỏ. Thay bằng DreamCoin, vũ khí, dream stone theo DEV_SPEC mục 11 |
-| P-02 | Chưa có kiểm thử với người thật, tay cầm vật lý, ngôn ngữ | Chuyển thành hai bước kiểm chứng M0 và M1 |
-| P-03 | Thiếu animation, âm thanh, art sản xuất | Làm theo tài liệu art, ghép vào từ M2 |
-| P-04 | Lần khởi động đầu chậm vì PSO (khoảng 77 giây tới UI); chưa có Shipping, Steam, soak | Giữ, xử lý ở M4 |
-| P-05 | Một ca solo DPS bị timeout trong ma trận encounter 18 ca, không tái hiện được | Encounter cũ bị thay; vẫn theo dõi vì có thể là lỗi AI hoặc driver test |
-
-## Phần nào giữ, phần nào thay
-
-Bảng đầy đủ nằm ở mục 3 của [DEV_SPEC.md](DEV_SPEC.md). Tóm tắt theo module:
-
-| Module | Hướng xử lý |
-|---|---|
-| `GolemCore`, `GolemFramework`, `GolemAbilitySystem`, `GolemCombat` | Giữ. Thêm nguyên tố cho đòn đánh và hệ số sát thương theo vùng trúng |
-| `GolemAI` | Giữ. Thêm phản ứng với nút ra hiệu và tự bồi màu; viết AI cho 4 loại Xenon và kẻ canh giữ |
-| `GolemItems` | Thay phần lớn: còn vũ khí 5 bậc, dream stone, sách kỹ năng, tarot, ví DreamCoin |
-| `GolemQuest` | Thu gọn thành cờ cốt truyện và hành động ban ngày |
-| `GolemDialogue` | Giữ cho trò chuyện ban ngày |
-| `GolemWorld` | Đổi nội dung: khu và trạng thái khu, sân đấu, cổng mơ, manh mối. Bỏ di chuyển nhanh giữa vùng |
-| `GolemUI` | Giữ khung và settings. Thay các màn hình RPG cũ bằng danh sách ở DEV_SPEC mục 15 |
-| `GolemSave` | Giữ khung. Tách `PlayerSave` và `WorldSave` theo DEV_SPEC mục 14. Không cần đọc được file lưu cũ |
-| `GolemOnline` | Viết mới: phiên chơi Steam, mời bạn |
-| `GolemDeveloper` | Giữ. Test của hệ thống bị tắt thì tắt theo |
+- **Động tác thừa so với thiết kế:** parry, finisher, traversal và khoá mục tiêu vẫn nằm trong ability set `Combat`. Thiết kế mới chỉ có đòn nhẹ, đòn nặng, né và một động tác class; M0 quyết định giữ hay bỏ từng cái.
+- **Poise và stagger** vẫn chạy bằng số trong combat profile. Thiết kế mới cho Xenon choáng khi bị lấp khoảng trống.
+- **`GolemWorld`, `GolemQuest`, `GolemDialogue`** còn nguyên khung của campaign cũ (bản đồ vùng, ping, quest) và 8 test `Golem.M6.*`, `Golem.M7.*`. Chúng không còn ai gọi; M1 sẽ thu gọn hoặc viết lại theo DEV_SPEC mục 11 và 14.
+- **`AS_Golem_Traversal`** là asset duy nhất không dựng lại được bằng Bootstrap trên engine 5.8.4 (ensure ở `AnimSequencerController`); file hiện có lấy từ lần dựng trước.
+- **Asset âm thanh** (`SC_Golem_*`, `SMix_Golem_User`) do commandlet campaign cũ tạo. Commandlet đó đã bị xoá, nên không dựng lại được nếu mất.
+- **Lần khởi động đầu chậm vì PSO** (việc tồn P-04) và **ca timeout ngẫu nhiên trong ma trận encounter** (P-05) thuộc về nội dung đã xoá hoặc để M4 xử lý.

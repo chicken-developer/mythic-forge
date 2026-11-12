@@ -7,8 +7,8 @@ Cập nhật 2026-11-13. Tài liệu này thay toàn bộ kế hoạch cũ (các
 | Mốc | Tên | Mục đích | Trạng thái |
 |---|---|---|---|
 | R0 | Dọn repo và đổi tên | Xoá tài liệu cũ, đổi Knight thành Golem, build và test lại | Đạt |
-| R1 | Tắt hệ thống cũ | Đưa những hệ thống thiết kế mới không dùng ra khỏi build | Chưa bắt đầu |
-| M0 | Luật trộn màu | Biết luật trộn màu có vui hay không | Chưa bắt đầu |
+| R1 | Tắt hệ thống cũ | Đưa những hệ thống thiết kế mới không dùng ra khỏi build | Đạt |
+| M0 | Luật trộn màu | Biết luật trộn màu có vui hay không | Đang làm |
 | M1 | Core loop | Biết vòng ngày-đêm có khiến người chơi quay lại hay không | Chưa bắt đầu |
 | M2 | Một khu hoàn chỉnh | Khu chợ với art thật, chơi được qua Steam | Chưa bắt đầu |
 | M3 | Đủ nội dung | Chơi được từ mở đầu tới kết bản Early Access | Chưa bắt đầu |
@@ -36,7 +36,9 @@ Hai quy tắc về thứ tự:
 
 ## R1. Tắt hệ thống cũ
 
-Mục đích là để mã nguồn khớp với thiết kế mới trước khi viết thêm. Nguyên tắc: đưa ra khỏi build và khỏi đường chơi chính, chưa xoá file.
+Đã xong ngày 2026-11-13, xem [R1_REPORT.md](R1_REPORT.md). Theo chỉ dẫn của chủ dự án, hệ thống cũ được xoá hẳn thay vì chỉ đưa ra khỏi build; bản cũ còn trong lịch sử git.
+
+Mục đích là để mã nguồn khớp với thiết kế mới trước khi viết thêm.
 
 | Việc | Module | Xong khi |
 |---|---|---|
