@@ -2,11 +2,6 @@
 
 #include "Commandlets/GolemCombatAssetAuthoring.h"
 #include "Commandlets/GolemAIAssetAuthoring.h"
-#include "Commandlets/GolemRPGAssetAuthoring.h"
-#include "Commandlets/GolemGearAssetAuthoring.h"
-#include "Commandlets/GolemStoryAssetAuthoring.h"
-#include "Commandlets/GolemCampaignAssetAuthoring.h"
-#include "Commandlets/GolemEncounterQualityAuthoring.h"
 #include "Assets/GolemDefinition.h"
 #include "Abilities/GolemReviveAbility.h"
 #include "Abilities/GolemTestDamageAbility.h"
@@ -19,9 +14,6 @@
 #include "Definitions/GolemPartyDefinition.h"
 #include "Tags/GolemGameplayTags.h"
 #include "Tasks/GolemFollowTask.h"
-#include "SkillLab/GolemFrozenSurface.h"
-#include "SkillLab/GolemRunestone.h"
-#include "Definitions/GolemRuneDefinition.h"
 
 #include "ActorFactories/ActorFactory.h"
 #include "AssetCompilingManager.h"
@@ -80,12 +72,6 @@ namespace GolemBootstrap
 	const TCHAR* CombatGameModePath = TEXT("/Script/ThreeDreamGolems.GolemCombatChallengeGameMode");
 	const TCHAR* ArenaMapPackageName = TEXT("/Game/Golem/Maps/Playables/L_M04_PartyArena");
 	const TCHAR* ArenaGameModePath = TEXT("/Script/ThreeDreamGolems.GolemPartyArenaGameMode");
-	const TCHAR* RPGMapPackageName = TEXT("/Game/Golem/Maps/Playables/L_M05_RPGLoop");
-	const TCHAR* RPGGameModePath = TEXT("/Script/ThreeDreamGolems.GolemRPGLoopGameMode");
-	const TCHAR* SkillLabMapPackageName = TEXT("/Game/Golem/Maps/Playables/L_M05_5_SkillLab");
-	const TCHAR* SkillLabGameModePath = TEXT("/Script/ThreeDreamGolems.GolemSkillLabGameMode");
-	const TCHAR* GearLabMapPackageName = TEXT("/Game/Golem/Maps/Playables/L_M05_6_GearLab");
-	const TCHAR* CatalogLabMapPackageName = TEXT("/Game/Golem/Maps/Playables/L_M05_6_CatalogLab");
 	const TCHAR* FollowTreePackageName = TEXT("/Game/Golem/AI/ST_Golem_Follow");
 	const FName FoundationId(TEXT("Foundation"));
 	const FVector FloorScale(30.0, 30.0, 0.25);
@@ -757,39 +743,15 @@ namespace GolemBootstrap
 		return true;
 	}
 
-	bool CreateRPGFixtures(UWorld* World)
-	{
-		UClass* StationClass = LoadClass<AActor>(nullptr, TEXT("/Script/ThreeDreamGolems.GolemRPGUpgradeStation"));
-		if (StationClass == nullptr)
-		{
-			UE_LOG(LogGolemBootstrap, Error, TEXT("Native RPG upgrade station is unavailable."));
-			return false;
-		}
-		AActor* Station = FindOrCreateActor<AActor>(World, TEXT("GolemRPG_UpgradeStation"),
-			FTransform(FVector(-1500.0, -1000.0, 20.0)), StationClass);
-		return Station != nullptr;
-	}
-
 	bool CreateMap(const int32 Milestone)
 	{
-		const bool bQuality = Milestone == 75;
-		const bool bCampaign = Milestone == 7 || Milestone == 70;
-		const bool bStory = Milestone == 6 || (Milestone >= 60 && Milestone <= 63) || bCampaign || bQuality;
-		const bool bGearLab = Milestone == 56 || Milestone == 57;
-		const bool bSkillLab = Milestone == 55 || bGearLab;
 		const bool bTraining = Milestone > 0;
 		const bool bAbilityYard = Milestone == 2 || Milestone == 3;
 		const bool bCombatChallenge = Milestone == 3;
-		const bool bRPG = Milestone == 5 || bSkillLab || bStory;
 		const bool bArena = Milestone >= 4;
-		const TCHAR* GameModePath = bQuality ? TEXT("/Script/ThreeDreamGolems.GolemEncounterQualityGameMode")
-			: bCampaign ? TEXT("/Script/ThreeDreamGolems.GolemCampaignGameMode")
-			: bStory ? TEXT("/Script/ThreeDreamGolems.GolemStoryGameMode") : bGearLab ? (Milestone == 57
-			? TEXT("/Script/ThreeDreamGolems.GolemGearCatalogGameMode")
-			: TEXT("/Script/ThreeDreamGolems.GolemGearLabGameMode"))
-			: (bSkillLab ? SkillLabGameModePath : (bRPG ? RPGGameModePath : (bArena ? ArenaGameModePath
+		const TCHAR* GameModePath = bArena ? ArenaGameModePath
 			: (bCombatChallenge ? CombatGameModePath : (bAbilityYard ? AbilityGameModePath
-				: (bTraining ? TrainingGameModePath : BootGameModePath))))));
+				: (bTraining ? TrainingGameModePath : BootGameModePath)));
 		UClass* BootGameMode = LoadClass<AGameModeBase>(nullptr, GameModePath);
 		UStaticMesh* FloorMesh = LoadObject<UStaticMesh>(nullptr, TEXT("/Engine/BasicShapes/Cube.Cube"));
 		if (BootGameMode == nullptr || FloorMesh == nullptr)
@@ -798,16 +760,9 @@ namespace GolemBootstrap
 			return false;
 		}
 
-		const FString PackageName(bQuality ? TEXT("/Game/Golem/Maps/Playables/L_M07_5_ForgeTrial") : bCampaign ? (Milestone == 70
-			? TEXT("/Game/Golem/Maps/Playables/L_M07_Courtyard") : TEXT("/Game/Golem/Maps/Playables/L_M07_Campaign")) : bStory ? (Milestone == 60
-			? TEXT("/Game/Golem/Maps/Playables/L_M06_StoryCourtyard") : Milestone == 63
-			? TEXT("/Game/Golem/Maps/Playables/L_M06_StoryV1") : Milestone == 61
-			? TEXT("/Game/Golem/Maps/Playables/L_M06_CaravanFixture") : Milestone == 62
-			? TEXT("/Game/Golem/Maps/Playables/L_M06_LifecycleFixture")
-			: TEXT("/Game/Golem/Maps/Playables/L_M06_StoryFrameworkDemo")) : bGearLab ? (Milestone == 57 ? CatalogLabMapPackageName : GearLabMapPackageName)
-			: (bSkillLab ? SkillLabMapPackageName : (bRPG ? RPGMapPackageName : (bArena ? ArenaMapPackageName
+		const FString PackageName(bArena ? ArenaMapPackageName
 			: (bCombatChallenge ? CombatMapPackageName : (bAbilityYard ? AbilityMapPackageName
-				: (bTraining ? TrainingMapPackageName : MapPackageName)))))));
+				: (bTraining ? TrainingMapPackageName : MapPackageName))));
 		const bool bPackageExists = FPackageName::DoesPackageExist(PackageName);
 		UPackage* Package = bPackageExists
 			? LoadPackage(nullptr, *PackageName, LOAD_None)
@@ -934,48 +889,6 @@ namespace GolemBootstrap
 		{
 			return false;
 		}
-		if (bRPG && !CreateRPGFixtures(World))
-		{
-			return false;
-		}
-		if (bCampaign && !GolemCampaignAssetAuthoring::PopulateMap(World, Milestone == 70))
-		{
-			return false;
-		}
-		if (bQuality && !GolemEncounterQualityAuthoring::PopulateMap(World))
-		{
-			return false;
-		}
-		if (bStory && !bCampaign && !bQuality && !GolemStoryAssetAuthoring::PopulateStoryMap(World, Milestone))
-		{
-			return false;
-		}
-		if (bSkillLab)
-		{
-			if (FindOrCreateActor<AGolemAbilityDummy>(World, TEXT("GolemSkillLab_CombatDummy"),
-				FTransform(FVector(-1200.0, 0.0, 100.0))) == nullptr)
-			{
-				return false;
-			}
-			const TArray<EGolemRunestoneKind> Kinds{EGolemRunestoneKind::Healing,
-				EGolemRunestoneKind::Crystal, EGolemRunestoneKind::Frost};
-			for (int32 Index = 0; Index < Kinds.Num(); ++Index)
-			{
-				AGolemRunestone* Stone = FindOrCreateActor<AGolemRunestone>(World,
-					FName(*FString::Printf(TEXT("GolemSkillLab_Runestone%d"), Index)),
-					FTransform(FVector(-900.0 + 900.0 * Index, 1100.0, 60.0)));
-				if (Stone == nullptr)
-				{
-					return false;
-				}
-				Stone->ConfigureFixture(Kinds[Index], FGuid());
-			}
-			if (FindOrCreateActor<AGolemFrozenSurface>(World, TEXT("GolemSkillLab_FrozenSurface"),
-				FTransform(FVector(1200.0, 500.0, 55.0))) == nullptr)
-			{
-				return false;
-			}
-		}
 		if (bTraining && !CreateTrainingNavigation(World))
 		{
 			return false;
@@ -983,30 +896,6 @@ namespace GolemBootstrap
 		if (bArena && !ValidateArenaNavigation(World))
 		{
 			return false;
-		}
-		if (bQuality)
-		{
-			UNavigationSystemV1* Navigation = FNavigationSystem::GetCurrent<UNavigationSystemV1>(World);
-			ANavigationData* Data = Navigation != nullptr ? Navigation->GetDefaultNavDataInstance(FNavigationSystem::DontCreate) : nullptr;
-			FProperty* Generation = FindFProperty<FProperty>(ANavigationData::StaticClass(), TEXT("RuntimeGeneration"));
-			if (Data == nullptr || Generation == nullptr || Generation->ImportText_Direct(TEXT("Dynamic"),
-				Generation->ContainerPtrToValuePtr<void>(Data), Data, PPF_None) == nullptr
-				|| Data->GetRuntimeGenerationMode() != ERuntimeGenerationType::Dynamic)
-			{
-				UE_LOG(LogGolemBootstrap, Error, TEXT("The practice gate requires an actual dynamic navmesh."));
-				return false;
-			}
-		}
-		if (bRPG)
-		{
-			UNavigationSystemV1* Navigation = FNavigationSystem::GetCurrent<UNavigationSystemV1>(World);
-			FNavLocation StationPoint;
-			if (Navigation == nullptr || !Navigation->ProjectPointToNavigation(FVector(-1500.0, -1000.0, 50.0),
-				StationPoint, FVector(100.0, 100.0, 150.0)))
-			{
-				UE_LOG(LogGolemBootstrap, Error, TEXT("RPG upgrade station lacks genuine walkable navigation."));
-				return false;
-			}
 		}
 
 		return SaveAsset(Package, World, FPackageName::GetMapPackageExtension());
@@ -1026,86 +915,9 @@ int32 UGolemBootstrapCommandlet::Main(const FString& Params)
 {
 	int32 Milestone = 0;
 	FParse::Value(*Params, TEXT("Milestone="), Milestone);
-	if (Milestone == 75)
+	if (Milestone < 0 || Milestone > 4)
 	{
-		return GolemEncounterQualityAuthoring::CreateAssets() && GolemBootstrap::CreateMap(75) ? 0 : 1;
-	}
-	if (Milestone == 7)
-	{
-		if (!GolemCampaignAssetAuthoring::CreateAssets() || !GolemBootstrap::CreateMap(7)
-			|| !GolemBootstrap::CreateMap(70))
-		{
-			return 1;
-		}
-		UE_LOG(LogGolemBootstrap, Display, TEXT("M7 campaign profiles/worlds, audio buses and two playable maps authored."));
-		return 0;
-	}
-	if (Milestone == 6)
-	{
-		if (!GolemStoryAssetAuthoring::CreateStoryAssets() || !GolemBootstrap::CreateMap(6)
-			|| !GolemBootstrap::CreateMap(60) || !GolemBootstrap::CreateMap(63)
-			|| !GolemBootstrap::CreateMap(61) || !GolemBootstrap::CreateMap(62))
-		{
-			return 1;
-		}
-		UE_LOG(LogGolemBootstrap, Display, TEXT("M6 story definitions and genuine demo/courtyard/V1 maps authored."));
-		return 0;
-	}
-	if (Milestone == 56)
-	{
-		if (!GolemGearAssetAuthoring::CreateGearAssets() || !GolemBootstrap::CreateMap(56)
-			|| !GolemBootstrap::CreateMap(57))
-		{
-			return 4;
-		}
-		UE_LOG(LogGolemBootstrap, Display, TEXT("M5.6 genuine 41-item manifest, GearLab and CatalogLab authored."));
-		return 0;
-	}
-	if (Milestone == 55)
-	{
-		// Existing M0-M4 assets are prerequisites; this branch never reauthors their implementation.
-		if (!GolemRPGAssetAuthoring::CreateRPGAssets())
-		{
-			return 4;
-		}
-		for (const FName RuneName : { FName(TEXT("Aftershock")), FName(TEXT("Convergence")),
-			FName(TEXT("Propagation")), FName(TEXT("Mobile")) })
-		{
-			const FString Path = TEXT("/Game/Golem/Definitions/Items/DA_Golem_Rune_") + RuneName.ToString();
-			const bool bExists = FPackageName::DoesPackageExist(Path);
-			UPackage* Package = bExists ? LoadPackage(nullptr, *Path, LOAD_None) : CreatePackage(*Path);
-			const FName AssetName(*FPackageName::GetLongPackageAssetName(Path));
-			UGolemRuneDefinition* Rune = FindObject<UGolemRuneDefinition>(Package, *AssetName.ToString());
-			if (Rune == nullptr && !bExists)
-			{
-				Rune = NewObject<UGolemRuneDefinition>(Package, AssetName, RF_Public | RF_Standalone);
-				Rune->TrySetIdentity(RuneName, TEXT("GolemItem"));
-				Rune->SetDisplayName(FText::FromName(RuneName));
-				const FName LogicId(*(FString(RuneName == TEXT("Aftershock") ? TEXT("Weapon.") : TEXT("Skill."))
-					+ RuneName.ToString()));
-				if (!Rune->TrySetAttachmentRune(LogicId).IsSuccess())
-				{
-					return 4;
-				}
-				FAssetRegistryModule::AssetCreated(Rune);
-			}
-			if (Rune == nullptr || !Rune->ValidateItem().IsSuccess()
-				|| !GolemBootstrap::SaveAsset(Package, Rune, FPackageName::GetAssetPackageExtension()))
-			{
-				return 4;
-			}
-		}
-		if ((!FPackageName::DoesPackageExist(GolemBootstrap::RPGMapPackageName) && !GolemBootstrap::CreateMap(5))
-			|| !GolemBootstrap::CreateMap(55))
-		{
-			return 4;
-		}
-		UE_LOG(LogGolemBootstrap, Display, TEXT("M5.5 genuine SkillLab map and attachment assets authored."));
-		return 0;
-	}
-	if (Milestone < 0 || Milestone > 5)
-	{
-		UE_LOG(LogGolemBootstrap, Error, TEXT("Supported bootstrap milestones are 0 through 5."));
+		UE_LOG(LogGolemBootstrap, Error, TEXT("Supported bootstrap milestones are 0 through 4."));
 		return 3;
 	}
 	if (Milestone > 0)
@@ -1114,16 +926,14 @@ int32 UGolemBootstrapCommandlet::Main(const FString& Params)
 			|| !GolemBootstrap::CreateFollowTree()
 			|| (Milestone >= 3 && !GolemCombatAssetAuthoring::CreateCombatAssets())
 			|| (Milestone >= 4 && !GolemAIAssetAuthoring::CreateAIAssets())
-			|| (Milestone == 5 && !GolemRPGAssetAuthoring::CreateRPGAssets())
 			|| !GolemBootstrap::CreateMap(Milestone))
 		{
 			return 4;
 		}
 		UE_LOG(LogGolemBootstrap, Display, TEXT("Milestone %d bootstrap complete: %s, real ability set and follow StateTree."),
-			Milestone, Milestone == 5 ? GolemBootstrap::RPGMapPackageName : (Milestone == 4
-				? GolemBootstrap::ArenaMapPackageName : (Milestone == 3
+			Milestone, Milestone == 4 ? GolemBootstrap::ArenaMapPackageName : (Milestone == 3
 				? GolemBootstrap::CombatMapPackageName : (Milestone == 2 ? GolemBootstrap::AbilityMapPackageName
-					: GolemBootstrap::TrainingMapPackageName))));
+					: GolemBootstrap::TrainingMapPackageName)));
 		return 0;
 	}
 	if (!GolemBootstrap::CreateDefinition())

@@ -1,5 +1,4 @@
 #include "PartyArena/GolemArenaEnemy.h"
-#include "SkillLab/GolemBossArmorComponent.h"
 #include "Skills/GolemSkillRuntimeComponent.h"
 
 #include "Assets/GolemAssetManager.h"
@@ -26,7 +25,6 @@ DEFINE_LOG_CATEGORY_STATIC(LogGolemArenaEnemy, Log, All);
 
 AGolemArenaEnemy::AGolemArenaEnemy()
 {
-	SkillLabArmor = CreateDefaultSubobject<UGolemBossArmorComponent>(TEXT("SkillLabArmor"));
 	bReplicates = true;
 	bAlwaysRelevant = true;
 	SetNetUpdateFrequency(30.0f);

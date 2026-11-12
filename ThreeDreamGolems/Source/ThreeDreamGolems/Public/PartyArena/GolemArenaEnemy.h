@@ -17,7 +17,6 @@ class UGolemThreatComponent;
 class UGolemBossPhaseComponent;
 class UGolemAIArchetypeDefinition;
 class UTextRenderComponent;
-class UGolemBossArmorComponent;
 class UGolemSkillRuntimeComponent;
 enum class EGolemLifeState : uint8;
 
@@ -51,8 +50,6 @@ protected:
 private:
 	UPROPERTY(Transient)
 	TObjectPtr<UGolemSkillRuntimeComponent> SpecializationRuntime;
-	UPROPERTY(VisibleAnywhere, Category = "Golem|SkillLab")
-	TObjectPtr<UGolemBossArmorComponent> SkillLabArmor;
 	void HandleLifeChanged(EGolemLifeState Previous, EGolemLifeState Current);
 	UFUNCTION()
 	void OnRep_EnemyIdentity();

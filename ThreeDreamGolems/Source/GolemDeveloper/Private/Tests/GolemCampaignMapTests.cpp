@@ -37,7 +37,7 @@ namespace GolemCampaignTests
 			FGolemMapRegion& Region = Definition->MapRegions.AddDefaulted_GetRef();
 			Region.RegionId = TEXT("School");
 			Region.Label = FText::FromString(TEXT("Test region"));
-			Region.Map = TSoftObjectPtr<UWorld>(FSoftObjectPath(TEXT("/Game/Golem/Maps/Playables/L_M07_Campaign")));
+			Region.Map = TSoftObjectPtr<UWorld>(FSoftObjectPath(TEXT("/Game/Golem/Maps/Playables/L_M04_PartyArena")));
 			FGolemMapMarker& Marker = Definition->MapMarkers.AddDefaulted_GetRef();
 			Marker.MarkerId = TEXT("Landmark");
 			Marker.RegionId = Region.RegionId;
