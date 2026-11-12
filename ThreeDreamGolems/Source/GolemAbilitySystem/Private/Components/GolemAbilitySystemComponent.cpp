@@ -447,7 +447,9 @@ FGolemResult UGolemAbilitySystemComponent::RequestAbilityInput(const FGameplayTa
 		{
 			Spec.InputPressed = false;
 			AbilitySpecInputReleased(Spec);
-			const UGolemGameplayAbility* Ability = Cast<UGolemGameplayAbility>(Spec.Ability);
+			// The live instance answers: one ability can be a held move for one Golem and a tap for another.
+			const UGameplayAbility* Live = Spec.GetPrimaryInstance() != nullptr ? Spec.GetPrimaryInstance() : Spec.Ability.Get();
+			const UGolemGameplayAbility* Ability = Cast<UGolemGameplayAbility>(Live);
 			if (Spec.IsActive() && (Ability == nullptr || Ability->ShouldCancelOnInputRelease()))
 			{
 				CancelAbilityHandle(Spec.Handle);

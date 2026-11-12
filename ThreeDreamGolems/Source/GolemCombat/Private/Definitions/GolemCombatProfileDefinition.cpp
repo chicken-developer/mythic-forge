@@ -70,7 +70,11 @@ namespace
 FGolemResult FGolemHeroMoveTuning::Validate() const
 {
 	if (!GolemFiniteRange(HeavyChargeSeconds, 0.0f, 10.0f) || !GolemFiniteRange(ProjectileRange, 100.0f, 20000.0f) ||
-		!GolemFiniteRange(ProjectileSpeed, 100.0f, 20000.0f) || !GolemFiniteRange(ProjectileRadius, 1.0f, 200.0f))
+		!GolemFiniteRange(ProjectileSpeed, 100.0f, 20000.0f) || !GolemFiniteRange(ProjectileRadius, 1.0f, 200.0f) ||
+		!GolemFiniteRange(ClassMoveCooldownSeconds, 0.0f, 600.0f) || !GolemFiniteRange(GuardDamageFraction, 0.0f, 1.0f) ||
+		!GolemFiniteRange(GuardMaxSeconds, 0.0f, 600.0f) || !GolemFiniteRange(BackflipDistance, 0.0f, 3000.0f) ||
+		!GolemFiniteRange(BackflipShotPowerScale, 0.0f, 100.0f) || !GolemFiniteRange(BarrierRadius, 0.0f, 10000.0f) ||
+		!GolemFiniteRange(BarrierSeconds, 0.1f, 600.0f))
 	{
 		return GolemInvalidCombatData(TEXT("HeroMoveTuning"));
 	}
@@ -80,7 +84,7 @@ FGolemResult FGolemHeroMoveTuning::Validate() const
 FGolemResult FGolemCombatTuning::Validate() const
 {
 	if (!GolemFiniteRange(MaxPoise, 1.0f, 10000.0f) || !GolemFiniteRange(StaggerDuration, 0.1f, 30.0f) ||
-		!GolemFiniteRange(BlockFacingCosine, -1.0f, 1.0f) || !GolemFiniteRange(BlockDamageFraction, 0.0f, 1.0f) ||
+		!GolemFiniteRange(BlockFacingCosine, -1.0f, 1.0f) ||
 		!GolemFiniteRange(ParryWindow, 0.05f, 2.0f) ||
 		!GolemFiniteRange(DodgeDuration, 0.1f, 3.0f) ||
 		!GolemFiniteRange(DodgeInvulnerabilityStart, 0.0f, DodgeDuration) ||

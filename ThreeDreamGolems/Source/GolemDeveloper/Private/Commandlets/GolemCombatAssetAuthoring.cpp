@@ -1,6 +1,6 @@
 #include "Commandlets/GolemCombatAssetAuthoring.h"
 
-#include "Abilities/GolemBlockAbility.h"
+#include "Abilities/GolemClassMoveAbility.h"
 #include "Abilities/GolemDodgeAbility.h"
 #include "Abilities/GolemFinisherAbility.h"
 #include "Abilities/GolemHeavyAttackAbility.h"
@@ -821,7 +821,7 @@ namespace GolemCombatAssetAuthoring
 			{
 				{ UGolemLightAttackAbility::StaticClass(), GolemGameplayTags::Input_Combat_Primary, 1 },
 				{ UGolemHeavyAttackAbility::StaticClass(), GolemGameplayTags::Input_Combat_Heavy, 1 },
-				{ UGolemBlockAbility::StaticClass(), GolemGameplayTags::Input_Combat_Block, 1 },
+				{ UGolemClassMoveAbility::StaticClass(), GolemGameplayTags::Input_Combat_Block, 1 },
 				{ UGolemParryAbility::StaticClass(), GolemGameplayTags::Input_Combat_Parry, 1 },
 				{ UGolemDodgeAbility::StaticClass(), GolemGameplayTags::Input_Combat_Dodge, 1 },
 				{ UGolemLockTargetAbility::StaticClass(), GolemGameplayTags::Input_Combat_LockOn, 1 },

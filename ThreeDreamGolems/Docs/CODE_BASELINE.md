@@ -9,8 +9,8 @@ Cập nhật 2026-11-13, giữa mốc M0. Mọi con số dưới đây đo trự
 | Engine | Unreal Engine 5.8.4 (CL 58902052), bản cài tại `C:\Program Files\Epic Games\UE_5.8` |
 | Công nghệ | C++, Gameplay Ability System, StateTree, Enhanced Input, CommonUI, MotionWarping |
 | Online | Plugin OnlineSubsystemNull, OnlineSubsystemSteam và SteamSockets đã bật; chưa có code phiên chơi |
-| Quy mô | Khoảng 42.400 dòng C++ trong 274 file, 14 module (sau R1: 36.200 dòng; trước R1: 91.500 dòng) |
-| Test | 55 test tự động, 55 PASS (lượt `M0b-test-2`, 2026-11-13); 17 trong số đó là nhóm `Golem.Color`, gồm một phiên chơi thật trên map M0 |
+| Quy mô | Khoảng 43.500 dòng C++ trong 275 file, 14 module (sau R1: 36.200 dòng; trước R1: 91.500 dòng) |
+| Test | 56 test tự động, 56 PASS (lượt `M0b-test-4`, 2026-11-13); 18 trong số đó là nhóm `Golem.Color`, gồm một phiên chơi thật trên map M0 và một phiên ba người qua listen server |
 | Nội dung | 77 asset: 5 map, 3 hero, 1 party, 2 Xenon, định nghĩa AI và combat, 4 StateTree chính và 3 StateTree test, 1 EQS, animation, Mannequin, 5 asset âm thanh |
 
 ## Module
@@ -36,7 +36,7 @@ Module runtime không phụ thuộc vòng; `Scripts/AuditModules.ps1` kiểm tra
 
 - **Đội ba Golem:** Mars (Earth, Warrior, đỏ), Jupiter (Sky, Hunter, vàng), Neptune (Sea, Mage, xanh dương) trong party `GolemParty:ThreeGolems`. Mỗi Golem có ASC riêng; người chơi nhận quyền điều khiển, AI nhận lại khi người chơi rời.
 - **Chỉ số:** `MaxHealth`/`Health`, `Power`, `Agility`, `ColorHold`, lấy từ hero definition của từng Golem. `Power` nhân vào hệ số của đòn đánh, `Agility` nhân vào tốc độ đi và thời gian hồi né, `ColorHold` cộng vào cửa sổ trộn màu.
-- **Combat:** đòn có pha lấy đà, hiệu lực, hồi; đỡ, parry, né có thời gian hồi; khoá mục tiêu; stagger theo poise; finisher; traversal. Sát thương bằng `Power` nhân hệ số của đòn (nhẹ 1,0, nặng 2,5). Đòn nặng của Mars là cú vung búa, của Jupiter và Neptune là đạn bay thẳng 25 m.
+- **Combat:** đòn có pha lấy đà, hiệu lực, hồi; động tác class trên nút đỡ cũ (Warrior đỡ, Hunter lộn lùi bắn, Mage lá chắn); parry; né có thời gian hồi; khoá mục tiêu; stagger theo poise; finisher; traversal. Sát thương bằng `Power` nhân hệ số của đòn (nhẹ 1,0, nặng 2,5). Đòn nặng của Mars là cú vung búa, của Jupiter và Neptune là đạn bay thẳng 25 m.
 - **AI:** StateTree quyết định, GAS thực thi; đồng đội theo đội hình và cứu người gục; ngân sách tấn công cho hai phe; boss hai pha.
 - **Gục và hồi sinh:** `GolemLifeComponent`, ability Revive giữ nút.
 - **Settings:** hiển thị, 4 bus âm thanh, đổi phím, cỡ chữ, giảm rung.
@@ -53,14 +53,31 @@ Module runtime không phụ thuộc vòng; `Scripts/AuditModules.ps1` kiểm tra
 
 Tên map `L_M0x_...` theo số mốc của kế hoạch cũ; sân đấu của M0 là `L_M0_ColorArena`. Bootstrap ghi lại số thiết kế (chỉ số Golem, hệ số đòn đánh, Xenon) vào asset mỗi lần chạy, nên đổi bản nháp là sửa số trong commandlet rồi chạy lại mốc 10.
 
+### Phím trên sân M0
+
+| Việc | Bàn phím và chuột | Tay cầm |
+|---|---|---|
+| Di chuyển, nhìn | WASD, chuột | Cần trái, cần phải |
+| Đòn nhẹ (không đặt màu) | Chuột trái | RT |
+| Đòn nặng (đặt màu của Golem lên khoảng trống) | Chuột phải | LT |
+| Né | Shift trái | B |
+| Động tác class (đỡ, lộn lùi bắn, lá chắn) | Q | LB |
+| Ra hiệu khoảng trống đang nhìn | X | D-pad lên |
+| Đổi Golem (chơi đơn) | Tab hoặc 1, 2, 3 | RB |
+| Cứu đồng đội gục (giữ) | E | X |
+| Host đặt lại sân với Xenon mới | R | Y |
+
+Các phím của hệ thống cũ vẫn hoạt động cho tới khi được dọn: C (parry), chuột giữa (khoá mục tiêu), H (finisher), V (traversal), N/Z/B/K (lệnh cho đồng đội).
+
 ## Chưa có
 
-Động tác class của ba Golem, Xenon loại Ném và Húc, tinh anh, kẻ canh giữ, `EGamePhase`, khu và trạng thái khu, sách kỹ năng, tarot, DreamCoin, vũ khí và dream stone, Little Princess, lưu game, giao diện CommonUI trong trận, phiên chơi Steam. Chơi nhiều người chưa được kiểm trên listen server.
+Xenon loại Ném và Húc, tinh anh, kẻ canh giữ, `EGamePhase`, khu và trạng thái khu, sách kỹ năng, tarot, DreamCoin, vũ khí và dream stone, Little Princess, lưu game, giao diện CommonUI trong trận, phiên chơi Steam. Chơi ba người mới được kiểm trong một tiến trình editor (listen server, hai client, trễ giả lập), chưa kiểm trên ba máy thật.
 
 ## Cần biết khi làm tiếp
 
+- **Động tác class dùng chung một ability** (`UGolemClassMoveAbility`) gắn vào input `Input.Combat.Block` và tag `Ability.Combat.Block`; hero definition quyết định nó là đỡ, lộn lùi bắn hay lá chắn. Actor không có hero definition (quái của sân cũ) nhận thế đỡ không giới hạn. AI đồng đội chưa tự dùng động tác class.
 - **Động tác thừa so với thiết kế:** parry, finisher, traversal và khoá mục tiêu vẫn nằm trong ability set `Combat`. Thiết kế mới chỉ có đòn nhẹ, đòn nặng, né và một động tác class; phần này chưa dọn vì các test `Golem.AI.*`, `Golem.GAS.*` và `Golem.Framework.*` cũ còn bám vào.
-- **Sân PartyArena cũ** (đợt quái và boss hai pha) vẫn còn và là lớp cha của sân M0. Khi M0 ổn, nên tách sân M0 ra khỏi nó rồi xoá sân cũ cùng `GolemArenaEnemy`.
+- **Sân PartyArena cũ** (đợt quái và boss hai pha) vẫn còn và là lớp cha của sân M0. Test `Golem.AI.Arena.Playthrough` của nó được viết cho thế đỡ giữ suốt trận, nên trong test đó thế đỡ của người chơi được đặt lại thành không giới hạn; giới hạn 3 giây của thiết kế được kiểm ở `Golem.Color.Arena.Playthrough`. Khi M0 ổn, nên tách sân M0 ra khỏi nó rồi xoá sân cũ cùng `GolemArenaEnemy`.
 - **AI đồng đội chỉ đặt màu vào đúng khoảng trống được giao.** `UGolemCombatComponent::SetColorIntent` giữ khoảng trống đó; đòn nặng của AI trúng khoảng trống khác thì tính như trúng thân xám. Người chơi không bị giới hạn này.
 - **Xenon không có AIController.** `UGolemXenonBrainComponent` tự xoay, tự đi thẳng và tự ra đòn; nó chưa dùng navmesh nên có thể kẹt sau vật cản.
 - **Poise và stagger** vẫn chạy bằng số trong combat profile. Thiết kế mới cho Xenon choáng khi bị lấp khoảng trống.

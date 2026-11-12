@@ -317,6 +317,20 @@ namespace GolemBootstrap
 		// Bow and staff shoot straight for 25 m; the hammer swings.
 		HeroMoves[1].bHeavyIsProjectile = true;
 		HeroMoves[2].bHeavyIsProjectile = true;
+		// Class moves: Warrior guards (80% less from the front, 3 s at most, 6 s recovery), Hunter leaps
+		// back 5 m and shoots for 1.5 x Power (8 s), Mage shields everyone within 4 m against one hit for 2 s (12 s).
+		HeroMoves[0].ClassMove = EGolemClassMove::Guard;
+		HeroMoves[0].ClassMoveCooldownSeconds = 6.0f;
+		HeroMoves[0].GuardDamageFraction = 0.2f;
+		HeroMoves[0].GuardMaxSeconds = 3.0f;
+		HeroMoves[1].ClassMove = EGolemClassMove::BackflipShot;
+		HeroMoves[1].ClassMoveCooldownSeconds = 8.0f;
+		HeroMoves[1].BackflipDistance = 500.0f;
+		HeroMoves[1].BackflipShotPowerScale = 1.5f;
+		HeroMoves[2].ClassMove = EGolemClassMove::Barrier;
+		HeroMoves[2].ClassMoveCooldownSeconds = 12.0f;
+		HeroMoves[2].BarrierRadius = 400.0f;
+		HeroMoves[2].BarrierSeconds = 2.0f;
 		const TArray<FLinearColor> HeroColors =
 		{
 			FLinearColor(0.9f, 0.1f, 0.08f), FLinearColor(0.95f, 0.8f, 0.1f), FLinearColor(0.08f, 0.25f, 0.95f)

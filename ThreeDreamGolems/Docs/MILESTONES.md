@@ -72,7 +72,7 @@ Giữ nguyên: lõi combat, AI đồng đội, gục và hồi sinh, khung boss 
 
 **Đạt khi:** 5 nhóm ba người chơi 15 phút. Ít nhất 4 nhóm tự hiểu luật trong 5 phút đầu mà không cần giải thích, và ít nhất 4 nhóm muốn chơi tiếp.
 
-**Tiến độ ngày 2026-11-13** (nhánh `feature/r1-disable-legacy`, 55 test PASS, lượt `M0b-test-2`):
+**Tiến độ ngày 2026-11-13** (nhánh `feature/r1-disable-legacy`, 56 test PASS, lượt `M0b-test-4`):
 
 | Việc | Trạng thái |
 |---|---|
@@ -92,14 +92,18 @@ Giữ nguyên: lõi combat, AI đồng đội, gục và hồi sinh, khung boss 
 | Chỉ báo khoảng trống: ký hiệu nguyên tố còn thiếu, vòng đếm giờ, dấu ra hiệu, mũi tên ở mép màn hình | Xong ở dạng vẽ trên HUD đúng vị trí khoảng trống (`AGolemColorArenaHUD`), chưa phải widget gắn trong thế giới 3D. Ký hiệu tạm: `^` Earth, `O` Sky, `~` Sea |
 | Hai Xenon Lính và Khiên: đuổi theo Golem gần nhất, báo trước vùng đánh rồi mới ra đòn | Xong (`UGolemXenonBrainComponent`), có test. Lính quét rộng 20 sát thương, báo trước 1,0 giây; Khiên đẩy lùi 25 sát thương, báo trước 0,8 giây, quay chậm để vòng ra lưng được. Xenon đi thẳng tới mục tiêu, chưa tìm đường vòng qua vật cản |
 | Sân `L_M0_ColorArena` với ba Golem và hai Xenon | Xong, là map mặc định |
-| Động tác class (đỡ 80% của Warrior, lộn lùi bắn của Hunter, lá chắn của Mage) | **Chưa làm.** Cả ba Golem vẫn dùng đỡ và parry của combat profile cũ |
-| Bỏ parry, finisher, traversal, khoá mục tiêu, poise khỏi bộ động tác | **Chưa làm.** Chúng không thuộc thiết kế mới nhưng còn nhiều test cũ bám vào |
-| Chơi 3 người qua listen server | **Chưa kiểm.** Mọi trạng thái mới đều replicate, nhưng mới chạy trên host |
+| Động tác class trên một nút (Q hoặc LB): Warrior đỡ 80% từ phía trước, tối đa 3 giây, hồi 6 giây; Hunter lộn lùi 5 m rồi bắn 1,5 × `Power` không đặt màu, hồi 8 giây; Mage tạo lá chắn chặn một đòn cho mọi Golem trong 4 m, tồn tại 2 giây, hồi 12 giây | Xong (`UGolemClassMoveAbility`), đã kiểm trong phiên chơi thật. AI đồng đội chưa tự dùng động tác class |
+| Bỏ parry, finisher, traversal, khoá mục tiêu, poise khỏi bộ động tác | **Chưa làm.** Chúng không thuộc thiết kế mới nhưng còn nhiều test cũ bám vào; phím của chúng vẫn hoạt động |
+| Chơi 3 người qua listen server | Đã kiểm bằng test `Golem.Color.Arena.ListenServerThreePlayers`: một host và hai client trong cùng tiến trình editor, trễ gói 50–100 ms. Chưa kiểm trên ba máy thật và chưa qua Steam |
 | Playtest 5 nhóm | Chưa làm, cần người chơi thật |
 
-Phiên chơi thật trong test `Golem.Color.Arena.Playthrough` chạy trên map M0 và kiểm theo thứ tự: Mars vung đòn nặng thật vào khoảng trống cam; Jupiter (AI) tự bắn bồi màu trong cửa sổ 4 giây; khoảng trống xanh dương kế tiếp để yên 3 giây thì không AI nào đụng vào; người chơi ra hiệu thì Neptune (AI) vòng ra bắn; cuối cùng Khiên báo trước rồi đẩy lùi Mars. Test tự chọn màu của khoảng trống và chỗ đứng ban đầu; phần còn lại là game tự chạy.
+Phiên chơi thật trong test `Golem.Color.Arena.Playthrough` chạy trên map M0 và kiểm theo thứ tự: Mars vung đòn nặng thật vào khoảng trống cam; Jupiter (AI) tự bắn bồi màu trong cửa sổ 4 giây; khoảng trống xanh dương kế tiếp để yên 3 giây thì không AI nào đụng vào; người chơi ra hiệu thì Neptune (AI) vòng ra bắn; Khiên báo trước rồi đẩy lùi Mars; Mars giữ nút đỡ thì chỉ mất 5 thay vì 25 máu và thế đỡ tự hết sau 3 giây; lá chắn của Neptune chặn đúng một đòn; Jupiter lộn lùi khoảng 5 m rồi bắn. Test tự chọn màu của khoảng trống và chỗ đứng ban đầu; phần còn lại là game tự chạy.
+
+Test ba người chơi kiểm: người chơi Jupiter bắn và người chơi Mars vung búa từ hai máy khác nhau trộn được một khoảng trống cam trên host; cả hai client thấy cùng trạng thái `Primed`, cùng hạn giờ, cùng số khoảng trống đã lấp và cùng lượng máu Xenon; dấu ra hiệu của một người hiện ở mọi máy.
 
 Ba điểm thiết kế còn mở được xử lý tạm như sau, đều là dữ liệu hoặc một nhánh code dễ đổi: đòn đặt màu không gây sát thương riêng (chỉ lần lấp mới trừ máu); Golem đang nghỉ chưa được tính vì luật gục của đêm thuộc M1; tinh anh chưa làm.
+
+Xenon bắt đầu đuổi theo Golem ngay khi map mở, kể cả khi người chơi chưa kết nối xong; hai test phiên chơi vì vậy sinh lại Xenon ở vị trí gốc và tắt bộ não của chúng trước khi đo. Khi có luồng trạng thái của M1, Xenon nên chỉ bắt đầu khi sân đấu bắt đầu.
 
 Số thiết kế nằm trong asset và được Bootstrap ghi lại mỗi lần chạy: đổi bản nháp thì sửa số trong `GolemBootstrapCommandlet.cpp` hoặc `GolemCombatAssetAuthoring.cpp` rồi chạy `-Action Bootstrap -Milestone 10`.
 

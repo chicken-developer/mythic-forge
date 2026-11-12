@@ -328,7 +328,8 @@ bool UGolemCombatComponent::PlaceColor(UGolemColorVoidComponent* Void)
 	return true;
 }
 
-void UGolemCombatComponent::FireHeavyProjectile(const FGolemAttackDefinition& Attack, const FGameplayTag ActionTag)
+void UGolemCombatComponent::FireProjectile(const float PowerScale, const float PoiseDamage, const bool bAppliesColor,
+	const FGameplayTag ActionTag)
 {
 	ACharacter* Character = Cast<ACharacter>(GetOwner());
 	UWorld* World = GetWorld();
@@ -365,12 +366,12 @@ void UGolemCombatComponent::FireHeavyProjectile(const FGolemAttackDefinition& At
 	Shot.Speed = HeroMoves.ProjectileSpeed;
 	Shot.Range = HeroMoves.ProjectileRange;
 	Shot.Radius = HeroMoves.ProjectileRadius;
-	Shot.Damage = GetAttackDamage(Attack.PowerScale);
-	Shot.PoiseDamage = Attack.PoiseDamage;
+	Shot.Damage = GetAttackDamage(PowerScale);
+	Shot.PoiseDamage = PoiseDamage;
 	Shot.ActionTag = ActionTag;
 	FGameplayTagContainer OwnedTags;
 	AbilitySystem->GetOwnedGameplayTags(OwnedTags);
-	Shot.bAppliesColor = Attack.bAppliesColor && GolemElements::FromOwnedTags(OwnedTags, Shot.Element);
+	Shot.bAppliesColor = bAppliesColor && GolemElements::FromOwnedTags(OwnedTags, Shot.Element);
 	Shot.ColorHoldSeconds = AbilitySystem->GetGolemAttributes() != nullptr ? AbilitySystem->GetGolemAttributes()->GetColorHold() : 0.0f;
 	Shot.bRestrictColor = Player == nullptr;
 	Shot.OnlyVoid = ColorIntent;
@@ -576,7 +577,7 @@ void UGolemCombatComponent::BeginTraceWindow(FName WindowId, UAnimSequenceBase* 
 		if (!bProjectileFired)
 		{
 			bProjectileFired = true;
-			FireHeavyProjectile(*Attack, AttackAction);
+			FireProjectile(Attack->PowerScale, Attack->PoiseDamage, Attack->bAppliesColor, AttackAction);
 		}
 		RefreshSnapshot();
 		return;
@@ -838,10 +839,6 @@ FGolemResult UGolemCombatComponent::BeginDefense(FGameplayTag ActionTag)
 		Snapshot.bParrying = true;
 		ParryStartedAt = GetWorld()->GetTimeSeconds();
 	}
-	else if (ActionTag == GolemGameplayTags::Ability_Combat_Block)
-	{
-		Snapshot.bBlocking = true;
-	}
 	else
 	{
 		return GolemCombatFailure(EGolemError::InvalidData, TEXT("DefenseAction"));
@@ -851,15 +848,108 @@ FGolemResult UGolemCombatComponent::BeginDefense(FGameplayTag ActionTag)
 }
 void UGolemCombatComponent::EndDefense(FGameplayTag ActionTag)
 {
-	if (ActionTag == GolemGameplayTags::Ability_Combat_Block)
-	{
-		Snapshot.bBlocking = false;
-	}
-	else if (ActionTag == GolemGameplayTags::Ability_Combat_Parry)
+	if (ActionTag == GolemGameplayTags::Ability_Combat_Parry)
 	{
 		Snapshot.bParrying = false;
 	}
 	RefreshSnapshot();
+}
+
+FGolemResult UGolemCombatComponent::BeginClassMove(EGolemClassMove& OutMove, float& OutDuration)
+{
+	OutMove = HeroMoves.ClassMove;
+	OutDuration = 0.0f;
+	ACharacter* Character = Cast<ACharacter>(GetOwner());
+	if (!IsAuthorityAlive() || Character == nullptr || Snapshot.bAttacking || Snapshot.bDodging || Snapshot.bStaggered
+		|| Snapshot.bBlocking || Snapshot.bParrying || bClassMoveActive)
+	{
+		return GolemCombatFailure(EGolemError::InvalidState, TEXT("BeginClassMove"));
+	}
+	const double Now = GetWorld()->GetTimeSeconds();
+	if (Now < Snapshot.ClassMoveReadyServerTime)
+	{
+		return FGolemResult::Failure(EGolemError::InvalidState, TEXT("ClassMoveCooldown"),
+			NSLOCTEXT("GolemCombat", "ClassMoveCooldown", "The class move is still recovering."));
+	}
+	switch (HeroMoves.ClassMove)
+	{
+	case EGolemClassMove::Guard:
+		Snapshot.bBlocking = true;
+		OutDuration = HeroMoves.GuardMaxSeconds;
+		break;
+	case EGolemClassMove::BackflipShot:
+	{
+		if (Character->GetCharacterMovement()->MovementMode != MOVE_Walking)
+		{
+			return GolemCombatFailure(EGolemError::InvalidState, TEXT("BackflipMovement"));
+		}
+		// A low arc: once airborne nothing brakes the Golem, so the leap covers the authored distance.
+		const float Gravity = FMath::Max(FMath::Abs(Character->GetCharacterMovement()->GetGravityZ()), 1.0f);
+		const float UpSpeed = 350.0f;
+		OutDuration = 2.0f * UpSpeed / Gravity;
+		Character->LaunchCharacter(-Character->GetActorForwardVector() * (HeroMoves.BackflipDistance / OutDuration)
+			+ FVector(0.0, 0.0, UpSpeed), true, true);
+		Snapshot.ClassMoveReadyServerTime = Now + HeroMoves.ClassMoveCooldownSeconds;
+		break;
+	}
+	case EGolemClassMove::Barrier:
+		for (TActorIterator<ACharacter> It(GetWorld()); It; ++It)
+		{
+			UGolemCombatComponent* Other = It->FindComponentByClass<UGolemCombatComponent>();
+			const UGolemAbilitySystemComponent* OtherASC = GolemActorASC(*It);
+			// Teammates and the caster alike: everyone of the party who stands close enough and is alive.
+			if (Other != nullptr && OtherASC != nullptr && OtherASC->HasMatchingGameplayTag(GolemGameplayTags::Role_Party_Golem)
+				&& OtherASC->GetLifeComponent() != nullptr && OtherASC->GetLifeComponent()->IsAlive()
+				&& FVector::DistSquared(It->GetActorLocation(), Character->GetActorLocation()) <= FMath::Square(HeroMoves.BarrierRadius))
+			{
+				Other->GrantBarrier(Now + HeroMoves.BarrierSeconds);
+			}
+		}
+		OutDuration = 0.25f;
+		Snapshot.ClassMoveReadyServerTime = Now + HeroMoves.ClassMoveCooldownSeconds;
+		break;
+	}
+	bClassMoveActive = true;
+	ActiveClassMove = HeroMoves.ClassMove;
+	RefreshSnapshot();
+	return FGolemResult::Success();
+}
+
+void UGolemCombatComponent::EndClassMove(const bool bWasCancelled)
+{
+	if (!bClassMoveActive)
+	{
+		return;
+	}
+	bClassMoveActive = false;
+	if (ActiveClassMove == EGolemClassMove::Guard)
+	{
+		Snapshot.bBlocking = false;
+		if (GetWorld() != nullptr)
+		{
+			// A Guard is held; its recovery starts when it is let go or runs out.
+			Snapshot.ClassMoveReadyServerTime = GetWorld()->GetTimeSeconds() + HeroMoves.ClassMoveCooldownSeconds;
+		}
+	}
+	else if (ActiveClassMove == EGolemClassMove::BackflipShot && !bWasCancelled && IsAuthorityAlive())
+	{
+		FireProjectile(HeroMoves.BackflipShotPowerScale, 0.0f, false, GolemGameplayTags::Ability_Combat_Block);
+	}
+	RefreshSnapshot();
+}
+
+float UGolemCombatComponent::GetClassMoveCooldownRemaining(const double Now) const
+{
+	return static_cast<float>(FMath::Max(0.0, Snapshot.ClassMoveReadyServerTime - Now));
+}
+
+void UGolemCombatComponent::GrantBarrier(const double EndTime)
+{
+	if (IsAuthorityAlive())
+	{
+		Snapshot.BarrierEndServerTime = FMath::Max(Snapshot.BarrierEndServerTime, EndTime);
+		RefreshSnapshot();
+	}
 }
 
 void UGolemCombatComponent::SetNextDodgeDirection(const FVector& Direction)
@@ -1090,6 +1180,14 @@ void UGolemCombatComponent::ResolveIncomingDamage(AActor* Source, float InDamage
 			return;
 		}
 	}
+	if (InDamage > 0.0f && Snapshot.BarrierEndServerTime > GetWorld()->GetTimeSeconds())
+	{
+		// A Mage's barrier stops exactly one hit and is gone.
+		OutHealthDamage = 0.0f;
+		Snapshot.BarrierEndServerTime = 0.0;
+		PublishOutcome(EGolemCombatOutcome::Blocked, GolemGameplayTags::Ability_Combat_Block, Source, 0.0f);
+		return;
+	}
 	const FVector IncomingDirection = IsValid(Source)
 		? (Source->GetActorLocation() - GetOwner()->GetActorLocation()).GetSafeNormal2D() : FVector::ZeroVector;
 	const bool bFront = !IncomingDirection.IsNearlyZero() &&
@@ -1111,7 +1209,7 @@ void UGolemCombatComponent::ResolveIncomingDamage(AActor* Source, float InDamage
 	}
 	if (bCanDefend && bFront && Snapshot.bBlocking)
 	{
-		OutHealthDamage *= Tuning.BlockDamageFraction;
+		OutHealthDamage *= HeroMoves.GuardDamageFraction;
 		PublishOutcome(EGolemCombatOutcome::Blocked, GolemGameplayTags::Ability_Combat_Block, Source, OutHealthDamage);
 		return;
 	}
@@ -1237,6 +1335,7 @@ void UGolemCombatComponent::ClearTransientActions()
 	}
 	Snapshot.bAttacking = false;
 	Snapshot.bBlocking = false;
+	bClassMoveActive = false;
 	Snapshot.AttackPhase = 0;
 	Snapshot.bParrying = false;
 	Snapshot.bDodging = false;
@@ -1262,6 +1361,8 @@ FGolemResult UGolemCombatComponent::ResetForCheckpoint()
 	EndStagger();
 	Snapshot.ComboIndex = 0;
 	Snapshot.DodgeReadyServerTime = 0.0;
+	Snapshot.ClassMoveReadyServerTime = 0.0;
+	Snapshot.BarrierEndServerTime = 0.0;
 	SetColorIntent(nullptr);
 	Snapshot.OutcomeCounts.Init(0, static_cast<int32>(EGolemCombatOutcome::Traversal) + 1);
 	RefreshSnapshot();

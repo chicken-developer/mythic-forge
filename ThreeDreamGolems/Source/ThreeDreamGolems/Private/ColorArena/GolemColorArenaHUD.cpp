@@ -67,10 +67,22 @@ void AGolemColorArenaHUD::DrawHUD()
 	const AGolemCharacter* OwnGolem = PlayerOwner != nullptr ? Cast<AGolemCharacter>(PlayerOwner->GetPawn()) : nullptr;
 	if (OwnGolem != nullptr && OwnGolem->GetCombatComponent() != nullptr)
 	{
-		const float Cooldown = OwnGolem->GetCombatComponent()->GetDodgeCooldownRemaining(World->GetGameState() != nullptr
-			? World->GetGameState()->GetServerWorldTimeSeconds() : World->GetTimeSeconds());
+		const UGolemCombatComponent* OwnCombat = OwnGolem->GetCombatComponent();
+		const double HostNow = World->GetGameState() != nullptr
+			? World->GetGameState()->GetServerWorldTimeSeconds() : World->GetTimeSeconds();
+		const float Cooldown = OwnCombat->GetDodgeCooldownRemaining(HostNow);
 		DrawText(Cooldown > 0.0f ? FString::Printf(TEXT("Dodge %.1f"), Cooldown) : FString(TEXT("Dodge ready")),
 			Cooldown > 0.0f ? FLinearColor(0.6f, 0.6f, 0.6f) : FLinearColor::Green, 25.0f, Canvas->SizeY - 60.0f, nullptr, 1.15f);
+		const TCHAR* MoveName = OwnCombat->GetHeroMoves().ClassMove == EGolemClassMove::BackflipShot ? TEXT("Backflip shot")
+			: OwnCombat->GetHeroMoves().ClassMove == EGolemClassMove::Barrier ? TEXT("Barrier") : TEXT("Guard");
+		const float MoveCooldown = OwnCombat->GetClassMoveCooldownRemaining(HostNow);
+		DrawText(MoveCooldown > 0.0f ? FString::Printf(TEXT("%s %.1f"), MoveName, MoveCooldown)
+				: FString::Printf(TEXT("%s ready"), MoveName),
+			MoveCooldown > 0.0f ? FLinearColor(0.6f, 0.6f, 0.6f) : FLinearColor::Green, 25.0f, Canvas->SizeY - 85.0f, nullptr, 1.15f);
+		if (OwnCombat->HasBarrierAt(HostNow))
+		{
+			DrawText(TEXT("BARRIER: the next hit is stopped"), FLinearColor(0.4f, 0.7f, 1.0f), 25.0f, Canvas->SizeY - 110.0f, nullptr, 1.15f);
+		}
 	}
 }
 
@@ -195,7 +207,7 @@ FText AGolemColorArenaHUD::GetObjectiveText() const
 FText AGolemColorArenaHUD::GetCombatHelp() const
 {
 	return NSLOCTEXT("GolemColorArena", "CombatKeys",
-		"WASD move | LMB light (no colour) | RMB heavy: places your colour on a void | Shift dodge | Q block");
+		"WASD move | LMB light (no colour) | RMB heavy: places your colour on a void | Shift dodge | Q / LB class move");
 }
 
 FText AGolemColorArenaHUD::GetPartyHelp() const

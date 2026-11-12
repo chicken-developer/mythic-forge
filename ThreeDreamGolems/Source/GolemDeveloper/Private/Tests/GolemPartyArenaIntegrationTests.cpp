@@ -1007,6 +1007,19 @@ namespace GolemPartyArenaTest
 		{
 			AGolemCharacter* Golem = Controller->GetControlledGolem();
 			UGolemCombatComponent* Combat = Golem->FindComponentByClass<UGolemCombatComponent>();
+			if (!bLegacyGuardFixture)
+			{
+				// Explicit fixture: this legacy boss observation was written for a block held through the whole
+				// fight. The designed Warrior Guard lasts 3 s with a 6 s recovery, so the human's Guard is made
+				// unlimited here; the Guard's own limits are checked in Golem.Color.Arena.Playthrough.
+				FGolemHeroMoveTuning Moves = Combat->GetHeroMoves();
+				Moves.ClassMove = EGolemClassMove::Guard;
+				Moves.GuardMaxSeconds = 0.0f;
+				Moves.ClassMoveCooldownSeconds = 0.0f;
+				Moves.GuardDamageFraction = 0.1f;
+				bLegacyGuardFixture = Combat->SetHeroMoves(Moves).IsSuccess();
+				Test.AddInfo(TEXT("Legacy fixture: the controlled Golem defends with an unlimited 90% Guard during the boss observation."));
+			}
 			if (Golem->GetLifeComponent()->IsAlive() && Combat->CanTransferControl()
 				&& !DownKeys.Contains(EKeys::Q) && !PulseKey.IsValid())
 			{
@@ -1242,6 +1255,7 @@ namespace GolemPartyArenaTest
 		bool bBossHoldEstablished = false;
 		bool bBossObservationPrepared = false;
 		bool bBossDefenseReleased = false;
+		bool bLegacyGuardFixture = false;
 		int32 CompanionConfirmedHits = 0;
 		int32 MaximumLeases = 0;
 		int32 BossGrantCount = 0;

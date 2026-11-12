@@ -75,6 +75,12 @@ struct GOLEMCOMBAT_API FGolemCombatSnapshot
 	/** Host time from which the next dodge is allowed. */
 	UPROPERTY(BlueprintReadOnly, Category = "Golem|Combat")
 	double DodgeReadyServerTime = 0.0;
+	/** Host time from which the class move is allowed again. */
+	UPROPERTY(BlueprintReadOnly, Category = "Golem|Combat")
+	double ClassMoveReadyServerTime = 0.0;
+	/** Host time until which a Mage's barrier stops the next hit; 0 when there is none. */
+	UPROPERTY(BlueprintReadOnly, Category = "Golem|Combat")
+	double BarrierEndServerTime = 0.0;
 	UPROPERTY(BlueprintReadOnly, Category = "Golem|Combat")
 	int32 Revision = 0;
 	int32 GetOutcomeCount(EGolemCombatOutcome Outcome) const;
@@ -139,6 +145,18 @@ public:
 	void EndDefense(FGameplayTag ActionTag);
 	FGolemResult BeginDodge();
 
+	/**
+	 * Starts this Golem's class move. OutMove tells the ability which one it is and OutDuration how
+	 * long it runs by itself (0 for a Guard held until the button is released).
+	 */
+	FGolemResult BeginClassMove(EGolemClassMove& OutMove, float& OutDuration);
+	void EndClassMove(bool bWasCancelled);
+	float GetClassMoveCooldownRemaining(double Now) const;
+
+	/** Authority only. The next hit before EndTime deals no damage and uses the barrier up. */
+	void GrantBarrier(double EndTime);
+	bool HasBarrierAt(double Now) const { return Snapshot.BarrierEndServerTime > Now; }
+
 	/** The next dodge goes this way instead of along the movement input. AI uses it to dodge away from a threat. */
 	void SetNextDodgeDirection(const FVector& Direction);
 	void EndDodge();
@@ -190,7 +208,7 @@ private:
 	bool IsAuthorityAlive() const;
 	bool IsColorHitAllowed(const UGolemColorVoidComponent* Void) const;
 	bool PlaceColor(UGolemColorVoidComponent* Void);
-	void FireHeavyProjectile(const FGolemAttackDefinition& Attack, FGameplayTag ActionTag);
+	void FireProjectile(float PowerScale, float PoiseDamage, bool bAppliesColor, FGameplayTag ActionTag);
 	const FGolemAttackDefinition* GetCurrentAttack() const;
 	UPROPERTY(ReplicatedUsing = OnRep_ProfileId)
 	FPrimaryAssetId ProfileId;
@@ -224,6 +242,8 @@ private:
 	float BaseWalkSpeed = 0.0f;
 	FVector NextDodgeDirection = FVector::ZeroVector;
 	bool bChargeRateActive = false;
+	bool bClassMoveActive = false;
+	EGolemClassMove ActiveClassMove = EGolemClassMove::Guard;
 	bool bProjectileFired = false;
 	float DodgeStartedAt = 0.0f;
 	float ParryStartedAt = 0.0f;

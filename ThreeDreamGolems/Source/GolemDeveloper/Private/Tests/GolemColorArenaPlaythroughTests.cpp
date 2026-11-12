@@ -9,6 +9,7 @@
 #include "ColorAssist/GolemColorAssistComponent.h"
 #include "Components/GolemAbilitySystemComponent.h"
 #include "Components/GolemCombatComponent.h"
+#include "Components/StateTreeAIComponent.h"
 #include "Controllers/GolemArenaCompanionController.h"
 #include "Party/GolemPartyState.h"
 #include "PartyArena/GolemArenaPlayerController.h"
@@ -52,6 +53,9 @@ namespace GolemColorArenaPlaythrough
 		NoInitiative,
 		SignalResponse,
 		XenonAttack,
+		Guard,
+		Barrier,
+		Backflip,
 		Cleanup,
 		Complete
 	};
@@ -102,7 +106,7 @@ namespace GolemColorArenaPlaythrough
 			{
 				BeginCleanup();
 			}
-			if (World.IsValid() && bKeyDown && World->GetTimeSeconds() - KeyPressedAt > 0.08)
+			if (World.IsValid() && bKeyDown && !bHoldKey && World->GetTimeSeconds() - KeyPressedAt > 0.08)
 			{
 				ReleaseKey();
 			}
@@ -137,6 +141,15 @@ namespace GolemColorArenaPlaythrough
 				break;
 			case EPhase::XenonAttack:
 				XenonAttack();
+				break;
+			case EPhase::Guard:
+				Guard();
+				break;
+			case EPhase::Barrier:
+				Barrier();
+				break;
+			case EPhase::Backflip:
+				Backflip();
 				break;
 			case EPhase::Cleanup:
 				Cleanup();
@@ -259,13 +272,23 @@ namespace GolemColorArenaPlaythrough
 			{
 				return;
 			}
-			// The colour phases need Xenons that stand still; their own behaviour is checked in the last phase.
-			for (AGolemXenon* Candidate : Mode->GetXenons())
+			if (!bXenonsReset)
 			{
-				if (Candidate != nullptr)
+				// Xenons start hunting as soon as the map opens. The colour phases need them at their spawn
+				// points, standing still; their own behaviour is checked in the later phases.
+				if (!Mode->RespawnXenons().IsSuccess())
 				{
-					Candidate->GetBrain()->SetBrainEnabled(false);
+					Fail(TEXT("The arena could not place fresh Xenons."));
+					return;
 				}
+				for (AGolemXenon* Candidate : Mode->GetXenons())
+				{
+					if (Candidate != nullptr)
+					{
+						Candidate->GetBrain()->SetBrainEnabled(false);
+					}
+				}
+				bXenonsReset = true;
 			}
 			if (ReadyWorldTime < 0.0)
 			{
@@ -323,9 +346,10 @@ namespace GolemColorArenaPlaythrough
 			const FVector VoidLocation = Void->GetComponentLocation();
 			const FVector Outward = (VoidLocation - Xenon->GetActorLocation()).GetSafeNormal2D();
 			const FVector Stand = VoidLocation + Outward * (Void->GetScaledSphereRadius() + 60.0f);
+			const FVector Right = FVector::CrossProduct(FVector::UpVector, Outward);
 			Place(Mars.Get(), FVector(Stand.X, Stand.Y, 100.0), (-Outward).Rotation().Yaw);
-			Place(Jupiter.Get(), FVector(Stand.X + 250.0, Stand.Y, 100.0) + Outward * 450.0, (-Outward).Rotation().Yaw);
-			Place(Neptune.Get(), FVector(Stand.X - 250.0, Stand.Y, 100.0) + Outward * 450.0, (-Outward).Rotation().Yaw);
+			Place(Jupiter.Get(), FVector(Stand.X, Stand.Y, 100.0) + Right * 250.0 + Outward * 450.0, (-Outward).Rotation().Yaw);
+			Place(Neptune.Get(), FVector(Stand.X, Stand.Y, 100.0) - Right * 250.0 + Outward * 450.0, (-Outward).Rotation().Yaw);
 			Controller->SetControlRotation((-Outward).Rotation());
 			Enter(EPhase::PlayerSwing, 8.0);
 		}
@@ -488,8 +512,152 @@ namespace GolemColorArenaPlaythrough
 				Test.TestTrue(TEXT("The shove throws Mars back"),
 					FVector::Dist2D(Mars->GetActorLocation(), Shield->GetActorLocation())
 						> FVector::Dist2D(MarsHitFrom, Shield->GetActorLocation()) + 100.0);
-				BeginCleanup();
+				// Next: the same shove against a Warrior's Guard. Mars steps back in front of the Shield.
+				const FVector Forward = Shield->GetActorForwardVector();
+				const FVector Spot = Shield->GetActorLocation() + Forward * 230.0;
+				Place(Mars.Get(), FVector(Spot.X, Spot.Y, 100.0), (-Forward).Rotation().Yaw);
+				MarsHealthBefore = Mars->GetGolemAbilitySystem()->GetGolemAttributes()->GetHealth();
+				StrikesBeforeGuard = Shield->GetBrain()->GetStrikeCount();
+				Enter(EPhase::Guard, 15.0);
 			}
+		}
+
+		void Guard()
+		{
+			const UGolemXenonBrainComponent* Brain = Shield->GetBrain();
+			const UGolemCombatComponent* Combat = Mars->GetCombatComponent();
+			if (!bGuardPressed)
+			{
+				// The player raises the Guard when the Shield shows its next shove, and keeps the button down.
+				if (Brain->GetAction() == EGolemXenonAction::Telegraph && Brain->IsThreatening(Mars->GetActorLocation()))
+				{
+					bGuardPressed = true;
+					bHoldKey = true;
+					PressKey(EKeys::Q);
+				}
+				return;
+			}
+			if (GuardStruckAt < 0.0)
+			{
+				if (Brain->GetStrikeCount() > StrikesBeforeGuard)
+				{
+					GuardStruckAt = World->GetTimeSeconds();
+					Test.TestTrue(TEXT("Mars was guarding when the shove landed"), Combat->GetSnapshot().bBlocking);
+					Test.TestEqual(TEXT("A Guard lets 20% of a frontal hit through: 5 of 25"),
+						Mars->GetGolemAbilitySystem()->GetGolemAttributes()->GetHealth(), MarsHealthBefore - 5.0f);
+					Shield->GetBrain()->SetBrainEnabled(false);
+				}
+				return;
+			}
+			// The button stays down: the Guard has to end by itself after its 3 seconds.
+			if (Combat->GetSnapshot().bBlocking)
+			{
+				return;
+			}
+			const double Held = World->GetTimeSeconds() - KeyPressedAt;
+			Test.TestTrue(FString::Printf(TEXT("A held Guard ends after 3 s (measured %.2f s)"), Held), Held > 2.8 && Held < 3.4);
+			Test.TestTrue(TEXT("The Guard then recovers for 6 s"),
+				Combat->GetClassMoveCooldownRemaining(World->GetTimeSeconds()) > 5.0f);
+			bHoldKey = false;
+			ReleaseKey();
+			// Next: Neptune's barrier. Neptune stands beside Mars; Jupiter is far away.
+			const FVector Beside = Mars->GetActorLocation() + FVector(150.0, 0.0, 0.0);
+			Place(Neptune.Get(), FVector(Beside.X, Beside.Y, 100.0), Mars->GetActorRotation().Yaw);
+			Place(Jupiter.Get(), FVector(0.0, -1200.0, 100.0), 90.0f);
+			Enter(EPhase::Barrier, 10.0);
+		}
+
+		void Barrier()
+		{
+			UGolemCombatComponent* MarsCombat = Mars->GetCombatComponent();
+			if (!bBarrierCast)
+			{
+				if (WorldElapsed() < 0.5)
+				{
+					return;
+				}
+				// Companions do not use class moves by themselves yet; the host triggers Neptune's the way input would.
+				UGolemAbilitySystemComponent* ASC = Neptune->GetGolemAbilitySystem();
+				const FGolemResult Used = ASC->RequestAbilityInput(GolemGameplayTags::Input_Combat_Block, true);
+				ASC->RequestAbilityInput(GolemGameplayTags::Input_Combat_Block, false);
+				if (!Used.IsSuccess())
+				{
+					// The companion may be in the middle of its own action; try again next frame.
+					return;
+				}
+				bBarrierCast = true;
+				const double Now = World->GetTimeSeconds();
+				Test.TestTrue(TEXT("Mars, 1.5 m away, is covered by the barrier"), MarsCombat->HasBarrierAt(Now));
+				Test.TestTrue(TEXT("The Mage is covered too"), Neptune->GetCombatComponent()->HasBarrierAt(Now));
+				Test.TestFalse(TEXT("Jupiter, more than 4 m away, is not covered"), Jupiter->GetCombatComponent()->HasBarrierAt(Now));
+				Test.TestTrue(TEXT("The barrier lasts 2 s"), MarsCombat->HasBarrierAt(Now + 1.9) && !MarsCombat->HasBarrierAt(Now + 2.1));
+				Test.TestTrue(TEXT("The barrier recovers for 12 s"),
+					Neptune->GetCombatComponent()->GetClassMoveCooldownRemaining(Now) > 11.0f);
+				const float Before = Mars->GetGolemAbilitySystem()->GetGolemAttributes()->GetHealth();
+				UGolemAbilitySystemComponent::ApplyCombatDamage(Shield.Get(), Mars.Get(), 25.0f, 0.0f, true);
+				Test.TestEqual(TEXT("The barrier stops one hit completely"),
+					Mars->GetGolemAbilitySystem()->GetGolemAttributes()->GetHealth(), Before);
+				Test.TestFalse(TEXT("And is used up by it"), MarsCombat->HasBarrierAt(World->GetTimeSeconds()));
+				UGolemAbilitySystemComponent::ApplyCombatDamage(Shield.Get(), Mars.Get(), 25.0f, 0.0f, true);
+				Test.TestEqual(TEXT("The second hit lands in full"),
+					Mars->GetGolemAbilitySystem()->GetGolemAttributes()->GetHealth(), Before - 25.0f);
+				// Last: Jupiter's backflip shot, facing the Shield from 7 m.
+				const FVector Forward = Shield->GetActorForwardVector();
+				const FVector Spot = Shield->GetActorLocation() + Forward * 700.0;
+				Place(Mars.Get(), FVector(-1200.0, -1200.0, 100.0), 0.0f);
+				Place(Neptune.Get(), FVector(1200.0, -1200.0, 100.0), 0.0f);
+				// Only the leap may move Jupiter while it is measured: its ordinary decisions wait.
+				if (AGolemArenaCompanionController* AI = Cast<AGolemArenaCompanionController>(Jupiter->GetController()))
+				{
+					AI->GetFollowComponent()->PauseLogic(TEXT("Backflip measurement"));
+					AI->StopMovement();
+				}
+				Place(Jupiter.Get(), FVector(Spot.X, Spot.Y, 100.0), (-Forward).Rotation().Yaw);
+				Enter(EPhase::Backflip, 10.0);
+			}
+		}
+
+		void Backflip()
+		{
+			if (!bBackflipCast)
+			{
+				if (WorldElapsed() < 0.6)
+				{
+					return;
+				}
+				// Keep Jupiter facing the Shield until the move starts; its own decisions may have turned it.
+				const FVector ToShield = Shield->GetActorLocation() - Jupiter->GetActorLocation();
+				Jupiter->SetActorRotation(FRotator(0.0, ToShield.Rotation().Yaw, 0.0));
+				UGolemAbilitySystemComponent* ASC = Jupiter->GetGolemAbilitySystem();
+				const FGolemResult Used = ASC->RequestAbilityInput(GolemGameplayTags::Input_Combat_Block, true);
+				ASC->RequestAbilityInput(GolemGameplayTags::Input_Combat_Block, false);
+				if (!Used.IsSuccess())
+				{
+					return;
+				}
+				bBackflipCast = true;
+				BackflipFrom = Jupiter->GetActorLocation();
+				BackflipAt = World->GetTimeSeconds();
+				ShieldHealthBefore = Shield->GetGolemAttributeSet()->GetHealth();
+				ShieldFilledBefore = Shield->GetVoidHost()->GetFilledCount();
+				return;
+			}
+			if (World->GetTimeSeconds() - BackflipAt < 1.6)
+			{
+				return;
+			}
+			const double Leap = FVector::Dist2D(Jupiter->GetActorLocation(), BackflipFrom);
+			const double Away = FVector::Dist2D(Jupiter->GetActorLocation(), Shield->GetActorLocation())
+				- FVector::Dist2D(BackflipFrom, Shield->GetActorLocation());
+			Test.TestTrue(FString::Printf(TEXT("The backflip covers about 5 m (measured %.0f cm)"), Leap), Leap > 400.0 && Leap < 600.0);
+			Test.TestTrue(TEXT("It goes away from what Jupiter was facing"), Away > 350.0);
+			// 1.5 x Power 10 = 15, of which the grey body takes 10%.
+			Test.TestEqual(TEXT("The shot deals 1.5 x Power to the grey body"), Shield->GetGolemAttributeSet()->GetHealth(),
+				ShieldHealthBefore - 1.5f);
+			Test.TestEqual(TEXT("The shot places no colour"), Shield->GetVoidHost()->GetFilledCount(), ShieldFilledBefore);
+			Test.TestTrue(TEXT("The backflip shot recovers for 8 s"),
+				Jupiter->GetCombatComponent()->GetClassMoveCooldownRemaining(World->GetTimeSeconds()) > 5.5f);
+			BeginCleanup();
 		}
 
 		void Fail(const FString& Message)
@@ -594,6 +762,17 @@ namespace GolemColorArenaPlaythrough
 		bool bOwnsSession = false;
 		bool bKeyDown = false;
 		bool bPressedHeavy = false;
+		bool bXenonsReset = false;
+		bool bHoldKey = false;
+		bool bGuardPressed = false;
+		bool bBarrierCast = false;
+		bool bBackflipCast = false;
+		int32 StrikesBeforeGuard = 0;
+		int32 ShieldFilledBefore = 0;
+		double GuardStruckAt = -1.0;
+		double BackflipAt = 0.0;
+		float ShieldHealthBefore = 0.0f;
+		FVector BackflipFrom = FVector::ZeroVector;
 		bool bSawDulled = false;
 		FKey HeldKey;
 		TWeakObjectPtr<UWorld> World;
