@@ -14,14 +14,14 @@ Tên cũ của project là Three Dream Knights (`ThreeDreamingKnights`). Thiết
 | [Docs/DEV_SPEC.md](Docs/DEV_SPEC.md) | Đặc tả chi tiết để code: trạng thái game, dữ liệu, con số khởi điểm |
 | [Docs/MILESTONES.md](Docs/MILESTONES.md) | Thứ tự làm, phạm vi và tiêu chí nghiệm thu của từng mốc |
 | [Docs/CODE_BASELINE.md](Docs/CODE_BASELINE.md) | Mã nguồn hiện có gì, phần nào giữ, phần nào thay |
-| [Docs/REFACTOR_TASK.md](Docs/REFACTOR_TASK.md) | Việc dọn repo và đổi tên Knight thành Golem (mốc R0) |
+| [Docs/REFACTOR_REPORT.md](Docs/REFACTOR_REPORT.md) | Báo cáo mốc R0: dọn repo và đổi tên Knight thành Golem |
 | [CODING_RULES.md](CODING_RULES.md) | Quy tắc code, bắt buộc đọc trước khi sửa mã nguồn |
 
 Khi hai tài liệu mâu thuẫn: chỉ dẫn trực tiếp của chủ dự án đứng trên hết, rồi tới `GAME_DESIGN.md`, `DEV_SPEC.md`, `MILESTONES.md`. `CODING_RULES.md` quyết định phong cách code.
 
 ## Trạng thái hiện tại
 
-- **Mốc đang làm:** R0, dọn repo và đổi tên. Xem [Docs/MILESTONES.md](Docs/MILESTONES.md).
+- **Mốc đang làm:** R0 (dọn repo và đổi tên) đã đạt ngày 2026-11-12, xem [Docs/REFACTOR_REPORT.md](Docs/REFACTOR_REPORT.md). Mốc kế tiếp là R1, chưa bắt đầu. Xem [Docs/MILESTONES.md](Docs/MILESTONES.md).
 - **Mã nguồn:** 14 module C++ trên GAS, StateTree, Enhanced Input, CommonUI. Có combat, AI đồng đội, gục và hồi sinh, boss hai pha, cửa hàng, lưu game, bộ test tự động. Chi tiết ở [Docs/CODE_BASELINE.md](Docs/CODE_BASELINE.md).
 - **Chưa có:** luật trộn màu, vòng ngày-đêm, bộ sinh kẻ canh giữ, sách kỹ năng, tarot, DreamCoin, phiên chơi qua Steam.
 

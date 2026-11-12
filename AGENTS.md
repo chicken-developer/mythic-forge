@@ -4,15 +4,14 @@ Read [MEMORY.md](MEMORY.md) before working in this repository. It records the
 current asset layout, active entry points and validation limits after the
 2026-11-02 directory refactor. Update it when these facts change.
 
-Game code stays in `ThreeDreamingKnights/`. Authoring assets and their review
+Game code stays in `ThreeDreamGolems/`. Authoring assets and their review
 projects live in `Assets/`; see [Assets/README.md](Assets/README.md).
 
-The game is now **Three Dream Golems**. Its design, dev spec and milestones are
-in `ThreeDreamingKnights/Docs/`; read `ThreeDreamingKnights/README.md` first.
-Milestone R0 is pending: the owner approved (2026-11-12) renaming the game
-project, its modules and its classes from Knight to Golem, and the folder to
-`ThreeDreamGolems/`. Follow `ThreeDreamingKnights/Docs/REFACTOR_TASK.md`
-exactly; that approval covers the game project only.
+The game is **Three Dream Golems**. Its design, dev spec and milestones are
+in `ThreeDreamGolems/Docs/`; read `ThreeDreamGolems/README.md` first.
+The project, its modules, classes and content were renamed from Knight to
+Golem on 2026-11-12 (milestone R0, see `ThreeDreamGolems/Docs/REFACTOR_REPORT.md`).
+That rename covers the game project only.
 
 For Medieval work, also read `Assets/hda_medieval_building/AGENTS.md` and the
 current function review guide it references. Follow the installed

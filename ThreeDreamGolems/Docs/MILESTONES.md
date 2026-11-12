@@ -6,7 +6,7 @@ Cập nhật 2026-11-12. Tài liệu này thay toàn bộ kế hoạch cũ (các
 
 | Mốc | Tên | Mục đích | Trạng thái |
 |---|---|---|---|
-| R0 | Dọn repo và đổi tên | Xoá tài liệu cũ, đổi Knight thành Golem, build và test lại | Đang làm |
+| R0 | Dọn repo và đổi tên | Xoá tài liệu cũ, đổi Knight thành Golem, build và test lại | Đạt |
 | R1 | Tắt hệ thống cũ | Đưa những hệ thống thiết kế mới không dùng ra khỏi build | Chưa bắt đầu |
 | M0 | Luật trộn màu | Biết luật trộn màu có vui hay không | Chưa bắt đầu |
 | M1 | Core loop | Biết vòng ngày-đêm có khiến người chơi quay lại hay không | Chưa bắt đầu |
@@ -23,7 +23,7 @@ Hai quy tắc về thứ tự:
 
 ## R0. Dọn repo và đổi tên
 
-Hướng dẫn từng bước ở [REFACTOR_TASK.md](REFACTOR_TASK.md).
+Đã xong ngày 2026-11-12. Kết quả, lệnh đã chạy và những gì chưa chạy ghi ở [REFACTOR_REPORT.md](REFACTOR_REPORT.md). Còn một việc cho chủ dự án: mở editor có giao diện và chơi thử bản đồ mặc định.
 
 | Việc | Xong khi |
 |---|---|

@@ -1,6 +1,6 @@
 # Project memory
 
-Updated: 2026-11-03 (Asia/Saigon).
+Updated: 2026-11-12 (Asia/Saigon).
 
 ## Current layout
 
@@ -9,7 +9,7 @@ the script's `__file__`; do not rely on the shell's working directory.
 
 | Purpose | Current location |
 | --- | --- |
-| Main game project and C++ code | `ThreeDreamingKnights/ThreeDreamingKnights.uproject`, `ThreeDreamingKnights/Source/` |
+| Main game project and C++ code | `ThreeDreamGolems/ThreeDreamGolems.uproject`, `ThreeDreamGolems/Source/` (renamed from `ThreeDreamingKnights` on 2026-11-12; modules are `Golem*`, content is `/Game/Golem`) |
 | Gothic HDA authoring | `Assets/hda_gothic_building/` |
 | Medieval HDA authoring | `Assets/hda_medieval_building/` |
 | Houdini reference assets | `Assets/hda_samples/AllHDAs/`, `Assets/hda_samples/AllHipFIles/` |
