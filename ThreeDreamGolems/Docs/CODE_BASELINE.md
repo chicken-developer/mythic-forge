@@ -6,6 +6,20 @@ Cập nhật 2026-11-12. Tài liệu này tóm tắt trạng thái mã nguồn t
 
 Tên trong tài liệu này dùng tiền tố `Golem`, tức tên sau khi xong mốc R0. Trước R0, các tên đó mang tiền tố `Knight` và project tên `ThreeDreamingKnights`.
 
+## Đối chiếu với code ngày 2026-11-13
+
+Phần này đo trực tiếp trên repo sau mốc R0, không lấy từ báo cáo cũ.
+
+- **Engine trên máy build:** 5.8.4 (CL 58902052). Build Editor Win64 Development qua; 134/134 test PASS ngày 2026-11-12, xem [REFACTOR_REPORT.md](REFACTOR_REPORT.md).
+- **Quy mô:** khoảng 91.500 dòng trong 14 module. `GolemDeveloper` (test và authoring) chiếm 26.400 dòng, `ThreeDreamGolems` 16.400, `GolemItems` 12.500, `GolemAbilitySystem` 9.800, `GolemAI` 8.100, `GolemCombat` 5.700, `GolemUI` 4.500, `GolemFramework` 4.200, `GolemCore` 1.700, `GolemWorld` 1.200, `GolemQuest` 600, `GolemSave` 300, `GolemDialogue` 250, `GolemOnline` 3.
+- **Hệ thống mới:** chưa có dòng code nào cho nguyên tố, khoảng trống, `EGamePhase`, khu, kẻ canh giữ, sách kỹ năng, tarot, DreamCoin, dream stone, Little Princess hay phiên chơi Steam.
+- **Cửa hàng:** chỉ là phần hàng bán (vendor stock) nằm trong hệ trang bị cũ (`GolemRPGGear`, bảng Gear của `GolemRPGPanel`) và actor `GolemRPGUpgradeStation`. Không có khung cửa hàng độc lập.
+- **Đòn tầm xa:** không có actor đạn bay; mọi đòn hiện là cận chiến. Ability đang có: light, heavy, block, parry, dodge, finisher, lock target, rune, traversal, revive.
+- **Thuộc tính GAS:** 21, gồm Health, Stamina, RuneEnergy, AttackPower, Defense, bốn loại kháng, CritChance, CritMultiplier, Haste, CooldownRecovery, MasteryBonus, Versatility, DamageReduction, PoiseBonus. Thiết kế mới còn 4.
+- **Lưu game:** một cấu trúc `FGolemCampaignCheckpoint` trong `UGolemCheckpointSave`; chưa tách theo người chơi và theo thế giới.
+- **Test theo nhóm:** 77 test thuộc hệ RPG cũ (Items 32, Skills 13, Equipment 12, M56 10, M55 7, RPG 3), 16 test thuộc campaign cũ (M6 10, M7 6), 41 test thuộc phần giữ lại (AI 17, GAS 9, Core 5, Combat 5, Framework 4, Party 1). Vài test AI và GAS trong nhóm cuối vẫn dựa vào 9 spec.
+- **`ThreeDreamGolems`:** gần hết là game mode và giao diện của các sân thử cũ: RPGLoop 3.600 dòng, Campaign 2.000, SkillLab 1.600, PartyArena 1.600, Story 1.500, GearLab 1.100, CombatChallenge 900, AbilityYard 800.
+
 ## Nền tảng
 
 | Hạng mục | Giá trị |
@@ -21,7 +35,7 @@ Tên trong tài liệu này dùng tiền tố `Golem`, tức tên sau khi xong m
 
 ## Module
 
-| Module | Trách nhiệm | Số file |
+| Module | Trách nhiệm | Số file (theo báo cáo cũ) |
 |---|---|---|
 | `ThreeDreamGolems` | Target, boot, GameInstance, GameMode, PlayerController, HUD, ghép các module | 126 |
 | `GolemAbilitySystem` | ASC, ability, effect, attribute, ability set, cue | 53 |

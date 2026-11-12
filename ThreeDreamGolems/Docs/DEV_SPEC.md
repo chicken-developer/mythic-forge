@@ -1,4 +1,4 @@
-<!-- Bản sao của tab Dev trong tài liệu Three Dream Golems — Game Design (2026-11-12). Khi thiết kế đổi, sửa tài liệu gốc trước rồi cập nhật file này. -->
+<!-- Bản sao của tab Dev trong tài liệu Three Dream Golems — Game Design (2026-11-13). Khi thiết kế đổi, sửa tài liệu gốc trước rồi cập nhật file này. -->
 
 # Three Dream Golems — Đặc tả cho dev
 
@@ -21,7 +21,7 @@ Một ngày-đêm đi qua các trạng thái dưới đây theo đúng thứ t�
 | 2 | `Day` | 2–4 phút | Đội tiêu 3 giờ tự do: dò manh mối, nâng vũ khí, trò chuyện. Gắn dream stone không tốn giờ. | Hết giờ, hoặc host chọn "Đi tới cổng mơ" |
 | 3 | `DreamGate` | 20 giây | Đội theo Little Princess tới khu đã chọn, cô làm phép mở cổng. Game ghi cờ `bNightInProgress`. | Mọi người chơi bước qua cổng |
 | 4 | `DreamHall` | Tự do | Cửa hàng của Princess phù thủy, lần 1. Mỗi Golem nhận một cuốn sách miễn phí. | Host xác nhận sẵn sàng |
-| 5 | `Arena` × 3 | 3–5 phút mỗi sân | Mỗi sân có 1–3 Xenon bóng đêm. Hạ hết thì mở đường sang sân sau. | Mọi Xenon trong sân đã lấy lại màu |
+| 5 | `Arena` × 3 | 2–4 phút mỗi sân | Mỗi sân có 1–3 Xenon bóng đêm. Hạ hết thì mở đường sang sân sau. | Mọi Xenon trong sân đã lấy lại màu |
 | 6 | `RestPoint` | Tự do | Cửa hàng lần 2, ngay trước kẻ canh giữ. | Host xác nhận sẵn sàng |
 | 7 | `Guardian` | 4–6 phút | Trận với kẻ canh giữ của khu. | Thắng, hoặc cả đội gục lần hai |
 | 8 | `Wake` | 30 giây | Màn kết quả, trả DreamCoin, cập nhật trạng thái khu và sổ tay, lưu game. | Tự chuyển sang `Morning` của ngày kế |
@@ -56,6 +56,14 @@ Nguyên tắc là giữ phần lõi đã chạy và đã có test, tắt những
 | Tarot | Viết mới | Mục 9 |
 | Giờ tự do ban ngày, manh mối, trạng thái khu | Viết mới | Mục 11 |
 | Little Princess, nút ra hiệu | Viết mới | Mục 12 |
+
+Ba nhóm chưa có trong bảng, xác định được sau khi đọc cấu trúc repo:
+
+- **Quest:** thu gọn thành cờ cốt truyện và ba hành động ban ngày. Bỏ hai nhiệm vụ demo của campaign cũ.
+- **Dialogue:** giữ, dùng cho trò chuyện ban ngày.
+- **World và giao diện campaign:** giữ tương tác, checkpoint và settings. Bỏ di chuyển nhanh giữa vùng, journal, bản đồ vùng và minimap; thay bằng khu, sân đấu, cổng mơ và các màn hình ở mục 15.
+
+Tên module trong bản sao này dùng tiền tố `Golem`, vì repo đã xong mốc R0 (2026-11-12). Tài liệu gốc còn ghi tiền tố cũ.
 
 ## 4. Ba Golem: chỉ số và động tác có sẵn
 
@@ -141,10 +149,11 @@ Chỉ những đòn có cờ `bAppliesColor` mới tác động lên khoảng tr
 
 ### Kết quả khi lấp một khoảng trống
 
-- Xenon mất một phần máu bằng `MaxHealth / số khoảng trống`. Lấp hết mọi khoảng trống thì máu về 0.
+- Mỗi Xenon có một số khoảng trống phải lấp (`VoidsToFill`), nhưng chỉ vài cái lộ ra cùng lúc (`MaxOpenVoids`). Lấp xong một cái thì cái kế tiếp lộ ra ở vị trí khác, sau khi Xenon hết choáng. Nhờ vậy mỗi con cần 3–4 lần phối hợp thành công chứ không gục sau một đòn.
+- Mỗi lần lấp, Xenon mất một phần máu bằng `MaxHealth / VoidsToFill`. Lấp hết thì máu về 0.
 - Xenon bị choáng 2,5 giây. Kẻ canh giữ chỉ choáng 1,5 giây.
 - Khi máu về 0, Xenon chuyển sang trạng thái `Restored`: lấy lại màu, ngừng chiến đấu và đứng yên tới hết sân. Xenon không bị xóa khỏi màn chơi.
-- Sát thương vào thân xám cũng có thể đưa máu về 0. Đây là đường lui cho đội thiếu người hoặc phối hợp kém: vẫn thắng được, nhưng chậm hơn khoảng 10 lần.
+- Sát thương vào thân xám cũng trừ máu, nên đội phối hợp kém vẫn có đường thắng, nhưng rất chậm. Tỉ lệ 10% là số cần đo ở M0: quá cao thì người chơi bỏ qua luật trộn màu, quá thấp thì đội kẹt cứng khi phối hợp hỏng.
 
 ### Lõi trắng
 
@@ -169,16 +178,18 @@ Xenon bóng đêm cao gấp 2–3 lần Golem. Mỗi sân chỉ có 1–3 con, n
 
 Tên dưới đây là tên làm việc, chưa phải tên chính thức.
 
-| Loại | Hành vi | Khoảng trống | Lúc lộ điểm yếu |
-| --- | --- | --- | --- |
-| Lính (`Grunt`) | Đánh cận chiến chậm, quét rộng | 1 cái, màu cơ bản, ở ngực | Luôn `Open` |
-| Khiên (`Shield`) | Giơ khiên che phía trước, đẩy lùi | 2 cái: một ở khiên, một ở lưng | Cái ở lưng chỉ trúng được từ phía sau |
-| Ném (`Thrower`) | Đứng xa ném đá, lùi khi bị áp sát | 1 cái hai màu, ở tay ném | `Open` trong 3 giây sau mỗi lần ném |
-| Húc (`Charger`) | Lao thẳng vào một Golem | 1 cái hai màu, ở đầu | `Open` trong 4 giây sau khi húc trúng tường |
+| Loại | Hành vi | Phải lấp | Lộ cùng lúc | Lúc lộ điểm yếu | Máu | Sát thương mỗi đòn |
+| --- | --- | --- | --- | --- | --- | --- |
+| Lính (`Grunt`) | Đánh cận chiến chậm, quét rộng | 3 | 1 | Luôn `Open` | 300 | 20 |
+| Khiên (`Shield`) | Giơ khiên che phía trước, đẩy lùi | 4 | 1 | Xen kẽ giữa khiên và lưng; cái ở lưng chỉ trúng được từ phía sau | 400 | 25 |
+| Ném (`Thrower`) | Đứng xa ném đá, lùi khi bị áp sát | 3 | 1 | `Open` trong 3 giây sau mỗi lần ném | 250 | 15 |
+| Húc (`Charger`) | Lao thẳng vào một Golem | 3 | 1 | `Open` trong 4 giây sau khi húc trúng tường | 350 | 30 |
+
+Khoảng trống là một màu hay màu trộn do tỉ lệ theo độ khó ở cuối mục này quyết định, không gắn cứng với loại Xenon. Với Máu của Golem từ 80 tới 140, một Golem chịu được 3–7 đòn trước khi gục.
 
 ### Tinh anh
 
-Tinh anh là một trong bốn loại trên với ba thay đổi: thêm một khoảng trống, mọi khoảng trống đều là màu trộn, và có một khoảng trống đổi `RequiredElements` sau mỗi 10 giây. Kích thước lớn hơn 20%.
+Tinh anh là một trong bốn loại trên với ba thay đổi: phải lấp thêm 2 khoảng trống, lộ 2 cái cùng lúc, mọi khoảng trống đều là màu trộn, và có một khoảng trống đổi `RequiredElements` sau mỗi 10 giây. Kích thước lớn hơn 20%.
 
 ### Dữ liệu của một loại Xenon (`FXenonArchetypeRow`)
 
@@ -190,7 +201,9 @@ Tinh anh là một trong bốn loại trên với ba thay đổi: thêm một kh
 | `Moves` | mảng | Danh sách đòn đánh, mỗi đòn có thời gian báo trước tối thiểu 0,6 giây |
 | `StaggerDuration` | float | Thời gian choáng khi bị lấp một khoảng trống |
 
-Màu cụ thể của từng khoảng trống được chọn lúc sinh quái, từ seed của đêm, trong phạm vi `VoidSlots` cho phép. Khi đội thiếu người và không có AI thay thế, bộ sinh không được chọn màu cần Golem vắng mặt.
+Thêm hai trường kiểu int: `VoidsToFill` (tổng số khoảng trống phải lấp) và `MaxOpenVoids` (số khoảng trống lộ ra cùng lúc).
+
+Màu cụ thể của từng khoảng trống được chọn lúc sinh quái, từ seed của đêm, trong phạm vi `VoidSlots` cho phép. Khoảng trống đầu tiên của loại Lính ở độ khó 1 luôn là màu cơ bản, để người chơi mới có một bước dễ.
 
 ### Thành phần mỗi sân
 
@@ -229,7 +242,7 @@ Mỗi loại khung có 4 × 6 × 3 = 72 tổ hợp. Lõi trắng luôn có và l
 
 ### Hai pha của trận
 
-1. **Pha 1:** 4 khoảng trống thường. Kẻ canh giữ dùng 2 chiêu đã chọn. Mỗi khoảng trống được lấp làm nó nhanh hơn 10%.
+1. **Pha 1:** 4 khoảng trống thường, tối đa 2 cái lộ cùng lúc. Chúng chỉ `Open` trong khoảng 4 giây sau mỗi chiêu của kẻ canh giữ, nên đội phải né chiêu trước rồi mới phối hợp. Kẻ canh giữ dùng 2 chiêu đã chọn. Mỗi khoảng trống được lấp làm nó nhanh hơn 10%.
 2. **Pha 2:** khi cả 4 đã `Filled`, lõi trắng lộ ra. Kẻ canh giữ dùng thêm một chiêu diện rộng cố định của loại khung. Lấp lõi trắng là thắng.
 
 ### Manh mối ban ngày
@@ -423,7 +436,7 @@ Dream stone gắn vào ô trên vũ khí và tăng chỉ số cố định. Có 
 | Đơn lớn | 4 | Một chỉ số +15% (Giữ màu: +0,8 giây) | 260 |
 | Đặc biệt | 1 | Máu, Sức đánh, Nhanh nhẹn +5%, Giữ màu +0,3 giây | Không bán |
 
-- **Nguồn:** mỗi lần thắng lần đầu một khu ở một độ khó, mỗi Golem nhận một viên ngẫu nhiên mình chưa có. Princess phù thủy bán 2 viên mỗi đêm ở `DreamHall`. Viên đặc biệt chỉ rơi từ kẻ canh giữ ở độ khó 3.
+- **Nguồn:** mỗi lần một người chơi thắng lần đầu một khu ở một độ khó, mỗi Golem của người đó nhận một viên ngẫu nhiên mình chưa có, trừ viên đặc biệt. Viên đặc biệt là phần thưởng khi thắng đủ 5 khu ở độ khó 3. Princess phù thủy bán 2 viên mỗi đêm ở `DreamHall`, cho người muốn có sớm.
 - **Gắn:** mỗi viên thuộc về một Golem. Một vũ khí không gắn hai viên cùng loại. Tháo lắp miễn phí vào ban ngày, không đổi được trong mơ.
 - **Cách cộng:** các phần trăm cộng vào nhau rồi nhân với chỉ số sau khi đã tính bậc vũ khí.
 
@@ -468,7 +481,7 @@ Dùng lại AI đồng đội đang có và thêm các hành vi sau, theo thứ 
 Ba ràng buộc:
 
 - AI không bao giờ đánh đòn đặt màu vào khoảng trống không cần màu của mình.
-- AI không tự mở đầu một khoảng trống màu trộn. Người chơi phải là người quyết định đánh vào đâu, để chơi đơn vẫn có cảm giác chỉ huy.
+- AI không tự mở đầu một khoảng trống, kể cả khoảng trống một màu của chính nó. Người chơi là người quyết định đánh vào đâu và lúc nào, để chơi đơn vẫn có cảm giác chỉ huy. AI chỉ đặt màu khi được ra hiệu, hoặc để bồi vào khoảng trống đang `Primed`.
 - Về sách, AI chỉ tự dùng sách hồi máu và sách cứu đồng đội. Những sách khác AI chỉ dùng khi người chơi ra hiệu hai lần liên tiếp vào cùng một mục tiêu.
 
 ### Little Princess
@@ -526,6 +539,8 @@ Mỗi sân chỉ có 3 Golem và tối đa 3 Xenon, nên băng thông không ph�
 | `PlayerSave` | `DreamCoin`, `WeaponLevel[3]`, `OwnedStones[3]`, `SocketedStones[3]`, `UnlockedTarot`, `UnlockedBooks`, `Notebook`, cài đặt | Sau mỗi giao dịch ban ngày, và ở `Wake` |
 | `WorldSave` | `WorldSeed`, `DayNumber`, `DistrictState[5]`, `ClearedDifficulty[5]`, `StoryFlags`, `HoursLeft`, `TodayGuardians`, `CluesFound`, `bNightInProgress`, `NightEarnings` | Ở `Morning`, sau mỗi hành động ban ngày, ở `DreamGate`, sau mỗi sân, và ở `Wake` |
 
+`PlayerSave` có thêm `StoneRewardsClaimed`: danh sách cặp khu và độ khó mà người chơi đã nhận dream stone thưởng. Phần thưởng tính theo người chơi, nên khách vào thế giới của host vẫn nhận đúng một lần cho mỗi cặp.
+
 - Mảng `[3]` là theo ba Golem: mỗi người chơi có tiến trình riêng cho cả Mars, Jupiter và Neptune, vì họ có thể chơi Golem khác nhau ở mỗi phòng.
 - Không lưu trạng thái giữa một sân đấu. Thoát giữa đêm được xử lý bằng cờ `bNightInProgress` như ở mục 2.
 - Cả hai file đồng bộ qua Steam Cloud. Mỗi file có số phiên bản để chuyển đổi khi cấu trúc thay đổi trong giai đoạn Early Access.
@@ -567,6 +582,8 @@ Mỗi mốc là một cờ trong `StoryFlags`. Đoạn cảnh chạy trên máy 
 
 Thứ tự dưới đây đặt hai bước kiểm chứng lên trước, để biết game có vui không trước khi đầu tư vào nội dung. Ngưỡng đạt là đề xuất.
 
+Trong repo, hai mốc chuẩn bị đứng trước M0: R0 (dọn repo, đổi tên Knight thành Golem) và R1 (tắt các hệ thống cũ). Chi tiết ở [MILESTONES.md](MILESTONES.md).
+
 | Mốc | Nội dung | Đạt khi |
 | --- | --- | --- |
 | **M0. Luật trộn màu** | Một sân đấu hình khối xám, ba Golem dùng Mannequin với bộ động tác có sẵn, một Xenon loại Lính và một loại Khiên, mục 5 đầy đủ, nút ra hiệu, AI bồi màu, chơi 3 người qua listen server | 5 nhóm ba người chơi 15 phút. Ít nhất 4 nhóm tự hiểu luật trong 5 phút đầu mà không cần giải thích, và ít nhất 4 nhóm muốn chơi tiếp |
@@ -580,6 +597,8 @@ Hai nguyên tắc khi làm:
 - **Không làm M2 khi M0 và M1 chưa đạt.** Nếu luật trộn màu không vui ở M0, sửa luật trước; thêm nội dung không cứu được nó.
 - **M0 và M1 không cần art.** Art làm song song theo tài liệu art, và ghép vào từ M2.
 
+**Ước lượng độ dài bản Early Access:** đi hết 5 khu ở cả 3 độ khó cần tối thiểu 15 đêm thắng. Tính cả những đêm thua, khoảng 25–35 đêm, tức 9–13 giờ chơi. Con số này chưa được đo.
+
 ## 18. Những điểm còn mở
 
 Các điểm dưới đây đang dùng đề xuất của tài liệu này. Code nên viết sao cho đổi chúng chỉ là đổi dữ liệu.
@@ -592,3 +611,5 @@ Các điểm dưới đây đang dùng đề xuất của tài liệu này. Code
 6. **Thiết kế trận Xeros** và **12 lá tarot còn lại.** Làm sau M1.
 7. **Tên chính thức** của các loại Xenon, kẻ canh giữ, sách và dream stone. Tài liệu đang dùng tên làm việc.
 8. **Mini game ban ngày** cho phần thưởng mang vào giấc mơ. Để dành, chưa làm ở bản này.
+9. **Thân xám nhận 10% sát thương, và mỗi Xenon phải lấp 3–4 khoảng trống.** Hai số này quyết định cảm giác của cả trận; đo ở M0.
+10. **"Thành phố càng nhiều màu thì Little Princess hỗ trợ càng mạnh."** Câu này có trong GAME_DESIGN.md nhưng chưa có luật cụ thể ở đây. Cần quyết định giữ hay bỏ.

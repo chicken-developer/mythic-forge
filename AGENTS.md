@@ -13,6 +13,12 @@ The project, its modules, classes and content were renamed from Knight to
 Golem on 2026-11-12 (milestone R0, see `ThreeDreamGolems/Docs/REFACTOR_REPORT.md`).
 That rename covers the game project only.
 
+The design is still a draft and changes often. The owner's latest exports are
+`Dev.md` and `Overview.md` at the repository root; they win over the copies in
+`ThreeDreamGolems/Docs/`. Before milestone work, run
+`python tools/sync_design_docs.py` and re-read what changed. Put every design
+number in data so a changed draft is a data edit, not a code change.
+
 For Medieval work, also read `Assets/hda_medieval_building/AGENTS.md` and the
 current function review guide it references. Follow the installed
 `.agents/skills/design-hda-building/SKILL.md` and its implementation references

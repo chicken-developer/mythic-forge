@@ -1,6 +1,6 @@
 # Milestones
 
-Cập nhật 2026-11-12. Tài liệu này thay toàn bộ kế hoạch cũ (các file `imp_plan_m00` tới `imp_plan_m12`). Đặc tả của từng hệ thống nằm ở [DEV_SPEC.md](DEV_SPEC.md); ở đây chỉ ghi thứ tự, phạm vi và điều kiện đạt.
+Cập nhật 2026-11-13. Tài liệu này thay toàn bộ kế hoạch cũ (các file `imp_plan_m00` tới `imp_plan_m12`). Đặc tả của từng hệ thống nằm ở [DEV_SPEC.md](DEV_SPEC.md); ở đây chỉ ghi thứ tự, phạm vi và điều kiện đạt.
 
 ## Bảng tổng
 
@@ -58,11 +58,12 @@ Giữ nguyên: lõi combat, AI đồng đội, gục và hồi sinh, khung boss 
 |---|---|
 | Thêm `EElement` và GameplayTag `Element.Earth`, `Element.Sky`, `Element.Sea`; gán cho ba Golem | `GolemCore` |
 | Bộ động tác có sẵn cho ba class: đòn nhẹ, đòn nặng có cờ `bAppliesColor`, né, động tác class | `GolemAbilitySystem`, `GolemCombat` |
+| Đòn nặng tầm xa của Jupiter và Neptune: đạn bay thẳng 25 m, phải trúng đúng vùng khoảng trống. Code hiện chưa có đạn bay | `GolemCombat` |
 | `UColorVoidComponent` với 5 trạng thái và luật chuyển trạng thái; replicate `State`, `AppliedElements`, `TimerEndServerTime` | `GolemCombat` |
-| Thân xám nhận 10% sát thương; lấp khoảng trống trừ máu theo phần và gây choáng; trạng thái `Restored` | `GolemCombat` |
-| Hai loại Xenon: Lính và Khiên, dùng Mannequin phóng to | `GolemAI` |
+| Thân xám nhận 10% sát thương; `VoidsToFill` và `MaxOpenVoids`: khoảng trống lộ lần lượt, mỗi lần lấp trừ `MaxHealth / VoidsToFill` và gây choáng; trạng thái `Restored` | `GolemCombat` |
+| Hai loại Xenon dùng Mannequin phóng to: Lính (lấp 3, luôn `Open`) và Khiên (lấp 4, xen kẽ khiên và lưng) | `GolemAI` |
 | Nút ra hiệu và dấu hiệu trên khoảng trống | `GolemCombat`, `GolemUI` |
-| AI đồng đội: đáp lại dấu ra hiệu, tự bồi màu, không bao giờ đánh sai màu | `GolemAI` |
+| AI đồng đội: đáp lại dấu ra hiệu, tự bồi màu vào khoảng trống đang `Primed`, không bao giờ đánh sai màu, không tự mở đầu khoảng trống nào | `GolemAI` |
 | Chỉ báo khoảng trống trong thế giới 3D: màu, ký hiệu nguyên tố, vòng đếm giờ | `GolemUI` |
 | Một sân đấu hình khối xám; chơi 3 người qua listen server bằng OnlineSubsystemNull | `GolemWorld`, `ThreeDreamGolems` |
 | Test tự động cho từng luật ở DEV_SPEC mục 5 | `GolemDeveloper` |
