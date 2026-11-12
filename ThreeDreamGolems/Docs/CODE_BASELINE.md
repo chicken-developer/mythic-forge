@@ -10,7 +10,7 @@ Cập nhật 2026-11-13, sau mốc R1. Mọi con số dưới đây đo trực t
 | Công nghệ | C++, Gameplay Ability System, StateTree, Enhanced Input, CommonUI, MotionWarping |
 | Online | Plugin OnlineSubsystemNull, OnlineSubsystemSteam và SteamSockets đã bật; chưa có code phiên chơi |
 | Quy mô | Khoảng 36.200 dòng C++ trong 230 file, 14 module (trước R1: 91.500 dòng, 636 file) |
-| Test | 38 test tự động, 38 PASS (lượt `R1b-test-3`, 2026-11-13) |
+| Test | 48 test tự động, 48 PASS (lượt `M0-test-3`, 2026-11-13); 10 trong số đó là nhóm `Golem.Color` |
 | Nội dung | 74 asset: 4 map, 3 hero, 1 party, định nghĩa AI và combat, 4 StateTree chính và 3 StateTree test, 1 EQS, animation, Mannequin, 5 asset âm thanh |
 
 ## Module
@@ -40,21 +40,22 @@ Module runtime không phụ thuộc vòng; `Scripts/AuditModules.ps1` kiểm tra
 - **AI:** StateTree quyết định, GAS thực thi; đồng đội theo đội hình và cứu người gục; ngân sách tấn công cho hai phe; boss hai pha.
 - **Gục và hồi sinh:** `GolemLifeComponent`, ability Revive giữ nút.
 - **Settings:** hiển thị, 4 bus âm thanh, đổi phím, cỡ chữ, giảm rung.
+- **Luật trộn màu (M0, đang làm):** khoảng trống 5 trạng thái trong `GolemCombat/Voids`, Xenon trong `GolemCombat/Xenon`, đòn nặng đặt màu. Tiến độ chi tiết ở [MILESTONES.md](MILESTONES.md).
 
 ## Điểm vào
 
 | Mục | Giá trị |
 |---|---|
-| Bản đồ mặc định | `/Game/Golem/Maps/Playables/L_M04_PartyArena` |
-| Các map khác | `L_M00_Boot`, `L_M01_TrainingYard`, `L_M02_AbilityYard` |
-| Dựng lại nội dung | `Scripts\ContinuousRun.ps1 -Action Bootstrap -Milestone 0`, rồi `1`, `2`, `4` |
+| Bản đồ mặc định | `/Game/Golem/Maps/Playables/L_M0_ColorArena` (sân M0: ba Golem, một Lính, một Khiên) |
+| Các map khác | `L_M00_Boot`, `L_M01_TrainingYard`, `L_M02_AbilityYard`, `L_M04_PartyArena` |
+| Dựng lại nội dung | `Scripts\ContinuousRun.ps1 -Action Bootstrap -Milestone 0`, rồi `1`, `2`, `4`, `10` (sân M0 và Xenon) |
 | Build, test | `Scripts\ContinuousRun.ps1 -Action BuildEditor`, `-Action Test -TestFilter 'Golem.'` |
 
 Tên map `L_M0x_...` theo số mốc của kế hoạch cũ. Sân đấu của M0 sẽ là map mới.
 
 ## Chưa có
 
-Luật trộn màu và khoảng trống, Xenon, kẻ canh giữ, `EGamePhase`, khu và trạng thái khu, sách kỹ năng, tarot, DreamCoin, vũ khí và dream stone, Little Princess, nút ra hiệu, lưu game, giao diện trong trận, phiên chơi Steam. Đòn tầm xa cũng chưa có: mọi đòn hiện là cận chiến.
+AI và đòn đánh của Xenon, nút ra hiệu, AI bồi màu, kẻ canh giữ, `EGamePhase`, khu và trạng thái khu, sách kỹ năng, tarot, DreamCoin, vũ khí và dream stone, Little Princess, nút ra hiệu, lưu game, giao diện trong trận, phiên chơi Steam. Đòn tầm xa cũng chưa có: mọi đòn hiện là cận chiến.
 
 ## Cần biết khi làm tiếp
 

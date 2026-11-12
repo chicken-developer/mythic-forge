@@ -72,6 +72,29 @@ Giữ nguyên: lõi combat, AI đồng đội, gục và hồi sinh, khung boss 
 
 **Đạt khi:** 5 nhóm ba người chơi 15 phút. Ít nhất 4 nhóm tự hiểu luật trong 5 phút đầu mà không cần giải thích, và ít nhất 4 nhóm muốn chơi tiếp.
 
+**Tiến độ ngày 2026-11-13** (nhánh `feature/r1-disable-legacy`, 48 test PASS):
+
+| Việc | Trạng thái |
+|---|---|
+| `EGolemElement`, tag `Element.*` và `Class.*`, gán cho ba Golem | Xong, có test |
+| `UGolemColorVoidComponent`: 5 trạng thái, luật chuyển, replicate | Xong, 5 test luật |
+| Thân xám 10%, lấp lần lượt theo `VoidsToFill`/`MaxOpenVoids`, trừ máu theo phần, choáng, `Restored`, lõi trắng | Xong, 3 test |
+| `AGolemXenon` và `UGolemXenonDefinition`; màu khoảng trống sinh từ seed | Xong, có test |
+| Đòn nặng có cờ `bAppliesColor` đặt màu của Golem lên khoảng trống | Xong ở đường đánh cận chiến; chưa có test vung đòn thật trong PIE |
+| Hai Xenon Lính và Khiên bằng khối xám, đứng yên | Có dữ liệu và actor; **chưa có AI và đòn đánh** |
+| Sân `L_M0_ColorArena` với ba Golem và hai Xenon | Xong, là map mặc định; mới kiểm bằng khởi động không giao diện |
+| Đòn nặng tầm xa của Jupiter và Neptune | Chưa làm |
+| Bộ động tác theo thiết kế (hệ số theo `Power`, lấy đà, hồi né theo `Agility`, động tác class) | Chưa làm; đang dùng combat profile cũ |
+| Chỉ số riêng của từng Golem (140/90/80 máu...) | Chưa làm; ba Golem đang dùng chỉ số mặc định |
+| Nút ra hiệu và dấu hiệu trên khoảng trống | Chưa làm |
+| AI đồng đội đáp dấu ra hiệu và tự bồi màu | Chưa làm |
+| Chỉ báo khoảng trống trong 3D (ký hiệu nguyên tố, vòng đếm giờ) | Mới có quả cầu đổi màu theo trạng thái |
+| Chơi 3 người qua listen server | Chưa kiểm |
+| Playtest 5 nhóm | Chưa làm, cần người chơi thật |
+
+Ba điểm thiết kế còn mở được xử lý tạm như sau, đều là dữ liệu hoặc một nhánh code dễ đổi: đòn đặt màu không gây sát thương riêng (chỉ lần lấp mới trừ máu); Golem đang nghỉ chưa được tính vì luật gục của đêm thuộc M1; tinh anh chưa làm.
+
+
 ## M1. Core loop
 
 Đặc tả: DEV_SPEC mục 2, 7, 8, 9, 10, 11 và 14.

@@ -6,7 +6,7 @@ param(
 	[string]$EvidenceName = '',
 	[ValidateSet('Development', 'DebugGame')]
 	[string]$Configuration = 'Development',
-	[ValidateSet(0, 1, 2, 4)]
+	[ValidateSet(0, 1, 2, 4, 10)]
 	[int]$Milestone = 0,
 	[ValidatePattern('^[A-Za-z0-9_.]+$')]
 	[string]$TestFilter = 'Golem.',

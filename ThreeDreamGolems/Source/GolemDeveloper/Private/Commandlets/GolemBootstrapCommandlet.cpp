@@ -11,6 +11,7 @@
 #include "Definitions/GolemHeroDefinition.h"
 #include "Definitions/GolemPartyDefinition.h"
 #include "Tags/GolemGameplayTags.h"
+#include "Xenon/GolemXenonDefinition.h"
 #include "Tasks/GolemFollowTask.h"
 
 #include "ActorFactories/ActorFactory.h"
@@ -68,6 +69,8 @@ namespace GolemBootstrap
 	const TCHAR* AbilityGameModePath = TEXT("/Script/ThreeDreamGolems.GolemAbilityYardGameMode");
 	const TCHAR* ArenaMapPackageName = TEXT("/Game/Golem/Maps/Playables/L_M04_PartyArena");
 	const TCHAR* ArenaGameModePath = TEXT("/Script/ThreeDreamGolems.GolemPartyArenaGameMode");
+	const TCHAR* ColorArenaMapPackageName = TEXT("/Game/Golem/Maps/Playables/L_M0_ColorArena");
+	const TCHAR* ColorArenaGameModePath = TEXT("/Script/ThreeDreamGolems.GolemColorArenaGameMode");
 	const TCHAR* FollowTreePackageName = TEXT("/Game/Golem/AI/ST_Golem_Follow");
 	const FName FoundationId(TEXT("Foundation"));
 	const FVector FloorScale(30.0, 30.0, 0.25);
@@ -694,12 +697,69 @@ namespace GolemBootstrap
 		return true;
 	}
 
+	/** DEV_SPEC section 6 starting values for the two Xenons of milestone M0. */
+	bool CreateXenonDefinitions()
+	{
+		struct FXenonSeed
+		{
+			const TCHAR* Name;
+			FText DisplayName;
+			float MaxHealth;
+			float ContactDamage;
+			int32 VoidsToFill;
+			bool bFirstVoidBasic;
+		};
+		const FXenonSeed Seeds[] =
+		{
+			{ TEXT("Grunt"), NSLOCTEXT("GolemXenon", "Grunt", "Grunt"), 300.0f, 20.0f, 3, true },
+			{ TEXT("Shield"), NSLOCTEXT("GolemXenon", "Shield", "Shield"), 400.0f, 25.0f, 4, false }
+		};
+		for (const FXenonSeed& Seed : Seeds)
+		{
+			const FString PackageName = FString::Printf(TEXT("/Game/Golem/Definitions/Xenon/DA_Golem_Xenon_%s"), Seed.Name);
+			bool bCreated = false;
+			UGolemXenonDefinition* Xenon = FindOrCreateDefinition<UGolemXenonDefinition>(PackageName, bCreated);
+			if (Xenon == nullptr)
+			{
+				return false;
+			}
+			if (bCreated)
+			{
+				FGolemVoidHostTuning Voids;
+				Voids.VoidsToFill = Seed.VoidsToFill;
+				Voids.MaxOpenVoids = 1;
+				// Front and back, so consecutive voids alternate sides: the Shield's shield, then its back.
+				TArray<FGolemXenonVoidSlot> Slots;
+				Slots.SetNum(2);
+				Slots[0].Offset = FVector(40.0, 0.0, 25.0);
+				Slots[1].Offset = FVector(-40.0, 0.0, 25.0);
+				if (!Xenon->TrySetIdentity(FName(Seed.Name), TEXT("GolemXenon"))
+					|| !Xenon->TrySetXenon(Seed.MaxHealth, Seed.ContactDamage, 2.5f, Voids, Slots, 0.3f,
+						Seed.bFirstVoidBasic).IsSuccess())
+				{
+					UE_LOG(LogGolemBootstrap, Error, TEXT("Xenon definition authoring failed: %s."), *PackageName);
+					return false;
+				}
+				Xenon->SetDisplayName(Seed.DisplayName);
+			}
+			if (Xenon->GetPrimaryAssetId() != FPrimaryAssetId(TEXT("GolemXenon"), FName(Seed.Name))
+				|| !Xenon->ValidateXenon().IsSuccess()
+				|| !SaveAsset(Xenon->GetPackage(), Xenon, FPackageName::GetAssetPackageExtension()))
+			{
+				UE_LOG(LogGolemBootstrap, Error, TEXT("Xenon definition identity/save validation failed: %s."), *PackageName);
+				return false;
+			}
+		}
+		return true;
+	}
+
 	bool CreateMap(const int32 Milestone)
 	{
 		const bool bTraining = Milestone > 0;
 		const bool bAbilityYard = Milestone == 2;
 		const bool bArena = Milestone >= 4;
-		const TCHAR* GameModePath = bArena ? ArenaGameModePath
+		const bool bColorArena = Milestone == 10;
+		const TCHAR* GameModePath = bColorArena ? ColorArenaGameModePath : bArena ? ArenaGameModePath
 			: (bAbilityYard ? AbilityGameModePath : (bTraining ? TrainingGameModePath : BootGameModePath));
 		UClass* BootGameMode = LoadClass<AGameModeBase>(nullptr, GameModePath);
 		UStaticMesh* FloorMesh = LoadObject<UStaticMesh>(nullptr, TEXT("/Engine/BasicShapes/Cube.Cube"));
@@ -709,7 +769,7 @@ namespace GolemBootstrap
 			return false;
 		}
 
-		const FString PackageName(bArena ? ArenaMapPackageName
+		const FString PackageName(bColorArena ? ColorArenaMapPackageName : bArena ? ArenaMapPackageName
 			: (bAbilityYard ? AbilityMapPackageName : (bTraining ? TrainingMapPackageName : MapPackageName)));
 		const bool bPackageExists = FPackageName::DoesPackageExist(PackageName);
 		UPackage* Package = bPackageExists
@@ -859,9 +919,9 @@ int32 UGolemBootstrapCommandlet::Main(const FString& Params)
 {
 	int32 Milestone = 0;
 	FParse::Value(*Params, TEXT("Milestone="), Milestone);
-	if (Milestone < 0 || Milestone > 4 || Milestone == 3)
+	if ((Milestone < 0 || Milestone > 4 || Milestone == 3) && Milestone != 10)
 	{
-		UE_LOG(LogGolemBootstrap, Error, TEXT("Supported bootstrap milestones are 0, 1, 2 and 4."));
+		UE_LOG(LogGolemBootstrap, Error, TEXT("Supported bootstrap milestones are 0, 1, 2, 4 and 10 (colour arena)."));
 		return 3;
 	}
 	if (Milestone > 0)
@@ -870,12 +930,13 @@ int32 UGolemBootstrapCommandlet::Main(const FString& Params)
 			|| !GolemBootstrap::CreateFollowTree()
 			|| (Milestone >= 3 && !GolemCombatAssetAuthoring::CreateCombatAssets())
 			|| (Milestone >= 4 && !GolemAIAssetAuthoring::CreateAIAssets())
+			|| (Milestone == 10 && !GolemBootstrap::CreateXenonDefinitions())
 			|| !GolemBootstrap::CreateMap(Milestone))
 		{
 			return 4;
 		}
 		UE_LOG(LogGolemBootstrap, Display, TEXT("Milestone %d bootstrap complete: %s, real ability set and follow StateTree."),
-			Milestone, Milestone == 4 ? GolemBootstrap::ArenaMapPackageName
+			Milestone, Milestone == 10 ? GolemBootstrap::ColorArenaMapPackageName : Milestone == 4 ? GolemBootstrap::ArenaMapPackageName
 				: (Milestone == 2 ? GolemBootstrap::AbilityMapPackageName : GolemBootstrap::TrainingMapPackageName));
 		return 0;
 	}
