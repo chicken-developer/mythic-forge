@@ -325,12 +325,12 @@ FText AGolemPartyArenaHUD::GetArenaTitle() const
 
 FText AGolemPartyArenaHUD::GetCombatHelp() const
 {
-	return NSLOCTEXT("GolemArena", "CombatKeys", "WASD move | LMB light / RMB heavy | Q block / C parry / Shift dodge | MMB lock | G rune / H finisher");
+	return NSLOCTEXT("GolemArena", "CombatKeys", "WASD move | LMB light / RMB heavy | Q class move / Shift dodge");
 }
 
 FText AGolemPartyArenaHUD::GetPartyHelp() const
 {
-	return NSLOCTEXT("GolemArena", "PartyKeys", "N follow / Z hold / B focus locked enemy / K regroup | gamepad View cycles | E / X hold revive | Tab / RB switch");
+	return NSLOCTEXT("GolemArena", "PartyKeys", "N follow / Z hold / B focus nearest enemy / K regroup | gamepad View cycles | E / X hold revive | Tab / RB switch");
 }
 
 FText AGolemPartyArenaHUD::GetRecoveryHelp() const

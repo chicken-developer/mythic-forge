@@ -10,6 +10,5 @@ public class GolemFramework : ModuleRules
 			"Core", "CoreUObject", "Engine", "GolemCore", "AIModule", "NetCore", "EnhancedInput", "InputCore",
 			"GameplayTags", "GameplayAbilities", "GolemAbilitySystem", "GolemCombat"
 		});
-		PrivateDependencyModuleNames.Add("MotionWarping");
 	}
 }

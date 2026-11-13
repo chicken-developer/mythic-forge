@@ -72,7 +72,7 @@ Giữ nguyên: lõi combat, AI đồng đội, gục và hồi sinh, khung boss 
 
 **Đạt khi:** 5 nhóm ba người chơi 15 phút. Ít nhất 4 nhóm tự hiểu luật trong 5 phút đầu mà không cần giải thích, và ít nhất 4 nhóm muốn chơi tiếp.
 
-**Tiến độ ngày 2026-11-13** (nhánh `feature/r1-disable-legacy`, 56 test PASS, lượt `M0b-test-4`):
+**Tiến độ ngày 2026-11-14** (nhánh `feature/r1-disable-legacy`, 56 test PASS, lượt `R1b-test-3`):
 
 | Việc | Trạng thái |
 |---|---|
@@ -93,7 +93,7 @@ Giữ nguyên: lõi combat, AI đồng đội, gục và hồi sinh, khung boss 
 | Hai Xenon Lính và Khiên: đuổi theo Golem gần nhất, báo trước vùng đánh rồi mới ra đòn | Xong (`UGolemXenonBrainComponent`), có test. Lính quét rộng 20 sát thương, báo trước 1,0 giây; Khiên đẩy lùi 25 sát thương, báo trước 0,8 giây, quay chậm để vòng ra lưng được. Xenon đi thẳng tới mục tiêu, chưa tìm đường vòng qua vật cản |
 | Sân `L_M0_ColorArena` với ba Golem và hai Xenon | Xong, là map mặc định |
 | Động tác class trên một nút (Q hoặc LB): Warrior đỡ 80% từ phía trước, tối đa 3 giây, hồi 6 giây; Hunter lộn lùi 5 m rồi bắn 1,5 × `Power` không đặt màu, hồi 8 giây; Mage tạo lá chắn chặn một đòn cho mọi Golem trong 4 m, tồn tại 2 giây, hồi 12 giây | Xong (`UGolemClassMoveAbility`), đã kiểm trong phiên chơi thật. AI đồng đội chưa tự dùng động tác class |
-| Bỏ parry, finisher, traversal, khoá mục tiêu, poise khỏi bộ động tác | **Chưa làm.** Chúng không thuộc thiết kế mới nhưng còn nhiều test cũ bám vào; phím của chúng vẫn hoạt động |
+| Bỏ parry, finisher, traversal, khoá mục tiêu, poise khỏi bộ động tác | Xong ngày 2026-11-14: code, tag, phím, montage và plugin MotionWarping đã xoá; ability set `Combat` còn đòn nhẹ, đòn nặng, né, động tác class. Chi tiết ở phần bổ sung của [R1_REPORT.md](R1_REPORT.md) |
 | Chơi 3 người qua listen server | Đã kiểm bằng test `Golem.Color.Arena.ListenServerThreePlayers`: một host và hai client trong cùng tiến trình editor, trễ gói 50–100 ms. Chưa kiểm trên ba máy thật và chưa qua Steam |
 | Playtest 5 nhóm | Chưa làm, cần người chơi thật |
 

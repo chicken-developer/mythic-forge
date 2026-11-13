@@ -48,7 +48,7 @@ int32 UGolemCampaignPreferencesCommandlet::Main(const FString& Params)
 		Settings->TextScale = 1.5f;
 		Settings->SubtitleScale = 2.0f;
 		Settings->ShakeScale = 0.0f;
-		Settings->bInvertY = Settings->bToggleBlock = Settings->bHoldLock = Settings->bReducedMotion = true;
+		Settings->bInvertY = Settings->bToggleBlock = Settings->bReducedMotion = true;
 		Settings->bSubtitleBackground = false;
 		Settings->SetScreenResolution(FIntPoint(1600, 900));
 		Settings->SetFullscreenMode(EWindowMode::Windowed);
@@ -61,7 +61,7 @@ int32 UGolemCampaignPreferencesCommandlet::Main(const FString& Params)
 			&& FMath::IsNearlyEqual(Settings->MusicVolume, 0.25f) && FMath::IsNearlyEqual(Settings->EffectsVolume, 0.45f)
 			&& FMath::IsNearlyEqual(Settings->VoiceVolume, 0.55f) && FMath::IsNearlyEqual(Settings->Sensitivity, 1.6f)
 			&& Settings->TextScale == 1.5f && Settings->SubtitleScale == 2.0f && Settings->ShakeScale == 0.0f
-			&& Settings->bInvertY && Settings->bToggleBlock && Settings->bHoldLock && Settings->bReducedMotion
+			&& Settings->bInvertY && Settings->bToggleBlock && Settings->bReducedMotion
 			&& !Settings->bSubtitleBackground && Settings->GetActionKey(TEXT("Forward")) == EKeys::Up
 			&& Settings->HasSeenTutorial(TEXT("Move")) && Settings->GetScreenResolution() == FIntPoint(1600, 900);
 	}
@@ -83,7 +83,7 @@ int32 UGolemCampaignPreferencesCommandlet::Main(const FString& Params)
 	{
 		bPassed = Settings->GetActionKey(TEXT("Forward")) == EKeys::W && Settings->Sensitivity == 1.0f
 			&& Settings->TextScale == 1.0f && Settings->SubtitleScale == 1.0f && Settings->bSubtitleBackground
-			&& !Settings->bInvertY && !Settings->bToggleBlock && !Settings->bHoldLock && !Settings->bReducedMotion;
+			&& !Settings->bInvertY && !Settings->bToggleBlock && !Settings->bReducedMotion;
 	}
 	bPassed &= UGolemGameUserSettings::GetPreferenceFilePath() == ActualPath;
 	UE_LOG(LogTemp, Display, TEXT("CampaignPreferencesColdProof operation=%s result=%s path=%s bindings=%d"),

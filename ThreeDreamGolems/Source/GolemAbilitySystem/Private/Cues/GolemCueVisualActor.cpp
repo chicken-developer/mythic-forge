@@ -67,16 +67,6 @@ void AGolemCueVisualActor::Configure(AActor* Target, FGameplayTag InCueTag, bool
 		Text = bPersistent ? NSLOCTEXT("GolemCue", "Reviving", "REVIVING")
 			: NSLOCTEXT("GolemCue", "Revived", "REVIVED");
 	}
-	else if (CueTag == GolemGameplayTags::GameplayCue_Parry)
-	{
-		Color = FLinearColor(0.2f, 0.9f, 1.0f);
-		Text = NSLOCTEXT("GolemCue", "Parry", "PARRY");
-	}
-	else if (CueTag == GolemGameplayTags::GameplayCue_Stagger)
-	{
-		Color = FLinearColor(1.0f, 0.45f, 0.02f);
-		Text = NSLOCTEXT("GolemCue", "Stagger", "STAGGERED");
-	}
 	Material = Disc->CreateDynamicMaterialInstance(0);
 	if (Material != nullptr)
 	{

@@ -67,7 +67,7 @@ Sau khi đổi code, toàn bộ definition, StateTree, montage và 4 map đượ
 
 ## Chưa làm, để lại có chủ ý
 
-- Parry, finisher, traversal, khoá mục tiêu và poise còn trong lõi combat. Thiết kế mới không nhắc tới chúng; M0 viết bộ động tác mới sẽ quyết định.
+- Parry, finisher, traversal, khoá mục tiêu và poise còn trong lõi combat. Thiết kế mới không nhắc tới chúng; M0 viết bộ động tác mới sẽ quyết định. **Đã xoá ngày 2026-11-14, xem phần bổ sung cuối báo cáo.**
 - `GolemWorld`, `GolemQuest`, `GolemDialogue` còn khung campaign cũ và 8 test của chúng. Không còn code nào gọi tới; M1 xử lý cùng lúc viết khu, manh mối và cờ cốt truyện.
 - Hai sân thử Training và AbilityYard cùng map của chúng còn lại vì test Framework và GAS chạy trên đó.
 
@@ -75,3 +75,50 @@ Sau khi đổi code, toàn bộ definition, StateTree, montage và 4 map đượ
 
 - Mở editor có giao diện và chơi thử bằng tay (cũng còn nợ từ R0).
 - Test ở chế độ có render, cook, đóng gói, cấu hình DebugGame.
+
+## Bổ sung 2026-11-14: bỏ parry, finisher, traversal, khoá mục tiêu và poise
+
+Việc này để lại từ R1 và nằm trong bảng tiến độ M0. Bộ động tác của M0 (đòn nhẹ, đòn nặng, né, động tác class) đã xong, nên năm hệ thống cũ được xoá hẳn. Chưa commit.
+
+### Đã xoá
+
+- **`GolemCombat`:** `UGolemParryAbility`, `UGolemLockTargetAbility`, `UGolemFinisherAbility`, `UGolemTraversalAbility`, `UGolemFinisherComponent`, `UGolemTraversalComponent` (12 file). Trong `UGolemCombatComponent`: poise, stagger của Golem, cửa sổ parry, khoá mục tiêu và camera khoá. Trong combat profile: `MaxPoise`, `StaggerDuration`, `ParryWindow`, `PoiseDamage`, bốn montage stagger, traversal, finisher.
+- **`GolemAbilitySystem`:** tham số `PoiseDamage` của `ApplyCombatDamage` và `IGolemDamageResponse::ResolveIncomingDamage`; cue Parry và Stagger.
+- **`GolemCore`:** 14 tag: `Input.Combat.Parry`, `.LockOn`, `.Finisher`, `Input.World.Traverse`, bốn tag `Ability.*` tương ứng, `State.Combat.Parrying`, `.Finishing`, `.Traversing`, `Data.Damage.Poise`, `GameplayCue.Golem.Parry`, `.Stagger`.
+- **`GolemFramework`, `GolemUI`:** phím C, chuột giữa, H, V và phần tay cầm của chúng; tuỳ chọn `HoldLock`; bốn dòng đổi phím (còn 21).
+- **Nội dung:** `AM_Golem_Stagger`, `AM_Golem_Traversal`, `AS_Golem_Traversal`, `AM_Golem_Finisher`, `AM_Golem_FinisherVictim` và ba animation Mannequin chỉ chúng dùng (`MM_Jump`, `MM_HitReact_Front_Hvy_01`, `MM_Death_Front_01`).
+- **Plugin MotionWarping** khỏi `.uproject`, ba file `Build.cs` và `AuditModules.ps1`.
+
+### Giữ lại và đổi tên
+
+- Tag `State.Combat.Staggered` còn, vì Xenon choáng khi bị lấp khoảng trống. Nó vẫn chặn ability combat và AI.
+- `LockedTarget` thành `AttackTarget`, `LockRange` thành `TargetRange`: mục tiêu mà AI quay về khi ra đòn. Golem của người chơi không còn mục tiêu ngầm.
+- `UGolemCameraModeComponent` còn nhưng hiện không ai dùng.
+
+### Thay đổi hành vi
+
+- **Golem không còn bị choáng** và không còn giật người khi trúng đòn.
+- **Golem có 6 ability** từ hai ability set (trước là 10).
+- **Lệnh Focus (phím B) của sân PartyArena cũ** chỉ vào kẻ địch còn sống gần nhất trong tầm nhìn, trong 22 m, thay cho mục tiêu đang khoá. Host vẫn kiểm lại ID, phe, tầm và tầm nhìn.
+- **Boss của sân PartyArena cũ có `Power` 4** (trước là 10). Trước đây nó bị choáng gần như suốt trận vì poise; không còn poise thì nó hạ cả đội trong 27 giây ở test `Golem.AI.Arena.Playthrough` (lượt `R1b-test-2`). Đây là số của sân thử cũ, không phải số thiết kế.
+
+### Dựng lại nội dung
+
+Ability set `Combat`, combat profile, bốn action set và archetype boss của sân cũ được xoá rồi tạo lại bằng `-Action Bootstrap -Milestone 10`. Bước tạo `AS_Golem_Traversal` từng gặp ensure trên engine 5.8.4 không còn, nên mọi asset của game (trừ âm thanh) nay dựng lại được bằng Bootstrap.
+
+### Kiểm tra đã chạy
+
+| Việc | Kết quả |
+|---|---|
+| Build `ThreeDreamGolemsEditor` Win64 Development | Qua (`R1b-build-3`) |
+| Build với `-DisableAdaptiveUnity` | Qua |
+| `AuditModules.ps1` | Qua, 14 module |
+| Bootstrap mốc 10 | Qua (`R1b-bootstrap-10b`) |
+| Test `Golem.` | 56 test, 56 PASS (`R1b-test-3`). Hai lượt trước lỗi 2 rồi 1 test, đều ở sân PartyArena cũ: số ability 10 thành 6, mã lỗi của Focus vào đồng đội, và trận boss nói trên |
+
+Số liệu: 263 file nguồn, khoảng 41.900 dòng (trước là 275 file, 43.600 dòng); 69 asset (trước là 77).
+
+### Chưa chạy
+
+- Mở editor có giao diện và chơi thử bằng tay; test ở chế độ có render; cook và đóng gói.
+- Chơi thử Focus trên sân cũ bằng tay và trên nhiều máy.

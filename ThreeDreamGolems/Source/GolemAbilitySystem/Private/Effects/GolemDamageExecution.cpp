@@ -48,16 +48,13 @@ void UGolemDamageExecution::Execute_Implementation(const FGameplayEffectCustomEx
 		return;
 	}
 	float Damage = FMath::Min(RawDamage, GolemMaxDamagePacket);
-	const float RawPoiseDamage = Spec.GetSetByCallerMagnitude(GolemGameplayTags::Data_DamagePoise, false, 0.0f);
-	const float PoiseDamage = FMath::IsFinite(RawPoiseDamage) ? FMath::Clamp(RawPoiseDamage, 0.0f, GolemMaxDamagePacket) : 0.0f;
 	const bool bCanDefend = Spec.GetSetByCallerMagnitude(GolemGameplayTags::Data_DamageCanDefend, false, 0.0f) > 0.0f;
-	if (bCanDefend || PoiseDamage > 0.0f)
+	if (bCanDefend)
 	{
 		if (IGolemDamageResponse* Response = FindDamageResponse(Target->GetOwnerActor()))
 		{
 			const float UnresolvedDamage = Damage;
-			Response->ResolveIncomingDamage(Spec.GetContext().GetOriginalInstigator(), UnresolvedDamage,
-				PoiseDamage, bCanDefend, Damage);
+			Response->ResolveIncomingDamage(Spec.GetContext().GetOriginalInstigator(), UnresolvedDamage, bCanDefend, Damage);
 			// A response can mitigate damage; it cannot increase or inject a non-finite health mutation.
 			Damage = FMath::IsFinite(Damage) ? FMath::Clamp(Damage, 0.0f, UnresolvedDamage) : UnresolvedDamage;
 		}

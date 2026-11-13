@@ -28,8 +28,7 @@ void UGolemGameplayCueNotify::HandleGameplayCue(AActor* Target, EGameplayCueEven
 		UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Target, true));
 	const FGameplayTag Tag = Parameters.MatchedTagName.IsValid() ? Parameters.MatchedTagName : Parameters.OriginalTag;
 	if (AbilitySystem == nullptr || (Tag != GolemGameplayTags::GameplayCue_Damage
-		&& Tag != GolemGameplayTags::GameplayCue_Downed && Tag != GolemGameplayTags::GameplayCue_Revive
-		&& Tag != GolemGameplayTags::GameplayCue_Parry && Tag != GolemGameplayTags::GameplayCue_Stagger))
+		&& Tag != GolemGameplayTags::GameplayCue_Downed && Tag != GolemGameplayTags::GameplayCue_Revive))
 	{
 		return;
 	}

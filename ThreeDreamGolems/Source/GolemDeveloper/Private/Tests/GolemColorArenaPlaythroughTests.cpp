@@ -594,11 +594,11 @@ namespace GolemColorArenaPlaythrough
 				Test.TestTrue(TEXT("The barrier recovers for 12 s"),
 					Neptune->GetCombatComponent()->GetClassMoveCooldownRemaining(Now) > 11.0f);
 				const float Before = Mars->GetGolemAbilitySystem()->GetGolemAttributes()->GetHealth();
-				UGolemAbilitySystemComponent::ApplyCombatDamage(Shield.Get(), Mars.Get(), 25.0f, 0.0f, true);
+				UGolemAbilitySystemComponent::ApplyCombatDamage(Shield.Get(), Mars.Get(), 25.0f, true);
 				Test.TestEqual(TEXT("The barrier stops one hit completely"),
 					Mars->GetGolemAbilitySystem()->GetGolemAttributes()->GetHealth(), Before);
 				Test.TestFalse(TEXT("And is used up by it"), MarsCombat->HasBarrierAt(World->GetTimeSeconds()));
-				UGolemAbilitySystemComponent::ApplyCombatDamage(Shield.Get(), Mars.Get(), 25.0f, 0.0f, true);
+				UGolemAbilitySystemComponent::ApplyCombatDamage(Shield.Get(), Mars.Get(), 25.0f, true);
 				Test.TestEqual(TEXT("The second hit lands in full"),
 					Mars->GetGolemAbilitySystem()->GetGolemAttributes()->GetHealth(), Before - 25.0f);
 				// Last: Jupiter's backflip shot, facing the Shield from 7 m.

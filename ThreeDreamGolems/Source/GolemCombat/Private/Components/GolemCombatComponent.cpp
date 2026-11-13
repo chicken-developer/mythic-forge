@@ -11,7 +11,6 @@
 #include "Animation/GolemAnimNotifyState_TraceWindow.h"
 #include "Attributes/GolemAttributeSet.h"
 #include "Assets/GolemAssetManager.h"
-#include "Camera/GolemCameraModeComponent.h"
 #include "Components/GolemAbilitySystemComponent.h"
 #include "Components/GolemLifeComponent.h"
 #include "Components/PrimitiveComponent.h"
@@ -142,8 +141,7 @@ FGolemResult UGolemCombatComponent::Configure(const FPrimaryAssetId& InProfileId
 		Profile = nullptr;
 		return Result;
 	}
-	Snapshot.Poise = GetMaxPoise();
-	Snapshot.OutcomeCounts.Init(0, static_cast<int32>(EGolemCombatOutcome::Traversal) + 1);
+	Snapshot.OutcomeCounts.Init(0, GolemCombatOutcomeCount);
 	RefreshSnapshot();
 	return FGolemResult::Success();
 }
@@ -328,8 +326,7 @@ bool UGolemCombatComponent::PlaceColor(UGolemColorVoidComponent* Void)
 	return true;
 }
 
-void UGolemCombatComponent::FireProjectile(const float PowerScale, const float PoiseDamage, const bool bAppliesColor,
-	const FGameplayTag ActionTag)
+void UGolemCombatComponent::FireProjectile(const float PowerScale, const bool bAppliesColor, const FGameplayTag ActionTag)
 {
 	ACharacter* Character = Cast<ACharacter>(GetOwner());
 	UWorld* World = GetWorld();
@@ -358,16 +355,15 @@ void UGolemCombatComponent::FireProjectile(const float PowerScale, const float P
 	{
 		AimPoint = ColorIntent->GetComponentLocation();
 	}
-	else if (IsValid(Snapshot.LockedTarget))
+	else if (IsValid(Snapshot.AttackTarget))
 	{
-		AimPoint = Snapshot.LockedTarget->GetActorLocation();
+		AimPoint = Snapshot.AttackTarget->GetActorLocation();
 	}
 	FGolemProjectileShot Shot;
 	Shot.Speed = HeroMoves.ProjectileSpeed;
 	Shot.Range = HeroMoves.ProjectileRange;
 	Shot.Radius = HeroMoves.ProjectileRadius;
 	Shot.Damage = GetAttackDamage(PowerScale);
-	Shot.PoiseDamage = PoiseDamage;
 	Shot.ActionTag = ActionTag;
 	FGameplayTagContainer OwnedTags;
 	AbilitySystem->GetOwnedGameplayTags(OwnedTags);
@@ -421,10 +417,7 @@ const FGolemCombatSnapshot& UGolemCombatComponent::GetSnapshot() const
 }
 bool UGolemCombatComponent::CanTransferControl() const
 {
-	return !Snapshot.bAttacking && !Snapshot.bBlocking && !Snapshot.bParrying && !Snapshot.bDodging &&
-		!Snapshot.bStaggered && (!AbilitySystem.IsValid() ||
-			(!AbilitySystem->HasMatchingGameplayTag(GolemGameplayTags::State_Combat_Finishing) &&
-			!AbilitySystem->HasMatchingGameplayTag(GolemGameplayTags::State_Combat_Traversing)));
+	return !Snapshot.bAttacking && !Snapshot.bBlocking && !Snapshot.bDodging;
 }
 bool UGolemCombatComponent::HasOpenComboWindow() const
 {
@@ -502,9 +495,9 @@ FGolemResult UGolemCombatComponent::BeginAttack(FGameplayTag ActionTag, UGolemGa
 			const FVector Direction = ColorIntent->GetComponentLocation() - GetOwner()->GetActorLocation();
 			GetOwner()->SetActorRotation(FRotator(0.0f, Direction.Rotation().Yaw, 0.0f));
 		}
-		else if (IsValid(Snapshot.LockedTarget) && ValidateCombatTarget(Snapshot.LockedTarget, Profile->GetTuning().LockRange).IsSuccess())
+		else if (IsValid(Snapshot.AttackTarget) && ValidateCombatTarget(Snapshot.AttackTarget, Profile->GetTuning().TargetRange).IsSuccess())
 		{
-			const FVector Direction = Snapshot.LockedTarget->GetActorLocation() - GetOwner()->GetActorLocation();
+			const FVector Direction = Snapshot.AttackTarget->GetActorLocation() - GetOwner()->GetActorLocation();
 			GetOwner()->SetActorRotation(FRotator(0.0f, Direction.Rotation().Yaw, 0.0f));
 		}
 		RefreshSnapshot();
@@ -577,7 +570,7 @@ void UGolemCombatComponent::BeginTraceWindow(FName WindowId, UAnimSequenceBase* 
 		if (!bProjectileFired)
 		{
 			bProjectileFired = true;
-			FireProjectile(Attack->PowerScale, Attack->PoiseDamage, Attack->bAppliesColor, AttackAction);
+			FireProjectile(Attack->PowerScale, Attack->bAppliesColor, AttackAction);
 		}
 		RefreshSnapshot();
 		return;
@@ -652,7 +645,7 @@ void UGolemCombatComponent::SetComboWindow(bool bOpen, UAnimSequenceBase* Animat
 		WindowHitActors.Reset();
 		ClearDeferredWeaponHits();
 		AbilitySystem->CurrentMontageJumpToSection(Attacks[Next].SectionName);
-		PublishOutcome(EGolemCombatOutcome::Combo, AttackAction, Snapshot.LockedTarget, Snapshot.ComboIndex);
+		PublishOutcome(EGolemCombatOutcome::Combo, AttackAction, Snapshot.AttackTarget, Snapshot.ComboIndex);
 		return;
 	}
 }
@@ -770,7 +763,7 @@ void UGolemCombatComponent::CommitWeaponHit(const FHitResult& Hit, const FGolemA
 	}
 	const float Before = TargetASC->GetGolemAttributes()->GetHealth();
 	const FGolemResult Result = UGolemAbilitySystemComponent::ApplyCombatDamage(GetOwner(), Target,
-		GetAttackDamage(Attack.PowerScale), Attack.PoiseDamage, true, &Hit);
+		GetAttackDamage(Attack.PowerScale), true, &Hit);
 	if (!TargetASC.IsValid() || TargetASC->GetGolemAttributes() == nullptr || !IsValid(Target))
 	{
 		return;
@@ -827,41 +820,13 @@ bool UGolemCombatComponent::IsTraceCapabilityCurrent(uint64 Generation, FName Wi
 		Ability.IsValid() && AttackAbility == Ability && Ability->IsActive();
 }
 
-FGolemResult UGolemCombatComponent::BeginDefense(FGameplayTag ActionTag)
-{
-	if (!IsAuthorityAlive() || Snapshot.bAttacking || Snapshot.bDodging || Snapshot.bStaggered ||
-		Snapshot.bBlocking || Snapshot.bParrying)
-	{
-		return GolemCombatFailure(EGolemError::InvalidState, TEXT("BeginDefense"));
-	}
-	if (ActionTag == GolemGameplayTags::Ability_Combat_Parry)
-	{
-		Snapshot.bParrying = true;
-		ParryStartedAt = GetWorld()->GetTimeSeconds();
-	}
-	else
-	{
-		return GolemCombatFailure(EGolemError::InvalidData, TEXT("DefenseAction"));
-	}
-	RefreshSnapshot();
-	return FGolemResult::Success();
-}
-void UGolemCombatComponent::EndDefense(FGameplayTag ActionTag)
-{
-	if (ActionTag == GolemGameplayTags::Ability_Combat_Parry)
-	{
-		Snapshot.bParrying = false;
-	}
-	RefreshSnapshot();
-}
-
 FGolemResult UGolemCombatComponent::BeginClassMove(EGolemClassMove& OutMove, float& OutDuration)
 {
 	OutMove = HeroMoves.ClassMove;
 	OutDuration = 0.0f;
 	ACharacter* Character = Cast<ACharacter>(GetOwner());
-	if (!IsAuthorityAlive() || Character == nullptr || Snapshot.bAttacking || Snapshot.bDodging || Snapshot.bStaggered
-		|| Snapshot.bBlocking || Snapshot.bParrying || bClassMoveActive)
+	if (!IsAuthorityAlive() || Character == nullptr || Snapshot.bAttacking || Snapshot.bDodging
+		|| Snapshot.bBlocking || bClassMoveActive)
 	{
 		return GolemCombatFailure(EGolemError::InvalidState, TEXT("BeginClassMove"));
 	}
@@ -933,7 +898,7 @@ void UGolemCombatComponent::EndClassMove(const bool bWasCancelled)
 	}
 	else if (ActiveClassMove == EGolemClassMove::BackflipShot && !bWasCancelled && IsAuthorityAlive())
 	{
-		FireProjectile(HeroMoves.BackflipShotPowerScale, 0.0f, false, GolemGameplayTags::Ability_Combat_Block);
+		FireProjectile(HeroMoves.BackflipShotPowerScale, false, GolemGameplayTags::Ability_Combat_Block);
 	}
 	RefreshSnapshot();
 }
@@ -959,7 +924,7 @@ void UGolemCombatComponent::SetNextDodgeDirection(const FVector& Direction)
 
 FGolemResult UGolemCombatComponent::BeginDodge()
 {
-	if (!IsAuthorityAlive() || Snapshot.bDodging || Snapshot.bStaggered)
+	if (!IsAuthorityAlive() || Snapshot.bDodging)
 	{
 		return GolemCombatFailure(EGolemError::InvalidState, TEXT("BeginDodge"));
 	}
@@ -1040,7 +1005,7 @@ FGolemResult UGolemCombatComponent::ValidateCombatTarget(AActor* Target, float R
 	return FGolemResult::Success();
 }
 
-AActor* UGolemCombatComponent::FindCombatTarget(float Range, bool bRequireStagger) const
+AActor* UGolemCombatComponent::FindCombatTarget(float Range) const
 {
 	if (GetWorld() == nullptr || GetOwner() == nullptr)
 	{
@@ -1052,11 +1017,6 @@ AActor* UGolemCombatComponent::FindCombatTarget(float Range, bool bRequireStagge
 	{
 		AActor* Candidate = *It;
 		if (!ValidateCombatTarget(Candidate, Range).IsSuccess())
-		{
-			continue;
-		}
-		const UGolemCombatComponent* TargetCombat = Candidate->FindComponentByClass<UGolemCombatComponent>();
-		if (bRequireStagger && (TargetCombat == nullptr || !TargetCombat->GetSnapshot().bStaggered))
 		{
 			continue;
 		}
@@ -1076,96 +1036,24 @@ FGolemResult UGolemCombatComponent::SetValidatedTarget(AActor* Target)
 	{
 		return GolemCombatFailure(EGolemError::NotAuthority, TEXT("SetCombatTarget"));
 	}
-	const FGolemResult Result = ValidateCombatTarget(Target, Profile->GetTuning().LockRange);
+	const FGolemResult Result = ValidateCombatTarget(Target, Profile->GetTuning().TargetRange);
 	if (Result.IsSuccess())
 	{
-		Snapshot.LockedTarget = Target;
-		UpdateLockCamera();
+		Snapshot.AttackTarget = Target;
 		RefreshSnapshot();
 	}
 	return Result;
 }
-FGolemResult UGolemCombatComponent::TryToggleTargetLock(AActor* Target)
+
+AActor* UGolemCombatComponent::GetAttackTarget() const
 {
-	if (!IsAuthorityAlive())
-	{
-		return GolemCombatFailure(EGolemError::InvalidState, TEXT("ToggleCombatLock"));
-	}
-	if (IsValid(Snapshot.LockedTarget) && (Target == nullptr || Target == Snapshot.LockedTarget))
-	{
-		Snapshot.LockedTarget = nullptr;
-		UpdateLockCamera();
-		RefreshSnapshot();
-		return FGolemResult::Success();
-	}
-	Target = Target != nullptr ? Target : FindCombatTarget(Profile->GetTuning().LockRange);
-	const FGolemResult Result = SetValidatedTarget(Target);
-	if (Result.IsSuccess())
-	{
-		PublishOutcome(EGolemCombatOutcome::TargetLocked, GolemGameplayTags::Ability_Combat_LockOn, Target);
-	}
-	return Result;
-}
-AActor* UGolemCombatComponent::GetLockedTarget() const
-{
-	return IsValid(Snapshot.LockedTarget) ? Snapshot.LockedTarget.Get() : nullptr;
+	return IsValid(Snapshot.AttackTarget) ? Snapshot.AttackTarget.Get() : nullptr;
 }
 
-void UGolemCombatComponent::UpdateLockCamera()
-{
-	UGolemCameraModeComponent* Camera = GetOwner() != nullptr
-		? GetOwner()->FindComponentByClass<UGolemCameraModeComponent>() : nullptr;
-	if (Camera == nullptr)
-	{
-		LockCameraHandle.Invalidate();
-		return;
-	}
-	if (LockCameraHandle.IsValid())
-	{
-		Camera->PopMode(LockCameraHandle);
-		LockCameraHandle.Invalidate();
-	}
-	if (IsValid(Snapshot.LockedTarget) && !bEndingPlay)
-	{
-		FGolemCameraModeSettings Settings;
-		Settings.Priority = 10;
-		Settings.FocusTarget = Snapshot.LockedTarget;
-		Settings.FieldOfView = 75.0f;
-		Settings.ArmLength = 360.0f;
-		Settings.SocketOffset = FVector(0.0f, 45.0f, 65.0f);
-		LockCameraHandle = Camera->PushMode(Settings);
-	}
-}
-
-float UGolemCombatComponent::GetMaxPoise() const
-{
-	return Profile != nullptr ? Profile->GetTuning().MaxPoise : 0.0f;
-}
-
-FGolemResult UGolemCombatComponent::RestoreSnapshotPoise(float InPoise)
-{
-	if (!IsValid(GetOwner()) || !GetOwner()->HasAuthority())
-	{
-		return GolemCombatFailure(EGolemError::NotAuthority, TEXT("SnapshotPoiseAuthority"));
-	}
-	if (!IsAuthorityAlive())
-	{
-		return GolemCombatFailure(EGolemError::InvalidState, TEXT("SnapshotPoiseState"));
-	}
-	if (!FMath::IsFinite(InPoise) || InPoise < 0.0f || InPoise > GetMaxPoise())
-	{
-		return GolemCombatFailure(EGolemError::InvalidData, TEXT("SnapshotPoiseRange"));
-	}
-	Snapshot.Poise = InPoise;
-	RefreshSnapshot();
-	return FGolemResult::Success();
-}
-
-void UGolemCombatComponent::ResolveIncomingDamage(AActor* Source, float InDamage, float PoiseDamage,
-	bool bCanDefend, float& OutHealthDamage)
+void UGolemCombatComponent::ResolveIncomingDamage(AActor* Source, float InDamage, bool bCanDefend, float& OutHealthDamage)
 {
 	OutHealthDamage = InDamage;
-	if (!IsAuthorityAlive() || !FMath::IsFinite(InDamage) || !FMath::IsFinite(PoiseDamage))
+	if (!IsAuthorityAlive() || !FMath::IsFinite(InDamage))
 	{
 		return;
 	}
@@ -1192,77 +1080,11 @@ void UGolemCombatComponent::ResolveIncomingDamage(AActor* Source, float InDamage
 		? (Source->GetActorLocation() - GetOwner()->GetActorLocation()).GetSafeNormal2D() : FVector::ZeroVector;
 	const bool bFront = !IncomingDirection.IsNearlyZero() &&
 		FVector::DotProduct(GetOwner()->GetActorForwardVector(), IncomingDirection) >= Tuning.BlockFacingCosine;
-	if (bCanDefend && bFront && Snapshot.bParrying &&
-		GetWorld()->GetTimeSeconds() - ParryStartedAt <= Tuning.ParryWindow)
-	{
-		OutHealthDamage = 0.0f;
-		AbilitySystem->ExecuteGameplayCue(GolemGameplayTags::GameplayCue_Parry);
-		PublishOutcome(EGolemCombatOutcome::Parried, GolemGameplayTags::Ability_Combat_Parry, Source);
-		if (IsValid(Source))
-		{
-			if (UGolemCombatComponent* SourceCombat = Source->FindComponentByClass<UGolemCombatComponent>())
-			{
-				SourceCombat->EnterStagger(GetOwner());
-			}
-		}
-		return;
-	}
 	if (bCanDefend && bFront && Snapshot.bBlocking)
 	{
 		OutHealthDamage *= HeroMoves.GuardDamageFraction;
 		PublishOutcome(EGolemCombatOutcome::Blocked, GolemGameplayTags::Ability_Combat_Block, Source, OutHealthDamage);
 		return;
-	}
-	if (PoiseDamage > 0.0f && !Snapshot.bStaggered)
-	{
-		Snapshot.Poise = FMath::Max(0.0f, Snapshot.Poise - PoiseDamage);
-		if (Snapshot.Poise <= 0.0f)
-		{
-			EnterStagger(Source);
-		}
-		else
-		{
-			// The same authored graybox reaction is used as a flinch only while no action owns the montage.
-			if (InDamage > 0.0f && !Snapshot.bAttacking && !Snapshot.bBlocking && !Snapshot.bParrying &&
-				!Snapshot.bDodging && !AbilitySystem->HasMatchingGameplayTag(GolemGameplayTags::State_Combat_Finishing) &&
-				!AbilitySystem->HasMatchingGameplayTag(GolemGameplayTags::State_Combat_Traversing))
-			{
-				AbilitySystem->PlayMontage(nullptr, FGameplayAbilityActivationInfo(), Profile->GetStaggerMontage(), 2.0f);
-			}
-			RefreshSnapshot();
-		}
-	}
-}
-
-void UGolemCombatComponent::EnterStagger(AActor* Source)
-{
-	if (!IsAuthorityAlive() || Snapshot.bStaggered)
-	{
-		return;
-	}
-	ClearTransientActions();
-	Snapshot.bStaggered = true;
-	Snapshot.Poise = 0.0f;
-	AbilitySystem->SetLooseGameplayTagCount(GolemGameplayTags::State_Combat_Staggered, 1,
-		EGameplayTagReplicationState::TagAndCountToAll);
-	AbilitySystem->ExecuteGameplayCue(GolemGameplayTags::GameplayCue_Stagger);
-	AbilitySystem->PlayMontage(nullptr, FGameplayAbilityActivationInfo(), Profile->GetStaggerMontage(), 1.0f);
-	GetWorld()->GetTimerManager().SetTimer(StaggerTimer, this, &ThisClass::EndStagger,
-		Profile->GetTuning().StaggerDuration, false);
-	PublishOutcome(EGolemCombatOutcome::Staggered, GolemGameplayTags::State_Combat_Staggered, Source);
-}
-void UGolemCombatComponent::EndStagger()
-{
-	if (!bEndingPlay && Profile != nullptr && GetOwner() != nullptr && GetOwner()->HasAuthority())
-	{
-		Snapshot.bStaggered = false;
-		Snapshot.Poise = GetMaxPoise();
-		if (AbilitySystem.IsValid())
-		{
-			AbilitySystem->SetLooseGameplayTagCount(GolemGameplayTags::State_Combat_Staggered, 0,
-				EGameplayTagReplicationState::TagAndCountToAll);
-		}
-		RefreshSnapshot();
 	}
 }
 
@@ -1307,11 +1129,6 @@ void UGolemCombatComponent::HandleLifeTagChanged(const FGameplayTag Tag, int32 C
 	if (Count > 0 && !bEndingPlay && GetOwner() != nullptr && GetOwner()->HasAuthority())
 	{
 		ClearTransientActions();
-		if (GetWorld() != nullptr)
-		{
-			GetWorld()->GetTimerManager().ClearTimer(StaggerTimer);
-		}
-		EndStagger();
 	}
 }
 
@@ -1325,9 +1142,7 @@ void UGolemCombatComponent::ClearTransientActions()
 		FGameplayTagContainer CombatTags;
 		for (const FGameplayTag Tag : {FGameplayTag(GolemGameplayTags::Ability_Combat_Primary),
 			FGameplayTag(GolemGameplayTags::Ability_Combat_Heavy), FGameplayTag(GolemGameplayTags::Ability_Combat_Block),
-			FGameplayTag(GolemGameplayTags::Ability_Combat_Parry), FGameplayTag(GolemGameplayTags::Ability_Combat_Dodge),
-			FGameplayTag(GolemGameplayTags::Ability_Combat_Finisher),
-			FGameplayTag(GolemGameplayTags::Ability_World_Traverse)})
+			FGameplayTag(GolemGameplayTags::Ability_Combat_Dodge)})
 		{
 			CombatTags.AddTag(Tag);
 		}
@@ -1337,10 +1152,8 @@ void UGolemCombatComponent::ClearTransientActions()
 	Snapshot.bBlocking = false;
 	bClassMoveActive = false;
 	Snapshot.AttackPhase = 0;
-	Snapshot.bParrying = false;
 	Snapshot.bDodging = false;
-	Snapshot.LockedTarget = nullptr;
-	UpdateLockCamera();
+	Snapshot.AttackTarget = nullptr;
 	AttackAbility.Reset();
 	AttackIndex = INDEX_NONE;
 	ActiveWindow = NAME_None;
@@ -1357,14 +1170,12 @@ FGolemResult UGolemCombatComponent::ResetForCheckpoint()
 		return GolemCombatFailure(EGolemError::InvalidState, TEXT("ResetCombat"));
 	}
 	ClearTransientActions();
-	GetWorld()->GetTimerManager().ClearTimer(StaggerTimer);
-	EndStagger();
 	Snapshot.ComboIndex = 0;
 	Snapshot.DodgeReadyServerTime = 0.0;
 	Snapshot.ClassMoveReadyServerTime = 0.0;
 	Snapshot.BarrierEndServerTime = 0.0;
 	SetColorIntent(nullptr);
-	Snapshot.OutcomeCounts.Init(0, static_cast<int32>(EGolemCombatOutcome::Traversal) + 1);
+	Snapshot.OutcomeCounts.Init(0, GolemCombatOutcomeCount);
 	RefreshSnapshot();
 	return FGolemResult::Success();
 }
@@ -1377,15 +1188,15 @@ void UGolemCombatComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 	{
 		return;
 	}
-	LockValidationElapsed += DeltaTime;
-	if (LockValidationElapsed >= 0.1f)
+	// An attack target that died, left or went out of sight is dropped.
+	TargetValidationElapsed += DeltaTime;
+	if (TargetValidationElapsed >= 0.1f)
 	{
-		LockValidationElapsed = 0.0f;
-		if (Snapshot.LockedTarget != nullptr &&
-			!ValidateCombatTarget(Snapshot.LockedTarget, Profile->GetTuning().LockRange).IsSuccess())
+		TargetValidationElapsed = 0.0f;
+		if (Snapshot.AttackTarget != nullptr &&
+			!ValidateCombatTarget(Snapshot.AttackTarget, Profile->GetTuning().TargetRange).IsSuccess())
 		{
-			Snapshot.LockedTarget = nullptr;
-			UpdateLockCamera();
+			Snapshot.AttackTarget = nullptr;
 			RefreshSnapshot();
 		}
 	}
@@ -1395,10 +1206,6 @@ void UGolemCombatComponent::EndPlay(EEndPlayReason::Type EndPlayReason)
 {
 	bEndingPlay = true;
 	ClearTransientActions();
-	if (GetWorld() != nullptr)
-	{
-		GetWorld()->GetTimerManager().ClearTimer(StaggerTimer);
-	}
 	if (AbilitySystem.IsValid())
 	{
 		AbilitySystem->RegisterGameplayTagEvent(GolemGameplayTags::State_Life_Downed).Remove(DownedTagHandle);

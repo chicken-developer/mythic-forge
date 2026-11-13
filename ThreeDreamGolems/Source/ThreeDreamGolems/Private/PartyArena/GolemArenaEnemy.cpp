@@ -8,7 +8,6 @@
 #include "Components/GolemLifeComponent.h"
 #include "Controllers/GolemEnemyController.h"
 #include "Definitions/GolemAIArchetypeDefinition.h"
-#include "Finisher/GolemFinisherComponent.h"
 #include "Tags/GolemGameplayTags.h"
 #include "Threat/GolemThreatComponent.h"
 
@@ -40,7 +39,6 @@ AGolemArenaEnemy::AGolemArenaEnemy()
 	Attributes = CreateDefaultSubobject<UGolemAttributeSet>(TEXT("EnemyAttributes"));
 	Life = CreateDefaultSubobject<UGolemLifeComponent>(TEXT("EnemyLife"));
 	Combat = CreateDefaultSubobject<UGolemCombatComponent>(TEXT("EnemyCombat"));
-	Finisher = CreateDefaultSubobject<UGolemFinisherComponent>(TEXT("EnemyFinisher"));
 	Threat = CreateDefaultSubobject<UGolemThreatComponent>(TEXT("EnemyThreat"));
 	BossPhase = CreateDefaultSubobject<UGolemBossPhaseComponent>(TEXT("BossPhases"));
 	Label = CreateDefaultSubobject<UTextRenderComponent>(TEXT("EnemyLabel"));
@@ -189,8 +187,6 @@ void AGolemArenaEnemy::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
 	Life->OnLifeStateChanged.Remove(LifeHandle);
 	LifeHandle.Reset();
-	Finisher->PrepareForEndPlay(EndPlayReason == EEndPlayReason::EndPlayInEditor
-		|| EndPlayReason == EEndPlayReason::Quit || EndPlayReason == EEndPlayReason::LevelTransition);
 	const bool bWorldEnding = EndPlayReason == EEndPlayReason::EndPlayInEditor
 		|| EndPlayReason == EEndPlayReason::Quit || EndPlayReason == EEndPlayReason::LevelTransition;
 	if (AController* OwnedController = GetController(); HasAuthority() && !bWorldEnding && IsValid(OwnedController))

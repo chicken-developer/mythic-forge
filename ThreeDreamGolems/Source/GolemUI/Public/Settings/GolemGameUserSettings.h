@@ -64,8 +64,6 @@ public:
 	UPROPERTY(Config)
 	bool bToggleBlock = false;
 	UPROPERTY(Config)
-	bool bHoldLock = false;
-	UPROPERTY(Config)
 	bool bSubtitleBackground = true;
 	UPROPERTY(Config)
 	bool bReducedMotion = false;

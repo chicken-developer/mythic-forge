@@ -12,7 +12,6 @@ class UGolemAbilitySystemComponent;
 class UGolemAttributeSet;
 class UGolemLifeComponent;
 class UGolemCombatComponent;
-class UGolemFinisherComponent;
 class UGolemThreatComponent;
 class UGolemBossPhaseComponent;
 class UGolemAIArchetypeDefinition;
@@ -57,8 +56,6 @@ private:
 	TObjectPtr<UGolemLifeComponent> Life;
 	UPROPERTY(VisibleAnywhere, Category = "Golem|Arena")
 	TObjectPtr<UGolemCombatComponent> Combat;
-	UPROPERTY(VisibleAnywhere, Category = "Golem|Arena")
-	TObjectPtr<UGolemFinisherComponent> Finisher;
 	UPROPERTY(VisibleAnywhere, Category = "Golem|Arena")
 	TObjectPtr<UGolemThreatComponent> Threat;
 	UPROPERTY(VisibleAnywhere, Category = "Golem|Arena")

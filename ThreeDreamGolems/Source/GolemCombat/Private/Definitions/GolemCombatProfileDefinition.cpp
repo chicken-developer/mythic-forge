@@ -4,10 +4,8 @@
 #include "Animation/AnimSequence.h"
 #include "Animation/GolemAnimNotifyState_ComboWindow.h"
 #include "Animation/GolemAnimNotifyState_TraceWindow.h"
-#include "AnimNotifyState_MotionWarping.h"
 #include "Engine/SkeletalMesh.h"
 #include "Misc/DataValidation.h"
-#include "RootMotionModifier_SkewWarp.h"
 #include "Tags/GolemGameplayTags.h"
 
 namespace
@@ -37,34 +35,6 @@ namespace
 		}
 		return false;
 	}
-	bool GolemValidTraversalMontage(const UAnimMontage* Montage)
-	{
-		if (Montage == nullptr || !Montage->HasRootMotion())
-		{
-			return false;
-		}
-		const float BlendOutStart = Montage->GetPlayLength() - (Montage->BlendOutTriggerTime < 0.0f
-			? Montage->BlendOut.GetBlendTime() : Montage->BlendOutTriggerTime);
-		if (!FMath::IsFinite(BlendOutStart))
-		{
-			return false;
-		}
-		for (const FAnimNotifyEvent& Notify : Montage->Notifies)
-		{
-			const UAnimNotifyState_MotionWarping* Warping =
-				Cast<UAnimNotifyState_MotionWarping>(Notify.NotifyStateClass);
-			const URootMotionModifier_SkewWarp* Modifier = Warping != nullptr
-				? Cast<URootMotionModifier_SkewWarp>(Warping->RootMotionModifier) : nullptr;
-			if (Modifier != nullptr && Modifier->WarpTargetName == TEXT("GolemTraversal") &&
-				Modifier->bWarpTranslation && Notify.GetDuration() > 0.0f && Notify.GetTriggerTime() >= 0.0f &&
-				Notify.GetTriggerTime() + Notify.GetDuration() <= Montage->GetPlayLength() + KINDA_SMALL_NUMBER &&
-				Notify.GetTriggerTime() + Notify.GetDuration() <= BlendOutStart + KINDA_SMALL_NUMBER)
-			{
-				return true;
-			}
-		}
-		return false;
-	}
 }
 
 FGolemResult FGolemHeroMoveTuning::Validate() const
@@ -83,15 +53,13 @@ FGolemResult FGolemHeroMoveTuning::Validate() const
 
 FGolemResult FGolemCombatTuning::Validate() const
 {
-	if (!GolemFiniteRange(MaxPoise, 1.0f, 10000.0f) || !GolemFiniteRange(StaggerDuration, 0.1f, 30.0f) ||
-		!GolemFiniteRange(BlockFacingCosine, -1.0f, 1.0f) ||
-		!GolemFiniteRange(ParryWindow, 0.05f, 2.0f) ||
+	if (!GolemFiniteRange(BlockFacingCosine, -1.0f, 1.0f) ||
 		!GolemFiniteRange(DodgeDuration, 0.1f, 3.0f) ||
 		!GolemFiniteRange(DodgeInvulnerabilityStart, 0.0f, DodgeDuration) ||
 		!GolemFiniteRange(DodgeInvulnerabilityEnd, DodgeInvulnerabilityStart, DodgeDuration) ||
 		!GolemFiniteRange(DodgeCooldownSeconds, 0.0f, 60.0f) ||
 		!GolemFiniteRange(DodgeSpeed, 0.0f, 1500.0f) ||
-		!GolemFiniteRange(LockRange, 100.0f, 5000.0f))
+		!GolemFiniteRange(TargetRange, 100.0f, 5000.0f))
 	{
 		return GolemInvalidCombatData(TEXT("CombatTuning"));
 	}
@@ -118,22 +86,6 @@ UAnimSequence* UGolemCombatProfileDefinition::GetWalkAnimation() const
 UAnimMontage* UGolemCombatProfileDefinition::GetDodgeMontage() const
 {
 	return DodgeMontage.LoadSynchronous();
-}
-UAnimMontage* UGolemCombatProfileDefinition::GetStaggerMontage() const
-{
-	return StaggerMontage.LoadSynchronous();
-}
-UAnimMontage* UGolemCombatProfileDefinition::GetTraversalMontage() const
-{
-	return TraversalMontage.LoadSynchronous();
-}
-UAnimMontage* UGolemCombatProfileDefinition::GetFinisherSourceMontage() const
-{
-	return FinisherSourceMontage.LoadSynchronous();
-}
-UAnimMontage* UGolemCombatProfileDefinition::GetFinisherTargetMontage() const
-{
-	return FinisherTargetMontage.LoadSynchronous();
 }
 const TArray<FGolemAttackDefinition>& UGolemCombatProfileDefinition::GetAttacks() const
 {
@@ -173,8 +125,6 @@ FGolemResult UGolemCombatProfileDefinition::ValidateAttacks(const TArray<FGolemA
 		if ((!bLight && Attack.ActionTag != GolemGameplayTags::Ability_Combat_Heavy) ||
 			!GolemValidMontage(Montage, GetSkeletalMesh()) || Attack.SectionName.IsNone() ||
 			!GolemFiniteRange(Attack.PowerScale, 0.01f, 100.0f) ||
-			!GolemFiniteRange(Attack.PoiseDamage, 0.0f, 10000.0f) ||
-			
 			!GolemFiniteRange(Attack.TraceRadius, 1.0f, 100.0f))
 		{
 			return GolemInvalidCombatData(TEXT("AttackDefinition"));
@@ -263,17 +213,9 @@ FGolemResult UGolemCombatProfileDefinition::ValidateCombatProfile() const
 	{
 		return AttackResult;
 	}
-	for (const UAnimMontage* Montage : {GetDodgeMontage(), GetStaggerMontage(),
-		GetTraversalMontage(), GetFinisherSourceMontage(), GetFinisherTargetMontage()})
+	if (!GolemValidMontage(GetDodgeMontage(), Mesh))
 	{
-		if (!GolemValidMontage(Montage, Mesh))
-		{
-			return GolemInvalidCombatData(TEXT("CombatActionMontages"));
-		}
-	}
-	if (!GolemValidTraversalMontage(GetTraversalMontage()))
-	{
-		return GolemInvalidCombatData(TEXT("TraversalMotionWarpingContract"));
+		return GolemInvalidCombatData(TEXT("CombatDodgeMontage"));
 	}
 	return FGolemResult::Success();
 }
@@ -302,25 +244,13 @@ FGolemResult UGolemCombatProfileDefinition::TrySetAttacks(const TArray<FGolemAtt
 	return Result;
 }
 
-FGolemResult UGolemCombatProfileDefinition::TrySetActionMontages(UAnimMontage* Dodge,
-	UAnimMontage* Stagger, UAnimMontage* Traversal, UAnimMontage* FinisherSource, UAnimMontage* FinisherTarget)
+FGolemResult UGolemCombatProfileDefinition::TrySetDodgeMontage(UAnimMontage* Dodge)
 {
-	for (const UAnimMontage* Montage : {Dodge, Stagger, Traversal, FinisherSource, FinisherTarget})
+	if (!GolemValidMontage(Dodge, GetSkeletalMesh()))
 	{
-		if (!GolemValidMontage(Montage, GetSkeletalMesh()))
-		{
-			return GolemInvalidCombatData(TEXT("CombatActionMontages"));
-		}
-	}
-	if (!GolemValidTraversalMontage(Traversal))
-	{
-		return GolemInvalidCombatData(TEXT("TraversalMotionWarpingContract"));
+		return GolemInvalidCombatData(TEXT("CombatDodgeMontage"));
 	}
 	DodgeMontage = Dodge;
-	StaggerMontage = Stagger;
-	TraversalMontage = Traversal;
-	FinisherSourceMontage = FinisherSource;
-	FinisherTargetMontage = FinisherTarget;
 	return FGolemResult::Success();
 }
 

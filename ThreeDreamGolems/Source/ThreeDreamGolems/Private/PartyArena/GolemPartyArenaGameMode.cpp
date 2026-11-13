@@ -11,14 +11,12 @@
 #include "Controllers/GolemArenaCompanionController.h"
 #include "Definitions/GolemAIArchetypeDefinition.h"
 #include "Definitions/GolemBossPhaseDefinition.h"
-#include "Finisher/GolemFinisherComponent.h"
 #include "Party/GolemPartyState.h"
 #include "PartyArena/GolemArenaCharacter.h"
 #include "PartyArena/GolemArenaEnemy.h"
 #include "PartyArena/GolemArenaPlayerController.h"
 #include "PartyArena/GolemPartyArenaHUD.h"
 #include "PartyArena/GolemPartyArenaStartMarker.h"
-#include "Traversal/GolemTraversalComponent.h"
 
 #include "Engine/World.h"
 #include "EngineUtils.h"
@@ -443,18 +441,6 @@ FGolemResult AGolemPartyArenaGameMode::TryRestartDrill(APlayerController* Player
 				Brain->StopLogic(TEXT("Arena checkpoint reset"));
 			}
 			Companion->GetAIContext()->ClearControlledPawn();
-		}
-		if (UGolemTraversalComponent* Traversal = Golem->FindComponentByClass<UGolemTraversalComponent>();
-			Traversal != nullptr && Traversal->HasActiveTraversal())
-		{
-			const FGuid Handle = Traversal->GetSnapshot().Handle;
-			Traversal->EndTraversal(Handle, true);
-		}
-		if (UGolemFinisherComponent* Finisher = Golem->FindComponentByClass<UGolemFinisherComponent>();
-			Finisher != nullptr && Finisher->HasActiveFinisher())
-		{
-			const FGuid Reservation = Finisher->GetReservation();
-			Finisher->EndFinisher(Reservation, false);
 		}
 		Golem->ResetControlInput();
 		Golem->GetCombatComponent()->ClearTransientActions();

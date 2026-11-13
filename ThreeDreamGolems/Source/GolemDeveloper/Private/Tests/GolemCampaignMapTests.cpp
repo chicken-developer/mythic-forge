@@ -221,7 +221,7 @@ bool FGolemCampaignInputTest::RunTest(const FString& Parameters)
 	UGolemGameUserSettings* Settings = NewObject<UGolemGameUserSettings>();
 	Settings->EnsureBindings();
 	TestTrue(TEXT("Native preferences validate"), Settings->ValidatePreferences().IsSuccess());
-	TestEqual(TEXT("Default controls and all four specialization slots"), Settings->KeyBindings.Num(), 25);
+	TestEqual(TEXT("Default controls and all four specialization slots"), Settings->KeyBindings.Num(), 21);
 	Settings->KeyBindings[1].Key = Settings->KeyBindings[0].Key;
 	TestFalse(TEXT("Conflicting keys rejected before application"), Settings->ValidatePreferences().IsSuccess());
 	Settings->KeyBindings.Reset();

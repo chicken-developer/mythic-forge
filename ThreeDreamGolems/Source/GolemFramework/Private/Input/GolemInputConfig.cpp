@@ -86,11 +86,7 @@ void UGolemInputConfig::InitializeDefaultMapping()
 		{GolemGameplayTags::Input_Combat_Primary, TEXT("IA_Golem_Light"), EKeys::LeftMouseButton, EKeys::Gamepad_RightTrigger},
 		{GolemGameplayTags::Input_Combat_Heavy, TEXT("IA_Golem_Heavy"), EKeys::RightMouseButton, EKeys::Gamepad_LeftTrigger},
 		{GolemGameplayTags::Input_Combat_Block, TEXT("IA_Golem_Block"), EKeys::Q, EKeys::Gamepad_LeftShoulder},
-		{GolemGameplayTags::Input_Combat_Parry, TEXT("IA_Golem_Parry"), EKeys::C, EKeys::Gamepad_LeftThumbstick},
-		{GolemGameplayTags::Input_Combat_Dodge, TEXT("IA_Golem_Dodge"), EKeys::LeftShift, EKeys::Gamepad_FaceButton_Right},
-		{GolemGameplayTags::Input_Combat_LockOn, TEXT("IA_Golem_Lock"), EKeys::MiddleMouseButton, EKeys::Gamepad_RightThumbstick},
-		{GolemGameplayTags::Input_Combat_Finisher, TEXT("IA_Golem_Finisher"), EKeys::H, EKeys::Gamepad_DPad_Right},
-		{GolemGameplayTags::Input_World_Traverse, TEXT("IA_Golem_Traverse"), EKeys::V, EKeys::Gamepad_DPad_Down}
+		{GolemGameplayTags::Input_Combat_Dodge, TEXT("IA_Golem_Dodge"), EKeys::LeftShift, EKeys::Gamepad_FaceButton_Right}
 	};
 	for (const FGolemCombatBinding& Binding : CombatBindings)
 	{

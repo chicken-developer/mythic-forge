@@ -70,7 +70,6 @@ namespace GolemPartyArenaTest
 		QueryPositive,
 		QueryUnreachable,
 		QueryCancel,
-		LockTarget,
 		FocusCommand,
 		CompanionRevive,
 		Wave,
@@ -198,14 +197,6 @@ namespace GolemPartyArenaTest
 				break;
 			case EGolemArenaTestPhase::QueryCancel:
 				CheckCancelledQuery();
-				break;
-			case EGolemArenaTestPhase::LockTarget:
-				if (!PulseKey.IsValid() && Controller->GetControlledGolem()->FindComponentByClass<UGolemCombatComponent>()
-					->GetLockedTarget() == QueryEnemy.Get())
-				{
-					Pulse(EKeys::B);
-					Enter(EGolemArenaTestPhase::FocusCommand);
-				}
 				break;
 			case EGolemArenaTestPhase::FocusCommand:
 				if (WorldElapsed() > 0.4 && HasCommand(EGolemCompanionCommand::Focus))
@@ -446,7 +437,7 @@ namespace GolemPartyArenaTest
 				if (Entry == nullptr || Entry->Golem != Golems[Slot].Get() || Entry->GolemId != GolemIds[Slot]
 					|| Entry->HeroDefinitionId != HeroIds[Slot]
 					|| Entry->Golem->GetGolemAbilitySystem()->GetOwnedGrantCount() != 2
-					|| Entry->Golem->GetGolemAbilitySystem()->GetActivatableAbilities().Num() != 10)
+					|| Entry->Golem->GetGolemAbilitySystem()->GetActivatableAbilities().Num() != 6)
 				{
 					Fail(TEXT("Arena replaced identity or duplicated/lost shared foundation/combat grants."));
 					return false;
@@ -665,8 +656,9 @@ namespace GolemPartyArenaTest
 			QueryController->GetDecisionTree()->RestartLogic();
 			PlaceControlledGolem(QueryEnemy->GetActorLocation() - FVector(0.0, 300.0, 0.0),
 				FRotator(0.0, 90.0, 0.0));
-			Pulse(EKeys::MiddleMouseButton);
-			Enter(EGolemArenaTestPhase::LockTarget);
+			// Focus takes the nearest enemy in sight, which is the one the Golem was just placed in front of.
+			Pulse(EKeys::B);
+			Enter(EGolemArenaTestPhase::FocusCommand);
 		}
 
 		void BeginCompanionRevive()

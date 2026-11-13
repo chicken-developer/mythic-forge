@@ -10,8 +10,6 @@
 UGolemCombatAbility::UGolemCombatAbility()
 {
 	ActivationBlockedTags.AddTag(GolemGameplayTags::State_Combat_Staggered);
-	ActivationBlockedTags.AddTag(GolemGameplayTags::State_Combat_Finishing);
-	ActivationBlockedTags.AddTag(GolemGameplayTags::State_Combat_Traversing);
 	ActivationBlockedTags.AddTag(GolemGameplayTags::State_Life_Reviving);
 }
 

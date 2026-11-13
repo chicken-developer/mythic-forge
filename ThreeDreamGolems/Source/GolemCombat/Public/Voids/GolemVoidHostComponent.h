@@ -77,8 +77,7 @@ public:
 	/** Runs stagger and reveal timers, and the timers of every void, up to Now. */
 	void AdvanceTo(double Now);
 
-	virtual void ResolveIncomingDamage(AActor* Source, float InDamage, float PoiseDamage,
-		bool bCanDefend, float& OutHealthDamage) override;
+	virtual void ResolveIncomingDamage(AActor* Source, float InDamage, bool bCanDefend, float& OutHealthDamage) override;
 
 	int32 GetFilledCount() const { return FilledCount; }
 	int32 GetTotalFills() const { return Tuning.TotalFills(); }

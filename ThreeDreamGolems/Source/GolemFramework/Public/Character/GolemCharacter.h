@@ -19,10 +19,7 @@ class UGolemAbilitySystemComponent;
 class UGolemAttributeSet;
 class UGolemLifeComponent;
 class UGolemCombatComponent;
-class UGolemTraversalComponent;
-class UGolemFinisherComponent;
 class UGolemCameraModeComponent;
-class UMotionWarpingComponent;
 class UMaterialInstanceDynamic;
 class USpringArmComponent;
 class UStaticMeshComponent;
@@ -97,14 +94,8 @@ private:
 	TObjectPtr<UGolemLifeComponent> LifeComponent;
 	UPROPERTY(VisibleAnywhere, Category = "Golem|Character|Combat")
 	TObjectPtr<UGolemCombatComponent> CombatComponent;
-	UPROPERTY(VisibleAnywhere, Category = "Golem|Character|Traversal")
-	TObjectPtr<UGolemTraversalComponent> TraversalComponent;
-	UPROPERTY(VisibleAnywhere, Category = "Golem|Character|Finisher")
-	TObjectPtr<UGolemFinisherComponent> FinisherComponent;
 	UPROPERTY(VisibleAnywhere, Category = "Golem|Character|Camera")
 	TObjectPtr<UGolemCameraModeComponent> CameraModeComponent;
-	UPROPERTY(VisibleAnywhere, Category = "Golem|Character|Traversal")
-	TObjectPtr<UMotionWarpingComponent> MotionWarping;
 
 	UPROPERTY(Transient)
 	TObjectPtr<UGolemAbilitySetDefinition> DefaultAbilitySet;

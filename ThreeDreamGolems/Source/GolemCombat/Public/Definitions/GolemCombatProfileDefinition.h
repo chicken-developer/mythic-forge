@@ -24,8 +24,6 @@ struct GOLEMCOMBAT_API FGolemAttackDefinition
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Combat|Attack")
 	float PowerScale = 1.0f;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Combat|Attack")
-	float PoiseDamage = 20.0f;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Combat|Attack")
 	float TraceRadius = 35.0f;
 
 	/** True for hits that place the attacker's element on a void (heavy attacks and some skill books). */
@@ -39,13 +37,7 @@ struct GOLEMCOMBAT_API FGolemCombatTuning
 	GENERATED_BODY()
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Combat|Defense")
-	float MaxPoise = 50.0f;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Combat|Defense")
-	float StaggerDuration = 2.5f;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Combat|Defense")
 	float BlockFacingCosine = 0.35f;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Combat|Defense")
-	float ParryWindow = 0.28f;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Combat|Defense")
 	float DodgeDuration = 0.65f;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Combat|Defense")
@@ -57,8 +49,9 @@ struct GOLEMCOMBAT_API FGolemCombatTuning
 	float DodgeCooldownSeconds = 1.5f;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Combat|Defense")
 	float DodgeSpeed = 600.0f;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Combat|Targeting")
-	float LockRange = 1200.0f;
+	/** Furthest an attack target may be before the Golem stops turning towards it. */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Golem|Combat|Targeting", meta = (Units = "cm"))
+	float TargetRange = 1200.0f;
 
 	FGolemResult Validate() const;
 };
@@ -147,18 +140,13 @@ public:
 	UAnimSequence* GetIdleAnimation() const;
 	UAnimSequence* GetWalkAnimation() const;
 	UAnimMontage* GetDodgeMontage() const;
-	UAnimMontage* GetStaggerMontage() const;
-	UAnimMontage* GetTraversalMontage() const;
-	UAnimMontage* GetFinisherSourceMontage() const;
-	UAnimMontage* GetFinisherTargetMontage() const;
 	const TArray<FGolemAttackDefinition>& GetAttacks() const;
 	const FGolemCombatTuning& GetTuning() const;
 	FPrimaryAssetId GetCombatAbilitySetId() const;
 	FGolemResult ValidateCombatProfile() const;
 	FGolemResult TrySetPresentation(USkeletalMesh* Mesh, UAnimSequence* Idle, UAnimSequence* Walk);
 	FGolemResult TrySetAttacks(const TArray<FGolemAttackDefinition>& InAttacks);
-	FGolemResult TrySetActionMontages(UAnimMontage* Dodge, UAnimMontage* Stagger,
-		UAnimMontage* Traversal, UAnimMontage* FinisherSource, UAnimMontage* FinisherTarget);
+	FGolemResult TrySetDodgeMontage(UAnimMontage* Dodge);
 	FGolemResult TrySetTuning(const FGolemCombatTuning& InTuning);
 	FGolemResult TrySetCombatAbilitySetId(const FPrimaryAssetId& InAbilitySetId);
 #if WITH_EDITOR
@@ -177,14 +165,6 @@ private:
 	TArray<FGolemAttackDefinition> Attacks;
 	UPROPERTY(EditDefaultsOnly, Category = "Golem|Combat|Animation")
 	TSoftObjectPtr<UAnimMontage> DodgeMontage;
-	UPROPERTY(EditDefaultsOnly, Category = "Golem|Combat|Animation")
-	TSoftObjectPtr<UAnimMontage> StaggerMontage;
-	UPROPERTY(EditDefaultsOnly, Category = "Golem|Combat|Animation")
-	TSoftObjectPtr<UAnimMontage> TraversalMontage;
-	UPROPERTY(EditDefaultsOnly, Category = "Golem|Combat|Animation")
-	TSoftObjectPtr<UAnimMontage> FinisherSourceMontage;
-	UPROPERTY(EditDefaultsOnly, Category = "Golem|Combat|Animation")
-	TSoftObjectPtr<UAnimMontage> FinisherTargetMontage;
 	UPROPERTY(EditDefaultsOnly, Category = "Golem|Combat|Tuning")
 	FGolemCombatTuning Tuning;
 	UPROPERTY(EditDefaultsOnly, Category = "Golem|Combat|Abilities")

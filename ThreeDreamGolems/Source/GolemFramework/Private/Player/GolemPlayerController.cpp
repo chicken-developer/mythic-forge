@@ -171,11 +171,7 @@ void AGolemPlayerController::SetupInputComponent()
 	BindAbilityInput(GolemGameplayTags::Input_Combat_Primary);
 	BindAbilityInput(GolemGameplayTags::Input_Combat_Heavy);
 	BindAbilityInput(GolemGameplayTags::Input_Combat_Block);
-	BindAbilityInput(GolemGameplayTags::Input_Combat_Parry);
 	BindAbilityInput(GolemGameplayTags::Input_Combat_Dodge);
-	BindAbilityInput(GolemGameplayTags::Input_Combat_LockOn);
-	BindAbilityInput(GolemGameplayTags::Input_Combat_Finisher);
-	BindAbilityInput(GolemGameplayTags::Input_World_Traverse);
 	InputBindingHandles.Add(EnhancedInput->BindAction(InputConfig->FindAction(GolemGameplayTags::Input_World_Interact),
 		ETriggerEvent::Started, this, &AGolemPlayerController::HandleInteract).GetHandle());
 	UpdateLocalMapping();
@@ -261,25 +257,7 @@ void AGolemPlayerController::ServerRequestAbilityInput_Implementation(
 	if (Result.IsSuccess())
 	{
 		const TGuardValue<bool> ProcessingScope(bProcessingAbilityInput, true);
-		AActor* Target = nullptr;
-		if (InputConfig->IsCombatInput(InputTag))
-		{
-			UGolemCombatComponent* Combat = Golem->GetCombatComponent();
-			if (InputTag == GolemGameplayTags::Input_Combat_Finisher)
-			{
-				Target = Combat->FindCombatTarget(220.0f, true);
-			}
-			else
-			{
-				const float Range = Combat->GetProfile()->GetTuning().LockRange;
-				Target = Combat->GetLockedTarget();
-				if (Target == nullptr || !Combat->ValidateCombatTarget(Target, Range).IsSuccess())
-				{
-					Target = Combat->FindCombatTarget(Range);
-				}
-			}
-		}
-		Result = Golem->GetGolemAbilitySystem()->RequestAbilityInput(InputTag, bPressed, Target);
+		Result = Golem->GetGolemAbilitySystem()->RequestAbilityInput(InputTag, bPressed);
 	}
 	if (bPressed || !Result.IsSuccess())
 	{
@@ -595,7 +573,7 @@ void AGolemPlayerController::HandleLook(const FInputActionValue& Value)
 }
 
 void AGolemPlayerController::SetLocalInputPreferences(const float Sensitivity, const bool bInvertY,
-	const bool bToggleBlock, const bool bHoldLock)
+	const bool bToggleBlock)
 {
 	if (!FMath::IsFinite(Sensitivity) || Sensitivity < 0.1f || Sensitivity > 4.0f)
 	{
@@ -605,7 +583,6 @@ void AGolemPlayerController::SetLocalInputPreferences(const float Sensitivity, c
 	LookSensitivity = Sensitivity;
 	bInvertLookY = bInvertY;
 	bToggleBlockInput = bToggleBlock;
-	bHoldLockInput = bHoldLock;
 }
 
 void AGolemPlayerController::HandleJumpStarted()
@@ -650,12 +627,6 @@ void AGolemPlayerController::HandleAbilityReleased(FGameplayTag InputTag)
 {
 	if (bToggleBlockInput && InputTag == GolemGameplayTags::Input_Combat_Block)
 	{
-		return;
-	}
-	if (bHoldLockInput && InputTag == GolemGameplayTags::Input_Combat_LockOn
-		&& GetControlledGolem() != nullptr && GetControlledGolem()->GetCombatComponent()->GetLockedTarget() != nullptr)
-	{
-		RequestAbilityInput(InputTag, true);
 		return;
 	}
 	RequestAbilityInput(InputTag, false);

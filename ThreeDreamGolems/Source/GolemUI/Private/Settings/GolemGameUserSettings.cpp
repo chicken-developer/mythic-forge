@@ -40,9 +40,7 @@ void UGolemGameUserSettings::EnsureBindings()
 		{TEXT("Golem1"), EKeys::One}, {TEXT("Golem2"), EKeys::Two}, {TEXT("Golem3"), EKeys::Three},
 		{TEXT("Retry"), EKeys::R}, {TEXT("Revive"), EKeys::E}, {TEXT("Interact"), EKeys::F},
 		{TEXT("Light"), EKeys::LeftMouseButton}, {TEXT("Heavy"), EKeys::RightMouseButton},
-		{TEXT("Block"), EKeys::Q}, {TEXT("Parry"), EKeys::C}, {TEXT("Dodge"), EKeys::LeftShift},
-		{TEXT("Lock"), EKeys::MiddleMouseButton}, {TEXT("Rune"), EKeys::G},
-		{TEXT("Finisher"), EKeys::H}, {TEXT("Traverse"), EKeys::V},
+		{TEXT("Block"), EKeys::Q}, {TEXT("Dodge"), EKeys::LeftShift}, {TEXT("Rune"), EKeys::G},
 		{TEXT("Skill1"), EKeys::F1}, {TEXT("Skill2"), EKeys::F2},
 		{TEXT("Skill3"), EKeys::F3}, {TEXT("Skill4"), EKeys::F4}};
 	for (const TPair<FName, FKey>& Pair : Defaults)
@@ -150,10 +148,6 @@ FGolemResult UGolemGameUserSettings::AdjustPreference(const FName Option, const 
 	{
 		bToggleBlock = !bToggleBlock;
 	}
-	else if (Option == TEXT("HoldLock"))
-	{
-		bHoldLock = !bHoldLock;
-	}
 	else if (Option == TEXT("SubtitleBackground"))
 	{
 		bSubtitleBackground = !bSubtitleBackground;
@@ -241,7 +235,7 @@ FGolemResult UGolemGameUserSettings::SavePreferences()
 		bMatches &= Disk.GetFloat(*Section, *Scalar.Key.ToString(), Actual) && FMath::IsNearlyEqual(Actual, Scalar.Value);
 	}
 	const TArray<TPair<FName, bool>> Toggles{{TEXT("bInvertY"), bInvertY}, {TEXT("bToggleBlock"), bToggleBlock},
-		{TEXT("bHoldLock"), bHoldLock}, {TEXT("bSubtitleBackground"), bSubtitleBackground}, {TEXT("bReducedMotion"), bReducedMotion}};
+		{TEXT("bSubtitleBackground"), bSubtitleBackground}, {TEXT("bReducedMotion"), bReducedMotion}};
 	for (const TPair<FName, bool>& Toggle : Toggles)
 	{
 		bool bActual = false;
@@ -270,7 +264,7 @@ void UGolemGameUserSettings::ResetPreferences()
 	MasterVolume = 1.0f;
 	MusicVolume = 0.8f;
 	EffectsVolume = VoiceVolume = Sensitivity = TextScale = SubtitleScale = ShakeScale = 1.0f;
-	bInvertY = bToggleBlock = bHoldLock = bReducedMotion = false;
+	bInvertY = bToggleBlock = bReducedMotion = false;
 	bSubtitleBackground = true;
 	KeyBindings.Reset();
 	EnsureBindings();
@@ -310,7 +304,7 @@ FText UGolemGameUserSettings::GetPreferenceLabel(const FName Option) const
 		return FText::AsNumber(FMath::RoundToInt(*Value * 100.0f));
 	}
 	const bool bEnabled = Option == TEXT("Invert") ? bInvertY : Option == TEXT("ToggleBlock") ? bToggleBlock
-		: Option == TEXT("HoldLock") ? bHoldLock : Option == TEXT("SubtitleBackground") ? bSubtitleBackground : bReducedMotion;
+		: Option == TEXT("SubtitleBackground") ? bSubtitleBackground : bReducedMotion;
 	return bEnabled ? NSLOCTEXT("GolemSettings", "On", "On") : NSLOCTEXT("GolemSettings", "Off", "Off");
 }
 

@@ -197,8 +197,7 @@ bool AGolemColorProjectile::ResolveHit(const FHitResult& Hit)
 	{
 		const TWeakObjectPtr<UGolemAbilitySystemComponent> WeakTarget = TargetASC;
 		const float Before = TargetASC->GetGolemAttributes()->GetHealth();
-		const FGolemResult Result = UGolemAbilitySystemComponent::ApplyCombatDamage(SourceActor, Target, Shot.Damage,
-			Shot.PoiseDamage, true, &Hit);
+		const FGolemResult Result = UGolemAbilitySystemComponent::ApplyCombatDamage(SourceActor, Target, Shot.Damage, true, &Hit);
 		UGolemCombatComponent* SourceCombat = IsValid(SourceActor)
 			? SourceActor->FindComponentByClass<UGolemCombatComponent>() : nullptr;
 		if (Result.IsSuccess() && WeakTarget.IsValid() && WeakTarget->GetGolemAttributes() != nullptr && SourceCombat != nullptr)

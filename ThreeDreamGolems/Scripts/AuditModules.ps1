@@ -160,7 +160,7 @@ $ExpectedModules = @(
 	'GolemDeveloper'
 )
 $RuntimePlugins = @(
-	'GameplayAbilities', 'StateTree', 'GameplayStateTree', 'EnhancedInput', 'CommonUI', 'MotionWarping',
+	'GameplayAbilities', 'StateTree', 'GameplayStateTree', 'EnhancedInput', 'CommonUI',
 	'OnlineSubsystemNull', 'OnlineSubsystemSteam', 'SteamSockets'
 )
 $EditorPlugins = @('ModelingToolsEditorMode', 'PythonScriptPlugin')

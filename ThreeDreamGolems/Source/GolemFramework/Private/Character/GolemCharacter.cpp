@@ -15,18 +15,15 @@
 #include "Engine/StaticMesh.h"
 #include "Engine/World.h"
 #include "Framework/GolemPartyGameMode.h"
-#include "Finisher/GolemFinisherComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "GameplayAbilitySpec.h"
 #include "Materials/MaterialInstanceDynamic.h"
 #include "Materials/MaterialInterface.h"
-#include "MotionWarpingComponent.h"
 #include "Net/UnrealNetwork.h"
 #include "Party/GolemPartyState.h"
 #include "Player/GolemPlayerController.h"
 #include "Tags/GolemGameplayTags.h"
-#include "Traversal/GolemTraversalComponent.h"
 #include "UObject/ConstructorHelpers.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogGolemCharacter, Log, All);
@@ -49,10 +46,7 @@ AGolemCharacter::AGolemCharacter()
 	Attributes = CreateDefaultSubobject<UGolemAttributeSet>(TEXT("GolemAttributes"));
 	LifeComponent = CreateDefaultSubobject<UGolemLifeComponent>(TEXT("GolemLife"));
 	CombatComponent = CreateDefaultSubobject<UGolemCombatComponent>(TEXT("GolemCombat"));
-	TraversalComponent = CreateDefaultSubobject<UGolemTraversalComponent>(TEXT("GolemTraversal"));
-	FinisherComponent = CreateDefaultSubobject<UGolemFinisherComponent>(TEXT("GolemFinisher"));
 	CameraModeComponent = CreateDefaultSubobject<UGolemCameraModeComponent>(TEXT("GolemCameraModes"));
-	MotionWarping = CreateDefaultSubobject<UMotionWarpingComponent>(TEXT("GolemMotionWarping"));
 	AbilityInitializationResult = FGolemResult::Failure(EGolemError::InvalidState, TEXT("InitializeGolemAbilities"),
 		NSLOCTEXT("GolemCharacter", "AbilitiesPending", "Golem identity and ability defaults are not initialized yet."));
 
@@ -201,7 +195,6 @@ bool AGolemCharacter::CanTransferControl() const
 		&& LifeComponent != nullptr && LifeComponent->IsAlive()
 		&& AbilitySystem != nullptr
 		&& CombatComponent != nullptr && CombatComponent->CanTransferControl()
-		&& !TraversalComponent->HasActiveTraversal() && !FinisherComponent->IsReserved()
 		&& Movement != nullptr && Movement->MovementMode != MOVE_None;
 }
 
@@ -216,11 +209,7 @@ void AGolemCharacter::ResetControlInput()
 		AbilitySystem->RequestAbilityInput(GolemGameplayTags::Input_Combat_Block, false);
 		AbilitySystem->RequestAbilityInput(GolemGameplayTags::Input_Combat_Primary, false);
 		AbilitySystem->RequestAbilityInput(GolemGameplayTags::Input_Combat_Heavy, false);
-		AbilitySystem->RequestAbilityInput(GolemGameplayTags::Input_Combat_Parry, false);
 		AbilitySystem->RequestAbilityInput(GolemGameplayTags::Input_Combat_Dodge, false);
-		AbilitySystem->RequestAbilityInput(GolemGameplayTags::Input_Combat_LockOn, false);
-		AbilitySystem->RequestAbilityInput(GolemGameplayTags::Input_Combat_Finisher, false);
-		AbilitySystem->RequestAbilityInput(GolemGameplayTags::Input_World_Traverse, false);
 	}
 }
 
@@ -316,9 +305,6 @@ void AGolemCharacter::BeginPlay()
 void AGolemCharacter::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
 	bEndingPlay = true;
-	TraversalComponent->PrepareForEndPlay();
-	FinisherComponent->PrepareForEndPlay(EndPlayReason == EEndPlayReason::EndPlayInEditor
-		|| EndPlayReason == EEndPlayReason::Quit || EndPlayReason == EEndPlayReason::LevelTransition);
 	CombatComponent->OnProfileChanged.Remove(CombatProfileHandle);
 	CombatProfileHandle.Reset();
 	LifeComponent->OnLifeStateChanged.Remove(LifeStateHandle);
@@ -532,9 +518,7 @@ void AGolemCharacter::HandleLifeStateChanged(EGolemLifeState Previous, EGolemLif
 	}
 	else
 	{
-		if (GetCharacterMovement()->MovementMode == MOVE_None && !FinisherComponent->IsReserved()
-			&& !TraversalComponent->HasActiveTraversal()
-			&& !AbilitySystem->HasMatchingGameplayTag(GolemGameplayTags::State_Combat_Staggered))
+		if (GetCharacterMovement()->MovementMode == MOVE_None)
 		{
 			GetCharacterMovement()->SetMovementMode(MOVE_Walking);
 		}

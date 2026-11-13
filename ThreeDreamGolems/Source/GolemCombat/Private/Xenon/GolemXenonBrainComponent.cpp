@@ -211,7 +211,7 @@ void UGolemXenonBrainComponent::Strike()
 		// A dodge inside its 0.35 s window, or a Warrior's block from the front, answers this hit.
 		if (Damage > 0.0f)
 		{
-			UGolemAbilitySystemComponent::ApplyCombatDamage(Owner, Victim, Damage, 0.0f, true);
+			UGolemAbilitySystemComponent::ApplyCombatDamage(Owner, Victim, Damage, true);
 		}
 		ACharacter* Character = Cast<ACharacter>(Victim);
 		if (Move.Knockback > 0.0f && IsValid(Character))

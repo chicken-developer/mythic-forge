@@ -634,15 +634,14 @@ namespace GolemArenaNetwork
 			{
 				return;
 			}
-			FScopedConditionalWorldSwitcher Switch(Requester->GetWorld());
-			Requester->RequestAbilityInput(GolemGameplayTags::Input_Combat_LockOn, true);
-			Requester->RequestAbilityInput(GolemGameplayTags::Input_Combat_LockOn, false);
 			Enter(EGolemArenaNetworkPhase::Focus);
 		}
 
 		void WaitFocus()
 		{
-			AActor* ReplicaTarget = Requester->GetControlledGolem()->GetCombatComponent()->GetLockedTarget();
+			// The requesting client picks the nearest enemy it can see from its own replicated copy of the world.
+			AActor* ReplicaTarget = bFocusSent ? nullptr
+				: Requester->GetControlledGolem()->GetCombatComponent()->FindCombatTarget(2200.0f);
 			UGolemAbilitySystemComponent* ReplicaASC = ReplicaTarget != nullptr
 				? ReplicaTarget->FindComponentByClass<UGolemAbilitySystemComponent>() : nullptr;
 			if (!bFocusSent)
@@ -664,7 +663,7 @@ namespace GolemArenaNetwork
 			if (!Capture->Reply.IsSuccess() || Companion->GetCommandSnapshot().Command != EGolemCompanionCommand::Focus
 				|| Companion->GetCommandSnapshot().FocusTargetId != Target->GetArenaEnemyId())
 			{
-				Fail(GetDiagnostics(TEXT("Real lock-derived Focus RPC failed")));
+				Fail(GetDiagnostics(TEXT("Real nearest-enemy Focus RPC failed")));
 				return;
 			}
 			Enter(EGolemArenaNetworkPhase::Attack);

@@ -2,25 +2,18 @@
 
 #include "Abilities/GolemClassMoveAbility.h"
 #include "Abilities/GolemDodgeAbility.h"
-#include "Abilities/GolemFinisherAbility.h"
 #include "Abilities/GolemHeavyAttackAbility.h"
 #include "Abilities/GolemLightAttackAbility.h"
-#include "Abilities/GolemLockTargetAbility.h"
-#include "Abilities/GolemParryAbility.h"
-#include "Abilities/GolemTraversalAbility.h"
 #include "Animation/GolemAnimNotifyState_ComboWindow.h"
 #include "Animation/GolemAnimNotifyState_TraceWindow.h"
 #include "Definitions/GolemAbilitySetDefinition.h"
 #include "Definitions/GolemCombatProfileDefinition.h"
 #include "Tags/GolemGameplayTags.h"
 
-#include "Animation/AnimData/IAnimationDataController.h"
-#include "Animation/AnimData/IAnimationDataModel.h"
 #include "Animation/AnimMontage.h"
 #include "Animation/AnimSequence.h"
 #include "Animation/Skeleton.h"
 #include "AnimSequenceLevelSequenceLink.h"
-#include "AnimNotifyState_MotionWarping.h"
 #include "AssetCompilingManager.h"
 #include "AssetRegistry/AssetRegistryModule.h"
 #include "Engine/SkeletalMesh.h"
@@ -30,7 +23,6 @@
 #include "Misc/Paths.h"
 #include "Misc/ScopeExit.h"
 #include "Misc/SecureHash.h"
-#include "RootMotionModifier_SkewWarp.h"
 #include "Serialization/ArchiveUObject.h"
 #include "UObject/LinkerInstancingContext.h"
 #include "UObject/Package.h"
@@ -260,10 +252,7 @@ namespace GolemCombatAssetAuthoring
 			VendorRoot + TEXT("Anims/Unarmed/Attack/MM_Attack_02"),
 			VendorRoot + TEXT("Anims/Unarmed/Attack/MM_Attack_03"),
 			VendorRoot + TEXT("Anims/Unarmed/Attack/MM_ChargedAttack"),
-			VendorRoot + TEXT("Anims/Unarmed/Jump/MM_Dash"),
-			VendorRoot + TEXT("Anims/Unarmed/Jump/MM_Jump"),
-			VendorRoot + TEXT("Anims/Rifle/HitReact/MM_HitReact_Front_Hvy_01"),
-			VendorRoot + TEXT("Anims/Death/MM_Death_Front_01")
+			VendorRoot + TEXT("Anims/Unarmed/Jump/MM_Dash")
 		};
 		TSet<FString> VisitedPackages;
 		TArray<TStrongObjectPtr<UPackage>> ImportedPackages;
@@ -424,149 +413,6 @@ namespace GolemCombatAssetAuthoring
 			*(PackageName + TEXT(".") + FPackageName::GetLongPackageAssetName(PackageName)));
 	}
 
-	bool ValidateTraversalSequence(UAnimSequence* Sequence, const bool bLog = true)
-	{
-		if (Sequence == nullptr || !Sequence->bEnableRootMotion || !FMath::IsFinite(Sequence->GetPlayLength())
-			|| Sequence->GetPlayLength() <= 0.0f)
-		{
-			return false;
-		}
-		const FAnimExtractContext Context(0.0, true);
-		const FVector Delta = Sequence->ExtractRootMotionFromRange(0.0, Sequence->GetPlayLength(), Context).GetTranslation();
-		const FVector HalfDelta = Sequence->ExtractRootMotionFromRange(0.0,
-			Sequence->GetPlayLength() * 0.5, Context).GetTranslation();
-		if (Delta.ContainsNaN() || HalfDelta.ContainsNaN() || FMath::Abs(Delta.X) > 1.0
-			|| FMath::Abs(Delta.Y - 300.0) > 1.0 || FMath::Abs(Delta.Z) > 1.0
-			|| HalfDelta.Z < 100.0)
-		{
-			if (bLog)
-			{
-				UE_LOG(LogGolemCombatAuthoring, Error,
-					TEXT("Traversal lacks the Manny local +Y root trajectory: end %s, mid %s."),
-					*Delta.ToString(), *HalfDelta.ToString());
-			}
-			return false;
-		}
-		if (bLog)
-		{
-			UE_LOG(LogGolemCombatAuthoring, Display, TEXT("Traversal real CPU root motion (Manny local +Y): full %s, midpoint %s."),
-				*Delta.ToString(), *HalfDelta.ToString());
-		}
-		return true;
-	}
-
-	bool AuthorTraversalRootTrajectory(UAnimSequence* Sequence)
-	{
-		if (Sequence == nullptr || Sequence->GetSkeleton() == nullptr || Sequence->GetDataModel() == nullptr)
-		{
-			return false;
-		}
-		const IAnimationDataModel* Model = Sequence->GetDataModel();
-		const FReferenceSkeleton& Reference = Sequence->GetSkeleton()->GetReferenceSkeleton();
-		if (Reference.GetNum() == 0 || Model->GetNumberOfKeys() < 2)
-		{
-			return false;
-		}
-		const FName RootName = Reference.GetBoneName(0);
-		const FTransform RootPose = Reference.GetRefBonePose()[0];
-		TArray<FVector3f> Positions;
-		TArray<FQuat4f> Rotations;
-		TArray<FVector3f> Scales;
-		for (int32 Key = 0; Key < Model->GetNumberOfKeys(); ++Key)
-		{
-			const float Alpha = static_cast<float>(Key) / static_cast<float>(Model->GetNumberOfKeys() - 1);
-			// Manny's mesh yaw is -90 degrees: animation local +Y is the character's forward +X.
-			Positions.Add(FVector3f(RootPose.GetTranslation())
-				+ FVector3f(0.0f, 300.0f * Alpha, 120.0f * FMath::Sin(PI * Alpha)));
-			Rotations.Add(FQuat4f(RootPose.GetRotation()));
-			Scales.Add(FVector3f(RootPose.GetScale3D()));
-		}
-		IAnimationDataController& Controller = Sequence->GetController();
-		IAnimationDataController::FScopedBracket Bracket(Controller,
-			NSLOCTEXT("GolemCombatAuthoring", "RootTrajectory", "Author Golem traversal root motion"), false);
-		if ((!Model->IsValidBoneTrackName(RootName) && !Controller.AddBoneCurve(RootName, false))
-			|| !Controller.SetBoneTrackKeys(RootName, Positions, Rotations, Scales, false))
-		{
-			return false;
-		}
-		Sequence->bEnableRootMotion = true;
-		Sequence->RootMotionRootLock = ERootMotionRootLock::AnimFirstFrame;
-		Controller.NotifyPopulated();
-		return true;
-	}
-
-	UAnimSequence* CreateTraversalSequence()
-	{
-		const FString PackageName = AnimationRoot + TEXT("AS_Golem_Traversal");
-		UAnimSequence* Sequence = nullptr;
-		if (FPackageName::DoesPackageExist(PackageName))
-		{
-			Sequence = LoadObject<UAnimSequence>(nullptr, *(PackageName + TEXT(".AS_Golem_Traversal")));
-			if (Sequence != nullptr && !ValidateTraversalSequence(Sequence, false))
-			{
-				// Repair only the generated root track; retained pose tracks, curves and attributes remain intact.
-				if (!AuthorTraversalRootTrajectory(Sequence))
-				{
-					return nullptr;
-				}
-				Sequence->PostEditChange();
-				FAssetCompilingManager::Get().FinishAllCompilation();
-				UE_LOG(LogGolemCombatAuthoring, Display,
-					TEXT("Repaired owned traversal root track to Manny local +Y without replacing its pose: %s."),
-					*Sequence->GetPathName());
-			}
-		}
-		else
-		{
-			UAnimSequence* Source = LoadSequence(TEXT("Anims/Unarmed/Jump/MM_Jump"));
-			if (Source == nullptr || Source->GetSkeleton() == nullptr)
-			{
-				return nullptr;
-			}
-			const IAnimationDataModel* SourceModel = Source->GetDataModel();
-			if (SourceModel == nullptr)
-			{
-				return nullptr;
-			}
-			Sequence = NewObject<UAnimSequence>(CreatePackage(*PackageName), TEXT("AS_Golem_Traversal"),
-				RF_Public | RF_Standalone);
-			if (Sequence == nullptr || Sequence->GetDataModel() == nullptr)
-			{
-				return nullptr;
-			}
-			{
-				IAnimationDataController& Controller = Sequence->GetController();
-				IAnimationDataController::FScopedBracket Bracket(Controller,
-					NSLOCTEXT("GolemCombatAuthoring", "RootTrajectory", "Author Golem traversal root motion"), false);
-				Sequence->SetSkeleton(Source->GetSkeleton());
-				Sequence->BoneCompressionSettings = Source->BoneCompressionSettings;
-				Sequence->CurveCompressionSettings = Source->CurveCompressionSettings;
-				// Copy the real pose, tracks, curves and attributes, without unrelated FBX reimport metadata.
-				// Full UObject duplication broadcasts model population before import-data PostLoad completes.
-				Controller.PopulateWithExistingModel(Source->GetDataModelInterface());
-				const IAnimationDataModel* Model = Sequence->GetDataModel();
-				if (Model->GetNumberOfKeys() != SourceModel->GetNumberOfKeys()
-					|| Model->GetNumBoneTracks() != SourceModel->GetNumBoneTracks())
-				{
-					UE_LOG(LogGolemCombatAuthoring, Error, TEXT("Traversal pose copy lost source keys or bone tracks."));
-					return nullptr;
-				}
-				if (!AuthorTraversalRootTrajectory(Sequence))
-				{
-					return nullptr;
-				}
-			}
-			UE_LOG(LogGolemCombatAuthoring, Display,
-				TEXT("Traversal copied real animation model from %s: %d keys, %d bone tracks."),
-				*Source->GetPathName(), Sequence->GetDataModel()->GetNumberOfKeys(),
-				Sequence->GetDataModel()->GetNumBoneTracks());
-			Sequence->PostEditChange();
-			FAssetRegistryModule::AssetCreated(Sequence);
-			FAssetCompilingManager::Get().FinishAllCompilation();
-		}
-		return ValidateTraversalSequence(Sequence) && SaveAsset(Sequence) ? Sequence : nullptr;
-	}
-
 	void AddNotifyWindow(UAnimMontage* Montage, UAnimNotifyState* State, const FName Name,
 		const float StartTime, const float Duration, const int32 TrackIndex)
 	{
@@ -626,7 +472,7 @@ namespace GolemCombatAssetAuthoring
 	}
 
 	bool ValidateMontageWindows(UAnimMontage* Montage, const TArray<FName>& Sections,
-		const bool bAttack, const bool bCombo, const bool bTraversal)
+		const bool bAttack, const bool bCombo)
 	{
 		for (const FName Section : Sections)
 		{
@@ -642,7 +488,6 @@ namespace GolemCombatAssetAuthoring
 			Montage->GetSectionStartAndEndTime(SectionIndex, SectionStart, SectionEnd);
 			bool bHasTrace = !bAttack;
 			bool bHasCombo = !bCombo;
-			bool bHasWarp = !bTraversal;
 			for (const FAnimNotifyEvent& Notify : Montage->Notifies)
 			{
 				if (!FMath::IsFinite(Notify.GetTime()) || !FMath::IsFinite(Notify.GetDuration())
@@ -664,19 +509,12 @@ namespace GolemCombatAssetAuthoring
 					bHasTrace |= Trace->WindowId == Section;
 				}
 				bHasCombo |= Notify.NotifyStateClass->IsA<UGolemAnimNotifyState_ComboWindow>();
-				if (const UAnimNotifyState_MotionWarping* WarpNotify =
-					Cast<UAnimNotifyState_MotionWarping>(Notify.NotifyStateClass))
-				{
-					const URootMotionModifier_SkewWarp* Warp = Cast<URootMotionModifier_SkewWarp>(WarpNotify->RootMotionModifier);
-					bHasWarp |= Warp != nullptr && Warp->WarpTargetName == FName(TEXT("GolemTraversal"))
-						&& Warp->bWarpTranslation && Warp->bWarpRotation && !Warp->bWarpToFeetLocation && !Warp->bIgnoreZAxis;
-				}
 			}
-			if (!bHasTrace || !bHasCombo || !bHasWarp)
+			if (!bHasTrace || !bHasCombo)
 			{
 				UE_LOG(LogGolemCombatAuthoring, Error,
-					TEXT("Owned montage section %s lacks its native windows: trace=%d combo=%d warp=%d, %s."),
-					*Section.ToString(), bHasTrace, bHasCombo, bHasWarp, *Montage->GetPathName());
+					TEXT("Owned montage section %s lacks its native windows: trace=%d combo=%d, %s."),
+					*Section.ToString(), bHasTrace, bHasCombo, *Montage->GetPathName());
 				return false;
 			}
 		}
@@ -684,8 +522,7 @@ namespace GolemCombatAssetAuthoring
 	}
 
 	UAnimMontage* CreateMontage(const TCHAR* AssetName, const TArray<UAnimSequence*>& Sequences,
-		const TArray<FName>& Sections, const bool bAttack = false, const bool bCombo = false,
-		const bool bTraversal = false, const float MinimumSegmentDuration = 0.0f)
+		const TArray<FName>& Sections, const bool bAttack = false, const bool bCombo = false)
 	{
 		bool bCreated = false;
 		UAnimMontage* Montage = FindOrCreateAsset<UAnimMontage>(AnimationRoot + AssetName, bCreated);
@@ -716,8 +553,7 @@ namespace GolemCombatAssetAuthoring
 				Segment.StartPos = StartTime;
 				Segment.AnimStartTime = 0.0f;
 				Segment.AnimEndTime = Sequence->GetPlayLength();
-				Segment.AnimPlayRate = Sequence->GetPlayLength()
-					/ FMath::Max(Sequence->GetPlayLength(), MinimumSegmentDuration);
+				Segment.AnimPlayRate = 1.0f;
 				Segment.LoopingCount = 1;
 				StartTime += Segment.GetLength();
 			}
@@ -745,27 +581,6 @@ namespace GolemCombatAssetAuthoring
 			{
 				Section.NextSectionName = NAME_None;
 			}
-			if (bTraversal)
-			{
-				UAnimNotifyState_MotionWarping* Notify = NewObject<UAnimNotifyState_MotionWarping>(Montage);
-				URootMotionModifier_SkewWarp* Warp = NewObject<URootMotionModifier_SkewWarp>(Notify);
-				Warp->WarpTargetName = TEXT("GolemTraversal");
-				Warp->bWarpTranslation = true;
-				Warp->bWarpToFeetLocation = false;
-				Warp->bIgnoreZAxis = false;
-				Warp->bWarpRotation = true;
-				Notify->RootMotionModifier = Warp;
-				AddNotifyWindow(Montage, Notify, TEXT("GolemTraversalWarp"), 0.0f, StartTime - 0.01f, 0);
-			}
-		}
-		if (bTraversal && Montage->BlendOutTriggerTime != 0.0f)
-		{
-			// A negative trigger blends before the end and attenuates the final active warp/root-motion samples.
-			Montage->BlendOutTriggerTime = 0.0f;
-			Montage->MarkPackageDirty();
-			Montage->PostEditChange();
-			UE_LOG(LogGolemCombatAuthoring, Display, TEXT("Repaired owned traversal blend-out trigger to montage end: %s."),
-				*Montage->GetPathName());
 		}
 		if (!RepairAndValidateNotifyTracks(Montage))
 		{
@@ -783,19 +598,14 @@ namespace GolemCombatAssetAuthoring
 		}
 		for (const FAnimSegment& Segment : Montage->SlotAnimTracks[0].AnimTrack.AnimSegments)
 		{
-			if (!FMath::IsFinite(Segment.GetLength()) || Segment.GetLength() <= 0.0f
-				|| Segment.GetLength() + UE_KINDA_SMALL_NUMBER < MinimumSegmentDuration)
+			if (!FMath::IsFinite(Segment.GetLength()) || Segment.GetLength() <= 0.0f)
 			{
 				UE_LOG(LogGolemCombatAuthoring, Error, TEXT("Owned montage has an invalid segment duration: %s."),
 					*Montage->GetPathName());
 				return nullptr;
 			}
 		}
-		if (!ValidateMontageWindows(Montage, Sections, bAttack, bCombo, bTraversal))
-		{
-			return nullptr;
-		}
-		if (bTraversal && (Montage->BlendOutTriggerTime != 0.0f || !ValidateTraversalSequence(Sequences[0])))
+		if (!ValidateMontageWindows(Montage, Sections, bAttack, bCombo))
 		{
 			return nullptr;
 		}
@@ -822,19 +632,13 @@ namespace GolemCombatAssetAuthoring
 				{ UGolemLightAttackAbility::StaticClass(), GolemGameplayTags::Input_Combat_Primary, 1 },
 				{ UGolemHeavyAttackAbility::StaticClass(), GolemGameplayTags::Input_Combat_Heavy, 1 },
 				{ UGolemClassMoveAbility::StaticClass(), GolemGameplayTags::Input_Combat_Block, 1 },
-				{ UGolemParryAbility::StaticClass(), GolemGameplayTags::Input_Combat_Parry, 1 },
-				{ UGolemDodgeAbility::StaticClass(), GolemGameplayTags::Input_Combat_Dodge, 1 },
-				{ UGolemLockTargetAbility::StaticClass(), GolemGameplayTags::Input_Combat_LockOn, 1 },
-				{ UGolemFinisherAbility::StaticClass(), GolemGameplayTags::Input_Combat_Finisher, 1 },
-				{ UGolemTraversalAbility::StaticClass(), GolemGameplayTags::Input_World_Traverse, 1 }
+				{ UGolemDodgeAbility::StaticClass(), GolemGameplayTags::Input_Combat_Dodge, 1 }
 			};
 			TArray<FGolemTagRelationship> Relationships;
 			const TArray<FGameplayTag> ActionTags =
 			{
 				GolemGameplayTags::Ability_Combat_Primary, GolemGameplayTags::Ability_Combat_Heavy,
-				GolemGameplayTags::Ability_Combat_Block, GolemGameplayTags::Ability_Combat_Parry,
-				GolemGameplayTags::Ability_Combat_Dodge,
-				GolemGameplayTags::Ability_Combat_Finisher, GolemGameplayTags::Ability_World_Traverse
+				GolemGameplayTags::Ability_Combat_Block, GolemGameplayTags::Ability_Combat_Dodge
 			};
 			for (const FGameplayTag Action : ActionTags)
 			{
@@ -844,21 +648,17 @@ namespace GolemCombatAssetAuthoring
 				Relationship.ActivationBlockedTags.AddTag(GolemGameplayTags::State_Life_Downed);
 				Relationship.ActivationBlockedTags.AddTag(GolemGameplayTags::State_Life_Dead);
 				Relationship.ActivationBlockedTags.AddTag(GolemGameplayTags::State_Combat_Staggered);
-				Relationship.ActivationBlockedTags.AddTag(GolemGameplayTags::State_Combat_Finishing);
-				Relationship.ActivationBlockedTags.AddTag(GolemGameplayTags::State_Combat_Traversing);
 				if (Action == GolemGameplayTags::Ability_Combat_Dodge)
 				{
 					Relationship.AbilityTagsToCancel.AddTag(GolemGameplayTags::Ability_Combat_Primary);
 					Relationship.AbilityTagsToCancel.AddTag(GolemGameplayTags::Ability_Combat_Heavy);
 					Relationship.AbilityTagsToCancel.AddTag(GolemGameplayTags::Ability_Combat_Block);
-					Relationship.AbilityTagsToCancel.AddTag(GolemGameplayTags::Ability_Combat_Parry);
 					Relationship.ActivationBlockedTags.AddTag(GolemGameplayTags::State_Combat_Dodging);
 				}
 				else
 				{
 					Relationship.ActivationBlockedTags.AddTag(GolemGameplayTags::State_Combat_Attacking);
 					Relationship.ActivationBlockedTags.AddTag(GolemGameplayTags::State_Combat_Blocking);
-					Relationship.ActivationBlockedTags.AddTag(GolemGameplayTags::State_Combat_Parrying);
 					Relationship.ActivationBlockedTags.AddTag(GolemGameplayTags::State_Combat_Dodging);
 				}
 			}
@@ -882,24 +682,14 @@ namespace GolemCombatAssetAuthoring
 		UAnimSequence* AttackB = LoadSequence(TEXT("Anims/Unarmed/Attack/MM_Attack_02"));
 		UAnimSequence* AttackC = LoadSequence(TEXT("Anims/Unarmed/Attack/MM_Attack_03"));
 		UAnimSequence* HeavySequence = LoadSequence(TEXT("Anims/Unarmed/Attack/MM_ChargedAttack"));
-		UAnimSequence* TraversalSequence = CreateTraversalSequence();
 		UAnimMontage* Light = CreateMontage(TEXT("AM_Golem_Light"), { AttackA, AttackB, AttackC },
 			{ TEXT("LightA"), TEXT("LightB"), TEXT("LightC") }, true, true);
 		UAnimMontage* Heavy = CreateMontage(TEXT("AM_Golem_Heavy"), { HeavySequence }, { TEXT("Heavy") }, true);
 		UAnimMontage* Dodge = CreateMontage(TEXT("AM_Golem_Dodge"),
 			{ LoadSequence(TEXT("Anims/Unarmed/Jump/MM_Dash")) }, { TEXT("Dodge") });
-		UAnimMontage* Stagger = CreateMontage(TEXT("AM_Golem_Stagger"),
-			{ LoadSequence(TEXT("Anims/Rifle/HitReact/MM_HitReact_Front_Hvy_01")) }, { TEXT("Stagger") });
-		UAnimMontage* Traversal = CreateMontage(TEXT("AM_Golem_Traversal"),
-			{ TraversalSequence }, { TEXT("Traversal") }, false, false, true);
-		UAnimMontage* Finisher = CreateMontage(TEXT("AM_Golem_Finisher"), { HeavySequence },
-			{ TEXT("Finisher") }, false, false, false, 3.0f);
-		UAnimMontage* Victim = CreateMontage(TEXT("AM_Golem_FinisherVictim"),
-			{ LoadSequence(TEXT("Anims/Death/MM_Death_Front_01")) }, { TEXT("Victim") }, false, false, false, 3.0f);
 		USkeletalMesh* Mesh = LoadObject<USkeletalMesh>(nullptr,
 			TEXT("/Game/Golem/Vendor/UE58/Mannequins/Meshes/SKM_Manny_Simple.SKM_Manny_Simple"));
-		if (Light == nullptr || Heavy == nullptr || Dodge == nullptr || Stagger == nullptr
-			|| Traversal == nullptr || Finisher == nullptr || Victim == nullptr || Mesh == nullptr)
+		if (Light == nullptr || Heavy == nullptr || Dodge == nullptr || Mesh == nullptr)
 		{
 			UE_LOG(LogGolemCombatAuthoring, Error, TEXT("Combat montage authoring failed; no profile will be saved."));
 			return false;
@@ -939,16 +729,14 @@ namespace GolemCombatAssetAuthoring
 			HeavyAttack.Montage = Heavy;
 			HeavyAttack.SectionName = TEXT("Heavy");
 			HeavyAttack.PowerScale = 2.5f;
-			HeavyAttack.PoiseDamage = 50.0f;
 			HeavyAttack.bAppliesColor = true;
 			FGolemCombatTuning Tuning;
-			Tuning.StaggerDuration = 5.0f;
 			// Dodge: 0.35 s without damage, 1.5 s recovery at Agility 100.
 			Tuning.DodgeInvulnerabilityStart = 0.05f;
 			Tuning.DodgeInvulnerabilityEnd = 0.4f;
 			Tuning.DodgeCooldownSeconds = 1.5f;
 			if (!Profile->TrySetAttacks(Attacks).IsSuccess()
-				|| !Profile->TrySetActionMontages(Dodge, Stagger, Traversal, Finisher, Victim).IsSuccess()
+				|| !Profile->TrySetDodgeMontage(Dodge).IsSuccess()
 				|| !Profile->TrySetTuning(Tuning).IsSuccess())
 			{
 				return false;

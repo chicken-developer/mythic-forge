@@ -8,7 +8,7 @@ public class GolemCombat : ModuleRules
 		PublicDependencyModuleNames.AddRange(new string[]
 		{
 			"Core", "CoreUObject", "Engine", "GolemCore", "GolemAbilitySystem", "GameplayAbilities",
-			"GameplayTags", "GameplayTasks", "MotionWarping"
+			"GameplayTags", "GameplayTasks"
 		});
 		PrivateDependencyModuleNames.AddRange(new string[] { "AnimGraphRuntime", "NavigationSystem", "AIModule" });
 	}

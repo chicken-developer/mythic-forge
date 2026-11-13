@@ -19,6 +19,5 @@ class GOLEMABILITYSYSTEM_API IGolemDamageResponse
 
 public:
 	/** Called once by the real GAS execution after defense capture, before health mutation. */
-	virtual void ResolveIncomingDamage(AActor* Source, float InDamage, float PoiseDamage,
-		bool bCanDefend, float& OutHealthDamage) = 0;
+	virtual void ResolveIncomingDamage(AActor* Source, float InDamage, bool bCanDefend, float& OutHealthDamage) = 0;
 };

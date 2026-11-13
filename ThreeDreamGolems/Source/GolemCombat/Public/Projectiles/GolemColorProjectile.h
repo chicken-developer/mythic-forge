@@ -27,8 +27,6 @@ struct GOLEMCOMBAT_API FGolemProjectileShot
 	/** Damage on a body hit, before the target's own reduction (a Xenon's grey body takes 10%). */
 	float Damage = 0.0f;
 
-	float PoiseDamage = 0.0f;
-
 	/** Ability the outcome is reported under. */
 	FGameplayTag ActionTag;
 

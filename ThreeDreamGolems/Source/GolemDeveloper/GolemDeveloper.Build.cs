@@ -11,7 +11,7 @@ public class GolemDeveloper : ModuleRules
 			"ThreeDreamGolems", "GolemCore", "GolemFramework", "GolemAI", "UnrealEd", "AssetRegistry",
 			"StateTreeModule", "StateTreeEditorModule", "GameplayStateTreeModule", "NavigationSystem",
 			"PropertyBindingUtils", "AIModule", "EnhancedInput", "InputCore", "GameplayTags", "Sockets", "ApplicationCore",
-			"GolemAbilitySystem", "GameplayAbilities", "GameplayTasks", "GolemCombat", "MotionWarping",
+			"GolemAbilitySystem", "GameplayAbilities", "GameplayTasks", "GolemCombat",
 			"AnimationDataController", "AnimGraphRuntime", "AssetTools", "LevelSequence", "AIGraph",
 			"EnvironmentQueryEditor", "GolemItems", "GolemUI", "UMG", "CommonUI", "Slate", "SlateCore", "Json",
 			"RenderCore", "RHI", "GolemQuest", "GolemDialogue", "GolemWorld", "GolemSave"

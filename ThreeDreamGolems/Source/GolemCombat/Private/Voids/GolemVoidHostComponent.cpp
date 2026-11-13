@@ -346,8 +346,8 @@ void UGolemVoidHostComponent::Restore(AActor* InstigatorActor)
 	OnRestored.Broadcast(InstigatorActor);
 }
 
-void UGolemVoidHostComponent::ResolveIncomingDamage(AActor* Source, const float InDamage, const float PoiseDamage,
-	const bool bCanDefend, float& OutHealthDamage)
+void UGolemVoidHostComponent::ResolveIncomingDamage(AActor* Source, const float InDamage, const bool bCanDefend,
+	float& OutHealthDamage)
 {
 	OutHealthDamage = !bInitialized ? InDamage : (bRestored ? 0.0f : InDamage * Tuning.GrayBodyDamageFraction);
 }

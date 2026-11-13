@@ -13,11 +13,40 @@
 
 #include "Engine/LocalPlayer.h"
 #include "Engine/World.h"
+#include "EngineUtils.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputAction.h"
 #include "InputCoreTypes.h"
 #include "InputMappingContext.h"
+
+namespace
+{
+	/** Focus reaches further than an attack does: the companions walk to the enemy that was pointed out. */
+	constexpr float GolemArenaFocusRange = 2200.0f;
+
+	/**
+	 * The living enemy of Source that carries this stable id, or nullptr: an id that names a friend or
+	 * nobody is not a focus target. The caller still validates range and line of sight.
+	 */
+	AActor* GolemArenaFindFocusEnemy(const AActor* Source, const FGolemEntityId& FocusId)
+	{
+		const UWorld* World = Source != nullptr ? Source->GetWorld() : nullptr;
+		if (World == nullptr || !FocusId.IsValid())
+		{
+			return nullptr;
+		}
+		for (TActorIterator<AActor> It(World); It; ++It)
+		{
+			const UGolemAbilitySystemComponent* CandidateASC = It->FindComponentByClass<UGolemAbilitySystemComponent>();
+			if (CandidateASC != nullptr && CandidateASC->GetEntityId() == FocusId)
+			{
+				return UGolemCombatComponent::AreHostile(Source, *It) ? *It : nullptr;
+			}
+		}
+		return nullptr;
+	}
+}
 
 void AGolemArenaPlayerController::SetPlayer(UPlayer* InPlayer)
 {
@@ -175,7 +204,8 @@ void AGolemArenaPlayerController::RequestCompanionCommand(const EGolemCompanionC
 	FGolemEntityId FocusId;
 	if (Golem != nullptr && Command == EGolemCompanionCommand::Focus)
 	{
-		AActor* Target = Golem->GetCombatComponent()->GetLockedTarget();
+		// Focus points the companions at the nearest enemy this Golem can see.
+		AActor* Target = Golem->GetCombatComponent()->FindCombatTarget(GolemArenaFocusRange);
 		UGolemAbilitySystemComponent* TargetASC = Target != nullptr
 			? Target->FindComponentByClass<UGolemAbilitySystemComponent>() : nullptr;
 		if (TargetASC != nullptr)
@@ -211,15 +241,13 @@ FGolemResult AGolemArenaPlayerController::ApplyCompanionCommand(const EGolemComp
 	AActor* Focus = nullptr;
 	if (Command == EGolemCompanionCommand::Focus)
 	{
-		Focus = Golem->GetCombatComponent()->GetLockedTarget();
-		UGolemAbilitySystemComponent* FocusASC = Focus != nullptr
-			? Focus->FindComponentByClass<UGolemAbilitySystemComponent>() : nullptr;
-		if (!FocusId.IsValid() || FocusASC == nullptr || !(FocusASC->GetEntityId() == FocusId))
+		Focus = GolemArenaFindFocusEnemy(Golem, FocusId);
+		if (Focus == nullptr)
 		{
 			return FGolemResult::Failure(EGolemError::InvalidId, TEXT("CompanionFocus"),
-				NSLOCTEXT("GolemArena", "FocusLock", "Lock a living enemy with MMB before issuing Focus."));
+				NSLOCTEXT("GolemArena", "FocusTarget", "Focus needs a living enemy in sight."));
 		}
-		const FGolemResult Target = Golem->GetCombatComponent()->ValidateCombatTarget(Focus, 2200.0f);
+		const FGolemResult Target = Golem->GetCombatComponent()->ValidateCombatTarget(Focus, GolemArenaFocusRange);
 		if (!Target.IsSuccess())
 		{
 			return Target;

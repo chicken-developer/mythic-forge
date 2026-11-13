@@ -472,11 +472,8 @@ namespace GolemAIAssetAuthoring
 		Entry.RequiredStateTags.AddTag(GolemGameplayTags::State_Life_Alive);
 		Entry.BlockedStateTags.AddTag(GolemGameplayTags::State_Combat_Attacking);
 		Entry.BlockedStateTags.AddTag(GolemGameplayTags::State_Combat_Blocking);
-		Entry.BlockedStateTags.AddTag(GolemGameplayTags::State_Combat_Parrying);
 		Entry.BlockedStateTags.AddTag(GolemGameplayTags::State_Combat_Dodging);
 		Entry.BlockedStateTags.AddTag(GolemGameplayTags::State_Combat_Staggered);
-		Entry.BlockedStateTags.AddTag(GolemGameplayTags::State_Combat_Finishing);
-		Entry.BlockedStateTags.AddTag(GolemGameplayTags::State_Combat_Traversing);
 		Entry.BlockedStateTags.AddTag(GolemGameplayTags::State_Life_Reviving);
 		return Entry;
 	}
@@ -741,7 +738,8 @@ namespace GolemAIAssetAuthoring
 			&& CreateActionSet(TEXT("ArenaBossPhaseTwo"), true, 0.55f)
 			&& CreateArchetype(TEXT("ArenaCompanion"), TEXT("ArenaCompanion"), Companion, Query, 100.0f, 25.0f)
 			&& CreateArchetype(TEXT("ArenaEnemy"), TEXT("ArenaEnemy"), Enemy, Query, 90.0f, 8.0f)
-			&& CreateArchetype(TEXT("ArenaBoss"), TEXT("ArenaBossPhaseOne"), Boss, Query, 220.0f, 10.0f)
+			// The old arena boss hits lightly: nothing staggers it any more, so it attacks without a pause.
+			&& CreateArchetype(TEXT("ArenaBoss"), TEXT("ArenaBossPhaseOne"), Boss, Query, 220.0f, 4.0f)
 			&& CreateBossPhases()
 			&& CreateLifecycleTestActionSet()
 			&& CreateLifecycleTree(TEXT("/Game/Golem/AI/Tests/ST_Golem_LifecyclePulse"), false, false)

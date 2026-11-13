@@ -23,13 +23,11 @@ enum class EGolemCombatOutcome : uint8
 	HeavyHit,
 	Combo,
 	Blocked,
-	Parried,
-	Dodged,
-	TargetLocked,
-	Staggered,
-	Finisher,
-	Traversal
+	Dodged
 };
+
+/** Number of EGolemCombatOutcome values; the snapshot keeps one counter per outcome. */
+constexpr int32 GolemCombatOutcomeCount = static_cast<int32>(EGolemCombatOutcome::Dodged) + 1;
 
 USTRUCT(BlueprintType)
 struct GOLEMCOMBAT_API FGolemCombatOutcome : public FGolemConfirmedEvent
@@ -50,11 +48,10 @@ struct GOLEMCOMBAT_API FGolemCombatSnapshot
 {
 	GENERATED_BODY()
 	UPROPERTY(BlueprintReadOnly, Category = "Golem|Combat")
-	float Poise = 0.0f;
-	UPROPERTY(BlueprintReadOnly, Category = "Golem|Combat")
 	int32 ComboIndex = 0;
+	/** Who this Golem turns towards when it attacks. Only AI sets it; a player's Golem attacks the way it faces. */
 	UPROPERTY(BlueprintReadOnly, Category = "Golem|Combat")
-	TObjectPtr<AActor> LockedTarget;
+	TObjectPtr<AActor> AttackTarget;
 	UPROPERTY(BlueprintReadOnly, Category = "Golem|Combat")
 	bool bAttacking = false;
 	/** Authoritative montage notify phase: 0 idle, 1 windup, 2 active trace, 3 recovery. */
@@ -63,11 +60,7 @@ struct GOLEMCOMBAT_API FGolemCombatSnapshot
 	UPROPERTY(BlueprintReadOnly, Category = "Golem|Combat")
 	bool bBlocking = false;
 	UPROPERTY(BlueprintReadOnly, Category = "Golem|Combat")
-	bool bParrying = false;
-	UPROPERTY(BlueprintReadOnly, Category = "Golem|Combat")
 	bool bDodging = false;
-	UPROPERTY(BlueprintReadOnly, Category = "Golem|Combat")
-	bool bStaggered = false;
 	UPROPERTY(BlueprintReadOnly, Category = "Golem|Combat")
 	TArray<int32> OutcomeCounts;
 	UPROPERTY(BlueprintReadOnly, Category = "Golem|Combat")
@@ -141,8 +134,6 @@ public:
 	void TickTraceWindow(FName WindowId, UAnimSequenceBase* Animation);
 	void EndTraceWindow(FName WindowId, UAnimSequenceBase* Animation);
 	void SetComboWindow(bool bOpen, UAnimSequenceBase* Animation);
-	FGolemResult BeginDefense(FGameplayTag ActionTag);
-	void EndDefense(FGameplayTag ActionTag);
 	FGolemResult BeginDodge();
 
 	/**
@@ -160,18 +151,13 @@ public:
 	/** The next dodge goes this way instead of along the movement input. AI uses it to dodge away from a threat. */
 	void SetNextDodgeDirection(const FVector& Direction);
 	void EndDodge();
-	AActor* FindCombatTarget(float Range = 1200.0f, bool bRequireStagger = false) const;
+	AActor* FindCombatTarget(float Range = 1200.0f) const;
 	FGolemResult ValidateCombatTarget(AActor* Target, float Range) const;
 	FGolemResult SetValidatedTarget(AActor* Target);
-	FGolemResult TryToggleTargetLock(AActor* Target = nullptr);
-	AActor* GetLockedTarget() const;
+	AActor* GetAttackTarget() const;
 	void PublishOutcome(EGolemCombatOutcome Outcome, FGameplayTag ActionTag,
 		AActor* Target = nullptr, float Amount = 0.0f);
-	virtual void ResolveIncomingDamage(AActor* Source, float InDamage, float PoiseDamage,
-		bool bCanDefend, float& OutHealthDamage) override;
-	float GetMaxPoise() const;
-	/** Restores a validated in-memory pool after the owning build projection has committed. */
-	FGolemResult RestoreSnapshotPoise(float InPoise);
+	virtual void ResolveIncomingDamage(AActor* Source, float InDamage, bool bCanDefend, float& OutHealthDamage) override;
 	FOnGolemCombatSnapshotChanged OnCombatSnapshotChanged;
 	FOnGolemCombatOutcome OnCombatOutcome;
 	FOnGolemCombatProfileChanged OnProfileChanged;
@@ -201,14 +187,11 @@ private:
 	void EndTraceGeometryDiagnostics(FName Reason);
 	bool IsTraceCapabilityCurrent(uint64 Generation, FName WindowId,
 		const TWeakObjectPtr<UGolemGameplayAbility>& Ability, int32 Index) const;
-	void EnterStagger(AActor* Source);
-	void EndStagger();
 	void HandleLifeTagChanged(const FGameplayTag Tag, int32 Count);
-	void UpdateLockCamera();
 	bool IsAuthorityAlive() const;
 	bool IsColorHitAllowed(const UGolemColorVoidComponent* Void) const;
 	bool PlaceColor(UGolemColorVoidComponent* Void);
-	void FireProjectile(float PowerScale, float PoiseDamage, bool bAppliesColor, FGameplayTag ActionTag);
+	void FireProjectile(float PowerScale, bool bAppliesColor, FGameplayTag ActionTag);
 	const FGolemAttackDefinition* GetCurrentAttack() const;
 	UPROPERTY(ReplicatedUsing = OnRep_ProfileId)
 	FPrimaryAssetId ProfileId;
@@ -246,12 +229,9 @@ private:
 	EGolemClassMove ActiveClassMove = EGolemClassMove::Guard;
 	bool bProjectileFired = false;
 	float DodgeStartedAt = 0.0f;
-	float ParryStartedAt = 0.0f;
-	float LockValidationElapsed = 0.0f;
+	float TargetValidationElapsed = 0.0f;
 	FDelegateHandle DownedTagHandle;
 	FDelegateHandle DeadTagHandle;
-	FTimerHandle StaggerTimer;
-	FGuid LockCameraHandle;
 	FGuid AttackActivationId;
 	int32 WindowHitIndex = 0;
 	struct FTraceGeometryDiagnostics

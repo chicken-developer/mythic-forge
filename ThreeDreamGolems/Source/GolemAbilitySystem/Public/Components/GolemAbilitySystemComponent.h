@@ -76,7 +76,7 @@ public:
 	FGolemResult RequestAbilityInput(const FGameplayTag& InputTag, bool bPressed, AActor* Target = nullptr);
 	AActor* FindAbilityTarget(const FGameplayTag& InputTag) const;
 	static FGolemResult ApplyDamage(AActor* Source, AActor* Target, float Amount);
-	static FGolemResult ApplyCombatDamage(AActor* Source, AActor* Target, float Amount, float PoiseDamage,
+	static FGolemResult ApplyCombatDamage(AActor* Source, AActor* Target, float Amount,
 		bool bCanDefend = true, const FHitResult* Hit = nullptr);
 	FGolemResult ResetAttributesForCheckpoint();
 	float GetInitialPower() const;

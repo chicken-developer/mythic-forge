@@ -306,7 +306,7 @@ bool FGolemVoidHostSequenceTest::RunTest(const FString& Parameters)
 	TestEqual(TEXT("It asks for the first colour of the plan"), First->GetRequiredMask(), Red);
 
 	TestTrue(TEXT("A normal hit lands on the grey body"), UGolemAbilitySystemComponent::ApplyCombatDamage(
-		Golem.Actor.Get(), Xenon.Actor.Get(), 50.0f, 0.0f, true).IsSuccess());
+		Golem.Actor.Get(), Xenon.Actor.Get(), 50.0f, true).IsSuccess());
 	TestEqual(TEXT("Grey body takes ten percent"), Xenon.Attributes->GetHealth(), 295.0f);
 
 	Xenon.Host->AdvanceTo(1.0);
@@ -413,11 +413,11 @@ bool FGolemVoidHostGrayBodyTest::RunTest(const FString& Parameters)
 	TestTrue(TEXT("Host initializes"), Init.IsSuccess());
 	for (int32 Hit = 0; Hit < 2; ++Hit)
 	{
-		UGolemAbilitySystemComponent::ApplyCombatDamage(Golem.Actor.Get(), Xenon.Actor.Get(), 100.0f, 0.0f, true);
+		UGolemAbilitySystemComponent::ApplyCombatDamage(Golem.Actor.Get(), Xenon.Actor.Get(), 100.0f, true);
 	}
 	TestEqual(TEXT("Two body hits of 100 remove 20"), Xenon.Attributes->GetHealth(), 10.0f);
 	TestFalse(TEXT("Not restored while health remains"), Xenon.Host->IsRestored());
-	UGolemAbilitySystemComponent::ApplyCombatDamage(Golem.Actor.Get(), Xenon.Actor.Get(), 100.0f, 0.0f, true);
+	UGolemAbilitySystemComponent::ApplyCombatDamage(Golem.Actor.Get(), Xenon.Actor.Get(), 100.0f, true);
 	TestEqual(TEXT("Third body hit empties health"), Xenon.Attributes->GetHealth(), 0.0f);
 	TestTrue(TEXT("Body damage alone restores the Xenon, slowly"), Xenon.Host->IsRestored());
 	TestEqual(TEXT("No void remains"), Xenon.Host->GetOpenVoids().Num(), 0);
@@ -746,7 +746,7 @@ bool FGolemXenonBrainTest::RunTest(const FString& Parameters)
 	Brain->Step(0.1f, 20.0);
 	TestEqual(TEXT("A disabled brain idles"), Brain->GetAction(), EGolemXenonAction::Idle);
 	Brain->SetBrainEnabled(true);
-	UGolemAbilitySystemComponent::ApplyCombatDamage(Front.Actor.Get(), Xenon, 100000.0f, 0.0f, true);
+	UGolemAbilitySystemComponent::ApplyCombatDamage(Front.Actor.Get(), Xenon, 100000.0f, true);
 	TestTrue(TEXT("Enough body damage restores the Xenon"), Xenon->IsRestored());
 	Brain->Step(0.1f, 30.0);
 	TestEqual(TEXT("A restored Xenon no longer fights"), Brain->GetAction(), EGolemXenonAction::Restored);

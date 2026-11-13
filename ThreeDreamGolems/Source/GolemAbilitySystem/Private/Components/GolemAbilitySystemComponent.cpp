@@ -525,15 +525,14 @@ AActor* UGolemAbilitySystemComponent::FindAbilityTarget(const FGameplayTag& Inpu
 
 FGolemResult UGolemAbilitySystemComponent::ApplyDamage(AActor* Source, AActor* Target, float Amount)
 {
-	return ApplyCombatDamage(Source, Target, Amount, 0.0f, false);
+	return ApplyCombatDamage(Source, Target, Amount, false);
 }
 
 FGolemResult UGolemAbilitySystemComponent::ApplyCombatDamage(AActor* Source, AActor* Target,
-	float Amount, float PoiseDamage, bool bCanDefend, const FHitResult* Hit)
+	float Amount, bool bCanDefend, const FHitResult* Hit)
 {
 	if (!IsValid(Source) || !IsValid(Target) || Source->GetWorld() != Target->GetWorld() ||
 		!FMath::IsFinite(Amount) || Amount <= 0.0f || Amount > 1000000.0f ||
-		!FMath::IsFinite(PoiseDamage) || PoiseDamage < 0.0f || PoiseDamage > 1000000.0f ||
 		(Hit != nullptr && Hit->GetActor() != Target))
 	{
 		return GolemGASFailure(EGolemError::InvalidData, TEXT("DamageRequest"));
@@ -562,7 +561,6 @@ FGolemResult UGolemAbilitySystemComponent::ApplyCombatDamage(AActor* Source, AAc
 		return GolemGASFailure(EGolemError::InvalidState, TEXT("DamageSpec"));
 	}
 	Spec.Data->SetSetByCallerMagnitude(GolemGameplayTags::Data_Damage, Amount);
-	Spec.Data->SetSetByCallerMagnitude(GolemGameplayTags::Data_DamagePoise, PoiseDamage);
 	Spec.Data->SetSetByCallerMagnitude(GolemGameplayTags::Data_DamageCanDefend, bCanDefend ? 1.0f : 0.0f);
 	return SourceASC->ApplyGameplayEffectSpecToTarget(*Spec.Data.Get(), TargetASC).WasSuccessfullyApplied()
 		? FGolemResult::Success() : GolemGASFailure(EGolemError::InvalidState, TEXT("DamageEffectRejected"));
@@ -620,8 +618,7 @@ void UGolemAbilitySystemComponent::RegisterNativeGameplayCues()
 	}
 	TArray<FGameplayCueReferencePair> Cues;
 	for (const FGameplayTag Tag : {FGameplayTag(GolemGameplayTags::GameplayCue_Damage),
-		FGameplayTag(GolemGameplayTags::GameplayCue_Downed), FGameplayTag(GolemGameplayTags::GameplayCue_Revive),
-		FGameplayTag(GolemGameplayTags::GameplayCue_Parry), FGameplayTag(GolemGameplayTags::GameplayCue_Stagger)})
+		FGameplayTag(GolemGameplayTags::GameplayCue_Downed), FGameplayTag(GolemGameplayTags::GameplayCue_Revive)})
 	{
 		if (!Set->GameplayCueDataMap.Contains(Tag))
 		{
