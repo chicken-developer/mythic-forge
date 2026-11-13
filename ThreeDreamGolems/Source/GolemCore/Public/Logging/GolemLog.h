@@ -1,0 +1,7 @@
+#pragma once
+
+#include "CoreMinimal.h"
+
+GOLEMCORE_API DECLARE_LOG_CATEGORY_EXTERN(LogGolemCore, Log, All);
+GOLEMCORE_API DECLARE_LOG_CATEGORY_EXTERN(LogGolemAssets, Log, All);
+GOLEMCORE_API DECLARE_LOG_CATEGORY_EXTERN(LogGolemEvents, Log, All);

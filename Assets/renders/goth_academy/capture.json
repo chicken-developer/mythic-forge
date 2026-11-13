@@ -1,0 +1,20 @@
+{
+ "hip": "E:/Repos/mythic-forge/Assets/hip/goth_academy.hip",
+ "asset": "goth_academy",
+ "views": {
+  "persp": true,
+  "front": true,
+  "side": true,
+  "persp_low": true,
+  "cutaway": true
+ },
+ "time": "2026-11-08 22:09:39",
+ "points": 71888,
+ "prims": 61884,
+ "size": [
+  33.70000076293945,
+  28.650000005960464,
+  18.550000190734863
+ ],
+ "preview_quality": 1
+}

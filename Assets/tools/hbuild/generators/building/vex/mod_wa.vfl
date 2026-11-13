@@ -1,0 +1,36 @@
+// MOD_WA: arched window bay (nominal height = floor_h). Same opening width / sill as W, but the top
+// of the opening is an arch: arch_shape 0 round, 1 pointed (lancet). win_h = sill to apex (x floor).
+// Wall around the opening, arched frame, mullion, glass, sill. Module space as in mod_w0.
+float bw = ch("../bay_w");
+float H  = ch("../floor_h");
+float t  = ch("../wall_t");
+int   sh = chi("../arch_shape");
+int   ns = chi("../arch_seg");
+float ow = bw * ch("../win_w");
+float oh = H  * ch("../win_h");
+float y0 = clamp(ch("../sill_h"), 0.05, max(0.05, H - oh - 0.15));   // keep a lintel of >= 0.15 m
+float rise = arch_rise(ow, sh);
+float ys = max(y0 + 0.1, y0 + oh - rise);                            // spring line of the arch
+float fw = ch("../frame_w");
+float fd = ch("../frame_d");
+float so = ch("../sill_out");
+
+vector ap[] = arch_pts(ow, ys, sh, ns);
+arch_wall(bw, H, t, ow, y0, ys, ap, "wall");
+
+float zc = (fd - t * 0.5) * 0.5;
+float zd = fd + t * 0.5;
+add_box(set(-(ow - fw) * 0.5, (y0 + ys) * 0.5, zc), set(fw, ys - y0, zd), "frame", "frame");
+add_box(set( (ow - fw) * 0.5, (y0 + ys) * 0.5, zc), set(fw, ys - y0, zd), "frame", "frame");
+add_box(set(0, y0 + fw * 0.5, zc), set(ow - 2 * fw, fw, zd), "frame", "frame");
+frame_along(ap, fw, zc, zd, "arch_frame");
+add_box(set(0, (y0 + ys + rise * 0.8) * 0.5, zc), set(fw * 0.6, ys + rise * 0.8 - y0 - fw, zd * 0.8), "frame", "mullion");
+
+// glass: the opening outline shrunk by the frame width
+vector gp[] = array(set(-(ow * 0.5 - fw), y0 + fw, 0), set(ow * 0.5 - fw, y0 + fw, 0));
+vector ia[] = arch_pts(ow - 2 * fw, ys, sh, ns);
+for (int i = len(ia) - 1; i >= 0; i--) append(gp, ia[i]);
+foreach (int i; vector p; gp) gp[i] = set(p.x, p.y, -t * 0.25);
+add_poly(gp, {0,0,1}, "glass", "glass");
+
+add_box(set(0, y0 - 0.04, (so - t * 0.5) * 0.5), set(ow + 0.2, 0.08, so + t * 0.5), "trim", "sill");

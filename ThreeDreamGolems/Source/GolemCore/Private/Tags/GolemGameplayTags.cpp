@@ -1,0 +1,59 @@
+#include "Tags/GolemGameplayTags.h"
+#include "Tags/GolemFixtureGameplayTags.h"
+
+namespace GolemGameplayTags
+{
+	UE_DEFINE_GAMEPLAY_TAG(Input_Move, "Input.Move");
+	UE_DEFINE_GAMEPLAY_TAG(Input_Look, "Input.Look");
+	UE_DEFINE_GAMEPLAY_TAG(Input_Jump, "Input.Jump");
+	UE_DEFINE_GAMEPLAY_TAG(Input_Golem_Select_First, "Input.Golem.Select.First");
+	UE_DEFINE_GAMEPLAY_TAG(Input_Golem_Select_Second, "Input.Golem.Select.Second");
+	UE_DEFINE_GAMEPLAY_TAG(Input_Golem_Select_Third, "Input.Golem.Select.Third");
+	UE_DEFINE_GAMEPLAY_TAG(Input_Training_Retry, "Input.Training.Retry");
+	UE_DEFINE_GAMEPLAY_TAG(Input_Golem_Next, "Input.Golem.Next");
+	UE_DEFINE_GAMEPLAY_TAG(Input_Combat_Primary, "Input.Combat.Primary");
+	UE_DEFINE_GAMEPLAY_TAG(Input_Combat_Heavy, "Input.Combat.Heavy");
+	UE_DEFINE_GAMEPLAY_TAG(Input_Combat_Block, "Input.Combat.Block");
+	UE_DEFINE_GAMEPLAY_TAG(Input_Combat_Dodge, "Input.Combat.Dodge");
+	UE_DEFINE_GAMEPLAY_TAG(Input_World_Interact, "Input.World.Interact");
+	UE_DEFINE_GAMEPLAY_TAG(Input_Party_Revive, "Input.Party.Revive");
+	UE_DEFINE_GAMEPLAY_TAG(Input_Ability_Test, "Input.Ability.Test");
+	UE_DEFINE_GAMEPLAY_TAG(Ability_Test_Pulse, "Ability.Test.Pulse");
+	UE_DEFINE_GAMEPLAY_TAG(State_Life_Reviving, "State.Life.Reviving");
+	UE_DEFINE_GAMEPLAY_TAG(Data_Damage, "Data.Damage");
+	UE_DEFINE_GAMEPLAY_TAG(Data_DamageCanDefend, "Data.Damage.CanDefend");
+	UE_DEFINE_GAMEPLAY_TAG(Data_HealthRestore, "Data.HealthRestore");
+	UE_DEFINE_GAMEPLAY_TAG(GameplayCue_Damage, "GameplayCue.Golem.Damage");
+	UE_DEFINE_GAMEPLAY_TAG(GameplayCue_Downed, "GameplayCue.Golem.Downed");
+	UE_DEFINE_GAMEPLAY_TAG(GameplayCue_Revive, "GameplayCue.Golem.Revive");
+	UE_DEFINE_GAMEPLAY_TAG(Event_CombatConfirmed, "Event.Combat.Confirmed");
+	UE_DEFINE_GAMEPLAY_TAG(Event_DamageConfirmed, "Event.Combat.DamageConfirmed");
+	UE_DEFINE_GAMEPLAY_TAG(Event_LifeStateChanged, "Event.Life.StateChanged");
+	UE_DEFINE_GAMEPLAY_TAG(Ability_Combat_Primary, "Ability.Combat.Primary");
+	UE_DEFINE_GAMEPLAY_TAG(Ability_Combat_Heavy, "Ability.Combat.Heavy");
+	UE_DEFINE_GAMEPLAY_TAG(Ability_Combat_Block, "Ability.Combat.Block");
+	UE_DEFINE_GAMEPLAY_TAG(Ability_Combat_Dodge, "Ability.Combat.Dodge");
+	UE_DEFINE_GAMEPLAY_TAG(Ability_Party_Revive, "Ability.Party.Revive");
+	UE_DEFINE_GAMEPLAY_TAG(State_Life_Alive, "State.Life.Alive");
+	UE_DEFINE_GAMEPLAY_TAG(State_Life_Downed, "State.Life.Downed");
+	UE_DEFINE_GAMEPLAY_TAG(State_Life_Dead, "State.Life.Dead");
+	UE_DEFINE_GAMEPLAY_TAG(State_Fixture_TravelPending, "State.Fixture.TravelPending");
+	UE_DEFINE_GAMEPLAY_TAG(State_Combat_Attacking, "State.Combat.Attacking");
+	UE_DEFINE_GAMEPLAY_TAG(State_Combat_Blocking, "State.Combat.Blocking");
+	UE_DEFINE_GAMEPLAY_TAG(State_Combat_Dodging, "State.Combat.Dodging");
+	UE_DEFINE_GAMEPLAY_TAG(State_Combat_Staggered, "State.Combat.Staggered");
+	UE_DEFINE_GAMEPLAY_TAG(State_Combat_Invulnerable, "State.Combat.Invulnerable");
+	UE_DEFINE_GAMEPLAY_TAG(Role_Party_Golem, "Role.Party.Golem");
+	UE_DEFINE_GAMEPLAY_TAG(Role_Party_Companion, "Role.Party.Companion");
+	UE_DEFINE_GAMEPLAY_TAG(Role_Enemy, "Role.Enemy");
+	UE_DEFINE_GAMEPLAY_TAG(State_Xenon_Restored, "State.Xenon.Restored");
+	UE_DEFINE_GAMEPLAY_TAG(Element_Earth, "Element.Earth");
+	UE_DEFINE_GAMEPLAY_TAG(Element_Sky, "Element.Sky");
+	UE_DEFINE_GAMEPLAY_TAG(Element_Sea, "Element.Sea");
+	UE_DEFINE_GAMEPLAY_TAG(Class_Warrior, "Class.Warrior");
+	UE_DEFINE_GAMEPLAY_TAG(Class_Hunter, "Class.Hunter");
+	UE_DEFINE_GAMEPLAY_TAG(Class_Mage, "Class.Mage");
+	UE_DEFINE_GAMEPLAY_TAG(Event_Foundation_Started, "Event.Foundation.Started");
+	UE_DEFINE_GAMEPLAY_TAG(Event_Foundation_AssetLoaded, "Event.Foundation.AssetLoaded");
+	UE_DEFINE_GAMEPLAY_TAG(Event_Foundation_Stopped, "Event.Foundation.Stopped");
+}

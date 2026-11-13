@@ -1,6 +1,6 @@
 # Project memory
 
-Updated: 2026-11-03 (Asia/Saigon).
+Updated: 2026-11-12 (Asia/Saigon).
 
 ## Current layout
 
@@ -9,7 +9,7 @@ the script's `__file__`; do not rely on the shell's working directory.
 
 | Purpose | Current location |
 | --- | --- |
-| Main game project and C++ code | `ThreeDreamingKnights/ThreeDreamingKnights.uproject`, `ThreeDreamingKnights/Source/` |
+| Main game project and C++ code | `ThreeDreamGolems/ThreeDreamGolems.uproject`, `ThreeDreamGolems/Source/` (renamed from `ThreeDreamingKnights` on 2026-11-12; modules are `Golem*`, content is `/Game/Golem`) |
 | Gothic HDA authoring | `Assets/hda_gothic_building/` |
 | Medieval HDA authoring | `Assets/hda_medieval_building/` |
 | Houdini reference assets | `Assets/hda_samples/AllHDAs/`, `Assets/hda_samples/AllHipFIles/` |
@@ -225,3 +225,37 @@ Export manifests retain the hashes/version of their original export runs:
 the SkyTown export scene hashes already differed from the current authoring HIP
 before the texture-path repair. Do not replace these hashes with the new HIP
 hash as if a new export or geometry verification had occurred.
+
+## hbuild building generator (houdini-procedural-builder flow) — 2026-11-07
+
+Branch `hbuild/building-generator`. A new, separate rebuild: the two original authoring HIPs
+(`Assets/hda_medieval_building/medieval_building.hip`, `Assets/hda_gothic_building/gothic_building.hip`) are
+read-only inputs; their sha256 are in `Assets/docs/original_hip_hashes.json` and were re-checked after the work.
+Project root of this flow is `Assets/`: `tools/` (hb.py + `hbuild/`, source of truth: Python + `.vfl`),
+`hda/bldg_building_generator.hda` (type `bldg::building_generator::1.0`, one generator for medieval and gothic,
+all presets embedded), `presets/*.json` (14 medieval + 3 gothic), `specs/*.md`, `hip/<asset>.hip`,
+`renders/<asset>/` (GUI viewport screenshots + `compare_rN.png`), `docs/` (`building_generator.md`,
+`hou_api_notes.md`, `source_analysis.md`, `review_log.md`). Outputs: 0 selected, 1 LOW, 2 HIGH (PolyBevel only on
+hardsurface parts; walls/roof planes flat for Substance Designer).
+
+Previews: no ROP/Karma/Mantra. `tools/hgui/capture_batch.py` starts one fresh Houdini GUI per asset
+(`HOUDINI_PATH` hook `tools/hgui/houdini_path/scripts/456.py`, `HOUDINI_PACKAGE_SKIP=1`) and flipbooks the
+SceneViewer; capturing many assets in one GUI session crashed, and `hou.exit()` from a deferred callback
+segfaults, so the hook hard-exits. Git refuses this repo without `-c safe.directory=E:/Repos/mythic-forge`
+(different owner SID); jobs pass it per command instead of changing global config. Houdini's own python has a
+broken PIL, so compare sheets are built outside Houdini (`tools/compare_sheet.py`, Pillow).
+
+References (`Assets/img_refs/`, reorganised by the user 2026-11-08): `medievals_refs/` = building concept sheets
+(one preset each), `medievals_moodboard/` and `gothics_moodboard/` = mood/style only. Gothic has no building
+concept sheets: the three gothic presets are style studies from moodboard images (`"ref_kind": "moodboard"`).
+
+hbuild fixes 2026-11-08: OUTPUT / roof_clip pulls wall-mounted parts (timber, cornice, pilaster, sign, gable
+triangles) 3 cm under pitched roofs near eave / verge (`tools/check_roof_poke.py` -> none left on all 17;
+med_tavern only has windows standing 0.3 m above its lean-to). `interior = 1` on all presets: floor slabs,
+ceiling, switchback stairs with Boolean holes (shell only, no furniture). Bake: `tools/bake_asset.py` ->
+`Assets/_render/SourceAssets/HBuild/<asset>/` (LOW/HIGH FBX, DirectX normal 4096 via Copernicus, pieces isolated
+by the generator's point i@piece; xyzdist-based piece transfer gave ~10% wrong texels). Unreal:
+`Assets/_render/Tools/HBuild/import_render.py` (request `RenderTests/HBuild/request.json`) imports into
+`/Game/HBuild/<asset>` and places LOW + HIGH in `/Game/Levels/NewMap` (Outliner folder HBuild/<asset>), captures
+to `RenderTests/HBuild/<asset>/`.
+

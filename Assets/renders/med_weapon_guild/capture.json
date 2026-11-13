@@ -1,0 +1,20 @@
+{
+ "hip": "E:/Repos/mythic-forge/Assets/hip/med_weapon_guild.hip",
+ "asset": "med_weapon_guild",
+ "views": {
+  "persp": true,
+  "front": true,
+  "side": true,
+  "persp_low": true,
+  "cutaway": true
+ },
+ "time": "2026-11-08 22:14:41",
+ "points": 21528,
+ "prims": 19892,
+ "size": [
+  11.65999984741211,
+  10.280912786722183,
+  11.379499435424805
+ ],
+ "preview_quality": 1
+}

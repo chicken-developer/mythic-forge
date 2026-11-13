@@ -1,0 +1,44 @@
+// MOD_WR: round / rose window bay (nominal height = floor_h). Circle of radius rose_r centred at
+// rose_y x floor height, wall around it, frame ring, rose_spokes radial bars + hub, glass disc.
+float bw = ch("../bay_w");
+float H  = ch("../floor_h");
+float t  = ch("../wall_t");
+float fw = ch("../frame_w");
+float fd = ch("../frame_d");
+float r  = min(ch("../rose_r"), bw * 0.45);
+float cy = clamp(H * ch("../rose_y"), r + 0.1, H - r - 0.1);
+int   n  = max(8, chi("../arch_seg") * 2);
+n = n - n % 4;                                   // multiple of 4: no segment crosses the centre line
+
+// wall: side boxes outside the circle, vertical strips above / below each circle segment
+float side = (bw - 2 * r) * 0.5;
+add_box(set(-(bw - side) * 0.5, H * 0.5, -t * 0.5), set(side, H, t), "wall", "wall");
+add_box(set( (bw - side) * 0.5, H * 0.5, -t * 0.5), set(side, H, t), "wall", "wall");
+vector cp[];
+for (int i = 0; i <= n; i++) {
+    float a = 2 * M_PI * i / n;
+    append(cp, set(r * cos(a), cy + r * sin(a), 0));
+}
+for (int i = 0; i < n; i++) {
+    vector a = cp[i], b = cp[i + 1];
+    float ye = ((a.y + b.y) * 0.5 >= cy) ? H : 0;                 // upper half -> to the top, lower -> to the floor
+    add_poly(array(set(a.x, a.y, 0), set(b.x, b.y, 0), set(b.x, ye, 0), set(a.x, ye, 0)), {0,0,1}, "wall", "wall");
+    add_poly(array(set(a.x, a.y, -t), set(b.x, b.y, -t), set(b.x, ye, -t), set(a.x, ye, -t)), {0,0,-1}, "wall", "wall");
+    vector m = (a + b) * 0.5;
+    add_poly(array(set(a.x, a.y, 0), set(b.x, b.y, 0), set(b.x, b.y, -t), set(a.x, a.y, -t)),
+             normalize(set(-m.x, cy - m.y, 0)), "wall", "reveal");
+}
+float zc = (fd - t * 0.5) * 0.5;
+float zd = fd + t * 0.5;
+vector cpr[] = reverse(cp);                      // clockwise: frame_along puts the ring inside the opening
+frame_along(cpr, fw, zc, zd, "rose_frame");
+int ks = chi("../rose_spokes");
+for (int k = 0; k < ks; k++) {
+    float a = 2 * M_PI * k / max(ks, 1);
+    vector d = set(cos(a), sin(a), 0);
+    add_obox(set(0, cy, 0) + d * (r * 0.5) + set(0, 0, zc), set(r - fw, fw * 0.6, zd * 0.8), d, {0,0,1}, "frame", "rose_spoke");
+}
+if (ks > 0) add_box(set(0, cy, zc), set(r * 0.25, r * 0.25, zd), "frame", "rose_hub");
+vector gp[];
+for (int i = 0; i < n; i++) { vector p = cp[i]; append(gp, set(p.x, p.y, -t * 0.25)); }
+add_poly(gp, {0,0,1}, "glass", "glass");

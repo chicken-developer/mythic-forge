@@ -1,4 +1,0 @@
-
-float w=ch("../../door_width_m"),h=ch("../../door_height_m");
-addpoint(0,set(-w*.08,-h*.27,-.069));
-addpoint(0,set(-w*.08,h*.17,-.069));

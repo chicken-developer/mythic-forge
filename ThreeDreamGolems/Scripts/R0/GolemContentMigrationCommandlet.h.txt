@@ -1,0 +1,18 @@
+#pragma once
+
+#include "Commandlets/Commandlet.h"
+#include "GolemContentMigrationCommandlet.generated.h"
+
+/**
+ * One-shot R0 tool. Rewrites the old project name inside saved content: FName, FString and FText property values,
+ * sub-object names (placed actors) and actor sub-paths. Asset and folder names are handled by the editor rename API.
+ * Run: -run=GolemContentMigration [-DryRun]
+ */
+UCLASS()
+class UGolemContentMigrationCommandlet : public UCommandlet
+{
+	GENERATED_BODY()
+
+public:
+	virtual int32 Main(const FString& Params) override;
+};

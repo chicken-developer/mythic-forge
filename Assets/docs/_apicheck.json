@@ -1,0 +1,61 @@
+{
+ "houdini": "22.0.368",
+ "results": [
+  {
+   "call": "attribwrangle parms class (0 detail,1 prims,2 points,3 vertices) + snippet",
+   "ok": true,
+   "detail": "class items=['detail', 'primitive', 'point', 'vertex', 'number']"
+  },
+  {
+   "call": "ParmTemplate kwargs: Menu(menu_labels, default_value), String(item_generator_script*, menu_type), Float(look=ColorSquare, naming_scheme=RGBA), Button(script_callback*)",
+   "ok": true,
+   "detail": "confirmed"
+  },
+  {
+   "call": "subnet.indirectInputs()[0] wireable with setInput",
+   "ok": true,
+   "detail": "indirect inputs=4"
+  },
+  {
+   "call": "subnet.createDigitalAsset(name, hda_file_name, description, min_num_inputs, max_num_inputs) + definition().setParmTemplateGroup/addSection/setExtraFileOption/save + matchCurrentDefinition",
+   "ok": true,
+   "detail": "type=hb::apicheck::1.0 file=C:/Users/quynh/AppData/Local/Temp/hb_apicheck.hda"
+  },
+  {
+   "call": "cam parms resx resy projection('ortho') orthowidth; Euler XYZ, looks down -Z",
+   "ok": true,
+   "detail": "projection items=['perspective', 'ortho', 'sphere', 'cylinder', 'lens'] rOrd=xyz"
+  },
+  {
+   "call": "/out opengl ROP type + parms camera, picture (existence only; no render per user rule)",
+   "ok": true,
+   "detail": "{'camera': True, 'picture': True}"
+  },
+  {
+   "call": "VEX: setpointattrib vector4 creates orient; copytopoints uses orient + vector scale",
+   "ok": true,
+   "detail": "copied bbox size=[0.0, 3.0, 2.0]"
+  },
+  {
+   "call": "VEX: user functions in wrangle + dynamic chv('../col_' + s@mat_id)",
+   "ok": true,
+   "detail": "Cd=(0.10000000149011612, 0.20000000298023224, 0.30000001192092896)"
+  },
+  {
+   "call": "polybevel SOP parms for HIGH branch (group, offset/distance, divisions, limit)",
+   "ok": true,
+   "detail": "type=polybevel::3.0 parms=['group', 'grouptype', 'ignoregroup', 'ignoreflatedges', 'ignoreflatpoints', 'flatangle', 'offsettingsection', 'offset', 'useoffsetscale', 'collisionsandlimits', 'limit', 'pinchangle', 'filletsection', 'filletshape', 'divisions', 'profilesampling', 'profilesource', 'profilegroup', 'profilescale', 'reverseprofile', 'symmetrizeprofile', 'profiledirection', 'profileramp', 'flatboost', 'outputgroupssection', 'useptfilletgroup', 'ptfilletgroup', 'useptfilletedges', 'ptfilletedges', 'useedgefilletgroup', 'useoffsetedges', 'offsetedges', 'useoffsetpoints', 'offsetpoints', 'profileramp1pos', 'profileramp1value', 'profileramp1interp', 'profileramp2pos', 'profileramp2value', 'profileramp2interp']"
+  },
+  {
+   "call": "SOP types used by LOW/HIGH (normal, clean, fuse, groupcreate/groupexpression, measure)",
+   "ok": true,
+   "detail": "{'normal': True, 'clean': True, 'fuse::2.0': True, 'fuse': True, 'groupexpression': True, 'groupcreate': True, 'measure': True, 'uvlayout': True, 'boolean::2.0': True, 'polyextrude::2.0': True, 'copytopoints::2.0': True, 'attribwrangle': True, 'switch': True, 'output': True, 'polyreduce::2.0': True}"
+  },
+  {
+   "call": "hou.hda.installFile / reloadFile / uninstallFile exist",
+   "ok": true,
+   "detail": "confirmed"
+  }
+ ],
+ "ok": true
+}

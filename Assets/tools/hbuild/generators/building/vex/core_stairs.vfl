@@ -1,0 +1,23 @@
+// CORE / stairs: straight flights between the storeys of the main body, two lanes along the stair wall
+// (switchback: flight f climbs storey f -> f+1 in lane f % 2 and starts where flight f-1 ended).
+// Each step is a closed box from the floor of the flight to the step top (material timber, part stair).
+if (!chi("../interior") || !chi("../stairs")) return;
+float t = ch("../wall_t"), gh = ch("../ground_h"), fh = ch("../floor_h");
+int nfl = chi("../floor_n");
+float w = ch("../stair_w");
+vector up = {0,1,0};
+for (int f = 0; f < nfl; f++) {
+    vector o, X, N;
+    float xs, dir, d0, y0, rz, tr;
+    int n;
+    if (!stair_flight(1, f, chi("../front_edge"), chi("../stair_side"), t, gh, fh, nfl, w, ch("../stair_riser"),
+                      ch("../stair_tread"), ch("../stair_u"), ch("../stair_landing"), o, X, N, xs, dir, d0, y0, n, rz, tr))
+        continue;
+    vector Z = cross(X, up);
+    for (int i = 1; i < n; i++) {
+        float xc = xs + dir * (i - 0.5) * tr;
+        float hs = i * rz;
+        vector c = o + X * xc + N * (d0 + w * 0.5) + up * (y0 + hs * 0.5);
+        add_obox(c, set(tr, hs, w), X, Z, "timber", "stair");
+    }
+}

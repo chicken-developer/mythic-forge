@@ -1,0 +1,8 @@
+// FOOTPRINT / rect: rectangle centred on the origin, edge 0 runs +X along the front (+Z) side.
+float w = ch("../width");
+float d = ch("../depth");
+int a = addpoint(0, set(-w * 0.5, 0,  d * 0.5));
+int b = addpoint(0, set( w * 0.5, 0,  d * 0.5));
+int c = addpoint(0, set( w * 0.5, 0, -d * 0.5));
+int e = addpoint(0, set(-w * 0.5, 0, -d * 0.5));
+addprim(0, "poly", a, b, c, e);

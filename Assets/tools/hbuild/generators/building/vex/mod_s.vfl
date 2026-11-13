@@ -1,0 +1,30 @@
+// MOD_S: shopfront bay (nominal height = ground_h). See mod_w0 for module space.
+float bw   = ch("../bay_w");
+float H    = ch("../ground_h");
+float t    = ch("../wall_t");
+float pier = ch("../shop_pier");
+float bh   = ch("../shop_bulkhead");
+float sh   = ch("../shop_sign_h");
+float fw   = ch("../frame_w");
+float fd   = ch("../frame_d");
+float ow   = max(0.2, bw - 2 * pier);
+float y1   = max(bh + 0.3, H - sh);              // top of the glazing = bottom of the sign band
+
+// piers and wall above the glazing
+add_box(set(-(bw - pier) * 0.5, H * 0.5, -t * 0.5), set(pier, H, t), "wall", "wall");
+add_box(set( (bw - pier) * 0.5, H * 0.5, -t * 0.5), set(pier, H, t), "wall", "wall");
+add_box(set(0, (y1 + H) * 0.5, -t * 0.5),           set(ow, H - y1, t), "wall", "wall");
+// bulkhead and sign band
+add_box(set(0, bh * 0.5, -t * 0.25 + 0.01), set(ow, bh, t * 0.5 + 0.02), "trim", "bulkhead");
+add_box(set(0, y1 + (H - y1) * 0.5, 0.05),  set(ow, (H - y1) * 0.8, 0.12), "trim", "sign");
+// frame, mullion, glass
+float zc = (fd - t * 0.5) * 0.5;
+float zd = fd + t * 0.5;
+float gh = y1 - bh;
+float ym = (bh + y1) * 0.5;
+add_box(set(-(ow - fw) * 0.5, ym, zc), set(fw, gh, zd), "frame", "frame");
+add_box(set( (ow - fw) * 0.5, ym, zc), set(fw, gh, zd), "frame", "frame");
+add_box(set(0, y1 - fw * 0.5, zc),     set(ow - 2 * fw, fw, zd), "frame", "frame");
+add_box(set(0, bh + fw * 0.5, zc),     set(ow - 2 * fw, fw, zd), "frame", "frame");
+add_box(set(0, ym, zc),                set(fw * 0.6, gh - 2 * fw, zd * 0.8), "frame", "mullion");
+add_box(set(0, ym, -t * 0.25),         set(ow - 2 * fw, gh - 2 * fw, 0.02), "glass", "glass");

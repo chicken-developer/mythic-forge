@@ -1,0 +1,77 @@
+// CANOPY: up to three canopy slots (a, b, c) against the ground outline (input 1, prim 0).
+//   side: 0 front, 1 right, 2 back, 3 left (edge front_edge + side); w along the wall, off = shift of
+//   its centre along the wall, d = depth out of the wall, h = height where it meets the wall,
+//   drop = how much lower the outer edge is.
+//   kind: 0 roof slab (porch / lean-to, material roof), 1 striped fabric awning with scalloped valance
+//   (fabric / fabric2), 2 open timber pergola. posts = timber posts on the outer edge; otherwise brackets.
+// Shared sizes: canopy_t, stripe_w, valance_h, post_w, post_gap, arch_seg (scallop resolution).
+vector up = {0,1,0};
+int pts[] = primpoints(1, 0);
+int np = len(pts);
+if (np < 3) return;
+int fe = chi("../front_edge") % np;
+float ct = ch("../canopy_t"), sw = ch("../stripe_w"), vh = ch("../valance_h");
+float pw = ch("../post_w"), gap = ch("../post_gap");
+int   seg = max(2, chi("../arch_seg"));
+string _s_list1[] = array("a", "b", "c");
+foreach (string s; _s_list1) {
+    string k = "../canopy_" + s;
+    if (!chi(k)) continue;
+    int e = (fe + chi(k + "_side")) % np;
+    vector a = point(1, "P", pts[e]), b = point(1, "P", pts[(e + 1) % np]);
+    vector X = normalize(b - a);
+    vector n = normalize(cross(X, up));
+    vector c = (a + b) * 0.5 + X * ch(k + "_off");
+    c.y = 0;
+    float w = ch(k + "_w"), D = ch(k + "_d"), h = ch(k + "_h"), dr = ch(k + "_drop");
+    int kind = chi(k + "_kind"), posts = chi(k + "_posts");
+    float ho = h - dr;                                         // outer edge height
+    if (kind == 0) {
+        vector top[] = array(c - X * (w * 0.5) + up * h, c + X * (w * 0.5) + up * h,
+                             c + X * (w * 0.5) + n * D + up * ho, c - X * (w * 0.5) + n * D + up * ho);
+        add_slab(top, up_normal(top), ct, "roof", "canopy", "soffit");
+    } else if (kind == 1) {
+        int ns = max(1, int(rint(w / max(sw, 0.05))));
+        for (int i = 0; i < ns; i++) {
+            float x0 = -w * 0.5 + w * i / ns, x1 = -w * 0.5 + w * (i + 1) / ns;
+            string m = (i % 2 == 0) ? "fabric" : "fabric2";
+            vector q[] = array(c + X * x0 + up * h, c + X * x1 + up * h, c + X * x1 + n * D + up * ho, c + X * x0 + n * D + up * ho);
+            add_slab(q, up_normal(q), max(ct * 0.25, 0.01), m, "awning", "awning_under");   // thin closed sheet (no z-fight)
+            if (vh > 0) {                                      // valance strip with one scallop per stripe
+                vector v[] = array(c + X * x0 + n * D + up * ho, c + X * x1 + n * D + up * ho);
+                for (int j = 0; j <= seg; j++) {
+                    float x = x1 + (x0 - x1) * j / seg;
+                    append(v, c + X * x + n * D + up * (ho - vh * (0.6 + 0.4 * sin(M_PI * j / seg))));
+                }
+                add_poly(v, n, m, "awning");
+                vector vb[];                                   // back face 1 cm behind: no coplanar z-fight
+                foreach (vector p; v) append(vb, p - n * 0.01);
+                add_poly(vb, -n, m, "awning_under");
+            }
+        }
+    } else {
+        int nr = max(2, int(ceil(w / max(gap * 0.5, 0.3))) + 1);
+        for (int i = 0; i < nr; i++) {
+            float x = -w * 0.5 + pw * 0.5 + (w - pw) * i / (nr - 1);
+            add_beam(c + X * x + up * h, c + X * x + n * D + up * ho, pw * 0.8, pw * 0.6, X, "timber", "beam");
+        }
+    }
+    // wall plate + outer beam
+    add_obox(c + up * (h - pw * 0.4) + n * (pw * 0.4), set(w, pw * 0.8, pw * 0.8), X, n, "timber", "beam");
+    if (posts) {
+        add_obox(c + n * (D - pw * 0.5) + up * (ho - pw * 0.5), set(w, pw, pw), X, n, "timber", "beam");
+        int npst = max(2, int(ceil(w / max(gap, 0.5))) + 1);
+        for (int i = 0; i < npst; i++) {
+            float x = -w * 0.5 + pw * 0.5 + (w - pw) * i / (npst - 1);
+            add_obox(c + X * x + n * (D - pw * 0.5) + up * ((ho - pw) * 0.5), set(pw, ho - pw, pw), X, n, "timber", "post");
+        }
+    } else {
+        float _sx_list2[] = array(-1.0, 1.0);
+        foreach (float sx; _sx_list2) {                  // knee-brace brackets at both ends
+            float x = sx * (w * 0.5 - pw);
+            float r = min(D * 0.8, 1.2);
+            add_beam(c + X * x + up * (h - r) + n * (pw * 0.3), c + X * x + n * (D * 0.8) + up * (h - dr * 0.8 - pw * 0.5),
+                     pw * 0.6, pw * 0.6, X, "timber", "bracket");
+        }
+    }
+}

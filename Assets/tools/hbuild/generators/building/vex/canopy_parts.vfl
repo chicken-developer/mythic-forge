@@ -1,0 +1,4 @@
+// OUTPUT / canopy parts (run over primitives): keep only canopy geometry (porch roof slab, awning sheets,
+// canopy wall plate / beams) as the reference for canopy_clear.vfl.
+string p = s@part;
+if (p != "canopy" && p != "awning" && p != "awning_under" && p != "beam") removeprim(0, @primnum, 1);

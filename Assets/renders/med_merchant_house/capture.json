@@ -1,0 +1,20 @@
+{
+ "hip": "E:/Repos/mythic-forge/Assets/hip/med_merchant_house.hip",
+ "asset": "med_merchant_house",
+ "views": {
+  "persp": true,
+  "front": true,
+  "side": true,
+  "persp_low": true,
+  "cutaway": true
+ },
+ "time": "2026-11-08 22:12:48",
+ "points": 17671,
+ "prims": 16893,
+ "size": [
+  9.459999084472656,
+  9.81262817978859,
+  8.589536190032959
+ ],
+ "preview_quality": 1
+}

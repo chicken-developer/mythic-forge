@@ -1,0 +1,96 @@
+// OUTPUT / roof clip (run over points; input 1 = roof faces only, see roof_faces.vfl). Wall-mounted parts (timber,
+// cornice, pilasters, shop signs ...) reach the wall top, while a pitched roof slopes down past the wall
+// line, so their outer part sticks out of the roof near the eave and the verge. A point that lies above the
+// upper face of a roof slab (parts slope / hip) by less than roof_clip, horizontally within roof_clip_edge
+// of an edge of that slab, is pulled roof_clip_gap under the roof. Parts in roof_clip_skip (the roof itself
+// and what stands on it on purpose) are never moved. Points further up or far from the edges (a wall above
+// a lean-to roof) stay where they are.
+float lim = ch("../roof_clip");
+if (lim <= 0) return;
+int prs[] = pointprims(0, @ptnum);
+if (len(prs) == 0) return;
+string own = prim(0, "part", prs[0]);
+string skip[] = split(chs("../roof_clip_skip"));
+foreach (string sk; skip)
+    if (match(sk, own)) return;
+float gap  = ch("../roof_clip_gap");
+float edge = ch("../roof_clip_edge");
+vector down = {0, -1, 0};
+vector hp[];
+int hpr[];
+vector huv[];
+// short ray (the hit de-duplication tolerance is relative to the ray length)
+int n = intersect_all(1, "", v@P - down * (lim + 1.0), down * (2 * lim + 2.0), hp, hpr, huv, 0.0001, 0.00001);
+float top = -1e30;
+int best = -1;
+for (int i = 0; i < n; i++) {
+    string part = prim(1, "part", hpr[i]);
+    if (part != "slope" && part != "hip") continue;
+    vector nn = prim_normal(1, hpr[i], huv[i].x, huv[i].y);
+    if (nn.y <= 0.05) continue;                           // upper face of the slab only
+    // skip the slab's thickness faces (the high end of a lean-to slab points partly up): narrower than
+    // roof_clip_shared across its longest edge
+    int fp[] = primpoints(1, hpr[i]);
+    float elen = 0;
+    for (int e = 0; e < len(fp); e++) {
+        vector ea = point(1, "P", fp[e]);
+        vector eb = point(1, "P", fp[(e + 1) % len(fp)]);
+        elen = max(elen, length(eb - ea));
+    }
+    float farea = primintrinsic(1, "measuredarea", hpr[i]);
+    if (farea / max(elen, 1e-6) < ch("../roof_clip_shared")) continue;
+    if (hp[i].y > top) { top = hp[i].y; best = hpr[i]; }
+}
+if (best < 0 || v@P.y <= top - gap || v@P.y >= top + lim) return;
+// horizontal distance to the outline of that roof face, ignoring its high edges (ridge, or the top edge of
+// a lean-to against a wall: the wall above it must not be pulled down)
+int vp[] = primpoints(1, best);
+int k = len(vp);
+float ymax = -1e30;
+foreach (int q; vp) {
+    vector pq = point(1, "P", q);
+    ymax = max(ymax, pq.y);
+}
+// lean-to: when the high edge of the face is not shared with another upper roof face (a ridge is), the roof
+// leans against a wall; that wall and what is on it above the high edge must stay. The slab's own thickness
+// faces also touch the high edge (and point partly up on a pitched slab), so a neighbour only counts when it
+// reaches further than roof_clip_shared from the high edge line.
+vector hi[];
+foreach (int q; vp) {
+    vector pq = point(1, "P", q);
+    if (pq.y >= ymax - 0.01) append(hi, pq);
+}
+vector edir = {1, 0, 0};
+if (len(hi) >= 2) edir = normalize(hi[1] - hi[0]);
+float reach = ch("../roof_clip_shared");
+int shared = 0;
+foreach (vector pq; hi) {
+    int near[] = pcfind(1, "P", pq, 0.01, 16);
+    foreach (int o; near) {
+        int pps[] = pointprims(1, o);
+        foreach (int op; pps) {
+            if (op == best) continue;
+            vector on = prim_normal(1, op, 0.5, 0.5);
+            if (on.y <= 0.05) continue;
+            float far = 0;
+            foreach (int r; primpoints(1, op)) {
+                vector pr = point(1, "P", r);
+                vector dd = pr - pq;
+                dd -= edir * dot(dd, edir);
+                far = max(far, length(dd));
+            }
+            if (far > reach) shared = 1;
+        }
+    }
+}
+if (!shared && v@P.y >= ymax - 0.02) return;
+float dmin = 1e30;
+for (int i = 0; i < k; i++) {
+    vector a = point(1, "P", vp[i]), b = point(1, "P", vp[(i + 1) % k]);
+    if (a.y > ymax - 0.01 && b.y > ymax - 0.01) continue;
+    vector2 A = set(a.x, a.z), B = set(b.x, b.z), Q = set(v@P.x, v@P.z);
+    vector2 d = B - A;
+    float u = clamp(dot(Q - A, d) / max(dot(d, d), 1e-12), 0.0, 1.0);
+    dmin = min(dmin, length(Q - (A + d * u)));
+}
+if (dmin <= edge) v@P.y = top - gap;

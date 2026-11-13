@@ -1,0 +1,74 @@
+// TRIMS: plinth, floor bands, cornice along every footprint edge + corner pilasters / quoins.
+// Plinth and the ground part of the pilasters follow prim 0 (ground outline); bands, cornice and the
+// upper part of the pilasters follow prim 1 (upper outline, jettied when jetty > 0).
+// Bands run along the wall plane, embedded wall_t into the wall and `out` metres proud of it;
+// each band is lengthened by 2*out so neighbouring bands meet on convex corners.
+void edge_band(vector p0; vector X; vector Z; float L; float ylo; float yhi; float out; float back;
+               string mat; string part) {
+    if (yhi - ylo <= 1e-4 || out <= 0) return;
+    vector c = p0 + X * (L * 0.5) + Z * ((out - back) * 0.5);
+    c.y = (ylo + yhi) * 0.5;
+    add_obox(c, set(L + 2 * out, yhi - ylo, out + back), X, Z, mat, part);
+}
+
+void pilasters(int prim; float y0; float y1; float pw; float pwo; float t; string mat) {
+    if (y1 - y0 <= 1e-4) return;
+    int pts[] = primpoints(1, prim);
+    int np = len(pts);
+    for (int i = 0; i < np; i++) {
+        vector p  = point(1, "P", pts[i]);
+        vector pn = point(1, "P", pts[(i + 1) % np]);
+        vector pp = point(1, "P", pts[(i - 1 + np) % np]);
+        vector dn = normalize(pn - p),  nn = normalize(cross(dn, {0,1,0}));
+        vector dp = normalize(p - pp),  npv = normalize(cross(dp, {0,1,0}));
+        // along the next edge, wrapping the corner by pilaster_out
+        vector c1 = p + dn * ((pw - pwo) * 0.5) + nn * ((pwo - t) * 0.5);
+        c1.y = (y0 + y1) * 0.5;
+        add_obox(c1, set(pw + pwo, y1 - y0, pwo + t), dn, nn, mat, "pilaster");
+        // along the previous edge
+        vector c2 = p - dp * (pw * 0.5) + npv * ((pwo - t) * 0.5);
+        c2.y = (y0 + y1) * 0.5;
+        add_obox(c2, set(pw, y1 - y0, pwo + t), dp, npv, mat, "pilaster");
+    }
+}
+
+float gh  = ch("../ground_h");
+float fh  = ch("../floor_h");
+int   nfl = chi("../floor_n");
+float t   = ch("../wall_t");
+float H   = gh + nfl * fh;
+float ph  = ch("../plinth_h"),    po  = ch("../plinth_out");
+float bh  = ch("../band_h"),      bo  = ch("../band_out");
+float chh = ch("../cornice_h"),   co  = ch("../cornice_out");
+float pw  = ch("../pilaster_w"),  pwo = ch("../pilaster_out");
+string plinth_mat   = chi("../plinth_mat")   == 1 ? "stone" : "trim";
+string pilaster_mat = chi("../pilaster_mat") == 1 ? "stone" : "trim";
+int   up_prim = min(1, nprimitives(1) - 1);
+
+for (int k = 0; k <= up_prim; k++) {
+    int pts[] = primpoints(1, k);
+    int np = len(pts);
+    for (int e = 0; e < np; e++) {
+        vector p0 = point(1, "P", pts[e]);
+        vector p1 = point(1, "P", pts[(e + 1) % np]);
+        float  L  = distance(p0, p1);
+        if (L < 1e-4) continue;
+        vector X = normalize(p1 - p0);
+        vector Z = normalize(cross(X, {0,1,0}));
+        if (k == 0)
+            edge_band(p0, X, Z, L, 0, ph, po, t, plinth_mat, "plinth");
+        if (k == up_prim) {
+            for (int f = 0; f < nfl; f++) {                       // band at the bottom of each upper floor
+                float lv = gh + f * fh;
+                edge_band(p0, X, Z, L, lv - bh * 0.5, lv + bh * 0.5, bo, t, "trim", "band");
+            }
+            edge_band(p0, X, Z, L, H - chh, H - chh * 0.4, co * 0.45, t, "trim", "cornice");   // corbel
+            edge_band(p0, X, Z, L, H - chh * 0.4, H, co, t, "trim", "cornice");                  // crown
+        }
+    }
+}
+
+if (pw > 0 && pwo > 0) {
+    pilasters(0, 0, nfl == 0 ? H : gh, pw, pwo, t, pilaster_mat);
+    if (nfl > 0) pilasters(up_prim, gh, H, pw, pwo, t, pilaster_mat);
+}

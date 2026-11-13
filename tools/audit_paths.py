@@ -21,7 +21,7 @@ RETIRED = re.compile(r"HoudiniWorkspace[/\\]|SubstanceWorkspace[/\\]|"
                      r"(?<![A-Za-z_])TDKProps[/\\](?!TDKProps\.(?:Build\.cs|cpp|h))|"
                      r"TDKKingdomMap[/\\]")
 REQUIRED = (
-    "ThreeDreamingKnights/ThreeDreamingKnights.uproject",
+    "ThreeDreamGolems/ThreeDreamGolems.uproject",
     "Assets/_render/TDKProps.uproject",
     "Assets/_composition/TDKKingdomMap.uproject",
     "Assets/_render/Source/TDKProps/TDKProps.Build.cs",
@@ -39,7 +39,7 @@ PATH_VARIABLES = {"ROOT", "REPO", "PROJECT", "P", "SOURCE", "SRC", "SAMPLES",
 
 
 def source_files():
-    for folder in (ROOT / "Assets", ROOT / "ThreeDreamingKnights"):
+    for folder in (ROOT / "Assets", ROOT / "ThreeDreamGolems"):
         for current, dirs, names in os.walk(folder):
             dirs[:] = [d for d in dirs if d not in SKIP and not d.startswith("relocated_")]
             for name in names:

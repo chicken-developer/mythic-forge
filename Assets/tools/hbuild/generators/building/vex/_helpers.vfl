@@ -1,0 +1,386 @@
+// ===== hbuild shared helpers (injected by build.py from vex/_helpers.vfl - edit there) =====
+// Houdini treats a polygon as facing the side from which its vertices look clockwise, i.e. its
+// normal is the NEGATIVE of the right-handed (Newell) normal. The add_* functions measure the winding
+// and flip the vertex order so the face points along `out`. Every primitive gets s@mat_id and s@part.
+
+vector newell(vector pts[]) {
+    int n = len(pts);
+    vector rh = 0;
+    for (int i = 0; i < n; i++) {
+        vector a = pts[i];
+        vector b = pts[(i + 1) % n];
+        rh += set((a.y - b.y) * (a.z + b.z), (a.z - b.z) * (a.x + b.x), (a.x - b.x) * (a.y + b.y));
+    }
+    return rh;
+}
+
+// Polygon on already created points `ids` (positions `pts`), facing `out`.
+int add_poly_ids(int ids[]; vector pts[]; vector out; string mat; string part) {
+    int n = len(ids);
+    int flip = dot(-newell(pts), out) < 0;
+    int ord[];
+    for (int k = 0; k < n; k++)
+        append(ord, ids[flip ? n - 1 - k : k]);
+    int pr = addprim(0, "poly", ord);
+    setprimattrib(0, "mat_id", pr, mat);
+    setprimattrib(0, "part", pr, part);
+    return pr;
+}
+
+// Polygon with its own new points, facing `out`.
+int add_poly(vector pts[]; vector out; string mat; string part) {
+    int ids[];
+    foreach (vector p; pts) append(ids, addpoint(0, p));
+    return add_poly_ids(ids, pts, out, mat, part);
+}
+
+// Oriented box: centre c, size s along the axes X (width), Y = cross(Z, X) (height), Z (depth).
+// The 6 faces share 8 points, so the box is a closed, connected solid (PolyBevel-ready for HIGH).
+void add_obox(vector c; vector s; vector X; vector Z; string mat; string part) {
+    if (min(s) <= 1e-5) return;                       // skip degenerate boxes (a parm set to 0)
+    vector Y = cross(Z, X);
+    vector h = s * 0.5;
+    vector C[];
+    int P[];
+    for (int k = 0; k < 8; k++) {
+        float sx = (k == 1 || k == 2 || k == 5 || k == 6) ? 1.0 : -1.0;
+        float sy = (k == 2 || k == 3 || k == 6 || k == 7) ? 1.0 : -1.0;
+        float sz = (k >= 4) ? 1.0 : -1.0;
+        vector p = c + X * (sx * h.x) + Y * (sy * h.y) + Z * (sz * h.z);
+        append(C, p);
+        append(P, addpoint(0, p));
+    }
+    int F[] = array(0,1,2,3, 4,5,6,7, 0,1,5,4, 3,2,6,7, 0,3,7,4, 1,2,6,5);
+    vector O[] = array({0,0,-1}, {0,0,1}, {0,-1,0}, {0,1,0}, {-1,0,0}, {1,0,0});
+    for (int f = 0; f < 6; f++) {
+        int ids[] = array(P[F[f*4]], P[F[f*4+1]], P[F[f*4+2]], P[F[f*4+3]]);
+        vector q[] = array(C[F[f*4]], C[F[f*4+1]], C[F[f*4+2]], C[F[f*4+3]]);
+        vector o = X * O[f].x + Y * O[f].y + Z * O[f].z;
+        add_poly_ids(ids, q, o, mat, part);
+    }
+}
+
+// Axis-aligned box in module space (X = along the facade, Y = up, Z = out of the wall).
+void add_box(vector c; vector s; string mat; string part) {
+    add_obox(c, s, {1,0,0}, {0,0,1}, mat, part);
+}
+
+// Box spanning the segment a -> b (a beam, brace, rafter): width w, depth d, Z = depth axis.
+void add_beam(vector a; vector b; float w; float d; vector Z; string mat; string part) {
+    float L = distance(a, b);
+    if (L < 1e-4) return;
+    vector X = normalize(b - a);
+    vector Zp = normalize(Z - X * dot(Z, X));         // make the depth axis perpendicular to the beam
+    add_obox((a + b) * 0.5, set(L, w, d), X, Zp, mat, part);
+}
+
+// Planar slab from its top outline `top` (any winding), upward normal `nrm`, thickness t.
+// t = 0 keeps the classic thin roof: a top face plus a coincident underside face (part `under`).
+void add_slab(vector top[]; vector nrm; float t; string mat; string part; string under) {
+    int n = len(top);
+    if (n < 3) return;
+    if (t <= 1e-5) {
+        add_poly(top, nrm, mat, part);
+        add_poly(top, -nrm, mat, under);
+        return;
+    }
+    vector bot[];
+    int T[], B[];
+    vector cen = 0;
+    foreach (vector p; top) {
+        append(bot, p - nrm * t);
+        append(T, addpoint(0, p));
+        append(B, addpoint(0, p - nrm * t));
+        cen += p;
+    }
+    cen /= n;
+    add_poly_ids(T, top, nrm, mat, part);
+    add_poly_ids(B, bot, -nrm, mat, under);
+    for (int i = 0; i < n; i++) {
+        int j = (i + 1) % n;
+        vector m = (top[i] + top[j]) * 0.5 - cen;
+        vector o = normalize(m - nrm * dot(m, nrm));
+        add_poly_ids(array(T[i], T[j], B[j], B[i]), array(top[i], top[j], bot[j], bot[i]), o, mat, part);
+    }
+}
+
+// Upward unit normal of a planar outline.
+vector up_normal(vector pts[]) {
+    vector n = normalize(-newell(pts));
+    return n.y < 0 ? -n : n;
+}
+
+// Point in a roof frame: origin `base` (wall-top height), ridge axis R, span axis S, height y.
+vector rp(vector base; vector R; vector S; float r; float s; float y) {
+    return base + R * r + S * s + set(0, y, 0);
+}
+
+// Gable (hip = 0) or hip (hip = 1) roof over r in [r0,r1] (ridge axis R) and s in [s0,s1] (span axis S).
+// Wall top is at y = 0 of `base`. tp = tan(pitch); ov = eave overhang; ovr = rake overhang; t = slab
+// thickness. Gable walls on the wall planes r0 (g0) / r1 (g1). Returns the ridge height above the wall top.
+float gable_roof(vector base; vector R; vector S; float r0; float r1; float s0; float s1;
+                 float tp; float ov; float ovr; float t; int hip; int g0; int g1; string wallmat) {
+    vector up = {0,1,0};
+    float sm = (s0 + s1) * 0.5;
+    float half = (s1 - s0) * 0.5 + ov;               // half span incl. overhang
+    float ey = -ov * tp;                             // eave below the wall top so the slope meets it
+    float ry = ey + half * tp;
+    float ra = r0 - ovr, rb = r1 + ovr, sa = s0 - ov, sb = s1 + ov;
+    float a = ra, b = rb;
+    if (hip) {                                       // hip: ridge shortened by the half span
+        a = ra + half; b = rb - half;
+        if (a > b) { a = (ra + rb) * 0.5; b = a; }
+    }
+    vector A[] = array(rp(base,R,S,ra,sa,ey), rp(base,R,S,rb,sa,ey), rp(base,R,S,b,sm,ry), rp(base,R,S,a,sm,ry));
+    vector B[] = array(rp(base,R,S,ra,sb,ey), rp(base,R,S,rb,sb,ey), rp(base,R,S,b,sm,ry), rp(base,R,S,a,sm,ry));
+    add_slab(A, up_normal(A), t, "roof", "slope", "soffit");
+    add_slab(B, up_normal(B), t, "roof", "slope", "soffit");
+    if (hip) {
+        vector E0[] = array(rp(base,R,S,ra,sa,ey), rp(base,R,S,ra,sb,ey), rp(base,R,S,a,sm,ry));
+        vector E1[] = array(rp(base,R,S,rb,sa,ey), rp(base,R,S,rb,sb,ey), rp(base,R,S,b,sm,ry));
+        add_slab(E0, up_normal(E0), t, "roof", "hip", "soffit");
+        add_slab(E1, up_normal(E1), t, "roof", "hip", "soffit");
+    } else {
+        if (g0) add_poly(array(rp(base,R,S,r0,s0,0), rp(base,R,S,r0,s1,0), rp(base,R,S,r0,sm,ry)), -R, wallmat, "gable");
+        if (g1) add_poly(array(rp(base,R,S,r1,s0,0), rp(base,R,S,r1,s1,0), rp(base,R,S,r1,sm,ry)),  R, wallmat, "gable");
+    }
+    return ry;
+}
+
+// Verge (barge) boards on both rakes of each gable end and an optional ridge beam (timber).
+void roof_boards(vector base; vector R; vector S; float r0; float r1; float s0; float s1;
+                 float tp; float ov; float ovr; float vw; float vt; float rw; int hip) {
+    float sm = (s0 + s1) * 0.5;
+    float half = (s1 - s0) * 0.5 + ov;
+    float ey = -ov * tp, ry = ey + half * tp;
+    if (vw > 0 && vt > 0 && !hip) {
+        float _r_list3[] = array(r0 - ovr, r1 + ovr);
+        foreach (float r; _r_list3) {
+            vector top = rp(base, R, S, r, sm, ry);
+            float _s_list4[] = array(s0 - ov, s1 + ov);
+            foreach (float s; _s_list4) {
+                vector e = rp(base, R, S, r, s, ey);
+                vector X = normalize(top - e);
+                vector Z = (r < (r0 + r1) * 0.5) ? -R : R;
+                vector Y = cross(Z, X);
+                add_obox((e + top) * 0.5 - Y * (vw * 0.5) + Z * (vt * 0.5), set(distance(e, top), vw, vt), X, Z, "timber", "verge");
+            }
+        }
+    }
+    if (rw > 0) {
+        float a = r0 - ovr, b = r1 + ovr;
+        if (hip) { a = r0 - ovr + half; b = r1 + ovr - half; }
+        if (b > a)
+            add_obox(rp(base, R, S, (a + b) * 0.5, sm, ry + rw * 0.2), set(b - a, rw, rw), R, {0,1,0}, "timber", "ridge_beam");
+    }
+}
+
+// Shed (lean-to) roof: high edge on s = s0 (height hi), low edge on s = s1 (height lo), r in [r0,r1].
+// Side walls (triangles above the wall top) when walls = 1. Heights relative to `base`.
+void shed_roof(vector base; vector R; vector S; float r0; float r1; float s0; float s1;
+               float hi; float lo; float ov; float t; int walls; string wallmat) {
+    float k = (hi - lo) / max(s1 - s0, 1e-3);        // drop per metre of span
+    vector top[] = array(rp(base,R,S,r0-ov,s0,hi), rp(base,R,S,r1+ov,s0,hi),
+                         rp(base,R,S,r1+ov,s1+ov,lo-ov*k), rp(base,R,S,r0-ov,s1+ov,lo-ov*k));
+    add_slab(top, up_normal(top), t, "roof", "slope", "soffit");
+    if (walls && hi > lo) {
+        add_poly(array(rp(base,R,S,r0,s0,lo), rp(base,R,S,r0,s1,lo), rp(base,R,S,r0,s0,hi)), -R, wallmat, "gable");
+        add_poly(array(rp(base,R,S,r1,s0,lo), rp(base,R,S,r1,s1,lo), rp(base,R,S,r1,s0,hi)),  R, wallmat, "gable");
+    }
+}
+
+// Oriented bounding rectangle of polygon `prim` on input `geo` with axes from its edge 0.
+// axis: 0 auto (ridge along the longer side), 1 ridge along edge 0, 2 ridge across edge 0.
+void roof_frame(int geo; int prim; int axis; export vector p0; export vector R; export vector S;
+                export float r0; export float r1; export float s0; export float s1) {
+    vector up = {0,1,0};
+    int pts[] = primpoints(geo, prim);
+    int np = len(pts);
+    p0 = point(geo, "P", pts[0]);
+    vector u = normalize(point(geo, "P", pts[1 % np]) - p0);
+    vector v = normalize(cross(u, up));
+    float umin = 1e9, umax = -1e9, vmin = 1e9, vmax = -1e9;
+    foreach (int pt; pts) {
+        vector d = point(geo, "P", pt) - p0;
+        umin = min(umin, dot(d, u)); umax = max(umax, dot(d, u));
+        vmin = min(vmin, dot(d, v)); vmax = max(vmax, dot(d, v));
+    }
+    int along_u = (axis == 1) ? 1 : (axis == 2) ? 0 : ((umax - umin) >= (vmax - vmin));
+    R = along_u ? u : v;
+    S = along_u ? v : u;
+    r0 = along_u ? umin : vmin;  r1 = along_u ? umax : vmax;
+    s0 = along_u ? vmin : umin;  s1 = along_u ? vmax : umax;
+}
+
+// Arch outline from the left spring (-w/2, ys) to the right spring (w/2, ys), z = 0.
+// shape 0 = round (semicircle, rise w/2), 1 = pointed (equilateral lancet, rise w*sqrt(3)/2).
+float arch_rise(float w; int shape) { return shape == 1 ? w * 0.8660254 : w * 0.5; }
+
+function vector[] arch_pts(float w; float ys; int shape; int nseg) {
+    vector out[];
+    int n = max(2, nseg);
+    if (shape == 1) {
+        int h = max(1, n / 2);
+        for (int i = 0; i <= h; i++) {               // left arc: centre (+w/2, ys), radius w, 180 -> 120 deg
+            float a = radians(180.0 - 60.0 * i / h);
+            append(out, set(w * 0.5 + w * cos(a), ys + w * sin(a), 0));
+        }
+        for (int i = 1; i <= h; i++) {               // right arc: centre (-w/2, ys), 60 -> 0 deg
+            float a = radians(60.0 - 60.0 * i / h);
+            append(out, set(-w * 0.5 + w * cos(a), ys + w * sin(a), 0));
+        }
+    } else {
+        for (int i = 0; i <= n; i++) {
+            float a = radians(180.0 - 180.0 * i / n);
+            append(out, set(w * 0.5 * cos(a), ys + w * 0.5 * sin(a), 0));
+        }
+    }
+    return out;
+}
+
+// Wall of one bay (width bw, height H, thickness t, z in [-t,0]) around an opening of width ow:
+// rectangle from y0 to the spring ys, then the arch `ap` (from arch_pts). Module space.
+void arch_wall(float bw; float H; float t; float ow; float y0; float ys; vector ap[]; string mat) {
+    float side = (bw - ow) * 0.5;
+    add_box(set(-(bw - side) * 0.5, H * 0.5, -t * 0.5), set(side, H, t), mat, "wall");
+    add_box(set( (bw - side) * 0.5, H * 0.5, -t * 0.5), set(side, H, t), mat, "wall");
+    if (y0 > 1e-4) add_box(set(0, y0 * 0.5, -t * 0.5), set(ow, y0, t), mat, "wall");
+    for (int i = 0; i < len(ap) - 1; i++) {
+        vector a = ap[i], b = ap[i + 1];
+        vector af = set(a.x, a.y, 0), bf = set(b.x, b.y, 0);
+        vector ab = set(a.x, a.y, -t), bb = set(b.x, b.y, -t);
+        add_poly(array(af, bf, set(b.x, H, 0), set(a.x, H, 0)), {0,0,1}, mat, "wall");
+        add_poly(array(ab, bb, set(b.x, H, -t), set(a.x, H, -t)), {0,0,-1}, mat, "wall");
+        vector m = (a + b) * 0.5;
+        add_poly(array(af, bf, bb, ab), normalize(set(-m.x, ys - m.y - 1e-3, 0)), mat, "reveal");
+    }
+}
+
+// Frame ring along an outline (open polyline), boxes of width fw and depth zd centred at depth zc.
+void frame_along(vector ap[]; float fw; float zc; float zd; string part) {
+    for (int i = 0; i < len(ap) - 1; i++) {
+        vector a = ap[i], b = ap[i + 1];
+        vector X = normalize(b - a);
+        vector Y = cross({0,0,1}, X);
+        vector c = (a + b) * 0.5 - Y * (fw * 0.5);           // inside the opening edge
+        add_obox(set(c.x, c.y, zc), set(distance(a, b) + fw * 0.5, fw, zd), X, {0,0,1}, "frame", part);
+    }
+}
+
+// Pyramid / cone cap on a closed ring `base` (horizontal), apex at `apex`.
+void add_pyramid(vector base[]; vector apex; string mat; string part) {
+    int n = len(base);
+    vector c = 0;
+    foreach (vector p; base) c += p;
+    c /= n;
+    for (int i = 0; i < n; i++) {
+        vector a = base[i], b = base[(i + 1) % n];
+        vector m = (a + b) * 0.5 - c;
+        add_poly(array(a, b, apex), normalize(set(m.x, 0, m.z)) + {0,0.5,0}, mat, part);
+    }
+    add_poly(base, {0,-1,0}, mat, part + "_under");
+}
+
+// Closed horizontal ring of n points (n = 4 -> square aligned to X/Z of the frame), radius = half width.
+function vector[] ring_pts(vector c; vector X; vector Z; float hw; int n; float y) {
+    vector out[];
+    int k = max(3, n);
+    float r = (k == 4) ? hw * 1.41421356 : hw / cos(M_PI / k);   // faces at distance hw from the centre
+    for (int i = 0; i < k; i++) {
+        float a = 2 * M_PI * (i + 0.5) / k;
+        vector p = c + X * (r * cos(a)) + Z * (r * sin(a));
+        p.y = y;
+        append(out, p);
+    }
+    return out;
+}
+// ===== end helpers =====
+
+// Stair flight f (storey f -> f+1) of the interior shell, inside the ground outline (input `geo`, prim 0).
+// Frame: o = first point of the front edge, X along the front edge, N into the building. Lanes of width w run
+// along X against the stair wall (side 0 = back wall, 1 = front wall); flight f uses lane f % 2 and starts
+// where flight f-1 ended (direction +X for even, -X for odd flights). The tread depth is shared by all
+// flights (from the tallest storey). Returns 0 when there is no flight f or no room for it.
+// Outputs: xs start along X, dir +-1, d0 inner lane edge along N, y0 floor, n risers, rz riser, tr tread.
+int stair_flight(int geo; int f; int front; int side; float t; float gh; float fh; int nfl; float w;
+                 float rmax; float tmax; float u; float land; export vector o; export vector X; export vector N;
+                 export float xs; export float dir; export float d0; export float y0; export int n;
+                 export float rz; export float tr) {
+    if (f < 0 || f >= nfl) return 0;
+    vector up = {0,1,0};
+    int pts[] = primpoints(geo, 0);
+    int np = len(pts);
+    if (np < 3) return 0;
+    int fe = front % np;
+    vector a0 = point(geo, "P", pts[fe]);
+    vector a1 = point(geo, "P", pts[(fe + 1) % np]);
+    X = a1 - a0;
+    X.y = 0;
+    X = normalize(X);
+    N = normalize(cross(up, X));
+    vector c = 0;
+    foreach (int p; pts) c += point(geo, "P", p);
+    c /= np;
+    if (dot(c - a0, N) < 0) N = -N;
+    o = a0;
+    o.y = 0;
+    float xa = 1e9, xb = -1e9, da = 1e9, db = -1e9;
+    foreach (int p; pts) {
+        vector d = point(geo, "P", p) - o;
+        xa = min(xa, dot(d, X)); xb = max(xb, dot(d, X));
+        da = min(da, dot(d, N)); db = max(db, dot(d, N));
+    }
+    float L0 = xa + t + land, L1 = xb - t - land;
+    float avail = L1 - L0;
+    if (avail < tmax * 2 || (db - da) - 2 * t < 2 * w + land) return 0;
+    float hmax = (nfl > 1) ? max(gh, fh) : gh;
+    int nmax = max(2, int(ceil(hmax / rmax)));
+    tr = min(tmax, avail / (nmax - 1));
+    float x = L0 + clamp(u, 0, 1) * max(avail - tr * (nmax - 1), 0);
+    for (int k = 0; k < f; k++) {
+        int nk = max(2, int(ceil(((k == 0) ? gh : fh) / rmax)));
+        x += ((k % 2 == 0) ? 1.0 : -1.0) * tr * (nk - 1);
+    }
+    float h = (f == 0) ? gh : fh;
+    n = max(2, int(ceil(h / rmax)));
+    rz = h / n;
+    y0 = (f == 0) ? 0 : gh + (f - 1) * fh;
+    xs = x;
+    dir = (f % 2 == 0) ? 1.0 : -1.0;
+    float xe = xs + dir * tr * (n - 1);
+    if (min(xs, xe) < xa + t - 1e-3 || max(xs, xe) > xb - t + 1e-3) return 0;
+    int lane = f % 2;
+    d0 = (side == 0) ? db - t - (lane + 1) * w : da + t + lane * w;
+    return 1;
+}
+
+// Oriented box like add_obox, split into n segments along X (one closed solid, shared points: the long faces
+// are strips of quads). Used for long members that must follow a roof surface point by point (roof clip);
+// PolyBevel ignores the flat inner edges, so HIGH shows no grooves.
+void add_obox_seg(vector c; vector s; vector X; vector Z; string mat; string part; int nseg) {
+    if (min(s) <= 1e-5) return;
+    int n = max(1, nseg);                             // parameters are references: never assign to them
+    vector Y = cross(Z, X);
+    vector h = s * 0.5;
+    int R[];                                          // ring i: corners (-y-z, +y-z, +y+z, -y+z)
+    vector Q[];
+    for (int i = 0; i <= n; i++) {
+        float x = -h.x + s.x * i / n;
+        float cy[] = array(-1.0, 1.0, 1.0, -1.0);
+        float cz[] = array(-1.0, -1.0, 1.0, 1.0);
+        for (int k = 0; k < 4; k++) {
+            vector p = c + X * x + Y * (cy[k] * h.y) + Z * (cz[k] * h.z);
+            append(Q, p);
+            append(R, addpoint(0, p));
+        }
+    }
+    vector out4[] = array(-Z, Y, Z, -Y);              // side between corner k and k+1
+    for (int i = 0; i < n; i++)
+        for (int k = 0; k < 4; k++) {
+            int a = i * 4 + k, b = i * 4 + (k + 1) % 4, cc = (i + 1) * 4 + (k + 1) % 4, d = (i + 1) * 4 + k;
+            add_poly_ids(array(R[a], R[b], R[cc], R[d]), array(Q[a], Q[b], Q[cc], Q[d]), out4[k], mat, part);
+        }
+    add_poly_ids(array(R[0], R[1], R[2], R[3]), array(Q[0], Q[1], Q[2], Q[3]), -X, mat, part);
+    int e = n * 4;
+    add_poly_ids(array(R[e], R[e + 1], R[e + 2], R[e + 3]), array(Q[e], Q[e + 1], Q[e + 2], Q[e + 3]), X, mat, part);
+}

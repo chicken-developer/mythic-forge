@@ -1,0 +1,20 @@
+{
+ "hip": "E:/Repos/mythic-forge/Assets/hip/goth_chapel.hip",
+ "asset": "goth_chapel",
+ "views": {
+  "persp": true,
+  "front": true,
+  "side": true,
+  "persp_low": true,
+  "cutaway": true
+ },
+ "time": "2026-11-08 22:09:58",
+ "points": 20162,
+ "prims": 17458,
+ "size": [
+  11.800000190734863,
+  15.740580946207047,
+  21.382843017578125
+ ],
+ "preview_quality": 1
+}

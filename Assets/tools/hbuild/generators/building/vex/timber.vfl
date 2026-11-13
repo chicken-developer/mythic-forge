@@ -1,0 +1,93 @@
+// TIMBER: half-timber overlay (posts, plates, rails, braces, gable trusses), material "timber".
+//   input 1 = OUT_LAYOUT (bay frames), input 2 = OUT_ROOF, input 3 = OUT_WINGS (gable triangles)
+// Members sit on the wall plane, from 0 to timber_d out of it. Overlay only: it never cuts the wall,
+// so it can be bypassed. Posts on every bay boundary, plates at the top of each storey (and at the
+// bottom of upper storeys), a sill-height rail on window bays, braces in plain W0 bays.
+if (!chi("../timber")) return;
+float tw    = ch("../timber_w");
+float td    = ch("../timber_d");
+int   tfrom = chi("../timber_from");
+int   style = chi("../timber_brace");
+int   rail  = chi("../timber_rail");
+float bayw  = ch("../bay_w");
+float gh    = ch("../ground_h");
+float fh    = ch("../floor_h");
+float sill  = ch("../sill_h");
+vector up   = {0,1,0};
+
+for (int pt = 0; pt < npoints(1); pt++) {
+    int f = point(1, "floor", pt);
+    if (f < tfrom) continue;
+    vector P = point(1, "P", pt);
+    vector4 q = point(1, "orient", pt);
+    vector X = qrotate(q, {1,0,0});
+    vector n = qrotate(q, {0,0,1});
+    float w = point(1, "bay_width", pt);
+    float h = (f == 0) ? gh : fh;
+    int b = point(1, "bay", pt), nb = point(1, "nbays", pt);
+    string m = point(1, "module", pt);
+    vector z = n * (td * 0.5 - 0.005);              // centre depth: from 1 cm inside the wall to td out
+    float  dz = td + 0.01;
+    vector L = P - X * (w * 0.5), Rb = P + X * (w * 0.5);
+
+    // posts on the left boundary of every bay, plus the right boundary of the last bay of the edge
+    add_obox(L + up * (h * 0.5) + z, set(tw, h, dz), X, n, "timber", "timber_post");
+    if (b == nb - 1) add_obox(Rb + up * (h * 0.5) + z, set(tw, h, dz), X, n, "timber", "timber_post");
+    // plates: top of the storey (in segments of <= timber_seg, so the roof clip can follow a roof valley /
+    // eave point by point); bottom only for upper storeys (the ground floor stands on the plinth)
+    add_obox_seg(P + up * (h - tw * 0.5) + z, set(w, tw, dz), X, n, "timber", "timber_plate",
+                 int(ceil(w / max(ch("../timber_seg"), 0.05))));
+    if (f > 0) add_obox(P + up * (tw * 0.5) + z, set(w, tw, dz), X, n, "timber", "timber_plate");
+    // rail at sill height on window bays (scaled like the module)
+    float sy = sill * h / ((m == "D" || m == "S" || m == "DA") ? gh : fh);
+    if (rail && (m == "W" || m == "WA") && sy > tw)
+        add_obox(P + up * (sy - tw * 0.5) + z, set(w, tw * 0.8, dz), X, n, "timber", "timber_rail");
+    // braces inside plain bays, between posts and plates
+    if (m == "W0" && style > 0) {
+        float x0 = -w * 0.5 + tw * 0.5, x1 = w * 0.5 - tw * 0.5;
+        float y0 = (f > 0) ? tw : 0, y1 = h - tw;
+        vector c00 = P + X * x0 + up * y0 + z, c10 = P + X * x1 + up * y0 + z;
+        vector c01 = P + X * x0 + up * y1 + z, c11 = P + X * x1 + up * y1 + z;
+        if (style == 1) {
+            if ((b + f) % 2 == 0) add_beam(c00, c11, tw * 0.85, dz, n, "timber", "timber_brace");
+            else                  add_beam(c10, c01, tw * 0.85, dz, n, "timber", "timber_brace");
+        } else if (style == 2) {
+            add_beam(c00, c11, tw * 0.85, dz, n, "timber", "timber_brace");
+            add_beam(c10, c01, tw * 0.85, dz, n, "timber", "timber_brace");
+        } else {
+            vector tm = (c01 + c11) * 0.5;               // chevron: both lower corners to the top middle
+            add_beam(c00, tm, tw * 0.85, dz, n, "timber", "timber_brace");
+            add_beam(c10, tm, tw * 0.85, dz, n, "timber", "timber_brace");
+        }
+    }
+}
+
+// gable trusses: tie beam, king post, collar at timber_collar x height, two struts to the collar ends
+if (chi("../timber_gable")) {
+    int _g_list5[] = array(2, 3);
+    foreach (int g; _g_list5) {
+        for (int pr = 0; pr < nprimitives(g); pr++) {
+            string part = prim(g, "part", pr);
+            if (part != "gable") continue;
+            int pp[] = primpoints(g, pr);
+            if (len(pp) != 3) continue;
+            vector a = point(g, "P", pp[0]), b = point(g, "P", pp[1]), c = point(g, "P", pp[2]);
+            vector apex = a, b0 = b, b1 = c;                       // apex = the highest point
+            if (b.y > apex.y) { apex = b; b0 = a; b1 = c; }
+            if (c.y > apex.y) { apex = c; b0 = a; b1 = b; }
+            vector n = prim_normal(g, pr, 0.3, 0.3);
+            vector z = n * (td * 0.5 - 0.005);
+            float dz = td + 0.01;
+            vector mid = (b0 + b1) * 0.5;
+            float hgt = apex.y - mid.y;
+            if (hgt < 0.5) continue;
+            float k = ch("../timber_collar");
+            vector l = lerp(b0, apex, k), r = lerp(b1, apex, k);
+            add_beam(b0 + up * (tw * 0.5) + z, b1 + up * (tw * 0.5) + z, tw, dz, n, "timber", "timber_gable");
+            add_beam(mid + z, apex - up * (tw * 0.5) + z, tw, dz, n, "timber", "timber_gable");
+            add_beam(l + z, r + z, tw, dz, n, "timber", "timber_gable");
+            add_beam(mid + z, l + z, tw * 0.85, dz, n, "timber", "timber_gable");
+            add_beam(mid + z, r + z, tw * 0.85, dz, n, "timber", "timber_gable");
+        }
+    }
+}

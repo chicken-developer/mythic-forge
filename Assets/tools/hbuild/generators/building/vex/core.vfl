@@ -1,0 +1,102 @@
+// CORE
+//   interior = 0: closed inner volumes (footprint inset by wall_t) hidden behind the facade modules.
+//   interior = 1: interior shell. The facade modules already are real walls (wall_t thick, openings cut
+//                 through), so the core only adds: one floor slab per storey (top face at the storey base),
+//                 a ceiling under the eave (its top face is the roof of a flat roof). Slabs reach half-way
+//                 into the walls so no gap shows at the wall line. Stair holes are cut by the Boolean
+//                 (core_cut.vfl), the flights come from core_stairs.vfl.
+// Ground storey on prim 0 (ground outline), upper storeys on prim 1 (upper outline, jettied).
+
+// footprint `prim` (input 1) offset inward by d (mitred, clamped on sharp corners), y = 0
+function vector[] inset_outline(int prim; float d) {
+    vector up = {0,1,0};
+    int pts[] = primpoints(1, prim);
+    int np = len(pts);
+    vector q[];
+    for (int i = 0; i < np; i++) {
+        vector p  = point(1, "P", pts[i]);
+        vector pp = point(1, "P", pts[(i - 1 + np) % np]);
+        vector pn = point(1, "P", pts[(i + 1) % np]);
+        vector n1 = normalize(cross(normalize(p - pp), up));
+        vector n2 = normalize(cross(normalize(pn - p), up));
+        vector m  = normalize(n1 + n2);
+        vector r  = p - m * (d / max(dot(m, n2), 0.25));
+        r.y = 0;
+        append(q, r);
+    }
+    return q;
+}
+
+function vector[] lifted(vector q[]; float y) {
+    vector r[];
+    foreach (vector p; q) append(r, p + set(0, y, 0));
+    return r;
+}
+
+// closed slab under the outline `top` (thickness th), separate material/part for top, underside, edges
+void slab3(vector top[]; float th; string tmat; string tpart; string bmat; string bpart; string smat; string spart) {
+    vector up = {0,1,0};
+    int n = len(top);
+    if (n < 3 || th <= 1e-5) return;
+    int T[], B[];
+    vector bot[];
+    vector cen = 0;
+    foreach (vector p; top) {
+        append(bot, p - up * th);
+        append(T, addpoint(0, p));
+        append(B, addpoint(0, p - up * th));
+        cen += p;
+    }
+    cen /= n;
+    add_poly_ids(T, top, up, tmat, tpart);
+    add_poly_ids(B, bot, -up, bmat, bpart);
+    for (int i = 0; i < n; i++) {
+        int j = (i + 1) % n;
+        vector m = (top[i] + top[j]) * 0.5 - cen;
+        m.y = 0;
+        add_poly_ids(array(T[i], T[j], B[j], B[i]), array(top[i], top[j], bot[j], bot[i]), normalize(m), smat, spart);
+    }
+}
+
+void core_volume(int prim; float y0; float y1; float t; string topmat; string toppart) {
+    vector up = {0,1,0};
+    vector q[] = inset_outline(prim, t);
+    int np = len(q);
+    for (int i = 0; i < np; i++) {
+        vector a = q[i];
+        vector b = q[(i + 1) % np];
+        vector side[] = array(a + set(0, y0, 0), b + set(0, y0, 0), b + set(0, y1, 0), a + set(0, y1, 0));
+        add_poly(side, cross(normalize(b - a), up), "wall", "core");
+    }
+    vector top[], bot[];
+    foreach (vector p; q) { append(top, p + set(0, y1, 0)); append(bot, p + set(0, y0, 0)); }
+    add_poly(top, up, topmat, toppart);
+    add_poly(bot, -up, "wall", "core_bottom");
+}
+
+float t   = ch("../wall_t");
+float gh  = ch("../ground_h");
+float fh  = ch("../floor_h");
+int   nfl = chi("../floor_n");
+float H   = gh + nfl * fh;
+int   p1  = min(1, nprimitives(1) - 1);
+if (!chi("../interior")) {
+    if (nfl == 0) {
+        core_volume(0, 0, gh, t, "roof", "core_top");
+    } else {
+        core_volume(0, 0, gh, t, "wall", "core_floor");
+        core_volume(p1, gh, H, t, "roof", "core_top");
+    }
+} else {
+    float  ft   = ch("../floor_t");
+    float  ct   = ch("../ceiling_t");
+    string fm   = chi("../interior_floor_mat") == 1 ? "stone" : "timber";
+    int    flat = chi("../roof_type") == 0;
+    vector g0[] = inset_outline(0, t * 0.5);
+    vector g1[] = inset_outline(p1, t * 0.5);
+    slab3(lifted(g0, 0), ft, fm, "floor", "wall", "slab_under", "wall", "slab_edge");
+    for (int f = 1; f <= nfl; f++)
+        slab3(lifted(g1, gh + (f - 1) * fh), ft, fm, "floor", "wall", "ceiling", "wall", "slab_edge");
+    slab3(lifted(nfl == 0 ? g0 : g1, H), ct, flat ? "roof" : "wall", flat ? "core_top" : "ceiling_top",
+          "wall", "ceiling", "wall", "slab_edge");
+}

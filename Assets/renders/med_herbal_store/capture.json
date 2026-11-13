@@ -1,0 +1,20 @@
+{
+ "hip": "E:/Repos/mythic-forge/Assets/hip/med_herbal_store.hip",
+ "asset": "med_herbal_store",
+ "views": {
+  "persp": true,
+  "front": true,
+  "side": true,
+  "persp_low": true,
+  "cutaway": true
+ },
+ "time": "2026-11-08 22:12:11",
+ "points": 7115,
+ "prims": 6607,
+ "size": [
+  9.059999465942383,
+  7.07024422287941,
+  9.282886266708374
+ ],
+ "preview_quality": 1
+}

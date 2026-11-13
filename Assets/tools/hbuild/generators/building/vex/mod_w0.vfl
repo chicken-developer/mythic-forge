@@ -1,0 +1,6 @@
+// MOD_W0: plain wall bay. Module space: origin = bay bottom-centre on the wall plane,
+// X along the facade, Y up, +Z out of the building; the wall body occupies z in [-wall_t, 0].
+float bw = ch("../bay_w");
+float H  = ch("../floor_h");
+float t  = ch("../wall_t");
+add_box(set(0, H * 0.5, -t * 0.5), set(bw, H, t), "wall", "wall");

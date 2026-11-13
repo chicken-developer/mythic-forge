@@ -1,0 +1,20 @@
+{
+ "hip": "E:/Repos/mythic-forge/Assets/hip/med_normal_house_b.hip",
+ "asset": "med_normal_house_b",
+ "views": {
+  "persp": true,
+  "front": true,
+  "side": true,
+  "persp_low": true,
+  "cutaway": true
+ },
+ "time": "2026-11-08 22:13:26",
+ "points": 15080,
+ "prims": 14316,
+ "size": [
+  9.25999927520752,
+  9.762083441019058,
+  8.58623218536377
+ ],
+ "preview_quality": 1
+}

@@ -1,0 +1,8 @@
+// UV (run over vertices): world-space box projection; 1 UV unit = uv_tile metres, so tileable
+// wall/trim textures keep the same texel density on every module and every building.
+vector n = abs(prim_normal(0, @primnum, 0.5, 0.5));
+float  k = 1.0 / max(ch("../uv_tile"), 1e-3);
+vector P = v@P;
+if (n.y >= n.x && n.y >= n.z)      v@uv = set(P.x, P.z, 0) * k;
+else if (n.x >= n.z)               v@uv = set(P.z, P.y, 0) * k;
+else                               v@uv = set(P.x, P.y, 0) * k;

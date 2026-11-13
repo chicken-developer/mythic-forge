@@ -1,0 +1,34 @@
+// MOD_W: window bay (nominal height = floor_h). See mod_w0 for module space.
+float bw = ch("../bay_w");
+float H  = ch("../floor_h");
+float t  = ch("../wall_t");
+float ow = bw * ch("../win_w");
+float oh = H  * ch("../win_h");
+float y0 = clamp(ch("../sill_h"), 0.05, max(0.05, H - oh - 0.15));   // keep a lintel of >= 0.15 m
+float y1 = y0 + oh;
+float fw = ch("../frame_w");
+float fd = ch("../frame_d");
+float so = ch("../sill_out");
+float side = (bw - ow) * 0.5;
+
+// wall around the opening
+add_box(set(-(bw - side) * 0.5, H * 0.5, -t * 0.5), set(side, H, t), "wall", "wall");
+add_box(set( (bw - side) * 0.5, H * 0.5, -t * 0.5), set(side, H, t), "wall", "wall");
+add_box(set(0, y0 * 0.5, -t * 0.5),                 set(ow, y0, t), "wall", "wall");
+add_box(set(0, (y1 + H) * 0.5, -t * 0.5),           set(ow, H - y1, t), "wall", "wall");
+
+// frame: from half-way into the wall to frame_d out of it
+float zc = (fd - t * 0.5) * 0.5;
+float zd = fd + t * 0.5;
+float ym = (y0 + y1) * 0.5;
+add_box(set(-(ow - fw) * 0.5, ym, zc), set(fw, oh, zd), "frame", "frame");
+add_box(set( (ow - fw) * 0.5, ym, zc), set(fw, oh, zd), "frame", "frame");
+add_box(set(0, y1 - fw * 0.5, zc),     set(ow - 2 * fw, fw, zd), "frame", "frame");
+add_box(set(0, y0 + fw * 0.5, zc),     set(ow - 2 * fw, fw, zd), "frame", "frame");
+add_box(set(0, ym, zc),                set(fw * 0.6, oh - 2 * fw, zd * 0.8), "frame", "mullion");
+add_box(set(0, ym, -t * 0.25),         set(ow - 2 * fw, oh - 2 * fw, 0.02), "glass", "glass");
+
+// sill and optional header
+add_box(set(0, y0 - 0.04, (so - t * 0.5) * 0.5), set(ow + 0.2, 0.08, so + t * 0.5), "trim", "sill");
+if (chi("../win_header"))
+    add_box(set(0, y1 + 0.1, 0.03), set(ow + 0.3, 0.2, 0.1), "trim", "header");

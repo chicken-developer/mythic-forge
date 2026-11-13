@@ -1,0 +1,20 @@
+{
+ "hip": "E:/Repos/mythic-forge/Assets/hip/med_food_shop.hip",
+ "asset": "med_food_shop",
+ "views": {
+  "persp": true,
+  "front": true,
+  "side": true,
+  "persp_low": true,
+  "cutaway": true
+ },
+ "time": "2026-11-08 22:11:14",
+ "points": 8281,
+ "prims": 7691,
+ "size": [
+  9.059999465942383,
+  6.856370836496353,
+  9.189536333084106
+ ],
+ "preview_quality": 1
+}

@@ -1,0 +1,20 @@
+{
+ "hip": "E:/Repos/mythic-forge/Assets/hip/med_craft_guild_hall.hip",
+ "asset": "med_craft_guild_hall",
+ "views": {
+  "persp": true,
+  "front": true,
+  "side": true,
+  "persp_low": true,
+  "cutaway": true
+ },
+ "time": "2026-11-08 22:10:55",
+ "points": 10012,
+ "prims": 8414,
+ "size": [
+  14.294975280761719,
+  9.230743795633316,
+  12.494976043701172
+ ],
+ "preview_quality": 1
+}

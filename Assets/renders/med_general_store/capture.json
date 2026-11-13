@@ -1,0 +1,20 @@
+{
+ "hip": "E:/Repos/mythic-forge/Assets/hip/med_general_store.hip",
+ "asset": "med_general_store",
+ "views": {
+  "persp": true,
+  "front": true,
+  "side": true,
+  "persp_low": true,
+  "cutaway": true
+ },
+ "time": "2026-11-08 22:11:52",
+ "points": 8283,
+ "prims": 7801,
+ "size": [
+  10.65999984741211,
+  7.215552717447281,
+  9.782886028289795
+ ],
+ "preview_quality": 1
+}

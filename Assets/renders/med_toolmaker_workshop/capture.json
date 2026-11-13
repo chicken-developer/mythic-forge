@@ -1,0 +1,20 @@
+{
+ "hip": "E:/Repos/mythic-forge/Assets/hip/med_toolmaker_workshop.hip",
+ "asset": "med_toolmaker_workshop",
+ "views": {
+  "persp": true,
+  "front": true,
+  "side": true,
+  "persp_low": true,
+  "cutaway": true
+ },
+ "time": "2026-11-08 22:14:23",
+ "points": 19155,
+ "prims": 18225,
+ "size": [
+  11.130000114440918,
+  10.68857803940773,
+  10.596016883850098
+ ],
+ "preview_quality": 1
+}

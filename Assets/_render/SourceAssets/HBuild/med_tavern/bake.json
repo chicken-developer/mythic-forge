@@ -1,0 +1,162 @@
+{
+ "asset": "med_tavern",
+ "hip": "E:/Repos/mythic-forge/Assets/hip/med_tavern.hip",
+ "hip_sha256": "0b33fd03e6571d4d91436858cdf3be0f55d55a8e8acd31b5747c1e6bb3a74694",
+ "houdini": "22.0.368",
+ "hda": "E:/Repos/mythic-forge/Assets/hda/bldg_building_generator.hda",
+ "type": "bldg::building_generator::1.0",
+ "low": {
+  "points": 5211,
+  "triangles": 7821,
+  "fixed_nonfinite_vertices": 0,
+  "high_fixed_points": 0,
+  "pieces": 596,
+  "piece0_points": 8,
+  "bounds_m": [
+   15.38,
+   11.1564,
+   11.6043
+  ],
+  "bbox_min_m": [
+   -8.85,
+   -0.15,
+   -4.6043
+  ],
+  "materials": {
+   "stone": 816,
+   "wall": 1021,
+   "frame": 1932,
+   "glass": 372,
+   "trim": 732,
+   "door": 24,
+   "timber": 2552,
+   "roof": 72,
+   "fabric": 150,
+   "fabric2": 150
+  },
+  "uv_sets": [
+   "uv",
+   "uv2"
+  ]
+ },
+ "high": {
+  "points": 23891,
+  "triangles": 45181,
+  "fixed_nonfinite_vertices": 0,
+  "high_fixed_points": 0,
+  "pieces": 596,
+  "piece0_points": 8,
+  "bounds_m": [
+   15.38,
+   11.1564,
+   11.596
+  ],
+  "bbox_min_m": [
+   -8.85,
+   -0.15,
+   -4.596
+  ],
+  "materials": {
+   "stone": 1392,
+   "wall": 1021,
+   "frame": 17388,
+   "glass": 372,
+   "trim": 6588,
+   "door": 216,
+   "timber": 17832,
+   "roof": 72,
+   "fabric": 150,
+   "fabric2": 150
+  },
+  "uv_sets": [
+   "uv",
+   "uv2"
+  ]
+ },
+ "colors_linear": {
+  "stone": [
+   0.651,
+   0.558,
+   0.423
+  ],
+  "wall": [
+   0.913,
+   0.753,
+   0.552
+  ],
+  "frame": [
+   0.112,
+   0.05,
+   0.021
+  ],
+  "glass": [
+   0.888,
+   0.423,
+   0.068
+  ],
+  "trim": [
+   0.651,
+   0.558,
+   0.423
+  ],
+  "door": [
+   0.112,
+   0.05,
+   0.021
+  ],
+  "timber": [
+   0.238,
+   0.102,
+   0.042
+  ],
+  "roof": [
+   0.591,
+   0.138,
+   0.058
+  ],
+  "fabric": [
+   0.888,
+   0.423,
+   0.068
+  ],
+  "fabric2": [
+   0.913,
+   0.815,
+   0.672
+  ]
+ },
+ "bake": {
+  "backend": "Copernicus bakegeometrytextures::2.0",
+  "resolution": 4096,
+  "normal_space": "tangent, DirectX (green down), MikkT, linear",
+  "uv": "UV0 (unique packed)",
+  "ray_length_m": 0.075,
+  "isolation": "connected pieces (generator i@piece, kept through the bevel) translated apart, same offsets low/high"
+ },
+ "fbx_units": "cm (positions x100)",
+ "material_slots": [
+  "M_door",
+  "M_fabric",
+  "M_fabric2",
+  "M_frame",
+  "M_glass",
+  "M_roof",
+  "M_stone",
+  "M_timber",
+  "M_trim",
+  "M_wall"
+ ],
+ "files": {
+  "low": "E:/Repos/mythic-forge/Assets/_render/SourceAssets/HBuild/med_tavern/SM_med_tavern_LOW.fbx",
+  "high": "E:/Repos/mythic-forge/Assets/_render/SourceAssets/HBuild/med_tavern/SM_med_tavern_HIGH.fbx",
+  "normal": "E:/Repos/mythic-forge/Assets/_render/SourceAssets/HBuild/med_tavern/T_med_tavern_N.png",
+  "hits": "E:/Repos/mythic-forge/Assets/_render/SourceAssets/HBuild/med_tavern/T_med_tavern_hits.png"
+ },
+ "sha256": {
+  "low": "b1562915ef75c95baac999bdf6e6af1b5712ca5cdd0b721afcfe0bf841c92820",
+  "high": "31237e05fb1cf07824b626b9c59473e0865592c492ef19dfb842c959f943046c",
+  "normal": "ecc0ddd6154d10d76bed9c173ae0ab87e18d6a2db2f03794c591c62f312ffdbd",
+  "hits": "d60c0db851ce187637676392613cdfab3dfc74b2279acdddf097a47f41037c1b"
+ },
+ "seconds": 28.0
+}

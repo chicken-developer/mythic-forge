@@ -1,0 +1,29 @@
+// MOD_DA: arched door / portal bay (nominal height = ground_h). door_w wide, door_h = floor to apex,
+// arch_shape 0 round, 1 pointed. Wall around the opening, arched frame, door slab. Module space as mod_w0.
+float bw = ch("../bay_w");
+float H  = ch("../ground_h");
+float t  = ch("../wall_t");
+int   sh = chi("../arch_shape");
+int   ns = chi("../arch_seg");
+float dw = min(ch("../door_w"), bw - 0.3);       // keep >= 0.15 m of wall each side
+float dh = min(ch("../door_h"), H - 0.3);
+float rise = arch_rise(dw, sh);
+float ys = max(0.5, dh - rise);                  // spring line (a door keeps >= 0.5 m of straight jamb)
+float fw = ch("../frame_w");
+float fd = ch("../frame_d");
+
+vector ap[] = arch_pts(dw, ys, sh, ns);
+arch_wall(bw, H, t, dw, 0, ys, ap, "wall");
+
+float zc = (fd - t * 0.5) * 0.5;
+float zd = fd + t * 0.5;
+add_box(set(-(dw - fw) * 0.5, ys * 0.5, zc), set(fw, ys, zd), "frame", "frame");
+add_box(set( (dw - fw) * 0.5, ys * 0.5, zc), set(fw, ys, zd), "frame", "frame");
+frame_along(ap, fw, zc, zd, "arch_frame");
+
+// door slab with the same outline, recessed into the wall
+vector dp[] = array(set(-(dw * 0.5 - fw), 0, 0), set(dw * 0.5 - fw, 0, 0));
+vector ia[] = arch_pts(dw - 2 * fw, ys, sh, ns);
+for (int i = len(ia) - 1; i >= 0; i--) append(dp, ia[i]);
+foreach (int i; vector p; dp) dp[i] = set(p.x, p.y, -t * 0.6);
+add_poly(dp, {0,0,1}, "door", "door");

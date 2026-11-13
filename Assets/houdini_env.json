@@ -1,0 +1,7 @@
+{
+ "hython": "E:/SideFX/Houdini 22.0.368/bin/hython.exe",
+ "python": "",
+ "houdini_version": "22.0.368",
+ "houdini_gui": "E:/SideFX/Houdini 22.0.368/bin/houdini.exe",
+ "note": "python = interpreter with matplotlib+numpy for contact_sheet/render_network; empty if Houdini's python lacks them"
+}

@@ -1,0 +1,66 @@
+// WINGS: core volume + roof of every wing footprint (OUT_WING_PLAN). Facades of the wings come from
+// LAYOUT + MOD_* like the main body. Local frame per wing: origin O = middle of the edge against the
+// main body, `out` = away from the main body, `along` = parallel to that wall.
+// roof: 0 cross gable (ridge along `out`, gable on the outer face, runs `back` metres into the main roof)
+//       1 shed sloping away from the main wall, 2 gable parallel to the main wall, 3 flat slab.
+float gh = ch("../ground_h"), fh = ch("../floor_h"), t = ch("../wall_t");
+float ov = ch("../roof_overhang"), rt = ch("../roof_t");
+vector up = {0,1,0};
+for (int w = 0; w < nprimitives(1); w++) {
+    int pts[] = primpoints(1, w);
+    if (len(pts) != 4) continue;
+    vector A = point(1, "P", pts[0]), B = point(1, "P", pts[1]), C = point(1, "P", pts[2]);
+    vector along = normalize(A - B);
+    vector out = normalize(C - B);
+    float ww = distance(A, B), dd = distance(B, C);
+    vector O = (A + B) * 0.5;
+    int nf = prim(1, "floors", w);
+    int rtype = prim(1, "roof", w);
+    float pitch = prim(1, "pitch", w);
+    float back = prim(1, "back", w);
+    float Hw = gh + (max(nf, 1) - 1) * fh;
+    float tp = tan(radians(pitch));
+
+    if (!chi("../interior")) {
+        // core: inset box (rectangle) up to the wing eave
+        vector q[] = array(A - along * t + out * t, B + along * t + out * t, C + along * t - out * t,
+                           A + (C - B) - along * t - out * t);
+        for (int i = 0; i < 4; i++) {
+            vector a = q[i], b = q[(i + 1) % 4];
+            add_poly(array(a, b, b + set(0, Hw, 0), a + set(0, Hw, 0)), cross(normalize(b - a), up), "wall", "core");
+        }
+        vector top[];
+        foreach (vector p; q) append(top, p + set(0, Hw, 0));
+        add_poly(top, up, "roof", "core_top");
+    } else {
+        // interior shell: floor slabs + ceiling, open towards the main wall (the wing has no wall there),
+        // half-way into the side and outer walls
+        float  h2 = t * 0.5;
+        float  ft = ch("../floor_t"), ct = ch("../ceiling_t");
+        string fm = chi("../interior_floor_mat") == 1 ? "stone" : "timber";
+        vector q[] = array(A - along * h2, B + along * h2, C + along * h2 - out * h2, A + (C - B) - along * h2 - out * h2);
+        for (int k = 0; k < max(nf, 1); k++) {
+            vector s0[];
+            foreach (vector p; q) append(s0, p + set(0, (k == 0) ? 0 : gh + (k - 1) * fh, 0));
+            add_slab(s0, up, ft, fm, "floor", k == 0 ? "slab_under" : "ceiling");
+        }
+        float cy = (rtype == 3) ? Hw - max(rt, 0.1) : Hw;   // a flat wing roof sits on the eave line
+        vector s1[];
+        foreach (vector p; q) append(s1, p + set(0, cy, 0));
+        add_slab(s1, up, ct, "wall", "ceiling_top", "ceiling");
+    }
+
+    vector base = O;
+    base.y = Hw;
+    if (rtype == 0)
+        gable_roof(base, out, along, -back, dd, -ww * 0.5, ww * 0.5, tp, ov, ov, rt, 0, 0, 1, "wall");
+    else if (rtype == 1)
+        shed_roof(base, along, out, -ww * 0.5, ww * 0.5, 0, dd, dd * tp, 0, ov, rt, 1, "wall");
+    else if (rtype == 2)
+        gable_roof(base, along, out, -ww * 0.5, ww * 0.5, 0, dd, tp, ov, ov, rt, 0, 1, 1, "wall");
+    else {
+        vector s[] = array(rp(base, along, out, -ww*0.5-ov, 0, 0), rp(base, along, out, ww*0.5+ov, 0, 0),
+                           rp(base, along, out, ww*0.5+ov, dd+ov, 0), rp(base, along, out, -ww*0.5-ov, dd+ov, 0));
+        add_slab(s, up, max(rt, 0.1), "roof", "slope", "soffit");
+    }
+}

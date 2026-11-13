@@ -2,7 +2,8 @@
 
 Game development and procedural asset authoring workspace.
 
-- [ThreeDreamingKnights](ThreeDreamingKnights/README.md): main Unreal game project.
+- [ThreeDreamGolems](ThreeDreamGolems/README.md): main Unreal game project,
+  Three Dream Golems (renamed from ThreeDreamingKnights on 2026-11-12).
 - [Assets](Assets/README.md): Houdini, Substance and asset review projects.
 - [Project memory](MEMORY.md): current paths and workflow for future sessions.
 

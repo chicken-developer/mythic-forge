@@ -1,0 +1,163 @@
+{
+  "status": "pass",
+  "engine": "5.8.4-58902052+++UE5+Release-5.8",
+  "asset": "med_tavern",
+  "map": "/Game/Levels/NewMap",
+  "dest": "/Game/HBuild/med_tavern",
+  "steps": [
+    "normal imported",
+    "meshes imported",
+    "level ready: 8 cameras"
+  ],
+  "captures": [
+    {
+      "id": "pair_a",
+      "file": "E:\\Repos\\mythic-forge\\Assets\\_render\\RenderTests\\HBuild\\med_tavern\\med_tavern_pair_a.png",
+      "camera": "CAM_med_tavern_pair_a",
+      "resolution": [
+        2400,
+        1350
+      ],
+      "image_provenance": "unreal_engine_capture"
+    },
+    {
+      "id": "low_a",
+      "file": "E:\\Repos\\mythic-forge\\Assets\\_render\\RenderTests\\HBuild\\med_tavern\\med_tavern_low_a.png",
+      "camera": "CAM_med_tavern_low_a",
+      "resolution": [
+        1920,
+        1080
+      ],
+      "image_provenance": "unreal_engine_capture"
+    },
+    {
+      "id": "high_a",
+      "file": "E:\\Repos\\mythic-forge\\Assets\\_render\\RenderTests\\HBuild\\med_tavern\\med_tavern_high_a.png",
+      "camera": "CAM_med_tavern_high_a",
+      "resolution": [
+        1920,
+        1080
+      ],
+      "image_provenance": "unreal_engine_capture"
+    },
+    {
+      "id": "pair_b",
+      "file": "E:\\Repos\\mythic-forge\\Assets\\_render\\RenderTests\\HBuild\\med_tavern\\med_tavern_pair_b.png",
+      "camera": "CAM_med_tavern_pair_b",
+      "resolution": [
+        2400,
+        1350
+      ],
+      "image_provenance": "unreal_engine_capture"
+    },
+    {
+      "id": "low_b",
+      "file": "E:\\Repos\\mythic-forge\\Assets\\_render\\RenderTests\\HBuild\\med_tavern\\med_tavern_low_b.png",
+      "camera": "CAM_med_tavern_low_b",
+      "resolution": [
+        1920,
+        1080
+      ],
+      "image_provenance": "unreal_engine_capture"
+    },
+    {
+      "id": "high_b",
+      "file": "E:\\Repos\\mythic-forge\\Assets\\_render\\RenderTests\\HBuild\\med_tavern\\med_tavern_high_b.png",
+      "camera": "CAM_med_tavern_high_b",
+      "resolution": [
+        1920,
+        1080
+      ],
+      "image_provenance": "unreal_engine_capture"
+    },
+    {
+      "id": "interior_a",
+      "file": "E:\\Repos\\mythic-forge\\Assets\\_render\\RenderTests\\HBuild\\med_tavern\\med_tavern_interior_a.png",
+      "camera": "CAM_med_tavern_interior_a",
+      "resolution": [
+        1920,
+        1080
+      ],
+      "image_provenance": "unreal_engine_capture"
+    },
+    {
+      "id": "interior_b",
+      "file": "E:\\Repos\\mythic-forge\\Assets\\_render\\RenderTests\\HBuild\\med_tavern\\med_tavern_interior_b.png",
+      "camera": "CAM_med_tavern_interior_b",
+      "resolution": [
+        1920,
+        1080
+      ],
+      "image_provenance": "unreal_engine_capture"
+    }
+  ],
+  "low": {
+    "asset": "/Game/HBuild/med_tavern/SM_med_tavern_LOW.SM_med_tavern_LOW",
+    "triangles": 7879,
+    "expected_triangles": 7879,
+    "size_m": [
+      15.38,
+      11.604,
+      11.156
+    ],
+    "expected_size_m_houdini_xyz": [
+      15.38,
+      11.1564,
+      11.6043
+    ],
+    "size_ok": true,
+    "materials": [
+      "stone",
+      "wall",
+      "frame",
+      "glass",
+      "trim",
+      "door",
+      "timber",
+      "roof",
+      "fabric",
+      "fabric2"
+    ]
+  },
+  "high": {
+    "asset": "/Game/HBuild/med_tavern/SM_med_tavern_HIGH.SM_med_tavern_HIGH",
+    "triangles": 48133,
+    "expected_triangles": 48286,
+    "size_m": [
+      15.38,
+      11.596,
+      11.156
+    ],
+    "expected_size_m_houdini_xyz": [
+      15.38,
+      11.1564,
+      11.596
+    ],
+    "size_ok": true,
+    "materials": [
+      "stone",
+      "wall",
+      "frame",
+      "glass",
+      "trim",
+      "door",
+      "timber",
+      "roof",
+      "fabric",
+      "fabric2"
+    ]
+  },
+  "map_actors_before": [
+    "CameraActor",
+    "DirectionalLight",
+    "ExponentialHeightFog",
+    "PlayerStart",
+    "PointLight",
+    "SkyAtmosphere",
+    "SkyLight",
+    "StaticMeshActor",
+    "VolumetricCloud"
+  ],
+  "placed_on": "new ground slab",
+  "lights_added": []
+}

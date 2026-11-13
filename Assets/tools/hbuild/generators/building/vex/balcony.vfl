@@ -1,0 +1,46 @@
+// BALCONY: one balcony slab with railing on storey balcony_floor (>= 1) of the main body, against the
+// upper outline (input 1, prim 1). side/off/w/d like the canopies. Deck, two corner posts, top and
+// bottom rails on the three open sides, balusters every balcony_gap, two knee-brace brackets under it.
+if (!chi("../balcony")) return;
+vector up = {0,1,0};
+int prim = min(1, nprimitives(1) - 1);
+int pts[] = primpoints(1, prim);
+int np = len(pts);
+int fe = chi("../front_edge") % np;
+int e = (fe + chi("../balcony_side")) % np;
+vector a = point(1, "P", pts[e]), b = point(1, "P", pts[(e + 1) % np]);
+vector X = normalize(b - a);
+vector n = normalize(cross(X, up));
+vector c = (a + b) * 0.5 + X * ch("../balcony_off");
+int   f  = max(1, chi("../balcony_floor"));
+float y  = ch("../ground_h") + (f - 1) * ch("../floor_h");
+c.y = y;
+float w = ch("../balcony_w"), D = ch("../balcony_d"), rh = ch("../balcony_rail_h");
+float st = ch("../balcony_t"), rs = ch("../balcony_rail_w"), gap = ch("../balcony_gap");
+
+add_obox(c + n * (D * 0.5) - up * (st * 0.5), set(w, st, D), X, n, "timber", "balcony_deck");
+vector L0 = c - X * (w * 0.5 - rs * 0.5) + n * rs * 0.5, L1 = c - X * (w * 0.5 - rs * 0.5) + n * (D - rs * 0.5);
+vector R0 = c + X * (w * 0.5 - rs * 0.5) + n * rs * 0.5, R1 = c + X * (w * 0.5 - rs * 0.5) + n * (D - rs * 0.5);
+vector _p_list10[] = array(L1, R1);
+foreach (vector p; _p_list10)
+    add_obox(p + up * (rh * 0.5), set(rs * 1.5, rh, rs * 1.5), X, n, "timber", "post");
+vector sides0[] = array(L0, L1, R1);
+vector sides1[] = array(L1, R1, R0);
+for (int i = 0; i < 3; i++) {
+    vector p = sides0[i], q = sides1[i];
+    vector side = normalize(cross(normalize(q - p), up));        // horizontal, across the rail
+    add_beam(p + up * (rh - rs * 0.5), q + up * (rh - rs * 0.5), rs, rs, side, "timber", "rail");
+    add_beam(p + up * (rs * 1.5), q + up * (rs * 1.5), rs, rs, side, "timber", "rail");
+    float L = distance(p, q);
+    int nb = max(1, int(L / max(gap, 0.05)));
+    vector dir = normalize(q - p);
+    for (int k = 1; k < nb; k++) {
+        vector bp = p + dir * (L * k / nb);
+        add_obox(bp + up * (rh * 0.5), set(rs * 0.6, rh - rs, rs * 0.6), dir, cross(up, dir), "timber", "baluster");
+    }
+}
+float _sx_list11[] = array(-1.0, 1.0);
+foreach (float sx; _sx_list11) {
+    float x = sx * (w * 0.5 - rs * 2);
+    add_beam(c + X * x - up * (D * 0.9) + n * 0.05, c + X * x + n * (D * 0.85) - up * st, rs * 1.2, rs * 1.2, X, "timber", "bracket");
+}
