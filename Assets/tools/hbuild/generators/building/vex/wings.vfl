@@ -1,4 +1,5 @@
-// WINGS: core volume + roof of every wing footprint (OUT_WING_PLAN). Facades of the wings come from
+// WINGS: core volume + roof of every wing footprint (OUT_WING_PLAN, input 1; input 2 = OUT_FOOTPRINT, used
+// to find the main roof for the cross-gable valley). Facades of the wings come from
 // LAYOUT + MOD_* like the main body. Local frame per wing: origin O = middle of the edge against the
 // main body, `out` = away from the main body, `along` = parallel to that wall.
 // roof: 0 cross gable (ridge along `out`, gable on the outer face, runs `back` metres into the main roof)
@@ -52,9 +53,58 @@ for (int w = 0; w < nprimitives(1); w++) {
 
     vector base = O;
     base.y = Hw;
-    if (rtype == 0)
-        gable_roof(base, out, along, -back, dd, -ww * 0.5, ww * 0.5, tp, ov, ov, rt, 0, 0, 1, "wall");
-    else if (rtype == 1)
+    if (rtype == 0) {
+        // Cross gable. Each slope runs back only to where it meets the main roof (the valley), 10 cm further
+        // so it is tucked into the main slab. Before, both slopes ran `back` metres at full width: their
+        // eaves went through the main wall and showed under the ceiling of the room behind it.
+        //   pitched main roof, wing on an eave side : valley from the wing eave to the wing ridge
+        //   pitched main roof, wing on a gable end  : the roof stops inside the main wall
+        //   flat main roof                          : unchanged, `back` metres over the flat roof
+        float half = ww * 0.5 + ov;
+        float ey = -ov * tp, ry = ey + half * tp;
+        float r_ridge = -back - ov, r_eave = -back - ov;     // back end of the ridge / of the valley's low end
+        float sc = half;                                     // |s| of the valley's low end (half = at the eave)
+        if (chi("../roof_type") != 0) {
+            r_ridge = -t * 0.5;
+            r_eave = -t * 0.5;
+            if (nprimitives(2) > 0) {
+                int mp = min(1, nprimitives(2) - 1);
+                vector mp0, mR, mS;
+                float mr0, mr1, ms0, ms1;
+                roof_frame(2, mp, chi("../roof_axis"), mp0, mR, mS, mr0, mr1, ms0, ms1);
+                float side = dot(mS, out);
+                if (abs(side) > 0.7) {
+                    float mtp   = max(tan(radians(ch("../roof_pitch"))), 1e-3);
+                    float Hm    = gh + chi("../floor_n") * fh;
+                    float mhalf = (ms1 - ms0) * 0.5;
+                    float so    = dot(O - mp0, mS);
+                    float jo    = (side > 0) ? ms1 - so : so - ms0;   // O to the upper wall line (jetty)
+                    float hcut  = Hm - ov * mtp - Hw;        // main eave edge, as a height above the wing wall top
+                    float ylow  = max(ey, hcut);             // the valley exists above this height only
+                    sc = clamp(half - (ylow - ey) / max(tp, 1e-3), 0.0, half);
+                    r_ridge = jo - clamp((Hw - Hm + ry) / mtp, 0.0, mhalf) - 0.1;
+                    r_eave  = jo - clamp((Hw - Hm + ylow) / mtp, -ov, mhalf) - 0.1;
+                }
+            }
+        }
+        float rb = dd + ov;
+        float yc = ry - sc * tp;                             // slope height at |s| = sc
+        float _sg_list0[] = array(-1.0, 1.0);
+        foreach (float sg; _sg_list0) {
+            if (sc > 1e-3) {                                 // ridge side: cut by the valley
+                vector SA[] = array(rp(base, out, along, r_eave, sg * sc, yc), rp(base, out, along, rb, sg * sc, yc),
+                                   rp(base, out, along, rb, 0, ry), rp(base, out, along, r_ridge, 0, ry));
+                add_slab(SA, up_normal(SA), rt, "roof", "slope", "soffit");
+            }
+            if (sc < half - 1e-3) {                          // strip lower than the main eave: runs to the main wall
+                vector SB[] = array(rp(base, out, along, -t * 0.5, sg * half, ey), rp(base, out, along, rb, sg * half, ey),
+                                   rp(base, out, along, rb, sg * sc, yc), rp(base, out, along, -t * 0.5, sg * sc, yc));
+                add_slab(SB, up_normal(SB), rt, "roof", "slope", "soffit");
+            }
+        }
+        add_poly(array(rp(base, out, along, dd, -ww * 0.5, 0), rp(base, out, along, dd, ww * 0.5, 0),
+                       rp(base, out, along, dd, 0, ry)), out, "wall", "gable");
+    } else if (rtype == 1)
         shed_roof(base, along, out, -ww * 0.5, ww * 0.5, 0, dd, dd * tp, 0, ov, rt, 1, "wall");
     else if (rtype == 2)
         gable_roof(base, along, out, -ww * 0.5, ww * 0.5, 0, dd, tp, ov, ov, rt, 0, 1, 1, "wall");

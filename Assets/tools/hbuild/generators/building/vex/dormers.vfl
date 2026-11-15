@@ -41,7 +41,9 @@ float yb = ry - xf * tp;                              // main roof height at the
 float ye = yb + dh;                                   // dormer eave
 float yr = min(ye + dw * 0.5 * dp, ry - 0.05);        // dormer ridge stays under the main ridge
 float xe = (ry - ye) / tp, xr = (ry - yr) / tp;       // where eave / ridge meet the main roof
-float yeo = ye - dov * dp;                            // eave height at the dormer overhang
+float dpe = (yr - ye) / max(dw * 0.5, 1e-3);          // real slope of the dormer roof: the ridge may be capped above
+float yeo = ye - dov * dpe;                           // eave height at the dormer overhang (on that same slope, so the
+                                                      // slab passes through the cheek tops instead of 7 cm below them)
 float xeo = (ry - yeo) / tp;
 
 foreach (float sd; sides) {
@@ -76,7 +78,11 @@ foreach (float sd; sides) {
                                 c0 + Sd * (xf + dov) + up * yr,
                                 c0 + Sd * xr + up * yr,
                                 c0 + R * (sx * (dw * 0.5 + dov)) + Sd * xeo + up * yeo);
-            add_slab(sl, up_normal(sl), rt, "roof", "dormer_roof", "soffit");
+            // vertical edge faces (same vertical thickness as a slab of roof_t): the two slopes meet in one
+            // plane at the ridge. Extruded along the slab normal, each slope's ridge face lay in (45 deg) or
+            // above (steeper) the other slope's top face.
+            vector sn = up_normal(sl);
+            add_slab(sl, up, rt / max(sn.y, 0.3), "roof", "dormer_roof", "soffit");
         }
     }
 }

@@ -56,14 +56,20 @@ foreach (string s; _s_list1) {
             add_beam(c + X * x + up * h, c + X * x + n * D + up * ho, pw * 0.8, pw * 0.6, X, "timber", "beam");
         }
     }
-    // wall plate + outer beam
-    add_obox(c + up * (h - pw * 0.4) + n * (pw * 0.4), set(w, pw * 0.8, pw * 0.8), X, n, "timber", "beam");
+    // wall plate + outer beam. They sit just under the sheet / slab (bd) instead of cutting through it, the
+    // outer beam stands bi behind the valance plane and both are 2 cm shorter than the sheet at each end:
+    // no face of a beam is coplanar with, or pokes through, the fabric or the roof slab.
+    float st = (kind == 1) ? max(ct * 0.25, 0.01) : (kind == 0 ? ct : 0.0);   // sheet / slab thickness
+    float bd = st * 1.3 + 0.01;
+    float bi = 0.03;
+    float wb = max(w - 0.04, pw);
+    add_obox(c + up * (h - pw * 0.4 - bd - dr * (pw * 0.8) / max(D, 0.01)) + n * (pw * 0.4), set(wb, pw * 0.8, pw * 0.8), X, n, "timber", "beam");
     if (posts) {
-        add_obox(c + n * (D - pw * 0.5) + up * (ho - pw * 0.5), set(w, pw, pw), X, n, "timber", "beam");
+        add_obox(c + n * (D - pw * 0.5 - bi) + up * (ho - pw * 0.5 - bd), set(wb, pw, pw), X, n, "timber", "beam");
         int npst = max(2, int(ceil(w / max(gap, 0.5))) + 1);
         for (int i = 0; i < npst; i++) {
-            float x = -w * 0.5 + pw * 0.5 + (w - pw) * i / (npst - 1);
-            add_obox(c + X * x + n * (D - pw * 0.5) + up * ((ho - pw) * 0.5), set(pw, ho - pw, pw), X, n, "timber", "post");
+            float x = -wb * 0.5 + pw * 0.5 + (wb - pw) * i / (npst - 1);
+            add_obox(c + X * x + n * (D - pw * 0.5 - bi) + up * ((ho - pw - bd) * 0.5), set(pw, ho - pw - bd, pw), X, n, "timber", "post");
         }
     } else {
         float _sx_list2[] = array(-1.0, 1.0);

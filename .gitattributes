@@ -1,1 +1,2 @@
 output/*.zip filter=lfs diff=lfs merge=lfs -text
+Assets/_review/KingdomReview.zip filter=lfs diff=lfs merge=lfs -text

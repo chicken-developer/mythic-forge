@@ -20,6 +20,7 @@ the script's `__file__`; do not rely on the shell's working directory.
 | Fountain reference | `Assets/3d_central_fountain/` |
 | Unreal asset review project | `Assets/_render/TDKProps.uproject` |
 | Review scripts, imported sources and results | `Assets/_render/Tools/`, `SourceAssets/`, `RenderTests/` |
+| Day/Night/Dream visual demo (art define H) | `Assets/_render/Tools/DreamDemo/README.md`; assets `/Game/DreamDemo`; map `/Game/Kingdom/Maps/L_Kingdom_Main` |
 | Unreal composition project | `Assets/_composition/TDKKingdomMap.uproject` |
 
 `HoudiniWorkspace/gothic_building` and `HoudiniWorkspace/medieval_building` moved

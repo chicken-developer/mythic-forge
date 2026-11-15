@@ -47,7 +47,7 @@ ROW1 = (  # name, family, vex, note, inputs (OUT names of other modules, wired t
     ("TRIMS", "trim", "trims.vfl", "plinth, bands, cornice, pilasters", ("FOOTPRINT",)),
     ("CORE", "core", "core.vfl", "closed volumes, or interior shell: slabs, ceiling, stairs", ("FOOTPRINT",)),
     ("ROOF", "roof", "roof.vfl", "flat/gable/hip, verge, ridge, chimneys", ("FOOTPRINT",)),
-    ("WINGS", "core", "wings.vfl", "wing volumes + roofs", ("WING_PLAN",)),
+    ("WINGS", "core", "wings.vfl", "wing volumes + roofs", ("WING_PLAN", "FOOTPRINT")),
     ("DORMERS", "roof", "dormers.vfl", "gabled dormers on the main roof", ("FOOTPRINT",)),
     ("CANOPY", "module", "canopy.vfl", "porch roofs, fabric awnings, pergolas", ("FOOTPRINT",)),
     ("BALCONY", "module", "balcony.vfl", "balcony deck + railing", ("FOOTPRINT",)),

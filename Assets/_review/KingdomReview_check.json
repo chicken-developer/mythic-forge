@@ -1,0 +1,21 @@
+{
+ "project": "E:\\Repos\\mythic-forge\\Assets\\_review\\KingdomReview",
+ "engine": "5.8.4-58902052+++UE5+Release-5.8",
+ "status": "pass",
+ "assets": 183,
+ "failed_to_load": [],
+ "classes": {
+  "StaticMesh": 25,
+  "World": 1,
+  "Material": 127,
+  "MaterialInstanceConstant": 6,
+  "Texture2D": 24
+ },
+ "script_modules": [
+  "/Script/InterchangeEngine",
+  "/Script/NavigationSystem"
+ ],
+ "missing_game_references": [],
+ "map_loaded": true,
+ "has_tdkprops_module": false
+}
