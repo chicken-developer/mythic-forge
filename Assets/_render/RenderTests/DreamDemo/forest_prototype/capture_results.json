@@ -1,0 +1,18 @@
+{
+ "resolution": [1920, 1080],
+ "rhi": "D3D12",
+ "gpu": "AMD Radeon RX 6900 XT",
+ "measurements": [
+  {"label": "Day", "gpu_ms": 10.1084, "frame_ms": 12.1781, "draw_calls": 729.1, "frames": 822},
+  {"label": "Night", "gpu_ms": 9.5657, "frame_ms": 11.5676, "draw_calls": 782.2, "frames": 865},
+  {"label": "Dream", "gpu_ms": 8.9142, "frame_ms": 10.9404, "draw_calls": 718.4, "frames": 915},
+  {"label": "Dream_no_caustics", "gpu_ms": 8.8416, "frame_ms": 10.9909, "draw_calls": 717.0, "frames": 546},
+  {"label": "Dream_no_sky", "gpu_ms": 8.8152, "frame_ms": 10.8228, "draw_calls": 711.1, "frames": 555},
+  {"label": "Dream_no_fish", "gpu_ms": 8.9138, "frame_ms": 10.9587, "draw_calls": 708.2, "frames": 548},
+  {"label": "Dream_no_bubbles", "gpu_ms": 8.8955, "frame_ms": 10.9493, "draw_calls": 713.6, "frames": 548},
+  {"label": "Dream_no_dust", "gpu_ms": 9.0010, "frame_ms": 10.9918, "draw_calls": 714.9, "frames": 546},
+  {"label": "Dream_no_floaters", "gpu_ms": 8.8460, "frame_ms": 10.7532, "draw_calls": 693.2, "frames": 558},
+  {"label": "Dream_no_ink", "gpu_ms": 8.7924, "frame_ms": 10.6835, "draw_calls": 711.7, "frames": 562},
+  {"label": "Dream_again", "gpu_ms": 8.9101, "frame_ms": 10.8301, "draw_calls": 715.1, "frames": 555}
+ ]
+}

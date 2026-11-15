@@ -1,0 +1,185 @@
+{
+ "runs": [
+  {
+   "script": "bake_meshes",
+   "ok": true,
+   "returncode": 0,
+   "process_seconds": 2.0,
+   "stderr_tail": []
+  }
+ ],
+ "records": {
+  "SM_Meshes": {
+   "name": "SM_Meshes",
+   "outputs": [
+    "RawContent/DreamDemo/SM_StarFish.fbx",
+    "RawContent/DreamDemo/SM_DustMote.fbx",
+    "RawContent/DreamDemo/SM_Bubble.fbx"
+   ],
+   "notes": {
+    "SM_StarFish": {
+     "triangles": 169,
+     "size_m": [
+      0.6,
+      0.285,
+      0.275
+     ],
+     "min": [
+      -0.3,
+      -0.125,
+      -0.1375
+     ],
+     "max": [
+      0.3,
+      0.16,
+      0.1375
+     ]
+    },
+    "SM_DustMote": {
+     "triangles": 20,
+     "size_m": [
+      0.0851,
+      0.0851,
+      0.0851
+     ],
+     "min": [
+      -0.0425,
+      -0.0425,
+      -0.0425
+     ],
+     "max": [
+      0.0425,
+      0.0425,
+      0.0425
+     ]
+    },
+    "SM_Bubble": {
+     "triangles": 624,
+     "size_m": [
+      1.0,
+      1.0,
+      1.0
+     ],
+     "min": [
+      -0.5,
+      -0.5,
+      -0.5
+     ],
+     "max": [
+      0.5,
+      0.5,
+      0.5
+     ]
+    }
+   },
+   "seconds": 0.12,
+   "houdini": "22.0.368"
+  },
+  "T_Aurora": {
+   "name": "T_Aurora",
+   "outputs": [
+    "RawContent/DreamDemo/T_AuroraStrip.png",
+    "RawContent/DreamDemo/_checks/T_AuroraStrip_tile2x2.png",
+    "RawContent/DreamDemo/T_AuroraFlow.png"
+   ],
+   "notes": {
+    "strip_seam_u": {
+     "inner": 0.0036050438438576496,
+     "wrap": 0.005565487095825548
+    },
+    "flow_seam": {
+     "inner_step_x": 0.003245247433981776,
+     "wrap_step_x": 0.0023555606603622437,
+     "inner_step_y": 0.001908152935335708,
+     "wrap_step_y": 0.0010963321547023952
+    },
+    "flow_mean_rg": [
+     0.9813827276229858,
+     0.4947277903556824
+    ],
+    "flow_import": "sRGB must be OFF in Unreal"
+   },
+   "seconds": 0.42,
+   "houdini": "22.0.368"
+  },
+  "T_Caustics": {
+   "name": "T_Caustics",
+   "outputs": [
+    "RawContent/DreamDemo/T_Caustics.png",
+    "RawContent/DreamDemo/_checks/T_Caustics_tile2x2.png"
+   ],
+   "notes": {
+    "seam": {
+     "inner_step_x": 0.014866232513507447,
+     "wrap_step_x": 0.012836869547754759,
+     "inner_step_y": 0.015364882484251692,
+     "wrap_step_y": 0.01623728258346091
+    },
+    "mean": 0.604388415813446
+   },
+   "seconds": 0.4,
+   "houdini": "22.0.368"
+  },
+  "T_DreamNebula": {
+   "name": "T_DreamNebula",
+   "outputs": [
+    "RawContent/DreamDemo/T_DreamNebula.exr",
+    "RawContent/DreamDemo/T_DreamNebula.hdr",
+    "RawContent/DreamDemo/_checks/T_DreamNebula_preview.png"
+   ],
+   "notes": {
+    "seam_longitude": {
+     "inner": 0.0008394600819131646,
+     "wrap": 0.002110717544042018
+    },
+    "max_value": 0.6820563077926636,
+    "mean_upper": 0.07321508973836899,
+    "mean_lower": 0.010430906899273396
+   },
+   "seconds": 1.52,
+   "houdini": "22.0.368"
+  },
+  "T_StarField": {
+   "name": "T_StarField",
+   "outputs": [
+    "RawContent/DreamDemo/T_StarField.png",
+    "RawContent/DreamDemo/_checks/T_StarField_tile2x2.png",
+    "RawContent/DreamDemo/T_CloudNoise.png",
+    "RawContent/DreamDemo/_checks/T_CloudNoise_tile2x2.png"
+   ],
+   "notes": {
+    "stars_seam": {
+     "inner_step_x": 0.03197269192443714,
+     "wrap_step_x": 0.033305135466078745,
+     "inner_step_y": 0.03185936058711837,
+     "wrap_step_y": 0.030627880489326624
+    },
+    "stars_coverage_over_0.5": 0.0637979507446289,
+    "cloud_seam": {
+     "inner_step_x": 0.0033326508000010406,
+     "wrap_step_x": 0.0041136387444566935,
+     "inner_step_y": 0.003377209304093606,
+     "wrap_step_y": 0.003698862507008016
+    }
+   },
+   "seconds": 0.6,
+   "houdini": "22.0.368"
+  },
+  "T_ThinFilm_Memory": {
+   "name": "T_ThinFilm_Memory",
+   "outputs": [
+    "RawContent/DreamDemo/T_ThinFilmRamp.png",
+    "RawContent/DreamDemo/T_MemoryPlaceholder_0.png",
+    "RawContent/DreamDemo/T_MemoryPlaceholder_1.png",
+    "RawContent/DreamDemo/T_MemoryPlaceholder_2.png",
+    "RawContent/DreamDemo/T_MemoryPlaceholder_3.png"
+   ],
+   "notes": {
+    "memory": "placeholders for the 2D artist; alpha is the soft round mask"
+   },
+   "seconds": 0.21,
+   "houdini": "22.0.368"
+  }
+ },
+ "preview": "Docs/DemoReports/STEP_2_preview.png"
+}

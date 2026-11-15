@@ -1,0 +1,239 @@
+{
+ "actors": [
+  {
+   "label": "Lantern_0_Flame",
+   "class": "StaticMeshActor",
+   "loc": [
+    1006,
+    1274,
+    262
+   ],
+   "tags": [
+    "State_Day",
+    "State_Night",
+    "DreamDemo.LanternFlame",
+    "DreamDemo.Step6"
+   ],
+   "note": ""
+  },
+  {
+   "label": "Lantern_0_Light",
+   "class": "PointLight",
+   "loc": [
+    1006,
+    1274,
+    280
+   ],
+   "tags": [
+    "State_Day",
+    "State_Night",
+    "DreamDemo.LanternLight",
+    "DreamDemo.Step6"
+   ],
+   "note": "no shadows"
+  },
+  {
+   "label": "Lantern_1_Flame",
+   "class": "StaticMeshActor",
+   "loc": [
+    181,
+    1820,
+    236
+   ],
+   "tags": [
+    "State_Day",
+    "State_Night",
+    "DreamDemo.LanternFlame",
+    "DreamDemo.Step6"
+   ],
+   "note": ""
+  },
+  {
+   "label": "Lantern_1_Light",
+   "class": "PointLight",
+   "loc": [
+    181,
+    1820,
+    254
+   ],
+   "tags": [
+    "State_Day",
+    "State_Night",
+    "DreamDemo.LanternLight",
+    "DreamDemo.Step6"
+   ],
+   "note": "no shadows"
+  },
+  {
+   "label": "Lantern_2_Flame",
+   "class": "StaticMeshActor",
+   "loc": [
+    -1369,
+    962,
+    300
+   ],
+   "tags": [
+    "State_Day",
+    "State_Night",
+    "DreamDemo.LanternFlame",
+    "DreamDemo.Step6"
+   ],
+   "note": ""
+  },
+  {
+   "label": "Lantern_2_Light",
+   "class": "PointLight",
+   "loc": [
+    -1369,
+    962,
+    318
+   ],
+   "tags": [
+    "State_Day",
+    "State_Night",
+    "DreamDemo.LanternLight",
+    "DreamDemo.Step6"
+   ],
+   "note": "shadows"
+  },
+  {
+   "label": "Lantern_3_Flame",
+   "class": "StaticMeshActor",
+   "loc": [
+    -1206,
+    -274,
+    350
+   ],
+   "tags": [
+    "State_Day",
+    "State_Night",
+    "DreamDemo.LanternFlame",
+    "DreamDemo.Step6"
+   ],
+   "note": ""
+  },
+  {
+   "label": "Lantern_3_Light",
+   "class": "PointLight",
+   "loc": [
+    -1206,
+    -274,
+    368
+   ],
+   "tags": [
+    "State_Day",
+    "State_Night",
+    "DreamDemo.LanternLight",
+    "DreamDemo.Step6"
+   ],
+   "note": "shadows"
+  },
+  {
+   "label": "Lantern_4_Flame",
+   "class": "StaticMeshActor",
+   "loc": [
+    18,
+    -845,
+    318
+   ],
+   "tags": [
+    "State_Day",
+    "State_Night",
+    "DreamDemo.LanternFlame",
+    "DreamDemo.Step6"
+   ],
+   "note": ""
+  },
+  {
+   "label": "Lantern_4_Light",
+   "class": "PointLight",
+   "loc": [
+    18,
+    -845,
+    336
+   ],
+   "tags": [
+    "State_Day",
+    "State_Night",
+    "DreamDemo.LanternLight",
+    "DreamDemo.Step6"
+   ],
+   "note": "no shadows"
+  },
+  {
+   "label": "Lantern_5_Flame",
+   "class": "StaticMeshActor",
+   "loc": [
+    1006,
+    -274,
+    262
+   ],
+   "tags": [
+    "State_Day",
+    "State_Night",
+    "DreamDemo.LanternFlame",
+    "DreamDemo.Step6"
+   ],
+   "note": ""
+  },
+  {
+   "label": "Lantern_5_Light",
+   "class": "PointLight",
+   "loc": [
+    1006,
+    -274,
+    280
+   ],
+   "tags": [
+    "State_Day",
+    "State_Night",
+    "DreamDemo.LanternLight",
+    "DreamDemo.Step6"
+   ],
+   "note": "no shadows"
+  },
+  {
+   "label": "Lantern_6_Flame",
+   "class": "StaticMeshActor",
+   "loc": [
+    -866,
+    1434,
+    285
+   ],
+   "tags": [
+    "State_Day",
+    "State_Night",
+    "DreamDemo.LanternFlame",
+    "DreamDemo.Step6"
+   ],
+   "note": ""
+  },
+  {
+   "label": "Lantern_6_Light",
+   "class": "PointLight",
+   "loc": [
+    -866,
+    1434,
+    303
+   ],
+   "tags": [
+    "State_Day",
+    "State_Night",
+    "DreamDemo.LanternLight",
+    "DreamDemo.Step6"
+   ],
+   "note": "shadows"
+  }
+ ],
+ "notes": [
+  "removed 47 actors from a previous run",
+  "no window meshes or lamp assets in the Stylized_Forest pack: emissive windows skipped, lanterns and bulbs are basic-shape stand-ins"
+ ],
+ "budget": {
+  "point_lights": 7,
+  "point_lights_with_shadows": 3,
+  "shadow_budget": 4,
+  "festival_bulbs_emissive_only": 33,
+  "attenuation_radius_cm": 1200.0
+ }
+}

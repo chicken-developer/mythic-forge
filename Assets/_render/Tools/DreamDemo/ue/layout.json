@@ -1,0 +1,63 @@
+{
+ "arena_center": [
+  3450.0,
+  0.0,
+  390.0
+ ],
+ "arena_radius": 1350.0,
+ "view_yaw": 180.0,
+ "nearest_obstacle_cm": 1367.4,
+ "obstacles_inside_arena": [],
+ "ground_traces_hit": 13,
+ "height_range_cm": [
+  390.0,
+  405.0
+ ],
+ "obstacle_count": 526,
+ "wall_building": {
+  "label": "KD_P07_med_merchant_house_025",
+  "mesh": "SM_med_merchant_house_BLK",
+  "origin": [
+   4673.0,
+   -1579.0
+  ],
+  "extent": [
+   473.0,
+   429.5
+  ],
+  "distance_cm": 1372.6
+ },
+ "wall": {
+  "mid": [
+   4340.3,
+   -1149.5,
+   405.0
+  ],
+  "radial": [
+   0.6123448532892697,
+   -0.7905907795124749
+  ],
+  "tangent": [
+   0.7905907795124749,
+   0.6123448532892697
+  ]
+ },
+ "xenon": [
+  3190.0,
+  0.0,
+  390.0
+ ],
+ "golems": [
+  3900.0,
+  -0.0,
+  405.0
+ ],
+ "ink": {
+  "center": [
+   2705.4,
+   -744.6,
+   390.0
+  ],
+  "radius": 380.0
+ }
+}

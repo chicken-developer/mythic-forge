@@ -1,0 +1,500 @@
+{
+ "actors": [
+  {
+   "label": "StarFishSchool_0",
+   "class": "DreamInstancedField",
+   "loc": [
+    -100,
+    500,
+    111
+   ],
+   "tags": [
+    "State_Dream",
+    "FX_Fish",
+    "DreamDemo.Step5"
+   ],
+   "note": "8 instances"
+  },
+  {
+   "label": "StarFishSchool_1",
+   "class": "DreamInstancedField",
+   "loc": [
+    -100,
+    500,
+    111
+   ],
+   "tags": [
+    "State_Dream",
+    "FX_Fish",
+    "DreamDemo.Step5"
+   ],
+   "note": "8 instances"
+  },
+  {
+   "label": "StarFishSchool_2",
+   "class": "DreamInstancedField",
+   "loc": [
+    -100,
+    500,
+    111
+   ],
+   "tags": [
+    "State_Dream",
+    "FX_Fish",
+    "DreamDemo.Step5"
+   ],
+   "note": "8 instances"
+  },
+  {
+   "label": "MemoryBubbles",
+   "class": "DreamInstancedField",
+   "loc": [
+    -100,
+    500,
+    111
+   ],
+   "tags": [
+    "State_Dream",
+    "FX_Bubbles",
+    "DreamDemo.Step5"
+   ],
+   "note": "10 instances"
+  },
+  {
+   "label": "CosmicDust",
+   "class": "DreamInstancedField",
+   "loc": [
+    -100,
+    500,
+    111
+   ],
+   "tags": [
+    "State_Dream",
+    "FX_Dust",
+    "DreamDemo.Step5"
+   ],
+   "note": "420 instances"
+  },
+  {
+   "label": "Decal_DreamInk",
+   "class": "DecalActor",
+   "loc": [
+    -100,
+    500,
+    111
+   ],
+   "tags": [
+    "State_Dream",
+    "FX_Ink",
+    "DreamDemo.Step5"
+   ],
+   "note": "darkness source at [642, 1242] radius 450"
+  },
+  {
+   "label": "Float_00_small_stone_01",
+   "class": "StaticMeshActor",
+   "loc": [
+    1297,
+    1018,
+    33
+   ],
+   "tags": [
+    "State_Dream",
+    "FX_Float",
+    "DreamDemo.Step5"
+   ],
+   "note": "rim"
+  },
+  {
+   "label": "Float_01_small_stone_04",
+   "class": "StaticMeshActor",
+   "loc": [
+    444,
+    1686,
+    22
+   ],
+   "tags": [
+    "State_Dream",
+    "FX_Float",
+    "DreamDemo.Step5"
+   ],
+   "note": "rim"
+  },
+  {
+   "label": "Float_02_small_stone_03",
+   "class": "StaticMeshActor",
+   "loc": [
+    -359,
+    1930,
+    22
+   ],
+   "tags": [
+    "State_Dream",
+    "FX_Float",
+    "DreamDemo.Step5"
+   ],
+   "note": "rim"
+  },
+  {
+   "label": "Float_03_log_01",
+   "class": "StaticMeshActor",
+   "loc": [
+    -1000,
+    1352,
+    76
+   ],
+   "tags": [
+    "State_Dream",
+    "FX_Float",
+    "DreamDemo.Step5"
+   ],
+   "note": "rim"
+  },
+  {
+   "label": "Float_04_small_branch_02",
+   "class": "StaticMeshActor",
+   "loc": [
+    -1389,
+    859,
+    75
+   ],
+   "tags": [
+    "State_Dream",
+    "FX_Float",
+    "DreamDemo.Step5"
+   ],
+   "note": "rim"
+  },
+  {
+   "label": "Float_05_small_stone_01",
+   "class": "StaticMeshActor",
+   "loc": [
+    -1171,
+    -221,
+    116
+   ],
+   "tags": [
+    "State_Dream",
+    "FX_Float",
+    "DreamDemo.Step5"
+   ],
+   "note": "rim"
+  },
+  {
+   "label": "Float_06_small_stone_04",
+   "class": "StaticMeshActor",
+   "loc": [
+    -592,
+    -719,
+    125
+   ],
+   "tags": [
+    "State_Dream",
+    "FX_Float",
+    "DreamDemo.Step5"
+   ],
+   "note": "rim"
+  },
+  {
+   "label": "Float_07_small_stone_03",
+   "class": "StaticMeshActor",
+   "loc": [
+    466,
+    -933,
+    88
+   ],
+   "tags": [
+    "State_Dream",
+    "FX_Float",
+    "DreamDemo.Step5"
+   ],
+   "note": "rim"
+  },
+  {
+   "label": "Float_08_small_branch_01",
+   "class": "StaticMeshActor",
+   "loc": [
+    1136,
+    -451,
+    43
+   ],
+   "tags": [
+    "State_Dream",
+    "FX_Float",
+    "DreamDemo.Step5"
+   ],
+   "note": "rim"
+  },
+  {
+   "label": "Float_09_small_branch_02",
+   "class": "StaticMeshActor",
+   "loc": [
+    823,
+    1317,
+    44
+   ],
+   "tags": [
+    "State_Dream",
+    "FX_Float",
+    "DreamDemo.Step5"
+   ],
+   "note": "inside ink"
+  },
+  {
+   "label": "Float_10_small_stone_01",
+   "class": "StaticMeshActor",
+   "loc": [
+    707,
+    1178,
+    71
+   ],
+   "tags": [
+    "State_Dream",
+    "FX_Float",
+    "DreamDemo.Step5"
+   ],
+   "note": "inside ink"
+  },
+  {
+   "label": "Float_11_small_stone_04",
+   "class": "StaticMeshActor",
+   "loc": [
+    -453,
+    1659,
+    50
+   ],
+   "tags": [
+    "State_Dream",
+    "FX_Float",
+    "DreamDemo.Step5"
+   ],
+   "note": "wall camera"
+  },
+  {
+   "label": "Float_12_small_stone_03",
+   "class": "StaticMeshActor",
+   "loc": [
+    -743,
+    1524,
+    57
+   ],
+   "tags": [
+    "State_Dream",
+    "FX_Float",
+    "DreamDemo.Step5"
+   ],
+   "note": "wall camera"
+  },
+  {
+   "label": "Lantern_0_Post",
+   "class": "StaticMeshActor",
+   "loc": [
+    1006,
+    1274,
+    135
+   ],
+   "tags": [
+    "DreamDemo.Lantern",
+    "DreamDemo.Step5"
+   ],
+   "note": ""
+  },
+  {
+   "label": "Lantern_0_Star",
+   "class": "StaticMeshActor",
+   "loc": [
+    1006,
+    1274,
+    262
+   ],
+   "tags": [
+    "State_Dream",
+    "DreamDemo.LanternStar",
+    "DreamDemo.Step5"
+   ],
+   "note": ""
+  },
+  {
+   "label": "Lantern_1_Post",
+   "class": "StaticMeshActor",
+   "loc": [
+    181,
+    1820,
+    109
+   ],
+   "tags": [
+    "DreamDemo.Lantern",
+    "DreamDemo.Step5"
+   ],
+   "note": ""
+  },
+  {
+   "label": "Lantern_1_Star",
+   "class": "StaticMeshActor",
+   "loc": [
+    181,
+    1820,
+    236
+   ],
+   "tags": [
+    "State_Dream",
+    "DreamDemo.LanternStar",
+    "DreamDemo.Step5"
+   ],
+   "note": ""
+  },
+  {
+   "label": "Lantern_2_Post",
+   "class": "StaticMeshActor",
+   "loc": [
+    -1369,
+    962,
+    173
+   ],
+   "tags": [
+    "DreamDemo.Lantern",
+    "DreamDemo.Step5"
+   ],
+   "note": ""
+  },
+  {
+   "label": "Lantern_2_Star",
+   "class": "StaticMeshActor",
+   "loc": [
+    -1369,
+    962,
+    300
+   ],
+   "tags": [
+    "State_Dream",
+    "DreamDemo.LanternStar",
+    "DreamDemo.Step5"
+   ],
+   "note": ""
+  },
+  {
+   "label": "Lantern_3_Post",
+   "class": "StaticMeshActor",
+   "loc": [
+    -1206,
+    -274,
+    223
+   ],
+   "tags": [
+    "DreamDemo.Lantern",
+    "DreamDemo.Step5"
+   ],
+   "note": ""
+  },
+  {
+   "label": "Lantern_3_Star",
+   "class": "StaticMeshActor",
+   "loc": [
+    -1206,
+    -274,
+    350
+   ],
+   "tags": [
+    "State_Dream",
+    "DreamDemo.LanternStar",
+    "DreamDemo.Step5"
+   ],
+   "note": ""
+  },
+  {
+   "label": "Lantern_4_Post",
+   "class": "StaticMeshActor",
+   "loc": [
+    18,
+    -845,
+    191
+   ],
+   "tags": [
+    "DreamDemo.Lantern",
+    "DreamDemo.Step5"
+   ],
+   "note": ""
+  },
+  {
+   "label": "Lantern_4_Star",
+   "class": "StaticMeshActor",
+   "loc": [
+    18,
+    -845,
+    318
+   ],
+   "tags": [
+    "State_Dream",
+    "DreamDemo.LanternStar",
+    "DreamDemo.Step5"
+   ],
+   "note": ""
+  },
+  {
+   "label": "Lantern_5_Post",
+   "class": "StaticMeshActor",
+   "loc": [
+    1006,
+    -274,
+    135
+   ],
+   "tags": [
+    "DreamDemo.Lantern",
+    "DreamDemo.Step5"
+   ],
+   "note": ""
+  },
+  {
+   "label": "Lantern_5_Star",
+   "class": "StaticMeshActor",
+   "loc": [
+    1006,
+    -274,
+    262
+   ],
+   "tags": [
+    "State_Dream",
+    "DreamDemo.LanternStar",
+    "DreamDemo.Step5"
+   ],
+   "note": ""
+  },
+  {
+   "label": "Lantern_6_Post",
+   "class": "StaticMeshActor",
+   "loc": [
+    -866,
+    1434,
+    158
+   ],
+   "tags": [
+    "DreamDemo.Lantern",
+    "DreamDemo.Step5"
+   ],
+   "note": ""
+  },
+  {
+   "label": "Lantern_6_Star",
+   "class": "StaticMeshActor",
+   "loc": [
+    -866,
+    1434,
+    285
+   ],
+   "tags": [
+    "State_Dream",
+    "DreamDemo.LanternStar",
+    "DreamDemo.Step5"
+   ],
+   "note": ""
+  }
+ ],
+ "notes": [
+  "removed 33 actors from a previous run"
+ ],
+ "materials": {
+  "M_log_stump_Float": "new WPO",
+  "MI_small_branch_Float": "parent M_log_stump_Float (pack material MI_small_branch_Inst)",
+  "MI_log_stump_Float": "parent M_log_stump_Float (pack material MI_log_stump_Inst)"
+ }
+}

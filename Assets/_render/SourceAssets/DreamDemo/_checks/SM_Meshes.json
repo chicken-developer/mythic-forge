@@ -1,0 +1,66 @@
+{
+ "name": "SM_Meshes",
+ "outputs": [
+  "RawContent/DreamDemo/SM_StarFish.fbx",
+  "RawContent/DreamDemo/SM_DustMote.fbx",
+  "RawContent/DreamDemo/SM_Bubble.fbx"
+ ],
+ "notes": {
+  "SM_StarFish": {
+   "triangles": 169,
+   "size_m": [
+    0.6,
+    0.285,
+    0.275
+   ],
+   "min": [
+    -0.3,
+    -0.125,
+    -0.1375
+   ],
+   "max": [
+    0.3,
+    0.16,
+    0.1375
+   ]
+  },
+  "SM_DustMote": {
+   "triangles": 20,
+   "size_m": [
+    0.0851,
+    0.0851,
+    0.0851
+   ],
+   "min": [
+    -0.0425,
+    -0.0425,
+    -0.0425
+   ],
+   "max": [
+    0.0425,
+    0.0425,
+    0.0425
+   ]
+  },
+  "SM_Bubble": {
+   "triangles": 624,
+   "size_m": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "min": [
+    -0.5,
+    -0.5,
+    -0.5
+   ],
+   "max": [
+    0.5,
+    0.5,
+    0.5
+   ]
+  }
+ },
+ "seconds": 0.12,
+ "houdini": "22.0.368"
+}

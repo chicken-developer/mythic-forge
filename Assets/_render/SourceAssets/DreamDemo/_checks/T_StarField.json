@@ -1,0 +1,26 @@
+{
+ "name": "T_StarField",
+ "outputs": [
+  "RawContent/DreamDemo/T_StarField.png",
+  "RawContent/DreamDemo/_checks/T_StarField_tile2x2.png",
+  "RawContent/DreamDemo/T_CloudNoise.png",
+  "RawContent/DreamDemo/_checks/T_CloudNoise_tile2x2.png"
+ ],
+ "notes": {
+  "stars_seam": {
+   "inner_step_x": 0.03197269192443714,
+   "wrap_step_x": 0.033305135466078745,
+   "inner_step_y": 0.03185936058711837,
+   "wrap_step_y": 0.030627880489326624
+  },
+  "stars_coverage_over_0.5": 0.0637979507446289,
+  "cloud_seam": {
+   "inner_step_x": 0.0033326508000010406,
+   "wrap_step_x": 0.0041136387444566935,
+   "inner_step_y": 0.003377209304093606,
+   "wrap_step_y": 0.003698862507008016
+  }
+ },
+ "seconds": 0.6,
+ "houdini": "22.0.368"
+}

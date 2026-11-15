@@ -1,0 +1,62 @@
+{
+ "dream_warm_sources": {
+  "pass": true,
+  "offenders": [],
+  "lights_checked": 1,
+  "emissive_materials_checked": 8,
+  "rule": "hue 15-60 deg and saturation > 0.4",
+  "note": "Xenon_WeakSpot is excluded: it is a gameplay colour, visible in every state"
+ },
+ "arena_center_clear": {
+  "pass": true,
+  "limit_cm": 944.9999999999999,
+  "offenders": [],
+  "floaters": 13,
+  "bubbles": 10,
+  "nearest_floater_cm": 1116,
+  "nearest_bubble_cm": 1000,
+  "note": "bubbles sway up to 30 cm sideways by world position offset; the margin covers it"
+ },
+ "stencil_table": {
+  "pass": true,
+  "entries": [
+   {
+    "actor": "Golem_StandIn_0",
+    "render_custom_depth": true,
+    "stencil": 1,
+    "expected": 1
+   },
+   {
+    "actor": "Golem_StandIn_1",
+    "render_custom_depth": true,
+    "stencil": 1,
+    "expected": 1
+   },
+   {
+    "actor": "Golem_StandIn_2",
+    "render_custom_depth": true,
+    "stencil": 1,
+    "expected": 1
+   },
+   {
+    "actor": "Xenon_StandIn",
+    "render_custom_depth": true,
+    "stencil": 2,
+    "expected": 2
+   },
+   {
+    "actor": "Xenon_WeakSpot",
+    "render_custom_depth": true,
+    "stencil": 3,
+    "expected": 3
+   }
+  ],
+  "offenders": []
+ },
+ "lantern_states": {
+  "pass": true,
+  "warm_actors": 47,
+  "star_actors": 7,
+  "offenders": []
+ }
+}

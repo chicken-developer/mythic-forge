@@ -1,0 +1,6 @@
+{
+	"FileVersion": 3,
+	"EngineAssociation": "5.8",
+	"Description": "Throwaway project that generates the DreamDemo Blueprints. See README.md.",
+	"Modules": [ { "Name": "DreamBPGen", "Type": "Runtime", "LoadingPhase": "Default" } ]
+}

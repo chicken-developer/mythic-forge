@@ -1,0 +1,8 @@
+{
+ "material": "M_PP_DreamGate",
+ "volume": "PPV_DreamGate (unbound, disabled until a transition)",
+ "controller_gate_volume": "PPV_DreamGate",
+ "gate_half_seconds": 1.2000000476837158,
+ "wake_half_seconds": 0.6000000238418579,
+ "gate_hold_frames": 3
+}

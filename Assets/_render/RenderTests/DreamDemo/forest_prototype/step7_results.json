@@ -1,0 +1,377 @@
+{
+ "capture_exit_code": 0,
+ "captures_present": {
+  "CAM_Wide_Day.png": true,
+  "CAM_Wide_Night.png": true,
+  "CAM_Wide_Dream.png": true,
+  "CAM_Wall_Day.png": true,
+  "CAM_Wall_Night.png": true,
+  "CAM_Wall_Dream.png": true,
+  "CAM_Sky_Day.png": true,
+  "CAM_Sky_Night.png": true,
+  "CAM_Sky_Dream.png": true
+ },
+ "sheets": [
+  "Docs/DemoReports/compare_full.png",
+  "Docs/DemoReports/compare_320_gray.png"
+ ],
+ "performance": {
+  "gpu": "AMD Radeon RX 6900 XT",
+  "rhi": "D3D12",
+  "resolution": [
+   1920,
+   1080
+  ],
+  "states": {
+   "Day": {
+    "label": "Day",
+    "gpu_ms": 10.1084,
+    "frame_ms": 12.1781,
+    "draw_calls": 729.1,
+    "frames": 822
+   },
+   "Night": {
+    "label": "Night",
+    "gpu_ms": 9.5657,
+    "frame_ms": 11.5676,
+    "draw_calls": 782.2,
+    "frames": 865
+   },
+   "Dream": {
+    "label": "Dream",
+    "gpu_ms": 8.9142,
+    "frame_ms": 10.9404,
+    "draw_calls": 718.4,
+    "frames": 915
+   }
+  },
+  "effects": {
+   "caustics": {
+    "gpu_ms_without": 8.8416,
+    "cost_ms": 0.0685,
+    "draw_calls_saved": -1.9
+   },
+   "sky": {
+    "gpu_ms_without": 8.8152,
+    "cost_ms": 0.0949,
+    "draw_calls_saved": 4.0
+   },
+   "fish": {
+    "gpu_ms_without": 8.9138,
+    "cost_ms": -0.0037,
+    "draw_calls_saved": 6.9
+   },
+   "bubbles": {
+    "gpu_ms_without": 8.8955,
+    "cost_ms": 0.0146,
+    "draw_calls_saved": 1.5
+   },
+   "dust": {
+    "gpu_ms_without": 9.001,
+    "cost_ms": -0.0909,
+    "draw_calls_saved": 0.2
+   },
+   "floaters": {
+    "gpu_ms_without": 8.846,
+    "cost_ms": 0.0641,
+    "draw_calls_saved": 21.9
+   },
+   "ink": {
+    "gpu_ms_without": 8.7924,
+    "cost_ms": 0.1177,
+    "draw_calls_saved": 3.4
+   }
+  },
+  "dream_reference": {
+   "label": "Dream_again",
+   "gpu_ms": 8.9101,
+   "frame_ms": 10.8301,
+   "draw_calls": 715.1,
+   "frames": 555
+  },
+  "dream_minus_day_ms": -1.1942,
+  "night_minus_day_ms": -0.5427
+ },
+ "stencil_check": {
+  "pass": true,
+  "stencil_pixels": 231638,
+  "mean_abs_diff_on_stencil_8bit": 1.411,
+  "mean_abs_diff_on_ground_8bit": 13.721,
+  "rule": "difference on stencil pixels < 2/255 and ground difference at least 3x larger",
+  "note": "the residual on stencil pixels is temporal noise (TSR, Lumen), not caustics"
+ },
+ "gray_320_stats": {
+  "CAM_Wide_Night": {
+   "mean": 0.1775,
+   "std": 0.117,
+   "edge_energy": 0.0556,
+   "lower_half_mean": 0.1656,
+   "lower_half_std": 0.0943
+  },
+  "CAM_Wide_Dream": {
+   "mean": 0.2227,
+   "std": 0.1264,
+   "edge_energy": 0.0647,
+   "lower_half_mean": 0.2606,
+   "lower_half_std": 0.1068
+  },
+  "CAM_Wall_Night": {
+   "mean": 0.2783,
+   "std": 0.1349,
+   "edge_energy": 0.0297,
+   "lower_half_mean": 0.2704,
+   "lower_half_std": 0.092
+  },
+  "CAM_Wall_Dream": {
+   "mean": 0.2055,
+   "std": 0.1066,
+   "edge_energy": 0.0613,
+   "lower_half_mean": 0.2592,
+   "lower_half_std": 0.1064
+  }
+ },
+ "gate": {
+  "frames": 46,
+  "fully_covered_frames": [
+   "gate_03.png",
+   "wake_02.png",
+   "wake_03.png",
+   "wake_04.png",
+   "wake_05.png"
+  ],
+  "per_frame": [
+   {
+    "frame": "gate_00.png",
+    "veil_fraction": 0.278,
+    "mean_luma": 0.532
+   },
+   {
+    "frame": "gate_01.png",
+    "veil_fraction": 0.509,
+    "mean_luma": 0.696
+   },
+   {
+    "frame": "gate_02.png",
+    "veil_fraction": 0.863,
+    "mean_luma": 0.85
+   },
+   {
+    "frame": "gate_03.png",
+    "veil_fraction": 1.0,
+    "mean_luma": 0.915
+   },
+   {
+    "frame": "gate_04.png",
+    "veil_fraction": 0.695,
+    "mean_luma": 0.823
+   },
+   {
+    "frame": "gate_05.png",
+    "veil_fraction": 0.73,
+    "mean_luma": 0.823
+   },
+   {
+    "frame": "gate_06.png",
+    "veil_fraction": 0.745,
+    "mean_luma": 0.823
+   },
+   {
+    "frame": "gate_07.png",
+    "veil_fraction": 0.74,
+    "mean_luma": 0.823
+   },
+   {
+    "frame": "gate_08.png",
+    "veil_fraction": 0.739,
+    "mean_luma": 0.826
+   },
+   {
+    "frame": "gate_09.png",
+    "veil_fraction": 0.568,
+    "mean_luma": 0.751
+   },
+   {
+    "frame": "gate_10.png",
+    "veil_fraction": 0.247,
+    "mean_luma": 0.571
+   },
+   {
+    "frame": "gate_11.png",
+    "veil_fraction": 0.082,
+    "mean_luma": 0.339
+   },
+   {
+    "frame": "gate_12.png",
+    "veil_fraction": 0.017,
+    "mean_luma": 0.219
+   },
+   {
+    "frame": "gate_13.png",
+    "veil_fraction": 0.019,
+    "mean_luma": 0.219
+   },
+   {
+    "frame": "gate_14.png",
+    "veil_fraction": 0.019,
+    "mean_luma": 0.218
+   },
+   {
+    "frame": "gate_15.png",
+    "veil_fraction": 0.019,
+    "mean_luma": 0.217
+   },
+   {
+    "frame": "gate_16.png",
+    "veil_fraction": 0.02,
+    "mean_luma": 0.216
+   },
+   {
+    "frame": "gate_17.png",
+    "veil_fraction": 0.021,
+    "mean_luma": 0.215
+   },
+   {
+    "frame": "gate_18.png",
+    "veil_fraction": 0.021,
+    "mean_luma": 0.214
+   },
+   {
+    "frame": "gate_19.png",
+    "veil_fraction": 0.021,
+    "mean_luma": 0.213
+   },
+   {
+    "frame": "gate_20.png",
+    "veil_fraction": 0.021,
+    "mean_luma": 0.212
+   },
+   {
+    "frame": "gate_21.png",
+    "veil_fraction": 0.02,
+    "mean_luma": 0.211
+   },
+   {
+    "frame": "gate_22.png",
+    "veil_fraction": 0.02,
+    "mean_luma": 0.21
+   },
+   {
+    "frame": "gate_23.png",
+    "veil_fraction": 0.019,
+    "mean_luma": 0.209
+   },
+   {
+    "frame": "gate_24.png",
+    "veil_fraction": 0.019,
+    "mean_luma": 0.208
+   },
+   {
+    "frame": "gate_25.png",
+    "veil_fraction": 0.017,
+    "mean_luma": 0.207
+   },
+   {
+    "frame": "gate_26.png",
+    "veil_fraction": 0.017,
+    "mean_luma": 0.206
+   },
+   {
+    "frame": "gate_27.png",
+    "veil_fraction": 0.016,
+    "mean_luma": 0.205
+   },
+   {
+    "frame": "gate_28.png",
+    "veil_fraction": 0.015,
+    "mean_luma": 0.204
+   },
+   {
+    "frame": "gate_29.png",
+    "veil_fraction": 0.015,
+    "mean_luma": 0.203
+   },
+   {
+    "frame": "wake_00.png",
+    "veil_fraction": 0.072,
+    "mean_luma": 0.303
+   },
+   {
+    "frame": "wake_01.png",
+    "veil_fraction": 0.713,
+    "mean_luma": 0.818
+   },
+   {
+    "frame": "wake_02.png",
+    "veil_fraction": 1.0,
+    "mean_luma": 0.918
+   },
+   {
+    "frame": "wake_03.png",
+    "veil_fraction": 1.0,
+    "mean_luma": 0.914
+   },
+   {
+    "frame": "wake_04.png",
+    "veil_fraction": 1.0,
+    "mean_luma": 0.912
+   },
+   {
+    "frame": "wake_05.png",
+    "veil_fraction": 1.0,
+    "mean_luma": 0.909
+   },
+   {
+    "frame": "wake_06.png",
+    "veil_fraction": 0.859,
+    "mean_luma": 0.839
+   },
+   {
+    "frame": "wake_07.png",
+    "veil_fraction": 0.337,
+    "mean_luma": 0.554
+   },
+   {
+    "frame": "wake_08.png",
+    "veil_fraction": 0.242,
+    "mean_luma": 0.462
+   },
+   {
+    "frame": "wake_09.png",
+    "veil_fraction": 0.242,
+    "mean_luma": 0.465
+   },
+   {
+    "frame": "wake_10.png",
+    "veil_fraction": 0.241,
+    "mean_luma": 0.467
+   },
+   {
+    "frame": "wake_11.png",
+    "veil_fraction": 0.24,
+    "mean_luma": 0.469
+   },
+   {
+    "frame": "wake_12.png",
+    "veil_fraction": 0.24,
+    "mean_luma": 0.471
+   },
+   {
+    "frame": "wake_13.png",
+    "veil_fraction": 0.24,
+    "mean_luma": 0.473
+   },
+   {
+    "frame": "wake_14.png",
+    "veil_fraction": 0.24,
+    "mean_luma": 0.475
+   },
+   {
+    "frame": "wake_15.png",
+    "veil_fraction": 0.24,
+    "mean_luma": 0.476
+   }
+  ],
+  "sheet": "Docs/DemoReports/STEP_8_gate_frames.png",
+  "note": "frames are 0.1 s apart; whether any uncovered frame shows unconverged Lumen is a visual check"
+ }
+}

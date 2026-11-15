@@ -1,0 +1,3809 @@
+{
+ "engine": "5.8.4-58902052+++UE5+Release-5.8",
+ "map": "/Game/Stylized_Forest/Maps/Demonstration",
+ "cvars": {
+  "r.DynamicGlobalIlluminationMethod": 1,
+  "r.ReflectionMethod": 1,
+  "r.Shadow.Virtual.Enable": 1,
+  "r.CustomDepth": 1,
+  "r.Nanite": 1,
+  "r.Substrate": 1,
+  "r.RayTracing": 1,
+  "r.AllowStaticLighting": 0
+ },
+ "pack_assets": {
+  "World": [
+   "/Game/Stylized_Forest/Maps/Demonstration",
+   "/Game/Stylized_Forest/Maps/Overview"
+  ],
+  "MapBuildDataRegistry": [
+   "/Game/Stylized_Forest/Maps/Demonstration_BuiltData",
+   "/Game/Stylized_Forest/Maps/Overview_BuiltData"
+  ],
+  "LandscapeLayerInfoObject": [
+   "/Game/Stylized_Forest/Maps/Demonstration_sharedassets/LayerInfo_Cliff",
+   "/Game/Stylized_Forest/Maps/Demonstration_sharedassets/LayerInfo_Grass",
+   "/Game/Stylized_Forest/Maps/Demonstration_sharedassets/LayerInfo_Grass_Cliff",
+   "/Game/Stylized_Forest/Maps/Demonstration_sharedassets/LayerInfo_Ground"
+  ],
+  "LandscapeGrassType": [
+   "/Game/Stylized_Forest/Materials/landscape/LandscapeGrassType_Grass_01",
+   "/Game/Stylized_Forest/Materials/landscape/LandscapeGrassType_Grass_02",
+   "/Game/Stylized_Forest/Materials/landscape/LandscapeGrassType_Grass_03",
+   "/Game/Stylized_Forest/Materials/landscape/LandscapeGrassType_Grass_04"
+  ],
+  "MaterialInstanceConstant": [
+   "/Game/Stylized_Forest/Materials/landscape/MI_landscape_Inst",
+   "/Game/Stylized_Forest/Materials/plants/MI_flower_01_Inst",
+   "/Game/Stylized_Forest/Materials/plants/MI_flower_02_Inst",
+   "/Game/Stylized_Forest/Materials/plants/MI_grass_01_Inst",
+   "/Game/Stylized_Forest/Materials/plants/MI_grass_02_Inst",
+   "/Game/Stylized_Forest/Materials/plants/MI_shrub_01_Inst",
+   "/Game/Stylized_Forest/Materials/plants/MI_shrub_flower_01_Inst",
+   "/Game/Stylized_Forest/Materials/stones/MI_stone_01_Inst",
+   "/Game/Stylized_Forest/Materials/stones/MI_stone_cliff_Inst",
+   "/Game/Stylized_Forest/Materials/trees/MI_branch_stump_Inst",
+   "/Game/Stylized_Forest/Materials/trees/MI_foliage_01_Inst",
+   "/Game/Stylized_Forest/Materials/trees/MI_foliage_02_Inst",
+   "/Game/Stylized_Forest/Materials/trees/MI_log_02_Inst",
+   "/Game/Stylized_Forest/Materials/trees/MI_log_stump_Inst",
+   "/Game/Stylized_Forest/Materials/trees/MI_small_branch_Inst",
+   "/Game/Stylized_Forest/Materials/trees/MI_stump_03_Inst",
+   "/Game/Stylized_Forest/Materials/trees/MI_tree_07_Inst",
+   "/Game/Stylized_Forest/Materials/trees/MI_tree_bark_01_Inst",
+   "/Game/Stylized_Forest/Materials/trees/MI_tree_bark_02_Inst"
+  ],
+  "Material": [
+   "/Game/Stylized_Forest/Materials/landscape/M_landscape",
+   "/Game/Stylized_Forest/Materials/plants/M_plants",
+   "/Game/Stylized_Forest/Materials/stones/M_stone",
+   "/Game/Stylized_Forest/Materials/stones/M_stone_cliff",
+   "/Game/Stylized_Forest/Materials/trees/M_foliage",
+   "/Game/Stylized_Forest/Materials/trees/M_log_stump",
+   "/Game/Stylized_Forest/Materials/trees/M_tree_bark"
+  ],
+  "StaticMesh": [
+   "/Game/Stylized_Forest/Meshes/plants/SM_flower_01",
+   "/Game/Stylized_Forest/Meshes/plants/SM_flower_02",
+   "/Game/Stylized_Forest/Meshes/plants/SM_grass_01",
+   "/Game/Stylized_Forest/Meshes/plants/SM_grass_02",
+   "/Game/Stylized_Forest/Meshes/plants/SM_grass_03",
+   "/Game/Stylized_Forest/Meshes/plants/SM_shrub_01",
+   "/Game/Stylized_Forest/Meshes/plants/SM_shrub_02",
+   "/Game/Stylized_Forest/Meshes/plants/SM_shrub_flower_01",
+   "/Game/Stylized_Forest/Meshes/stones/SM_small_stone_01",
+   "/Game/Stylized_Forest/Meshes/stones/SM_small_stone_02",
+   "/Game/Stylized_Forest/Meshes/stones/SM_small_stone_03",
+   "/Game/Stylized_Forest/Meshes/stones/SM_small_stone_04",
+   "/Game/Stylized_Forest/Meshes/stones/SM_stone_01",
+   "/Game/Stylized_Forest/Meshes/stones/SM_stone_02",
+   "/Game/Stylized_Forest/Meshes/stones/SM_stone_03",
+   "/Game/Stylized_Forest/Meshes/stones/SM_stone_04",
+   "/Game/Stylized_Forest/Meshes/stones/SM_stone_05",
+   "/Game/Stylized_Forest/Meshes/stones/SM_stone_06",
+   "/Game/Stylized_Forest/Meshes/trees/SM_branch_01",
+   "/Game/Stylized_Forest/Meshes/trees/SM_branch_02",
+   "/Game/Stylized_Forest/Meshes/trees/SM_log_01",
+   "/Game/Stylized_Forest/Meshes/trees/SM_log_02",
+   "/Game/Stylized_Forest/Meshes/trees/SM_small_branch_01",
+   "/Game/Stylized_Forest/Meshes/trees/SM_small_branch_02",
+   "/Game/Stylized_Forest/Meshes/trees/SM_small_branch_03",
+   "/Game/Stylized_Forest/Meshes/trees/SM_stump_01",
+   "/Game/Stylized_Forest/Meshes/trees/SM_stump_02",
+   "/Game/Stylized_Forest/Meshes/trees/SM_stump_03",
+   "/Game/Stylized_Forest/Meshes/trees/SM_tree_01",
+   "/Game/Stylized_Forest/Meshes/trees/SM_tree_02",
+   "/Game/Stylized_Forest/Meshes/trees/SM_tree_03",
+   "/Game/Stylized_Forest/Meshes/trees/SM_tree_04",
+   "/Game/Stylized_Forest/Meshes/trees/SM_tree_05",
+   "/Game/Stylized_Forest/Meshes/trees/SM_tree_06",
+   "/Game/Stylized_Forest/Meshes/trees/SM_tree_07",
+   "/Game/Stylized_Forest/Meshes/trees/SM_tree_shrub"
+  ],
+  "Texture2D": [
+   "/Game/Stylized_Forest/Textures/landscape/T_cliff_basecolor",
+   "/Game/Stylized_Forest/Textures/landscape/T_cliff_normal",
+   "/Game/Stylized_Forest/Textures/landscape/T_grass_basecolor",
+   "/Game/Stylized_Forest/Textures/landscape/T_grass_normal",
+   "/Game/Stylized_Forest/Textures/landscape/T_ground_basecolor",
+   "/Game/Stylized_Forest/Textures/landscape/T_ground_height",
+   "/Game/Stylized_Forest/Textures/landscape/T_ground_normal",
+   "/Game/Stylized_Forest/Textures/landscape/T_landscape_mask_01",
+   "/Game/Stylized_Forest/Textures/plants/T_plants_basecolor",
+   "/Game/Stylized_Forest/Textures/plants/T_plants_normal",
+   "/Game/Stylized_Forest/Textures/plants/T_plants_wind_mask",
+   "/Game/Stylized_Forest/Textures/stones/T_base_stones_normal",
+   "/Game/Stylized_Forest/Textures/stones/T_moss_basecolor",
+   "/Game/Stylized_Forest/Textures/stones/T_moss_normal",
+   "/Game/Stylized_Forest/Textures/stones/T_small_stone_basecolor",
+   "/Game/Stylized_Forest/Textures/stones/T_small_stone_normal",
+   "/Game/Stylized_Forest/Textures/stones/T_stone_06_basecolor",
+   "/Game/Stylized_Forest/Textures/stones/T_stone_06_normal",
+   "/Game/Stylized_Forest/Textures/stones/T_stone_basecolor",
+   "/Game/Stylized_Forest/Textures/stones/T_stone_normal",
+   "/Game/Stylized_Forest/Textures/trees/T_branch_stump_basecolor",
+   "/Game/Stylized_Forest/Textures/trees/T_branch_stump_normal",
+   "/Game/Stylized_Forest/Textures/trees/T_foliage_basecolor",
+   "/Game/Stylized_Forest/Textures/trees/T_foliage_normal",
+   "/Game/Stylized_Forest/Textures/trees/T_log_02_basecolor",
+   "/Game/Stylized_Forest/Textures/trees/T_log_02_normal",
+   "/Game/Stylized_Forest/Textures/trees/T_log_stump_basecolor",
+   "/Game/Stylized_Forest/Textures/trees/T_log_stump_normal",
+   "/Game/Stylized_Forest/Textures/trees/T_stump_03_basecolor",
+   "/Game/Stylized_Forest/Textures/trees/T_stump_03_normal",
+   "/Game/Stylized_Forest/Textures/trees/T_tree_07_basecolor",
+   "/Game/Stylized_Forest/Textures/trees/T_tree_07_normal",
+   "/Game/Stylized_Forest/Textures/trees/T_tree_bark_basecolor",
+   "/Game/Stylized_Forest/Textures/trees/T_tree_bark_normal"
+  ]
+ },
+ "meshes": {
+  "/Game/Stylized_Forest/Meshes/plants/SM_flower_01": {
+   "size_cm": [
+    89,
+    91,
+    27
+   ],
+   "min_z": 28,
+   "tris": 84,
+   "materials": [
+    "/Game/Stylized_Forest/Materials/plants/MI_flower_01_Inst.MI_flower_01_Inst"
+   ],
+   "nanite": false
+  },
+  "/Game/Stylized_Forest/Meshes/plants/SM_flower_02": {
+   "size_cm": [
+    56,
+    45,
+    60
+   ],
+   "min_z": -1,
+   "tris": 79,
+   "materials": [
+    "/Game/Stylized_Forest/Materials/plants/MI_shrub_flower_01_Inst.MI_shrub_flower_01_Inst",
+    "/Game/Stylized_Forest/Materials/plants/MI_flower_02_Inst.MI_flower_02_Inst"
+   ],
+   "nanite": false
+  },
+  "/Game/Stylized_Forest/Meshes/plants/SM_grass_01": {
+   "size_cm": [
+    86,
+    66,
+    66
+   ],
+   "min_z": 0,
+   "tris": 41,
+   "materials": [
+    "/Game/Stylized_Forest/Materials/plants/MI_grass_01_Inst.MI_grass_01_Inst"
+   ],
+   "nanite": false
+  },
+  "/Game/Stylized_Forest/Meshes/plants/SM_grass_02": {
+   "size_cm": [
+    55,
+    52,
+    75
+   ],
+   "min_z": -2,
+   "tris": 40,
+   "materials": [
+    "/Game/Stylized_Forest/Materials/plants/MI_grass_02_Inst.MI_grass_02_Inst"
+   ],
+   "nanite": false
+  },
+  "/Game/Stylized_Forest/Meshes/plants/SM_grass_03": {
+   "size_cm": [
+    73,
+    63,
+    97
+   ],
+   "min_z": -3,
+   "tris": 48,
+   "materials": [
+    "/Game/Stylized_Forest/Materials/plants/MI_grass_02_Inst.MI_grass_02_Inst"
+   ],
+   "nanite": false
+  },
+  "/Game/Stylized_Forest/Meshes/plants/SM_shrub_01": {
+   "size_cm": [
+    338,
+    364,
+    305
+   ],
+   "min_z": -82,
+   "tris": 774,
+   "materials": [
+    "/Game/Stylized_Forest/Materials/trees/MI_foliage_01_Inst.MI_foliage_01_Inst"
+   ],
+   "nanite": false
+  },
+  "/Game/Stylized_Forest/Meshes/plants/SM_shrub_02": {
+   "size_cm": [
+    196,
+    192,
+    115
+   ],
+   "min_z": -2,
+   "tris": 204,
+   "materials": [
+    "/Game/Stylized_Forest/Materials/plants/MI_shrub_01_Inst.MI_shrub_01_Inst"
+   ],
+   "nanite": false
+  },
+  "/Game/Stylized_Forest/Meshes/plants/SM_shrub_flower_01": {
+   "size_cm": [
+    63,
+    56,
+    66
+   ],
+   "min_z": -1,
+   "tris": 84,
+   "materials": [
+    "/Game/Stylized_Forest/Materials/plants/MI_shrub_flower_01_Inst.MI_shrub_flower_01_Inst"
+   ],
+   "nanite": false
+  },
+  "/Game/Stylized_Forest/Meshes/stones/SM_small_stone_01": {
+   "size_cm": [
+    56,
+    51,
+    37
+   ],
+   "min_z": -10,
+   "tris": 114,
+   "materials": [
+    "/Game/Stylized_Forest/Materials/trees/MI_small_branch_Inst.MI_small_branch_Inst"
+   ],
+   "nanite": false
+  },
+  "/Game/Stylized_Forest/Meshes/stones/SM_small_stone_02": {
+   "size_cm": [
+    54,
+    44,
+    40
+   ],
+   "min_z": -12,
+   "tris": 108,
+   "materials": [
+    "/Game/Stylized_Forest/Materials/trees/MI_small_branch_Inst.MI_small_branch_Inst"
+   ],
+   "nanite": false
+  },
+  "/Game/Stylized_Forest/Meshes/stones/SM_small_stone_03": {
+   "size_cm": [
+    67,
+    55,
+    29
+   ],
+   "min_z": -9,
+   "tris": 108,
+   "materials": [
+    "/Game/Stylized_Forest/Materials/trees/MI_small_branch_Inst.MI_small_branch_Inst"
+   ],
+   "nanite": false
+  },
+  "/Game/Stylized_Forest/Meshes/stones/SM_small_stone_04": {
+   "size_cm": [
+    163,
+    157,
+    40
+   ],
+   "min_z": -12,
+   "tris": 552,
+   "materials": [
+    "/Game/Stylized_Forest/Materials/trees/MI_small_branch_Inst.MI_small_branch_Inst"
+   ],
+   "nanite": false
+  },
+  "/Game/Stylized_Forest/Meshes/stones/SM_stone_01": {
+   "size_cm": [
+    246,
+    239,
+    284
+   ],
+   "min_z": -138,
+   "tris": 750,
+   "materials": [
+    "/Game/Stylized_Forest/Materials/stones/MI_stone_01_Inst.MI_stone_01_Inst"
+   ],
+   "nanite": false
+  },
+  "/Game/Stylized_Forest/Meshes/stones/SM_stone_02": {
+   "size_cm": [
+    361,
+    337,
+    250
+   ],
+   "min_z": -126,
+   "tris": 580,
+   "materials": [
+    "/Game/Stylized_Forest/Materials/stones/MI_stone_01_Inst.MI_stone_01_Inst"
+   ],
+   "nanite": false
+  },
+  "/Game/Stylized_Forest/Meshes/stones/SM_stone_03": {
+   "size_cm": [
+    307,
+    347,
+    293
+   ],
+   "min_z": -146,
+   "tris": 544,
+   "materials": [
+    "/Game/Stylized_Forest/Materials/stones/MI_stone_01_Inst.MI_stone_01_Inst"
+   ],
+   "nanite": false
+  },
+  "/Game/Stylized_Forest/Meshes/stones/SM_stone_04": {
+   "size_cm": [
+    351,
+    387,
+    268
+   ],
+   "min_z": -134,
+   "tris": 664,
+   "materials": [
+    "/Game/Stylized_Forest/Materials/stones/MI_stone_01_Inst.MI_stone_01_Inst"
+   ],
+   "nanite": false
+  },
+  "/Game/Stylized_Forest/Meshes/stones/SM_stone_05": {
+   "size_cm": [
+    296,
+    310,
+    329
+   ],
+   "min_z": -164,
+   "tris": 492,
+   "materials": [
+    "/Game/Stylized_Forest/Materials/stones/MI_stone_01_Inst.MI_stone_01_Inst"
+   ],
+   "nanite": false
+  },
+  "/Game/Stylized_Forest/Meshes/stones/SM_stone_06": {
+   "size_cm": [
+    706,
+    686,
+    578
+   ],
+   "min_z": -214,
+   "tris": 1604,
+   "materials": [
+    "/Game/Stylized_Forest/Materials/stones/MI_stone_cliff_Inst.MI_stone_cliff_Inst"
+   ],
+   "nanite": false
+  },
+  "/Game/Stylized_Forest/Meshes/trees/SM_branch_01": {
+   "size_cm": [
+    885,
+    418,
+    187
+   ],
+   "min_z": -13,
+   "tris": 834,
+   "materials": [
+    "/Game/Stylized_Forest/Materials/trees/MI_branch_stump_Inst.MI_branch_stump_Inst"
+   ],
+   "nanite": false
+  },
+  "/Game/Stylized_Forest/Meshes/trees/SM_branch_02": {
+   "size_cm": [
+    885,
+    756,
+    222
+   ],
+   "min_z": -47,
+   "tris": 1668,
+   "materials": [
+    "/Game/Stylized_Forest/Materials/trees/MI_branch_stump_Inst.MI_branch_stump_Inst"
+   ],
+   "nanite": false
+  },
+  "/Game/Stylized_Forest/Meshes/trees/SM_log_01": {
+   "size_cm": [
+    544,
+    180,
+    144
+   ],
+   "min_z": -41,
+   "tris": 1115,
+   "materials": [
+    "/Game/Stylized_Forest/Materials/trees/MI_log_stump_Inst.MI_log_stump_Inst"
+   ],
+   "nanite": false
+  },
+  "/Game/Stylized_Forest/Meshes/trees/SM_log_02": {
+   "size_cm": [
+    1224,
+    188,
+    175
+   ],
+   "min_z": -18,
+   "tris": 1080,
+   "materials": [
+    "/Game/Stylized_Forest/Materials/trees/MI_log_02_Inst.MI_log_02_Inst"
+   ],
+   "nanite": false
+  },
+  "/Game/Stylized_Forest/Meshes/trees/SM_small_branch_01": {
+   "size_cm": [
+    151,
+    230,
+    45
+   ],
+   "min_z": -6,
+   "tris": 372,
+   "materials": [
+    "/Game/Stylized_Forest/Materials/trees/MI_small_branch_Inst.MI_small_branch_Inst"
+   ],
+   "nanite": false
+  },
+  "/Game/Stylized_Forest/Meshes/trees/SM_small_branch_02": {
+   "size_cm": [
+    186,
+    55,
+    35
+   ],
+   "min_z": -3,
+   "tris": 184,
+   "materials": [
+    "/Game/Stylized_Forest/Materials/trees/MI_small_branch_Inst.MI_small_branch_Inst"
+   ],
+   "nanite": false
+  },
+  "/Game/Stylized_Forest/Meshes/trees/SM_small_branch_03": {
+   "size_cm": [
+    111,
+    35,
+    19
+   ],
+   "min_z": -1,
+   "tris": 94,
+   "materials": [
+    "/Game/Stylized_Forest/Materials/trees/MI_small_branch_Inst.MI_small_branch_Inst"
+   ],
+   "nanite": false
+  },
+  "/Game/Stylized_Forest/Meshes/trees/SM_stump_01": {
+   "size_cm": [
+    225,
+    240,
+    327
+   ],
+   "min_z": -70,
+   "tris": 1296,
+   "materials": [
+    "/Game/Stylized_Forest/Materials/trees/MI_log_stump_Inst.MI_log_stump_Inst"
+   ],
+   "nanite": false
+  },
+  "/Game/Stylized_Forest/Meshes/trees/SM_stump_02": {
+   "size_cm": [
+    246,
+    280,
+    383
+   ],
+   "min_z": -96,
+   "tris": 976,
+   "materials": [
+    "/Game/Stylized_Forest/Materials/trees/MI_branch_stump_Inst.MI_branch_stump_Inst"
+   ],
+   "nanite": false
+  },
+  "/Game/Stylized_Forest/Meshes/trees/SM_stump_03": {
+   "size_cm": [
+    460,
+    454,
+    433
+   ],
+   "min_z": -143,
+   "tris": 908,
+   "materials": [
+    "/Game/Stylized_Forest/Materials/trees/MI_stump_03_Inst.MI_stump_03_Inst"
+   ],
+   "nanite": false
+  },
+  "/Game/Stylized_Forest/Meshes/trees/SM_tree_01": {
+   "size_cm": [
+    858,
+    869,
+    1696
+   ],
+   "min_z": -23,
+   "tris": 8178,
+   "materials": [
+    "/Game/Stylized_Forest/Materials/trees/MI_foliage_01_Inst.MI_foliage_01_Inst",
+    "/Game/Stylized_Forest/Materials/trees/MI_tree_bark_01_Inst.MI_tree_bark_01_Inst"
+   ],
+   "nanite": false
+  },
+  "/Game/Stylized_Forest/Meshes/trees/SM_tree_02": {
+   "size_cm": [
+    1456,
+    1546,
+    1783
+   ],
+   "min_z": -19,
+   "tris": 12079,
+   "materials": [
+    "/Game/Stylized_Forest/Materials/trees/MI_foliage_01_Inst.MI_foliage_01_Inst",
+    "/Game/Stylized_Forest/Materials/trees/MI_tree_bark_01_Inst.MI_tree_bark_01_Inst"
+   ],
+   "nanite": false
+  },
+  "/Game/Stylized_Forest/Meshes/trees/SM_tree_03": {
+   "size_cm": [
+    1069,
+    1160,
+    2181
+   ],
+   "min_z": -22,
+   "tris": 7459,
+   "materials": [
+    "/Game/Stylized_Forest/Materials/trees/MI_foliage_01_Inst.MI_foliage_01_Inst",
+    "/Game/Stylized_Forest/Materials/trees/MI_tree_bark_01_Inst.MI_tree_bark_01_Inst"
+   ],
+   "nanite": false
+  },
+  "/Game/Stylized_Forest/Meshes/trees/SM_tree_04": {
+   "size_cm": [
+    925,
+    1137,
+    2737
+   ],
+   "min_z": -23,
+   "tris": 3216,
+   "materials": [
+    "/Game/Stylized_Forest/Materials/trees/MI_foliage_01_Inst.MI_foliage_01_Inst",
+    "/Game/Stylized_Forest/Materials/trees/MI_tree_bark_01_Inst.MI_tree_bark_01_Inst"
+   ],
+   "nanite": false
+  },
+  "/Game/Stylized_Forest/Meshes/trees/SM_tree_05": {
+   "size_cm": [
+    889,
+    866,
+    2444
+   ],
+   "min_z": -23,
+   "tris": 1700,
+   "materials": [
+    "/Game/Stylized_Forest/Materials/trees/MI_tree_bark_01_Inst.MI_tree_bark_01_Inst",
+    "/Game/Stylized_Forest/Materials/trees/MI_foliage_01_Inst.MI_foliage_01_Inst"
+   ],
+   "nanite": false
+  },
+  "/Game/Stylized_Forest/Meshes/trees/SM_tree_06": {
+   "size_cm": [
+    680,
+    711,
+    839
+   ],
+   "min_z": -17,
+   "tris": 4137,
+   "materials": [
+    "/Game/Stylized_Forest/Materials/trees/MI_tree_bark_02_Inst.MI_tree_bark_02_Inst",
+    "/Game/Stylized_Forest/Materials/trees/MI_foliage_02_Inst.MI_foliage_02_Inst"
+   ],
+   "nanite": false
+  },
+  "/Game/Stylized_Forest/Meshes/trees/SM_tree_07": {
+   "size_cm": [
+    1344,
+    407,
+    720
+   ],
+   "min_z": -102,
+   "tris": 1572,
+   "materials": [
+    "/Game/Stylized_Forest/Materials/trees/MI_tree_07_Inst.MI_tree_07_Inst"
+   ],
+   "nanite": false
+  },
+  "/Game/Stylized_Forest/Meshes/trees/SM_tree_shrub": {
+   "size_cm": [
+    560,
+    577,
+    383
+   ],
+   "min_z": -32,
+   "tris": 1453,
+   "materials": [
+    "/Game/Stylized_Forest/Materials/trees/MI_tree_bark_01_Inst.MI_tree_bark_01_Inst",
+    "/Game/Stylized_Forest/Materials/trees/MI_foliage_02_Inst.MI_foliage_02_Inst"
+   ],
+   "nanite": false
+  }
+ },
+ "map_loaded": true,
+ "actor_count": 105,
+ "actor_classes": {
+  "StaticMeshActor": 97,
+  "DirectionalLight": 1,
+  "PlayerStart": 1,
+  "InstancedFoliageActor": 1,
+  "BP_Sky_Sphere_C": 1,
+  "SkyLight": 1,
+  "Landscape": 1,
+  "PostProcessVolume": 1,
+  "ExponentialHeightFog": 1
+ },
+ "world_partition": false,
+ "mesh_usage": {
+  "SM_shrub_02": 16,
+  "SM_tree_shrub": 10,
+  "SM_stone_04": 7,
+  "SM_small_stone_04": 7,
+  "SM_stone_05": 6,
+  "SM_stone_06": 6,
+  "SM_stump_03": 4,
+  "SM_stone_01": 4,
+  "SM_stone_02": 4,
+  "SM_flower_02": 4,
+  "SM_small_stone_03": 4,
+  "SM_branch_02": 3,
+  "SM_grass_03": 3,
+  "SM_small_stone_02": 3,
+  "SM_stump_02": 2,
+  "SM_stump_01": 2,
+  "SM_log_01": 2,
+  "SM_tree_07": 2,
+  "SM_log_02": 2,
+  "SM_branch_01": 2,
+  "SM_stone_03": 2,
+  "SM_small_branch_03": 1,
+  "SM_small_stone_01": 1
+ },
+ "actors": [
+  {
+   "label": "Light Source",
+   "class": "DirectionalLight",
+   "loc": [
+    100,
+    -200,
+    570
+   ],
+   "extent": [
+    360,
+    388,
+    396
+   ],
+   "origin": [
+    306,
+    -48,
+    414
+   ],
+   "components": [
+    "ArrowComponent",
+    "BillboardComponent",
+    "DirectionalLightComponent"
+   ],
+   "lights": [
+    {
+     "type": "DirectionalLightComponent",
+     "intensity": 4.0,
+     "color": [
+      255,
+      255,
+      255
+     ],
+     "mobility": "<ComponentMobility.MOVABLE: 2>",
+     "rot": [
+      -31,
+      36
+     ]
+    }
+   ]
+  },
+  {
+   "label": "Player Start",
+   "class": "PlayerStart",
+   "loc": [
+    -490,
+    20,
+    252
+   ],
+   "extent": [
+    140,
+    80,
+    92
+   ],
+   "origin": [
+    -390,
+    20,
+    252
+   ],
+   "components": [
+    "ArrowComponent",
+    "BillboardComponent",
+    "CapsuleComponent"
+   ]
+  },
+  {
+   "label": "InstancedFoliageActor",
+   "class": "InstancedFoliageActor",
+   "loc": [
+    0,
+    0,
+    0
+   ],
+   "extent": [
+    25877,
+    26123,
+    1825
+   ],
+   "origin": [
+    -88,
+    48,
+    1374
+   ],
+   "components": [
+    "FoliageInstancedStaticMeshComponent",
+    "SceneComponent"
+   ],
+   "ism": [
+    {
+     "mesh": "SM_tree_01",
+     "count": 187
+    },
+    {
+     "mesh": "SM_tree_02",
+     "count": 183
+    },
+    {
+     "mesh": "SM_tree_03",
+     "count": 185
+    },
+    {
+     "mesh": "SM_tree_04",
+     "count": 189
+    },
+    {
+     "mesh": "SM_tree_05",
+     "count": 186
+    },
+    {
+     "mesh": "SM_tree_06",
+     "count": 184
+    },
+    {
+     "mesh": "SM_small_branch_01",
+     "count": 8
+    },
+    {
+     "mesh": "SM_small_branch_03",
+     "count": 13
+    },
+    {
+     "mesh": "SM_small_branch_02",
+     "count": 13
+    }
+   ]
+  },
+  {
+   "label": "Sky Sphere",
+   "class": "BP_Sky_Sphere_C",
+   "loc": [
+    0,
+    0,
+    0
+   ],
+   "extent": [
+    1638400,
+    1638400,
+    1638400
+   ],
+   "origin": [
+    0,
+    0,
+    0
+   ],
+   "components": [
+    "SceneComponent",
+    "StaticMeshComponent"
+   ]
+  },
+  {
+   "label": "SkyLight",
+   "class": "SkyLight",
+   "loc": [
+    21,
+    -31,
+    505
+   ],
+   "extent": [
+    1,
+    1,
+    1
+   ],
+   "origin": [
+    21,
+    -31,
+    505
+   ],
+   "components": [
+    "BillboardComponent",
+    "SkyLightComponent"
+   ]
+  },
+  {
+   "label": "Landscape",
+   "class": "Landscape",
+   "loc": [
+    -25200,
+    -25200,
+    100
+   ],
+   "extent": [
+    25200,
+    25200,
+    545
+   ],
+   "origin": [
+    0,
+    0,
+    71
+   ],
+   "components": [
+    "LandscapeComponent",
+    "LandscapeHeightfieldCollisionComponent",
+    "SceneComponent"
+   ]
+  },
+  {
+   "label": "PostProcessVolume",
+   "class": "PostProcessVolume",
+   "loc": [
+    750,
+    820,
+    200
+   ],
+   "extent": [
+    100,
+    100,
+    100
+   ],
+   "origin": [
+    750,
+    820,
+    200
+   ],
+   "components": [
+    "BrushComponent"
+   ]
+  },
+  {
+   "label": "ExponentialHeightFog",
+   "class": "ExponentialHeightFog",
+   "loc": [
+    320,
+    -80,
+    100
+   ],
+   "extent": [
+    0,
+    0,
+    0
+   ],
+   "origin": [
+    320,
+    -80,
+    100
+   ],
+   "components": [
+    "BillboardComponent",
+    "ExponentialHeightFogComponent"
+   ]
+  },
+  {
+   "label": "SM_stump_02",
+   "class": "StaticMeshActor",
+   "loc": [
+    -800,
+    1250,
+    60
+   ],
+   "extent": [
+    123,
+    140,
+    191
+   ],
+   "origin": [
+    -780,
+    1263,
+    156
+   ],
+   "mesh": "SM_stump_02",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_stump_03",
+   "class": "StaticMeshActor",
+   "loc": [
+    -1850,
+    -1870,
+    320
+   ],
+   "extent": [
+    230,
+    227,
+    217
+   ],
+   "origin": [
+    -1877,
+    -1869,
+    393
+   ],
+   "mesh": "SM_stump_03",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_stump_01",
+   "class": "StaticMeshActor",
+   "loc": [
+    3320,
+    -3300,
+    70
+   ],
+   "extent": [
+    112,
+    120,
+    163
+   ],
+   "origin": [
+    3331,
+    -3289,
+    164
+   ],
+   "mesh": "SM_stump_01",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_small_branch_03",
+   "class": "StaticMeshActor",
+   "loc": [
+    100,
+    80,
+    90
+   ],
+   "extent": [
+    56,
+    17,
+    9
+   ],
+   "origin": [
+    107,
+    73,
+    99
+   ],
+   "mesh": "SM_small_branch_03",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_stump_3",
+   "class": "StaticMeshActor",
+   "loc": [
+    -7280,
+    -9170,
+    470
+   ],
+   "extent": [
+    123,
+    140,
+    191
+   ],
+   "origin": [
+    -7260,
+    -9157,
+    566
+   ],
+   "mesh": "SM_stump_02",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_stump_4",
+   "class": "StaticMeshActor",
+   "loc": [
+    -5370,
+    -11950,
+    360
+   ],
+   "extent": [
+    230,
+    227,
+    217
+   ],
+   "origin": [
+    -5397,
+    -11949,
+    433
+   ],
+   "mesh": "SM_stump_03",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_stump_2",
+   "class": "StaticMeshActor",
+   "loc": [
+    -14010,
+    -6220,
+    190
+   ],
+   "extent": [
+    112,
+    120,
+    163
+   ],
+   "origin": [
+    -13999,
+    -6209,
+    284
+   ],
+   "mesh": "SM_stump_01",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_log_01",
+   "class": "StaticMeshActor",
+   "loc": [
+    -16080,
+    -3610,
+    10
+   ],
+   "extent": [
+    272,
+    90,
+    72
+   ],
+   "origin": [
+    -16087,
+    -3600,
+    41
+   ],
+   "mesh": "SM_log_01",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_tree_07",
+   "class": "StaticMeshActor",
+   "loc": [
+    6930,
+    1840,
+    -260
+   ],
+   "extent": [
+    645,
+    588,
+    360
+   ],
+   "origin": [
+    7415,
+    1533,
+    -2
+   ],
+   "mesh": "SM_tree_07",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    -40,
+    0
+   ]
+  },
+  {
+   "label": "SM_tree_shrub",
+   "class": "StaticMeshActor",
+   "loc": [
+    -3400,
+    -270,
+    320
+   ],
+   "extent": [
+    280,
+    289,
+    191
+   ],
+   "origin": [
+    -3382,
+    -275,
+    479
+   ],
+   "mesh": "SM_tree_shrub",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_tree_shrub2",
+   "class": "StaticMeshActor",
+   "loc": [
+    -320,
+    4360,
+    -140
+   ],
+   "extent": [
+    280,
+    289,
+    191
+   ],
+   "origin": [
+    -302,
+    4355,
+    19
+   ],
+   "mesh": "SM_tree_shrub",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_tree_shrub3",
+   "class": "StaticMeshActor",
+   "loc": [
+    270,
+    -2990,
+    310
+   ],
+   "extent": [
+    280,
+    289,
+    191
+   ],
+   "origin": [
+    288,
+    -2995,
+    469
+   ],
+   "mesh": "SM_tree_shrub",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_tree_shrub4",
+   "class": "StaticMeshActor",
+   "loc": [
+    -1670,
+    -11000,
+    260
+   ],
+   "extent": [
+    280,
+    289,
+    191
+   ],
+   "origin": [
+    -1652,
+    -11005,
+    419
+   ],
+   "mesh": "SM_tree_shrub",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_tree_shrub5",
+   "class": "StaticMeshActor",
+   "loc": [
+    -9550,
+    -8250,
+    390
+   ],
+   "extent": [
+    280,
+    289,
+    191
+   ],
+   "origin": [
+    -9532,
+    -8255,
+    549
+   ],
+   "mesh": "SM_tree_shrub",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_tree_shrub6",
+   "class": "StaticMeshActor",
+   "loc": [
+    -15000,
+    -3810,
+    60
+   ],
+   "extent": [
+    280,
+    289,
+    191
+   ],
+   "origin": [
+    -14982,
+    -3815,
+    219
+   ],
+   "mesh": "SM_tree_shrub",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_tree_shrub7",
+   "class": "StaticMeshActor",
+   "loc": [
+    -8600,
+    17190,
+    -190
+   ],
+   "extent": [
+    280,
+    289,
+    191
+   ],
+   "origin": [
+    -8582,
+    17185,
+    -31
+   ],
+   "mesh": "SM_tree_shrub",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_tree_shrub8",
+   "class": "StaticMeshActor",
+   "loc": [
+    -15370,
+    18640,
+    50
+   ],
+   "extent": [
+    280,
+    289,
+    191
+   ],
+   "origin": [
+    -15352,
+    18635,
+    209
+   ],
+   "mesh": "SM_tree_shrub",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_tree_shrub9",
+   "class": "StaticMeshActor",
+   "loc": [
+    -18220,
+    11530,
+    140
+   ],
+   "extent": [
+    280,
+    289,
+    191
+   ],
+   "origin": [
+    -18202,
+    11525,
+    299
+   ],
+   "mesh": "SM_tree_shrub",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_log_02",
+   "class": "StaticMeshActor",
+   "loc": [
+    -6470,
+    16810,
+    20
+   ],
+   "extent": [
+    612,
+    94,
+    87
+   ],
+   "origin": [
+    -6452,
+    16824,
+    90
+   ],
+   "mesh": "SM_log_02",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_log_3",
+   "class": "StaticMeshActor",
+   "loc": [
+    5320,
+    3440,
+    -370
+   ],
+   "extent": [
+    612,
+    94,
+    87
+   ],
+   "origin": [
+    5338,
+    3454,
+    -300
+   ],
+   "mesh": "SM_log_02",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_stump_5",
+   "class": "StaticMeshActor",
+   "loc": [
+    -3800,
+    -4820,
+    290
+   ],
+   "extent": [
+    230,
+    227,
+    217
+   ],
+   "origin": [
+    -3827,
+    -4819,
+    363
+   ],
+   "mesh": "SM_stump_03",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_branch_02",
+   "class": "StaticMeshActor",
+   "loc": [
+    -8510,
+    -760,
+    170
+   ],
+   "extent": [
+    442,
+    378,
+    111
+   ],
+   "origin": [
+    -8525,
+    -854,
+    234
+   ],
+   "mesh": "SM_branch_02",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_branch_01",
+   "class": "StaticMeshActor",
+   "loc": [
+    -7600,
+    4610,
+    440
+   ],
+   "extent": [
+    442,
+    209,
+    94
+   ],
+   "origin": [
+    -7612,
+    4586,
+    521
+   ],
+   "mesh": "SM_branch_01",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_branch_3",
+   "class": "StaticMeshActor",
+   "loc": [
+    -1040,
+    7750,
+    -30
+   ],
+   "extent": [
+    442,
+    378,
+    111
+   ],
+   "origin": [
+    -1055,
+    7656,
+    34
+   ],
+   "mesh": "SM_branch_02",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_log_2",
+   "class": "StaticMeshActor",
+   "loc": [
+    -4580,
+    -8920,
+    320
+   ],
+   "extent": [
+    272,
+    90,
+    72
+   ],
+   "origin": [
+    -4587,
+    -8910,
+    351
+   ],
+   "mesh": "SM_log_01",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_tree_8",
+   "class": "StaticMeshActor",
+   "loc": [
+    -2340,
+    -14530,
+    130
+   ],
+   "extent": [
+    672,
+    203,
+    360
+   ],
+   "origin": [
+    -1771,
+    -14454,
+    388
+   ],
+   "mesh": "SM_tree_07",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_tree_shrub10",
+   "class": "StaticMeshActor",
+   "loc": [
+    -10090,
+    -10810,
+    50
+   ],
+   "extent": [
+    280,
+    289,
+    191
+   ],
+   "origin": [
+    -10072,
+    -10815,
+    209
+   ],
+   "mesh": "SM_tree_shrub",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_branch_4",
+   "class": "StaticMeshActor",
+   "loc": [
+    -10620,
+    -12440,
+    80
+   ],
+   "extent": [
+    442,
+    378,
+    111
+   ],
+   "origin": [
+    -10635,
+    -12534,
+    144
+   ],
+   "mesh": "SM_branch_02",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_branch_2",
+   "class": "StaticMeshActor",
+   "loc": [
+    -13970,
+    1630,
+    80
+   ],
+   "extent": [
+    442,
+    209,
+    94
+   ],
+   "origin": [
+    -13982,
+    1606,
+    161
+   ],
+   "mesh": "SM_branch_01",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_stump_6",
+   "class": "StaticMeshActor",
+   "loc": [
+    -10360,
+    3650,
+    330
+   ],
+   "extent": [
+    230,
+    227,
+    217
+   ],
+   "origin": [
+    -10387,
+    3651,
+    403
+   ],
+   "mesh": "SM_stump_03",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_stone_01",
+   "class": "StaticMeshActor",
+   "loc": [
+    -5730,
+    7620,
+    150
+   ],
+   "extent": [
+    123,
+    120,
+    142
+   ],
+   "origin": [
+    -5733,
+    7619,
+    154
+   ],
+   "mesh": "SM_stone_01",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_stone_05",
+   "class": "StaticMeshActor",
+   "loc": [
+    -4200,
+    5220,
+    50
+   ],
+   "extent": [
+    148,
+    155,
+    164
+   ],
+   "origin": [
+    -4200,
+    5220,
+    50
+   ],
+   "mesh": "SM_stone_05",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_stone_04",
+   "class": "StaticMeshActor",
+   "loc": [
+    2020,
+    6090,
+    -170
+   ],
+   "extent": [
+    175,
+    193,
+    134
+   ],
+   "origin": [
+    2020,
+    6090,
+    -170
+   ],
+   "mesh": "SM_stone_04",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_stone_03",
+   "class": "StaticMeshActor",
+   "loc": [
+    3090,
+    3950,
+    -260
+   ],
+   "extent": [
+    154,
+    173,
+    146
+   ],
+   "origin": [
+    3090,
+    3950,
+    -260
+   ],
+   "mesh": "SM_stone_03",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_stone_02",
+   "class": "StaticMeshActor",
+   "loc": [
+    1000,
+    1800,
+    -20
+   ],
+   "extent": [
+    180,
+    169,
+    125
+   ],
+   "origin": [
+    992,
+    1795,
+    -21
+   ],
+   "mesh": "SM_stone_02",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_stone_2",
+   "class": "StaticMeshActor",
+   "loc": [
+    -2010,
+    -3070,
+    320
+   ],
+   "extent": [
+    123,
+    120,
+    142
+   ],
+   "origin": [
+    -2013,
+    -3071,
+    324
+   ],
+   "mesh": "SM_stone_01",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_stone_6",
+   "class": "StaticMeshActor",
+   "loc": [
+    1560,
+    -2570,
+    190
+   ],
+   "extent": [
+    148,
+    155,
+    164
+   ],
+   "origin": [
+    1560,
+    -2570,
+    190
+   ],
+   "mesh": "SM_stone_05",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_stone_5",
+   "class": "StaticMeshActor",
+   "loc": [
+    610,
+    -960,
+    80
+   ],
+   "extent": [
+    175,
+    193,
+    134
+   ],
+   "origin": [
+    610,
+    -960,
+    80
+   ],
+   "mesh": "SM_stone_04",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_stone_06",
+   "class": "StaticMeshActor",
+   "loc": [
+    -2730,
+    -1190,
+    200
+   ],
+   "extent": [
+    353,
+    343,
+    289
+   ],
+   "origin": [
+    -2725,
+    -1204,
+    275
+   ],
+   "mesh": "SM_stone_06",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_stone_7",
+   "class": "StaticMeshActor",
+   "loc": [
+    4180,
+    -1230,
+    -30
+   ],
+   "extent": [
+    353,
+    343,
+    289
+   ],
+   "origin": [
+    4185,
+    -1244,
+    45
+   ],
+   "mesh": "SM_stone_06",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_stone_8",
+   "class": "StaticMeshActor",
+   "loc": [
+    3980,
+    -1440,
+    40
+   ],
+   "extent": [
+    491,
+    490,
+    289
+   ],
+   "origin": [
+    3975,
+    -1454,
+    115
+   ],
+   "mesh": "SM_stone_06",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    -40,
+    0
+   ]
+  },
+  {
+   "label": "SM_stone_9",
+   "class": "StaticMeshActor",
+   "loc": [
+    3660,
+    -900,
+    20
+   ],
+   "extent": [
+    148,
+    155,
+    164
+   ],
+   "origin": [
+    3660,
+    -900,
+    20
+   ],
+   "mesh": "SM_stone_05",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_stone_10",
+   "class": "StaticMeshActor",
+   "loc": [
+    3640,
+    -2020,
+    20
+   ],
+   "extent": [
+    175,
+    193,
+    134
+   ],
+   "origin": [
+    3640,
+    -2020,
+    20
+   ],
+   "mesh": "SM_stone_04",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_stone_11",
+   "class": "StaticMeshActor",
+   "loc": [
+    -4440,
+    12380,
+    10
+   ],
+   "extent": [
+    353,
+    343,
+    289
+   ],
+   "origin": [
+    -4435,
+    12366,
+    85
+   ],
+   "mesh": "SM_stone_06",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_stone_12",
+   "class": "StaticMeshActor",
+   "loc": [
+    -4810,
+    12000,
+    -10
+   ],
+   "extent": [
+    148,
+    155,
+    164
+   ],
+   "origin": [
+    -4810,
+    12000,
+    -10
+   ],
+   "mesh": "SM_stone_05",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_stone_3",
+   "class": "StaticMeshActor",
+   "loc": [
+    -3860,
+    12360,
+    10
+   ],
+   "extent": [
+    180,
+    169,
+    125
+   ],
+   "origin": [
+    -3868,
+    12355,
+    9
+   ],
+   "mesh": "SM_stone_02",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_stone_13",
+   "class": "StaticMeshActor",
+   "loc": [
+    -12470,
+    20370,
+    0
+   ],
+   "extent": [
+    175,
+    193,
+    134
+   ],
+   "origin": [
+    -12470,
+    20370,
+    0
+   ],
+   "mesh": "SM_stone_04",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_stone_4",
+   "class": "StaticMeshActor",
+   "loc": [
+    -16750,
+    15610,
+    -20
+   ],
+   "extent": [
+    123,
+    120,
+    142
+   ],
+   "origin": [
+    -16753,
+    15609,
+    -16
+   ],
+   "mesh": "SM_stone_01",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_stone_14",
+   "class": "StaticMeshActor",
+   "loc": [
+    -21440,
+    11800,
+    0
+   ],
+   "extent": [
+    353,
+    343,
+    289
+   ],
+   "origin": [
+    -21435,
+    11786,
+    75
+   ],
+   "mesh": "SM_stone_06",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_stone_15",
+   "class": "StaticMeshActor",
+   "loc": [
+    -20950,
+    11600,
+    -10
+   ],
+   "extent": [
+    175,
+    193,
+    134
+   ],
+   "origin": [
+    -20950,
+    11600,
+    -10
+   ],
+   "mesh": "SM_stone_04",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_stone_16",
+   "class": "StaticMeshActor",
+   "loc": [
+    -21720,
+    12290,
+    -40
+   ],
+   "extent": [
+    180,
+    169,
+    125
+   ],
+   "origin": [
+    -21728,
+    12285,
+    -41
+   ],
+   "mesh": "SM_stone_02",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_stone_17",
+   "class": "StaticMeshActor",
+   "loc": [
+    -15070,
+    1940,
+    50
+   ],
+   "extent": [
+    148,
+    155,
+    164
+   ],
+   "origin": [
+    -15070,
+    1940,
+    50
+   ],
+   "mesh": "SM_stone_05",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_stone_18",
+   "class": "StaticMeshActor",
+   "loc": [
+    -15370,
+    2230,
+    0
+   ],
+   "extent": [
+    175,
+    193,
+    134
+   ],
+   "origin": [
+    -15370,
+    2230,
+    0
+   ],
+   "mesh": "SM_stone_04",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_stone_19",
+   "class": "StaticMeshActor",
+   "loc": [
+    -9400,
+    -5530,
+    470
+   ],
+   "extent": [
+    353,
+    343,
+    289
+   ],
+   "origin": [
+    -9395,
+    -5544,
+    545
+   ],
+   "mesh": "SM_stone_06",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_stone_20",
+   "class": "StaticMeshActor",
+   "loc": [
+    -9680,
+    -5450,
+    480
+   ],
+   "extent": [
+    175,
+    193,
+    134
+   ],
+   "origin": [
+    -9680,
+    -5450,
+    480
+   ],
+   "mesh": "SM_stone_04",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_stone_21",
+   "class": "StaticMeshActor",
+   "loc": [
+    -9280,
+    -6170,
+    440
+   ],
+   "extent": [
+    154,
+    173,
+    146
+   ],
+   "origin": [
+    -9280,
+    -6170,
+    440
+   ],
+   "mesh": "SM_stone_03",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_stone_22",
+   "class": "StaticMeshActor",
+   "loc": [
+    -6940,
+    -13950,
+    90
+   ],
+   "extent": [
+    123,
+    120,
+    142
+   ],
+   "origin": [
+    -6943,
+    -13951,
+    94
+   ],
+   "mesh": "SM_stone_01",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_stone_23",
+   "class": "StaticMeshActor",
+   "loc": [
+    -2860,
+    -11900,
+    290
+   ],
+   "extent": [
+    148,
+    155,
+    164
+   ],
+   "origin": [
+    -2860,
+    -11900,
+    290
+   ],
+   "mesh": "SM_stone_05",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_stone_24",
+   "class": "StaticMeshActor",
+   "loc": [
+    -3730,
+    -7360,
+    180
+   ],
+   "extent": [
+    180,
+    169,
+    125
+   ],
+   "origin": [
+    -3738,
+    -7365,
+    179
+   ],
+   "mesh": "SM_stone_02",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_shrub_02",
+   "class": "StaticMeshActor",
+   "loc": [
+    340,
+    -940,
+    90
+   ],
+   "extent": [
+    98,
+    96,
+    58
+   ],
+   "origin": [
+    338,
+    -941,
+    145
+   ],
+   "mesh": "SM_shrub_02",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_shrub_3",
+   "class": "StaticMeshActor",
+   "loc": [
+    380,
+    -1100,
+    90
+   ],
+   "extent": [
+    205,
+    205,
+    86
+   ],
+   "origin": [
+    383,
+    -1101,
+    173
+   ],
+   "mesh": "SM_shrub_02",
+   "scale": [
+    1.5,
+    1.5,
+    1.5
+   ],
+   "rot": [
+    0,
+    130,
+    0
+   ]
+  },
+  {
+   "label": "SM_grass_03",
+   "class": "StaticMeshActor",
+   "loc": [
+    560,
+    -750,
+    60
+   ],
+   "extent": [
+    37,
+    32,
+    49
+   ],
+   "origin": [
+    554,
+    -753,
+    106
+   ],
+   "mesh": "SM_grass_03",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_shrub_4",
+   "class": "StaticMeshActor",
+   "loc": [
+    3570,
+    -1140,
+    50
+   ],
+   "extent": [
+    98,
+    96,
+    58
+   ],
+   "origin": [
+    3568,
+    -1141,
+    105
+   ],
+   "mesh": "SM_shrub_02",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_shrub_5",
+   "class": "StaticMeshActor",
+   "loc": [
+    3580,
+    -1660,
+    50
+   ],
+   "extent": [
+    98,
+    96,
+    58
+   ],
+   "origin": [
+    3578,
+    -1661,
+    105
+   ],
+   "mesh": "SM_shrub_02",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_grass_4",
+   "class": "StaticMeshActor",
+   "loc": [
+    3580,
+    -1370,
+    60
+   ],
+   "extent": [
+    37,
+    32,
+    49
+   ],
+   "origin": [
+    3574,
+    -1373,
+    106
+   ],
+   "mesh": "SM_grass_03",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_shrub_6",
+   "class": "StaticMeshActor",
+   "loc": [
+    1710,
+    -2380,
+    180
+   ],
+   "extent": [
+    147,
+    144,
+    86
+   ],
+   "origin": [
+    1707,
+    -2381,
+    263
+   ],
+   "mesh": "SM_shrub_02",
+   "scale": [
+    1.5,
+    1.5,
+    1.5
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_shrub_7",
+   "class": "StaticMeshActor",
+   "loc": [
+    1530,
+    -2310,
+    180
+   ],
+   "extent": [
+    98,
+    96,
+    58
+   ],
+   "origin": [
+    1528,
+    -2311,
+    235
+   ],
+   "mesh": "SM_shrub_02",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_shrub_8",
+   "class": "StaticMeshActor",
+   "loc": [
+    -2720,
+    -720,
+    240
+   ],
+   "extent": [
+    147,
+    144,
+    86
+   ],
+   "origin": [
+    -2723,
+    -721,
+    323
+   ],
+   "mesh": "SM_shrub_02",
+   "scale": [
+    1.5,
+    1.5,
+    1.5
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_shrub_9",
+   "class": "StaticMeshActor",
+   "loc": [
+    -2560,
+    -650,
+    210
+   ],
+   "extent": [
+    136,
+    137,
+    58
+   ],
+   "origin": [
+    -2561,
+    -652,
+    265
+   ],
+   "mesh": "SM_shrub_02",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    50,
+    0
+   ]
+  },
+  {
+   "label": "SM_flower_02",
+   "class": "StaticMeshActor",
+   "loc": [
+    -2480,
+    -830,
+    240
+   ],
+   "extent": [
+    28,
+    22,
+    30
+   ],
+   "origin": [
+    -2480,
+    -825,
+    269
+   ],
+   "mesh": "SM_flower_02",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_flower_3",
+   "class": "StaticMeshActor",
+   "loc": [
+    380,
+    -840,
+    70
+   ],
+   "extent": [
+    28,
+    22,
+    30
+   ],
+   "origin": [
+    380,
+    -835,
+    99
+   ],
+   "mesh": "SM_flower_02",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_flower_4",
+   "class": "StaticMeshActor",
+   "loc": [
+    3400,
+    -920,
+    50
+   ],
+   "extent": [
+    28,
+    22,
+    30
+   ],
+   "origin": [
+    3400,
+    -915,
+    79
+   ],
+   "mesh": "SM_flower_02",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_shrub_10",
+   "class": "StaticMeshActor",
+   "loc": [
+    -4510,
+    11930,
+    -20
+   ],
+   "extent": [
+    98,
+    96,
+    58
+   ],
+   "origin": [
+    -4512,
+    11929,
+    35
+   ],
+   "mesh": "SM_shrub_02",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_shrub_11",
+   "class": "StaticMeshActor",
+   "loc": [
+    -4080,
+    12140,
+    0
+   ],
+   "extent": [
+    171,
+    168,
+    101
+   ],
+   "origin": [
+    -4084,
+    12138,
+    97
+   ],
+   "mesh": "SM_shrub_02",
+   "scale": [
+    1.75,
+    1.75,
+    1.75
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_grass_5",
+   "class": "StaticMeshActor",
+   "loc": [
+    -4300,
+    11990,
+    -10
+   ],
+   "extent": [
+    37,
+    32,
+    49
+   ],
+   "origin": [
+    -4306,
+    11987,
+    36
+   ],
+   "mesh": "SM_grass_03",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_flower_5",
+   "class": "StaticMeshActor",
+   "loc": [
+    -4650,
+    12110,
+    0
+   ],
+   "extent": [
+    28,
+    22,
+    30
+   ],
+   "origin": [
+    -4650,
+    12115,
+    29
+   ],
+   "mesh": "SM_flower_02",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_shrub_12",
+   "class": "StaticMeshActor",
+   "loc": [
+    -4850,
+    12460,
+    10
+   ],
+   "extent": [
+    98,
+    96,
+    58
+   ],
+   "origin": [
+    -4852,
+    12459,
+    65
+   ],
+   "mesh": "SM_shrub_02",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_shrub_13",
+   "class": "StaticMeshActor",
+   "loc": [
+    -5860,
+    16630,
+    40
+   ],
+   "extent": [
+    98,
+    96,
+    58
+   ],
+   "origin": [
+    -5862,
+    16629,
+    95
+   ],
+   "mesh": "SM_shrub_02",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_shrub_14",
+   "class": "StaticMeshActor",
+   "loc": [
+    -12730,
+    20240,
+    10
+   ],
+   "extent": [
+    147,
+    144,
+    86
+   ],
+   "origin": [
+    -12733,
+    20239,
+    93
+   ],
+   "mesh": "SM_shrub_02",
+   "scale": [
+    1.5,
+    1.5,
+    1.5
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_shrub_15",
+   "class": "StaticMeshActor",
+   "loc": [
+    -3990,
+    -7580,
+    210
+   ],
+   "extent": [
+    98,
+    96,
+    58
+   ],
+   "origin": [
+    -3992,
+    -7581,
+    265
+   ],
+   "mesh": "SM_shrub_02",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_shrub_16",
+   "class": "StaticMeshActor",
+   "loc": [
+    -20940,
+    11960,
+    -10
+   ],
+   "extent": [
+    98,
+    96,
+    58
+   ],
+   "origin": [
+    -20942,
+    11959,
+    45
+   ],
+   "mesh": "SM_shrub_02",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_shrub_17",
+   "class": "StaticMeshActor",
+   "loc": [
+    -21190,
+    12110,
+    -10
+   ],
+   "extent": [
+    98,
+    96,
+    58
+   ],
+   "origin": [
+    -21192,
+    12109,
+    45
+   ],
+   "mesh": "SM_shrub_02",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_small_stone_04",
+   "class": "StaticMeshActor",
+   "loc": [
+    -11870,
+    -1250,
+    200
+   ],
+   "extent": [
+    81,
+    78,
+    20
+   ],
+   "origin": [
+    -11868,
+    -1245,
+    208
+   ],
+   "mesh": "SM_small_stone_04",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_small_stone_03",
+   "class": "StaticMeshActor",
+   "loc": [
+    -12470,
+    -640,
+    180
+   ],
+   "extent": [
+    33,
+    28,
+    15
+   ],
+   "origin": [
+    -12469,
+    -635,
+    185
+   ],
+   "mesh": "SM_small_stone_03",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_small_stone_02",
+   "class": "StaticMeshActor",
+   "loc": [
+    -12900,
+    340,
+    110
+   ],
+   "extent": [
+    27,
+    22,
+    20
+   ],
+   "origin": [
+    -12902,
+    342,
+    118
+   ],
+   "mesh": "SM_small_stone_02",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_small_stone_3",
+   "class": "StaticMeshActor",
+   "loc": [
+    -460,
+    290,
+    80
+   ],
+   "extent": [
+    27,
+    22,
+    20
+   ],
+   "origin": [
+    -462,
+    292,
+    88
+   ],
+   "mesh": "SM_small_stone_02",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_small_stone_4",
+   "class": "StaticMeshActor",
+   "loc": [
+    -1520,
+    350,
+    90
+   ],
+   "extent": [
+    33,
+    28,
+    15
+   ],
+   "origin": [
+    -1519,
+    355,
+    95
+   ],
+   "mesh": "SM_small_stone_03",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_small_stone_5",
+   "class": "StaticMeshActor",
+   "loc": [
+    -1300,
+    2390,
+    -10
+   ],
+   "extent": [
+    81,
+    78,
+    20
+   ],
+   "origin": [
+    -1298,
+    2395,
+    -2
+   ],
+   "mesh": "SM_small_stone_04",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_small_stone_6",
+   "class": "StaticMeshActor",
+   "loc": [
+    -2060,
+    4370,
+    -110
+   ],
+   "extent": [
+    81,
+    78,
+    20
+   ],
+   "origin": [
+    -2058,
+    4375,
+    -102
+   ],
+   "mesh": "SM_small_stone_04",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_small_stone_7",
+   "class": "StaticMeshActor",
+   "loc": [
+    -6430,
+    11830,
+    -80
+   ],
+   "extent": [
+    33,
+    28,
+    15
+   ],
+   "origin": [
+    -6429,
+    11835,
+    -75
+   ],
+   "mesh": "SM_small_stone_03",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_small_stone_01",
+   "class": "StaticMeshActor",
+   "loc": [
+    -6100,
+    12520,
+    -30
+   ],
+   "extent": [
+    28,
+    26,
+    19
+   ],
+   "origin": [
+    -6099,
+    12520,
+    -22
+   ],
+   "mesh": "SM_small_stone_01",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_small_stone_8",
+   "class": "StaticMeshActor",
+   "loc": [
+    -7970,
+    15660,
+    -90
+   ],
+   "extent": [
+    81,
+    78,
+    20
+   ],
+   "origin": [
+    -7968,
+    15665,
+    -82
+   ],
+   "mesh": "SM_small_stone_04",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_small_stone_9",
+   "class": "StaticMeshActor",
+   "loc": [
+    -12810,
+    16980,
+    -190
+   ],
+   "extent": [
+    81,
+    78,
+    20
+   ],
+   "origin": [
+    -12808,
+    16985,
+    -182
+   ],
+   "mesh": "SM_small_stone_04",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_small_stone_10",
+   "class": "StaticMeshActor",
+   "loc": [
+    -16770,
+    18060,
+    100
+   ],
+   "extent": [
+    81,
+    78,
+    20
+   ],
+   "origin": [
+    -16768,
+    18065,
+    108
+   ],
+   "mesh": "SM_small_stone_04",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_small_stone_11",
+   "class": "StaticMeshActor",
+   "loc": [
+    -17040,
+    17500,
+    70
+   ],
+   "extent": [
+    27,
+    22,
+    20
+   ],
+   "origin": [
+    -17042,
+    17502,
+    78
+   ],
+   "mesh": "SM_small_stone_02",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_small_stone_12",
+   "class": "StaticMeshActor",
+   "loc": [
+    -20200,
+    13800,
+    -100
+   ],
+   "extent": [
+    33,
+    28,
+    15
+   ],
+   "origin": [
+    -20199,
+    13805,
+    -95
+   ],
+   "mesh": "SM_small_stone_03",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "label": "SM_small_stone_13",
+   "class": "StaticMeshActor",
+   "loc": [
+    -18960,
+    8890,
+    30
+   ],
+   "extent": [
+    81,
+    78,
+    20
+   ],
+   "origin": [
+    -18958,
+    8895,
+    38
+   ],
+   "mesh": "SM_small_stone_04",
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rot": [
+    0,
+    0,
+    0
+   ]
+  }
+ ]
+}

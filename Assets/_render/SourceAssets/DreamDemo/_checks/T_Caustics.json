@@ -1,0 +1,18 @@
+{
+ "name": "T_Caustics",
+ "outputs": [
+  "RawContent/DreamDemo/T_Caustics.png",
+  "RawContent/DreamDemo/_checks/T_Caustics_tile2x2.png"
+ ],
+ "notes": {
+  "seam": {
+   "inner_step_x": 0.014866232513507447,
+   "wrap_step_x": 0.012836869547754759,
+   "inner_step_y": 0.015364882484251692,
+   "wrap_step_y": 0.01623728258346091
+  },
+  "mean": 0.604388415813446
+ },
+ "seconds": 0.4,
+ "houdini": "22.0.368"
+}

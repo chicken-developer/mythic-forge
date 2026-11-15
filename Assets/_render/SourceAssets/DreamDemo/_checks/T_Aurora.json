@@ -1,0 +1,27 @@
+{
+ "name": "T_Aurora",
+ "outputs": [
+  "RawContent/DreamDemo/T_AuroraStrip.png",
+  "RawContent/DreamDemo/_checks/T_AuroraStrip_tile2x2.png",
+  "RawContent/DreamDemo/T_AuroraFlow.png"
+ ],
+ "notes": {
+  "strip_seam_u": {
+   "inner": 0.0036050438438576496,
+   "wrap": 0.005565487095825548
+  },
+  "flow_seam": {
+   "inner_step_x": 0.003245247433981776,
+   "wrap_step_x": 0.0023555606603622437,
+   "inner_step_y": 0.001908152935335708,
+   "wrap_step_y": 0.0010963321547023952
+  },
+  "flow_mean_rg": [
+   0.9813827276229858,
+   0.4947277903556824
+  ],
+  "flow_import": "sRGB must be OFF in Unreal"
+ },
+ "seconds": 0.42,
+ "houdini": "22.0.368"
+}

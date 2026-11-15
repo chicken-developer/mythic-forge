@@ -1,0 +1,566 @@
+{
+ "actors": [
+  {
+   "label": "StarFishSchool_0",
+   "class": "BP_DreamInstancedField_C",
+   "loc": [
+    3450,
+    0,
+    390
+   ],
+   "tags": [
+    "State_Dream",
+    "FX_Fish",
+    "DreamState",
+    "DreamDemo",
+    "DreamDemo.Step5"
+   ],
+   "note": "8 instances"
+  },
+  {
+   "label": "StarFishSchool_1",
+   "class": "BP_DreamInstancedField_C",
+   "loc": [
+    3450,
+    0,
+    390
+   ],
+   "tags": [
+    "State_Dream",
+    "FX_Fish",
+    "DreamState",
+    "DreamDemo",
+    "DreamDemo.Step5"
+   ],
+   "note": "8 instances"
+  },
+  {
+   "label": "StarFishSchool_2",
+   "class": "BP_DreamInstancedField_C",
+   "loc": [
+    3450,
+    0,
+    390
+   ],
+   "tags": [
+    "State_Dream",
+    "FX_Fish",
+    "DreamState",
+    "DreamDemo",
+    "DreamDemo.Step5"
+   ],
+   "note": "8 instances"
+  },
+  {
+   "label": "MemoryBubbles",
+   "class": "BP_DreamInstancedField_C",
+   "loc": [
+    3450,
+    0,
+    390
+   ],
+   "tags": [
+    "State_Dream",
+    "FX_Bubbles",
+    "DreamState",
+    "DreamDemo",
+    "DreamDemo.Step5"
+   ],
+   "note": "10 instances"
+  },
+  {
+   "label": "CosmicDust",
+   "class": "BP_DreamInstancedField_C",
+   "loc": [
+    3450,
+    0,
+    390
+   ],
+   "tags": [
+    "State_Dream",
+    "FX_Dust",
+    "DreamState",
+    "DreamDemo",
+    "DreamDemo.Step5"
+   ],
+   "note": "420 instances"
+  },
+  {
+   "label": "Decal_DreamInk",
+   "class": "DecalActor",
+   "loc": [
+    3450,
+    0,
+    390
+   ],
+   "tags": [
+    "State_Dream",
+    "FX_Ink",
+    "DreamState",
+    "DreamDemo",
+    "DreamDemo.Step5"
+   ],
+   "note": "darkness source at [2705, -745] radius 380"
+  },
+  {
+   "label": "Float_00_ClayPot_Big",
+   "class": "StaticMeshActor",
+   "loc": [
+    2192,
+    -467,
+    390
+   ],
+   "tags": [
+    "State_Dream",
+    "FX_Float",
+    "DreamState",
+    "DreamDemo",
+    "DreamDemo.Step5"
+   ],
+   "note": "rim"
+  },
+  {
+   "label": "Float_01_Crate_01",
+   "class": "StaticMeshActor",
+   "loc": [
+    2961,
+    -1067,
+    451
+   ],
+   "tags": [
+    "State_Dream",
+    "FX_Float",
+    "DreamState",
+    "DreamDemo",
+    "DreamDemo.Step5"
+   ],
+   "note": "rim"
+  },
+  {
+   "label": "Float_02_Barrel_01",
+   "class": "StaticMeshActor",
+   "loc": [
+    3683,
+    -1287,
+    470
+   ],
+   "tags": [
+    "State_Dream",
+    "FX_Float",
+    "DreamState",
+    "DreamDemo",
+    "DreamDemo.Step5"
+   ],
+   "note": "rim"
+  },
+  {
+   "label": "Float_03_ClayPot_Big",
+   "class": "StaticMeshActor",
+   "loc": [
+    4260,
+    -767,
+    405
+   ],
+   "tags": [
+    "State_Dream",
+    "FX_Float",
+    "DreamState",
+    "DreamDemo",
+    "DreamDemo.Step5"
+   ],
+   "note": "rim"
+  },
+  {
+   "label": "Float_04_Crate_01",
+   "class": "StaticMeshActor",
+   "loc": [
+    4610,
+    -323,
+    466
+   ],
+   "tags": [
+    "State_Dream",
+    "FX_Float",
+    "DreamState",
+    "DreamDemo",
+    "DreamDemo.Step5"
+   ],
+   "note": "rim"
+  },
+  {
+   "label": "Float_05_Barrel_01",
+   "class": "StaticMeshActor",
+   "loc": [
+    4414,
+    649,
+    470
+   ],
+   "tags": [
+    "State_Dream",
+    "FX_Float",
+    "DreamState",
+    "DreamDemo",
+    "DreamDemo.Step5"
+   ],
+   "note": "rim"
+  },
+  {
+   "label": "Float_06_ClayPot_Big",
+   "class": "StaticMeshActor",
+   "loc": [
+    3893,
+    1097,
+    405
+   ],
+   "tags": [
+    "State_Dream",
+    "FX_Float",
+    "DreamState",
+    "DreamDemo",
+    "DreamDemo.Step5"
+   ],
+   "note": "rim"
+  },
+  {
+   "label": "Float_07_Crate_01",
+   "class": "StaticMeshActor",
+   "loc": [
+    2941,
+    1289,
+    451
+   ],
+   "tags": [
+    "State_Dream",
+    "FX_Float",
+    "DreamState",
+    "DreamDemo",
+    "DreamDemo.Step5"
+   ],
+   "note": "rim"
+  },
+  {
+   "label": "Float_08_Barrel_01",
+   "class": "StaticMeshActor",
+   "loc": [
+    2338,
+    856,
+    455
+   ],
+   "tags": [
+    "State_Dream",
+    "FX_Float",
+    "DreamState",
+    "DreamDemo",
+    "DreamDemo.Step5"
+   ],
+   "note": "rim"
+  },
+  {
+   "label": "Float_09_ClayPot_Big",
+   "class": "StaticMeshActor",
+   "loc": [
+    2585,
+    -704,
+    390
+   ],
+   "tags": [
+    "State_Dream",
+    "FX_Float",
+    "DreamState",
+    "DreamDemo",
+    "DreamDemo.Step5"
+   ],
+   "note": "inside ink"
+  },
+  {
+   "label": "Float_10_Crate_01",
+   "class": "StaticMeshActor",
+   "loc": [
+    2665,
+    -946,
+    451
+   ],
+   "tags": [
+    "State_Dream",
+    "FX_Float",
+    "DreamState",
+    "DreamDemo",
+    "DreamDemo.Step5"
+   ],
+   "note": "inside ink"
+  },
+  {
+   "label": "Float_11_Barrel_01",
+   "class": "StaticMeshActor",
+   "loc": [
+    4079,
+    -1188,
+    470
+   ],
+   "tags": [
+    "State_Dream",
+    "FX_Float",
+    "DreamState",
+    "DreamDemo",
+    "DreamDemo.Step5"
+   ],
+   "note": "wall camera"
+  },
+  {
+   "label": "Float_12_ClayPot_Big",
+   "class": "StaticMeshActor",
+   "loc": [
+    4427,
+    -918,
+    405
+   ],
+   "tags": [
+    "State_Dream",
+    "FX_Float",
+    "DreamState",
+    "DreamDemo",
+    "DreamDemo.Step5"
+   ],
+   "note": "wall camera"
+  },
+  {
+   "label": "Lantern_0_Post",
+   "class": "StaticMeshActor",
+   "loc": [
+    2455,
+    -697,
+    495
+   ],
+   "tags": [
+    "DreamDemo.Lantern",
+    "DreamDemo",
+    "DreamDemo.Step5"
+   ],
+   "note": ""
+  },
+  {
+   "label": "Lantern_0_Star",
+   "class": "StaticMeshActor",
+   "loc": [
+    2455,
+    -697,
+    622
+   ],
+   "tags": [
+    "State_Dream",
+    "DreamDemo.LanternStar",
+    "DreamState",
+    "DreamDemo",
+    "DreamDemo.Step5"
+   ],
+   "note": ""
+  },
+  {
+   "label": "Lantern_1_Post",
+   "class": "StaticMeshActor",
+   "loc": [
+    3197,
+    -1188,
+    510
+   ],
+   "tags": [
+    "DreamDemo.Lantern",
+    "DreamDemo",
+    "DreamDemo.Step5"
+   ],
+   "note": ""
+  },
+  {
+   "label": "Lantern_1_Star",
+   "class": "StaticMeshActor",
+   "loc": [
+    3197,
+    -1188,
+    637
+   ],
+   "tags": [
+    "State_Dream",
+    "DreamDemo.LanternStar",
+    "DreamState",
+    "DreamDemo",
+    "DreamDemo.Step5"
+   ],
+   "note": ""
+  },
+  {
+   "label": "Lantern_2_Post",
+   "class": "StaticMeshActor",
+   "loc": [
+    4592,
+    -416,
+    510
+   ],
+   "tags": [
+    "DreamDemo.Lantern",
+    "DreamDemo",
+    "DreamDemo.Step5"
+   ],
+   "note": ""
+  },
+  {
+   "label": "Lantern_2_Star",
+   "class": "StaticMeshActor",
+   "loc": [
+    4592,
+    -416,
+    637
+   ],
+   "tags": [
+    "State_Dream",
+    "DreamDemo.LanternStar",
+    "DreamState",
+    "DreamDemo",
+    "DreamDemo.Step5"
+   ],
+   "note": ""
+  },
+  {
+   "label": "Lantern_3_Post",
+   "class": "StaticMeshActor",
+   "loc": [
+    4445,
+    697,
+    510
+   ],
+   "tags": [
+    "DreamDemo.Lantern",
+    "DreamDemo",
+    "DreamDemo.Step5"
+   ],
+   "note": ""
+  },
+  {
+   "label": "Lantern_3_Star",
+   "class": "StaticMeshActor",
+   "loc": [
+    4445,
+    697,
+    637
+   ],
+   "tags": [
+    "State_Dream",
+    "DreamDemo.LanternStar",
+    "DreamState",
+    "DreamDemo",
+    "DreamDemo.Step5"
+   ],
+   "note": ""
+  },
+  {
+   "label": "Lantern_4_Post",
+   "class": "StaticMeshActor",
+   "loc": [
+    3344,
+    1210,
+    510
+   ],
+   "tags": [
+    "DreamDemo.Lantern",
+    "DreamDemo",
+    "DreamDemo.Step5"
+   ],
+   "note": ""
+  },
+  {
+   "label": "Lantern_4_Star",
+   "class": "StaticMeshActor",
+   "loc": [
+    3344,
+    1210,
+    637
+   ],
+   "tags": [
+    "State_Dream",
+    "DreamDemo.LanternStar",
+    "DreamState",
+    "DreamDemo",
+    "DreamDemo.Step5"
+   ],
+   "note": ""
+  },
+  {
+   "label": "Lantern_5_Post",
+   "class": "StaticMeshActor",
+   "loc": [
+    2455,
+    697,
+    495
+   ],
+   "tags": [
+    "DreamDemo.Lantern",
+    "DreamDemo",
+    "DreamDemo.Step5"
+   ],
+   "note": ""
+  },
+  {
+   "label": "Lantern_5_Star",
+   "class": "StaticMeshActor",
+   "loc": [
+    2455,
+    697,
+    622
+   ],
+   "tags": [
+    "State_Dream",
+    "DreamDemo.LanternStar",
+    "DreamState",
+    "DreamDemo",
+    "DreamDemo.Step5"
+   ],
+   "note": ""
+  },
+  {
+   "label": "Lantern_6_Post",
+   "class": "StaticMeshActor",
+   "loc": [
+    4375,
+    -705,
+    510
+   ],
+   "tags": [
+    "DreamDemo.Lantern",
+    "DreamDemo",
+    "DreamDemo.Step5"
+   ],
+   "note": ""
+  },
+  {
+   "label": "Lantern_6_Star",
+   "class": "StaticMeshActor",
+   "loc": [
+    4375,
+    -705,
+    637
+   ],
+   "tags": [
+    "State_Dream",
+    "DreamDemo.LanternStar",
+    "DreamState",
+    "DreamDemo",
+    "DreamDemo.Step5"
+   ],
+   "note": ""
+  }
+ ],
+ "notes": [
+  "removed 33 actors from a previous run"
+ ],
+ "materials": {
+  "MM_MasterMaterial_Float": "new WPO",
+  "prop SM_ClayPot_Big": [
+   "MI_Pots_01_Float"
+  ],
+  "prop SM_Crate_01": [
+   "MI_Furniture_Crate_Float"
+  ],
+  "prop SM_SM_Barrel_01": [
+   "MI_Furniture_Crate_Float"
+  ]
+ }
+}

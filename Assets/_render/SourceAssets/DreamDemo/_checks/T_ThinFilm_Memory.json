@@ -1,0 +1,15 @@
+{
+ "name": "T_ThinFilm_Memory",
+ "outputs": [
+  "RawContent/DreamDemo/T_ThinFilmRamp.png",
+  "RawContent/DreamDemo/T_MemoryPlaceholder_0.png",
+  "RawContent/DreamDemo/T_MemoryPlaceholder_1.png",
+  "RawContent/DreamDemo/T_MemoryPlaceholder_2.png",
+  "RawContent/DreamDemo/T_MemoryPlaceholder_3.png"
+ ],
+ "notes": {
+  "memory": "placeholders for the 2D artist; alpha is the soft round mask"
+ },
+ "seconds": 0.21,
+ "houdini": "22.0.368"
+}

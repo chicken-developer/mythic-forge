@@ -1,0 +1,4 @@
+row 1, column 1: CAM_Wide Night
+row 1, column 2: CAM_Wide Dream
+row 2, column 1: CAM_Wall Night
+row 2, column 2: CAM_Wall Dream

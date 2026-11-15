@@ -1,0 +1,383 @@
+{
+ "actors": [
+  {
+   "label": "DL_Moon",
+   "class": "DirectionalLight",
+   "loc": [
+    0,
+    0,
+    800
+   ],
+   "tags": [
+    "State_Night",
+    "DreamState",
+    "DreamDemo",
+    "DreamDemo.Step4"
+   ],
+   "note": ""
+  },
+  {
+   "label": "Sky_Night",
+   "class": "StaticMeshActor",
+   "loc": [
+    0,
+    0,
+    0
+   ],
+   "tags": [
+    "State_Night",
+    "DreamState",
+    "DreamDemo",
+    "DreamDemo.Step4"
+   ],
+   "note": ""
+  },
+  {
+   "label": "SL_Night",
+   "class": "SkyLight",
+   "loc": [
+    0,
+    0,
+    900
+   ],
+   "tags": [
+    "State_Night",
+    "DreamState",
+    "DreamDemo",
+    "DreamDemo.Step4"
+   ],
+   "note": ""
+  },
+  {
+   "label": "Fog_Night",
+   "class": "ExponentialHeightFog",
+   "loc": [
+    0,
+    0,
+    100
+   ],
+   "tags": [
+    "State_Night",
+    "DreamState",
+    "DreamDemo",
+    "DreamDemo.Step4"
+   ],
+   "note": ""
+  },
+  {
+   "label": "PPV_Night",
+   "class": "PostProcessVolume",
+   "loc": [
+    0,
+    0,
+    300
+   ],
+   "tags": [
+    "State_Night",
+    "DreamState",
+    "DreamDemo",
+    "DreamDemo.Step4"
+   ],
+   "note": ""
+  },
+  {
+   "label": "DL_Dream",
+   "class": "DirectionalLight",
+   "loc": [
+    0,
+    0,
+    800
+   ],
+   "tags": [
+    "State_Dream",
+    "DreamState",
+    "DreamDemo",
+    "DreamDemo.Step4"
+   ],
+   "note": ""
+  },
+  {
+   "label": "Sky_Dream",
+   "class": "StaticMeshActor",
+   "loc": [
+    0,
+    0,
+    0
+   ],
+   "tags": [
+    "State_Dream",
+    "FX_Sky",
+    "DreamState",
+    "DreamDemo",
+    "DreamDemo.Step4"
+   ],
+   "note": ""
+  },
+  {
+   "label": "SL_Dream",
+   "class": "SkyLight",
+   "loc": [
+    0,
+    0,
+    900
+   ],
+   "tags": [
+    "State_Dream",
+    "DreamState",
+    "DreamDemo",
+    "DreamDemo.Step4"
+   ],
+   "note": ""
+  },
+  {
+   "label": "Fog_Dream",
+   "class": "ExponentialHeightFog",
+   "loc": [
+    0,
+    0,
+    100
+   ],
+   "tags": [
+    "State_Dream",
+    "DreamState",
+    "DreamDemo",
+    "DreamDemo.Step4"
+   ],
+   "note": ""
+  },
+  {
+   "label": "PPV_Dream",
+   "class": "PostProcessVolume",
+   "loc": [
+    0,
+    0,
+    300
+   ],
+   "tags": [
+    "State_Dream",
+    "DreamState",
+    "DreamDemo",
+    "DreamDemo.Step4"
+   ],
+   "note": ""
+  },
+  {
+   "label": "Golem_StandIn_0",
+   "class": "SkeletalMeshActor",
+   "loc": [
+    3932,
+    130,
+    405
+   ],
+   "tags": [
+    "DreamDemo",
+    "DreamDemo.Step4"
+   ],
+   "note": "stencil 1"
+  },
+  {
+   "label": "Golem_StandIn_1",
+   "class": "SkeletalMeshActor",
+   "loc": [
+    3900,
+    0,
+    405
+   ],
+   "tags": [
+    "DreamDemo",
+    "DreamDemo.Step4"
+   ],
+   "note": "stencil 1"
+  },
+  {
+   "label": "Golem_StandIn_2",
+   "class": "SkeletalMeshActor",
+   "loc": [
+    3932,
+    -130,
+    405
+   ],
+   "tags": [
+    "DreamDemo",
+    "DreamDemo.Step4"
+   ],
+   "note": "stencil 1"
+  },
+  {
+   "label": "Xenon_StandIn",
+   "class": "StaticMeshActor",
+   "loc": [
+    3190,
+    0,
+    608
+   ],
+   "tags": [
+    "DreamDemo",
+    "DreamDemo.Step4"
+   ],
+   "note": "stencil 2"
+  },
+  {
+   "label": "Xenon_WeakSpot",
+   "class": "StaticMeshActor",
+   "loc": [
+    3433,
+    0,
+    630
+   ],
+   "tags": [
+    "DreamDemo",
+    "DreamDemo.Step4"
+   ],
+   "note": "stencil 3"
+  },
+  {
+   "label": "CAM_Wide",
+   "class": "CameraActor",
+   "loc": [
+    4300,
+    0,
+    605
+   ],
+   "tags": [
+    "DreamDemo",
+    "DreamDemo.Step4"
+   ],
+   "note": "fov 90 rot [-1.3, 180.0, 0.0]"
+  },
+  {
+   "label": "CAM_Wall",
+   "class": "CameraActor",
+   "loc": [
+    3961,
+    -659,
+    570
+   ],
+   "tags": [
+    "DreamDemo",
+    "DreamDemo.Step4"
+   ],
+   "note": "fov 60 rot [-4.2, -52.2, 0.0]"
+  },
+  {
+   "label": "CAM_Sky",
+   "class": "CameraActor",
+   "loc": [
+    3650,
+    900,
+    575
+   ],
+   "tags": [
+    "DreamDemo",
+    "DreamDemo.Step4"
+   ],
+   "note": "fov 90 rot [30.0, 190.0, 0.0]"
+  },
+  {
+   "label": "BP_DreamWorldState",
+   "class": "BP_DreamWorldState_C",
+   "loc": [
+    0,
+    0,
+    400
+   ],
+   "tags": [
+    "DreamDemo",
+    "DreamDemo.Step4"
+   ],
+   "note": ""
+  }
+ ],
+ "notes": [
+  "removed 19 actors from a previous run",
+  "27 KD_Label actors set to hidden in game",
+  "golem idle animation: MM_Idle",
+  "weak spot: trace missed the boulder, placed from bounds"
+ ],
+ "day_lighting": {
+  "sun": {
+   "intensity": 6.0,
+   "mobility": "<ComponentMobility.STATIONARY: 1>",
+   "rotation": [
+    -42.0,
+    35.0
+   ]
+  },
+  "sky_light": {
+   "intensity": 1.0,
+   "source": "<SkyLightSourceType.SLS_CAPTURED_SCENE: 0>",
+   "real_time_capture": true
+  },
+  "actors": {
+   "KD_Sun": "DirectionalLight",
+   "KD_SkyLight": "SkyLight",
+   "KD_SkyAtmosphere": "SkyAtmosphere",
+   "KD_Fog": "ExponentialHeightFog",
+   "KD_Clouds": "VolumetricCloud"
+  },
+  "post_process_volume": false
+ },
+ "layout": {
+  "arena_center": [
+   3450.0,
+   0.0,
+   390.0
+  ],
+  "arena_radius": 1350.0,
+  "view_yaw": 180.0,
+  "nearest_obstacle_cm": 1367.4,
+  "obstacles_inside_arena": [],
+  "ground_traces_hit": 13,
+  "height_range_cm": [
+   390.0,
+   405.0
+  ],
+  "obstacle_count": 526,
+  "wall_building": {
+   "label": "KD_P07_med_merchant_house_025",
+   "mesh": "SM_med_merchant_house_BLK",
+   "origin": [
+    4673.0,
+    -1579.0
+   ],
+   "extent": [
+    473.0,
+    429.5
+   ],
+   "distance_cm": 1372.6
+  },
+  "wall": {
+   "mid": [
+    4340.3,
+    -1149.5,
+    405.0
+   ],
+   "radial": [
+    0.6123448532892697,
+    -0.7905907795124749
+   ],
+   "tangent": [
+    0.7905907795124749,
+    0.6123448532892697
+   ]
+  },
+  "xenon": [
+   3190.0,
+   0.0,
+   390.0
+  ],
+  "golems": [
+   3900.0,
+   -0.0,
+   405.0
+  ],
+  "ink": {
+   "center": [
+    2705.4,
+    -744.6,
+    390.0
+   ],
+   "radius": 380.0
+  }
+ }
+}

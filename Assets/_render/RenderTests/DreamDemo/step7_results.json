@@ -1,0 +1,172 @@
+{
+ "capture_exit_code": 0,
+ "captures_present": {
+  "CAM_Wide_Day.png": true,
+  "CAM_Wide_Night.png": true,
+  "CAM_Wide_Dream.png": true,
+  "CAM_Wall_Day.png": true,
+  "CAM_Wall_Night.png": true,
+  "CAM_Wall_Dream.png": true,
+  "CAM_Sky_Day.png": true,
+  "CAM_Sky_Night.png": true,
+  "CAM_Sky_Dream.png": true
+ },
+ "sheets": [
+  "RenderTests/DreamDemo/compare_full.png",
+  "RenderTests/DreamDemo/compare_320_gray.png"
+ ],
+ "performance": {
+  "note": "not measured: GPU timing needed the removed C++ controller. Numbers of the forest prototype are in forest_prototype/STEP_7.md."
+ },
+ "stencil_check": {
+  "pass": true,
+  "stencil_pixels": 227005,
+  "mean_abs_diff_on_stencil_8bit": 0.344,
+  "mean_abs_diff_on_ground_8bit": 6.528,
+  "rule": "difference on stencil pixels < 2/255 and ground difference at least 3x larger",
+  "note": "the residual on stencil pixels is temporal noise (TSR, Lumen), not caustics"
+ },
+ "gray_320_stats": {
+  "CAM_Wide_Night": {
+   "mean": 0.2888,
+   "std": 0.1593,
+   "edge_energy": 0.0677,
+   "lower_half_mean": 0.3811,
+   "lower_half_std": 0.1391
+  },
+  "CAM_Wide_Dream": {
+   "mean": 0.2395,
+   "std": 0.1858,
+   "edge_energy": 0.0543,
+   "lower_half_mean": 0.3735,
+   "lower_half_std": 0.1628
+  },
+  "CAM_Wall_Night": {
+   "mean": 0.4508,
+   "std": 0.2058,
+   "edge_energy": 0.0601,
+   "lower_half_mean": 0.5217,
+   "lower_half_std": 0.1664
+  },
+  "CAM_Wall_Dream": {
+   "mean": 0.2626,
+   "std": 0.1681,
+   "edge_energy": 0.0764,
+   "lower_half_mean": 0.3228,
+   "lower_half_std": 0.1772
+  }
+ },
+ "gate": {
+  "frames": 20,
+  "fully_covered_frames": [
+   "gate_01.png",
+   "gate_02.png",
+   "wake_01.png"
+  ],
+  "per_frame": [
+   {
+    "frame": "gate_00.png",
+    "veil_fraction": 0.301,
+    "mean_luma": 0.638
+   },
+   {
+    "frame": "gate_01.png",
+    "veil_fraction": 1.0,
+    "mean_luma": 0.641
+   },
+   {
+    "frame": "gate_02.png",
+    "veil_fraction": 0.998,
+    "mean_luma": 0.737
+   },
+   {
+    "frame": "gate_03.png",
+    "veil_fraction": 0.251,
+    "mean_luma": 0.338
+   },
+   {
+    "frame": "gate_04.png",
+    "veil_fraction": 0.122,
+    "mean_luma": 0.243
+   },
+   {
+    "frame": "gate_05.png",
+    "veil_fraction": 0.122,
+    "mean_luma": 0.243
+   },
+   {
+    "frame": "gate_06.png",
+    "veil_fraction": 0.124,
+    "mean_luma": 0.243
+   },
+   {
+    "frame": "gate_07.png",
+    "veil_fraction": 0.123,
+    "mean_luma": 0.243
+   },
+   {
+    "frame": "gate_08.png",
+    "veil_fraction": 0.121,
+    "mean_luma": 0.243
+   },
+   {
+    "frame": "gate_09.png",
+    "veil_fraction": 0.121,
+    "mean_luma": 0.243
+   },
+   {
+    "frame": "gate_10.png",
+    "veil_fraction": 0.121,
+    "mean_luma": 0.243
+   },
+   {
+    "frame": "gate_11.png",
+    "veil_fraction": 0.121,
+    "mean_luma": 0.243
+   },
+   {
+    "frame": "wake_00.png",
+    "veil_fraction": 0.675,
+    "mean_luma": 0.588
+   },
+   {
+    "frame": "wake_01.png",
+    "veil_fraction": 0.943,
+    "mean_luma": 0.653
+   },
+   {
+    "frame": "wake_02.png",
+    "veil_fraction": 0.034,
+    "mean_luma": 0.491
+   },
+   {
+    "frame": "wake_03.png",
+    "veil_fraction": 0.067,
+    "mean_luma": 0.533
+   },
+   {
+    "frame": "wake_04.png",
+    "veil_fraction": 0.084,
+    "mean_luma": 0.554
+   },
+   {
+    "frame": "wake_05.png",
+    "veil_fraction": 0.088,
+    "mean_luma": 0.563
+   },
+   {
+    "frame": "wake_06.png",
+    "veil_fraction": 0.091,
+    "mean_luma": 0.568
+   },
+   {
+    "frame": "wake_07.png",
+    "veil_fraction": 0.091,
+    "mean_luma": 0.569
+   }
+  ],
+  "sheet": "RenderTests/DreamDemo/STEP_8_gate_frames.png",
+  "note": "frames are 0.1 s apart; whether any uncovered frame shows unconverged Lumen is a visual check"
+ },
+ "tour_errors": []
+}

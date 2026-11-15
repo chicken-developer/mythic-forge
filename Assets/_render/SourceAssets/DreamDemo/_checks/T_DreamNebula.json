@@ -1,0 +1,19 @@
+{
+ "name": "T_DreamNebula",
+ "outputs": [
+  "RawContent/DreamDemo/T_DreamNebula.exr",
+  "RawContent/DreamDemo/T_DreamNebula.hdr",
+  "RawContent/DreamDemo/_checks/T_DreamNebula_preview.png"
+ ],
+ "notes": {
+  "seam_longitude": {
+   "inner": 0.0008394600819131646,
+   "wrap": 0.002110717544042018
+  },
+  "max_value": 0.6820563077926636,
+  "mean_upper": 0.07321508973836899,
+  "mean_lower": 0.010430906899273396
+ },
+ "seconds": 1.52,
+ "houdini": "22.0.368"
+}

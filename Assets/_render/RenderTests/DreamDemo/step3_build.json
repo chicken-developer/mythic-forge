@@ -1,0 +1,241 @@
+{
+ "imports": {
+  "T_Caustics.png": {
+   "paths": [
+    "/Game/DreamDemo/Textures/T_Caustics.T_Caustics"
+   ],
+   "class": "Texture2D"
+  },
+  "T_AuroraStrip.png": {
+   "paths": [
+    "/Game/DreamDemo/Textures/T_AuroraStrip.T_AuroraStrip"
+   ],
+   "class": "Texture2D"
+  },
+  "T_StarField.png": {
+   "paths": [
+    "/Game/DreamDemo/Textures/T_StarField.T_StarField"
+   ],
+   "class": "Texture2D"
+  },
+  "T_CloudNoise.png": {
+   "paths": [
+    "/Game/DreamDemo/Textures/T_CloudNoise.T_CloudNoise"
+   ],
+   "class": "Texture2D"
+  },
+  "T_AuroraFlow.png": {
+   "paths": [
+    "/Game/DreamDemo/Textures/T_AuroraFlow.T_AuroraFlow"
+   ],
+   "class": "Texture2D"
+  },
+  "T_ThinFilmRamp.png": {
+   "paths": [
+    "/Game/DreamDemo/Textures/T_ThinFilmRamp.T_ThinFilmRamp"
+   ],
+   "class": "Texture2D"
+  },
+  "T_MemoryPlaceholder_0.png": {
+   "paths": [
+    "/Game/DreamDemo/Textures/T_MemoryPlaceholder_0.T_MemoryPlaceholder_0"
+   ],
+   "class": "Texture2D"
+  },
+  "T_MemoryPlaceholder_1.png": {
+   "paths": [
+    "/Game/DreamDemo/Textures/T_MemoryPlaceholder_1.T_MemoryPlaceholder_1"
+   ],
+   "class": "Texture2D"
+  },
+  "T_MemoryPlaceholder_2.png": {
+   "paths": [
+    "/Game/DreamDemo/Textures/T_MemoryPlaceholder_2.T_MemoryPlaceholder_2"
+   ],
+   "class": "Texture2D"
+  },
+  "T_MemoryPlaceholder_3.png": {
+   "paths": [
+    "/Game/DreamDemo/Textures/T_MemoryPlaceholder_3.T_MemoryPlaceholder_3"
+   ],
+   "class": "Texture2D"
+  },
+  "T_DreamNebula.hdr": {
+   "paths": [
+    "/Game/DreamDemo/Textures/T_DreamNebula.T_DreamNebula"
+   ],
+   "class": "TextureCube"
+  },
+  "SM_StarFish.fbx": {
+   "paths": [
+    "/Game/DreamDemo/Meshes/SM_StarFish.SM_StarFish"
+   ],
+   "class": "StaticMesh",
+   "triangles": 169,
+   "size_cm": [
+    60.0,
+    27.5,
+    28.5
+   ],
+   "bounds_extension_cm": [
+    4000.0,
+    4000.0,
+    300.0
+   ]
+  },
+  "SM_DustMote.fbx": {
+   "paths": [
+    "/Game/DreamDemo/Meshes/SM_DustMote.SM_DustMote"
+   ],
+   "class": "StaticMesh",
+   "triangles": 20,
+   "size_cm": [
+    8.5,
+    8.5,
+    8.5
+   ],
+   "bounds_extension_cm": [
+    60.0,
+    60.0,
+    700.0
+   ]
+  },
+  "SM_Bubble.fbx": {
+   "paths": [
+    "/Game/DreamDemo/Meshes/SM_Bubble.SM_Bubble"
+   ],
+   "class": "StaticMesh",
+   "triangles": 624,
+   "size_cm": [
+    100.0,
+    100.0,
+    100.0
+   ],
+   "bounds_extension_cm": [
+    150.0,
+    150.0,
+    500.0
+   ]
+  }
+ },
+ "checks": {
+  "r.CustomDepth": "already 3",
+  "T_MemoryArray_layers": 4,
+  "T_DreamNebula_class": "TextureCube",
+  "SM_StarFish_axis": {
+   "max_x_cm": 30.0,
+   "uv_x_at_max_x": 0.0,
+   "min_x_cm": -30.0,
+   "uv_x_at_min_x": 1.0,
+   "head_at_plus_x": true
+  },
+  "MPC_Dream": {
+   "scalars": [
+    "WorldBlend",
+    "NightBlend",
+    "CausticsIntensity",
+    "CausticsSpeed",
+    "CausticsScale",
+    "ArenaCausticsFloor",
+    "FloatAmount",
+    "AuroraIntensity",
+    "AuroraSpeed",
+    "AuroraHueShift",
+    "DarknessCount",
+    "DarknessEdgeNoise",
+    "CausticsBrightness",
+    "CausticsSharpness",
+    "CausticsMaxDistance",
+    "CausticsFoliageBoost",
+    "DustSpeed",
+    "FloatLiftMin",
+    "FloatLiftMax",
+    "GateMode",
+    "GateStartTime",
+    "GateDuration",
+    "MotionReduced",
+    "DebugStencilView"
+   ],
+   "vectors": [
+    "ArenaCenterRadius",
+    "DarknessSource0",
+    "DarknessSource1",
+    "DarknessSource2",
+    "DarknessSource3",
+    "CausticsTint",
+    "GateCenter"
+   ],
+   "ArenaCenterRadius": [
+    3450.0,
+    0.0,
+    390.0,
+    1350.0
+   ]
+  },
+  "M_PP_DreamCaustics_location": "<BlendableLocation.BL_SCENE_COLOR_AFTER_DOF: 1>"
+ },
+ "notes": [],
+ "layout": {
+  "arena_center": [
+   3450.0,
+   0.0,
+   390.0
+  ],
+  "arena_radius": 1350.0,
+  "view_yaw": 180.0,
+  "nearest_obstacle_cm": 1367.4,
+  "obstacles_inside_arena": [],
+  "ground_traces_hit": 13,
+  "height_range_cm": [
+   390.0,
+   405.0
+  ],
+  "obstacle_count": 526,
+  "wall_building": {
+   "label": "KD_P07_med_merchant_house_025",
+   "mesh": "SM_med_merchant_house_BLK",
+   "origin": [
+    4673.0,
+    -1579.0
+   ],
+   "extent": [
+    473.0,
+    429.5
+   ],
+   "distance_cm": 1372.6
+  },
+  "wall": {
+   "mid": [
+    4340.3,
+    -1149.5,
+    405.0
+   ],
+   "radial": [
+    0.6123448532892697,
+    -0.7905907795124749
+   ],
+   "tangent": [
+    0.7905907795124749,
+    0.6123448532892697
+   ]
+  },
+  "xenon": [
+   3190.0,
+   0.0,
+   390.0
+  ],
+  "golems": [
+   3900.0,
+   -0.0,
+   405.0
+  ],
+  "ink": {
+   "center": [
+    2705.4,
+    -744.6,
+    390.0
+   ],
+   "radius": 380.0
+  }
+ }
+}
